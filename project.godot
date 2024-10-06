@@ -11,5 +11,14 @@ config_version=5
 [application]
 
 config/name="rogue_slg"
+run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+mouse_cursor/custom_image="res://images/pointer_scifi_a.svg"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
