@@ -1,24 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://bgm08y6mwa1xl"]
+[gd_scene load_steps=25 format=3 uid="uid://bgm08y6mwa1xl"]
 
 [ext_resource type="Script" path="res://scripts/hero.gd" id="1_2jlbh"]
 [ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="1_ufarh"]
-[ext_resource type="Shader" path="res://shaders/high_light.gdshader" id="2_c5gmw"]
 [ext_resource type="Texture2D" uid="uid://t17pqkrha6od" path="res://images/Archer-Green.png" id="2_mxpjn"]
 [ext_resource type="Texture2D" uid="uid://c3rdthe31eav6" path="res://images/Mage-Cyan.png" id="3_ciahd"]
 [ext_resource type="Script" path="res://scripts/hero_state_machine.gd" id="5_fgiwk"]
 [ext_resource type="Script" path="res://scripts/idle.gd" id="6_yiwd7"]
-[ext_resource type="Script" path="res://scripts/move.gd" id="7_duu28"]
-[ext_resource type="Script" path="res://scripts/end.gd" id="8_2fhne"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y1qti"]
-size = Vector2(12, 12)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_er1yf"]
-resource_local_to_scene = true
-shader = ExtResource("2_c5gmw")
-shader_parameter/width = 0.7
-shader_parameter/outline_color = Color(0, 1, 0, 1)
-shader_parameter/is_high_light = null
+size = Vector2(16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mykbe"]
 atlas = ExtResource("2_mxpjn")
@@ -181,28 +171,18 @@ position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_y1qti")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
-material = SubResource("ShaderMaterial_er1yf")
 position = Vector2(8, 9)
 scale = Vector2(0.77, 0.77)
 sprite_frames = SubResource("SpriteFrames_hvq5q")
-animation = &"soldier_move"
+animation = &"soldier_idle"
 autoplay = "archer_idle"
-frame_progress = 0.453164
 
 [node name="hero_state_machine" type="Node2D" parent="."]
 script = ExtResource("5_fgiwk")
-initial_state = NodePath("idle")
 
 [node name="idle" type="Node2D" parent="hero_state_machine"]
 script = ExtResource("6_yiwd7")
 
 [node name="move" type="Node2D" parent="hero_state_machine"]
-script = ExtResource("7_duu28")
 
 [node name="end" type="Node2D" parent="hero_state_machine"]
-script = ExtResource("8_2fhne")
-
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
-[connection signal="hide_move_range" from="hero_state_machine/move" to="." method="_on_move_hide_move_range"]
-[connection signal="show_move_range" from="hero_state_machine/move" to="." method="_on_move_show_move_range"]
