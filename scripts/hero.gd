@@ -18,16 +18,15 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_mouse_entered() -> void:
-	Current.movable_array = []
-	animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 	Current.hero = self
-	if not Current.move_state_hero:
+	animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+	if hero_state_machine.state == hero_state_machine.get_node("idle"):
 		emit_signal("hero_cmd", "show_move_range")
 
 
 func _on_area_2d_mouse_exited() -> void:
 	animated_sprite_2d.material.set_shader_parameter("is_high_light", false)
-	if not Current.move_state_hero:
+	if hero_state_machine.state == hero_state_machine.get_node("idle"):
 		emit_signal("hero_cmd", "hide_move_range")
 
 
@@ -36,5 +35,9 @@ func _on_move_show_move_range() -> void:
 
 
 func _on_move_hide_move_range() -> void:
-	Current.movable_array = []
+	Current.movable_grid_index_array = []
 	emit_signal("hero_cmd", "hide_move_range")
+
+
+func _on_move_hero_move() -> void:
+	emit_signal("hero_cmd", "hero_move")

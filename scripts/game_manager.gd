@@ -1,9 +1,9 @@
 extends Node2D
 
 const hero_property = {
-	"soldier": {"move": 3, "init_vec": Vector2i(3, 3)},
-	"archer": {"move": 2, "init_vec": Vector2i(3, 2)},
-	"mage": {"move": 2, "init_vec": Vector2i(2, 2)}
+	"soldier": {"name": "soldier", "move": 3, "init_vec": Vector2i(3, 3)},
+	"archer": {"name": "archer", "move": 2, "init_vec": Vector2i(3, 2)},
+	"mage": {"name": "mage", "move": 2, "init_vec": Vector2i(2, 2)}
 	}
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
@@ -15,6 +15,7 @@ var grid_size = Vector2i(16, 16)
 var start_pos = Vector2i(16, 16)
 const grid_offset = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1)]
 var all_grid_dict: Dictionary
+var astar: AStarGrid2D
 
 func _ready() -> void:
 	# 生成网格
@@ -29,51 +30,72 @@ func _ready() -> void:
 	# 生成英雄
 	for hero_name in hero_property:
 		var hero = HERO.instantiate()
-		hero.hero_name = hero_name
-		hero.hero_grid_index = hero_property[hero_name].init_vec
-		hero.hero_move = hero_property[hero_name].move
-		hero.position = Vector2i(hero_property[hero_name].init_vec.x * grid_size.x + start_pos.x, hero_property[hero_name].init_vec.y * grid_size.y + start_pos.y)
-		Current.hero = hero
-		Current.hero_grid_index_dict[hero.hero_grid_index] = hero.name
-		#var callable = Callable(self, "_on_hero_cmd")
-		hero.connect("hero_cmd", _on_hero_cmd)
+		set_hero_properties(hero, hero_property[hero_name])
 		heros.add_child(hero)
+	# 配置Astar寻路
+	astar = AStarGrid2D.new()
+	astar.region = tile_map_layer.get_used_rect()
+	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	astar.update()
 	
+
+func set_hero_properties(hero: Hero, properties: Dictionary):
+	hero.hero_name = properties.name
+	hero.hero_grid_index = properties.init_vec
+	hero.hero_move = properties.move
+	hero.position = Vector2i(properties.init_vec.x * grid_size.x + start_pos.x, properties.init_vec.y * grid_size.y + start_pos.y)
+	Current.hero = hero
+	Current.all_hero_dict[hero.hero_name] = hero
+	hero.connect("hero_cmd", _on_hero_cmd)
 
 func _on_hero_cmd(cmd_name):
 	call(cmd_name)
 
 func show_move_range():
-	Current.movable_array.append(Current.hero.hero_grid_index)
-	var grid_index_array = [Current.hero.hero_grid_index]
+	var hero = Current.hero
+	Current.movable_grid_index_array.append(hero.hero_grid_index)
+	var grid_index_array = [hero.hero_grid_index]
 	var next_iter_grid_index_array: Array
 	# 根据移动力决定迭代次数
-	for i in range(Current.hero.hero_move):
+	for i in range(hero.hero_move):
 		# 从原点找四周可以移动的格子，四个格子作为下次迭代的原点继续迭代
 		for grid_index in grid_index_array:
 			for offset in grid_offset:
 				var next_grid_index = grid_index + offset
 				# 判断有英雄或者敌人占位
-				if Current.hero_grid_index_dict.has(next_grid_index) or Current.enemy_grid_index_dict.has(next_grid_index):
+				if Current.all_hero_grid_index_array.has(next_grid_index) or Current.enemy_grid_index_array.has(next_grid_index):
 					continue
 				# 判断是否已经加入可移动数组
-				if next_grid_index in Current.movable_array:
+				if next_grid_index in Current.movable_grid_index_array:
 					continue
 				# 可移动数组
-				Current.movable_array.append(next_grid_index)
+				Current.movable_grid_index_array.append(next_grid_index)
 				# 下次迭代用的数组
 				next_iter_grid_index_array.append(next_grid_index)
 		grid_index_array = next_iter_grid_index_array
 		next_iter_grid_index_array = []
 	# 显示可移动范围
 	for grid_index in all_grid_dict:
-		if grid_index in Current.movable_array:
+		if grid_index in Current.movable_grid_index_array:
 			all_grid_dict[grid_index].range.visible = true
 	
 	#print(Current.movable_array)
 
 func hide_move_range():
-	Current.movable_array = []
+	Current.movable_grid_index_array = []
 	for grid_index in all_grid_dict:
 		all_grid_dict[grid_index].range.visible = false
+	
+func hero_move():
+	if Current.id_path.size() > 0:
+		return
+	var hero = Current.hero
+	var target_grid_index = Current.grid_index
+	# 判断目标位置不在移动围内或有其他棋子，则不能移动
+	if not Current.movable_grid_index_array.has(target_grid_index) \
+	or Current.all_hero_grid_index_array.has(target_grid_index) \
+	or Current.enemy_grid_index_array.has(target_grid_index):
+		return
+	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
+	print(Current.id_path)
 	

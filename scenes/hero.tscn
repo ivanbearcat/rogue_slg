@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bgm08y6mwa1xl"]
+[gd_scene load_steps=30 format=3 uid="uid://bgm08y6mwa1xl"]
 
 [ext_resource type="Script" path="res://scripts/hero.gd" id="1_2jlbh"]
 [ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="1_ufarh"]
@@ -60,6 +60,10 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("3_ciahd")
 region = Rect2(96, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_cubco"]
+atlas = ExtResource("1_ufarh")
+region = Rect2(32, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ono3i"]
 atlas = ExtResource("1_ufarh")
 region = Rect2(0, 0, 32, 32)
@@ -86,6 +90,11 @@ region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hvq5q"]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"archer_end",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mykbe")
@@ -114,6 +123,11 @@ animations = [{
 "name": &"archer_move",
 "speed": 5.0
 }, {
+"frames": [],
+"loop": true,
+"name": &"mage_end",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ocea7")
@@ -140,6 +154,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"mage_move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cubco")
+}],
+"loop": true,
+"name": &"soldier_end",
 "speed": 5.0
 }, {
 "frames": [{
@@ -185,9 +207,7 @@ material = SubResource("ShaderMaterial_er1yf")
 position = Vector2(8, 9)
 scale = Vector2(0.77, 0.77)
 sprite_frames = SubResource("SpriteFrames_hvq5q")
-animation = &"soldier_move"
-autoplay = "archer_idle"
-frame_progress = 0.453164
+animation = &"soldier_end"
 
 [node name="hero_state_machine" type="Node2D" parent="."]
 script = ExtResource("5_fgiwk")
@@ -204,5 +224,6 @@ script = ExtResource("8_2fhne")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="hero_move" from="hero_state_machine/move" to="." method="_on_move_hero_move"]
 [connection signal="hide_move_range" from="hero_state_machine/move" to="." method="_on_move_hide_move_range"]
 [connection signal="show_move_range" from="hero_state_machine/move" to="." method="_on_move_show_move_range"]
