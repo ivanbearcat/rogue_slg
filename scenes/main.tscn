@@ -1,7 +1,12 @@
-[gd_scene load_steps=5 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=10 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
+[ext_resource type="PackedScene" uid="uid://cg3bpprphtel7" path="res://scenes/enemy_home.tscn" id="3_nw6hu"]
+[ext_resource type="PackedScene" uid="uid://do602nbje67kg" path="res://scenes/hero_home.tscn" id="4_xm60c"]
+[ext_resource type="PackedScene" uid="uid://bi3753khyy75" path="res://scenes/slime_small.tscn" id="5_lyn6t"]
+[ext_resource type="PackedScene" uid="uid://yhedl0orxggu" path="res://scenes/slime_middle.tscn" id="6_7j34k"]
+[ext_resource type="PackedScene" uid="uid://lcui48c1li02" path="res://scenes/slime_big.tscn" id="7_teyqg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
 texture = ExtResource("2_nsbfg")
@@ -819,6 +824,23 @@ tile_set = SubResource("TileSet_yxupo")
 [node name="heros" type="Node2D" parent="."]
 
 [node name="grids" type="Node2D" parent="."]
+
+[node name="buildings" type="Node2D" parent="."]
+
+[node name="enemy_home" parent="buildings" instance=ExtResource("3_nw6hu")]
+position = Vector2(38.5, 37.25)
+
+[node name="hero_home" parent="buildings" instance=ExtResource("4_xm60c")]
+position = Vector2(71.5, 68.75)
+
+[node name="slime_small" parent="buildings" instance=ExtResource("5_lyn6t")]
+position = Vector2(39, 37.5)
+
+[node name="slime_small2" parent="buildings" instance=ExtResource("6_7j34k")]
+position = Vector2(39, 49.25)
+
+[node name="slime_small3" parent="buildings" instance=ExtResource("7_teyqg")]
+position = Vector2(39.5, 62.25)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(71.5, 68.5)
