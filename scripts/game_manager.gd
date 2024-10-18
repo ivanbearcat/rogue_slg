@@ -9,8 +9,7 @@ const hero_property = {
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var grids: Node2D = $grids
 @onready var heros: Node2D = $heros
-const GRID = preload("res://scenes/grid.tscn")
-const HERO = preload("res://scenes/hero.tscn")
+
 var grid_size = Vector2i(16, 16)
 var start_pos = Vector2i(16, 16)
 const grid_offset = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1)]
@@ -22,23 +21,23 @@ func _ready() -> void:
 	var removable_map_vec =  Vector2i(7, 7)
 	for x in range(removable_map_vec.x):
 		for y in range(removable_map_vec.y):
-			var grid = GRID.instantiate()
+			var grid = SceneManager.create_scene("grid")
 			grid.grid_index = Vector2i(x, y)
 			grid.position = Vector2i(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
 			all_grid_dict[Vector2i(x, y)] = grid
 			grids.add_child(grid)
 	# 生成英雄
 	for hero_name in hero_property:
-		var hero = HERO.instantiate()
-		set_hero_properties(hero, hero_property[hero_name])
-		heros.add_child(hero)
+		var hero_instantiate = SceneManager.create_scene("hero")
+		set_hero_properties(hero_instantiate, hero_property[hero_name])
+		heros.add_child(hero_instantiate)
 	# 配置Astar寻路
 	astar = AStarGrid2D.new()
 	astar.region = tile_map_layer.get_used_rect()
 	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar.update()
 	
-
+# 设置英雄信息
 func set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_name = properties.name
 	hero.hero_grid_index = properties.init_vec
@@ -46,11 +45,13 @@ func set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.position = Vector2i(properties.init_vec.x * grid_size.x + start_pos.x, properties.init_vec.y * grid_size.y + start_pos.y)
 	Current.hero = hero
 	Current.all_hero_dict[hero.hero_name] = hero
-	hero.connect("hero_cmd", _on_hero_cmd)
+	hero.hero_cmd.connect(_on_hero_cmd)
 
+# 可变参数信号
 func _on_hero_cmd(cmd_name):
 	call(cmd_name)
 
+# 显示移动网格
 func show_move_range():
 	var hero = Current.hero
 	Current.movable_grid_index_array.append(hero.hero_grid_index)
@@ -81,11 +82,13 @@ func show_move_range():
 	
 	#print(Current.movable_array)
 
+# 隐藏移动网格
 func hide_move_range():
 	Current.movable_grid_index_array = []
 	for grid_index in all_grid_dict:
 		all_grid_dict[grid_index].range.visible = false
-	
+
+# 英雄移动路径	
 func hero_move():
 	if Current.id_path.size() > 0:
 		return

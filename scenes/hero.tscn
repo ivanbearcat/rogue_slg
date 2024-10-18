@@ -227,3 +227,4 @@ script = ExtResource("8_2fhne")
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
 [connection signal="hero_move" from="hero_state_machine/move" to="." method="_on_move_hero_move"]
 [connection signal="hide_move_range" from="hero_state_machine/move" to="." method="_on_move_hide_move_range"]
+[connection signal="show_move_range" from="hero_state_machine/move" to="." method="_on_move_show_move_range"]

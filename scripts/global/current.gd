@@ -1,6 +1,8 @@
 extends Node
-# 选中的英雄
+# 鼠标指向的英雄
 var hero: Hero
+# 鼠标点击英雄
+var clicked_hero: Hero
 # 选中的图块索引
 var grid_index: Vector2i
 # 包含所有英雄字典
@@ -17,11 +19,11 @@ var enemy_grid_index_array: Array
 # 前可移动的数组
 var movable_grid_index_array: Array
 # 当前是移动态英雄
-@onready var move_state_hero: Hero:
+var move_state_hero: Hero:
 	get:
 		for hero_name in all_hero_dict:
 			if all_hero_dict[hero_name].hero_state_machine.state == all_hero_dict[hero_name].hero_state_machine.get_node("move"):
 				return all_hero_dict[hero_name]
-		return
+		return null
 # Astar计算路径
 var id_path: Array

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_70vec"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3sbim"]
-size = Vector2(12, 12)
+size = Vector2(14, 14)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6omwm"]
 

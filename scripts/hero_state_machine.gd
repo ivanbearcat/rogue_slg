@@ -35,6 +35,6 @@ func is_selected_hero():
 	if Current.hero != null:
 		if Current.hero.hero_name == owner.hero_name:
 			return true
-	if Current.move_state_hero != null:
-		if Current.move_state_hero.hero_name == owner.hero_name:
+	if Current.clicked_hero != null:
+		if Current.clicked_hero.hero_name == owner.hero_name:
 			return true
