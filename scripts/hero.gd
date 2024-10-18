@@ -22,6 +22,7 @@ func _on_area_2d_mouse_entered() -> void:
 	animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 	if hero_state_machine.state == hero_state_machine.get_node("idle"):
 		if Current.clicked_hero == null:
+			await get_tree().create_timer(0.01).timeout
 			emit_signal("hero_cmd", "show_move_range")
 
 

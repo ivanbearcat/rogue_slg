@@ -10,6 +10,9 @@ func _ready():
 func unhandled_input(event: InputEvent):
 	pass
 
+func input(event: InputEvent):
+	pass
+
 func update(_delta: float) -> void:
 	pass
 

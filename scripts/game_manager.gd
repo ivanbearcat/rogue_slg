@@ -43,7 +43,7 @@ func set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_grid_index = properties.init_vec
 	hero.hero_move = properties.move
 	hero.position = Vector2i(properties.init_vec.x * grid_size.x + start_pos.x, properties.init_vec.y * grid_size.y + start_pos.y)
-	Current.hero = hero
+	#Current.hero = hero
 	Current.all_hero_dict[hero.hero_name] = hero
 	hero.hero_cmd.connect(_on_hero_cmd)
 
@@ -92,7 +92,7 @@ func hide_move_range():
 func hero_move():
 	if Current.id_path.size() > 0:
 		return
-	var hero = Current.hero
+	var hero = Current.clicked_hero
 	var target_grid_index = Current.grid_index
 	# 判断目标位置不在移动围内或有其他棋子，则不能移动
 	if not Current.movable_grid_index_array.has(target_grid_index) \

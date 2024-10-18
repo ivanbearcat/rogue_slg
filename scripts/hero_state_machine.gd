@@ -15,6 +15,10 @@ func _unhandled_input(event: InputEvent)->void:
 	if is_selected_hero():
 		state.unhandled_input(event)
 
+func _input(event: InputEvent)->void:
+	if is_selected_hero():
+		state.input(event)
+
 func _process(delta):
 	if is_selected_hero():
 		state.update(delta)
@@ -24,17 +28,19 @@ func _physics_process(delta):
 		state.physics_update(delta)
 
 func transition_to(target_state_name :String):
-	if is_selected_hero():
-		if not has_node(target_state_name):
-			return
-		state.exit()
-		state = get_node(target_state_name)
-		state.enter()
+	if not has_node(target_state_name):
+		return
+	state.exit()
+	state = get_node(target_state_name)
+	state.enter()
 	
 func is_selected_hero():
-	if Current.hero != null:
-		if Current.hero.hero_name == owner.hero_name:
-			return true
 	if Current.clicked_hero != null:
-		if Current.clicked_hero.hero_name == owner.hero_name:
-			return true
+		return Current.clicked_hero.hero_name == owner.hero_name
+	if Current.hero != null:
+		return Current.hero.hero_name == owner.hero_name
+	
+
+
+
+			

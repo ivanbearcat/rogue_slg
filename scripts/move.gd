@@ -9,9 +9,11 @@ func enter():
 	owner.animated_sprite_2d.play(owner.hero_name + "_move")
 	emit_signal("show_move_range")
 
-func unhandled_input(event: InputEvent) -> void:
+func input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
 		emit_signal("hero_move")
+		if not Current.id_path.has(Current.grid_index):
+			owner.hero_state_machine.transition_to("idle")
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed() == true:
 		Current.clicked_hero.hero_state_machine.transition_to("idle")
 	if event.is_action_pressed("esc"):
