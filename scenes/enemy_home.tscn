@@ -12,7 +12,6 @@ region = Rect2(96, 416, 16, 16)
 [node name="enemy_home" type="Node2D"]
 
 [node name="Area2D" type="Area2D" parent="."]
-scale = Vector2(0.77, 0.77)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(8, 8)
@@ -20,4 +19,5 @@ shape = SubResource("RectangleShape2D_1aagm")
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 position = Vector2(8, 8)
+scale = Vector2(0.77, 0.77)
 texture = SubResource("AtlasTexture_ripts")

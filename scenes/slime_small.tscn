@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://bi3753khyy75"]
+[gd_scene load_steps=21 format=3 uid="uid://bi3753khyy75"]
 
 [ext_resource type="Texture2D" uid="uid://tnl7iet676i7" path="res://images/Slime.png" id="1_1jsnh"]
+[ext_resource type="Script" path="res://scripts/slime_small.gd" id="1_huabk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
 size = Vector2(14, 14)
@@ -132,6 +133,7 @@ animations = [{
 
 [node name="slime_small" type="Node2D"]
 z_index = 1
+script = ExtResource("1_huabk")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -141,7 +143,7 @@ shape = SubResource("RectangleShape2D_ilaur")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
 material = SubResource("ShaderMaterial_iw5ek")
-position = Vector2(7, 8)
+position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_ycjvq")
 animation = &"idle"

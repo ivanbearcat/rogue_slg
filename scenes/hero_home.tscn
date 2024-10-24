@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="1_du66c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rr2y2"]
-size = Vector2(14, 14)
+size = Vector2(16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_blvxa"]
 atlas = ExtResource("1_du66c")
@@ -12,7 +12,6 @@ region = Rect2(128, 416, 16, 16)
 [node name="hero_home" type="Node2D"]
 
 [node name="Area2D" type="Area2D" parent="."]
-scale = Vector2(0.77, 0.77)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(8, 8)
@@ -20,4 +19,5 @@ shape = SubResource("RectangleShape2D_rr2y2")
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 position = Vector2(8, 8)
+scale = Vector2(0.77, 0.77)
 texture = SubResource("AtlasTexture_blvxa")

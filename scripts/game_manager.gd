@@ -9,16 +9,24 @@ const hero_property = {
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var grids: Node2D = $grids
 @onready var heros: Node2D = $heros
+@onready var buildings: Node2D = $buildings
+@onready var enemys: Node2D = $enemys
 
 var grid_size = Vector2i(16, 16)
 var start_pos = Vector2i(16, 16)
 const grid_offset = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1)]
 var all_grid_dict: Dictionary
 var astar: AStarGrid2D
+var removable_map_vec =  Vector2i(7, 7)
+#var current_trun: turn
 
-func _ready() -> void:
+#enum turn {
+	#hero_trun,
+	#enemy_trun
+#}
+
+func _ready() -> void:	
 	# 生成网格
-	var removable_map_vec =  Vector2i(7, 7)
 	for x in range(removable_map_vec.x):
 		for y in range(removable_map_vec.y):
 			var grid = SceneManager.create_scene("grid")
@@ -36,14 +44,83 @@ func _ready() -> void:
 	astar.region = tile_map_layer.get_used_rect()
 	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar.update()
-	
+	# 生成英雄的家
+	var hero_home_instantiate = SceneManager.create_scene("hero_home")
+	hero_home_instantiate.position = _grid_index_to_position(removable_map_vec / 2)
+	buildings.add_child(hero_home_instantiate)
+	# 随机生成敌人的家
+	var margin_grid: Array[Vector2i]
+	# 计算所有地图边缘地块
+	for x in range(removable_map_vec.x):
+		for y in range(removable_map_vec.y):
+			if x == 0 or x == range(removable_map_vec.x).max() or y == 0 or y == range(removable_map_vec.y).max():
+				margin_grid.append(Vector2i(x, y))
+	# 从边缘地块随机3块生成巢穴
+	while true:
+		if Current.enemy_home_array.size() >= 5: 
+			break
+		var grid_index = margin_grid.pick_random()
+		if Current.enemy_home_array == [] or not Current.enemy_home_array.has(grid_index):
+			Current.enemy_home_array.append(grid_index)	
+	for grid_index in Current.enemy_home_array:
+		var enemy_home_instantiate = SceneManager.create_scene("enemy_home")
+		enemy_home_instantiate.position = _grid_index_to_position(grid_index)
+		buildings.add_child(enemy_home_instantiate)
+
+func _process(delta: float) -> void:
+	if Current.turn == "enemy_turn":
+		_slime_ai(delta)
+
+func _grid_index_to_position(grid_index: Vector2i) -> Vector2i:
+	return Vector2i(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
+
+# 史莱姆生成、移动、进化
+func _slime_ai(delta: float):
+	# 生成
+	var slime_sum = 0
+	while true:
+		if slime_sum >= 3 or Current.available_enemy_home.size() <= 2: 
+			break
+		var grid_index = Current.enemy_home_array.pick_random()
+		if Current.enemy_grid_index_array == [] or not Current.enemy_grid_index_array.has(grid_index):
+			Current.enemy_grid_index_array.append(grid_index)
+			var enemy_instantiate = SceneManager.create_scene("slime_small")
+			enemy_instantiate.position = _grid_index_to_position(grid_index)
+			enemy_instantiate.enemy_grid_index = grid_index
+			Current.all_enemy_array.append(enemy_instantiate)
+			enemys.add_child(enemy_instantiate)
+			slime_sum += 1
+	# 移动
+	for enemy in Current.all_enemy_array:
+		var movable_grid_array: Array
+		for offset in grid_offset:
+			var next_grid_index = enemy.enemy_grid_index + offset
+			# 判断是否有英雄、史莱姆、巢穴占位
+			if Current.all_hero_grid_index_array.has(next_grid_index) or \
+			Current.enemy_grid_index_array.has(next_grid_index) or \
+			Current.enemy_home_array.has(next_grid_index) or \
+			next_grid_index.x < 0 or \
+			next_grid_index.x > removable_map_vec.x - 1 or \
+			next_grid_index.y < 0 or \
+			next_grid_index.y > removable_map_vec.y - 1:
+				continue
+			movable_grid_array.append(next_grid_index)
+		print(movable_grid_array)
+		# 从可移动数组中随机一个移动
+		if movable_grid_array.size() > 0:
+			var target_grid = movable_grid_array.pick_random()
+			var target_position: Vector2 = _grid_index_to_position(target_grid)
+			enemy.target_position = target_position
+			
+	Current.turn = "hero_turn"
+			
+			
 # 设置英雄信息
 func set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_name = properties.name
 	hero.hero_grid_index = properties.init_vec
 	hero.hero_move = properties.move
-	hero.position = Vector2i(properties.init_vec.x * grid_size.x + start_pos.x, properties.init_vec.y * grid_size.y + start_pos.y)
-	#Current.hero = hero
+	hero.position = _grid_index_to_position(properties.init_vec)
 	Current.all_hero_dict[hero.hero_name] = hero
 	hero.hero_cmd.connect(_on_hero_cmd)
 
@@ -51,7 +128,7 @@ func set_hero_properties(hero: Hero, properties: Dictionary):
 func _on_hero_cmd(cmd_name):
 	call(cmd_name)
 
-# 显示移动网格
+# 显示英雄移动网格
 func show_move_range():
 	var hero = Current.hero
 	Current.movable_grid_index_array.append(hero.hero_grid_index)
@@ -64,7 +141,9 @@ func show_move_range():
 			for offset in grid_offset:
 				var next_grid_index = grid_index + offset
 				# 判断有英雄或者敌人占位
-				if Current.all_hero_grid_index_array.has(next_grid_index) or Current.enemy_grid_index_array.has(next_grid_index):
+				if Current.all_hero_grid_index_array.has(next_grid_index) or \
+				Current.enemy_grid_index_array.has(next_grid_index) or \
+				Current.enemy_home_array.has(next_grid_index):
 					continue
 				# 判断是否已经加入可移动数组
 				if next_grid_index in Current.movable_grid_index_array:
@@ -80,9 +159,7 @@ func show_move_range():
 		if grid_index in Current.movable_grid_index_array:
 			all_grid_dict[grid_index].range.visible = true
 	
-	#print(Current.movable_array)
-
-# 隐藏移动网格
+# 隐藏英雄移动网格
 func hide_move_range():
 	Current.movable_grid_index_array = []
 	for grid_index in all_grid_dict:
@@ -101,4 +178,7 @@ func hero_move():
 		return
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	print(Current.id_path)
-	
+
+
+func _on_button_pressed() -> void:
+	Current.turn = "enemy_turn"

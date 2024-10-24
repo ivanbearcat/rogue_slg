@@ -8,6 +8,7 @@ var grid_index: Vector2i
 func _on_area_2d_mouse_entered() -> void:
 	cursor.show()
 	Current.grid_index = grid_index
+	print(grid_index)
 
 
 func _on_area_2d_mouse_exited() -> void:
