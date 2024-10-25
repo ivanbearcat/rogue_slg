@@ -36,13 +36,20 @@ var move_state_hero: Hero:
 var id_path: Array
 # 史莱姆巢穴的数组
 var enemy_home_array: Array
+# 史莱姆巢穴图块位置的数组
+var enemy_home_grid_index_array: Array:
+	get:
+		var grid_index_array: Array
+		for enemy_home in enemy_home_array:
+			grid_index_array.append(enemy_home.enemy_home_grid_index)
+		return grid_index_array
 # 敌我回合
-var turn: String
+var turn: String = "hero_turn"
 # 可生成史莱姆的巢穴
 var available_enemy_home: Array:
 	get:
 		var available_array: Array
-		for grid_index in enemy_home_array:
+		for grid_index in enemy_home_grid_index_array:
 			if not enemy_grid_index_array.has(grid_index):
 				available_array.append(grid_index)
 		return available_array
