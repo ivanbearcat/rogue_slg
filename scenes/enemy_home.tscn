@@ -25,7 +25,7 @@ position = Vector2(8, 8)
 scale = Vector2(0.77, 0.77)
 texture = SubResource("AtlasTexture_ripts")
 
-[node name="skull" type="Sprite2D" parent="Area2D"]
+[node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false
 position = Vector2(8, 6)
 scale = Vector2(0.3, 0.3)

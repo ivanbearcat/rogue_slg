@@ -19,6 +19,8 @@ var all_grid_dict: Dictionary
 var astar: AStarGrid2D
 var removable_map_vec =  Vector2i(7, 7)
 var slime_create_array: Array
+var grow_up_slime_array: Array
+var instantiate_slime_array: Array
 
 
 func _ready() -> void:	
@@ -67,14 +69,19 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Current.turn == "hero_turn":
 		_slime_create_ai()
+		#tile_map_layer.set_cell(Vector2i(5,5), 0, Vector2i(17,1), 0)
 	if Current.turn == "enemy_turn":
 		# 生成并移动史莱姆
 		for enemy_home in Current.enemy_home_array:
-			enemy_home.skull.visible = false
+			enemy_home.warning.visible = false
 		for enemy in slime_create_array:
 			enemys.add_child(enemy)
 		_slime_move_ai()
 		slime_create_array.clear()
+		# 史莱姆成长
+		for slime in grow_up_slime_array:
+			slime.warning.visible = false
+		grow_up_slime_array.clear()
 		Current.turn = "hero_turn"
 	
 
@@ -98,7 +105,14 @@ func _slime_create_ai():
 			enemy_instantiate.enemy_grid_index = enemy_home.enemy_home_grid_index
 			Current.all_enemy_array.append(enemy_instantiate)
 			slime_create_array.append(enemy_instantiate)
-			enemy_home.skull.visible = true
+			enemy_home.warning.visible = true
+	instantiate_slime_array = enemys.get_children()
+	if instantiate_slime_array.size() > 0:
+		grow_up_slime_array.append(instantiate_slime_array.pick_random())
+		if grow_up_slime_array.size() <= 1:
+			for slime in grow_up_slime_array:
+				slime.warning.visible = true
+		
 # 史莱姆移动
 func _slime_move_ai():
 	for enemy in Current.all_enemy_array:
