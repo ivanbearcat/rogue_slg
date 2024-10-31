@@ -15,7 +15,9 @@ var all_hero_dict: Dictionary
 			grid_index_array.append(all_hero_dict[hero_name].hero_grid_index)
 		return grid_index_array
 # 包含所有史莱姆的字典
-var all_enemy_array: Array
+var all_enemy_array: Array:
+	get:
+		return $"/root/game_manager/enemys".get_children()
 # 包含所有敌人位置的数组
 @onready var enemy_grid_index_array: Array:
 	get:
@@ -40,8 +42,9 @@ var enemy_home_array: Array
 var enemy_home_grid_index_array: Array:
 	get:
 		var grid_index_array: Array
-		for enemy_home in enemy_home_array:
-			grid_index_array.append(enemy_home.enemy_home_grid_index)
+		if enemy_home_array.size() > 0:
+			for enemy_home in enemy_home_array:
+				grid_index_array.append(enemy_home.enemy_home_grid_index)
 		return grid_index_array
 # 敌我回合
 var turn: String = "hero_turn"
@@ -49,9 +52,16 @@ var turn: String = "hero_turn"
 var available_enemy_home: Array:
 	get:
 		var available_array: Array
-		for grid_index in enemy_home_grid_index_array:
-			if not enemy_grid_index_array.has(grid_index):
-				available_array.append(grid_index)
+		for enemy_home in enemy_home_array:
+			if not enemy_grid_index_array.has(enemy_home.enemy_home_grid_index):
+				available_array.append(enemy_home)
 		return available_array
+# 正在移动的史莱姆
+var has_move_slime: bool:
+	get:
+		for slime in all_enemy_array:
+			if slime.target_position != Vector2.ZERO:
+				return true
+		return false
 
 	

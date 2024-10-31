@@ -11,6 +11,7 @@ const hero_property = {
 @onready var heros: Node2D = $heros
 @onready var buildings: Node2D = $buildings
 @onready var enemys: Node2D = $enemys
+@onready var turn_button: Button = $turn_button
 
 var grid_size = Vector2i(16, 16)
 var start_pos = Vector2i(16, 16)
@@ -20,7 +21,6 @@ var astar: AStarGrid2D
 var removable_map_vec =  Vector2i(7, 7)
 var slime_create_array: Array
 var grow_up_slime_array: Array
-var instantiate_slime_array: Array
 
 
 func _ready() -> void:	
@@ -64,25 +64,13 @@ func _ready() -> void:
 			enemy_home_instantiate.enemy_home_grid_index = grid_index
 			Current.enemy_home_array.append(enemy_home_instantiate)	
 			buildings.add_child(enemy_home_instantiate)
+	# 预生成史莱姆和警告信息
+	_slime_create_ai()
 
 
 func _process(delta: float) -> void:
-	if Current.turn == "hero_turn":
-		_slime_create_ai()
-		#tile_map_layer.set_cell(Vector2i(5,5), 0, Vector2i(17,1), 0)
-	if Current.turn == "enemy_turn":
-		# 生成并移动史莱姆
-		for enemy_home in Current.enemy_home_array:
-			enemy_home.warning.visible = false
-		for enemy in slime_create_array:
-			enemys.add_child(enemy)
-		_slime_move_ai()
-		slime_create_array.clear()
-		# 史莱姆成长
-		for slime in grow_up_slime_array:
-			slime.warning.visible = false
-		grow_up_slime_array.clear()
-		Current.turn = "hero_turn"
+	pass
+			
 	
 
 func _grid_index_to_position(grid_index: Vector2i) -> Vector2i:
@@ -94,22 +82,26 @@ func _position_to_grid_index(position: Vector2i) -> Vector2i:
 # 史莱姆生成
 func _slime_create_ai():
 	while true:
+		# 限制史莱姆创建数量，限制无史莱姆占位的巢穴
 		if slime_create_array.size() >= 3 or Current.available_enemy_home.size() <= 2: 
 			break
-		var enemy_home = Current.enemy_home_array.pick_random()
-		if Current.enemy_grid_index_array == [] or \
-		not Current.enemy_grid_index_array.has(enemy_home.enemy_home_grid_index):
-			Current.enemy_grid_index_array.append(enemy_home.enemy_home_grid_index)
-			var enemy_instantiate = SceneManager.create_scene("slime_small")
-			enemy_instantiate.position = _grid_index_to_position(enemy_home.enemy_home_grid_index)
-			enemy_instantiate.enemy_grid_index = enemy_home.enemy_home_grid_index
-			Current.all_enemy_array.append(enemy_instantiate)
-			slime_create_array.append(enemy_instantiate)
-			enemy_home.warning.visible = true
-	instantiate_slime_array = enemys.get_children()
-	if instantiate_slime_array.size() > 0:
-		grow_up_slime_array.append(instantiate_slime_array.pick_random())
-		if grow_up_slime_array.size() <= 1:
+		# 生成史莱姆的巢穴判断重复
+		var is_unique := true
+		var enemy_home = Current.available_enemy_home.pick_random()
+		for slime in slime_create_array:
+			if slime.enemy_grid_index == enemy_home.enemy_home_grid_index:
+				is_unique = false
+		if is_unique == false:
+			continue
+		# 根据选择的巢穴生成史莱姆
+		var enemy_instantiate = SceneManager.create_scene("slime_small")
+		enemy_instantiate.position = _grid_index_to_position(enemy_home.enemy_home_grid_index)
+		enemy_instantiate.enemy_grid_index = enemy_home.enemy_home_grid_index
+		slime_create_array.append(enemy_instantiate)
+		enemy_home.warning.visible = true
+	if Current.all_enemy_array.size() > 0:
+		if grow_up_slime_array.size() < 1:
+			grow_up_slime_array.append(Current.all_enemy_array.pick_random())
 			for slime in grow_up_slime_array:
 				slime.warning.visible = true
 		
@@ -135,6 +127,29 @@ func _slime_move_ai():
 			var target_position: Vector2 = _grid_index_to_position(target_grid)
 			enemy.target_position = target_position
 			enemy.enemy_grid_index = target_grid
+
+# 史莱姆成长
+func _slime_grow_up_ai():
+	var slime_type
+	#var slime_target_position
+	if grow_up_slime_array.size() > 0:
+		for slime in grow_up_slime_array:
+			var slime_grid_index = slime.enemy_grid_index
+			if slime.enemy_type == 1:
+				slime_type = "slime_middle"
+				slime.queue_free()
+				await get_tree().create_timer(0.1).timeout
+			elif slime.enemy_type == 2:
+				slime_type = "slime_big"
+				slime.queue_free()
+				await get_tree().create_timer(0.1).timeout
+			elif slime.enemy_type == 3:
+				tile_map_layer.set_cell(slime_grid_index + start_pos, 0, Vector2i(17,1), 0)
+			if slime_type != null:
+				var slime_instantiate = SceneManager.create_scene(slime_type)
+				slime_instantiate.position = _grid_index_to_position(slime_grid_index)
+				slime_instantiate.enemy_grid_index = slime_grid_index
+				enemys.add_child(slime_instantiate)
 			
 			
 # 设置英雄信息
@@ -204,3 +219,23 @@ func hero_move():
 
 func _on_button_pressed() -> void:
 	Current.turn = "enemy_turn"
+	turn_button.visible = false
+	# 生成并移动史莱姆
+	for enemy_home in Current.enemy_home_array:
+		enemy_home.warning.visible = false
+	for enemy in slime_create_array:
+		enemys.add_child(enemy)
+	_slime_move_ai()
+	while Current.has_move_slime:
+		await get_tree().create_timer(0.1).timeout
+	slime_create_array.clear()
+	# 史莱姆成长
+	_slime_grow_up_ai()
+	for slime in grow_up_slime_array:
+		slime.warning.visible = false
+	grow_up_slime_array.clear()
+	await get_tree().create_timer(0.1).timeout
+	# 史莱姆预生成和告警信息
+	_slime_create_ai()
+	Current.turn = "hero_turn"
+	turn_button.visible = true
