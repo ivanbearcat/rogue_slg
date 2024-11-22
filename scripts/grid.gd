@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var range: Sprite2D = $Area2D/range
 @onready var cursor: Sprite2D = $Area2D/cursor
+@onready var warning: Sprite2D = $Area2D/warning
+
 var grid_index: Vector2i
 
 

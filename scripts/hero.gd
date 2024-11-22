@@ -1,7 +1,7 @@
 extends Node2D
 class_name Hero
 
-signal hero_cmd()
+signal hero_cmd
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 @onready var hero_state_machine: HeroStateMachine = $hero_state_machine

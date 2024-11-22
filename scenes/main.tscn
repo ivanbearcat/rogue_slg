@@ -839,4 +839,11 @@ offset_bottom = 145.0
 text = "回合结束"
 script = ExtResource("6_8acfx")
 
+[node name="Label" type="Label" parent="."]
+offset_left = 142.0
+offset_top = 84.0
+offset_right = 211.0
+offset_bottom = 107.0
+text = "回合: 0"
+
 [connection signal="pressed" from="turn_button" to="." method="_on_button_pressed"]
