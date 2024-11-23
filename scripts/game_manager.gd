@@ -19,7 +19,7 @@ var start_pos = Vector2i(16, 16)
 const grid_offset = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1)]
 var all_grid_dict: Dictionary
 var astar: AStarGrid2D
-var removable_map_vec =  Vector2i(7, 7)
+var _removable_map_vec =  Vector2i(7, 7)
 var _slime_create_array: Array
 var _transformable_slime_array: Array
 var round := 0
@@ -29,8 +29,8 @@ var _margin_grid: Array[Vector2i]
 
 func _ready() -> void:	
 	## 生成网格
-	for x in range(removable_map_vec.x):
-		for y in range(removable_map_vec.y):
+	for x in range(_removable_map_vec.x):
+		for y in range(_removable_map_vec.y):
 			var grid = SceneManager.create_scene("grid")
 			grid.grid_index = Vector2i(x, y)
 			grid.position = Vector2i(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
@@ -50,10 +50,12 @@ func _ready() -> void:
 	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	astar.update()
 	## 计算所有地图边缘地块
-	for x in range(removable_map_vec.x):
-		for y in range(removable_map_vec.y):
-			if x == 0 or x == range(removable_map_vec.x).max() or y == 0 or y == range(removable_map_vec.y).max():
+	for x in range(_removable_map_vec.x):
+		for y in range(_removable_map_vec.y):
+			if x == 0 or x == range(_removable_map_vec.x).max() or y == 0 or y == range(_removable_map_vec.y).max():
 				_margin_grid.append(Vector2i(x, y))
+	## 预生成史莱姆和警告信息
+	_slime_create_ai()
 	### 从边缘地块随机3块生成巢穴
 	#while true:
 		#if Current.enemy_home_array.size() >= 5: 
@@ -65,8 +67,7 @@ func _ready() -> void:
 			#enemy_home_instantiate.enemy_home_grid_index = grid_index
 			#Current.enemy_home_array.append(enemy_home_instantiate)	
 			#buildings.add_child(enemy_home_instantiate)
-	## 预生成史莱姆和警告信息
-	_slime_create_ai()
+	
 
 
 func _process(delta: float) -> void:
@@ -86,7 +87,7 @@ func _slime_create_ai():
 	var create_slime_grid_index_array: Array[Vector2i]
 	var slime_num: int
 	for grid_index in _margin_grid:
-		if ! grid_index in Current.enemy_grid_index_array:
+		if ! grid_index in Current.all_enemy_grid_index_array:
 			available_grid_array.append(grid_index)
 	if available_grid_array.size() > 0:
 		slime_num = clamp(available_grid_array.size(), 1, 3)
@@ -138,12 +139,12 @@ func _slime_move_ai():
 			var next_grid_index = enemy.enemy_grid_index + offset
 			## 判断是否有英雄、史莱姆、巢穴占位者超出边界
 			if Current.all_hero_grid_index_array.has(next_grid_index) or \
-			Current.enemy_grid_index_array.has(next_grid_index) or \
+			Current.all_enemy_grid_index_array.has(next_grid_index) or \
 			Current.enemy_home_grid_index_array.has(next_grid_index) or \
 			next_grid_index.x < 0 or \
-			next_grid_index.x > removable_map_vec.x - 1 or \
+			next_grid_index.x > _removable_map_vec.x - 1 or \
 			next_grid_index.y < 0 or \
-			next_grid_index.y > removable_map_vec.y - 1:
+			next_grid_index.y > _removable_map_vec.y - 1:
 				continue
 			movable_grid_array.append(next_grid_index)
 		## 从可移动数组中随机一个移动
@@ -229,7 +230,7 @@ func show_move_range():
 				var next_grid_index = grid_index + offset
 				## 判断有英雄或者敌人占位
 				if Current.all_hero_grid_index_array.has(next_grid_index) or \
-				Current.enemy_grid_index_array.has(next_grid_index) or \
+				Current.all_enemy_grid_index_array.has(next_grid_index) or \
 				Current.enemy_home_grid_index_array.has(next_grid_index):
 					continue
 				## 判断是否已经加入可移动数组
@@ -261,7 +262,7 @@ func hero_move():
 	## 判断目标位置不在移动围内或有其他棋子，则不能移动
 	if not Current.movable_grid_index_array.has(target_grid_index) \
 	or Current.all_hero_grid_index_array.has(target_grid_index) \
-	or Current.enemy_grid_index_array.has(target_grid_index):
+	or Current.all_enemy_grid_index_array.has(target_grid_index):
 		return
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	print(Current.id_path)
@@ -293,3 +294,11 @@ func _on_button_pressed() -> void:
 	turn_button.visible = true
 	round += 1
 	label.text = "回合: " + str(round)
+	## 重置英雄状态
+	for hero_name in Current.all_hero_dict:
+		Current.all_hero_dict[hero_name].hero_state_machine.transition_to("idle")
+	## 重置不可移动地块
+	for grid in grids.get_children():
+		astar.set_point_solid(grid.grid_index, false)
+	for grid_index in Current.all_enemy_grid_index_array:
+		astar.set_point_solid(grid_index, true)

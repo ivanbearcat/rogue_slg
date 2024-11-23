@@ -19,7 +19,7 @@ var all_enemy_array: Array:
 	get:
 		return $"/root/game_manager/enemys".get_children()
 # 包含所有敌人位置的数组
-@onready var enemy_grid_index_array: Array:
+@onready var all_enemy_grid_index_array: Array:
 	get:
 		var grid_index_array: Array
 		for enemy in all_enemy_array:
@@ -53,7 +53,7 @@ var available_enemy_home: Array:
 	get:
 		var available_array: Array
 		for enemy_home in enemy_home_array:
-			if not enemy_grid_index_array.has(enemy_home.enemy_home_grid_index):
+			if not all_enemy_grid_index_array.has(enemy_home.enemy_home_grid_index):
 				available_array.append(enemy_home)
 		return available_array
 # 正在移动的史莱姆
