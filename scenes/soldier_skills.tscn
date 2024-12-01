@@ -1,0 +1,262 @@
+[gd_scene load_steps=19 format=3 uid="uid://bpjrapjnm3rqj"]
+
+[ext_resource type="Shader" path="res://shaders/high_light.gdshader" id="1_78qh4"]
+[ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="1_vlmwk"]
+[ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="2_wi8mv"]
+[ext_resource type="Script" path="res://scripts/ui/skill1.gd" id="3_71tpo"]
+[ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="4_rqeci"]
+[ext_resource type="Script" path="res://scripts/ui/skill2.gd" id="6_ojpdg"]
+[ext_resource type="Script" path="res://scripts/ui/skill3.gd" id="7_3khon"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mokjr"]
+shader = ExtResource("1_78qh4")
+shader_parameter/width = 0.77
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_high_light = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0onc4"]
+atlas = ExtResource("1_vlmwk")
+region = Rect2(113, 113, 30, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_buw5v"]
+atlas = ExtResource("2_wi8mv")
+region = Rect2(224, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0x8es"]
+atlas = ExtResource("1_vlmwk")
+region = Rect2(165, 191, 3, 6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ag2gv"]
+shader = ExtResource("1_78qh4")
+shader_parameter/width = 0.77
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_high_light = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0ofj"]
+atlas = ExtResource("2_wi8mv")
+region = Rect2(224, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qi8s"]
+atlas = ExtResource("2_wi8mv")
+region = Rect2(224, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nj68k"]
+atlas = ExtResource("1_vlmwk")
+region = Rect2(170, 191, 3, 6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_epqtw"]
+shader = ExtResource("1_78qh4")
+shader_parameter/width = 0.77
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/is_high_light = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2s2q"]
+atlas = ExtResource("2_wi8mv")
+region = Rect2(256, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wqdr"]
+atlas = ExtResource("1_vlmwk")
+region = Rect2(175, 191, 3, 6)
+
+[node name="MarginContainer" type="MarginContainer"]
+offset_right = 102.0
+offset_bottom = 34.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -5
+layout_mode = 2
+color = Color(0.1875, 0.1875, 0.1875, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+script = ExtResource("3_71tpo")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/MarginContainer"]
+material = SubResource("ShaderMaterial_mokjr")
+layout_mode = 2
+mouse_filter = 0
+texture = SubResource("AtlasTexture_0onc4")
+region_rect = Rect2(0, 0, 30, 14)
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_buw5v")
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/MarginContainer/TextureRect"]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 1.0
+offset_right = 31.0
+offset_bottom = 8.0
+color = Color(0.77, 0.768075, 0.7623, 1)
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer/TextureRect/ColorRect"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 5.0
+offset_bottom = 6.0
+texture = SubResource("AtlasTexture_0x8es")
+expand_mode = 1
+
+[node name="mask1" type="ColorRect" parent="HBoxContainer/MarginContainer/TextureRect"]
+visible = false
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(1, 1, 1, 0.27451)
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer/TextureRect/mask1"]
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 46.0
+scale = Vector2(0.7, 0.7)
+text = "按ESC或
+右键取消
+"
+label_settings = ExtResource("4_rqeci")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+script = ExtResource("6_ojpdg")
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="HBoxContainer/MarginContainer2"]
+material = SubResource("ShaderMaterial_ag2gv")
+layout_mode = 2
+texture = SubResource("AtlasTexture_0onc4")
+region_rect = Rect2(0, 0, 30, 14)
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer/MarginContainer2"]
+z_index = 1
+layout_mode = 2
+texture = SubResource("AtlasTexture_w0ofj")
+
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer/MarginContainer2/TextureRect2"]
+modulate = Color(1, 1, 1, 0.490196)
+show_behind_parent = true
+layout_mode = 2
+offset_left = 1.0
+offset_right = 33.0
+offset_bottom = 32.0
+texture = SubResource("AtlasTexture_2qi8s")
+
+[node name="ColorRect2" type="ColorRect" parent="HBoxContainer/MarginContainer2/TextureRect2"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 1.0
+offset_right = 31.0
+offset_bottom = 8.0
+color = Color(0.77, 0.768075, 0.7623, 1)
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer2/TextureRect2/ColorRect2"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 5.0
+offset_bottom = 6.0
+texture = SubResource("AtlasTexture_nj68k")
+expand_mode = 1
+
+[node name="mask2" type="ColorRect" parent="HBoxContainer/MarginContainer2/TextureRect2"]
+visible = false
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(1, 1, 1, 0.27451)
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/TextureRect2/mask2"]
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 46.0
+scale = Vector2(0.7, 0.7)
+text = "按ESC或
+右键取消
+"
+label_settings = ExtResource("4_rqeci")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+script = ExtResource("7_3khon")
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="HBoxContainer/MarginContainer3"]
+material = SubResource("ShaderMaterial_epqtw")
+layout_mode = 2
+texture = SubResource("AtlasTexture_0onc4")
+region_rect = Rect2(0, 0, 30, 14)
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer/MarginContainer3"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_a2s2q")
+
+[node name="ColorRect3" type="ColorRect" parent="HBoxContainer/MarginContainer3/TextureRect3"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 1.0
+offset_right = 31.0
+offset_bottom = 8.0
+color = Color(0.77, 0.768075, 0.7623, 1)
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer3/TextureRect3/ColorRect3"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 5.0
+offset_bottom = 6.0
+texture = SubResource("AtlasTexture_2wqdr")
+expand_mode = 1
+
+[node name="mask3" type="ColorRect" parent="HBoxContainer/MarginContainer3/TextureRect3"]
+visible = false
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(1, 1, 1, 0.27451)
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer3/TextureRect3/mask3"]
+layout_mode = 0
+offset_right = 46.0
+offset_bottom = 46.0
+scale = Vector2(0.7, 0.7)
+text = "按ESC或
+右键取消
+"
+label_settings = ExtResource("4_rqeci")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer" to="HBoxContainer/MarginContainer" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer" to="HBoxContainer/MarginContainer" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer2" to="HBoxContainer/MarginContainer2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer2" to="HBoxContainer/MarginContainer2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/MarginContainer3" to="HBoxContainer/MarginContainer3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/MarginContainer3" to="HBoxContainer/MarginContainer3" method="_on_mouse_exited"]

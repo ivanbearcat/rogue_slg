@@ -15,5 +15,5 @@ func change_scene(view_name: StringName, msg:Dictionary = {}) -> Node:
 
 func create_scene(scene_name: StringName) -> Node:
 	var scene_path: String = "res://scenes/" + scene_name + ".tscn"
-	assert(ResourceLoader.exists(scene_path), "无法加载场景文件")
+	assert(ResourceLoader.exists(scene_path), "无法加载场景文件: " + scene_path)
 	return load(scene_path).instantiate()

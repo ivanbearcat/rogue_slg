@@ -9,4 +9,3 @@ void fragment() {
 		COLOR = new_color;
 	}
 }
-

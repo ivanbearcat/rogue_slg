@@ -11,8 +11,10 @@ const hero_property = {
 @onready var heros: Node2D = $heros
 @onready var buildings: Node2D = $buildings
 @onready var enemys: Node2D = $enemys
-@onready var turn_button: Button = $turn_button
-@onready var label: Label = $Label
+@onready var turn_button: Button = %turn_button
+@onready var turn_label: Label = %turn_label
+@onready var left_side_ui: MarginContainer = $UI/left_side_ui
+
 
 var grid_size = Vector2i(16, 16)
 var start_pos = Vector2i(16, 16)
@@ -203,6 +205,8 @@ func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.position = _grid_index_to_position(properties.init_vec)
 	Current.all_hero_dict[hero.hero_name] = hero
 	hero.hero_cmd.connect(_on_hero_cmd)
+	var hero_skills_ui = SceneManager.create_scene(hero.hero_name + "_skills")
+	left_side_ui.add_child(hero_skills_ui)
 
 ## 可变参数信号
 func _on_hero_cmd(cmd_name):
@@ -270,7 +274,7 @@ func hero_move():
 ## 回合结束
 func _on_button_pressed() -> void:
 	Current.turn = "enemy_turn"
-	turn_button.visible = false
+	turn_button.disabled = true
 	## 生成并移动史莱姆
 	var grids_array = grids.get_children()
 	for grid in grids_array:
@@ -291,9 +295,9 @@ func _on_button_pressed() -> void:
 	## 史莱姆预生成和告警信息
 	_slime_create_ai()
 	Current.turn = "hero_turn"
-	turn_button.visible = true
+	turn_button.disabled = false
 	round += 1
-	label.text = "回合: " + str(round)
+	turn_label.text = "回合: " + str(round)
 	## 重置英雄状态
 	for hero_name in Current.all_hero_dict:
 		Current.all_hero_dict[hero_name].hero_state_machine.transition_to("idle")
