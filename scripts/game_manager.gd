@@ -15,18 +15,29 @@ const hero_property = {
 @onready var turn_label: Label = %turn_label
 @onready var left_side_ui: MarginContainer = $UI/left_side_ui
 
-
+## 格子像素大小
 var grid_size = Vector2i(16, 16)
+## 起始格子位置
 var start_pos = Vector2i(16, 16)
+## 格子位置上下左右偏移
 const grid_offset = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1)]
+## 所有格子字典
 var all_grid_dict: Dictionary
+## astar寻路
 var astar: AStarGrid2D
+## 最大可移动的地图块
 var _removable_map_vec =  Vector2i(7, 7)
+## 史莱姆创建列表
 var _slime_create_array: Array
+## 史莱姆变化列表
 var _transformable_slime_array: Array
+## 回合计数
 var round := 0
+## 带有骰子点数的动画图片索引
 var dice_point: Array = [0, 2, 4, 6, 8, 10]
+## 史莱姆场景列表
 var slime_scene_array := ['slime_small', 'slime_small_red', 'slime_small_yellow', 'slime_small_blue']
+## 边缘格子列表
 var _margin_grid: Array[Vector2i]
 
 func _ready() -> void:	
@@ -69,8 +80,6 @@ func _ready() -> void:
 			#enemy_home_instantiate.enemy_home_grid_index = grid_index
 			#Current.enemy_home_array.append(enemy_home_instantiate)	
 			#buildings.add_child(enemy_home_instantiate)
-	
-
 
 func _process(delta: float) -> void:
 	pass
@@ -306,3 +315,7 @@ func _on_button_pressed() -> void:
 		astar.set_point_solid(grid.grid_index, false)
 	for grid_index in Current.all_enemy_grid_index_array:
 		astar.set_point_solid(grid_index, true)
+
+
+func _on_area_2d_mouse_entered() -> void:
+	Current.grid_index = Vector2.ZERO

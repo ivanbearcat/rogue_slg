@@ -10,13 +10,9 @@ var grid_index: Vector2i
 func _on_area_2d_mouse_entered() -> void:
 	cursor.show()
 	Current.grid_index = grid_index
-	#print(grid_index)
-
+	print(Current.grid_index)
 
 func _on_area_2d_mouse_exited() -> void:
 	cursor.hide()
-	Current.grid_index = Vector2i.ZERO
-
 	
-func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	pass
+	

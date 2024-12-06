@@ -7,7 +7,12 @@ func enter():
 
 func unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
-		if Current.all_hero_grid_index_array.has(Current.grid_index):
+		var grid_index = Current.grid_index
+		print(Current.all_hero_grid_index_array.has(grid_index))
+		print(Current.all_hero_grid_index_array)
+		print(grid_index)
+		print("-==")
+		if Current.all_hero_grid_index_array.has(grid_index):
 			hero_state_machine.transition_to("move")
 
 func exit():
