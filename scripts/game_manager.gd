@@ -1,9 +1,9 @@
 extends Node2D
 
 const hero_property = {
-	"soldier": {"name": "soldier", "move": 3, "init_vec": Vector2i(3, 3)},
-	"archer": {"name": "archer", "move": 2, "init_vec": Vector2i(3, 2)},
-	"mage": {"name": "mage", "move": 2, "init_vec": Vector2i(2, 2)}
+	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2i(3, 3)},
+	"archer": {"name": "archer", "movement": 2, "init_vec": Vector2i(3, 2)},
+	"mage": {"name": "mage", "movement": 2, "init_vec": Vector2i(2, 2)}
 	}
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
@@ -209,10 +209,10 @@ func _slime_grow_up_ai():
 ## 设置英雄信息
 func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_name = properties.name
-	hero.hero_grid_index = properties.init_vec
-	hero.hero_move = properties.move
+	#hero.hero_grid_index = properties.init_vec
+	hero.hero_movement = properties.movement
 	hero.position = _grid_index_to_position(properties.init_vec)
-	Current.all_hero_dict[hero.hero_name] = hero
+	#Current.all_hero_dict[hero.hero_name] = hero
 	hero.hero_cmd.connect(_on_hero_cmd)
 	var hero_skills_ui = SceneManager.create_scene(hero.hero_name + "_skills")
 	left_side_ui.add_child(hero_skills_ui)
@@ -236,7 +236,7 @@ func show_move_range():
 	var grid_index_array = [hero.hero_grid_index]
 	var next_iter_grid_index_array: Array
 	## 根据移动力决定迭代次数
-	for i in range(hero.hero_move):
+	for i in range(hero.hero_movement):
 		## 从原点找四周可以移动的格子，四个格子作为下次迭代的原点继续迭代
 		for grid_index in grid_index_array:
 			for offset in grid_offset:
@@ -308,13 +308,15 @@ func _on_button_pressed() -> void:
 	round += 1
 	turn_label.text = "回合: " + str(round)
 	## 重置英雄状态
-	for hero_name in Current.all_hero_dict:
-		Current.all_hero_dict[hero_name].hero_state_machine.transition_to("idle")
-	## 重置不可移动地块
+	for hero in Current.all_hero_array:
+		hero.hero_state_machine.transition_to("idle")
+	## 重新计算不可移动地块
 	for grid in grids.get_children():
 		astar.set_point_solid(grid.grid_index, false)
 	for grid_index in Current.all_enemy_grid_index_array:
 		astar.set_point_solid(grid_index, true)
+	## 重置已移动标记
+	Current.is_moved = false
 
 
 func _on_area_2d_mouse_entered() -> void:

@@ -7,8 +7,13 @@ signal hero_cmd
 @onready var hero_state_machine: HeroStateMachine = $hero_state_machine
 
 var hero_name: String
-var hero_grid_index: Vector2i
-var hero_move: int
+var hero_grid_index: Vector2i:
+	get:
+		for hero in Current.all_hero_array:
+			if hero_name == hero.hero_name:
+				return get_node("/root/game_manager")._position_to_grid_index(position)
+		return Vector2i.ZERO
+var hero_movement: int
 
 func _ready() -> void:
 	animated_sprite_2d.play(hero_name + "_idle")

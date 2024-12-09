@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bx67eybmq4vsu"]
+[gd_scene load_steps=9 format=3 uid="uid://bx67eybmq4vsu"]
 
 [ext_resource type="Script" path="res://scripts/grid.gd" id="1_p7jgk"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_70vec"]
@@ -16,6 +16,10 @@ region = Rect2(336, 80, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fnun3"]
 atlas = ExtResource("2_70vec")
 region = Rect2(352, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1vvw"]
+atlas = ExtResource("2_70vec")
+region = Rect2(336, 64, 16, 16)
 
 [node name="grid" type="Node2D"]
 script = ExtResource("1_p7jgk")
@@ -42,6 +46,18 @@ visible = false
 position = Vector2(8, 9)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_br1fs")
+
+[node name="attack" type="Sprite2D" parent="Area2D"]
+visible = false
+z_index = 50
+position = Vector2(8, 8)
+texture = SubResource("AtlasTexture_n1vvw")
+
+[node name="target" type="Sprite2D" parent="Area2D"]
+visible = false
+z_index = 50
+position = Vector2(8, 8)
+texture = SubResource("AtlasTexture_n1vvw")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

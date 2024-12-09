@@ -9,6 +9,14 @@ extends MarginContainer
 var is_enterd := false
 
 func _input(event: InputEvent) -> void:
+	## 点击英雄才显示
+	if Current.clicked_hero == null:
+		return
+	else:
+		## 移动状态才显示
+		if Current.clicked_hero.hero_state_machine.state.name != "move":
+			print(Current.clicked_hero.hero_state_machine.state.name)
+			return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \
 	event.is_pressed() == true and is_enterd == true:
 		mask_1.visible = false
