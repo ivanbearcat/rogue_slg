@@ -7,14 +7,12 @@ signal hero_move
 func enter():
 	print(owner.hero_name + "进入move")
 	owner.animated_sprite_2d.play(owner.hero_name + "_move")
-	if Current.is_moved == false:
-		emit_signal("show_move_range")
+	emit_signal("show_move_range")
 
 func input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
-		emit_signal("hero_move")
-		#if not Current.id_path.has(Current.grid_index):
-			#owner.hero_state_machine.transition_to("idle")
+		if Current.is_moved == false:
+			emit_signal("hero_move")
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
 	event.is_pressed() == true or event.is_action_pressed("esc"):
 		Current.clicked_hero.hero_state_machine.transition_to("idle")
@@ -27,16 +25,12 @@ func update(_delta: float) -> void:
 		owner.position = owner.position.move_toward(target_position, 100 * _delta)
 		if owner.position == target_position:
 			Current.id_path.remove_at(0)
-			Current.is_moved = true
 		if Current.id_path.is_empty():
-			hero_state_machine.transition_to("end")
-			## 更新移动后英雄的位置
-			#for hero in Current.all_hero_array:
-				#if hero_name == owner.hero_name:
-					#hero.hero_grid_index = target_grid_index
+			Current.is_moved = true
+			owner.animated_sprite_2d.play(owner.hero_name + "_idle")
+			emit_signal("hide_move_range")
 				
 
 func exit():
 	print(owner.hero_name, "离开move")
-	emit_signal("hide_move_range")
 	Current.clicked_hero = null
