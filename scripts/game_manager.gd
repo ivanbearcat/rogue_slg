@@ -57,6 +57,7 @@ func _ready() -> void:
 	var hero_instantiate = SceneManager.create_scene("hero")
 	_set_hero_properties(hero_instantiate, hero_property["soldier"])
 	heros.add_child(hero_instantiate)
+	_set_hero_skill_scripts(hero_instantiate)
 	## 配置Astar寻路
 	astar = AStarGrid2D.new()
 	astar.region = tile_map_layer.get_used_rect()
@@ -216,6 +217,18 @@ func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_cmd.connect(_on_hero_cmd)
 	var hero_skills_ui = SceneManager.create_scene(hero.hero_name + "_skills")
 	left_side_ui.add_child(hero_skills_ui)
+	
+## 设置3技能的状态脚本
+func _set_hero_skill_scripts(hero: Hero):
+	var script_path_1 = "res://scripts/skills_state/" + hero.hero_name + "_skill_1.gd"
+	var script_path_2 = "res://scripts/skills_state/" + hero.hero_name + "_skill_2.gd"
+	var script_path_3 = "res://scripts/skills_state/" + hero.hero_name + "_skill_3.gd"
+	var script_1 = load(script_path_1)
+	var script_2 = load(script_path_2)
+	var script_3 = load(script_path_3)
+	hero.skill_1.set_script(script_1)
+	hero.skill_2.set_script(script_2)
+	hero.skill_3.set_script(script_3)
 
 ## 可变参数信号
 func _on_hero_cmd(cmd_name):
@@ -279,6 +292,10 @@ func hero_move():
 		return
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	print(Current.id_path)
+
+## 显示技能范围
+#func show_skill_range():
+	#call(skill_system.show_skill_range(Current.clicked_hero.hero_name, skill_num))
 
 ## 回合结束
 func _on_button_pressed() -> void:

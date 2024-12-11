@@ -862,6 +862,8 @@ shape = SubResource("RectangleShape2D_oscie")
 
 [node name="buildings" type="Node2D" parent="."]
 
+[node name="skill_system" type="Node2D" parent="."]
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(71.5, 68.5)
 

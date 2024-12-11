@@ -5,6 +5,9 @@ signal hero_cmd
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 @onready var hero_state_machine: HeroStateMachine = $hero_state_machine
+@onready var skill_1: Node2D = $hero_state_machine/skill_1
+@onready var skill_2: Node2D = $hero_state_machine/skill_2
+@onready var skill_3: Node2D = $hero_state_machine/skill_3
 
 var hero_name: String
 var hero_grid_index: Vector2i:
@@ -17,6 +20,8 @@ var hero_movement: int
 
 func _ready() -> void:
 	animated_sprite_2d.play(hero_name + "_idle")
+	#skill_1.show_skill_1_range.connect(_on_show_skill_1_range)
+	
 
 func _process(delta: float) -> void:
 	pass
@@ -42,11 +47,12 @@ func _on_area_2d_mouse_exited() -> void:
 func _on_move_show_move_range() -> void:
 	emit_signal("hero_cmd", "show_move_range")
 
-
 func _on_move_hide_move_range() -> void:
 	Current.movable_grid_index_array = []
 	emit_signal("hero_cmd", "hide_move_range")
 
-
 func _on_move_hero_move() -> void:
 	emit_signal("hero_cmd", "hero_move")
+
+func _on_show_skill_1_range() -> void:
+	emit_signal("hero_cmd", "show_skill_1_range")

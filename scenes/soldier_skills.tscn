@@ -3,10 +3,10 @@
 [ext_resource type="Shader" path="res://shaders/high_light.gdshader" id="1_78qh4"]
 [ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="1_vlmwk"]
 [ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="2_wi8mv"]
-[ext_resource type="Script" path="res://scripts/ui/skill1.gd" id="3_71tpo"]
+[ext_resource type="Script" path="res://scripts/ui/skill_1.gd" id="3_71tpo"]
 [ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="4_rqeci"]
-[ext_resource type="Script" path="res://scripts/ui/skill2.gd" id="6_ojpdg"]
-[ext_resource type="Script" path="res://scripts/ui/skill3.gd" id="7_3khon"]
+[ext_resource type="Script" path="res://scripts/ui/skill_2.gd" id="6_ojpdg"]
+[ext_resource type="Script" path="res://scripts/ui/skill_3.gd" id="7_3khon"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mokjr"]
 shader = ExtResource("1_78qh4")

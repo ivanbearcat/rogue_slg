@@ -364,11 +364,11 @@ script = ExtResource("7_duu28")
 [node name="end" type="Node2D" parent="hero_state_machine"]
 script = ExtResource("8_2fhne")
 
-[node name="skill1" type="Node2D" parent="hero_state_machine"]
+[node name="skill_1" type="Node2D" parent="hero_state_machine"]
 
-[node name="skill2" type="Node2D" parent="hero_state_machine"]
+[node name="skill_2" type="Node2D" parent="hero_state_machine"]
 
-[node name="skill3" type="Node2D" parent="hero_state_machine"]
+[node name="skill_3" type="Node2D" parent="hero_state_machine"]
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
