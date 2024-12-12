@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bgm08y6mwa1xl"]
+[gd_scene load_steps=49 format=3 uid="uid://bgm08y6mwa1xl"]
 
 [ext_resource type="Script" path="res://scripts/hero.gd" id="1_2jlbh"]
 [ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="1_ufarh"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://scripts/idle.gd" id="6_yiwd7"]
 [ext_resource type="Script" path="res://scripts/move.gd" id="7_duu28"]
 [ext_resource type="Script" path="res://scripts/end.gd" id="8_2fhne"]
+[ext_resource type="Script" path="res://scripts/skills_state/soldier_skill_2.gd" id="10_d3wpk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y1qti"]
 size = Vector2(16, 16)
@@ -365,6 +366,7 @@ script = ExtResource("7_duu28")
 script = ExtResource("8_2fhne")
 
 [node name="skill_1" type="Node2D" parent="hero_state_machine"]
+script = ExtResource("10_d3wpk")
 
 [node name="skill_2" type="Node2D" parent="hero_state_machine"]
 

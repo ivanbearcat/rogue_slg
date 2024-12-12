@@ -77,4 +77,7 @@ var has_move_slime: bool:
 ## 是否移动过
 var is_moved: bool
 
+## 选中的技能编号
+var skill_num: String
+
 	

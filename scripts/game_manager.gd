@@ -14,6 +14,7 @@ const hero_property = {
 @onready var turn_button: Button = %turn_button
 @onready var turn_label: Label = %turn_label
 @onready var left_side_ui: MarginContainer = $UI/left_side_ui
+@onready var skill_system: Node2D = $skill_system
 
 ## 格子像素大小
 var grid_size = Vector2i(16, 16)
@@ -49,11 +50,8 @@ func _ready() -> void:
 			grid.position = Vector2i(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
 			all_grid_dict[Vector2i(x, y)] = grid
 			grids.add_child(grid)
+			grid.grid_cmd.connect(_on_grid_cmd)
 	## 生成英雄
-	#for hero_name in hero_property:
-		#var hero_instantiate = SceneManager.create_scene("hero")
-		#set_hero_properties(hero_instantiate, hero_property[hero_name])
-		#heros.add_child(hero_instantiate)
 	var hero_instantiate = SceneManager.create_scene("hero")
 	_set_hero_properties(hero_instantiate, hero_property["soldier"])
 	heros.add_child(hero_instantiate)
@@ -70,21 +68,7 @@ func _ready() -> void:
 				_margin_grid.append(Vector2i(x, y))
 	## 预生成史莱姆和警告信息
 	_slime_create_ai()
-	### 从边缘地块随机3块生成巢穴
-	#while true:
-		#if Current.enemy_home_array.size() >= 5: 
-			#break
-		#var grid_index = margin_grid.pick_random()
-		#if Current.enemy_home_array == [] or not Current.enemy_home_grid_index_array.has(grid_index):
-			#var enemy_home_instantiate = SceneManager.create_scene("enemy_home")
-			#enemy_home_instantiate.position = _grid_index_to_position(grid_index)
-			#enemy_home_instantiate.enemy_home_grid_index = grid_index
-			#Current.enemy_home_array.append(enemy_home_instantiate)	
-			#buildings.add_child(enemy_home_instantiate)
 
-func _process(delta: float) -> void:
-	pass
-			
 	
 func _grid_index_to_position(grid_index: Vector2i) -> Vector2i:
 	return Vector2i(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
@@ -123,25 +107,7 @@ func _slime_create_ai():
 			_transformable_slime_array.append(Current.all_enemy_array.pick_random())
 			for slime in _transformable_slime_array:
 				slime.warning.visible = true
-	#while true:
-		### 限制史莱姆创建数量，限制无史莱姆占位的巢穴
-		#if slime_create_array.size() >= 3 or Current.available_enemy_home.size() <= 2: 
-			#break
-		### 生成史莱姆的巢穴判断重复
-		#var is_unique := true
-		#var enemy_home = Current.available_enemy_home.pick_random()
-		#for slime in slime_create_array:
-			#if slime.enemy_grid_index == enemy_home.enemy_home_grid_index:
-				#is_unique = false
-		#if is_unique == false:
-			#continue
-		### 根据选择的巢穴生成史莱姆
-		#var slime_sence = slime_scene_array.pick_random()
-		#var enemy_instantiate = SceneManager.create_scene(slime_sence)
-		#enemy_instantiate.position = _grid_index_to_position(enemy_home.enemy_home_grid_index)
-		#enemy_instantiate.enemy_grid_index = enemy_home.enemy_home_grid_index
-		#slime_create_array.append(enemy_instantiate)
-		#enemy_home.warning.visible = true
+
 		
 ## 史莱姆移动
 func _slime_move_ai():
@@ -169,7 +135,6 @@ func _slime_move_ai():
 ## 史莱姆变化
 func _slime_grow_up_ai():
 	var slime_type
-	#var slime_target_position
 	if _transformable_slime_array.size() > 0:
 		for slime in _transformable_slime_array:
 			var slime_grid_index = slime.enemy_grid_index
@@ -188,23 +153,6 @@ func _slime_grow_up_ai():
 				_roll_dice(slime_instantiate)
 			else:
 				print("error: 正则没到查到字符")
-			## 史莱姆变成长
-			#if slime.enemy_type == 1:
-				#slime_type = "slime_middle"
-				#slime.queue_free()
-				#await get_tree().create_timer(0.1).timeout
-			#elif slime.enemy_type == 2:
-				#slime_type = "slime_big"
-				#slime.queue_free()
-				#await get_tree().create_timer(0.1).timeout
-			#elif slime.enemy_type == 3:
-				#pass
-				##tile_map_layer.set_cell(slime_grid_index + start_pos, 0, Vector2i(17,1), 0)
-			#if slime_type != null:
-				#var slime_instantiate = SceneManager.create_scene(slime_type)
-				#slime_instantiate.position = _grid_index_to_position(slime_grid_index)
-				#slime_instantiate.enemy_grid_index = slime_grid_index
-				#enemys.add_child(slime_instantiate)
 			
 			
 ## 设置英雄信息
@@ -232,6 +180,9 @@ func _set_hero_skill_scripts(hero: Hero):
 
 ## 可变参数信号
 func _on_hero_cmd(cmd_name):
+	call(cmd_name)
+	
+func _on_grid_cmd(cmd_name):
 	call(cmd_name)
 
 ## 投骰子动画
@@ -293,9 +244,13 @@ func hero_move():
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	print(Current.id_path)
 
-## 显示技能范围
-#func show_skill_range():
-	#call(skill_system.show_skill_range(Current.clicked_hero.hero_name, skill_num))
+## 显示技能可点击范围
+func show_skill_range():
+	skill_system.show_skill_range(Current.clicked_hero.hero_name, Current.skill_num)
+
+## 显示技能伤害范围
+func show_skill_attack():
+	print("show_skill_attack")
 
 ## 回合结束
 func _on_button_pressed() -> void:

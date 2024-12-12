@@ -3,6 +3,9 @@ class_name HeroStateMachine
 
 @export var initial_state := NodePath()
 @onready var state: HeroState = get_node(initial_state)
+@onready var skill_1: Node2D = $skill_1
+@onready var skill_2: Node2D = $skill_2
+@onready var skill_3: Node2D = $skill_3
 
 func _ready():
 	await owner.ready
