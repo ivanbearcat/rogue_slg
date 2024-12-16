@@ -248,9 +248,17 @@ func hero_move():
 func show_skill_range():
 	skill_system.show_skill_range(Current.clicked_hero.hero_name, Current.skill_num)
 
+## 隐藏技能可点击范围
+func hide_skill_range():
+	skill_system.hide_skill_range(Current.clicked_hero.hero_name, Current.skill_num)
+
 ## 显示技能伤害范围
 func show_skill_attack():
-	print("show_skill_attack")
+	skill_system.show_skill_attack(Current.clicked_hero.hero_name, Current.skill_num)
+
+## 隐藏技能伤害范围
+func hide_skill_attack():
+	skill_system.hide_skill_attack(Current.clicked_hero.hero_name, Current.skill_num)
 
 ## 回合结束
 func _on_button_pressed() -> void:

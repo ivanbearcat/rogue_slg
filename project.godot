@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Current="*res://scripts/global/current.gd"
 SceneManager="*res://scripts/global/scene_manager.gd"
+Tools="*res://scripts/global/tools.gd"
 
 [display]
 

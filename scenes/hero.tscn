@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://scripts/idle.gd" id="6_yiwd7"]
 [ext_resource type="Script" path="res://scripts/move.gd" id="7_duu28"]
 [ext_resource type="Script" path="res://scripts/end.gd" id="8_2fhne"]
-[ext_resource type="Script" path="res://scripts/skills_state/soldier_skill_2.gd" id="10_d3wpk"]
+[ext_resource type="Script" path="res://scripts/skills_state/soldier_skill_1.gd" id="10_27sfp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y1qti"]
 size = Vector2(16, 16)
@@ -366,11 +366,13 @@ script = ExtResource("7_duu28")
 script = ExtResource("8_2fhne")
 
 [node name="skill_1" type="Node2D" parent="hero_state_machine"]
-script = ExtResource("10_d3wpk")
+script = ExtResource("10_27sfp")
 
 [node name="skill_2" type="Node2D" parent="hero_state_machine"]
+script = ExtResource("10_27sfp")
 
 [node name="skill_3" type="Node2D" parent="hero_state_machine"]
+script = ExtResource("10_27sfp")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

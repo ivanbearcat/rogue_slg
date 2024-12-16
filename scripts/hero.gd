@@ -22,6 +22,11 @@ var hero_movement: int
 func _ready() -> void:
 	animated_sprite_2d.play(hero_name + "_idle")
 	skill_1.show_skill_range.connect(_on_show_skill_range)
+	skill_1.hide_skill_range.connect(_on_hide_skill_range)
+	skill_2.show_skill_range.connect(_on_show_skill_range)
+	skill_2.hide_skill_range.connect(_on_hide_skill_range)
+	skill_3.show_skill_range.connect(_on_show_skill_range)
+	skill_3.hide_skill_range.connect(_on_hide_skill_range)
 	
 	
 
@@ -59,3 +64,6 @@ func _on_move_hero_move() -> void:
 
 func _on_show_skill_range() -> void:
 	emit_signal("hero_cmd", "show_skill_range")
+	
+func _on_hide_skill_range() -> void:
+	emit_signal("hero_cmd", "hide_skill_range")
