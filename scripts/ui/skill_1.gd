@@ -32,9 +32,14 @@ func _input(event: InputEvent) -> void:
 	## 右键点击恢复
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
 	event.is_pressed() == true or event.is_action_pressed("esc"):
-		nine_patch_rect.material.set_shader_parameter("is_high_light", false)
-		mask_1.visible = false
-		Current.clicked_hero.hero_state_machine.transition_to("move")
+		if Current.clicked_hero.hero_state_machine.state.name in ["skill_1", "skill_2", "skill_3"]:
+			mask_1.visible = false
+			nine_patch_rect.material.set_shader_parameter("is_high_light", false)
+			mask_2.visible = false
+			nine_patch_rect_2.material.set_shader_parameter("is_high_light", false)
+			mask_3.visible = false
+			nine_patch_rect_3.material.set_shader_parameter("is_high_light", false)
+			Current.clicked_hero.hero_state_machine.transition_to("move")
 
 func _on_mouse_entered() -> void:
 	nine_patch_rect.material.set_shader_parameter("is_high_light", true)

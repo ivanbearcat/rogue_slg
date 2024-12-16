@@ -9,7 +9,7 @@ func unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
 		var grid_index = Current.grid_index
 		if Current.all_hero_grid_index_array.has(grid_index):
-			hero_state_machine.transition_to("move")
+			hero_state_machine.transition_to("move")		
 
 func exit():
 	print(owner.hero_name, "离开idle")

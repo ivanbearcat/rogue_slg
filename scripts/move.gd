@@ -16,7 +16,8 @@ func input(event: InputEvent) -> void:
 			emit_signal("hero_move")
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
 		event.is_pressed() == true or event.is_action_pressed("esc"):
-			Current.clicked_hero.hero_state_machine.transition_to("idle")
+			if Current.is_moved == false:
+				Current.clicked_hero.hero_state_machine.transition_to("idle")
 
 func update(_delta: float) -> void:
 	if ! Current.id_path.is_empty():

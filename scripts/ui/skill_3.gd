@@ -27,11 +27,11 @@ func _input(event: InputEvent) -> void:
 				## 显示技能3
 				mask_3.visible = true
 				nine_patch_rect_3.material.set_shader_parameter("is_high_light", true)
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
-	event.is_pressed() == true or event.is_action_pressed("esc"):
-		nine_patch_rect_3.material.set_shader_parameter("is_high_light", false)
-		mask_3.visible = false
-		Current.clicked_hero.hero_state_machine.transition_to("move")
+	#if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
+	#event.is_pressed() == true or event.is_action_pressed("esc"):
+		#nine_patch_rect_3.material.set_shader_parameter("is_high_light", false)
+		#mask_3.visible = false
+		#Current.clicked_hero.hero_state_machine.transition_to("move")
 
 func _on_mouse_entered() -> void:
 	nine_patch_rect_3.material.set_shader_parameter("is_high_light", true)
