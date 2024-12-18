@@ -6,7 +6,7 @@ signal skill_attack
 
 func enter():
 	print(owner.hero_name + "进入soldier_slash")
-	owner.animated_sprite_2d.play(owner.hero_name + "_idle")
+	owner.animated_sprite_2d.play(owner.hero_name + "_end")
 	Current.skill_num = "1"
 	emit_signal("show_skill_range")
 
@@ -14,10 +14,11 @@ func input(event: InputEvent) -> void:
 	## 点击释放技能的格子触发技能信号
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
 		## 判断点击的格子在技能范围:
-		if false:
-			owner.animated_sprite_2d.play("soldier_slash")
+		if Current.grid_index in Current.skill_target_range:
+			owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
 			emit_signal("skill_attack")
-			## 判断技能动画、移动等完成后进入end状态
+			while owner.animated_sprite_2d.is_playing():
+				await Tools.time_sleep(0.1)
 			hero_state_machine.transition_to("end")	
 
 func exit():

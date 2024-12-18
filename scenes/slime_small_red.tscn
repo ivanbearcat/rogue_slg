@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dgecjw6rvatc2"]
+[gd_scene load_steps=41 format=3 uid="uid://dgecjw6rvatc2"]
 
 [ext_resource type="Script" path="res://scripts/slime_small.gd" id="1_y6hv8"]
 [ext_resource type="Texture2D" uid="uid://bdlqcxnxh51j5" path="res://images/Slime_red.png" id="2_yy20k"]
@@ -39,10 +39,6 @@ region = Rect2(384, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_sjrd3"]
 atlas = ExtResource("2_yy20k")
 region = Rect2(416, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bejq7"]
-atlas = ExtResource("2_yy20k")
-region = Rect2(448, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i6iip"]
 atlas = ExtResource("2_yy20k")
@@ -99,11 +95,8 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sjrd3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bejq7")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
 "speed": 5.0
 }, {
@@ -291,9 +284,8 @@ shape = SubResource("RectangleShape2D_ilaur")
 position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_ycjvq")
-animation = &"idle"
+animation = &"die"
 autoplay = "idle"
-frame_progress = 0.376563
 
 [node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false
@@ -307,3 +299,5 @@ scale = Vector2(-0.196884, -0.190505)
 sprite_frames = SubResource("SpriteFrames_aldak")
 animation = &"roll"
 frame_progress = 0.944284
+
+[connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

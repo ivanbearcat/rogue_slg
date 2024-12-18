@@ -17,12 +17,10 @@ func _on_area_2d_mouse_entered() -> void:
 	print(Current.grid_index)
 	if target.visible == true:
 		emit_signal("grid_cmd", "show_skill_attack")
-		print("in")
 
 func _on_area_2d_mouse_exited() -> void:
 	cursor.hide()
-	if target.visible == true:
+	if attack.visible == true:
 		emit_signal("grid_cmd", "hide_skill_attack")
-		print("out")
 	
 	

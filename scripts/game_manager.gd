@@ -30,8 +30,6 @@ var astar: AStarGrid2D
 var _removable_map_vec =  Vector2i(7, 7)
 ## 史莱姆创建列表
 var _slime_create_array: Array
-## 史莱姆变化列表
-var _transformable_slime_array: Array
 ## 回合计数
 var round := 0
 ## 带有骰子点数的动画图片索引
@@ -68,6 +66,7 @@ func _ready() -> void:
 				_margin_grid.append(Vector2i(x, y))
 	## 预生成史莱姆和警告信息
 	_slime_create_ai()
+	_enemy_turn()
 
 	
 func _grid_index_to_position(grid_index: Vector2i) -> Vector2i:
@@ -103,9 +102,9 @@ func _slime_create_ai():
 					grid.warning.visible = true
 	## 添加史莱姆进入可以变换的列表
 	if Current.all_enemy_array.size() > 0:
-		if _transformable_slime_array.size() < 1:
-			_transformable_slime_array.append(Current.all_enemy_array.pick_random())
-			for slime in _transformable_slime_array:
+		if Current.transformable_slime_array.size() < 1:
+			Current.transformable_slime_array.append(Current.all_enemy_array.pick_random())
+			for slime in Current.transformable_slime_array:
 				slime.warning.visible = true
 
 		
@@ -135,8 +134,8 @@ func _slime_move_ai():
 ## 史莱姆变化
 func _slime_grow_up_ai():
 	var slime_type
-	if _transformable_slime_array.size() > 0:
-		for slime in _transformable_slime_array:
+	if Current.transformable_slime_array.size() > 0:
+		for slime in Current.transformable_slime_array:
 			var slime_grid_index = slime.enemy_grid_index
 			var regex = RegEx.new()
 			regex.compile(".*(?<name>slime.*)\\.tscn")
@@ -250,7 +249,7 @@ func show_skill_range():
 
 ## 隐藏技能可点击范围
 func hide_skill_range():
-	skill_system.hide_skill_range(Current.clicked_hero.hero_name, Current.skill_num)
+	skill_system.hide_skill_range()
 
 ## 显示技能伤害范围
 func show_skill_attack():
@@ -258,10 +257,18 @@ func show_skill_attack():
 
 ## 隐藏技能伤害范围
 func hide_skill_attack():
-	skill_system.hide_skill_attack(Current.clicked_hero.hero_name, Current.skill_num)
+	skill_system.hide_skill_attack()
+
+## 技能结算
+func skill_attack():
+	skill_system.skill_attack(Current.clicked_hero.hero_name, Current.skill_num)
 
 ## 回合结束
 func _on_button_pressed() -> void:
+	_enemy_turn()
+	
+## 敌人回合
+func _enemy_turn():
 	Current.turn = "enemy_turn"
 	turn_button.disabled = true
 	## 生成并移动史莱姆
@@ -277,9 +284,9 @@ func _on_button_pressed() -> void:
 	_slime_create_array.clear()
 	## 史莱姆成长
 	_slime_grow_up_ai()
-	for slime in _transformable_slime_array:
+	for slime in Current.transformable_slime_array:
 		slime.warning.visible = false
-	_transformable_slime_array.clear()
+	Current.transformable_slime_array.clear()
 	await get_tree().create_timer(0.1).timeout
 	## 史莱姆预生成和告警信息
 	_slime_create_ai()

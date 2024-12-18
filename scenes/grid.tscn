@@ -34,7 +34,7 @@ script = ExtResource("1_p7jgk")
 position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_3sbim")
 
-[node name="range" type="Sprite2D" parent="Area2D"]
+[node name="target" type="Sprite2D" parent="Area2D"]
 visible = false
 material = SubResource("ShaderMaterial_6omwm")
 position = Vector2(8, 8)
@@ -51,9 +51,8 @@ position = Vector2(8, 9)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_br1fs")
 
-[node name="target" type="Sprite2D" parent="Area2D"]
+[node name="range" type="Sprite2D" parent="Area2D"]
 visible = false
-z_index = 50
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_kyn0y")
 

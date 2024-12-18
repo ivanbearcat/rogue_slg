@@ -73,11 +73,14 @@ var has_move_slime: bool:
 			if slime.target_position != Vector2.ZERO:
 				return true
 		return false
-		
 ## 是否移动过
 var is_moved: bool
-
 ## 选中的技能编号
 var skill_num: String
-
+## 技能选择范围
+var skill_target_range: Array
+## 技能伤害范围
+var skill_attack_range: Array
+## 将要变化的史莱姆列表
+var transformable_slime_array: Array
 	

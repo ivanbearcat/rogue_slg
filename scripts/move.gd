@@ -29,7 +29,7 @@ func update(_delta: float) -> void:
 			Current.id_path.remove_at(0)
 		if Current.id_path.is_empty():
 			Current.is_moved = true
-			owner.animated_sprite_2d.play(owner.hero_name + "_idle")
+			owner.animated_sprite_2d.play(owner.hero_name + "_end")
 			emit_signal("hide_move_range")
 				
 
