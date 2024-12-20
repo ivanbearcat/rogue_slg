@@ -864,6 +864,7 @@ shape = SubResource("RectangleShape2D_oscie")
 [node name="buildings" type="Node2D" parent="."]
 
 [node name="skill_system" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_rragv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -913,4 +914,5 @@ offset_bottom = 141.0
 scale = Vector2(0.77, 0.77)
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]
 [connection signal="pressed" from="UI/right_side_ui/VBoxContainer/MarginContainer/turn_button" to="." method="_on_button_pressed"]

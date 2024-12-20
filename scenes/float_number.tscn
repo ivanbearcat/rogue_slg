@@ -1,15 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://co3drgm7df8ed"]
+[gd_scene load_steps=4 format=3 uid="uid://co3drgm7df8ed"]
 
-[ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="1_cgseb"]
+[ext_resource type="FontFile" uid="uid://bp53tlinpuypa" path="res://fonts/SourceHanSansCN-Normal.otf" id="2_eem51"]
 [ext_resource type="Script" path="res://scripts/ui/float_number.gd" id="2_j1ws4"]
 
-[node name="MarginContainer" type="MarginContainer"]
-offset_right = 14.0
-offset_bottom = 15.0
+[sub_resource type="LabelSettings" id="LabelSettings_hmpp3"]
+font = ExtResource("2_eem51")
+font_size = 26
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D"]
 script = ExtResource("2_j1ws4")
 
 [node name="Label" type="Label" parent="."]
 z_index = 195
-layout_mode = 2
+offset_right = 14.0
+offset_bottom = 15.0
 text = "+2 "
-label_settings = ExtResource("1_cgseb")
+label_settings = SubResource("LabelSettings_hmpp3")

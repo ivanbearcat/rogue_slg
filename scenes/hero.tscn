@@ -350,7 +350,7 @@ material = SubResource("ShaderMaterial_er1yf")
 position = Vector2(8, 9)
 scale = Vector2(0.77, 0.77)
 sprite_frames = SubResource("SpriteFrames_hvq5q")
-animation = &"soldier_skill_3"
+animation = &"soldier_end"
 
 [node name="hero_state_machine" type="Node2D" parent="."]
 script = ExtResource("5_fgiwk")
@@ -376,6 +376,7 @@ script = ExtResource("10_27sfp")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="hero_move" from="hero_state_machine/move" to="." method="_on_move_hero_move"]
 [connection signal="hide_move_range" from="hero_state_machine/move" to="." method="_on_move_hide_move_range"]
 [connection signal="show_move_range" from="hero_state_machine/move" to="." method="_on_move_show_move_range"]

@@ -17,11 +17,10 @@ func input(event: InputEvent) -> void:
 		if Current.grid_index in Current.skill_target_range:
 			owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
 			emit_signal("skill_attack")
-			while owner.animated_sprite_2d.is_playing():
-				await Tools.time_sleep(0.1)
-			hero_state_machine.transition_to("end")	
+			
 
 func exit():
 	print(owner.hero_name, "离开soldier_slash")
 	emit_signal("hide_skill_range")
+	get_tree().call_group("skill_ui", "hide_all_skill")
 	Current.skill_num = ""

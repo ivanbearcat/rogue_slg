@@ -15,6 +15,8 @@ const hero_property = {
 @onready var turn_label: Label = %turn_label
 @onready var left_side_ui: MarginContainer = $UI/left_side_ui
 @onready var skill_system: Node2D = $skill_system
+@onready var skill_1_ui: MarginContainer
+
 
 ## 格子像素大小
 var grid_size = Vector2i(16, 16)
@@ -164,7 +166,10 @@ func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_cmd.connect(_on_hero_cmd)
 	var hero_skills_ui = SceneManager.create_scene(hero.hero_name + "_skills")
 	left_side_ui.add_child(hero_skills_ui)
+	## onready后无法获取到代码新增的节点skill_1_ui，在此处添加了场景树之后可以获取，但无法使用唯一标识获取
+	skill_1_ui = left_side_ui.get_node("MarginContainer/HBoxContainer/skill_1")
 	
+
 ## 设置3技能的状态脚本
 func _set_hero_skill_scripts(hero: Hero):
 	var script_path_1 = "res://scripts/skills_state/" + hero.hero_name + "_skill_1.gd"
@@ -305,6 +310,10 @@ func _enemy_turn():
 	## 重置已移动标记
 	Current.is_moved = false
 
-
+## 鼠标移出可移动区域清除格子位置
 func _on_area_2d_mouse_entered() -> void:
 	Current.grid_index = Vector2.ZERO
+
+
+func _on_skill_system_hide_all_skill() -> void:
+	skill_1_ui.hide_all_skill()

@@ -1,13 +1,15 @@
 extends MarginContainer
 
 @onready var nine_patch_rect: NinePatchRect = $NinePatchRect
-@onready var nine_patch_rect_2: NinePatchRect = $"../MarginContainer2/NinePatchRect2"
-@onready var nine_patch_rect_3: NinePatchRect = $"../MarginContainer3/NinePatchRect3"
+@onready var nine_patch_rect_2: NinePatchRect = $"../skill_2/NinePatchRect2"
+@onready var nine_patch_rect_3: NinePatchRect = $"../skill_3/NinePatchRect3"
 @onready var mask_1: ColorRect = $TextureRect/mask1
-@onready var mask_2: ColorRect = $"../MarginContainer2/TextureRect2/mask2"
-@onready var mask_3: ColorRect = $"../MarginContainer3/TextureRect3/mask3"
+@onready var mask_2: ColorRect = $"../skill_2/TextureRect2/mask2"
+@onready var mask_3: ColorRect = $"../skill_3/TextureRect3/mask3"
+
 
 var is_enterd := false
+
 
 func _input(event: InputEvent) -> void:
 	## 点击英雄才显示
@@ -33,13 +35,16 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
 	event.is_pressed() == true or event.is_action_pressed("esc"):
 		if Current.clicked_hero.hero_state_machine.state.name in ["skill_1", "skill_2", "skill_3"]:
-			mask_1.visible = false
-			nine_patch_rect.material.set_shader_parameter("is_high_light", false)
-			mask_2.visible = false
-			nine_patch_rect_2.material.set_shader_parameter("is_high_light", false)
-			mask_3.visible = false
-			nine_patch_rect_3.material.set_shader_parameter("is_high_light", false)
+			hide_all_skill()
 			Current.clicked_hero.hero_state_machine.transition_to("move")
+
+func hide_all_skill():
+	mask_1.visible = false
+	nine_patch_rect.material.set_shader_parameter("is_high_light", false)
+	mask_2.visible = false
+	nine_patch_rect_2.material.set_shader_parameter("is_high_light", false)
+	mask_3.visible = false
+	nine_patch_rect_3.material.set_shader_parameter("is_high_light", false)
 
 func _on_mouse_entered() -> void:
 	nine_patch_rect.material.set_shader_parameter("is_high_light", true)

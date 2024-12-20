@@ -60,3 +60,7 @@ func _on_hide_skill_range() -> void:
 
 func _on_skill_attack():
 	emit_signal("hero_cmd", "skill_attack")
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	self.hero_state_machine.transition_to("end")

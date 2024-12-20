@@ -1,4 +1,4 @@
-extends MarginContainer
+extends Node2D
 
 var float_num: String:
 	set(v):
