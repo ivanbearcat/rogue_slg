@@ -23,7 +23,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		Current.transformable_slime_array.erase(self)
 	var float_number_instantiate = SceneManager.create_scene("float_number")
 	float_number_instantiate.velocity = Vector2(0, -10)
-	float_number_instantiate.position = self.position
+	$Area2D.hide()
 	self.add_child(float_number_instantiate)
-	Tools.time_sleep(2)
+	await Tools.time_sleep(1.0)
 	self.queue_free()
