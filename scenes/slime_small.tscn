@@ -292,9 +292,9 @@ material = SubResource("ShaderMaterial_jokqn")
 position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_ycjvq")
-animation = &"idle"
+animation = &"be_attack"
 autoplay = "idle"
-frame_progress = 0.869101
+frame_progress = 0.226534
 
 [node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false

@@ -8,6 +8,17 @@ var enemy_grid_index: Vector2i
 var enemy_hp: int = 1
 var target_position: Vector2
 var enemy_type: int = 1
+var dice_real_point: Dictionary = {
+	0: 2,
+	2: 1,
+	4: 6,
+	6: 4,
+	8: 5,
+	10: 3
+}
+var slime_score: int:
+	get:
+		return dice_real_point[self.dice.frame]
 
 
 func _process(delta: float) -> void:
@@ -21,9 +32,11 @@ func _process(delta: float) -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if self in Current.transformable_slime_array:
 		Current.transformable_slime_array.erase(self)
-	var float_number_instantiate = SceneManager.create_scene("float_number")
-	float_number_instantiate.velocity = Vector2(0, -10)
 	$Area2D.hide()
+	Current.total_score += slime_score
+	var float_number_instantiate = SceneManager.create_scene("float_number")
+	float_number_instantiate.float_num = slime_score
+	float_number_instantiate.velocity = Vector2(0, -10)
 	self.add_child(float_number_instantiate)
 	await Tools.time_sleep(1.0)
 	self.queue_free()

@@ -1,8 +1,8 @@
 extends Node2D
 
-var float_num: String:
+var float_num: int:
 	set(v):
-		$Label.text = v
+		$Label.text = "+" + str(v)
 	get:
 		return $Label.text
 

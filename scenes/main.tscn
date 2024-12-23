@@ -879,15 +879,21 @@ offset_bottom = 40.0
 [node name="right_side_ui" type="MarginContainer" parent="UI"]
 layout_mode = 0
 offset_left = 138.5
-offset_top = 99.5
+offset_top = 82.5
 offset_right = 186.5
-offset_bottom = 141.5
+offset_bottom = 143.5
 scale = Vector2(0.8, 0.8)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/right_side_ui"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="total_score" type="Label" parent="UI/right_side_ui/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "总分: 0"
+label_settings = ExtResource("3_h858a")
 
 [node name="turn_label" type="Label" parent="UI/right_side_ui/VBoxContainer"]
 unique_name_in_owner = true
