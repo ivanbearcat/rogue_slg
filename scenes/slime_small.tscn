@@ -294,7 +294,7 @@ scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_ycjvq")
 animation = &"be_attack"
 autoplay = "idle"
-frame_progress = 0.226534
+frame_progress = 0.238253
 
 [node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false

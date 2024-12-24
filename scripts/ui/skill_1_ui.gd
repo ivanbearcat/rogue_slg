@@ -17,7 +17,7 @@ func _input(event: InputEvent) -> void:
 		return
 	else:
 		## 移动状态才显示
-		if ["move", "skill_1", "skill_2", "skill_3"].has(Current.clicked_hero.hero_state_machine.state.name):
+		if ["idle", "move", "skill_1", "skill_2", "skill_3"].has(Current.clicked_hero.hero_state_machine.state.name):
 			## 左键点击显示技能被按下的图
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \
 			event.is_pressed() == true and is_enterd == true or event.is_action_pressed("1"):

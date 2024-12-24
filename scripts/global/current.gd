@@ -88,3 +88,5 @@ var transformable_slime_array: Array
 var total_score: int:
 	set(v):
 		total_score_ui.text = "总分: " + str(v)
+	get:
+		return int(total_score_ui.text)

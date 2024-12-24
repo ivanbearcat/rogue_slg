@@ -266,7 +266,7 @@ func hide_skill_attack():
 
 ## 技能结算
 func skill_attack():
-	skill_system.skill_attack(Current.clicked_hero.hero_name, Current.skill_num)
+	skill_system.skill_attack()
 
 ## 回合结束
 func _on_button_pressed() -> void:

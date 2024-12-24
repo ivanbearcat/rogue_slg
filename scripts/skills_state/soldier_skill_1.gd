@@ -5,7 +5,7 @@ signal hide_skill_range
 signal skill_attack
 
 func enter():
-	print(owner.hero_name + "进入soldier_slash")
+	print(owner.hero_name + "进入soldier_skill_1")
 	owner.animated_sprite_2d.play(owner.hero_name + "_end")
 	Current.skill_num = "1"
 	emit_signal("show_skill_range")
@@ -20,7 +20,6 @@ func input(event: InputEvent) -> void:
 			
 
 func exit():
-	print(owner.hero_name, "离开soldier_slash")
+	print(owner.hero_name, "离开soldier_skill_2")
 	emit_signal("hide_skill_range")
-	get_tree().call_group("skill_ui", "hide_all_skill")
 	Current.skill_num = ""

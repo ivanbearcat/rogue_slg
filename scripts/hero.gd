@@ -30,7 +30,7 @@ func _ready() -> void:
 	skill_2.skill_attack.connect(_on_skill_attack)
 	skill_3.show_skill_range.connect(_on_show_skill_range)
 	skill_3.hide_skill_range.connect(_on_hide_skill_range)
-	skill_1.skill_attack.connect(_on_skill_attack)
+	skill_3.skill_attack.connect(_on_skill_attack)
 	
 
 

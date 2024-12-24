@@ -16,7 +16,7 @@ func _input(event: InputEvent) -> void:
 		return
 	else:
 		## 移动状态才显示
-		if ["move", "skill_1", "skill_2", "skill_3"].has(Current.clicked_hero.hero_state_machine.state.name):
+		if ["idle", "move", "skill_1", "skill_2", "skill_3"].has(Current.clicked_hero.hero_state_machine.state.name):
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \
 			event.is_pressed() == true and is_enterd == true or event.is_action_pressed("3"):
 				## 取消显示其他技能
@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 				## 显示技能3
 				mask_3.visible = true
 				nine_patch_rect_3.material.set_shader_parameter("is_high_light", true)
-
+				Current.clicked_hero.hero_state_machine.transition_to("skill_3")
 
 func _on_mouse_entered() -> void:
 	nine_patch_rect_3.material.set_shader_parameter("is_high_light", true)
