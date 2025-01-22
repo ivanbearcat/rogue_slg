@@ -61,6 +61,7 @@ region = Rect2(175, 191, 3, 6)
 [node name="MarginContainer" type="MarginContainer"]
 offset_right = 102.0
 offset_bottom = 34.0
+scale = Vector2(0.77, 0.77)
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -5
@@ -120,9 +121,11 @@ color = Color(1, 1, 1, 0.27451)
 
 [node name="Label" type="Label" parent="HBoxContainer/skill_1/TextureRect/mask1"]
 layout_mode = 0
-offset_right = 46.0
-offset_bottom = 46.0
-scale = Vector2(0.7, 0.7)
+offset_left = 1.6
+offset_top = 2.9
+offset_right = 65.6
+offset_bottom = 53.9
+scale = Vector2(0.45, 0.45)
 text = "按ESC或
 右键取消
 "
@@ -188,9 +191,11 @@ color = Color(1, 1, 1, 0.27451)
 
 [node name="Label" type="Label" parent="HBoxContainer/skill_2/TextureRect2/mask2"]
 layout_mode = 0
-offset_right = 46.0
-offset_bottom = 46.0
-scale = Vector2(0.7, 0.7)
+offset_left = 1.6
+offset_top = 2.9
+offset_right = 65.6
+offset_bottom = 53.9
+scale = Vector2(0.45, 0.45)
 text = "按ESC或
 右键取消
 "
@@ -246,9 +251,11 @@ color = Color(1, 1, 1, 0.27451)
 
 [node name="Label" type="Label" parent="HBoxContainer/skill_3/TextureRect3/mask3"]
 layout_mode = 0
-offset_right = 46.0
-offset_bottom = 46.0
-scale = Vector2(0.7, 0.7)
+offset_left = 1.6
+offset_top = 2.9
+offset_right = 65.6
+offset_bottom = 53.9
+scale = Vector2(0.45, 0.45)
 text = "按ESC或
 右键取消
 "

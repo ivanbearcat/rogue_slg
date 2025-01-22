@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/slime_small.gd" id="1_tf0m4"]
 [ext_resource type="Texture2D" uid="uid://cyo82memmjeol" path="res://images/Slime_yellow.png" id="2_h1rea"]
-[ext_resource type="Texture2D" uid="uid://d35dnb2ltby7g" path="res://images/Skillicon11_10.png" id="3_gsqex"]
+[ext_resource type="Texture2D" uid="uid://d2i2drhs34c14" path="res://images/icon_reset_red.png" id="3_wdma6"]
 [ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="4_k2fsi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
@@ -290,12 +290,12 @@ autoplay = "idle"
 [node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false
 position = Vector2(7.49707, 3.82962)
-scale = Vector2(0.281433, 0.239351)
-texture = ExtResource("3_gsqex")
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_wdma6")
 
 [node name="dice" type="AnimatedSprite2D" parent="Area2D"]
 position = Vector2(12.2809, 5.30422)
-scale = Vector2(-0.196884, -0.190505)
+scale = Vector2(-0.197, -0.191)
 sprite_frames = SubResource("SpriteFrames_aldak")
 animation = &"roll"
 frame_progress = 0.944284

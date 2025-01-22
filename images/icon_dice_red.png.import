@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d35dnb2ltby7g"
-path="res://.godot/imported/Skillicon11_10.png-eb0ea3c550582174331b76c8a538712e.ctex"
+uid="uid://vuqgwegyu08q"
+path="res://.godot/imported/icon_dice_red.png-83f235d085f1629f35481d87c9559500.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/Skillicon11_10.png"
-dest_files=["res://.godot/imported/Skillicon11_10.png-eb0ea3c550582174331b76c8a538712e.ctex"]
+source_file="res://images/icon_dice_red.png"
+dest_files=["res://.godot/imported/icon_dice_red.png-83f235d085f1629f35481d87c9559500.ctex"]
 
 [params]
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/grid.gd" id="1_p7jgk"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_70vec"]
-[ext_resource type="Texture2D" uid="uid://4kfhtqg08wfq" path="res://images/Skillicon11_19.png" id="3_br1fs"]
+[ext_resource type="Texture2D" uid="uid://b5dc0ftulapfe" path="res://images/icon_skull_red.png" id="3_whhth"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3sbim"]
 size = Vector2(13, 13)
@@ -48,8 +48,8 @@ texture = SubResource("AtlasTexture_fnun3")
 [node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false
 position = Vector2(8, 9)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_br1fs")
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_whhth")
 
 [node name="range" type="Sprite2D" parent="Area2D"]
 visible = false

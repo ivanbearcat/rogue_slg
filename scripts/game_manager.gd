@@ -13,7 +13,8 @@ const hero_property = {
 @onready var enemys: Node2D = $enemys
 @onready var turn_button: Button = %turn_button
 @onready var turn_label: Label = %turn_label
-@onready var left_side_ui: MarginContainer = $UI/left_side_ui
+#@onready var left_side_ui: MarginContainer = $UI/left_side_ui
+@onready var hero_skill: Control = $hero_skill
 @onready var skill_system: Node2D = $skill_system
 @onready var skill_1_ui: MarginContainer
 
@@ -159,15 +160,15 @@ func _slime_grow_up_ai():
 ## 设置英雄信息
 func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_name = properties.name
-	#hero.hero_grid_index = properties.init_vec
+	Current.hero = hero
 	hero.hero_movement = properties.movement
 	hero.position = _grid_index_to_position(properties.init_vec)
 	#Current.all_hero_dict[hero.hero_name] = hero
 	hero.hero_cmd.connect(_on_hero_cmd)
 	var hero_skills_ui = SceneManager.create_scene(hero.hero_name + "_skills")
-	left_side_ui.add_child(hero_skills_ui)
+	hero_skill.add_child(hero_skills_ui)
 	## onready后无法获取到代码新增的节点skill_1_ui，在此处添加了场景树之后可以获取，但无法使用唯一标识获取
-	skill_1_ui = left_side_ui.get_node("MarginContainer/HBoxContainer/skill_1")
+	skill_1_ui = hero_skill.get_node("MarginContainer/HBoxContainer/skill_1")
 	
 
 ## 设置3技能的状态脚本

@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://tnl7iet676i7" path="res://images/Slime.png" id="1_1jsnh"]
 [ext_resource type="Script" path="res://scripts/slime_small.gd" id="1_huabk"]
 [ext_resource type="Shader" path="res://shaders/high_light.gdshader" id="2_k2nca"]
-[ext_resource type="Texture2D" uid="uid://d35dnb2ltby7g" path="res://images/Skillicon11_10.png" id="3_3dkmt"]
 [ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="4_1j7yk"]
+[ext_resource type="Texture2D" uid="uid://d2i2drhs34c14" path="res://images/icon_reset_red.png" id="4_au6rk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
 size = Vector2(14, 14)
@@ -299,8 +299,8 @@ frame_progress = 0.238253
 [node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false
 position = Vector2(7.49707, 3.82962)
-scale = Vector2(0.281433, 0.239351)
-texture = ExtResource("3_3dkmt")
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_au6rk")
 
 [node name="dice" type="AnimatedSprite2D" parent="Area2D"]
 position = Vector2(12.2809, 5.30422)

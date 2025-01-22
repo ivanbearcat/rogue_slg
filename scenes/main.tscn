@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=18 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
 [ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="3_h858a"]
 [ext_resource type="Script" path="res://scripts/skill_system.gd" id="3_rragv"]
 [ext_resource type="FontFile" uid="uid://bp53tlinpuypa" path="res://fonts/SourceHanSansCN-Normal.otf" id="4_76ilt"]
+[ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="6_bkbmf"]
+[ext_resource type="Texture2D" uid="uid://c17wcqa1otoo2" path="res://images/dice_one.tres" id="6_vreof"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
 texture = ExtResource("2_nsbfg")
@@ -825,6 +827,24 @@ size = Vector2(16, 112)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oscie"]
 size = Vector2(16, 112)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ny6h8"]
+atlas = ExtResource("6_bkbmf")
+region = Rect2(0, 96, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xggs"]
+atlas = ExtResource("6_bkbmf")
+region = Rect2(145, 65, 46, 14)
+
+[sub_resource type="LabelSettings" id="LabelSettings_62n0d"]
+font = ExtResource("4_76ilt")
+font_color = Color(0, 0, 0, 1)
+outline_size = 5
+outline_color = Color(0.352941, 0.411765, 0.533333, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ri1gj"]
+atlas = ExtResource("6_bkbmf")
+region = Rect2(49, 97, 30, 30)
+
 [node name="game_manager" type="Node2D"]
 scale = Vector2(4, 4)
 script = ExtResource("1_jbfvy")
@@ -870,55 +890,499 @@ script = ExtResource("3_rragv")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(71.5, 68.5)
 
-[node name="UI" type="Control" parent="."]
+[node name="score_panal" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -71.0
+offset_top = 16.0
+offset_right = 11.0
+offset_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="score_panal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_ny6h8")
+patch_margin_left = 5
+patch_margin_top = 6
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="score_panal/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("AtlasTexture_2xggs")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 124.0
+offset_bottom = 25.0
+scale = Vector2(0.25, 0.25)
+theme_override_constants/separation = 7
+
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer"]
+layout_mode = 2
+text = "点数"
+label_settings = SubResource("LabelSettings_62n0d")
+
+[node name="Label2" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer"]
+layout_mode = 2
+text = "分值"
+label_settings = SubResource("LabelSettings_62n0d")
+
+[node name="Label3" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer"]
+layout_mode = 2
+text = "得分"
+label_settings = SubResource("LabelSettings_62n0d")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.55
+offset_left = 2.5
+offset_top = 1.0
+offset_right = 121.15
+offset_bottom = 24.0
+scale = Vector2(0.25, 0.25)
+theme_override_constants/separation = 7
+
+[node name="Label4" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer2"]
+layout_mode = 2
+text = "骰型"
+label_settings = SubResource("LabelSettings_62n0d")
+
+[node name="Label5" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer2"]
+layout_mode = 2
+text = "倍率"
+label_settings = SubResource("LabelSettings_62n0d")
+
+[node name="Label6" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer2"]
+layout_mode = 2
+text = "得分"
+label_settings = SubResource("LabelSettings_62n0d")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
+theme_override_constants/separation = 0
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_ri1gj")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="GridContainer" type="GridContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 3
+columns = 3
+
+[node name="TextureRect" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect5" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect6" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect7" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect8" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect9" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect10" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect11" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect12" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect13" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect14" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect15" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect16" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect17" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect18" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_ri1gj")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="GridContainer" type="GridContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 3
+columns = 3
+
+[node name="TextureRect" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect5" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect6" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect7" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect8" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect9" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect10" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect11" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect12" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect13" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect14" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect15" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect16" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect17" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect18" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_vreof")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="current_score" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 138.0
+offset_top = 75.0
+offset_right = 209.0
+offset_bottom = 132.0
 
-[node name="right_side_ui" type="MarginContainer" parent="UI"]
-layout_mode = 0
-offset_left = 138.5
-offset_top = 82.5
-offset_right = 186.5
-offset_bottom = 143.5
-scale = Vector2(0.8, 0.8)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/right_side_ui"]
-layout_mode = 2
-size_flags_horizontal = 4
+[node name="VBoxContainer" type="VBoxContainer" parent="current_score"]
+layout_mode = 1
+offset_right = 72.0
+offset_bottom = 88.0
+scale = Vector2(0.6, 0.6)
+size_flags_horizontal = 0
 size_flags_vertical = 4
 
-[node name="total_score" type="Label" parent="UI/right_side_ui/VBoxContainer"]
+[node name="total_score" type="Label" parent="current_score/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "总分: 0"
 label_settings = ExtResource("3_h858a")
 
-[node name="turn_label" type="Label" parent="UI/right_side_ui/VBoxContainer"]
+[node name="turn_label" type="Label" parent="current_score/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "回合: 0"
 label_settings = ExtResource("3_h858a")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/right_side_ui/VBoxContainer"]
-layout_mode = 2
-
-[node name="turn_button" type="Button" parent="UI/right_side_ui/VBoxContainer/MarginContainer"]
+[node name="turn_button" type="Button" parent="current_score/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_76ilt")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 16
 text = "回合结束"
 
-[node name="left_side_ui" type="MarginContainer" parent="UI"]
-layout_mode = 0
-offset_left = -68.75
+[node name="hero_skill" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -69.0
 offset_top = 107.0
-offset_right = 33.25
-offset_bottom = 141.0
-scale = Vector2(0.77, 0.77)
+offset_right = 5.0
+offset_bottom = 130.0
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]
-[connection signal="pressed" from="UI/right_side_ui/VBoxContainer/MarginContainer/turn_button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="current_score/VBoxContainer/turn_button" to="." method="_on_button_pressed"]
