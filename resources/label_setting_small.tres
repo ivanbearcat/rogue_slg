@@ -3,6 +3,7 @@
 [ext_resource type="FontFile" uid="uid://bp53tlinpuypa" path="res://fonts/SourceHanSansCN-Normal.otf" id="1_6aixs"]
 
 [resource]
+line_spacing = 0.0
 font = ExtResource("1_6aixs")
 outline_size = 6
 outline_color = Color(0, 0, 0, 1)

@@ -84,7 +84,7 @@ var skill_attack_range: Array
 ## 将要变化的史莱姆列表
 var transformable_slime_array: Array
 ## 总分
-@onready var total_score_ui: Label = get_node("/root/game_manager/UI/right_side_ui/VBoxContainer/total_score")
+@onready var total_score_ui: Label = get_node("/root/game_manager/current_score/VBoxContainer/total_score")
 var total_score: int:
 	set(v):
 		total_score_ui.text = "总分: " + str(v)
