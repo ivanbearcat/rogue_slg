@@ -1,7 +1,8 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://c17wcqa1otoo2"]
 
-[ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="1_xecyh"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_op861"]
+load_path = "res://.godot/imported/dice_type.png-5ace320fbfb9f992a7581b1e5a1a1dfd.ctex"
 
 [resource]
-atlas = ExtResource("1_xecyh")
-region = Rect2(58, 2, 24, 24)
+atlas = SubResource("CompressedTexture2D_op861")
+region = Rect2(4, 0, 24, 10)

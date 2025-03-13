@@ -1,4 +1,6 @@
 extends Node
+# game_manager节点
+@onready var game_manager: Node2D = get_node("/root/game_manager")
 # 鼠标指向的英雄
 var hero: Hero
 # 鼠标点击英雄
@@ -84,9 +86,81 @@ var skill_attack_range: Array
 ## 将要变化的史莱姆列表
 var transformable_slime_array: Array
 ## 总分
-@onready var total_score_ui: Label = get_node("/root/game_manager/current_score/VBoxContainer/total_score")
 var total_score: int:
 	set(v):
-		total_score_ui.text = "总分: " + str(v)
+		game_manager.total_score.text = "总分: " + str(v)
 	get:
-		return int(total_score_ui.text)
+		return int(game_manager.total_score.text)
+## 骰型板基础分数
+var one_score: int:
+	set(v):
+		game_manager.one_score.text = str(v)
+	get:
+		return int(game_manager.one_score.text)
+var two_score: int:
+	set(v):
+		game_manager.two_score.text = str(v)
+	get:
+		return int(game_manager.two_score.text)
+var three_score: int:
+	set(v):
+		game_manager.three_score.text = str(v)
+	get:
+		return int(game_manager.three_score.text)
+var four_score: int:
+	set(v):
+		game_manager.four_score.text = str(v)
+	get:
+		return int(game_manager.four_score.text)
+var five_score: int:
+	set(v):
+		game_manager.five_score.text = str(v)
+	get:
+		return int(game_manager.five_score.text)
+var six_score: int:
+	set(v):
+		game_manager.six_score.text = str(v)
+	get:
+		return int(game_manager.six_score.text)
+## 骰型板倍率
+var none_percent: float:
+	set(v):
+		game_manager.none_percent.text = str(v * 100) + "%"
+	get:
+		return float(game_manager.none_percent.text)
+var duizi_percent: float:
+	set(v):
+		game_manager.duizi_percent.text = str(v * 100) + "%"
+	get:
+		return float(game_manager.duizi_percent.text)
+var shunzi_percent: float:
+	set(v):
+		game_manager.shunzi_percent.text = str(v * 100) + "%"
+	get:
+		return float(game_manager.shunzi_percent.text)
+var tongse_percent: float:
+	set(v):
+		game_manager.tongse_percent.text = str(v * 100) + "%"
+	get:
+		return float(game_manager.tongse_percent.text)
+var mirror_percent: float:
+	set(v):
+		game_manager.mirror_percent.text = str(v * 100) + "%"
+	get:
+		return float(game_manager.mirror_percent.text)
+var point_percent: float:
+	set(v):
+		game_manager.point_percent.text = str(v * 100) + "%"
+	get:
+		return float(game_manager.point_percent.text)
+## 实时基础和倍率
+var base_score: int:
+	set(v):
+		game_manager.base_score.text = str(v)
+	get:
+		return int(game_manager.base_score.text)
+var percent_score: float:
+	set(v):
+		game_manager.percent_score.text = str(v * 100) + "%"
+	get:
+		return int(game_manager.percent_score.text)

@@ -17,7 +17,22 @@ const hero_property = {
 @onready var hero_skill: Control = $hero_skill
 @onready var skill_system: Node2D = $skill_system
 @onready var skill_1_ui: MarginContainer
-
+@onready var total_score: Label = %total_score
+## 骰型板
+@onready var one_score: Label = %one_score
+@onready var two_score: Label = %two_score
+@onready var three_score: Label = %three_score
+@onready var four_score: Label = %four_score
+@onready var five_score: Label = %five_score
+@onready var six_score: Label = %six_score
+@onready var none_percent: Label = %none_percent
+@onready var duizi_percent: Label = %duizi_percent
+@onready var shunzi_percent: Label = %shunzi_percent
+@onready var tongse_percent: Label = %tongse_percent
+@onready var mirror_percent: Label = %mirror_percent
+@onready var point_percent: Label = %point_percent
+@onready var base_score: Label = %base_score
+@onready var percent_score: Label = %percent_score
 
 ## 格子像素大小
 var grid_size = Vector2i(16, 16)
@@ -42,7 +57,9 @@ var slime_scene_array := ['slime_small', 'slime_small_red', 'slime_small_yellow'
 ## 边缘格子列表
 var _margin_grid: Array[Vector2i]
 
-func _ready() -> void:	
+func _ready() -> void:
+	Current.base_score = 10
+	Current.percent_score = 1.2
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
