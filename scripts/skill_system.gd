@@ -17,7 +17,8 @@ func show_skill_attack(hero_name, skill_num):
 func hide_skill_attack():
 	for attack_grid_index in game_manager.all_grid_dict:
 		game_manager.all_grid_dict[attack_grid_index].attack.visible = false
-	
+
+## 鼠标点击红框之后	
 func skill_attack():
 	var _slime_die_array: Array
 	for slime in Current.all_enemy_array:
@@ -54,7 +55,7 @@ func _show_soldier_skill_1_attack():
 					if attack_grid_index in game_manager.all_grid_dict:
 						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 						Current.skill_attack_range.append(attack_grid_index)
-					
+	print(_fetch_attack_slime_array_info(_fetch_attack_slime_array()))
 
 func _show_soldier_skill_2_range():
 	Current.skill_target_range = []
@@ -104,3 +105,35 @@ func _show_soldier_skill_3_attack():
 					Current.skill_attack_range.append(attack_grid_index)
 					game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 					print(Current.skill_attack_range)
+
+## 所有在红格子里的史莱姆组
+func _fetch_attack_slime_array():
+	var slime_array: Array
+	for slime in Current.all_enemy_array:
+		if slime.enemy_grid_index in Current.skill_attack_range:
+			slime_array.append(slime)
+	return slime_array
+
+## 统计史莱姆骰子的颜色、点数、数量, return: [[<color>, <dice_num>], ...]
+func _fetch_attack_slime_array_info(slime_array):
+	var slime_color_dict := {
+		"slime_small": "green",
+		"slime_small_red": "red",
+		"slime_small_yellow": "yellow",
+		"slime_small_blue": "blue"
+	}
+	var attack_slime_array_info: Array
+	for slime in slime_array:
+		var slime_color = slime_color_dict[Tools.fetch_slime_scene(slime)]
+		if slime_color:
+			attack_slime_array_info.append([slime_color, slime.dice_point])
+		else:
+			assert(false, "slime have not color")
+	return attack_slime_array_info
+
+## 骰型板展示史莱姆对应的点数和骰型
+func _show_dice_panel(attack_slime_array_info):
+	pass
+## 计算本次攻击的分数
+func _count_score(attack_slime_array_info):
+	pass

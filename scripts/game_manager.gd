@@ -33,6 +33,20 @@ const hero_property = {
 @onready var point_percent: Label = %point_percent
 @onready var base_score: Label = %base_score
 @onready var percent_score: Label = %percent_score
+## 骰型板框线
+@onready var one_score_frame: PanelContainer = %one_score_frame
+@onready var two_score_frame: PanelContainer = %two_score_frame
+@onready var three_score_frame: PanelContainer = %three_score_frame
+@onready var four_score_frame: PanelContainer = %four_score_frame
+@onready var five_score_frame: PanelContainer = %five_score_frame
+@onready var six_score_frame: PanelContainer = %six_score_frame
+@onready var none_percent_frame: PanelContainer = %none_percent_frame
+@onready var duizi_percent_frame: PanelContainer = %duizi_percent_frame
+@onready var shunzi_percent_frame: PanelContainer = %shunzi_percent_frame
+@onready var tongse_percent_frame: PanelContainer = %tongse_percent_frame
+@onready var mirror_percent_frame: PanelContainer = %mirror_percent_frame
+@onready var point_percent_frame: PanelContainer = %point_percent_frame
+
 
 ## 格子像素大小
 var grid_size = Vector2i(16, 16)
@@ -56,10 +70,23 @@ var dice_point: Array = [0, 2, 4, 6, 8, 10]
 var slime_scene_array := ['slime_small', 'slime_small_red', 'slime_small_yellow', 'slime_small_blue']
 ## 边缘格子列表
 var _margin_grid: Array[Vector2i]
+## 颜色
+var color = {
+	"red": "cc0808"
+}
+
 
 func _ready() -> void:
-	Current.base_score = 10
-	Current.percent_score = 1.2
+	## 测试
+	#var sb = none_percent_frame.get("theme_override_styles/panel")
+	#sb.border_color = Color.html(color["red"])
+	## 设置基础倍率
+	Current.none_percent = 1
+	Current.duizi_percent = 1.5
+	Current.shunzi_percent = 1.6
+	Current.tongse_percent = 1.4
+	Current.mirror_percent = 3
+	Current.point_percent = 2
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -153,25 +180,27 @@ func _slime_move_ai():
 
 ## 史莱姆变化
 func _slime_grow_up_ai():
-	var slime_type
 	if Current.transformable_slime_array.size() > 0:
 		for slime in Current.transformable_slime_array:
 			var slime_grid_index = slime.enemy_grid_index
+			## 获取史莱姆颜色
 			var regex = RegEx.new()
 			regex.compile(".*(?<name>slime.*)\\.tscn")
 			var result = regex.search(slime.scene_file_path)
-			if result.get_string("name"):
+			var slime_color = Tools.fetch_slime_scene(slime)
+			if slime_color:
 				var copy_slime_scene_array = slime_scene_array.duplicate()
-				copy_slime_scene_array.pop_at(copy_slime_scene_array.find(result.get_string("name")))
+				copy_slime_scene_array.pop_at(copy_slime_scene_array.find(slime_color))
 				slime.queue_free()
 				var slime_sence = copy_slime_scene_array.pick_random()
+				copy_slime_scene_array.clear()
 				var slime_instantiate = SceneManager.create_scene(slime_sence)
 				slime_instantiate.position = _grid_index_to_position(slime_grid_index)
 				slime_instantiate.enemy_grid_index = slime_grid_index
 				enemys.add_child(slime_instantiate)
-				_roll_dice(slime_instantiate)
+				_roll_dice(slime_instantiate)	
 			else:
-				print("error: 正则没到查到字符")
+				assert(false, "slime have not color")
 			
 			
 ## 设置英雄信息

@@ -156,11 +156,17 @@ var point_percent: float:
 ## 实时基础和倍率
 var base_score: int:
 	set(v):
-		game_manager.base_score.text = str(v)
+		if v != 0:
+			game_manager.base_score.text = str(v)	
+		else:
+			game_manager.base_score.text = ''
 	get:
 		return int(game_manager.base_score.text)
 var percent_score: float:
 	set(v):
-		game_manager.percent_score.text = str(v * 100) + "%"
+		if v != 0:
+			game_manager.percent_score.text = str(v * 100) + "%"
+		else:
+			game_manager.percent_score.text = ''
 	get:
 		return int(game_manager.percent_score.text)
