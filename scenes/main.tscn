@@ -1785,7 +1785,8 @@ offset_right = 4.0
 offset_bottom = 8.0
 scale = Vector2(0.85, 0.85)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="dice_num"]
+[node name="dice_list" type="HBoxContainer" parent="dice_num"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1795,8 +1796,7 @@ grow_vertical = 2
 pivot_offset = Vector2(28, 4)
 theme_override_constants/separation = 1
 
-[node name="dice1" type="TextureRect" parent="dice_num/HBoxContainer"]
-unique_name_in_owner = true
+[node name="dice1" type="TextureRect" parent="dice_num/dice_list"]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1804,8 +1804,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice2" type="TextureRect" parent="dice_num/HBoxContainer"]
-unique_name_in_owner = true
+[node name="dice2" type="TextureRect" parent="dice_num/dice_list"]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1813,8 +1812,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice3" type="TextureRect" parent="dice_num/HBoxContainer"]
-unique_name_in_owner = true
+[node name="dice3" type="TextureRect" parent="dice_num/dice_list"]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1822,8 +1820,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice4" type="TextureRect" parent="dice_num/HBoxContainer"]
-unique_name_in_owner = true
+[node name="dice4" type="TextureRect" parent="dice_num/dice_list"]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1831,8 +1828,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice5" type="TextureRect" parent="dice_num/HBoxContainer"]
-unique_name_in_owner = true
+[node name="dice5" type="TextureRect" parent="dice_num/dice_list"]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1840,8 +1836,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice6" type="TextureRect" parent="dice_num/HBoxContainer"]
-unique_name_in_owner = true
+[node name="dice6" type="TextureRect" parent="dice_num/dice_list"]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1849,8 +1844,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice7" type="TextureRect" parent="dice_num/HBoxContainer"]
-unique_name_in_owner = true
+[node name="dice7" type="TextureRect" parent="dice_num/dice_list"]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1858,8 +1852,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice8" type="TextureRect" parent="dice_num/HBoxContainer"]
-unique_name_in_owner = true
+[node name="dice8" type="TextureRect" parent="dice_num/dice_list"]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3

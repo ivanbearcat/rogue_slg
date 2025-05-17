@@ -46,7 +46,8 @@ const hero_property = {
 @onready var tongse_percent_frame: PanelContainer = %tongse_percent_frame
 @onready var mirror_percent_frame: PanelContainer = %mirror_percent_frame
 @onready var point_percent_frame: PanelContainer = %point_percent_frame
-
+## 骰子UI父级
+@onready var dice_list: HBoxContainer = %dice_list
 
 ## 格子像素大小
 var grid_size = Vector2i(16, 16)
@@ -76,17 +77,18 @@ var color = {
 }
 
 
+
 func _ready() -> void:
 	## 测试
 	#var sb = none_percent_frame.get("theme_override_styles/panel")
 	#sb.border_color = Color.html(color["red"])
 	## 设置基础倍率
-	Current.none_percent = 1
-	Current.duizi_percent = 1.5
-	Current.shunzi_percent = 1.6
-	Current.tongse_percent = 1.4
-	Current.mirror_percent = 3
-	Current.point_percent = 2
+	Current.none_percent = 100
+	Current.duizi_percent = 150
+	Current.shunzi_percent = 160
+	Current.tongse_percent = 140
+	Current.mirror_percent = 300
+	Current.point_percent = 200
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):

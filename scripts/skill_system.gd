@@ -17,6 +17,7 @@ func show_skill_attack(hero_name, skill_num):
 func hide_skill_attack():
 	for attack_grid_index in game_manager.all_grid_dict:
 		game_manager.all_grid_dict[attack_grid_index].attack.visible = false
+	_reset_dice_panel()
 
 ## 鼠标点击红框之后	
 func skill_attack():
@@ -55,7 +56,13 @@ func _show_soldier_skill_1_attack():
 					if attack_grid_index in game_manager.all_grid_dict:
 						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 						Current.skill_attack_range.append(attack_grid_index)
-	print(_fetch_attack_slime_array_info(_fetch_attack_slime_array()))
+	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
+	#_count_dice_type([['red',1],['red',5],['blue',2]])
+	var dice_type_point = _count_dice_type(attack_slime_array_info)
+	#print(dice_type_point)
+	_show_dice_panel(attack_slime_array_info, dice_type_point)
+	
+	
 
 func _show_soldier_skill_2_range():
 	Current.skill_target_range = []
@@ -115,6 +122,7 @@ func _fetch_attack_slime_array():
 	return slime_array
 
 ## 统计史莱姆骰子的颜色、点数、数量, return: [[<color>, <dice_num>], ...]
+## example: [["red"， 3]， ["blue", 3]]
 func _fetch_attack_slime_array_info(slime_array):
 	var slime_color_dict := {
 		"slime_small": "green",
@@ -132,8 +140,286 @@ func _fetch_attack_slime_array_info(slime_array):
 	return attack_slime_array_info
 
 ## 骰型板展示史莱姆对应的点数和骰型
-func _show_dice_panel(attack_slime_array_info):
-	pass
+func _show_dice_panel(attack_slime_array_info, dice_type_point):
+	var dice_array = game_manager.dice_list.get_children()
+	for num in range(attack_slime_array_info.size()):
+		dice_array[num].set_self_modulate(Color(1, 1, 1, 1))
+	var frame_dict = {
+		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
+		2: game_manager.two_score_frame.get("theme_override_styles/panel"),
+		3: game_manager.three_score_frame.get("theme_override_styles/panel"),
+		4: game_manager.four_score_frame.get("theme_override_styles/panel"),
+		5: game_manager.five_score_frame.get("theme_override_styles/panel"),
+		6: game_manager.six_score_frame.get("theme_override_styles/panel"),
+		'none': game_manager.none_percent_frame.get("theme_override_styles/panel"),
+		'duizi': game_manager.duizi_percent_frame.get("theme_override_styles/panel"),
+		'shunzi': game_manager.shunzi_percent_frame.get("theme_override_styles/panel"),
+		'tongse': game_manager.tongse_percent_frame.get("theme_override_styles/panel"),
+		'mirror': game_manager.mirror_percent_frame.get("theme_override_styles/panel"),
+		'point': game_manager.point_percent_frame.get("theme_override_styles/panel")
+	}
+	var color = {
+		"alpha0": "cc080800",
+		"red": "cc0808"
+	}
+	#sb.border_color = Color.html(color["red"])
+	if dice_type_point[2]:
+		## 骰面框线
+		for point in dice_type_point[2]:
+			frame_dict[point].border_color = Color.html(color["red"])
+		## 骰型框线
+		frame_dict[dice_type_point[0]].border_color = Color.html(color["red"])
+	
+## 清空板展示史莱姆对应的点数和骰型
+func _reset_dice_panel():
+	var dice_array = game_manager.dice_list.get_children()
+	for dice in dice_array:
+		dice.set_self_modulate(Color(1, 1, 1, 0.3))
+	var frame_dict = {
+		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
+		2: game_manager.two_score_frame.get("theme_override_styles/panel"),
+		3: game_manager.three_score_frame.get("theme_override_styles/panel"),
+		4: game_manager.four_score_frame.get("theme_override_styles/panel"),
+		5: game_manager.five_score_frame.get("theme_override_styles/panel"),
+		6: game_manager.six_score_frame.get("theme_override_styles/panel"),
+		'none': game_manager.none_percent_frame.get("theme_override_styles/panel"),
+		'duizi': game_manager.duizi_percent_frame.get("theme_override_styles/panel"),
+		'shunzi': game_manager.shunzi_percent_frame.get("theme_override_styles/panel"),
+		'tongse': game_manager.tongse_percent_frame.get("theme_override_styles/panel"),
+		'mirror': game_manager.mirror_percent_frame.get("theme_override_styles/panel"),
+		'point': game_manager.point_percent_frame.get("theme_override_styles/panel")
+	}
+	var color = {
+		"alpha0": "cc080800",
+		"red": "cc0808"
+	}
+	for i in frame_dict.values():
+		i.border_color = Color.html(color["alpha0"])
+
+## 计算选中的最高最终骰型
+func _count_dice_type(attack_slime_array_info):
+	var duizi_score_dice = _count_duizi(attack_slime_array_info)
+	var shunzi_score_dice = _count_shunzi(attack_slime_array_info)
+	var tongse_score_dice = _count_tongse(attack_slime_array_info)
+	var mirror_score_dice = _count_mirror(attack_slime_array_info)
+	var all_score_dict := {
+		'duizi': duizi_score_dice,
+		'shunzi': shunzi_score_dice,
+		'tongse': tongse_score_dice,
+		'mirror': mirror_score_dice
+	}
+	var biggest_score := []
+	for score in all_score_dict:
+		#print(score, all_score_dict[score])
+		if all_score_dict[score][0] > 0:
+			if biggest_score:
+				if all_score_dict[score][0] > biggest_score[1]:
+					biggest_score = [score, all_score_dict[score][0], all_score_dict[score][1]]
+			else:
+				biggest_score = [score, all_score_dict[score][0], all_score_dict[score][1]]
+	if biggest_score:
+		biggest_score[1] = round(biggest_score[1])
+		#print(biggest_score)
+		return biggest_score
+	else:
+		#print(['none', round(_count_none(attack_slime_array_info))])
+		var none_score_dice = _count_none(attack_slime_array_info)
+		return ['none', round(none_score_dice[0]), none_score_dice[1]]
 ## 计算本次攻击的分数
 func _count_score(attack_slime_array_info):
 	pass
+	
+## 对子算法
+func _count_duizi(attack_slime_array_info):
+	var score_dict := {
+		1: Current.one_score,
+		2: Current.two_score,
+		3: Current.three_score,
+		4: Current.four_score,
+		5: Current.five_score,
+		6: Current.six_score
+	}
+	var resut_dict := {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+	for point in attack_slime_array_info:
+		resut_dict[point[1]].append(point[1])
+	var score := 0.0
+	var tmp_score := 0.0
+	var tmp_item := []
+	for v in resut_dict.values():
+		if tmp_item:
+			if v.size() >= tmp_item.size():
+				tmp_item = v
+		else:
+			if v.size() >= 2:
+				tmp_item = v
+	if tmp_item:
+		for point in tmp_item:
+			tmp_score += score_dict[point]
+		score = tmp_score * (Current.duizi_percent / 100.0)
+	return [score, tmp_item]
+
+## 顺子算法
+func _count_shunzi(attack_slime_array_info):
+	var score_dict := {
+		1: Current.one_score,
+		2: Current.two_score,
+		3: Current.three_score,
+		4: Current.four_score,
+		5: Current.five_score,
+		6: Current.six_score
+	}
+	var score := 0.0
+	var tmp_score := 0.0
+	var tmp_item := []
+	var flag := 0
+	var tmp_array_1 := []
+	var tmp_array_2 := []
+	var unique_porint_array := []
+	for point in attack_slime_array_info:
+		if not unique_porint_array.has(point[1]):
+			unique_porint_array.append(point[1])
+	unique_porint_array.sort()
+	for point in unique_porint_array:
+		if flag == 0:
+			if tmp_array_1:
+				if point - 1 == tmp_array_1[tmp_array_1.size() - 1]:
+					tmp_array_1.append(point)
+				else:
+					if tmp_array_1.size() > 2:
+						tmp_item = tmp_array_1
+						break
+					else:
+						flag += 1
+						tmp_array_2.append(point)
+						continue
+			else:
+				tmp_array_1.append(point)
+		else:
+			if point - 1 == tmp_array_2[tmp_array_2.size() - 1]:
+				tmp_array_2.append(point)
+			else:
+				tmp_item = tmp_array_2
+				break
+	if tmp_array_2.size() >= 2:
+		tmp_item = tmp_array_2
+	else:
+		if tmp_array_1.size() >= 2:
+			tmp_item = tmp_array_1
+		else:
+			tmp_item = []
+	if tmp_item:
+		for point in tmp_item:
+			tmp_score += score_dict[point]
+		score = tmp_score * (Current.shunzi_percent / 100.0)
+	return [score, tmp_item]
+
+## 同色算法
+func _count_tongse(attack_slime_array_info):
+	var score_dict := {
+		1: Current.one_score,
+		2: Current.two_score,
+		3: Current.three_score,
+		4: Current.four_score,
+		5: Current.five_score,
+		6: Current.six_score
+	}
+	var resut_dict := {"red": [], "yellow": [], "green": [], "blue": []}
+	for point in attack_slime_array_info:
+		resut_dict[point[0]].append(point[1])
+	var score := 0.0
+	var tmp_score := 0.0
+	var tmp_item := []
+	for v in resut_dict.values():
+		if tmp_item:
+			if v.size() == tmp_item.size():
+				var count_1 = 0
+				for i in v:
+					count_1 += i
+				var count_2 = 0
+				for i in tmp_item:
+					count_2 += i
+				if count_1 > count_2:
+					tmp_item = v
+			if v.size() > tmp_item.size():
+				tmp_item = v
+		else:
+			if v.size() >= 2:
+				tmp_item = v
+	if tmp_item:
+		for point in tmp_item:
+			tmp_score += score_dict[point]
+		score = tmp_score * (Current.tongse_percent / 100.0)
+	return [score, tmp_item]
+
+## 镜像算法
+func _count_mirror(attack_slime_array_info):
+	var score_dict := {
+		1: Current.one_score,
+		2: Current.two_score,
+		3: Current.three_score,
+		4: Current.four_score,
+		5: Current.five_score,
+		6: Current.six_score
+	}
+	var resut_dict := {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+	for point in attack_slime_array_info:
+		resut_dict[point[1]].append(point)
+	var tmp_item := []
+	for v in resut_dict.values():
+		if tmp_item:
+			if v.size() >= tmp_item.size():
+				tmp_item = v
+		else:
+			if v.size() >= 2:
+				tmp_item = v
+	resut_dict = {"red": [], "yellow": [], "green": [], "blue": []}
+	for point in tmp_item:
+		resut_dict[point[0]].append(point[1])
+	var score := 0.0
+	var tmp_score := 0.0
+	tmp_item = []
+	for v in resut_dict.values():
+		if tmp_item:
+			if v.size() == tmp_item.size():
+				var count_1 = 0
+				for i in v:
+					count_1 += i
+				var count_2 = 0
+				for i in tmp_item:
+					count_2 += i
+				if count_1 > count_2:
+					tmp_item = v
+			if v.size() > tmp_item.size():
+				tmp_item = v
+		else:
+			if v.size() >= 2:
+				tmp_item = v
+	if tmp_item:
+		for point in tmp_item:
+			tmp_score += score_dict[point]
+		score = tmp_score * (Current.mirror_percent / 100.0)
+	return [score, tmp_item]
+
+## 点数算法
+func _count_point(attack_slime_array_info):
+	pass
+
+## 无骰型法
+func _count_none(attack_slime_array_info):
+	var score_dict := {
+		1: Current.one_score,
+		2: Current.two_score,
+		3: Current.three_score,
+		4: Current.four_score,
+		5: Current.five_score,
+		6: Current.six_score
+	}
+	var score := 0.0
+	var tmp_score := 0.0
+	var tmp_item := []
+	for point in attack_slime_array_info:
+		tmp_item.append(point[1])
+		tmp_score += score_dict[point[1]]
+	if tmp_score:
+		score = tmp_score * (Current.none_percent / 100.0)
+	return [score, tmp_item]

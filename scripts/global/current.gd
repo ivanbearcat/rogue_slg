@@ -125,32 +125,32 @@ var six_score: int:
 ## 骰型板倍率
 var none_percent: float:
 	set(v):
-		game_manager.none_percent.text = str(v * 100) + "%"
+		game_manager.none_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.none_percent.text)
 var duizi_percent: float:
 	set(v):
-		game_manager.duizi_percent.text = str(v * 100) + "%"
+		game_manager.duizi_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.duizi_percent.text)
 var shunzi_percent: float:
 	set(v):
-		game_manager.shunzi_percent.text = str(v * 100) + "%"
+		game_manager.shunzi_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.shunzi_percent.text)
 var tongse_percent: float:
 	set(v):
-		game_manager.tongse_percent.text = str(v * 100) + "%"
+		game_manager.tongse_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.tongse_percent.text)
 var mirror_percent: float:
 	set(v):
-		game_manager.mirror_percent.text = str(v * 100) + "%"
+		game_manager.mirror_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.mirror_percent.text)
 var point_percent: float:
 	set(v):
-		game_manager.point_percent.text = str(v * 100) + "%"
+		game_manager.point_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.point_percent.text)
 ## 实时基础和倍率
@@ -165,7 +165,7 @@ var base_score: int:
 var percent_score: float:
 	set(v):
 		if v != 0:
-			game_manager.percent_score.text = str(v * 100) + "%"
+			game_manager.percent_score.text = str(v) + "%"
 		else:
 			game_manager.percent_score.text = ''
 	get:

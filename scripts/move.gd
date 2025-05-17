@@ -23,7 +23,7 @@ func update(_delta: float) -> void:
 	if ! Current.id_path.is_empty():
 		var target_grid_index = Current.id_path[0]
 		var target_position = Vector2(target_grid_index.x * 16, target_grid_index.y * 16) + Vector2(16, 16)
-		print(owner.position, target_position)
+		#print(owner.position, target_position)
 		owner.position = owner.position.move_toward(target_position, 100 * _delta)
 		if owner.position == target_position:
 			Current.id_path.remove_at(0)
