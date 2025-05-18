@@ -158,6 +158,22 @@ func _show_dice_panel(attack_slime_array_info, dice_type_point):
 		'mirror': game_manager.mirror_percent_frame.get("theme_override_styles/panel"),
 		'point': game_manager.point_percent_frame.get("theme_override_styles/panel")
 	}
+	var percent_dict = {
+		'none': Current.none_percent,
+		'duizi': Current.duizi_percent,
+		'shunzi': Current.shunzi_percent,
+		'tongse': Current.tongse_percent,
+		'mirror': Current.mirror_percent,
+		'point': Current.point_percent
+	}
+	var score_dict := {
+		1: Current.one_score,
+		2: Current.two_score,
+		3: Current.three_score,
+		4: Current.four_score,
+		5: Current.five_score,
+		6: Current.six_score
+	}
 	var color = {
 		"alpha0": "cc080800",
 		"red": "cc0808"
@@ -169,6 +185,11 @@ func _show_dice_panel(attack_slime_array_info, dice_type_point):
 			frame_dict[point].border_color = Color.html(color["red"])
 		## 骰型框线
 		frame_dict[dice_type_point[0]].border_color = Color.html(color["red"])
+	var total_score := 0
+	for point in dice_type_point[2]:
+		total_score += score_dict[point]
+	Current.base_score = total_score
+	Current.percent_score = percent_dict[dice_type_point[0]]
 	
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
@@ -195,6 +216,8 @@ func _reset_dice_panel():
 	}
 	for i in frame_dict.values():
 		i.border_color = Color.html(color["alpha0"])
+	Current.base_score = 0
+	Current.percent_score = 0
 
 ## 计算选中的最高最终骰型
 func _count_dice_type(attack_slime_array_info):

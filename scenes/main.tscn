@@ -1720,20 +1720,18 @@ stretch_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="real_time_score/HBoxContainer/TextureRect"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 7.0
+offset_right = 56.0
+offset_bottom = 24.0
 scale = Vector2(0.47, 0.47)
-pivot_offset = Vector2(14, 11)
+pivot_offset = Vector2(0, -3)
 
 [node name="base_score" type="Label" parent="real_time_score/HBoxContainer/TextureRect/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 label_settings = ExtResource("3_h858a")
-horizontal_alignment = 2
+horizontal_alignment = 1
 
 [node name="TextureRect2" type="TextureRect" parent="real_time_score/HBoxContainer"]
 layout_mode = 2
@@ -1744,20 +1742,18 @@ stretch_mode = 3
 
 [node name="MarginContainer2" type="MarginContainer" parent="real_time_score/HBoxContainer/TextureRect2"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 4.0
+offset_right = 64.0
+offset_bottom = 24.0
 scale = Vector2(0.47, 0.47)
-pivot_offset = Vector2(14, 11)
+pivot_offset = Vector2(0, -3)
 
 [node name="percent_score" type="Label" parent="real_time_score/HBoxContainer/TextureRect2/MarginContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 label_settings = ExtResource("3_h858a")
-horizontal_alignment = 2
+horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="real_time_score"]
 layout_mode = 1
@@ -1780,8 +1776,8 @@ texture = ExtResource("11_w4riq")
 [node name="dice_num" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -56.0
-offset_right = 4.0
+offset_left = -65.0
+offset_right = 5.0
 offset_bottom = 8.0
 scale = Vector2(0.85, 0.85)
 
