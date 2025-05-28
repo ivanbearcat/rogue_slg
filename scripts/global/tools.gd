@@ -13,3 +13,15 @@ func fetch_slime_scene(slime_scene):
 		return slime_color
 	else:
 		return null
+
+## 放大的抖动效果
+func big_flow_effect(object):
+	var tween = create_tween()
+	tween.tween_property(object, "scale:x", 1.5, 0.07)
+	tween.parallel().tween_property(object, "pivot_offset:x", 4, 0.07)
+	tween.parallel().tween_property(object, "scale:y", 1.5, 0.07)
+	tween.parallel().tween_property(object, "pivot_offset:y", 4, 0.07)
+	tween.tween_property(object, "scale:x", 1, 0.07)
+	tween.parallel().tween_property(object, "pivot_offset:x", 8, 0.07)
+	tween.parallel().tween_property(object, "scale:y", 1, 0.07)
+	tween.parallel().tween_property(object, "pivot_offset:y", 8, 0.07)

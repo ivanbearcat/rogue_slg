@@ -26,6 +26,23 @@ func skill_attack():
 		if slime.enemy_grid_index in Current.skill_attack_range:
 			slime.animated_sprite_2d.play("die")
 			hide_all_skill.emit()
+	var dice_array = game_manager.dice_list.get_children()
+	for index in range(dice_array.size() - 1, -1, -1):
+		print(index)
+		if dice_array[index].get_self_modulate() == Color(1, 1, 1, 1):
+			Tools.big_flow_effect(dice_array[index])
+			if index == 1: continue
+			var float_number_instantiate = SceneManager.create_scene("float_number")
+			float_number_instantiate.float_num = Current.dice_type_point
+			float_number_instantiate.velocity = Vector2(0, -10)
+			dice_array[index].add_child(float_number_instantiate)
+			await Tools.time_sleep(0.5)
+			Current.total_score += Current.dice_type_point
+	while Current.attack_animation_finished == 0:
+		await Tools.time_sleep(0.05)
+	Current.hero.hero_state_machine.transition_to("end")
+		
+
 	
 func _show_soldier_skill_1_range():
 	Current.skill_target_range = []
@@ -59,6 +76,7 @@ func _show_soldier_skill_1_attack():
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#_count_dice_type([['red',1],['red',5],['blue',2]])
 	var dice_type_point = _count_dice_type(attack_slime_array_info)
+	Current.dice_type_point = dice_type_point[1]
 	#print(dice_type_point)
 	_show_dice_panel(attack_slime_array_info, dice_type_point)
 	
@@ -85,6 +103,12 @@ func _show_soldier_skill_2_attack():
 			for attack_grid_index in Current.skill_attack_range:
 				if attack_grid_index in game_manager.all_grid_dict:
 					game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
+	#_count_dice_type([['red',1],['red',5],['blue',2]])
+	var dice_type_point = _count_dice_type(attack_slime_array_info)
+	Current.dice_type_point = dice_type_point[1]
+	#print(dice_type_point)
+	_show_dice_panel(attack_slime_array_info, dice_type_point)
 
 func _show_soldier_skill_3_range():
 	Current.skill_target_range = []
@@ -112,6 +136,12 @@ func _show_soldier_skill_3_attack():
 					Current.skill_attack_range.append(attack_grid_index)
 					game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 					print(Current.skill_attack_range)
+	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
+	#_count_dice_type([['red',1],['red',5],['blue',2]])
+	var dice_type_point = _count_dice_type(attack_slime_array_info)
+	Current.dice_type_point = dice_type_point[1]
+	#print(dice_type_point)
+	_show_dice_panel(attack_slime_array_info, dice_type_point)
 
 ## 所有在红格子里的史莱姆组
 func _fetch_attack_slime_array():
@@ -142,7 +172,7 @@ func _fetch_attack_slime_array_info(slime_array):
 ## 骰型板展示史莱姆对应的点数和骰型
 func _show_dice_panel(attack_slime_array_info, dice_type_point):
 	var dice_array = game_manager.dice_list.get_children()
-	for num in range(attack_slime_array_info.size()):
+	for num in range(dice_type_point[2].size()):
 		dice_array[num].set_self_modulate(Color(1, 1, 1, 1))
 	var frame_dict = {
 		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
@@ -174,17 +204,13 @@ func _show_dice_panel(attack_slime_array_info, dice_type_point):
 		5: Current.five_score,
 		6: Current.six_score
 	}
-	var color = {
-		"alpha0": "cc080800",
-		"red": "cc0808"
-	}
 	#sb.border_color = Color.html(color["red"])
 	if dice_type_point[2]:
 		## 骰面框线
 		for point in dice_type_point[2]:
-			frame_dict[point].border_color = Color.html(color["red"])
+			frame_dict[point].border_color = Color.html(game_manager.color["red"])
 		## 骰型框线
-		frame_dict[dice_type_point[0]].border_color = Color.html(color["red"])
+		frame_dict[dice_type_point[0]].border_color = Color.html(game_manager.color["red"])
 	var total_score := 0
 	for point in dice_type_point[2]:
 		total_score += score_dict[point]
@@ -210,16 +236,14 @@ func _reset_dice_panel():
 		'mirror': game_manager.mirror_percent_frame.get("theme_override_styles/panel"),
 		'point': game_manager.point_percent_frame.get("theme_override_styles/panel")
 	}
-	var color = {
-		"alpha0": "cc080800",
-		"red": "cc0808"
-	}
 	for i in frame_dict.values():
-		i.border_color = Color.html(color["alpha0"])
+		i.border_color = Color.html(game_manager.color["alpha0"])
 	Current.base_score = 0
 	Current.percent_score = 0
 
 ## 计算选中的最高最终骰型
+## return ['none', round(none_score_dice[0]), none_score_dice[1]]
+## [<类型>, <分数>, <参与计算的骰子数组>]
 func _count_dice_type(attack_slime_array_info):
 	var duizi_score_dice = _count_duizi(attack_slime_array_info)
 	var shunzi_score_dice = _count_shunzi(attack_slime_array_info)
@@ -248,6 +272,7 @@ func _count_dice_type(attack_slime_array_info):
 		#print(['none', round(_count_none(attack_slime_array_info))])
 		var none_score_dice = _count_none(attack_slime_array_info)
 		return ['none', round(none_score_dice[0]), none_score_dice[1]]
+
 ## 计算本次攻击的分数
 func _count_score(attack_slime_array_info):
 	pass

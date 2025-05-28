@@ -5,19 +5,18 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_hmpp3"]
 font = ExtResource("2_eem51")
-font_size = 12
-outline_size = 3
-outline_color = Color(0, 0, 0, 1)
+font_size = 32
+outline_size = 8
+outline_color = Color(0.79, 0, 0.0131665, 1)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("2_j1ws4")
 
 [node name="Label" type="Label" parent="."]
 z_index = 195
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 26.0
-offset_bottom = 28.0
-scale = Vector2(0.5, 0.5)
+offset_right = 16.0
+offset_bottom = 18.0
+scale = Vector2(0.25, 0.25)
 text = "+2 "
 label_settings = SubResource("LabelSettings_hmpp3")
+horizontal_alignment = 1

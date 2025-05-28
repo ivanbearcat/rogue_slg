@@ -63,4 +63,5 @@ func _on_skill_attack():
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	self.hero_state_machine.transition_to("end")
+	Current.attack_animation_finished = 1
+	#self.hero_state_machine.transition_to("end")

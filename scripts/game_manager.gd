@@ -73,9 +73,9 @@ var slime_scene_array := ['slime_small', 'slime_small_red', 'slime_small_yellow'
 var _margin_grid: Array[Vector2i]
 ## 颜色
 var color = {
+	"alpha0": "cc080800",
 	"red": "cc0808"
 }
-
 
 
 func _ready() -> void:
@@ -358,6 +358,9 @@ func _enemy_turn():
 		astar.set_point_solid(grid_index, true)
 	## 重置已移动标记
 	Current.is_moved = false
+	## 测试
+	#var a = dice_list.get_children()[0]
+	#Tools.big_flow_effect(a)
 
 ## 鼠标移出可移动区域清除格子位置
 func _on_area_2d_mouse_entered() -> void:

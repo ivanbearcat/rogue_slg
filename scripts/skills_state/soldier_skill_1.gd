@@ -15,6 +15,7 @@ func input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
 		## 判断点击的格子在技能范围:
 		if Current.grid_index in Current.skill_target_range:
+			Current.attack_animation_finished = 0
 			owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
 			emit_signal("skill_attack")
 			

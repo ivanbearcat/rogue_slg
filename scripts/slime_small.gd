@@ -32,11 +32,11 @@ func _process(delta: float) -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if self in Current.transformable_slime_array:
 		Current.transformable_slime_array.erase(self)
-	$Area2D.hide()
-	Current.total_score += dice_point
-	var float_number_instantiate = SceneManager.create_scene("float_number")
-	float_number_instantiate.float_num = dice_point
-	float_number_instantiate.velocity = Vector2(0, -10)
-	self.add_child(float_number_instantiate)
-	await Tools.time_sleep(1.0)
+	#$Area2D.hide()
+	#Current.total_score += dice_point
+	#var float_number_instantiate = SceneManager.create_scene("float_number")
+	#float_number_instantiate.float_num = dice_point
+	#float_number_instantiate.velocity = Vector2(0, -10)
+	#self.add_child(float_number_instantiate)
+	#await Tools.time_sleep(1.0)
 	self.queue_free()

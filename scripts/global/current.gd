@@ -170,3 +170,7 @@ var percent_score: float:
 			game_manager.percent_score.text = ''
 	get:
 		return int(game_manager.percent_score.text)
+## 单次骰型的分数
+var dice_type_point: int
+## 攻击动画是否完成
+var attack_animation_finished = 1
