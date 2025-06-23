@@ -21,14 +21,28 @@ func hide_skill_attack():
 
 ## 鼠标点击红框之后	
 func skill_attack():
+	## 判断是能量技能则置空能量史莱姆变量，可以重新生成
+	var reset_flag = false
+	if not Current.power_slime is Slime:
+		match Current.skill_num:
+			"1":
+				if Current.power_slime == 0:
+					reset_flag = true
+			"2":
+				if Current.power_slime == 1:
+					reset_flag = true
+			"3":
+				if Current.power_slime == 2:
+					reset_flag = true
+	## 史莱姆死亡
 	var _slime_die_array: Array
 	for slime in Current.all_enemy_array:
 		if slime.enemy_grid_index in Current.skill_attack_range:
 			slime.animated_sprite_2d.play("die")
-			hide_all_skill.emit()
 	var dice_array = game_manager.dice_list.get_children()
+	## 根据骰子数量条计算分数
 	for index in range(dice_array.size() - 1, -1, -1):
-		print(index)
+		#print(index)
 		if dice_array[index].get_self_modulate() == Color(1, 1, 1, 1):
 			Tools.big_flow_effect(dice_array[index])
 			if index == 1: continue
@@ -38,8 +52,15 @@ func skill_attack():
 			dice_array[index].add_child(float_number_instantiate)
 			await Tools.time_sleep(0.5)
 			Current.total_score += Current.dice_type_point
+	## 等待攻击动画完成
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)
+	## 等动画播完执行量史莱姆重置
+	if reset_flag:
+		Current.power_slime = null
+		EventBus.event_emit("skill_power_reset")
+	## 恢复技能UI弹起状态
+	hide_all_skill.emit()
 	Current.hero.hero_state_machine.transition_to("end")
 		
 
@@ -58,28 +79,57 @@ func _show_soldier_skill_1_range():
 		
 func _show_soldier_skill_1_attack():
 	Current.skill_attack_range = []
-	for grid_index in Current.skill_target_range:
-		## 鼠标选中格子等于技能格子,显示伤害范围
-		if Current.grid_index == grid_index:
-			if grid_index.x == Current.clicked_hero.hero_grid_index.x:
-				for attack_grid_index in \
-				[grid_index + Vector2i(-1, 0), grid_index, grid_index + Vector2i(1, 0)]:
-					if attack_grid_index in game_manager.all_grid_dict:
-						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
-						Current.skill_attack_range.append(attack_grid_index)
-			if grid_index.y == Current.clicked_hero.hero_grid_index.y:
-				for attack_grid_index in \
-				[grid_index + Vector2i(0, -1), grid_index, grid_index + Vector2i(0, 1)]:
-					if attack_grid_index in game_manager.all_grid_dict:
-						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
-						Current.skill_attack_range.append(attack_grid_index)
+	if not Current.power_slime is Slime and Current.power_slime == 0:
+		for grid_index in Current.skill_target_range:
+			## 鼠标选中格子等于技能格子,显示伤害范围
+			if Current.grid_index == grid_index:
+				if grid_index.x == Current.clicked_hero.hero_grid_index.x:
+					var offset = grid_index.y - Current.clicked_hero.hero_grid_index.y
+					for attack_grid_index in \
+					[grid_index + Vector2i(-1, 0),
+					grid_index,
+					grid_index + Vector2i(1, 0),
+					grid_index + Vector2i(-1, offset),
+					grid_index + Vector2i(0, offset),
+					grid_index + Vector2i(1, offset)]:
+						if attack_grid_index in game_manager.all_grid_dict:
+							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+							Current.skill_attack_range.append(attack_grid_index)
+				if grid_index.y == Current.clicked_hero.hero_grid_index.y:
+					var offset = grid_index.x - Current.clicked_hero.hero_grid_index.x
+					for attack_grid_index in \
+					[grid_index + Vector2i(0, -1),
+					grid_index,
+					grid_index + Vector2i(0, 1),
+					grid_index + Vector2i(offset, -1),
+					grid_index + Vector2i(offset, 0),
+					grid_index + Vector2i(offset, 1)]:
+						if attack_grid_index in game_manager.all_grid_dict:
+							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+							Current.skill_attack_range.append(attack_grid_index)
+	else:
+		for grid_index in Current.skill_target_range:
+			## 鼠标选中格子等于技能格子,显示伤害范围
+			if Current.grid_index == grid_index:
+				if grid_index.x == Current.clicked_hero.hero_grid_index.x:
+					for attack_grid_index in \
+					[grid_index + Vector2i(-1, 0), grid_index, grid_index + Vector2i(1, 0)]:
+						if attack_grid_index in game_manager.all_grid_dict:
+							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+							Current.skill_attack_range.append(attack_grid_index)
+				if grid_index.y == Current.clicked_hero.hero_grid_index.y:
+					for attack_grid_index in \
+					[grid_index + Vector2i(0, -1), grid_index, grid_index + Vector2i(0, 1)]:
+						if attack_grid_index in game_manager.all_grid_dict:
+							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+							Current.skill_attack_range.append(attack_grid_index)
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#_count_dice_type([['red',1],['red',5],['blue',2]])
 	var dice_type_point = _count_dice_type(attack_slime_array_info)
 	Current.dice_type_point = dice_type_point[1]
 	#print(dice_type_point)
 	_show_dice_panel(attack_slime_array_info, dice_type_point)
-	
+		
 	
 
 func _show_soldier_skill_2_range():
@@ -95,14 +145,28 @@ func _show_soldier_skill_2_range():
 		_show_soldier_skill_2_attack()	
 		
 func _show_soldier_skill_2_attack():
-	Current.skill_attack_range = []
-	for grid_index in Current.skill_target_range:
-		## 鼠标选中格子等于技能格子,显示伤害范围
-		if Current.grid_index == grid_index:
-			Current.skill_attack_range = Current.skill_target_range
-			for attack_grid_index in Current.skill_attack_range:
-				if attack_grid_index in game_manager.all_grid_dict:
-					game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+	if not Current.power_slime is Slime and Current.power_slime == 1:
+		Current.skill_attack_range = []
+		for grid_index in Current.skill_target_range:
+			## 鼠标选中格子等于技能格子,显示伤害范围
+			if Current.grid_index == grid_index:
+				Current.skill_attack_range = Current.skill_target_range
+				## 加入英雄围四个角的坐标
+				var offset_list = [Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]
+				for offset in offset_list:
+					Current.skill_attack_range.append(Current.clicked_hero.hero_grid_index + offset)
+				for attack_grid_index in Current.skill_attack_range:
+					if attack_grid_index in game_manager.all_grid_dict:
+						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+	else:
+		Current.skill_attack_range = []
+		for grid_index in Current.skill_target_range:
+			## 鼠标选中格子等于技能格子,显示伤害范围
+			if Current.grid_index == grid_index:
+				Current.skill_attack_range = Current.skill_target_range
+				for attack_grid_index in Current.skill_attack_range:
+					if attack_grid_index in game_manager.all_grid_dict:
+						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#_count_dice_type([['red',1],['red',5],['blue',2]])
 	var dice_type_point = _count_dice_type(attack_slime_array_info)
@@ -123,19 +187,34 @@ func _show_soldier_skill_3_range():
 		_show_soldier_skill_3_attack()	
 		
 func _show_soldier_skill_3_attack():
-	Current.skill_attack_range = []
-	var hero_grid_index = Current.clicked_hero.hero_grid_index
-	for grid_index in Current.skill_target_range:
-		## 鼠标选中格子等于技能格子,显示伤害范围
-		if Current.grid_index == grid_index:
-			var offset = Current.grid_index - hero_grid_index
-			var attack_grid_index = hero_grid_index
-			for i in range(3):
-				attack_grid_index += offset
-				if attack_grid_index in game_manager.all_grid_dict:
-					Current.skill_attack_range.append(attack_grid_index)
-					game_manager.all_grid_dict[attack_grid_index].attack.visible = true
-					print(Current.skill_attack_range)
+	if not Current.power_slime is Slime and Current.power_slime == 2:
+		Current.skill_attack_range = []
+		var hero_grid_index = Current.clicked_hero.hero_grid_index
+		for grid_index in Current.skill_target_range:
+			## 鼠标选中格子等于技能格子,显示伤害范围
+			if Current.grid_index == grid_index:
+				var offset = Current.grid_index - hero_grid_index
+				var attack_grid_index = hero_grid_index
+				for i in range(6):
+					attack_grid_index += offset
+					if attack_grid_index in game_manager.all_grid_dict:
+						Current.skill_attack_range.append(attack_grid_index)
+						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+						print(Current.skill_attack_range)
+	else:
+		Current.skill_attack_range = []
+		var hero_grid_index = Current.clicked_hero.hero_grid_index
+		for grid_index in Current.skill_target_range:
+			## 鼠标选中格子等于技能格子,显示伤害范围
+			if Current.grid_index == grid_index:
+				var offset = Current.grid_index - hero_grid_index
+				var attack_grid_index = hero_grid_index
+				for i in range(3):
+					attack_grid_index += offset
+					if attack_grid_index in game_manager.all_grid_dict:
+						Current.skill_attack_range.append(attack_grid_index)
+						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+						print(Current.skill_attack_range)
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#_count_dice_type([['red',1],['red',5],['blue',2]])
 	var dice_type_point = _count_dice_type(attack_slime_array_info)
@@ -185,16 +264,16 @@ func _show_dice_panel(attack_slime_array_info, dice_type_point):
 		'duizi': game_manager.duizi_percent_frame.get("theme_override_styles/panel"),
 		'shunzi': game_manager.shunzi_percent_frame.get("theme_override_styles/panel"),
 		'tongse': game_manager.tongse_percent_frame.get("theme_override_styles/panel"),
-		'mirror': game_manager.mirror_percent_frame.get("theme_override_styles/panel"),
-		'point': game_manager.point_percent_frame.get("theme_override_styles/panel")
+		'tongdui': game_manager.tongdui_percent_frame.get("theme_override_styles/panel"),
+		'tongshun': game_manager.tongshun_percent_frame.get("theme_override_styles/panel")
 	}
 	var percent_dict = {
 		'none': Current.none_percent,
 		'duizi': Current.duizi_percent,
 		'shunzi': Current.shunzi_percent,
 		'tongse': Current.tongse_percent,
-		'mirror': Current.mirror_percent,
-		'point': Current.point_percent
+		'tongdui': Current.tongdui_percent,
+		'tongshun': Current.tongshun_percent
 	}
 	var score_dict := {
 		1: Current.one_score,
@@ -233,8 +312,8 @@ func _reset_dice_panel():
 		'duizi': game_manager.duizi_percent_frame.get("theme_override_styles/panel"),
 		'shunzi': game_manager.shunzi_percent_frame.get("theme_override_styles/panel"),
 		'tongse': game_manager.tongse_percent_frame.get("theme_override_styles/panel"),
-		'mirror': game_manager.mirror_percent_frame.get("theme_override_styles/panel"),
-		'point': game_manager.point_percent_frame.get("theme_override_styles/panel")
+		'tongdui': game_manager.tongdui_percent_frame.get("theme_override_styles/panel"),
+		'tongshun': game_manager.tongshun_percent_frame.get("theme_override_styles/panel")
 	}
 	for i in frame_dict.values():
 		i.border_color = Color.html(game_manager.color["alpha0"])
@@ -248,12 +327,14 @@ func _count_dice_type(attack_slime_array_info):
 	var duizi_score_dice = _count_duizi(attack_slime_array_info)
 	var shunzi_score_dice = _count_shunzi(attack_slime_array_info)
 	var tongse_score_dice = _count_tongse(attack_slime_array_info)
-	var mirror_score_dice = _count_mirror(attack_slime_array_info)
+	var tongdui_score_dice = _count_tongdui(attack_slime_array_info)
+	var tongshun_score_dice = _count_tongshun(attack_slime_array_info)
 	var all_score_dict := {
 		'duizi': duizi_score_dice,
 		'shunzi': shunzi_score_dice,
 		'tongse': tongse_score_dice,
-		'mirror': mirror_score_dice
+		'tongdui': tongdui_score_dice,
+		'tongshun': tongshun_score_dice
 	}
 	var biggest_score := []
 	for score in all_score_dict:
@@ -399,8 +480,8 @@ func _count_tongse(attack_slime_array_info):
 		score = tmp_score * (Current.tongse_percent / 100.0)
 	return [score, tmp_item]
 
-## 镜像算法
-func _count_mirror(attack_slime_array_info):
+## 同色对子算法
+func _count_tongdui(attack_slime_array_info):
 	var score_dict := {
 		1: Current.one_score,
 		2: Current.two_score,
@@ -445,12 +526,84 @@ func _count_mirror(attack_slime_array_info):
 	if tmp_item:
 		for point in tmp_item:
 			tmp_score += score_dict[point]
-		score = tmp_score * (Current.mirror_percent / 100.0)
+		score = tmp_score * (Current.tongdui_percent / 100.0)
 	return [score, tmp_item]
 
-## 点数算法
-func _count_point(attack_slime_array_info):
-	pass
+## 同色顺子算法
+func _count_tongshun(attack_slime_array_info):
+	var score_dict := {
+		1: Current.one_score,
+		2: Current.two_score,
+		3: Current.three_score,
+		4: Current.four_score,
+		5: Current.five_score,
+		6: Current.six_score
+	}
+	var score := 0.0
+	var tmp_score := 0.0
+	var tmp_item := []
+	## 计算同色组
+	var resut_dict := {"red": [], "yellow": [], "green": [], "blue": []}
+	for point in attack_slime_array_info:
+		resut_dict[point[0]].append(point[1])
+	for v in resut_dict.values():
+		if tmp_item:
+			if v.size() == tmp_item.size():
+				var count_1 = 0
+				for i in v:
+					count_1 += i
+				var count_2 = 0
+				for i in tmp_item:
+					count_2 += i
+				if count_1 > count_2:
+					tmp_item = v
+			if v.size() > tmp_item.size():
+				tmp_item = v
+		else:
+			if v.size() >= 2:
+				tmp_item = v
+	## 计算顺子
+	var flag := 0
+	var tmp_array_1 := []
+	var tmp_array_2 := []
+	var unique_porint_array := []
+	for point in tmp_item:
+		if not unique_porint_array.has(point):
+			unique_porint_array.append(point)
+	unique_porint_array.sort()
+	for point in unique_porint_array:
+		if flag == 0:
+			if tmp_array_1:
+				if point - 1 == tmp_array_1[tmp_array_1.size() - 1]:
+					tmp_array_1.append(point)
+				else:
+					if tmp_array_1.size() > 2:
+						tmp_item = tmp_array_1
+						break
+					else:
+						flag += 1
+						tmp_array_2.append(point)
+						continue
+			else:
+				tmp_array_1.append(point)
+		else:
+			if point - 1 == tmp_array_2[tmp_array_2.size() - 1]:
+				tmp_array_2.append(point)
+			else:
+				tmp_item = tmp_array_2
+				break
+	if tmp_array_2.size() >= 2:
+		tmp_item = tmp_array_2
+	else:
+		if tmp_array_1.size() >= 2:
+			tmp_item = tmp_array_1
+		else:
+			tmp_item = []
+	if tmp_item:
+		for point in tmp_item:
+			tmp_score += score_dict[point]
+		score = tmp_score * (Current.tongshun_percent / 100.0)
+	return [score, tmp_item]
 
 ## 无骰型法
 func _count_none(attack_slime_array_info):

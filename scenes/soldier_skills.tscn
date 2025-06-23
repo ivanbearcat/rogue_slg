@@ -1,12 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://bpjrapjnm3rqj"]
+[gd_scene load_steps=25 format=3 uid="uid://bpjrapjnm3rqj"]
 
-[ext_resource type="Shader" path="res://shaders/high_light.gdshader" id="1_78qh4"]
+[ext_resource type="Shader" uid="uid://bvwarcrhlc6ea" path="res://shaders/high_light.gdshader" id="1_78qh4"]
 [ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="1_vlmwk"]
 [ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="2_wi8mv"]
-[ext_resource type="Script" path="res://scripts/ui/skill_1_ui.gd" id="3_71tpo"]
+[ext_resource type="Script" uid="uid://mb8vecn28h10" path="res://scripts/ui/skill_1_ui.gd" id="3_71tpo"]
+[ext_resource type="Shader" uid="uid://dji4fqms4hwsg" path="res://shaders/electricity.gdshader" id="4_q6aow"]
 [ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="4_rqeci"]
-[ext_resource type="Script" path="res://scripts/ui/skill_2_ui.gd" id="6_ojpdg"]
-[ext_resource type="Script" path="res://scripts/ui/skill_3_ui.gd" id="7_3khon"]
+[ext_resource type="Script" uid="uid://b1g80k6amnbch" path="res://scripts/ui/skill_2_ui.gd" id="6_ojpdg"]
+[ext_resource type="Script" uid="uid://cf0vyp174rum0" path="res://scripts/ui/skill_3_ui.gd" id="7_3khon"]
+[ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="8_qf8i0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mokjr"]
 shader = ExtResource("1_78qh4")
@@ -17,6 +19,22 @@ shader_parameter/is_high_light = false
 [sub_resource type="AtlasTexture" id="AtlasTexture_0onc4"]
 atlas = ExtResource("1_vlmwk")
 region = Rect2(113, 113, 30, 14)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q6aow"]
+seed = 2
+frequency = 0.0971
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qf8i0"]
+width = 2048
+noise = SubResource("FastNoiseLite_q6aow")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q6aow"]
+shader = ExtResource("4_q6aow")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_qf8i0")
+shader_parameter/noise_speed = 0.05
+shader_parameter/noise_size = 0.04
+shader_parameter/edge_color = Color(1, 0.574052, 0.12776, 1)
+shader_parameter/enable = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_buw5v"]
 atlas = ExtResource("2_wi8mv")
@@ -30,7 +48,7 @@ region = Rect2(165, 191, 3, 6)
 shader = ExtResource("1_78qh4")
 shader_parameter/width = 0.77
 shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/is_high_light = null
+shader_parameter/is_high_light = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0ofj"]
 atlas = ExtResource("2_wi8mv")
@@ -48,7 +66,15 @@ region = Rect2(170, 191, 3, 6)
 shader = ExtResource("1_78qh4")
 shader_parameter/width = 0.77
 shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/is_high_light = null
+shader_parameter/is_high_light = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cwbpb"]
+shader = ExtResource("4_q6aow")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_qf8i0")
+shader_parameter/noise_speed = 0.05
+shader_parameter/noise_size = 0.04
+shader_parameter/edge_color = Color(1, 0.574052, 0.12776, 1)
+shader_parameter/enable = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a2s2q"]
 atlas = ExtResource("2_wi8mv")
@@ -91,11 +117,13 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_1"]
+[node name="hero_ui_1" type="TextureRect" parent="HBoxContainer/skill_1"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_q6aow")
 layout_mode = 2
 texture = SubResource("AtlasTexture_buw5v")
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/skill_1/TextureRect"]
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/skill_1/hero_ui_1"]
 layout_mode = 2
 offset_left = 25.0
 offset_top = 1.0
@@ -103,7 +131,7 @@ offset_right = 31.0
 offset_bottom = 8.0
 color = Color(0.77, 0.768075, 0.7623, 1)
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_1/TextureRect/ColorRect"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_1/hero_ui_1/ColorRect"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
@@ -112,14 +140,14 @@ offset_bottom = 6.0
 texture = SubResource("AtlasTexture_0x8es")
 expand_mode = 1
 
-[node name="mask1" type="ColorRect" parent="HBoxContainer/skill_1/TextureRect"]
+[node name="mask1" type="ColorRect" parent="HBoxContainer/skill_1/hero_ui_1"]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
 color = Color(1, 1, 1, 0.27451)
 
-[node name="Label" type="Label" parent="HBoxContainer/skill_1/TextureRect/mask1"]
+[node name="Label" type="Label" parent="HBoxContainer/skill_1/hero_ui_1/mask1"]
 layout_mode = 0
 offset_left = 1.6
 offset_top = 2.9
@@ -151,12 +179,14 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="TextureRect2" type="TextureRect" parent="HBoxContainer/skill_2"]
+[node name="hero_ui_2" type="TextureRect" parent="HBoxContainer/skill_2"]
+unique_name_in_owner = true
 z_index = 1
+material = ExtResource("8_qf8i0")
 layout_mode = 2
 texture = SubResource("AtlasTexture_w0ofj")
 
-[node name="TextureRect4" type="TextureRect" parent="HBoxContainer/skill_2/TextureRect2"]
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer/skill_2/hero_ui_2"]
 modulate = Color(1, 1, 1, 0.490196)
 show_behind_parent = true
 layout_mode = 2
@@ -165,7 +195,7 @@ offset_right = 33.0
 offset_bottom = 32.0
 texture = SubResource("AtlasTexture_2qi8s")
 
-[node name="ColorRect2" type="ColorRect" parent="HBoxContainer/skill_2/TextureRect2"]
+[node name="ColorRect2" type="ColorRect" parent="HBoxContainer/skill_2/hero_ui_2"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 1.0
@@ -173,7 +203,7 @@ offset_right = 31.0
 offset_bottom = 8.0
 color = Color(0.77, 0.768075, 0.7623, 1)
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_2/TextureRect2/ColorRect2"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_2/hero_ui_2/ColorRect2"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
@@ -182,14 +212,14 @@ offset_bottom = 6.0
 texture = SubResource("AtlasTexture_nj68k")
 expand_mode = 1
 
-[node name="mask2" type="ColorRect" parent="HBoxContainer/skill_2/TextureRect2"]
+[node name="mask2" type="ColorRect" parent="HBoxContainer/skill_2/hero_ui_2"]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
 color = Color(1, 1, 1, 0.27451)
 
-[node name="Label" type="Label" parent="HBoxContainer/skill_2/TextureRect2/mask2"]
+[node name="Label" type="Label" parent="HBoxContainer/skill_2/hero_ui_2/mask2"]
 layout_mode = 0
 offset_left = 1.6
 offset_top = 2.9
@@ -221,11 +251,13 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="TextureRect3" type="TextureRect" parent="HBoxContainer/skill_3"]
+[node name="hero_ui_3" type="TextureRect" parent="HBoxContainer/skill_3"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_cwbpb")
 layout_mode = 2
 texture = SubResource("AtlasTexture_a2s2q")
 
-[node name="ColorRect3" type="ColorRect" parent="HBoxContainer/skill_3/TextureRect3"]
+[node name="ColorRect3" type="ColorRect" parent="HBoxContainer/skill_3/hero_ui_3"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 1.0
@@ -233,7 +265,7 @@ offset_right = 31.0
 offset_bottom = 8.0
 color = Color(0.77, 0.768075, 0.7623, 1)
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_3/TextureRect3/ColorRect3"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_3/hero_ui_3/ColorRect3"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
@@ -242,14 +274,14 @@ offset_bottom = 6.0
 texture = SubResource("AtlasTexture_2wqdr")
 expand_mode = 1
 
-[node name="mask3" type="ColorRect" parent="HBoxContainer/skill_3/TextureRect3"]
+[node name="mask3" type="ColorRect" parent="HBoxContainer/skill_3/hero_ui_3"]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
 color = Color(1, 1, 1, 0.27451)
 
-[node name="Label" type="Label" parent="HBoxContainer/skill_3/TextureRect3/mask3"]
+[node name="Label" type="Label" parent="HBoxContainer/skill_3/hero_ui_3/mask3"]
 layout_mode = 0
 offset_left = 1.6
 offset_top = 2.9

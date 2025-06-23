@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://co3drgm7df8ed"]
 
 [ext_resource type="FontFile" uid="uid://bp53tlinpuypa" path="res://fonts/SourceHanSansCN-Normal.otf" id="2_eem51"]
-[ext_resource type="Script" path="res://scripts/ui/float_number.gd" id="2_j1ws4"]
+[ext_resource type="Script" uid="uid://c1hbdjx1pfv88" path="res://scripts/ui/float_number.gd" id="2_j1ws4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hmpp3"]
 font = ExtResource("2_eem51")

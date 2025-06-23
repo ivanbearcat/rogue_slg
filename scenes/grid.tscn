@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bx67eybmq4vsu"]
 
-[ext_resource type="Script" path="res://scripts/grid.gd" id="1_p7jgk"]
+[ext_resource type="Script" uid="uid://d18cc55ayi4ja" path="res://scripts/grid.gd" id="1_p7jgk"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_70vec"]
 [ext_resource type="Texture2D" uid="uid://b5dc0ftulapfe" path="res://images/icon_skull_red.png" id="3_whhth"]
 

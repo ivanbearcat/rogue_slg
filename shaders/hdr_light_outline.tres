@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dn3pjsxdxnlb5"]
+
+[ext_resource type="Shader" uid="uid://bvwarcrhlc6ea" path="res://shaders/high_light.gdshader" id="1_23yj5"]
+
+[resource]
+shader = ExtResource("1_23yj5")
+shader_parameter/width = 1.1
+shader_parameter/outline_color = Color(0, 100, 100, 1)
+shader_parameter/is_high_light = true

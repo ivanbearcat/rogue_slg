@@ -1,8 +1,7 @@
 [gd_scene load_steps=22 format=3 uid="uid://yhedl0orxggu"]
 
 [ext_resource type="Texture2D" uid="uid://tnl7iet676i7" path="res://images/Slime.png" id="1_1jsnh"]
-[ext_resource type="Script" path="res://scripts/slime_middle.gd" id="1_jynod"]
-[ext_resource type="Texture2D" uid="uid://d35dnb2ltby7g" path="res://images/Skillicon11_10.png" id="3_0xder"]
+[ext_resource type="Script" uid="uid://djxbtwet3n3w1" path="res://scripts/slime_middle.gd" id="1_jynod"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
 size = Vector2(14, 14)
@@ -132,6 +131,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Resource" id="Resource_urffp"]
+metadata/__load_path__ = "res://images/Skillicon11_10.png"
+
 [node name="slime_small" type="Node2D"]
 z_index = 1
 script = ExtResource("1_jynod")
@@ -156,4 +158,4 @@ frame_progress = 0.275624
 visible = false
 position = Vector2(7.49707, 3.82962)
 scale = Vector2(0.281433, 0.239351)
-texture = ExtResource("3_0xder")
+texture = SubResource("Resource_urffp")

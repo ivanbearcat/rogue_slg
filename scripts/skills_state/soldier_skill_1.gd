@@ -4,11 +4,13 @@ signal show_skill_range
 signal hide_skill_range
 signal skill_attack
 
+
 func enter():
 	print(owner.hero_name + "进入soldier_skill_1")
 	owner.animated_sprite_2d.play(owner.hero_name + "_end")
 	Current.skill_num = "1"
 	emit_signal("show_skill_range")
+	
 
 func input(event: InputEvent) -> void:
 	## 点击释放技能的格子触发技能信号

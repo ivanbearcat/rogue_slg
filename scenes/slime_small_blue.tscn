@@ -1,12 +1,47 @@
-[gd_scene load_steps=41 format=3 uid="uid://btvvwmetc2oyv"]
+[gd_scene load_steps=44 format=3 uid="uid://btvvwmetc2oyv"]
 
-[ext_resource type="Script" path="res://scripts/slime_small.gd" id="1_tqd4j"]
+[ext_resource type="Script" uid="uid://ka44hpx6jsu0" path="res://scripts/slime_small.gd" id="1_tqd4j"]
 [ext_resource type="Texture2D" uid="uid://b4voe758sxvk5" path="res://images/Slime_blue.png" id="2_dkde8"]
 [ext_resource type="Texture2D" uid="uid://d2i2drhs34c14" path="res://images/icon_reset_red.png" id="3_4rqaj"]
 [ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="4_mpbkm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
 size = Vector2(14, 14)
+
+[sub_resource type="Shader" id="Shader_nc03e"]
+code = "shader_type canvas_item;
+
+uniform float width: hint_range(0.0, 10.0);
+uniform vec4 outline_color: source_color;
+uniform bool is_high_light;
+
+void fragment(){
+	if (is_high_light){
+		float size_x = width * 1.0 / float(textureSize(TEXTURE, 0 ).x);
+		float size_y = width * 1.0 / float(textureSize(TEXTURE, 0 ).y);
+		vec4 tex_color=texture(TEXTURE, UV);
+
+		float alpha=8.0 * tex_color.a;
+		alpha -= texture(TEXTURE, UV + vec2(size_x, 0)).a;
+		alpha -= texture(TEXTURE, UV + vec2(-size_x, 0)).a;
+		alpha -= texture(TEXTURE, UV + vec2(0, size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(0, -size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(size_x, size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(size_x, -size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(-size_x, size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(-size_x, -size_y)).a;
+
+		vec4 final_color = mix(tex_color, outline_color, clamp(alpha, 0.0, 1.0));
+		COLOR = vec4(final_color.rgb, clamp(alpha + tex_color.a, 0.0, 1.0));
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r8iat"]
+resource_local_to_scene = true
+shader = SubResource("Shader_nc03e")
+shader_parameter/width = 1.1
+shader_parameter/outline_color = Color(0, 100, 100, 1)
+shader_parameter/is_high_light = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ck37"]
 atlas = ExtResource("2_dkde8")
@@ -64,7 +99,7 @@ region = Rect2(128, 0, 32, 32)
 atlas = ExtResource("2_dkde8")
 region = Rect2(160, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ycjvq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_nc03e"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -270,6 +305,12 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="Environment" id="Environment_4dbh4"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 0.44
+
 [node name="slime_small" type="Node2D"]
 z_index = 1
 script = ExtResource("1_tqd4j")
@@ -281,9 +322,10 @@ position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_ilaur")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+material = SubResource("ShaderMaterial_r8iat")
 position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
-sprite_frames = SubResource("SpriteFrames_ycjvq")
+sprite_frames = SubResource("SpriteFrames_nc03e")
 animation = &"die"
 autoplay = "idle"
 
@@ -299,5 +341,8 @@ scale = Vector2(-0.196884, -0.190505)
 sprite_frames = SubResource("SpriteFrames_aldak")
 animation = &"roll"
 frame_progress = 0.944284
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4dbh4")
 
 [connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

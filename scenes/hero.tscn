@@ -1,15 +1,15 @@
 [gd_scene load_steps=49 format=3 uid="uid://bgm08y6mwa1xl"]
 
-[ext_resource type="Script" path="res://scripts/hero.gd" id="1_2jlbh"]
+[ext_resource type="Script" uid="uid://ut48jmydioy2" path="res://scripts/hero.gd" id="1_2jlbh"]
 [ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="1_ufarh"]
-[ext_resource type="Shader" path="res://shaders/high_light.gdshader" id="2_c5gmw"]
+[ext_resource type="Shader" uid="uid://bvwarcrhlc6ea" path="res://shaders/high_light.gdshader" id="2_c5gmw"]
 [ext_resource type="Texture2D" uid="uid://t17pqkrha6od" path="res://images/Archer-Green.png" id="2_mxpjn"]
 [ext_resource type="Texture2D" uid="uid://c3rdthe31eav6" path="res://images/Mage-Cyan.png" id="3_ciahd"]
-[ext_resource type="Script" path="res://scripts/hero_state_machine.gd" id="5_fgiwk"]
-[ext_resource type="Script" path="res://scripts/idle.gd" id="6_yiwd7"]
-[ext_resource type="Script" path="res://scripts/move.gd" id="7_duu28"]
-[ext_resource type="Script" path="res://scripts/end.gd" id="8_2fhne"]
-[ext_resource type="Script" path="res://scripts/skills_state/soldier_skill_1.gd" id="10_27sfp"]
+[ext_resource type="Script" uid="uid://c8w5syikihkgg" path="res://scripts/hero_state_machine.gd" id="5_fgiwk"]
+[ext_resource type="Script" uid="uid://bdld8nwmy5adl" path="res://scripts/idle.gd" id="6_yiwd7"]
+[ext_resource type="Script" uid="uid://covcj4hn2ii1i" path="res://scripts/move.gd" id="7_duu28"]
+[ext_resource type="Script" uid="uid://peuw3ycxprmr" path="res://scripts/end.gd" id="8_2fhne"]
+[ext_resource type="Script" uid="uid://0crxqf10lvx8" path="res://scripts/skills_state/soldier_skill_1.gd" id="10_27sfp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y1qti"]
 size = Vector2(16, 16)
@@ -19,7 +19,7 @@ resource_local_to_scene = true
 shader = ExtResource("2_c5gmw")
 shader_parameter/width = 0.7
 shader_parameter/outline_color = Color(0, 1, 0, 1)
-shader_parameter/is_high_light = null
+shader_parameter/is_high_light = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mykbe"]
 atlas = ExtResource("2_mxpjn")

@@ -3,13 +3,19 @@ extends MarginContainer
 @onready var nine_patch_rect: NinePatchRect = $NinePatchRect
 @onready var nine_patch_rect_2: NinePatchRect = $"../skill_2/NinePatchRect2"
 @onready var nine_patch_rect_3: NinePatchRect = $"../skill_3/NinePatchRect3"
-@onready var mask_1: ColorRect = $TextureRect/mask1
-@onready var mask_2: ColorRect = $"../skill_2/TextureRect2/mask2"
-@onready var mask_3: ColorRect = $"../skill_3/TextureRect3/mask3"
+@onready var mask_1: ColorRect = $hero_ui_1/mask1
+@onready var mask_2: ColorRect = $"../skill_2/hero_ui_2/mask2"
+@onready var mask_3: ColorRect = $"../skill_3/hero_ui_3/mask3"
+@onready var hero_ui_1: TextureRect = %hero_ui_1
+@onready var hero_ui_2: TextureRect = %hero_ui_2
+@onready var hero_ui_3: TextureRect = %hero_ui_3
 
 
 var is_enterd := false
 
+func _ready() -> void:
+	EventBus.subscribe("skill_power_up", _on_skill_power_up)
+	EventBus.subscribe("skill_power_reset", _on_skill_power_reset)
 
 func _input(event: InputEvent) -> void:
 	## 点击英雄才显示
@@ -54,3 +60,14 @@ func _on_mouse_exited() -> void:
 	if mask_1.visible == false:
 		nine_patch_rect.material.set_shader_parameter("is_high_light", false)
 	is_enterd = false
+
+func _on_skill_power_up() -> void:
+	var skill_ui_list = [hero_ui_1, hero_ui_2, hero_ui_3]
+	var skill_ui_tmp = skill_ui_list.pick_random()
+	skill_ui_tmp.material.set_shader_parameter("enable", true)
+	Current.power_slime = skill_ui_list.find(skill_ui_tmp)
+	
+func _on_skill_power_reset() -> void:
+	var skill_ui_list = [hero_ui_1, hero_ui_2, hero_ui_3]
+	for skill in skill_ui_list:
+		skill.material.set_shader_parameter("enable", false)

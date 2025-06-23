@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://ibjahw08itr5"]
+
+[ext_resource type="Shader" uid="uid://dji4fqms4hwsg" path="res://shaders/electricity.gdshader" id="1_xneil"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q6aow"]
+seed = 2
+frequency = 0.0971
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qf8i0"]
+width = 2048
+seamless = true
+noise = SubResource("FastNoiseLite_q6aow")
+
+[resource]
+shader = ExtResource("1_xneil")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_qf8i0")
+shader_parameter/noise_speed = 0.05
+shader_parameter/noise_size = 0.04
+shader_parameter/edge_color = Color(1, 0.574052, 0.12776, 1)
+shader_parameter/enable = false

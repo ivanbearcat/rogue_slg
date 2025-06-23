@@ -1,18 +1,47 @@
-[gd_scene load_steps=43 format=3 uid="uid://bi3753khyy75"]
+[gd_scene load_steps=45 format=3 uid="uid://bi3753khyy75"]
 
 [ext_resource type="Texture2D" uid="uid://tnl7iet676i7" path="res://images/Slime.png" id="1_1jsnh"]
-[ext_resource type="Script" path="res://scripts/slime_small.gd" id="1_huabk"]
-[ext_resource type="Shader" path="res://shaders/high_light.gdshader" id="2_k2nca"]
+[ext_resource type="Script" uid="uid://ka44hpx6jsu0" path="res://scripts/slime_small.gd" id="1_huabk"]
+[ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="2_rlt5f"]
 [ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="4_1j7yk"]
 [ext_resource type="Texture2D" uid="uid://d2i2drhs34c14" path="res://images/icon_reset_red.png" id="4_au6rk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jokqn"]
-shader = ExtResource("2_k2nca")
-shader_parameter/width = 0.77
-shader_parameter/outline_color = Color(1, 0, 0, 1)
+[sub_resource type="Shader" id="Shader_rlt5f"]
+code = "shader_type canvas_item;
+
+uniform float width: hint_range(0.0, 10.0);
+uniform vec4 outline_color: source_color;
+uniform bool is_high_light;
+
+void fragment(){
+	if (is_high_light){
+		float size_x = width * 1.0 / float(textureSize(TEXTURE, 0 ).x);
+		float size_y = width * 1.0 / float(textureSize(TEXTURE, 0 ).y);
+		vec4 tex_color=texture(TEXTURE, UV);
+
+		float alpha=8.0 * tex_color.a;
+		alpha -= texture(TEXTURE, UV + vec2(size_x, 0)).a;
+		alpha -= texture(TEXTURE, UV + vec2(-size_x, 0)).a;
+		alpha -= texture(TEXTURE, UV + vec2(0, size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(0, -size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(size_x, size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(size_x, -size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(-size_x, size_y)).a;
+		alpha -= texture(TEXTURE, UV + vec2(-size_x, -size_y)).a;
+
+		vec4 final_color = mix(tex_color, outline_color, clamp(alpha, 0.0, 1.0));
+		COLOR = vec4(final_color.rgb, clamp(alpha + tex_color.a, 0.0, 1.0));
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_354rs"]
+resource_local_to_scene = true
+shader = SubResource("Shader_rlt5f")
+shader_parameter/width = 1.1
+shader_parameter/outline_color = Color(0, 100, 100, 1)
 shader_parameter/is_high_light = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1dq0q"]
@@ -71,7 +100,7 @@ region = Rect2(128, 0, 32, 32)
 atlas = ExtResource("1_1jsnh")
 region = Rect2(160, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ycjvq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_rlt5f"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -277,6 +306,12 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="Environment" id="Environment_fkuq7"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 0.44
+
 [node name="slime_small" type="Node2D"]
 z_index = 1
 script = ExtResource("1_huabk")
@@ -288,16 +323,18 @@ position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_ilaur")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
-material = SubResource("ShaderMaterial_jokqn")
+material = SubResource("ShaderMaterial_354rs")
 position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
-sprite_frames = SubResource("SpriteFrames_ycjvq")
+sprite_frames = SubResource("SpriteFrames_rlt5f")
 animation = &"be_attack"
 autoplay = "idle"
-frame_progress = 0.238253
 
 [node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false
+modulate = Color(0, 1, 0.36875, 1)
+self_modulate = Color(0.165817, 1, 0.379638, 1)
+material = ExtResource("2_rlt5f")
 position = Vector2(7.49707, 3.82962)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_au6rk")
@@ -307,5 +344,8 @@ position = Vector2(12.2809, 5.30422)
 scale = Vector2(-0.196884, -0.190505)
 sprite_frames = SubResource("SpriteFrames_aldak")
 animation = &"roll"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fkuq7")
 
 [connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

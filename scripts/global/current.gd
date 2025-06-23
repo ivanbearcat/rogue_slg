@@ -14,12 +14,6 @@ var all_hero_array: Array:
 	get:
 		return $"/root/game_manager/heros".get_children()
 # 包含所有英雄位置的数组
-#@onready var all_hero_grid_index_array: Array:
-	#get:
-		#var grid_index_array: Array
-		#for hero_name in all_hero_dict:
-			#grid_index_array.append(all_hero_dict[hero_name].hero_grid_index)
-		#return grid_index_array
 @onready var all_hero_grid_index_array: Array:
 	get:
 		var grid_index_array: Array
@@ -123,36 +117,36 @@ var six_score: int:
 	get:
 		return int(game_manager.six_score.text)
 ## 骰型板倍率
-var none_percent: float:
+var none_percent: int:
 	set(v):
 		game_manager.none_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.none_percent.text)
-var duizi_percent: float:
+var duizi_percent: int:
 	set(v):
 		game_manager.duizi_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.duizi_percent.text)
-var shunzi_percent: float:
+var shunzi_percent: int:
 	set(v):
 		game_manager.shunzi_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.shunzi_percent.text)
-var tongse_percent: float:
+var tongse_percent: int:
 	set(v):
 		game_manager.tongse_percent.text = str(v) + "%"
 	get:
 		return float(game_manager.tongse_percent.text)
-var mirror_percent: float:
+var tongdui_percent: int:
 	set(v):
-		game_manager.mirror_percent.text = str(v) + "%"
+		game_manager.tongdui_percent.text = str(v) + "%"
 	get:
-		return float(game_manager.mirror_percent.text)
-var point_percent: float:
+		return float(game_manager.tongdui_percent.text)
+var tongshun_percent: int:
 	set(v):
-		game_manager.point_percent.text = str(v) + "%"
+		game_manager.tongshun_percent.text = str(v) + "%"
 	get:
-		return float(game_manager.point_percent.text)
+		return float(game_manager.tongshun_percent.text)
 ## 实时基础和倍率
 var base_score: int:
 	set(v):
@@ -174,3 +168,5 @@ var percent_score: float:
 var dice_type_point: int
 ## 攻击动画是否完成
 var attack_animation_finished = 1
+## 能量史莱姆或强化技能编号
+var power_slime

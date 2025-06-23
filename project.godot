@@ -12,7 +12,7 @@ config_version=5
 
 config/name="rogue_slg"
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Current="*res://scripts/global/current.gd"
 SceneManager="*res://scripts/global/scene_manager.gd"
 Tools="*res://scripts/global/tools.gd"
+EventBus="*res://scripts/global/event_bus.gd"
 
 [display]
 
@@ -62,3 +63,4 @@ mouse_right={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+viewport/hdr_2d=true

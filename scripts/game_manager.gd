@@ -29,8 +29,8 @@ const hero_property = {
 @onready var duizi_percent: Label = %duizi_percent
 @onready var shunzi_percent: Label = %shunzi_percent
 @onready var tongse_percent: Label = %tongse_percent
-@onready var mirror_percent: Label = %mirror_percent
-@onready var point_percent: Label = %point_percent
+@onready var tongdui_percent: Label = %tongdui_percent
+@onready var tongshun_percent: Label = %tongshun_percent
 @onready var base_score: Label = %base_score
 @onready var percent_score: Label = %percent_score
 ## 骰型板框线
@@ -44,8 +44,8 @@ const hero_property = {
 @onready var duizi_percent_frame: PanelContainer = %duizi_percent_frame
 @onready var shunzi_percent_frame: PanelContainer = %shunzi_percent_frame
 @onready var tongse_percent_frame: PanelContainer = %tongse_percent_frame
-@onready var mirror_percent_frame: PanelContainer = %mirror_percent_frame
-@onready var point_percent_frame: PanelContainer = %point_percent_frame
+@onready var tongdui_percent_frame: PanelContainer = %tongdui_percent_frame
+@onready var tongshun_percent_frame: PanelContainer = %tongshun_percent_frame
 ## 骰子UI父级
 @onready var dice_list: HBoxContainer = %dice_list
 
@@ -87,8 +87,8 @@ func _ready() -> void:
 	Current.duizi_percent = 150
 	Current.shunzi_percent = 160
 	Current.tongse_percent = 140
-	Current.mirror_percent = 300
-	Current.point_percent = 200
+	Current.tongdui_percent = 300
+	Current.tongshun_percent = 320
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -114,10 +114,10 @@ func _ready() -> void:
 			if x == 0 or x == range(_removable_map_vec.x).max() or y == 0 or y == range(_removable_map_vec.y).max():
 				_margin_grid.append(Vector2i(x, y))
 	## 预生成史莱姆和警告信息
-	_slime_create_ai()
+	_create_slime()
+	_create_power_slime()
 	_enemy_turn()
 
-	
 func _grid_index_to_position(grid_index: Vector2i) -> Vector2i:
 	return Vector2i(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
 
@@ -125,7 +125,7 @@ func _position_to_grid_index(position: Vector2i) -> Vector2i:
 	return Vector2i((position.x - start_pos.x) / grid_size.x, (position.y - start_pos.y) / grid_size.y)
 
 ## 史莱姆生成
-func _slime_create_ai():
+func _create_slime():
 	## 边缘地块随机生成3个史莱姆
 	var available_grid_array: Array[Vector2i]
 	var create_slime_grid_index_array: Array[Vector2i]
@@ -149,12 +149,18 @@ func _slime_create_ai():
 			for grid in grids_array:
 				if grid.grid_index == grid_index:
 					grid.warning.visible = true
-	## 添加史莱姆进入可以变换的列表
-	if Current.all_enemy_array.size() > 0:
-		if Current.transformable_slime_array.size() < 1:
-			Current.transformable_slime_array.append(Current.all_enemy_array.pick_random())
-			for slime in Current.transformable_slime_array:
-				slime.warning.visible = true
+## 添加能量史莱姆
+func _create_power_slime():
+	#if Current.all_enemy_array.size() > 0:
+		#if Current.transformable_slime_array.size() < 1:
+			#Current.transformable_slime_array.append(Current.all_enemy_array.pick_random())
+			#for slime in Current.transformable_slime_array:
+				#slime.warning.visible = true
+				#print(slime)
+	if Current.power_slime == null:
+		Current.power_slime = Current.all_enemy_array.pick_random()
+		if Current.power_slime is Slime:
+			Current.power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 
 		
 ## 史莱姆移动
@@ -180,7 +186,7 @@ func _slime_move_ai():
 			enemy.target_position = target_position
 			enemy.enemy_grid_index = target_grid
 
-## 史莱姆变化
+## 史莱姆重掷
 func _slime_grow_up_ai():
 	if Current.transformable_slime_array.size() > 0:
 		for slime in Current.transformable_slime_array:
@@ -336,14 +342,15 @@ func _enemy_turn():
 	while Current.has_move_slime:
 		await get_tree().create_timer(0.1).timeout
 	_slime_create_array.clear()
-	## 史莱姆成长
-	_slime_grow_up_ai()
-	for slime in Current.transformable_slime_array:
-		slime.warning.visible = false
-	Current.transformable_slime_array.clear()
-	await get_tree().create_timer(0.1).timeout
+	## 史莱姆重掷
+	#_slime_grow_up_ai()
+	#for slime in Current.transformable_slime_array:
+		#slime.warning.visible = false
+	#Current.transformable_slime_array.clear()
+	#await get_tree().create_timer(0.1).timeout
 	## 史莱姆预生成和告警信息
-	_slime_create_ai()
+	_create_slime()
+	_create_power_slime()
 	Current.turn = "hero_turn"
 	turn_button.disabled = false
 	round += 1
