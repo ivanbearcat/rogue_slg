@@ -37,3 +37,12 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		## 技能强化
 		EventBus.event_emit("skill_power_up")
 	self.queue_free()
+
+
+func _on_area_2d_mouse_entered() -> void:
+	if Current.mouse_status != 'default':
+		Current.slime = self
+
+
+func _on_area_2d_mouse_exited() -> void:
+	Current.slime = null

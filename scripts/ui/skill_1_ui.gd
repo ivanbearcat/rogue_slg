@@ -10,7 +10,7 @@ extends MarginContainer
 @onready var hero_ui_2: TextureRect = %hero_ui_2
 @onready var hero_ui_3: TextureRect = %hero_ui_3
 
-
+## 鼠标进入范围
 var is_enterd := false
 
 func _ready() -> void:

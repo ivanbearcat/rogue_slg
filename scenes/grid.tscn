@@ -58,7 +58,7 @@ texture = SubResource("AtlasTexture_kyn0y")
 
 [node name="attack" type="Sprite2D" parent="Area2D"]
 visible = false
-z_index = 50
+z_index = 1
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_n1vvw")
 

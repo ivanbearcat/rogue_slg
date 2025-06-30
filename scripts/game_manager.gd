@@ -12,6 +12,7 @@ const hero_property = {
 @onready var buildings: Node2D = $buildings
 @onready var enemys: Node2D = $enemys
 @onready var turn_button: Button = %turn_button
+@onready var reroll_label: Label = %reroll_label
 @onready var turn_label: Label = %turn_label
 #@onready var left_side_ui: MarginContainer = $UI/left_side_ui
 @onready var hero_skill: Control = $hero_skill
@@ -187,28 +188,24 @@ func _slime_move_ai():
 			enemy.enemy_grid_index = target_grid
 
 ## 史莱姆重掷
-func _slime_grow_up_ai():
-	if Current.transformable_slime_array.size() > 0:
-		for slime in Current.transformable_slime_array:
-			var slime_grid_index = slime.enemy_grid_index
-			## 获取史莱姆颜色
-			var regex = RegEx.new()
-			regex.compile(".*(?<name>slime.*)\\.tscn")
-			var result = regex.search(slime.scene_file_path)
-			var slime_color = Tools.fetch_slime_scene(slime)
-			if slime_color:
-				var copy_slime_scene_array = slime_scene_array.duplicate()
-				copy_slime_scene_array.pop_at(copy_slime_scene_array.find(slime_color))
-				slime.queue_free()
-				var slime_sence = copy_slime_scene_array.pick_random()
-				copy_slime_scene_array.clear()
-				var slime_instantiate = SceneManager.create_scene(slime_sence)
-				slime_instantiate.position = _grid_index_to_position(slime_grid_index)
-				slime_instantiate.enemy_grid_index = slime_grid_index
-				enemys.add_child(slime_instantiate)
-				_roll_dice(slime_instantiate)	
-			else:
-				assert(false, "slime have not color")
+func slime_reroll(slime: Node2D):
+	var slime_grid_index = slime.enemy_grid_index
+	## 获取史莱姆颜色
+	#var regex = RegEx.new()
+	#regex.compile(".*(?<name>slime.*)\\.tscn")
+	#var result = regex.search(slime.scene_file_path)
+	#var slime_color = Tools.fetch_slime_scene(slime)
+	#if slime_color:
+		#var copy_slime_scene_array = slime_scene_array.duplicate()
+		#copy_slime_scene_array.pop_at(copy_slime_scene_array.find(slime_color))
+	slime.queue_free()
+	var slime_sence = slime_scene_array.pick_random()
+	var slime_instantiate = SceneManager.create_scene(slime_sence)
+	slime_instantiate.position = _grid_index_to_position(slime_grid_index)
+	slime_instantiate.enemy_grid_index = slime_grid_index
+	enemys.add_child(slime_instantiate)
+	_roll_dice(slime_instantiate)	
+
 			
 			
 ## 设置英雄信息
@@ -321,10 +318,19 @@ func hide_skill_attack():
 
 ## 技能结算
 func skill_attack():
-	skill_system.skill_attack()
+	await skill_system.skill_attack()
+	_enemy_turn()
 
-## 回合结束
-func _on_button_pressed() -> void:
+## 重掷按钮按下
+func _on_reroll_button_pressed() -> void:
+	if Current.reroll_times > 0:
+		CursorManager.change_cursor("reroll")
+	else:
+		## 无法重掷效果
+		pass
+
+## 跳过回合按钮按下
+func _on_turn_button_pressed() -> void:
 	_enemy_turn()
 	
 ## 敌人回合

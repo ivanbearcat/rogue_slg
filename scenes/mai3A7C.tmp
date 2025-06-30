@@ -1,9 +1,9 @@
-[gd_scene load_steps=49 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=38 format=4 uid="uid://18r2fm65t68x"]
 
-[ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
 [ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="3_h858a"]
-[ext_resource type="Script" uid="uid://ce3nrlk8drkh7" path="res://scripts/skill_system.gd" id="3_rragv"]
+[ext_resource type="Script" path="res://scripts/skill_system.gd" id="3_rragv"]
 [ext_resource type="FontFile" uid="uid://bp53tlinpuypa" path="res://fonts/SourceHanSansCN-Normal.otf" id="4_76ilt"]
 [ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="6_1gmj2"]
 [ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="6_bkbmf"]
@@ -850,205 +850,52 @@ outline_color = Color(0.352941, 0.411765, 0.533333, 1)
 atlas = ExtResource("6_bkbmf")
 region = Rect2(49, 97, 30, 30)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_31t0e"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_tlte2"]
 atlas = ExtResource("6_1gmj2")
 region = Rect2(2, 2, 24, 24)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bt6xe"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_612w7"]
 atlas = ExtResource("6_1gmj2")
 region = Rect2(30, 2, 24, 24)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqdd3"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_eok4h"]
 atlas = ExtResource("6_1gmj2")
 region = Rect2(58, 2, 24, 24)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tuil3"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kpq8t"]
 atlas = ExtResource("6_1gmj2")
 region = Rect2(86, 2, 24, 24)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_edkoa"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_sdjh4"]
 atlas = ExtResource("6_1gmj2")
 region = Rect2(114, 2, 24, 24)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_luxfg"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a0si6"]
 atlas = ExtResource("6_1gmj2")
 region = Rect2(142, 2, 24, 24)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yld4"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_2wq0j"]
 atlas = ExtResource("8_akto2")
-region = Rect2(4, 44, 24, 11)
+region = Rect2(4, 44, 24, 10)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhkwd"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_op861"]
+load_path = "res://.godot/imported/dice_type.png-5ace320fbfb9f992a7581b1e5a1a1dfd.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_surj8"]
-atlas = ExtResource("8_akto2")
-region = Rect2(4, 11, 24, 11)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7h2xm"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hhd2"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+atlas = SubResource("CompressedTexture2D_op861")
+region = Rect2(4, 11, 24, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lur3c"]
-atlas = ExtResource("8_akto2")
-region = Rect2(4, 22, 24, 11)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqm5u"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+atlas = SubResource("CompressedTexture2D_op861")
+region = Rect2(4, 22, 24, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a1xmg"]
-atlas = ExtResource("8_akto2")
-region = Rect2(4, 33, 24, 11)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opren"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+atlas = SubResource("CompressedTexture2D_op861")
+region = Rect2(4, 33, 24, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hkjfj"]
-atlas = ExtResource("8_akto2")
-region = Rect2(4, 55, 24, 11)
+atlas = ExtResource("6_1gmj2")
+region = Rect2(114, 58, 24, 24)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_574tw"]
 diffuse_texture = ExtResource("9_njo2n")
@@ -1066,7 +913,7 @@ script = ExtResource("1_jbfvy")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
-tile_map_data = PackedByteArray("AAABAAgAAAAIAAoAAAACAAgAAAAIAAoAAAADAAgAAAAIAAoAAAAEAAgAAAAIAAoAAAAFAAgAAAAIAAoAAAAGAAgAAAAIAAoAAAAHAAgAAAAIAAoAAAAHAAAAAAAIAAwAAAAIAAEAAAAHAAsAAAAIAAIAAAAHAAsAAAAIAAMAAAAHAAsAAAAIAAQAAAAHAAsAAAAIAAUAAAAHAAsAAAAIAAYAAAAHAAsAAAAIAAcAAAAHAAsAAAAIAAgAAAAKAAoAAAAIAAAAAAAKAAsAAAD9//7/AAAIAAsAAAD+//7/AAAIAAsAAAD///7/AAAIAAsAAAAAAP7/AAAIAAsAAAABAP7/AAAIAAsAAAACAP7/AAAIAAsAAAADAP7/AAAIAAsAAAAEAP7/AAAIAAsAAAAFAP7/AAAIAAsAAAAGAP7/AAAIAAsAAAAHAP7/AAAIAAsAAAAIAP7/AAAIAAsAAAAJAP7/AAAIAAsAAAAKAP7/AAAIAAsAAAALAP7/AAAIAAsAAAAMAP7/AAAIAAsAAAANAP7/AAAIAAsAAAAOAP7/AAAIAAsAAAAOAP//AAAIAAsAAAANAP//AAAIAAsAAAAMAP//AAAIAAsAAAALAP//AAAIAAsAAAAKAP//AAAIAAsAAAAJAP//AAAIAAsAAAAIAP//AAAIAAsAAAAHAP//AAAIAAsAAAAGAP//AAAIAAsAAAAFAP//AAAIAAsAAAAEAP//AAAIAAsAAAADAP//AAAIAAsAAAACAP//AAAIAAsAAAABAP//AAAIAAsAAAAAAP//AAAIAAsAAAD/////AAAIAAsAAAD+////AAAIAAsAAAD9////AAAIAAsAAAD8////AAAIAAsAAAD7////AAAIAAsAAAD6////AAAIAAsAAAD6//7/AAAIAAsAAAD7//7/AAAIAAsAAAD8//7/AAAIAAsAAAD6//3/AAAIAAsAAAD7//3/AAAIAAsAAAD8//3/AAAIAAsAAAD9//3/AAAIAAsAAAD+//3/AAAIAAsAAAD///3/AAAIAAsAAAAAAP3/AAAIAAsAAAABAP3/AAAIAAsAAAACAP3/AAAIAAsAAAADAP3/AAAIAAsAAAAEAP3/AAAIAAsAAAAFAP3/AAAIAAsAAAAGAP3/AAAIAAsAAAAHAPz/AAAIAAsAAAAIAPz/AAAIAAsAAAAJAPz/AAAIAAsAAAAKAPz/AAAIAAsAAAALAPz/AAAIAAsAAAALAP3/AAAIAAsAAAAMAP3/AAAIAAsAAAANAP3/AAAIAAsAAAANAPz/AAAIAAsAAAAOAPz/AAAIAAsAAAAOAP3/AAAIAAsAAAAKAP3/AAAIAAsAAAAJAP3/AAAIAAsAAAAIAP3/AAAIAAsAAAAHAP3/AAAIAAsAAAD6//z/AAAIAAsAAAD7//z/AAAIAAsAAAD8//z/AAAIAAsAAAD9//z/AAAIAAsAAAD+//z/AAAIAAsAAAD///z/AAAIAAsAAAAAAPz/AAAIAAsAAAABAPz/AAAIAAsAAAACAPz/AAAIAAsAAAADAPz/AAAIAAsAAAAEAPz/AAAIAAsAAAAFAPz/AAAIAAsAAAAMAPz/AAAIAAsAAAAGAPz/AAAIAAsAAAD6/wAAAAAIAAsAAAD7/wAAAAAIAAsAAAD8/wAAAAAIAAsAAAD9/wAAAAAIAAsAAAD+/wAAAAAIAAsAAAD//wAAAAAIAAsAAAD+/wEAAAAIAAsAAAD9/wEAAAAIAAsAAAD8/wEAAAAIAAsAAAD7/wEAAAAIAAsAAAD6/wEAAAAIAAsAAAD6/wIAAAAIAAsAAAD7/wIAAAAIAAsAAAD+/wIAAAAIAAsAAAD+/wMAAAAIAAsAAAD8/wMAAAAIAAsAAAD7/wMAAAAIAAsAAAD6/wMAAAAIAAsAAAD6/wQAAAAIAAsAAAD6/wUAAAAIAAsAAAAEAAkAAAAIAAsAAAAFAAkAAAAIAAsAAAAGAAkAAAAIAAsAAAAHAAkAAAAIAAsAAAAOAAkAAAAIAAsAAAAOAAEAAAAIAAsAAAAOAAAAAAAIAAsAAAAOAAIAAAAIAAsAAAAOAAMAAAAIAAsAAAAOAAQAAAAIAAsAAAAOAAUAAAAIAAsAAAANAAIAAAAIAAsAAAANAAEAAAAIAAsAAAANAAAAAAAIAAsAAAANAAMAAAAIAAsAAAANAAQAAAAIAAsAAAANAAUAAAAIAAsAAAAMAAQAAAAIAAsAAAAMAAUAAAAIAAsAAAAMAAAAAAAIAAsAAAAMAAEAAAAIAAsAAAAMAAIAAAAIAAsAAAALAAMAAAAIAAsAAAALAAQAAAAIAAsAAAAKAAUAAAAIAAsAAAAKAAYAAAAIAAsAAAAKAAcAAAAIAAsAAAAJAAwAAAAIAAsAAAALAAUAAAAIAAsAAAALAAIAAAAIAAsAAAALAAEAAAAIAAsAAAALAAYAAAAIAAsAAAALAAcAAAAIAAsAAAALAAAAAAAIAAsAAAAKAAEAAAAIAAsAAAAKAAIAAAAIAAsAAAAKAAMAAAAIAAsAAAAJAAMAAAAIAAsAAAAKAAQAAAAIAAsAAAAJAAgAAAAIAAsAAAAKAAAAAAAIAAsAAAAJAAAAAAAIAAsAAAAJAAEAAAAIAAsAAAAJAAIAAAAIAAsAAAAMAAMAAAAIAAsAAAAKAAwAAAAIAAsAAAANAAsAAAAIAAsAAAACAAwAAAAIAAsAAAABAAwAAAAIAAsAAAAAAAwAAAAIAAsAAAD//wwAAAAIAAsAAAD+/wwAAAAIAAsAAAD9/wwAAAAIAAsAAAALAAwAAAAIAAsAAAD6/woAAAAIAAsAAAD7/wQAAAAIAAsAAAD9/wYAAAAIAAsAAAD9/wUAAAAIAAsAAAD9/wQAAAAIAAsAAAD9/wgAAAAIAAsAAAD+/wcAAAAIAAsAAAD+/wYAAAAIAAsAAAD+/wgAAAAIAAsAAAD//wgAAAAIAAsAAAD+/wQAAAAIAAsAAAD+/wUAAAAIAAsAAAD9/wcAAAAIAAsAAAD8/wYAAAAIAAsAAAD8/wUAAAAIAAsAAAD8/wQAAAAIAAsAAAAOAAoAAAAIAAsAAAAOAAwAAAAIAAsAAAAOAAsAAAAIAAsAAAANAAwAAAAIAAsAAAAMAAwAAAAIAAsAAAD8/wwAAAAIAAsAAAD7/wwAAAAIAAsAAAD6/wwAAAAIAAsAAAD6/wsAAAAIAAsAAAD7/wsAAAAIAAsAAAACAAEAAAABAAIAAAADAAIAAAABAAAAAAAEAAIAAAACAAAAAAAEAAMAAAACAAAAAAAFAAMAAAACAAAAAAAFAAQAAAABAAEAAAAGAAUAAAACAAIAAAAGAAYAAAACAAIAAAAHAAYAAAACAAAAAAAHAAcAAAACAAEAAAAGAAcAAAABAAAAAAAFAAcAAAABAAEAAAAEAAcAAAABAAEAAAADAAcAAAABAAEAAAACAAcAAAABAAAAAAACAAYAAAACAAIAAAADAAYAAAABAAIAAAAEAAYAAAAAAAEAAAAFAAYAAAAAAAIAAAAHAAUAAAAAAAEAAAAHAAQAAAACAAEAAAAHAAMAAAABAAEAAAAHAAIAAAACAAAAAAAHAAEAAAACAAEAAAAGAAEAAAAAAAIAAAAFAAEAAAABAAEAAAAEAAEAAAABAAIAAAADAAEAAAACAAIAAAAFAAIAAAACAAAAAAAGAAMAAAABAAIAAAAGAAQAAAACAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAACAAAAAAADAAUAAAABAAEAAAACAAUAAAACAAAAAAACAAQAAAABAAIAAAADAAQAAAACAAAAAAADAAMAAAAAAAEAAAACAAMAAAABAAEAAAACAAIAAAAAAAEAAAAGAAIAAAACAAEAAAABAAcAAAAAAAIAAAD//wcAAAAIAAsAAAD//wYAAAAIAAsAAAAAAAYAAAAJAAsAAAABAAYAAAABAAAAAAD//wUAAAAIAAsAAAAAAAUAAAAJAAsAAAABAAUAAAACAAAAAAD//wQAAAAIAAsAAAAAAAQAAAAJAAsAAAABAAQAAAABAAIAAAAAAAEAAAAJAAsAAAAAAAIAAAAJAAsAAAABAAEAAAABAAAAAAABAAIAAAAAAAAAAAD//wIAAAAIAAsAAAD//wEAAAAIAAsAAAAAAAMAAAAJAAsAAAABAAMAAAABAAEAAAD//wMAAAAIAAsAAAD6/wcAAAAIAAsAAAD6/wgAAAAIAAsAAAD6/wYAAAAIAAsAAAD7/wYAAAAIAAsAAAD8/wcAAAAIAAsAAAD8/wkAAAAIAAsAAAD6/wkAAAAIAAsAAAD9/wsAAAAIAAsAAAD8/wsAAAAIAAsAAAD+/woAAAAIAAsAAAD+/wsAAAAIAAsAAAD+/wkAAAAIAAsAAAD//woAAAAIAAsAAAD//wsAAAAIAAsAAAD//wkAAAAIAAsAAAAAAAoAAAAIAAsAAAAAAAsAAAAIAAsAAAAAAAkAAAAIAAsAAAABAAoAAAAIAAsAAAABAAsAAAAIAAsAAAABAAkAAAAIAAsAAAACAAoAAAAIAAsAAAACAAsAAAAIAAsAAAACAAkAAAAIAAsAAAADAAoAAAAIAAsAAAADAAsAAAAIAAsAAAADAAkAAAAIAAsAAAAEAAoAAAAIAAsAAAAEAAsAAAAIAAsAAAAEAAwAAAAIAAsAAAADAAwAAAAIAAsAAAAFAAsAAAAIAAsAAAAFAAwAAAAIAAsAAAAFAAoAAAAIAAsAAAAGAAsAAAAIAAsAAAAGAAwAAAAIAAsAAAAGAAoAAAAIAAsAAAAHAAsAAAAIAAsAAAAHAAwAAAAIAAsAAAAHAAoAAAAIAAsAAAAIAAsAAAAIAAsAAAAIAAwAAAAIAAsAAAAIAAoAAAAIAAsAAAAJAAsAAAAIAAsAAAAJAAoAAAAIAAsAAAAIAAkAAAAIAAsAAAAJAAkAAAAIAAsAAAAKAAoAAAAIAAsAAAAKAAsAAAAIAAsAAAAKAAkAAAAIAAsAAAALAAoAAAAIAAsAAAALAAsAAAAIAAsAAAALAAkAAAAIAAsAAAAMAAoAAAAIAAsAAAAMAAsAAAAIAAsAAAAMAAkAAAAIAAsAAAANAAoAAAAIAAsAAAANAAkAAAAIAAsAAAANAAcAAAAIAAsAAAAMAAcAAAAIAAsAAAANAAYAAAAIAAsAAAAMAAYAAAAIAAsAAAD7/wUAAAAIAAsAAAAAAAcAAAAJAAsAAAAAAAgAAAALAAoAAAAAAAAAAAALAAsAAAABAAAAAAAIAAwAAAACAAAAAAAIAAwAAAADAAAAAAAIAAwAAAAEAAAAAAAIAAwAAAAFAAAAAAAIAAwAAAAGAAAAAAAIAAwAAAD7/wcAAAAIAAsAAAD7/wgAAAAIAAsAAAD8/wgAAAAIAAsAAAD9/wkAAAAIAAsAAAD9/woAAAAIAAsAAAD8/woAAAAIAAsAAAD7/woAAAAIAAsAAAD7/wkAAAAIAAsAAAAEAAQAAAABAAEAAAAJAAQAAAAIAAsAAAAJAAUAAAAIAAsAAAAJAAYAAAAIAAsAAAAJAAcAAAAIAAsAAAAKAAgAAAAIAAsAAAALAAgAAAAIAAsAAAAMAAgAAAAIAAsAAAANAAgAAAAIAAsAAAD8/wIAAAAIAAsAAAD9/wIAAAAIAAsAAAD9/wMAAAAIAAsAAAAOAAgAAAAIAAsAAAAOAAcAAAAIAAsAAAAOAAYAAAAIAAsAAAD5/woAAAAIAAsAAAD5/wkAAAAIAAsAAAD5/wgAAAAIAAsAAAD5/wcAAAAIAAsAAAD5/wYAAAAIAAsAAAD5/wUAAAAIAAsAAAD5//z/AAAIAAsAAAD5/wAAAAAIAAsAAAD5/wEAAAAIAAsAAAD5/wIAAAAIAAsAAAD5/wMAAAAIAAsAAAD5/wQAAAAIAAsAAAD5////AAAIAAsAAAD5//7/AAAIAAsAAAD5//3/AAAIAAsAAAD5/wsAAAAIAAsAAAD5/wwAAAAIAAsAAAAPAAwAAAAIAAsAAAAPAAsAAAAIAAsAAAAPAAoAAAAIAAsAAAAPAAkAAAAIAAsAAAAPAAgAAAAIAAsAAAAPAAcAAAAIAAsAAAAPAAYAAAAIAAsAAAAPAAUAAAAIAAsAAAAPAAQAAAAIAAsAAAAPAAMAAAAIAAsAAAAPAAIAAAAIAAsAAAAPAAEAAAAIAAsAAAAPAAAAAAAIAAsAAAAPAP//AAAIAAsAAAAPAP7/AAAIAAsAAAAPAP3/AAAIAAsAAAAPAPz/AAAIAAsAAAA=")
+tile_map_data = PackedByteArray("AAABAAgAAAAIAAoAAAACAAgAAAAIAAoAAAADAAgAAAAIAAoAAAAEAAgAAAAIAAoAAAAFAAgAAAAIAAoAAAAGAAgAAAAIAAoAAAAHAAgAAAAIAAoAAAAHAAAAAAAIAAwAAAAIAAEAAAAHAAsAAAAIAAIAAAAHAAsAAAAIAAMAAAAHAAsAAAAIAAQAAAAHAAsAAAAIAAUAAAAHAAsAAAAIAAYAAAAHAAsAAAAIAAcAAAAHAAsAAAAIAAgAAAAKAAoAAAAIAAAAAAAKAAsAAAD9//7/AAAIAAsAAAD+//7/AAAIAAsAAAD///7/AAAIAAsAAAAAAP7/AAAIAAsAAAABAP7/AAAIAAsAAAACAP7/AAAIAAsAAAADAP7/AAAIAAsAAAAEAP7/AAAIAAsAAAAFAP7/AAAIAAsAAAAGAP7/AAAIAAsAAAAHAP7/AAAIAAsAAAAIAP7/AAAIAAsAAAAJAP7/AAAIAAsAAAAKAP7/AAAIAAsAAAALAP7/AAAIAAsAAAAMAP7/AAAIAAsAAAANAP7/AAAIAAsAAAAOAP7/AAAIAAsAAAAOAP//AAAIAAsAAAANAP//AAAIAAsAAAAMAP//AAAIAAsAAAALAP//AAAIAAsAAAAKAP//AAAIAAsAAAAJAP//AAAIAAsAAAAIAP//AAAIAAsAAAAHAP//AAAIAAsAAAAGAP//AAAIAAsAAAAFAP//AAAIAAsAAAAEAP//AAAIAAsAAAADAP//AAAIAAsAAAACAP//AAAIAAsAAAABAP//AAAIAAsAAAAAAP//AAAIAAsAAAD/////AAAIAAsAAAD+////AAAIAAsAAAD9////AAAIAAsAAAD8////AAAIAAsAAAD7////AAAIAAsAAAD6////AAAIAAsAAAD6//7/AAAIAAsAAAD7//7/AAAIAAsAAAD8//7/AAAIAAsAAAD6//3/AAAIAAsAAAD7//3/AAAIAAsAAAD8//3/AAAIAAsAAAD9//3/AAAIAAsAAAD+//3/AAAIAAsAAAD///3/AAAIAAsAAAAAAP3/AAAIAAsAAAABAP3/AAAIAAsAAAACAP3/AAAIAAsAAAADAP3/AAAIAAsAAAAEAP3/AAAIAAsAAAAFAP3/AAAIAAsAAAAGAP3/AAAIAAsAAAAHAPz/AAAIAAsAAAAIAPz/AAAIAAsAAAAJAPz/AAAIAAsAAAAKAPz/AAAIAAsAAAALAPz/AAAIAAsAAAALAP3/AAAIAAsAAAAMAP3/AAAIAAsAAAANAP3/AAAIAAsAAAANAPz/AAAIAAsAAAAOAPz/AAAIAAsAAAAOAP3/AAAIAAsAAAAKAP3/AAAIAAsAAAAJAP3/AAAIAAsAAAAIAP3/AAAIAAsAAAAHAP3/AAAIAAsAAAD6//z/AAAIAAsAAAD7//z/AAAIAAsAAAD8//z/AAAIAAsAAAD9//z/AAAIAAsAAAD+//z/AAAIAAsAAAD///z/AAAIAAsAAAAAAPz/AAAIAAsAAAABAPz/AAAIAAsAAAACAPz/AAAIAAsAAAADAPz/AAAIAAsAAAAEAPz/AAAIAAsAAAAFAPz/AAAIAAsAAAAGAPv/AAAIAAsAAAAHAPv/AAAIAAsAAAAIAPv/AAAIAAsAAAAJAPv/AAAIAAsAAAAKAPv/AAAIAAsAAAALAPv/AAAIAAsAAAAMAPz/AAAIAAsAAAAOAPv/AAAIAAsAAAANAPv/AAAIAAsAAAAMAPv/AAAIAAsAAAAFAPv/AAAIAAsAAAAEAPv/AAAIAAsAAAADAPv/AAAIAAsAAAACAPv/AAAIAAsAAAABAPv/AAAIAAsAAAAAAPv/AAAIAAsAAAD///v/AAAIAAsAAAD+//v/AAAIAAsAAAD9//v/AAAIAAsAAAD8//v/AAAIAAsAAAD7//v/AAAIAAsAAAD6//v/AAAIAAsAAAAGAPz/AAAIAAsAAAD6/wAAAAAIAAsAAAD7/wAAAAAIAAsAAAD8/wAAAAAIAAsAAAD9/wAAAAAIAAsAAAD+/wAAAAAIAAsAAAD//wAAAAAIAAsAAAD+/wEAAAAIAAsAAAD9/wEAAAAIAAsAAAD8/wEAAAAIAAsAAAD7/wEAAAAIAAsAAAD6/wEAAAAIAAsAAAD6/wIAAAAIAAsAAAD7/wIAAAAIAAsAAAD+/wIAAAAIAAsAAAD+/wMAAAAIAAsAAAD8/wMAAAAIAAsAAAD7/wMAAAAIAAsAAAD6/wMAAAAIAAsAAAD6/wQAAAAIAAsAAAD6/wUAAAAIAAsAAAAEAAkAAAAIAAsAAAAFAAkAAAAIAAsAAAAGAAkAAAAIAAsAAAAHAAkAAAAIAAsAAAAOAAkAAAAIAAsAAAAOAAEAAAAIAAsAAAAOAAAAAAAIAAsAAAAOAAIAAAAIAAsAAAAOAAMAAAAIAAsAAAAOAAQAAAAIAAsAAAAOAAUAAAAIAAsAAAANAAIAAAAIAAsAAAANAAEAAAAIAAsAAAANAAAAAAAIAAsAAAANAAMAAAAIAAsAAAANAAQAAAAIAAsAAAANAAUAAAAIAAsAAAAMAAQAAAAIAAsAAAAMAAUAAAAIAAsAAAAMAAAAAAAIAAsAAAAMAAEAAAAIAAsAAAAMAAIAAAAIAAsAAAALAAMAAAAIAAsAAAALAAQAAAAIAAsAAAAKAAUAAAAIAAsAAAAKAAYAAAAIAAsAAAAKAAcAAAAIAAsAAAAJAAwAAAAIAAsAAAALAAUAAAAIAAsAAAALAAIAAAAIAAsAAAALAAEAAAAIAAsAAAALAAYAAAAIAAsAAAALAAcAAAAIAAsAAAALAAAAAAAIAAsAAAAKAAEAAAAIAAsAAAAKAAIAAAAIAAsAAAAKAAMAAAAIAAsAAAAJAAMAAAAIAAsAAAAKAAQAAAAIAAsAAAAJAAgAAAAIAAsAAAAKAAAAAAAIAAsAAAAJAAAAAAAIAAsAAAAJAAEAAAAIAAsAAAAJAAIAAAAIAAsAAAAMAAMAAAAIAAsAAAAKAAwAAAAIAAsAAAANAAsAAAAIAAsAAAAKAA0AAAAIAAsAAAAJAA0AAAAIAAsAAAAIAA0AAAAIAAsAAAAHAA0AAAAIAAsAAAAGAA0AAAAIAAsAAAAFAA0AAAAIAAsAAAACAAwAAAAIAAsAAAABAAwAAAAIAAsAAAAAAAwAAAAIAAsAAAD//wwAAAAIAAsAAAD+/wwAAAAIAAsAAAD9/wwAAAAIAAsAAAALAAwAAAAIAAsAAAD6/woAAAAIAAsAAAD7/wQAAAAIAAsAAAD9/wYAAAAIAAsAAAD9/wUAAAAIAAsAAAD9/wQAAAAIAAsAAAD9/wgAAAAIAAsAAAD+/wcAAAAIAAsAAAD+/wYAAAAIAAsAAAD+/wgAAAAIAAsAAAD//wgAAAAIAAsAAAD+/wQAAAAIAAsAAAD+/wUAAAAIAAsAAAD9/wcAAAAIAAsAAAD8/wYAAAAIAAsAAAD8/wUAAAAIAAsAAAD8/wQAAAAIAAsAAAAOAAoAAAAIAAsAAAAOAAwAAAAIAAsAAAAOAAsAAAAIAAsAAAANAAwAAAAIAAsAAAANAA0AAAAIAAsAAAAMAA0AAAAIAAsAAAAMAAwAAAAIAAsAAAAEAA0AAAAIAAsAAAADAA0AAAAIAAsAAAACAA0AAAAIAAsAAAABAA0AAAAIAAsAAAAAAA0AAAAIAAsAAAD//w0AAAAIAAsAAAD+/w0AAAAIAAsAAAD9/w0AAAAIAAsAAAD8/w0AAAAIAAsAAAD7/w0AAAAIAAsAAAALAA0AAAAIAAsAAAAOAA0AAAAIAAsAAAD8/wwAAAAIAAsAAAD7/wwAAAAIAAsAAAD6/wwAAAAIAAsAAAD6/w0AAAAIAAsAAAD6/wsAAAAIAAsAAAD7/wsAAAAIAAsAAAD6/w4AAAAIAAsAAAD7/w4AAAAIAAsAAAD8/w4AAAAIAAsAAAD9/w4AAAAIAAsAAAD+/w4AAAAIAAsAAAD//w4AAAAIAAsAAAAAAA4AAAAIAAsAAAABAA4AAAAIAAsAAAACAA4AAAAIAAsAAAADAA4AAAAIAAsAAAAEAA4AAAAIAAsAAAAFAA4AAAAIAAsAAAAGAA4AAAAIAAsAAAAHAA4AAAAIAAsAAAAIAA4AAAAIAAsAAAAJAA4AAAAIAAsAAAAKAA4AAAAIAAsAAAALAA4AAAAIAAsAAAAMAA4AAAAIAAsAAAANAA4AAAAIAAsAAAAOAA4AAAAIAAsAAAD6//r/AAAIAAsAAAD7//r/AAAIAAsAAAD8//r/AAAIAAsAAAD9//r/AAAIAAsAAAD+//r/AAAIAAsAAAD///r/AAAIAAsAAAAAAPr/AAAIAAsAAAABAPr/AAAIAAsAAAACAPr/AAAIAAsAAAADAPr/AAAIAAsAAAAEAPr/AAAIAAsAAAAFAPr/AAAIAAsAAAAGAPr/AAAIAAsAAAAHAPr/AAAIAAsAAAAIAPr/AAAIAAsAAAAJAPr/AAAIAAsAAAAKAPr/AAAIAAsAAAALAPr/AAAIAAsAAAAMAPr/AAAIAAsAAAANAPr/AAAIAAsAAAAOAPr/AAAIAAsAAAACAAEAAAABAAIAAAADAAIAAAABAAAAAAAEAAIAAAACAAAAAAAEAAMAAAACAAAAAAAFAAMAAAACAAAAAAAFAAQAAAABAAEAAAAGAAUAAAACAAIAAAAGAAYAAAACAAIAAAAHAAYAAAACAAAAAAAHAAcAAAACAAEAAAAGAAcAAAABAAAAAAAFAAcAAAABAAEAAAAEAAcAAAABAAEAAAADAAcAAAABAAEAAAACAAcAAAABAAAAAAACAAYAAAACAAIAAAADAAYAAAABAAIAAAAEAAYAAAAAAAEAAAAFAAYAAAAAAAIAAAAHAAUAAAAAAAEAAAAHAAQAAAACAAEAAAAHAAMAAAABAAEAAAAHAAIAAAACAAAAAAAHAAEAAAACAAEAAAAGAAEAAAAAAAIAAAAFAAEAAAABAAEAAAAEAAEAAAABAAIAAAADAAEAAAACAAIAAAAFAAIAAAACAAAAAAAGAAMAAAABAAIAAAAGAAQAAAACAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAACAAAAAAADAAUAAAABAAEAAAACAAUAAAACAAAAAAACAAQAAAABAAIAAAADAAQAAAACAAAAAAADAAMAAAAAAAEAAAACAAMAAAABAAEAAAACAAIAAAAAAAEAAAAGAAIAAAACAAEAAAABAAcAAAAAAAIAAAD//wcAAAAIAAsAAAD//wYAAAAIAAsAAAAAAAYAAAAJAAsAAAABAAYAAAABAAAAAAD//wUAAAAIAAsAAAAAAAUAAAAJAAsAAAABAAUAAAACAAAAAAD//wQAAAAIAAsAAAAAAAQAAAAJAAsAAAABAAQAAAABAAIAAAAAAAEAAAAJAAsAAAAAAAIAAAAJAAsAAAABAAEAAAABAAAAAAABAAIAAAAAAAAAAAD//wIAAAAIAAsAAAD//wEAAAAIAAsAAAAAAAMAAAAJAAsAAAABAAMAAAABAAEAAAD//wMAAAAIAAsAAAD6/wcAAAAIAAsAAAD6/wgAAAAIAAsAAAD6/wYAAAAIAAsAAAD7/wYAAAAIAAsAAAD8/wcAAAAIAAsAAAD8/wkAAAAIAAsAAAD6/wkAAAAIAAsAAAD9/wsAAAAIAAsAAAD8/wsAAAAIAAsAAAD+/woAAAAIAAsAAAD+/wsAAAAIAAsAAAD+/wkAAAAIAAsAAAD//woAAAAIAAsAAAD//wsAAAAIAAsAAAD//wkAAAAIAAsAAAAAAAoAAAAIAAsAAAAAAAsAAAAIAAsAAAAAAAkAAAAIAAsAAAABAAoAAAAIAAsAAAABAAsAAAAIAAsAAAABAAkAAAAIAAsAAAACAAoAAAAIAAsAAAACAAsAAAAIAAsAAAACAAkAAAAIAAsAAAADAAoAAAAIAAsAAAADAAsAAAAIAAsAAAADAAkAAAAIAAsAAAAEAAoAAAAIAAsAAAAEAAsAAAAIAAsAAAAEAAwAAAAIAAsAAAADAAwAAAAIAAsAAAAFAAsAAAAIAAsAAAAFAAwAAAAIAAsAAAAFAAoAAAAIAAsAAAAGAAsAAAAIAAsAAAAGAAwAAAAIAAsAAAAGAAoAAAAIAAsAAAAHAAsAAAAIAAsAAAAHAAwAAAAIAAsAAAAHAAoAAAAIAAsAAAAIAAsAAAAIAAsAAAAIAAwAAAAIAAsAAAAIAAoAAAAIAAsAAAAJAAsAAAAIAAsAAAAJAAoAAAAIAAsAAAAIAAkAAAAIAAsAAAAJAAkAAAAIAAsAAAAKAAoAAAAIAAsAAAAKAAsAAAAIAAsAAAAKAAkAAAAIAAsAAAALAAoAAAAIAAsAAAALAAsAAAAIAAsAAAALAAkAAAAIAAsAAAAMAAoAAAAIAAsAAAAMAAsAAAAIAAsAAAAMAAkAAAAIAAsAAAANAAoAAAAIAAsAAAANAAkAAAAIAAsAAAANAAcAAAAIAAsAAAAMAAcAAAAIAAsAAAANAAYAAAAIAAsAAAAMAAYAAAAIAAsAAAD7/wUAAAAIAAsAAAAAAAcAAAAJAAsAAAAAAAgAAAALAAoAAAAAAAAAAAALAAsAAAABAAAAAAAIAAwAAAACAAAAAAAIAAwAAAADAAAAAAAIAAwAAAAEAAAAAAAIAAwAAAAFAAAAAAAIAAwAAAAGAAAAAAAIAAwAAAD7/wcAAAAIAAsAAAD7/wgAAAAIAAsAAAD8/wgAAAAIAAsAAAD9/wkAAAAIAAsAAAD9/woAAAAIAAsAAAD8/woAAAAIAAsAAAD7/woAAAAIAAsAAAD7/wkAAAAIAAsAAAAEAAQAAAABAAEAAAAJAAQAAAAIAAsAAAAJAAUAAAAIAAsAAAAJAAYAAAAIAAsAAAAJAAcAAAAIAAsAAAAKAAgAAAAIAAsAAAALAAgAAAAIAAsAAAAMAAgAAAAIAAsAAAANAAgAAAAIAAsAAAD8/wIAAAAIAAsAAAD9/wIAAAAIAAsAAAD9/wMAAAAIAAsAAAAOAAgAAAAIAAsAAAAOAAcAAAAIAAsAAAAOAAYAAAAIAAsAAAA=")
 tile_set = SubResource("TileSet_yxupo")
 
 [node name="Area2D" type="Area2D" parent="TileMapLayer"]
@@ -1232,19 +1079,12 @@ theme_override_constants/margin_bottom = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 0
 
-[node name="one_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_31t0e")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame"]
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1252,7 +1092,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_tlte2")
 stretch_mode = 3
 
-[node name="one_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame/HBoxContainer"]
+[node name="one_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1263,17 +1103,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="two_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_bt6xe")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame/HBoxContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1281,7 +1115,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_612w7")
 stretch_mode = 3
 
-[node name="two_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame/HBoxContainer2"]
+[node name="two_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1292,17 +1126,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="three_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_jqdd3")
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame/HBoxContainer3"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1310,7 +1138,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_eok4h")
 stretch_mode = 3
 
-[node name="three_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame/HBoxContainer3"]
+[node name="three_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer3"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1321,17 +1149,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="four_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_tuil3")
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame/HBoxContainer4"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1339,7 +1161,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_kpq8t")
 stretch_mode = 3
 
-[node name="four_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame/HBoxContainer4"]
+[node name="four_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer4"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1350,17 +1172,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="five_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_edkoa")
-
-[node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame/HBoxContainer5"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1368,7 +1184,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_sdjh4")
 stretch_mode = 3
 
-[node name="five_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame/HBoxContainer5"]
+[node name="five_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer5"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1379,17 +1195,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="six_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_luxfg")
-
-[node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame/HBoxContainer6"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer6"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1397,7 +1207,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_a0si6")
 stretch_mode = 3
 
-[node name="six_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame/HBoxContainer6"]
+[node name="six_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/HBoxContainer6"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1430,19 +1240,12 @@ theme_override_constants/margin_bottom = 3
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2"]
 layout_mode = 2
-theme_override_constants/separation = 0
 
-[node name="none_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_2yld4")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame"]
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1450,13 +1253,13 @@ size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_2wq0j")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "  无    "
 label_settings = ExtResource("3_h858a")
 
-[node name="none_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer"]
+[node name="none_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -1467,17 +1270,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="duizi_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_bhkwd")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1485,13 +1282,13 @@ size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_surj8")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer2"]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "对子"
 label_settings = ExtResource("3_h858a")
 
-[node name="duizi_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2"]
+[node name="duizi_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -1502,17 +1299,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="shunzi_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_7h2xm")
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1520,13 +1311,13 @@ size_flags_stretch_ratio = 2.0
 texture = ExtResource("6_vreof")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer3"]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "顺子"
 label_settings = ExtResource("3_h858a")
 
-[node name="shunzi_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3"]
+[node name="shunzi_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer3"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -1537,17 +1328,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="tongse_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_7hhd2")
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1555,13 +1340,13 @@ size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_lur3c")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer4"]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "同色"
 label_settings = ExtResource("3_h858a")
 
-[node name="tongse_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4"]
+[node name="tongse_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer4"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -1572,17 +1357,11 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="tongdui_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_yqm5u")
-
-[node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1590,13 +1369,13 @@ size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_a1xmg")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer5"]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
-text = "同对"
+text = "镜像"
 label_settings = ExtResource("3_h858a")
 
-[node name="tongdui_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5"]
+[node name="mirror_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer5"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -1607,32 +1386,25 @@ label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="tongshun_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_opren")
-
-[node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer6"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_hkjfj")
-expand_mode = 2
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer6"]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
-text = "同顺"
+text = "点数"
 label_settings = ExtResource("3_h858a")
 
-[node name="tongshun_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6"]
+[node name="point_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/HBoxContainer6"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -1671,37 +1443,18 @@ layout_mode = 2
 text = "总分: 0"
 label_settings = ExtResource("3_h858a")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="current_score/VBoxContainer"]
-layout_mode = 2
-
-[node name="reroll_label" type="Label" parent="current_score/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "重掷: 3"
-label_settings = ExtResource("3_h858a")
-
-[node name="turn_label" type="Label" parent="current_score/VBoxContainer/HBoxContainer2"]
+[node name="turn_label" type="Label" parent="current_score/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "回合: 0"
 label_settings = ExtResource("3_h858a")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="current_score/VBoxContainer"]
-layout_mode = 2
-
-[node name="reroll_button" type="Button" parent="current_score/VBoxContainer/HBoxContainer"]
+[node name="turn_button" type="Button" parent="current_score/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_76ilt")
 theme_override_font_sizes/font_size = 16
-text = "重掷"
-
-[node name="turn_button" type="Button" parent="current_score/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_76ilt")
-theme_override_font_sizes/font_size = 16
-text = "跳过回合"
+text = "回合结束"
 
 [node name="hero_skill" type="Control" parent="."]
 layout_mode = 3
@@ -1731,45 +1484,49 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("CanvasTexture_574tw")
-expand_mode = 2
+expand_mode = 1
 stretch_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="real_time_score/HBoxContainer/TextureRect"]
 layout_mode = 1
-offset_left = 7.0
-offset_right = 56.0
-offset_bottom = 24.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(0.47, 0.47)
-pivot_offset = Vector2(0, -3)
+pivot_offset = Vector2(14, 11)
 
 [node name="base_score" type="Label" parent="real_time_score/HBoxContainer/TextureRect/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 label_settings = ExtResource("3_h858a")
-horizontal_alignment = 1
+horizontal_alignment = 2
 
 [node name="TextureRect2" type="TextureRect" parent="real_time_score/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("CanvasTexture_oy8gc")
-expand_mode = 2
+expand_mode = 1
 stretch_mode = 3
 
 [node name="MarginContainer2" type="MarginContainer" parent="real_time_score/HBoxContainer/TextureRect2"]
 layout_mode = 1
-offset_left = 4.0
-offset_right = 64.0
-offset_bottom = 24.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(0.47, 0.47)
-pivot_offset = Vector2(0, -3)
+pivot_offset = Vector2(14, 11)
 
 [node name="percent_score" type="Label" parent="real_time_score/HBoxContainer/TextureRect2/MarginContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 label_settings = ExtResource("3_h858a")
-horizontal_alignment = 1
+horizontal_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="real_time_score"]
 layout_mode = 1
@@ -1792,87 +1549,88 @@ texture = ExtResource("11_w4riq")
 [node name="dice_num" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -65.0
-offset_right = 5.0
-offset_bottom = 8.0
-scale = Vector2(0.85, 0.85)
+offset_left = -59.5
+offset_top = -2.0
+offset_right = -2.5
+offset_bottom = 6.0
 
-[node name="dice_list" type="HBoxContainer" parent="dice_num"]
-unique_name_in_owner = true
+[node name="HBoxContainer" type="HBoxContainer" parent="dice_num"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -14.0
+offset_right = 42.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(28, 4)
-theme_override_constants/separation = 1
 
-[node name="dice1" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice1" type="TextureRect" parent="dice_num/HBoxContainer"]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
-[node name="dice2" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice2" type="TextureRect" parent="dice_num/HBoxContainer"]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
-[node name="dice3" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice3" type="TextureRect" parent="dice_num/HBoxContainer"]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
-[node name="dice4" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice4" type="TextureRect" parent="dice_num/HBoxContainer"]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
-[node name="dice5" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice5" type="TextureRect" parent="dice_num/HBoxContainer"]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
-[node name="dice6" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice6" type="TextureRect" parent="dice_num/HBoxContainer"]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
-[node name="dice7" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice7" type="TextureRect" parent="dice_num/HBoxContainer"]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
-[node name="dice8" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice8" type="TextureRect" parent="dice_num/HBoxContainer"]
+unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]
-[connection signal="pressed" from="current_score/VBoxContainer/HBoxContainer/reroll_button" to="." method="_on_reroll_button_pressed"]
-[connection signal="pressed" from="current_score/VBoxContainer/HBoxContainer/turn_button" to="." method="_on_turn_button_pressed"]
+[connection signal="pressed" from="current_score/VBoxContainer/turn_button" to="." method="_on_button_pressed"]
