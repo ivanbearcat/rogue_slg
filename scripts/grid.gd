@@ -21,6 +21,9 @@ func _on_area_2d_mouse_entered() -> void:
 func _on_area_2d_mouse_exited() -> void:
 	cursor.hide()
 	if attack.visible == true:
+		## 等待分数结算动画和计分完成
+		while Current.doing_skill_attack:
+			await Tools.time_sleep(0.05)
 		emit_signal("grid_cmd", "hide_skill_attack")
 	
 	

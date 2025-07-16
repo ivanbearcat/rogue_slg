@@ -180,3 +180,11 @@ var reroll_times: int:
 		game_manager.reroll_label.text = "重掷: " + str(v)
 	get:
 		return int(game_manager.reroll_label.text)
+## 当前等级
+var level := 1
+## 当前经验
+var exp := 0
+## 升级需要的经验
+var require_exp := 3
+## 是否正在攻击结算
+var doing_skill_attack := 0

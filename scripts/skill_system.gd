@@ -21,6 +21,8 @@ func hide_skill_attack():
 
 ## 鼠标点击红框之后	
 func skill_attack():
+	## 正在攻击结算
+	Current.doing_skill_attack = 1
 	## 判断是能量技能则置空能量史莱姆变量，可以重新生成
 	var reset_flag = false
 	if not Current.power_slime is Slime:
@@ -55,14 +57,14 @@ func skill_attack():
 	## 等待攻击动画完成
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)
-	## 等动画播完执行量史莱姆重置
+	## 等动画播完执行能量史莱姆重置
 	if reset_flag:
 		Current.power_slime = null
 		EventBus.event_emit("skill_power_reset")
 	## 恢复技能UI弹起状态
 	hide_all_skill.emit()
 	Current.hero.hero_state_machine.transition_to("end")
-		
+	Current.doing_skill_attack = 0
 
 	
 func _show_soldier_skill_1_range():

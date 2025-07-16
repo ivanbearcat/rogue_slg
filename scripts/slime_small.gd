@@ -4,6 +4,7 @@ class_name Slime
 @onready var warning: Sprite2D = $Area2D/warning
 @onready var dice: AnimatedSprite2D = $Area2D/dice
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
+@onready var game_manager: Node2D = $"/root/game_manager"
 
 var enemy_grid_index: Vector2i
 var enemy_hp: int = 1
@@ -31,6 +32,7 @@ func _process(delta: float) -> void:
 			
 			
 func _on_animated_sprite_2d_animation_finished() -> void:
+	game_manager.add_exp(1)
 	if self in Current.transformable_slime_array:
 		Current.transformable_slime_array.erase(self)
 	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light"):

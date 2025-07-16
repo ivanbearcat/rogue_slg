@@ -49,6 +49,11 @@ const hero_property = {
 @onready var tongshun_percent_frame: PanelContainer = %tongshun_percent_frame
 ## 骰子UI父级
 @onready var dice_list: HBoxContainer = %dice_list
+## 经验条
+@onready var exp_bar: TextureProgressBar = %exp_bar
+## 经验条刻度池
+@onready var exp_bar_scale_pool: HBoxContainer = %exp_bar_scale_pool
+@onready var exp_label: Label = %exp_label
 
 ## 格子像素大小
 var grid_size = Vector2i(16, 16)
@@ -65,7 +70,7 @@ var _removable_map_vec =  Vector2i(7, 7)
 ## 史莱姆创建列表
 var _slime_create_array: Array
 ## 回合计数
-var round := 0
+var count_round := 0
 ## 带有骰子点数的动画图片索引
 var dice_point: Array = [0, 2, 4, 6, 8, 10]
 ## 史莱姆场景列表
@@ -73,7 +78,7 @@ var slime_scene_array := ['slime_small', 'slime_small_red', 'slime_small_yellow'
 ## 边缘格子列表
 var _margin_grid: Array[Vector2i]
 ## 颜色
-var color = {
+var color := {
 	"alpha0": "cc080800",
 	"red": "cc0808"
 }
@@ -81,8 +86,10 @@ var color = {
 
 func _ready() -> void:
 	## 测试
-	#var sb = none_percent_frame.get("theme_override_styles/panel")
-	#sb.border_color = Color.html(color["red"])
+	#for i in range(20):
+		#await _add_exp(1)
+
+	
 	## 设置基础倍率
 	Current.none_percent = 100
 	Current.duizi_percent = 150
@@ -187,6 +194,7 @@ func _slime_move_ai():
 			enemy.target_position = target_position
 			enemy.enemy_grid_index = target_grid
 
+
 ## 史莱姆重掷
 func slime_reroll(slime: Node2D):
 	var slime_grid_index = slime.enemy_grid_index
@@ -206,8 +214,35 @@ func slime_reroll(slime: Node2D):
 	enemys.add_child(slime_instantiate)
 	_roll_dice(slime_instantiate)	
 
-			
-			
+
+##设置验条刻度
+func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
+	exp_label.text = str(num_now) + '/' + str(num_max)
+
+
+## 增加经验
+func add_exp(new_exp: int) -> void:
+	Current.exp += new_exp
+	exp_bar.value = Current.exp
+	_set_exp_bar_scale(Current.exp, Current.require_exp)
+	## 等待1秒让一次攻击下的史莱姆经验全加上再升级
+	await Tools.time_sleep(1)
+	_check_level_up()
+
+
+## 检查并升级
+func _check_level_up() -> void:
+	if Current.exp >= Current.require_exp:
+		Current.level += 1
+		if Current.require_exp < 7:
+			Current.require_exp += 1
+		Current.exp = 0
+		exp_bar.value = 0
+		exp_bar.max_value = Current.require_exp
+		_set_exp_bar_scale(Current.exp, Current.require_exp)
+	
+
+
 ## 设置英雄信息
 func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_name = properties.name
@@ -359,8 +394,8 @@ func _enemy_turn():
 	_create_power_slime()
 	Current.turn = "hero_turn"
 	turn_button.disabled = false
-	round += 1
-	turn_label.text = "回合: " + str(round)
+	count_round += 1
+	turn_label.text = "回合: " + str(count_round)
 	## 重置英雄状态
 	for hero in Current.all_hero_array:
 		hero.hero_state_machine.transition_to("idle")
