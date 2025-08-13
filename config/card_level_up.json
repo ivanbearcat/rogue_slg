@@ -1,0 +1,650 @@
+[
+    {
+        "card_id": "card_one",
+        "card_name": "一点",
+        "card_textrue": "res://images/card/card_one.png",
+        "card_description": "基础分数增加[color=green]1[/color]",
+        "card_operate": "add",
+        "card_value": 1,
+        "weight": 100
+    },
+    {
+        "card_id": "card_two",
+        "card_name": "二点",
+        "card_textrue": "res://images/card/card_two.png",
+        "card_description": "基础分数增加[color=green]1[/color]",
+        "card_operate": "add",
+        "card_value": 1,
+        "weight": 100
+    },
+    {
+        "card_id": "card_three",
+        "card_name": "三点",
+        "card_textrue": "res://images/card/card_three.png",
+        "card_description": "基础分数增加[color=green]1[/color]",
+        "card_operate": "add",
+        "card_value": 1,
+        "weight": 100
+    },
+    {
+        "card_id": "card_four",
+        "card_name": "四点",
+        "card_textrue": "res://images/card/card_four.png",
+        "card_description": "基础分数增加[color=green]1[/color]",
+        "card_operate": "add",
+        "card_value": 1,
+        "weight": 100
+    },
+    {
+        "card_id": "card_five",
+        "card_name": "五点",
+        "card_textrue": "res://images/card/card_five.png",
+        "card_description": "基础分数增加[color=green]1[/color]",
+        "card_operate": "add",
+        "card_value": 1,
+        "weight": 100
+    },
+    {
+        "card_id": "card_six",
+        "card_name": "六点",
+        "card_textrue": "res://images/card/card_six.png",
+        "card_description": "基础分数增加[color=green]1[/color]",
+        "card_operate": "add",
+        "card_value": 1,
+        "weight": 100
+    },
+    {
+        "card_id": "card_one",
+        "card_name": "一点",
+        "card_textrue": "res://images/card/card_one.png",
+        "card_description": "基础分数增加[color=green]5%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.05,
+        "weight": 100
+    },
+    {
+        "card_id": "card_two",
+        "card_name": "二点",
+        "card_textrue": "res://images/card/card_two.png",
+        "card_description": "基础分数增加[color=green]5%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.05,
+        "weight": 100
+    },
+    {
+        "card_id": "card_three",
+        "card_name": "三点",
+        "card_textrue": "res://images/card/card_three.png",
+        "card_description": "基础分数增加[color=green]5%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.05,
+        "weight": 100
+    },
+    {
+        "card_id": "card_four",
+        "card_name": "四点",
+        "card_textrue": "res://images/card/card_four.png",
+        "card_description": "基础分数增加[color=green]5%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.05,
+        "weight": 100
+    },
+    {
+        "card_id": "card_five",
+        "card_name": "五点",
+        "card_textrue": "res://images/card/card_five.png",
+        "card_description": "基础分数增加[color=green]5%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.05,
+        "weight": 100
+    },
+    {
+        "card_id": "card_six",
+        "card_name": "六点",
+        "card_textrue": "res://images/card/card_six.png",
+        "card_description": "基础分数增加[color=green]5%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.05,
+        "weight": 100
+    },
+    {
+        "card_id": "card_none",
+        "card_name": "无",
+        "card_textrue": "res://images/card/card_none.png",
+        "card_description": "倍率增加[color=green]10%[/color]",
+        "card_operate": "add",
+        "card_value": 10,
+        "weight": 100
+    },
+    {
+        "card_id": "card_duizi",
+        "card_name": "对子",
+        "card_textrue": "res://images/card/card_duizi.png",
+        "card_description": "倍率增加[color=green]15%[/color]",
+        "card_operate": "add",
+        "card_value": 15,
+        "weight": 100
+    },
+    {
+        "card_id": "card_shunzi",
+        "card_name": "顺子",
+        "card_textrue": "res://images/card/card_shunzi.png",
+        "card_description": "倍率增加[color=green]16%[/color]",
+        "card_operate": "add",
+        "card_value": 16,
+        "weight": 100
+    },
+    {
+        "card_id": "card_tongse",
+        "card_name": "同色",
+        "card_textrue": "res://images/card/card_tongse.png",
+        "card_description": "倍率增加[color=green]14%[/color]",
+        "card_operate": "add",
+        "card_value": 14,
+        "weight": 100
+    },
+    {
+        "card_id": "card_tongdui",
+        "card_name": "同对",
+        "card_textrue": "res://images/card/card_tongdui.png",
+        "card_description": "倍率增加[color=green]30%[/color]",
+        "card_operate": "add",
+        "card_value": 30,
+        "weight": 100
+    },
+    {
+        "card_id": "card_tongshun",
+        "card_name": "同顺",
+        "card_textrue": "res://images/card/card_tongshun.png",
+        "card_description": "倍率增加[color=green]20%[/color]",
+        "card_operate": "add",
+        "card_value": 20,
+        "weight": 100
+    },
+    {
+        "card_id": "card_one_blue",
+        "card_name": "一点",
+        "card_textrue": "res://images/card/card_one_blue.png",
+        "card_description": "基础分数增加[color=green]2[/color]",
+        "card_operate": "add",
+        "card_value": 2,
+        "weight": 5
+    },
+    {
+        "card_id": "card_two_blue",
+        "card_name": "二点",
+        "card_textrue": "res://images/card/card_two_blue.png",
+        "card_description": "基础分数增加[color=green]2[/color]",
+        "card_operate": "add",
+        "card_value": 2,
+        "weight": 5
+    },
+    {
+        "card_id": "card_three_blue",
+        "card_name": "三点",
+        "card_textrue": "res://images/card/card_three_blue.png",
+        "card_description": "基础分数增加[color=green]2[/color]",
+        "card_operate": "add",
+        "card_value": 2,
+        "weight": 5
+    },
+    {
+        "card_id": "card_four_blue",
+        "card_name": "四点",
+        "card_textrue": "res://images/card/card_four_blue.png",
+        "card_description": "基础分数增加[color=green]2[/color]",
+        "card_operate": "add",
+        "card_value": 2,
+        "weight": 5
+    },
+    {
+        "card_id": "card_five_blue",
+        "card_name": "五点",
+        "card_textrue": "res://images/card/card_five_blue.png",
+        "card_description": "基础分数增加[color=green]2[/color]",
+        "card_operate": "add",
+        "card_value": 2,
+        "weight": 5
+    },
+    {
+        "card_id": "card_six_blue",
+        "card_name": "六点",
+        "card_textrue": "res://images/card/card_six_blue.png",
+        "card_description": "基础分数增加[color=green]2[/color]",
+        "card_operate": "add",
+        "card_value": 2,
+        "weight": 5
+    },
+    {
+        "card_id": "card_one_blue",
+        "card_name": "一点",
+        "card_textrue": "res://images/card/card_one_blue.png",
+        "card_description": "基础分数增加[color=green]10%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.1,
+        "weight": 5
+    },
+    {
+        "card_id": "card_two_blue",
+        "card_name": "二点",
+        "card_textrue": "res://images/card/card_two_blue.png",
+        "card_description": "基础分数增加[color=green]10%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.1,
+        "weight": 5
+    },
+    {
+        "card_id": "card_three_blue",
+        "card_name": "三点",
+        "card_textrue": "res://images/card/card_three_blue.png",
+        "card_description": "基础分数增加[color=green]10%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.1,
+        "weight": 5
+    },
+    {
+        "card_id": "card_four_blue",
+        "card_name": "四点",
+        "card_textrue": "res://images/card/card_four_blue.png",
+        "card_description": "基础分数增加[color=green]10%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.1,
+        "weight": 5
+    },
+    {
+        "card_id": "card_five_blue",
+        "card_name": "五点",
+        "card_textrue": "res://images/card/card_five_blue.png",
+        "card_description": "基础分数增加[color=green]10%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.1,
+        "weight": 5
+    },
+    {
+        "card_id": "card_six_blue",
+        "card_name": "六点",
+        "card_textrue": "res://images/card/card_six_blue.png",
+        "card_description": "基础分数增加[color=green]20%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.1,
+        "weight": 5
+    },
+    {
+        "card_id": "card_none_blue",
+        "card_name": "无",
+        "card_textrue": "res://images/card/card_none_blue.png",
+        "card_description": "倍率增加[color=green]20%[/color]",
+        "card_operate": "add",
+        "card_value": 20,
+        "weight": 5
+    },
+    {
+        "card_id": "card_duizi_blue",
+        "card_name": "对子",
+        "card_textrue": "res://images/card/card_duizi_blue.png",
+        "card_description": "倍率增加[color=green]30%[/color]",
+        "card_operate": "add",
+        "card_value": 30,
+        "weight": 5
+    },
+    {
+        "card_id": "card_shunzi_blue",
+        "card_name": "顺子",
+        "card_textrue": "res://images/card/card_shunzi_blue.png",
+        "card_description": "倍率增加[color=green]32%[/color]",
+        "card_operate": "add",
+        "card_value": 32,
+        "weight": 5
+    },
+    {
+        "card_id": "card_tongse_blue",
+        "card_name": "同色",
+        "card_textrue": "res://images/card/card_tongse_blue.png",
+        "card_description": "倍率增加[color=green]28%[/color]",
+        "card_operate": "add",
+        "card_value": 28,
+        "weight": 5
+    },
+    {
+        "card_id": "card_tongdui_blue",
+        "card_name": "同对",
+        "card_textrue": "res://images/card/card_tongdui_blue.png",
+        "card_description": "倍率增加[color=green]60%[/color]",
+        "card_operate": "add",
+        "card_value": 60,
+        "weight": 5
+    },
+    {
+        "card_id": "card_tongshun_blue",
+        "card_name": "同顺",
+        "card_textrue": "res://images/card/card_tongshun_blue.png",
+        "card_description": "倍率增加[color=green]40%[/color]",
+        "card_operate": "add",
+        "card_value": 40,
+        "weight": 5
+    },
+    {
+        "card_id": "card_one_purple",
+        "card_name": "一点",
+        "card_textrue": "res://images/card/card_one_purple.png",
+        "card_description": "基础分数增加[color=green]3[/color]",
+        "card_operate": "add",
+        "card_value": 3,
+        "weight": -15
+    },
+    {
+        "card_id": "card_two_purple",
+        "card_name": "二点",
+        "card_textrue": "res://images/card/card_two_purple.png",
+        "card_description": "基础分数增加[color=green]3[/color]",
+        "card_operate": "add",
+        "card_value": 3,
+        "weight": -15
+    },
+    {
+        "card_id": "card_three_purple",
+        "card_name": "三点",
+        "card_textrue": "res://images/card/card_three_purple.png",
+        "card_description": "基础分数增加[color=green]3[/color]",
+        "card_operate": "add",
+        "card_value": 3,
+        "weight": -15
+    },
+    {
+        "card_id": "card_four_purple",
+        "card_name": "四点",
+        "card_textrue": "res://images/card/card_four_purple.png",
+        "card_description": "基础分数增加[color=green]3[/color]",
+        "card_operate": "add",
+        "card_value": 3,
+        "weight": -15
+    },
+    {
+        "card_id": "card_five_purple",
+        "card_name": "五点",
+        "card_textrue": "res://images/card/card_five_purple.png",
+        "card_description": "基础分数增加[color=green]3[/color]",
+        "card_operate": "add",
+        "card_value": 3,
+        "weight": -15
+    },
+    {
+        "card_id": "card_six_purple",
+        "card_name": "六点",
+        "card_textrue": "res://images/card/card_six_purple.png",
+        "card_description": "基础分数增加[color=green]3[/color]",
+        "card_operate": "add",
+        "card_value": 3,
+        "weight": -15
+    },
+    {
+        "card_id": "card_one_purple",
+        "card_name": "一点",
+        "card_textrue": "res://images/card/card_one_purple.png",
+        "card_description": "基础分数增加[color=green]15%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.15,
+        "weight": -15
+    },
+    {
+        "card_id": "card_two_purple",
+        "card_name": "二点",
+        "card_textrue": "res://images/card/card_two_purple.png",
+        "card_description": "基础分数增加[color=green]15%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.15,
+        "weight": -15
+    },
+    {
+        "card_id": "card_three_purple",
+        "card_name": "三点",
+        "card_textrue": "res://images/card/card_three_purple.png",
+        "card_description": "基础分数增加[color=green]15%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.15,
+        "weight": -15
+    },
+    {
+        "card_id": "card_four_purple",
+        "card_name": "四点",
+        "card_textrue": "res://images/card/card_four_purple.png",
+        "card_description": "基础分数增加[color=green]15%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.15,
+        "weight": -15
+    },
+    {
+        "card_id": "card_five_purple",
+        "card_name": "五点",
+        "card_textrue": "res://images/card/card_five_purple.png",
+        "card_description": "基础分数增加[color=green]15%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.15,
+        "weight": -15
+    },
+    {
+        "card_id": "card_six_purple",
+        "card_name": "六点",
+        "card_textrue": "res://images/card/card_six_purple.png",
+        "card_description": "基础分数增加[color=green]15%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.15,
+        "weight": -15
+    },
+    {
+        "card_id": "card_none_purple",
+        "card_name": "无",
+        "card_textrue": "res://images/card/card_none_purple.png",
+        "card_description": "倍率增加[color=green]30%[/color]",
+        "card_operate": "add",
+        "card_value": 30,
+        "weight": -15
+    },
+    {
+        "card_id": "card_duizi_purple",
+        "card_name": "对子",
+        "card_textrue": "res://images/card/card_duizi_purple.png",
+        "card_description": "倍率增加[color=green]45%[/color]",
+        "card_operate": "add",
+        "card_value": 45,
+        "weight": -15
+    },
+    {
+        "card_id": "card_shunzi_purple",
+        "card_name": "顺子",
+        "card_textrue": "res://images/card/card_shunzi_purple.png",
+        "card_description": "倍率增加[color=green]48%[/color]",
+        "card_operate": "add",
+        "card_value": 48,
+        "weight": -15
+    },
+    {
+        "card_id": "card_tongse_purple",
+        "card_name": "同色",
+        "card_textrue": "res://images/card/card_tongse_purple.png",
+        "card_description": "倍率增加[color=green]42%[/color]",
+        "card_operate": "add",
+        "card_value": 42,
+        "weight": -15
+    },
+    {
+        "card_id": "card_tongdui_purple",
+        "card_name": "同对",
+        "card_textrue": "res://images/card/card_tongdui_purple.png",
+        "card_description": "倍率增加[color=green]90%[/color]",
+        "card_operate": "add",
+        "card_value": 90,
+        "weight": -15
+    },
+    {
+        "card_id": "card_tongshun_purple",
+        "card_name": "同顺",
+        "card_textrue": "res://images/card/card_tongshun_purple.png",
+        "card_description": "倍率增加[color=green]60%[/color]",
+        "card_operate": "add",
+        "card_value": 60,
+        "weight": -15
+    },
+    {
+        "card_id": "card_one_orange",
+        "card_name": "一点",
+        "card_textrue": "res://images/card/card_one_orange.png",
+        "card_description": "基础分数增加[color=green]4[/color]",
+        "card_operate": "add",
+        "card_value": 4,
+        "weight": -35
+    },
+    {
+        "card_id": "card_two_orange",
+        "card_name": "二点",
+        "card_textrue": "res://images/card/card_two_orange.png",
+        "card_description": "基础分数增加[color=green]4[/color]",
+        "card_operate": "add",
+        "card_value": 4,
+        "weight": -35
+    },
+    {
+        "card_id": "card_three_orange",
+        "card_name": "三点",
+        "card_textrue": "res://images/card/card_three_orange.png",
+        "card_description": "基础分数增加[color=green]4[/color]",
+        "card_operate": "add",
+        "card_value": 4,
+        "weight": -35
+    },
+    {
+        "card_id": "card_four_orange",
+        "card_name": "四点",
+        "card_textrue": "res://images/card/card_four_orange.png",
+        "card_description": "基础分数增加[color=green]4[/color]",
+        "card_operate": "add",
+        "card_value": 4,
+        "weight": -35
+    },
+    {
+        "card_id": "card_five_orange",
+        "card_name": "五点",
+        "card_textrue": "res://images/card/card_five_orange.png",
+        "card_description": "基础分数增加[color=green]4[/color]",
+        "card_operate": "add",
+        "card_value": 4,
+        "weight": -35
+    },
+    {
+        "card_id": "card_six_orange",
+        "card_name": "六点",
+        "card_textrue": "res://images/card/card_six_orange.png",
+        "card_description": "基础分数增加[color=green]4[/color]",
+        "card_operate": "add",
+        "card_value": 4,
+        "weight": -35
+    },
+    {
+        "card_id": "card_one_orange",
+        "card_name": "一点",
+        "card_textrue": "res://images/card/card_one_orange.png",
+        "card_description": "基础分数增加[color=green]20%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.2,
+        "weight": -35
+    },
+    {
+        "card_id": "card_two_orange",
+        "card_name": "二点",
+        "card_textrue": "res://images/card/card_two_orange.png",
+        "card_description": "基础分数增加[color=green]20%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.2,
+        "weight": -35
+    },
+    {
+        "card_id": "card_three_orange",
+        "card_name": "三点",
+        "card_textrue": "res://images/card/card_three_orange.png",
+        "card_description": "基础分数增加[color=green]20%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.2,
+        "weight": -35
+    },
+    {
+        "card_id": "card_four_orange",
+        "card_name": "四点",
+        "card_textrue": "res://images/card/card_four_orange.png",
+        "card_description": "基础分数增加[color=green]20%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.2,
+        "weight": -35
+    },
+    {
+        "card_id": "card_five_orange",
+        "card_name": "五点",
+        "card_textrue": "res://images/card/card_five_orange.png",
+        "card_description": "基础分数增加[color=green]20%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.2,
+        "weight": -35
+    },
+    {
+        "card_id": "card_six_orange",
+        "card_name": "六点",
+        "card_textrue": "res://images/card/card_six_orange.png",
+        "card_description": "基础分数增加[color=green]20%[/color]",
+        "card_operate": "mul",
+        "card_value": 1.2,
+        "weight": -35
+    },
+    {
+        "card_id": "card_none_orange",
+        "card_name": "无",
+        "card_textrue": "res://images/card/card_none_orange.png",
+        "card_description": "倍率增加[color=green]40%[/color]",
+        "card_operate": "add",
+        "card_value": 40,
+        "weight": -35
+    },
+    {
+        "card_id": "card_duizi_orange",
+        "card_name": "对子",
+        "card_textrue": "res://images/card/card_duizi_orange.png",
+        "card_description": "倍率增加[color=green]60%[/color]",
+        "card_operate": "add",
+        "card_value": 60,
+        "weight": -35
+    },
+    {
+        "card_id": "card_shunzi_orange",
+        "card_name": "顺子",
+        "card_textrue": "res://images/card/card_shunzi_orange.png",
+        "card_description": "倍率增加[color=green]64%[/color]",
+        "card_operate": "add",
+        "card_value": 64,
+        "weight": -35
+    },
+    {
+        "card_id": "card_tongse_orange",
+        "card_name": "同色",
+        "card_textrue": "res://images/card/card_tongse_orange.png",
+        "card_description": "倍率增加[color=green]56%[/color]",
+        "card_operate": "add",
+        "card_value": 56,
+        "weight": -35
+    },
+    {
+        "card_id": "card_tongdui_orange",
+        "card_name": "同对",
+        "card_textrue": "res://images/card/card_tongdui_orange.png",
+        "card_description": "倍率增加[color=green]120%[/color]",
+        "card_operate": "add",
+        "card_value": 120,
+        "weight": -35
+    },
+    {
+        "card_id": "card_tongshun_orange",
+        "card_name": "同顺",
+        "card_textrue": "res://images/card/card_tongshun_orange.png",
+        "card_description": "倍率增加[color=green]80%[/color]",
+        "card_operate": "add",
+        "card_value": 80,
+        "weight": -35
+    }
+]

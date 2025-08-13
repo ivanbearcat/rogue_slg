@@ -42,10 +42,12 @@ func skill_attack():
 		if slime.enemy_grid_index in Current.skill_attack_range:
 			slime.animated_sprite_2d.play("die")
 	var dice_array = game_manager.dice_list.get_children()
-	## 根据骰子数量条计算分数
+	## 根据骰子数量条计算分数并统计骰子数
+	var dice_num = 0
 	for index in range(dice_array.size() - 1, -1, -1):
 		#print(index)
 		if dice_array[index].get_self_modulate() == Color(1, 1, 1, 1):
+			dice_num += 1
 			Tools.big_flow_effect(dice_array[index])
 			if index == 1: continue
 			var float_number_instantiate = SceneManager.create_scene("float_number")
@@ -54,6 +56,10 @@ func skill_attack():
 			dice_array[index].add_child(float_number_instantiate)
 			await Tools.time_sleep(0.5)
 			Current.total_score += Current.dice_type_point
+	## 保留最高骰子数
+	print(dice_num)
+	print(Current.highest_dice_num)
+	if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
 	## 等待攻击动画完成
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)

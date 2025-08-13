@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://57y505qp1fef"
-path="res://.godot/imported/card_sunzi.png-1d00f5962e83aa1b34bc97aaaea28e33.ctex"
+uid="uid://buc65e42axg0h"
+path="res://.godot/imported/card_six_purple.png-ffa6cc4799454921ea86fc100912068c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/card/card_sunzi.png"
-dest_files=["res://.godot/imported/card_sunzi.png-1d00f5962e83aa1b34bc97aaaea28e33.ctex"]
+source_file="res://images/card/card_six_purple.png"
+dest_files=["res://.godot/imported/card_six_purple.png-ffa6cc4799454921ea86fc100912068c.ctex"]
 
 [params]
 

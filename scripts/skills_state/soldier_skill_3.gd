@@ -1,26 +1,36 @@
 extends HeroState
 
-signal show_skill_range
-signal hide_skill_range
-signal skill_attack
+signal show_move_range
+signal hide_move_range
+signal hero_move
+
 
 func enter():
 	print(owner.hero_name + "进入soldier_skill_3")
-	owner.animated_sprite_2d.play(owner.hero_name + "_end")
-	Current.skill_num = "3"
-	emit_signal("show_skill_range")
+	owner.animated_sprite_2d.play(owner.hero_name + "_move")
+	emit_signal("show_move_range")
+
 
 func input(event: InputEvent) -> void:
 	## 点击释放技能的格子触发技能信号
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
-		## 判断点击的格子在技能范围:
-		if Current.grid_index in Current.skill_target_range:
-			Current.attack_animation_finished = 0
-			owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
-			emit_signal("skill_attack")
-			
+		emit_signal("hero_move")
+
+func update(_delta: float) -> void:
+	if ! Current.id_path.is_empty():
+		var target_grid_index = Current.id_path[0]
+		var target_position = Vector2(target_grid_index.x * 16, target_grid_index.y * 16) + Vector2(16, 16)
+		#print(owner.position, target_position)
+		owner.position = owner.position.move_toward(target_position, 100 * _delta)
+		if owner.position == target_position:
+			Current.id_path.remove_at(0)
+		if Current.id_path.is_empty():
+			Current.is_moved = true
+			owner.animated_sprite_2d.play(owner.hero_name + "_end")
+			emit_signal("hide_move_range")
+			EventBus.event_emit("hide_all_skills")
 
 func exit():
 	print(owner.hero_name, "离开soldier_skill_3")
-	emit_signal("hide_skill_range")
-	Current.skill_num = ""
+	emit_signal("hide_move_range")
+	

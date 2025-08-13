@@ -14,7 +14,7 @@ func fetch_slime_scene(slime_scene):
 	else:
 		return null
 
-## 放大的抖动效果
+## 把图片放大並抖动的动画效果
 func big_flow_effect(object):
 	var tween = create_tween()
 	tween.tween_property(object, "scale:x", 1.5, 0.07)
@@ -25,3 +25,39 @@ func big_flow_effect(object):
 	tween.parallel().tween_property(object, "pivot_offset:x", 8, 0.07)
 	tween.parallel().tween_property(object, "scale:y", 1, 0.07)
 	tween.parallel().tween_property(object, "pivot_offset:y", 8, 0.07)
+
+## 加载json配置文件
+func load_json_file(file_path: String) -> Array:
+	## 检查文件是否存在
+	if not FileAccess.file_exists(file_path):
+		print("JSON 文件不存在:", file_path)
+		return []
+	## 读取文件内容
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if file == null:
+		print("无法打开文件:", FileAccess.get_open_error())
+		return []
+	var json_string = file.get_as_text()
+	file.close()
+	## 解析 JSON
+	var parse_result = JSON.parse_string(json_string)
+	if not parse_result:
+		print("JSON 解析失败！错误代码:", parse_result)
+		return []
+	return parse_result  # 返回 Dictionary
+
+## 阿拉伯数字转中文数字
+var num_to_cnnum: Dictionary = {
+	1: "一",
+	2: "二",
+	3: "三",
+	4: "四",
+	5: "五",
+	6: "六",
+	7: "七",
+	8: "八",
+	9: "九",
+	10: "十",
+	11: "十一",
+	12: "十二"
+}

@@ -6,6 +6,7 @@ func _ready():
 	pass
 
 func _input(event: InputEvent) -> void:
+	## 鼠标变成重掷后的左键操作
 	if Current.mouse_status != 'default' and Current.slime:
 		if event is InputEventMouseButton and \
 		event.button_index == MOUSE_BUTTON_LEFT and \
@@ -18,7 +19,20 @@ func _input(event: InputEvent) -> void:
 				Input.CURSOR_ARROW,
 				Vector2(0, 0)
 			)
+			Current.mouse_status = 'default'
 			Current.reroll_times -= 1
+	## 鼠标变成重掷后的右键操作
+	if Current.mouse_status != 'default':
+		if event is InputEventMouseButton and \
+		event.button_index == MOUSE_BUTTON_RIGHT and \
+		event.is_pressed() == true:
+			## 恢复鼠标
+			Current.mouse_status = 'default'
+			Input.set_custom_mouse_cursor(
+				load('res://images/pointer_scifi_a.svg'),
+				Input.CURSOR_ARROW,
+				Vector2(0, 0)
+			)
 	
 
 func change_cursor(cursor_name):

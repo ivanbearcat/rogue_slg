@@ -33,7 +33,7 @@ var all_enemy_array: Array:
 		for enemy in all_enemy_array:
 			grid_index_array.append(enemy.enemy_grid_index)
 		return grid_index_array
-## 前可移动的数组
+## 当前可移动的数组
 var movable_grid_index_array: Array
 ## 当前是移动状态英雄
 var move_state_hero: Hero:
@@ -42,7 +42,7 @@ var move_state_hero: Hero:
 			if hero.hero_state_machine.state.name == "move":
 				return hero
 		return null
-## Astar计算路径
+## Astar计算的移动路径
 var id_path: Array
 ## 史莱姆巢穴的数组
 var enemy_home_array: Array
@@ -81,12 +81,40 @@ var skill_target_range: Array
 var skill_attack_range: Array
 ## 将要变化的史莱姆列表
 var transformable_slime_array: Array
-## 总分
+## 目标分数
+var target_score: int:
+	set(v):
+		game_manager.target_score.text = "目标: " + str(v)
+	get:
+		return int(game_manager.target_score.text)
+## 当前总分
 var total_score: int:
 	set(v):
 		game_manager.total_score.text = "总分: " + str(v)
 	get:
 		return int(game_manager.total_score.text)
+## 当前关卡
+var count_stage := 1:
+	set(v):
+		count_stage = v
+		game_manager.stage_label.text = "关卡" + Tools.num_to_cnnum[v]
+		game_manager.clear_stage_label.text = "关卡" + Tools.num_to_cnnum[v]
+	get:
+		return count_stage
+## 关卡奖励金币数
+var count_add_coins := 0
+## 金币总数
+var total_coins := 0:
+	set(v):
+		game_manager.total_coins_label.text = str(v)
+## 回合计数
+var count_round := 0:
+	set(v):
+		game_manager.turn_label.text = "回合: " + str(v)
+	get:
+		return int(game_manager.turn_label.text)
+## 最高骰子数
+var highest_dice_num := 0
 ## 骰型板基础分数
 var one_score: int:
 	set(v):

@@ -11,7 +11,7 @@ var is_enterd := false
 
 func _input(event: InputEvent) -> void:
 	## 点击英雄才显示
-	if Current.clicked_hero == null:
+	if Current.clicked_hero == null or Current.id_path:
 		return
 	else:
 		## 移动状态才显示

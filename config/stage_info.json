@@ -1,0 +1,62 @@
+[
+    {
+        "stage_num": 1,
+        "target_score": 100,
+        "stage_type": 1
+    },
+    {
+        "stage_num": 2,
+        "target_score": 200,
+        "stage_type": 1
+    },
+    {
+        "stage_num": 3,
+        "target_score": 300,
+        "stage_type": 2
+    },
+    {
+        "stage_num": 4,
+        "target_score": 400,
+        "stage_type": 1
+    },
+    {
+        "stage_num": 5,
+        "target_score": 500,
+        "stage_type": 1
+    },
+    {
+        "stage_num": 6,
+        "target_score": 600,
+        "stage_type": 2
+    },
+    {
+        "stage_num": 7,
+        "target_score": 700,
+        "stage_type": 1
+    },
+    {
+        "stage_num": 8,
+        "target_score": 800,
+        "stage_type": 1
+    },
+    {
+        "stage_num": 9,
+        "target_score": 900,
+        "stage_type": 2
+    },
+    {
+        "stage_num": 10,
+        "target_score": 1000,
+        "stage_type": 1
+    },
+    {
+        "stage_num": 11,
+        "target_score": 1100,
+        "stage_type": 1
+    },
+    {
+        "stage_num": 12,
+        "target_score": 1200,
+        "stage_type": 3
+    }
+]

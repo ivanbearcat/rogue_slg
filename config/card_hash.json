@@ -1,0 +1,16 @@
+[
+    {
+        "card_one": "Current.one_score",
+        "card_two": "Current.two_score",
+        "card_three": "Current.three_score",
+        "card_four": "Current.four_score",
+        "card_five": "Current.five_score",
+        "card_six": "Current.six_score",
+        "card_none": "Current.none_percent",
+        "card_duizi": "Current.duizi_percent",
+        "card_shunzi": "Current.shunzi_percent",
+        "card_tongse": "Current.tongse_percent",
+        "card_tongdui": "Current.tongdui_percent",
+        "card_tongshun": "Current.tongshun_percent"
+    }
+]

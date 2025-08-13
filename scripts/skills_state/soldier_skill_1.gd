@@ -3,6 +3,10 @@ extends HeroState
 signal show_skill_range
 signal hide_skill_range
 signal skill_attack
+signal show_move_range
+signal hide_move_range
+signal hero_move
+
 
 
 func enter():

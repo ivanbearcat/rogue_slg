@@ -16,10 +16,11 @@ var is_enterd := false
 func _ready() -> void:
 	EventBus.subscribe("skill_power_up", _on_skill_power_up)
 	EventBus.subscribe("skill_power_reset", _on_skill_power_reset)
+	EventBus.subscribe("hide_all_skills", hide_all_skill)
 
 func _input(event: InputEvent) -> void:
 	## 点击英雄才显示
-	if Current.clicked_hero == null:
+	if Current.clicked_hero == null or Current.id_path:
 		return
 	else:
 		## 移动状态才显示
