@@ -19,8 +19,8 @@ var all_hero_array: Array:
 @onready var all_hero_grid_index_array: Array:
 	get:
 		var grid_index_array: Array
-		for hero in all_hero_array:
-			grid_index_array.append(hero.hero_grid_index)
+		for _hero in all_hero_array:
+			grid_index_array.append(_hero.hero_grid_index)
 		return grid_index_array
 ## 包含所有史莱姆的字典
 var all_enemy_array: Array:
@@ -38,8 +38,8 @@ var movable_grid_index_array: Array
 ## 当前是移动状态英雄
 var move_state_hero: Hero:
 	get:
-		for hero in all_hero_array:
-			if hero.hero_state_machine.state.name == "move":
+		for _hero in all_hero_array:
+			if _hero.hero_state_machine.state.name == "move":
 				return hero
 		return null
 ## Astar计算的移动路径
@@ -67,8 +67,8 @@ var available_enemy_home: Array:
 ## 正在移动的史莱姆
 var has_move_slime: bool:
 	get:
-		for slime in all_enemy_array:
-			if slime.target_position != Vector2.ZERO:
+		for _slime in all_enemy_array:
+			if _slime.target_position != Vector2.ZERO:
 				return true
 		return false
 ## 是否移动过
@@ -211,8 +211,14 @@ var reroll_times: int:
 ## 当前等级
 var level := 1
 ## 当前经验
-var exp := 0
+var hero_exp := 0
 ## 升级需要的经验
 var require_exp := 3
 ## 是否正在攻击结算
 var doing_skill_attack := 0
+## 最大能量
+var max_power := 2
+## 当前能量
+var power := 0
+## 能量技能
+var power_skill := 0

@@ -1,22 +1,25 @@
 extends MarginContainer
 
-@onready var nine_patch_rect: NinePatchRect = $NinePatchRect
-@onready var nine_patch_rect_2: NinePatchRect = $"../skill_2/NinePatchRect2"
-@onready var nine_patch_rect_3: NinePatchRect = $"../skill_3/NinePatchRect3"
-@onready var mask_1: ColorRect = $hero_ui_1/mask1
-@onready var mask_2: ColorRect = $"../skill_2/hero_ui_2/mask2"
-@onready var mask_3: ColorRect = $"../skill_3/hero_ui_3/mask3"
+@onready var nine_patch_rect: NinePatchRect = %NinePatchRect
+@onready var nine_patch_rect_2: NinePatchRect = %NinePatchRect2
+@onready var nine_patch_rect_3: NinePatchRect = %NinePatchRect3
+@onready var mask_1: ColorRect = %mask1
+@onready var mask_2: ColorRect = %mask2
+@onready var mask_3: ColorRect = %mask3
 @onready var hero_ui_1: TextureRect = %hero_ui_1
 @onready var hero_ui_2: TextureRect = %hero_ui_2
 @onready var hero_ui_3: TextureRect = %hero_ui_3
+@onready var skill_1_button: TextureButton = %skill_1_button
+@onready var skill_2_button: TextureButton = %skill_2_button
+@onready var skill_3_button: TextureButton = %skill_3_button
 
 ## 鼠标进入范围
 var is_enterd := false
 
 func _ready() -> void:
-	EventBus.subscribe("skill_power_up", _on_skill_power_up)
 	EventBus.subscribe("skill_power_reset", _on_skill_power_reset)
 	EventBus.subscribe("hide_all_skills", hide_all_skill)
+	EventBus.subscribe("skill_button_reset", _on_skill_button_reset)
 
 func _input(event: InputEvent) -> void:
 	## 点击英雄才显示
@@ -25,6 +28,8 @@ func _input(event: InputEvent) -> void:
 	else:
 		## 移动状态才显示
 		if ["idle", "move", "skill_1", "skill_2", "skill_3"].has(Current.clicked_hero.hero_state_machine.state.name):
+			## 避免和alt+1冲突
+			if event.is_action_pressed("alt+1"): return
 			## 左键点击显示技能被按下的图
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \
 			event.is_pressed() == true and is_enterd == true or event.is_action_pressed("1"):
@@ -62,13 +67,50 @@ func _on_mouse_exited() -> void:
 		nine_patch_rect.material.set_shader_parameter("is_high_light", false)
 	is_enterd = false
 
-func _on_skill_power_up() -> void:
-	var skill_ui_list = [hero_ui_1, hero_ui_2, hero_ui_3]
-	var skill_ui_tmp = skill_ui_list.pick_random()
-	skill_ui_tmp.material.set_shader_parameter("enable", true)
-	Current.power_slime = skill_ui_list.find(skill_ui_tmp)
+## 技能赋能
+func _skill_power_up(skill_num: int) -> void:
+	var skill_dict := {
+		1: [skill_1_button, hero_ui_1],
+		2: [skill_2_button, hero_ui_2],
+		3: [skill_3_button, hero_ui_3]
+	}
+	_on_skill_power_reset()
+	if Current.power > 0:
+		if skill_dict[skill_num][0].button_pressed:
+			skill_dict[skill_num][1].material.set_shader_parameter("enable", true)
+			Current.power_skill = skill_num
+		else:
+			skill_dict[skill_num][1].material.set_shader_parameter("enable", false)
+	else:
+		## 没有能量赋能（震屏，弹提示）
+		skill_dict[skill_num][0].button_pressed = false
 	
 func _on_skill_power_reset() -> void:
 	var skill_ui_list = [hero_ui_1, hero_ui_2, hero_ui_3]
 	for skill in skill_ui_list:
 		skill.material.set_shader_parameter("enable", false)
+	Current.power_skill = 0
+
+func _on_skill_button_reset() -> void:
+	skill_1_button.button_pressed = false
+	skill_2_button.button_pressed = false
+	skill_3_button.button_pressed = false
+
+func _on_skill_1_button_pressed() -> void:
+	_skill_power_up(1)
+	if Current.skill_num == "1":
+		EventBus.event_emit("hide_skill_attack")
+		EventBus.event_emit("show_skill_attack", [Current.clicked_hero.hero_name, str(1)])
+	
+func _on_skill_2_button_pressed() -> void:
+	_skill_power_up(2)
+	if Current.skill_num == "2":
+		EventBus.event_emit("hide_skill_attack")
+		EventBus.event_emit("show_skill_attack", [Current.clicked_hero.hero_name, str(2)])
+
+func _on_skill_3_button_pressed() -> void:
+	_skill_power_up(3)
+	if Current.skill_num == "3":
+		EventBus.event_emit("hide_skill_attack")
+		EventBus.event_emit("show_skill_attack", [Current.clicked_hero.hero_name, str(3)])
+	

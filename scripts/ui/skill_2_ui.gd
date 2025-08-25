@@ -1,11 +1,11 @@
 extends MarginContainer
 
-@onready var nine_patch_rect: NinePatchRect = $"../skill_1/NinePatchRect"
-@onready var nine_patch_rect_2: NinePatchRect = $NinePatchRect2
-@onready var nine_patch_rect_3: NinePatchRect = $"../skill_3/NinePatchRect3"
-@onready var mask_1: ColorRect = $"../skill_1/hero_ui_1/mask1"
-@onready var mask_2: ColorRect = $hero_ui_2/mask2
-@onready var mask_3: ColorRect = $"../skill_3/hero_ui_3/mask3"
+@onready var nine_patch_rect: NinePatchRect = %NinePatchRect
+@onready var nine_patch_rect_2: NinePatchRect = %NinePatchRect2
+@onready var nine_patch_rect_3: NinePatchRect = %NinePatchRect3
+@onready var mask_1: ColorRect = %mask1
+@onready var mask_2: ColorRect = %mask2
+@onready var mask_3: ColorRect = %mask3
 
 var is_enterd := false
 
@@ -16,6 +16,8 @@ func _input(event: InputEvent) -> void:
 	else:
 		## 移动状态才显示
 		if ["idle", "move", "skill_1", "skill_2", "skill_3"].has(Current.clicked_hero.hero_state_machine.state.name):
+			## ## 避免和alt+2冲突
+			if event.is_action_pressed("alt+2"): return
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \
 			event.is_pressed() == true and is_enterd == true  or event.is_action_pressed("2"):
 				## 取消显示其他技能

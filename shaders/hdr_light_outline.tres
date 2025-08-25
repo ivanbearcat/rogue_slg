@@ -4,6 +4,6 @@
 
 [resource]
 shader = ExtResource("1_23yj5")
-shader_parameter/width = 1.1
-shader_parameter/outline_color = Color(0, 100, 100, 1)
+shader_parameter/width = 0.426
+shader_parameter/outline_color = Color(1, 100, 100, 1)
 shader_parameter/is_high_light = true

@@ -1,7 +1,7 @@
 extends Node2D
 
 const hero_property = {
-	"soldier": {"name": "soldier", "movement": 2, "init_vec": Vector2i(3, 3)},
+	"soldier": {"name": "soldier", "movement": 2, "init_vec": Vector2i(3, 3), "class_icon": "res://images/soldier_icon.png"},
 	"archer": {"name": "archer", "movement": 1, "init_vec": Vector2i(3, 2)},
 	"mage": {"name": "mage", "movement": 1, "init_vec": Vector2i(2, 2)}
 	}
@@ -55,8 +55,7 @@ const hero_property = {
 @onready var exp_bar: TextureProgressBar = %exp_bar
 ## 金币总数
 @onready var total_coins_label: Label = %total_coins_label
-## 经验条刻度池
-@onready var exp_bar_scale_pool: HBoxContainer = %exp_bar_scale_pool
+## 经验条
 @onready var exp_label: Label = %exp_label
 ## 升级后卡牌择界面
 @onready var level_up_ui: CanvasLayer = %level_up_ui
@@ -75,6 +74,12 @@ const hero_property = {
 @onready var clear_stage_label: Label = %clear_stage_label
 @onready var coin_array_1: HBoxContainer = %coin_array1
 @onready var coin_array_2: HBoxContainer = %coin_array2
+## 帮助按钮
+@onready var help_button: TextureButton = %help_button
+## 职业图标
+@onready var class_icon: TextureRect = %class_icon
+## 能量数UI
+@onready var power_label: Label = %power_label
 
 
 ## 格子像素大小
@@ -124,6 +129,8 @@ func _ready() -> void:
 	Current.tongse_percent = 140
 	Current.tongdui_percent = 300
 	Current.tongshun_percent = 320
+	## 订阅能量UI事件
+	EventBus.subscribe("change_power_ui", _on_change_power_ui)
 	## 设置目标分数
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
@@ -162,8 +169,8 @@ func _ready() -> void:
 func _grid_index_to_position(grid_index: Vector2i) -> Vector2i:
 	return Vector2i(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
 
-func _position_to_grid_index(position: Vector2i) -> Vector2i:
-	return Vector2i((position.x - start_pos.x) / grid_size.x, (position.y - start_pos.y) / grid_size.y)
+func _position_to_grid_index(_position: Vector2i) -> Vector2i:
+	return Vector2i((_position.x - start_pos.x) / grid_size.x, (_position.y - start_pos.y) / grid_size.y)
 
 ## 史莱姆生成
 func _create_slime():
@@ -192,13 +199,7 @@ func _create_slime():
 					grid.warning.visible = true
 ## 添加能量史莱姆
 func _create_power_slime():
-	#if Current.all_enemy_array.size() > 0:
-		#if Current.transformable_slime_array.size() < 1:
-			#Current.transformable_slime_array.append(Current.all_enemy_array.pick_random())
-			#for slime in Current.transformable_slime_array:
-				#slime.warning.visible = true
-				#print(slime)
-	if Current.power_slime == null:
+	if Current.power_slime == null and Current.all_enemy_array:
 		Current.power_slime = Current.all_enemy_array.pick_random()
 		if Current.power_slime is Slime:
 			Current.power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
@@ -255,9 +256,9 @@ func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
 
 ## 增加经验
 func add_exp(new_exp: int) -> void:
-	Current.exp += new_exp
-	exp_bar.value = Current.exp
-	_set_exp_bar_scale(Current.exp, Current.require_exp)
+	Current.hero_exp += new_exp
+	exp_bar.value = Current.hero_exp
+	_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
 	## 等待1秒让一次攻击下的史莱姆经验全加上再升级
 	await Tools.time_sleep(1)
 	_check_and_level_up()
@@ -265,17 +266,17 @@ func add_exp(new_exp: int) -> void:
 
 ## 检查并升级
 func _check_and_level_up() -> void:
-	if Current.exp >= Current.require_exp:
+	if Current.hero_exp >= Current.require_exp:
 		Current.level += 1
 		## 最多增加到7个史莱姆可以升级
 		if Current.require_exp < 7:
 			Current.require_exp += 1
-		Current.exp = 0
+		Current.hero_exp = 0
 		exp_bar.value = 0
 		## 设置经验条数值
 		exp_bar.max_value = Current.require_exp
 		## 设置经验label
-		_set_exp_bar_scale(Current.exp, Current.require_exp)
+		_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
 		## 生成3个随机卡牌
 		var total_weight := 0
 		## 计算总权重
@@ -319,12 +320,17 @@ func _set_hero_properties(hero: Hero, properties: Dictionary):
 	Current.hero = hero
 	hero.hero_movement = properties.movement
 	hero.position = _grid_index_to_position(properties.init_vec)
+	## 职业图标
+	class_icon.texture = load(properties.class_icon)
 	#Current.all_hero_dict[hero.hero_name] = hero
 	hero.hero_cmd.connect(_on_hero_cmd)
 	var hero_skills_ui = SceneManager.create_scene(hero.hero_name + "_skills")
 	hero_skill.add_child(hero_skills_ui)
 	## onready后无法获取到代码新增的节点skill_1_ui，在此处添加了场景树之后可以获取，但无法使用唯一标识获取
-	skill_1_ui = hero_skill.get_node("MarginContainer/HBoxContainer/skill_1")
+	var hero_skill_child = hero_skill.get_child(1)
+	skill_1_ui = hero_skill_child.get_node("%skill_1")
+	
+	#skill_1_ui = hero_skill.get_node("MarginContainer/HBoxContainer/skill_1")
 	
 
 ## 设置3技能的状态脚本
@@ -770,3 +776,7 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 0
 	get_tree().paused = false
+
+func _on_change_power_ui(num: int) -> void:
+	Current.power = Current.power + num
+	power_label.text = str(Current.power) + '/' + str(Current.max_power)

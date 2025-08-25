@@ -3,6 +3,13 @@ extends Node2D
 
 signal hide_all_skill
 
+
+func _ready() -> void:
+		## 订阅显示攻击范围
+	EventBus.subscribe("show_skill_attack", show_skill_attack)
+	EventBus.subscribe("hide_skill_attack", hide_skill_attack)
+
+
 func show_skill_range(hero_name, skill_num):
 	call("_show_" + hero_name + "_skill_" + skill_num + "_range")
 
@@ -24,18 +31,18 @@ func skill_attack():
 	## 正在攻击结算
 	Current.doing_skill_attack = 1
 	## 判断是能量技能则置空能量史莱姆变量，可以重新生成
-	var reset_flag = false
-	if not Current.power_slime is Slime:
-		match Current.skill_num:
-			"1":
-				if Current.power_slime == 0:
-					reset_flag = true
-			"2":
-				if Current.power_slime == 1:
-					reset_flag = true
-			"3":
-				if Current.power_slime == 2:
-					reset_flag = true
+	#var reset_flag = false
+	#if not Current.power_slime is Slime:
+		#match Current.skill_num:
+			#"1":
+				#if Current.power_slime == 0:
+					#reset_flag = true
+			#"2":
+				#if Current.power_slime == 1:
+					#reset_flag = true
+			#"3":
+				#if Current.power_slime == 2:
+					#reset_flag = true
 	## 史莱姆死亡
 	var _slime_die_array: Array
 	for slime in Current.all_enemy_array:
@@ -57,16 +64,15 @@ func skill_attack():
 			await Tools.time_sleep(0.5)
 			Current.total_score += Current.dice_type_point
 	## 保留最高骰子数
-	print(dice_num)
-	print(Current.highest_dice_num)
 	if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
 	## 等待攻击动画完成
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)
-	## 等动画播完执行能量史莱姆重置
-	if reset_flag:
-		Current.power_slime = null
+	## 如果是赋能技能就消耗能量,然后重置UI
+	if Current.power_skill:
+		EventBus.event_emit("change_power_ui", [-1])
 		EventBus.event_emit("skill_power_reset")
+		EventBus.event_emit("skill_button_reset")
 	## 恢复技能UI弹起状态
 	hide_all_skill.emit()
 	Current.hero.hero_state_machine.transition_to("end")
@@ -87,7 +93,7 @@ func _show_soldier_skill_1_range():
 		
 func _show_soldier_skill_1_attack():
 	Current.skill_attack_range = []
-	if not Current.power_slime is Slime and Current.power_slime == 0:
+	if Current.power_skill == 1:
 		for grid_index in Current.skill_target_range:
 			## 鼠标选中格子等于技能格子,显示伤害范围
 			if Current.grid_index == grid_index:
@@ -136,7 +142,7 @@ func _show_soldier_skill_1_attack():
 	var dice_type_point = _count_dice_type(attack_slime_array_info)
 	Current.dice_type_point = dice_type_point[1]
 	#print(dice_type_point)
-	_show_dice_panel(attack_slime_array_info, dice_type_point)
+	_show_dice_panel(dice_type_point)
 		
 	
 
@@ -153,12 +159,12 @@ func _show_soldier_skill_2_range():
 		_show_soldier_skill_2_attack()	
 		
 func _show_soldier_skill_2_attack():
-	if not Current.power_slime is Slime and Current.power_slime == 1:
-		Current.skill_attack_range = []
+	Current.skill_attack_range = []
+	if Current.power_skill == 2:
 		for grid_index in Current.skill_target_range:
 			## 鼠标选中格子等于技能格子,显示伤害范围
 			if Current.grid_index == grid_index:
-				Current.skill_attack_range = Current.skill_target_range
+				Current.skill_attack_range = Current.skill_target_range.duplicate()
 				## 加入英雄围四个角的坐标
 				var offset_list = [Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]
 				for offset in offset_list:
@@ -167,7 +173,6 @@ func _show_soldier_skill_2_attack():
 					if attack_grid_index in game_manager.all_grid_dict:
 						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 	else:
-		Current.skill_attack_range = []
 		for grid_index in Current.skill_target_range:
 			## 鼠标选中格子等于技能格子,显示伤害范围
 			if Current.grid_index == grid_index:
@@ -180,7 +185,7 @@ func _show_soldier_skill_2_attack():
 	var dice_type_point = _count_dice_type(attack_slime_array_info)
 	Current.dice_type_point = dice_type_point[1]
 	#print(dice_type_point)
-	_show_dice_panel(attack_slime_array_info, dice_type_point)
+	_show_dice_panel(dice_type_point)
 
 func _show_soldier_skill_3_range():
 	Current.skill_target_range = []
@@ -195,8 +200,8 @@ func _show_soldier_skill_3_range():
 		_show_soldier_skill_3_attack()	
 		
 func _show_soldier_skill_3_attack():
-	if not Current.power_slime is Slime and Current.power_slime == 2:
-		Current.skill_attack_range = []
+	Current.skill_attack_range = []
+	if Current.power_skill == 3:
 		var hero_grid_index = Current.clicked_hero.hero_grid_index
 		for grid_index in Current.skill_target_range:
 			## 鼠标选中格子等于技能格子,显示伤害范围
@@ -210,7 +215,6 @@ func _show_soldier_skill_3_attack():
 						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 						print(Current.skill_attack_range)
 	else:
-		Current.skill_attack_range = []
 		var hero_grid_index = Current.clicked_hero.hero_grid_index
 		for grid_index in Current.skill_target_range:
 			## 鼠标选中格子等于技能格子,显示伤害范围
@@ -228,7 +232,7 @@ func _show_soldier_skill_3_attack():
 	var dice_type_point = _count_dice_type(attack_slime_array_info)
 	Current.dice_type_point = dice_type_point[1]
 	#print(dice_type_point)
-	_show_dice_panel(attack_slime_array_info, dice_type_point)
+	_show_dice_panel(dice_type_point)
 
 ## 所有在红格子里的史莱姆组
 func _fetch_attack_slime_array():
@@ -257,7 +261,7 @@ func _fetch_attack_slime_array_info(slime_array):
 	return attack_slime_array_info
 
 ## 骰型板展示史莱姆对应的点数和骰型
-func _show_dice_panel(attack_slime_array_info, dice_type_point):
+func _show_dice_panel(dice_type_point):
 	var dice_array = game_manager.dice_list.get_children()
 	for num in range(dice_type_point[2].size()):
 		dice_array[num].set_self_modulate(Color(1, 1, 1, 1))
@@ -302,7 +306,8 @@ func _show_dice_panel(attack_slime_array_info, dice_type_point):
 	for point in dice_type_point[2]:
 		total_score += score_dict[point]
 	Current.base_score = total_score
-	Current.percent_score = percent_dict[dice_type_point[0]]
+	if Current.base_score:
+		Current.percent_score = percent_dict[dice_type_point[0]]
 	
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
@@ -361,10 +366,6 @@ func _count_dice_type(attack_slime_array_info):
 		#print(['none', round(_count_none(attack_slime_array_info))])
 		var none_score_dice = _count_none(attack_slime_array_info)
 		return ['none', round(none_score_dice[0]), none_score_dice[1]]
-
-## 计算本次攻击的分数
-func _count_score(attack_slime_array_info):
-	pass
 	
 ## 对子算法
 func _count_duizi(attack_slime_array_info):

@@ -2,7 +2,7 @@ extends Node
 
 var current_scene : Node2D
 
-func change_scene(view_name: StringName, msg:Dictionary = {}) -> Node:
+func change_scene(view_name: StringName) -> Node:
 	var scene_view := create_scene(view_name)
 	if current_scene:
 		current_scene.queue_free()

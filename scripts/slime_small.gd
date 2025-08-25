@@ -36,8 +36,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if self in Current.transformable_slime_array:
 		Current.transformable_slime_array.erase(self)
 	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light"):
-		## 技能强化
-		EventBus.event_emit("skill_power_up")
+		## 增加能量
+		if Current.power < Current.max_power:
+			EventBus.event_emit("change_power_ui", [1])
 	self.queue_free()
 
 

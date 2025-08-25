@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bpjrapjnm3rqj"]
+[gd_scene load_steps=36 format=3 uid="uid://bpjrapjnm3rqj"]
 
 [ext_resource type="Shader" uid="uid://bvwarcrhlc6ea" path="res://shaders/high_light.gdshader" id="1_78qh4"]
 [ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="1_vlmwk"]
@@ -8,6 +8,7 @@
 [ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="4_rqeci"]
 [ext_resource type="Script" uid="uid://b1g80k6amnbch" path="res://scripts/ui/skill_2_ui.gd" id="6_ojpdg"]
 [ext_resource type="Script" uid="uid://cf0vyp174rum0" path="res://scripts/ui/skill_3_ui.gd" id="7_3khon"]
+[ext_resource type="Texture2D" uid="uid://dwtnrc2k82jus" path="res://images/green_button.png" id="7_cwbpb"]
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="8_qf8i0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mokjr"]
@@ -44,6 +45,28 @@ region = Rect2(224, 32, 32, 32)
 atlas = ExtResource("1_vlmwk")
 region = Rect2(165, 191, 3, 6)
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_cwbpb"]
+allow_unpress = true
+
+[sub_resource type="InputEventKey" id="InputEventKey_cwbpb"]
+alt_pressed = true
+keycode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_7kdkw"]
+events = [SubResource("InputEventKey_cwbpb")]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwbpb"]
+atlas = ExtResource("7_cwbpb")
+region = Rect2(4, 4, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_foqgk"]
+atlas = ExtResource("7_cwbpb")
+region = Rect2(36, 4, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kdkw"]
+atlas = ExtResource("7_cwbpb")
+region = Rect2(19, 3, 10, 10)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ag2gv"]
 shader = ExtResource("1_78qh4")
 shader_parameter/width = 0.77
@@ -61,6 +84,14 @@ region = Rect2(224, 96, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_nj68k"]
 atlas = ExtResource("1_vlmwk")
 region = Rect2(170, 191, 3, 6)
+
+[sub_resource type="InputEventKey" id="InputEventKey_7kdkw"]
+device = -1
+alt_pressed = true
+keycode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_foqgk"]
+events = [SubResource("InputEventKey_7kdkw")]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_epqtw"]
 shader = ExtResource("1_78qh4")
@@ -84,10 +115,20 @@ region = Rect2(256, 32, 32, 32)
 atlas = ExtResource("1_vlmwk")
 region = Rect2(175, 191, 3, 6)
 
+[sub_resource type="InputEventKey" id="InputEventKey_xdb1j"]
+device = -1
+alt_pressed = true
+keycode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_qjn3n"]
+events = [SubResource("InputEventKey_xdb1j")]
+
 [node name="MarginContainer" type="MarginContainer"]
 offset_right = 102.0
 offset_bottom = 34.0
 scale = Vector2(0.77, 0.77)
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -5
@@ -98,7 +139,12 @@ color = Color(0.1875, 0.1875, 0.1875, 1)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="skill_1" type="MarginContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="skill_1" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
@@ -106,7 +152,8 @@ theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 script = ExtResource("3_71tpo")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/skill_1"]
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/VBoxContainer/skill_1"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_mokjr")
 layout_mode = 2
 mouse_filter = 0
@@ -117,13 +164,13 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="hero_ui_1" type="TextureRect" parent="HBoxContainer/skill_1"]
+[node name="hero_ui_1" type="TextureRect" parent="HBoxContainer/VBoxContainer/skill_1"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_q6aow")
 layout_mode = 2
 texture = SubResource("AtlasTexture_buw5v")
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/skill_1/hero_ui_1"]
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/VBoxContainer/skill_1/hero_ui_1"]
 layout_mode = 2
 offset_left = 25.0
 offset_top = 1.0
@@ -131,7 +178,7 @@ offset_right = 31.0
 offset_bottom = 8.0
 color = Color(0.77, 0.768075, 0.7623, 1)
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_1/hero_ui_1/ColorRect"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/skill_1/hero_ui_1/ColorRect"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
@@ -140,20 +187,27 @@ offset_bottom = 6.0
 texture = SubResource("AtlasTexture_0x8es")
 expand_mode = 1
 
-[node name="mask1" type="ColorRect" parent="HBoxContainer/skill_1/hero_ui_1"]
+[node name="mask1" type="ColorRect" parent="HBoxContainer/VBoxContainer/skill_1/hero_ui_1"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-color = Color(1, 1, 1, 0.27451)
+color = Color(0, 0, 0, 0.670588)
 
-[node name="Label" type="Label" parent="HBoxContainer/skill_1/hero_ui_1/mask1"]
-layout_mode = 0
-offset_left = 1.6
-offset_top = 2.9
-offset_right = 65.6
-offset_bottom = 53.9
-scale = Vector2(0.45, 0.45)
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/skill_1/hero_ui_1/mask1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -17.0
+offset_right = 16.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.35, 0.35)
+pivot_offset = Vector2(32, 36)
 text = "按ESC或
 右键取消
 "
@@ -161,7 +215,23 @@ label_settings = ExtResource("4_rqeci")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="skill_2" type="MarginContainer" parent="HBoxContainer"]
+[node name="skill_1_button" type="TextureButton" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "使用能量"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_cwbpb")
+shortcut = SubResource("Shortcut_7kdkw")
+texture_normal = SubResource("AtlasTexture_cwbpb")
+texture_pressed = SubResource("AtlasTexture_foqgk")
+texture_hover = SubResource("AtlasTexture_7kdkw")
+stretch_mode = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="skill_2" type="MarginContainer" parent="HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
@@ -169,7 +239,8 @@ theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 script = ExtResource("6_ojpdg")
 
-[node name="NinePatchRect2" type="NinePatchRect" parent="HBoxContainer/skill_2"]
+[node name="NinePatchRect2" type="NinePatchRect" parent="HBoxContainer/VBoxContainer2/skill_2"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_ag2gv")
 layout_mode = 2
 texture = SubResource("AtlasTexture_0onc4")
@@ -179,14 +250,14 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="hero_ui_2" type="TextureRect" parent="HBoxContainer/skill_2"]
+[node name="hero_ui_2" type="TextureRect" parent="HBoxContainer/VBoxContainer2/skill_2"]
 unique_name_in_owner = true
 z_index = 1
 material = ExtResource("8_qf8i0")
 layout_mode = 2
 texture = SubResource("AtlasTexture_w0ofj")
 
-[node name="TextureRect4" type="TextureRect" parent="HBoxContainer/skill_2/hero_ui_2"]
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer/VBoxContainer2/skill_2/hero_ui_2"]
 modulate = Color(1, 1, 1, 0.490196)
 show_behind_parent = true
 layout_mode = 2
@@ -195,7 +266,7 @@ offset_right = 33.0
 offset_bottom = 32.0
 texture = SubResource("AtlasTexture_2qi8s")
 
-[node name="ColorRect2" type="ColorRect" parent="HBoxContainer/skill_2/hero_ui_2"]
+[node name="ColorRect2" type="ColorRect" parent="HBoxContainer/VBoxContainer2/skill_2/hero_ui_2"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 1.0
@@ -203,7 +274,7 @@ offset_right = 31.0
 offset_bottom = 8.0
 color = Color(0.77, 0.768075, 0.7623, 1)
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_2/hero_ui_2/ColorRect2"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer2/skill_2/hero_ui_2/ColorRect2"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
@@ -212,20 +283,27 @@ offset_bottom = 6.0
 texture = SubResource("AtlasTexture_nj68k")
 expand_mode = 1
 
-[node name="mask2" type="ColorRect" parent="HBoxContainer/skill_2/hero_ui_2"]
+[node name="mask2" type="ColorRect" parent="HBoxContainer/VBoxContainer2/skill_2/hero_ui_2"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-color = Color(1, 1, 1, 0.27451)
+color = Color(0, 0, 0, 0.670588)
 
-[node name="Label" type="Label" parent="HBoxContainer/skill_2/hero_ui_2/mask2"]
-layout_mode = 0
-offset_left = 1.6
-offset_top = 2.9
-offset_right = 65.6
-offset_bottom = 53.9
-scale = Vector2(0.45, 0.45)
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2/skill_2/hero_ui_2/mask2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -17.0
+offset_right = 16.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.35, 0.35)
+pivot_offset = Vector2(32, 36)
 text = "按ESC或
 右键取消
 "
@@ -233,7 +311,23 @@ label_settings = ExtResource("4_rqeci")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="skill_3" type="MarginContainer" parent="HBoxContainer"]
+[node name="skill_2_button" type="TextureButton" parent="HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "使用能量"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_cwbpb")
+shortcut = SubResource("Shortcut_foqgk")
+texture_normal = SubResource("AtlasTexture_cwbpb")
+texture_pressed = SubResource("AtlasTexture_foqgk")
+texture_hover = SubResource("AtlasTexture_7kdkw")
+stretch_mode = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="skill_3" type="MarginContainer" parent="HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
@@ -241,7 +335,8 @@ theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 script = ExtResource("7_3khon")
 
-[node name="NinePatchRect3" type="NinePatchRect" parent="HBoxContainer/skill_3"]
+[node name="NinePatchRect3" type="NinePatchRect" parent="HBoxContainer/VBoxContainer3/skill_3"]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_epqtw")
 layout_mode = 2
 texture = SubResource("AtlasTexture_0onc4")
@@ -251,13 +346,13 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="hero_ui_3" type="TextureRect" parent="HBoxContainer/skill_3"]
+[node name="hero_ui_3" type="TextureRect" parent="HBoxContainer/VBoxContainer3/skill_3"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_cwbpb")
 layout_mode = 2
 texture = SubResource("AtlasTexture_a2s2q")
 
-[node name="ColorRect3" type="ColorRect" parent="HBoxContainer/skill_3/hero_ui_3"]
+[node name="ColorRect3" type="ColorRect" parent="HBoxContainer/VBoxContainer3/skill_3/hero_ui_3"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 1.0
@@ -265,7 +360,7 @@ offset_right = 31.0
 offset_bottom = 8.0
 color = Color(0.77, 0.768075, 0.7623, 1)
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/skill_3/hero_ui_3/ColorRect3"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer3/skill_3/hero_ui_3/ColorRect3"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
@@ -274,20 +369,27 @@ offset_bottom = 6.0
 texture = SubResource("AtlasTexture_2wqdr")
 expand_mode = 1
 
-[node name="mask3" type="ColorRect" parent="HBoxContainer/skill_3/hero_ui_3"]
+[node name="mask3" type="ColorRect" parent="HBoxContainer/VBoxContainer3/skill_3/hero_ui_3"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-color = Color(1, 1, 1, 0.27451)
+color = Color(0, 0, 0, 0.670588)
 
-[node name="Label" type="Label" parent="HBoxContainer/skill_3/hero_ui_3/mask3"]
-layout_mode = 0
-offset_left = 1.6
-offset_top = 2.9
-offset_right = 65.6
-offset_bottom = 53.9
-scale = Vector2(0.45, 0.45)
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/skill_3/hero_ui_3/mask3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -17.0
+offset_right = 16.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.35, 0.35)
+pivot_offset = Vector2(32, 36)
 text = "按ESC或
 右键取消
 "
@@ -295,9 +397,24 @@ label_settings = ExtResource("4_rqeci")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="mouse_entered" from="HBoxContainer/skill_1" to="HBoxContainer/skill_1" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="HBoxContainer/skill_1" to="HBoxContainer/skill_1" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="HBoxContainer/skill_2" to="HBoxContainer/skill_2" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="HBoxContainer/skill_2" to="HBoxContainer/skill_2" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="HBoxContainer/skill_3" to="HBoxContainer/skill_3" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="HBoxContainer/skill_3" to="HBoxContainer/skill_3" method="_on_mouse_exited"]
+[node name="skill_3_button" type="TextureButton" parent="HBoxContainer/VBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "使用能量"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_cwbpb")
+shortcut = SubResource("Shortcut_qjn3n")
+texture_normal = SubResource("AtlasTexture_cwbpb")
+texture_pressed = SubResource("AtlasTexture_foqgk")
+texture_hover = SubResource("AtlasTexture_7kdkw")
+stretch_mode = 3
+
+[connection signal="mouse_entered" from="HBoxContainer/VBoxContainer/skill_1" to="HBoxContainer/VBoxContainer/skill_1" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/VBoxContainer/skill_1" to="HBoxContainer/VBoxContainer/skill_1" method="_on_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/skill_1_button" to="HBoxContainer/VBoxContainer/skill_1" method="_on_skill_1_button_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/VBoxContainer2/skill_2" to="HBoxContainer/VBoxContainer2/skill_2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/VBoxContainer2/skill_2" to="HBoxContainer/VBoxContainer2/skill_2" method="_on_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/skill_2_button" to="HBoxContainer/VBoxContainer/skill_1" method="_on_skill_2_button_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/VBoxContainer3/skill_3" to="HBoxContainer/VBoxContainer3/skill_3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/VBoxContainer3/skill_3" to="HBoxContainer/VBoxContainer3/skill_3" method="_on_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer3/skill_3_button" to="HBoxContainer/VBoxContainer/skill_1" method="_on_skill_3_button_pressed"]
