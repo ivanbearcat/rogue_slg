@@ -15,6 +15,8 @@ func input(event: InputEvent) -> void:
 	## 点击释放技能的格子触发技能信号
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
 		emit_signal("hero_move")
+		EventBus.event_emit("change_power_ui", [-1])
+		EventBus.event_emit("skill_button_reset")
 
 func update(_delta: float) -> void:
 	if ! Current.id_path.is_empty():

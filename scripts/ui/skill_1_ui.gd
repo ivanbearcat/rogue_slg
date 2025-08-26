@@ -6,6 +6,7 @@ extends MarginContainer
 @onready var mask_1: ColorRect = %mask1
 @onready var mask_2: ColorRect = %mask2
 @onready var mask_3: ColorRect = %mask3
+@onready var mask_4: ColorRect = %mask4
 @onready var hero_ui_1: TextureRect = %hero_ui_1
 @onready var hero_ui_2: TextureRect = %hero_ui_2
 @onready var hero_ui_3: TextureRect = %hero_ui_3
@@ -77,16 +78,21 @@ func _skill_power_up(skill_num: int) -> void:
 	_on_skill_power_reset()
 	if Current.power > 0:
 		if skill_dict[skill_num][0].button_pressed:
-			skill_dict[skill_num][1].material.set_shader_parameter("enable", true)
+			if skill_num == 3:
+				mask_4.hide()
+			else:
+				skill_dict[skill_num][1].material.set_shader_parameter("enable", true)
 			Current.power_skill = skill_num
 		else:
+			if skill_num == 3:
+				mask_4.show()
 			skill_dict[skill_num][1].material.set_shader_parameter("enable", false)
 	else:
 		## 没有能量赋能（震屏，弹提示）
 		skill_dict[skill_num][0].button_pressed = false
 	
 func _on_skill_power_reset() -> void:
-	var skill_ui_list = [hero_ui_1, hero_ui_2, hero_ui_3]
+	var skill_ui_list = [hero_ui_1, hero_ui_2]
 	for skill in skill_ui_list:
 		skill.material.set_shader_parameter("enable", false)
 	Current.power_skill = 0
@@ -95,6 +101,7 @@ func _on_skill_button_reset() -> void:
 	skill_1_button.button_pressed = false
 	skill_2_button.button_pressed = false
 	skill_3_button.button_pressed = false
+	mask_4.show()
 
 func _on_skill_1_button_pressed() -> void:
 	_skill_power_up(1)
