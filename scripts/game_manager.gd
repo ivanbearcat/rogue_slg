@@ -78,8 +78,9 @@ const hero_property = {
 @onready var help_button: TextureButton = %help_button
 ## 职业图标
 @onready var class_icon: TextureRect = %class_icon
-## 能量数UI
+## UI
 @onready var power_label: Label = %power_label
+@onready var level_label: Label = %level_label
 
 
 ## 格子像素大小
@@ -117,7 +118,7 @@ var stage_info_json_data
 func _ready() -> void:
 	## 测试
 	print(round(11*1.05))
-	print(11*1.05)
+	print(15*1.1)
 	
 	## 加载json数据
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
@@ -129,8 +130,6 @@ func _ready() -> void:
 	Current.tongse_percent = 140
 	Current.tongdui_percent = 300
 	Current.tongshun_percent = 320
-	## 订阅能量UI事件
-	EventBus.subscribe("change_power_ui", _on_change_power_ui)
 	## 设置目标分数
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
@@ -311,6 +310,10 @@ func _check_and_level_up() -> void:
 		card_3_description.text = level_up_three_card_array[2]['card_description']
 		## 弹出升级卡牌选择
 		level_up_ui.show()
+		## 增加权重
+		for row in card_level_up_json_data:
+			row["weight"] += 10
+		## 暂停
 		get_tree().paused = true
 
 
@@ -442,6 +445,8 @@ func _on_reroll_button_pressed() -> void:
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
+	if Current.power < Current.max_power:
+		Current.power += 1
 	_enemy_turn()
 	
 ## 敌人回合
@@ -658,7 +663,7 @@ func _on_card_2_button_pressed() -> void:
 				)
 		'card_shunzi':
 			Current.shunzi_percent = _modifiy_value(
-				Current.sunzi_percent,
+				Current.shunzi_percent,
 				level_up_three_card_array[1]['card_operate'],
 				level_up_three_card_array[1]['card_value']
 				)
@@ -735,7 +740,7 @@ func _on_card_3_button_pressed() -> void:
 				)
 		'card_shunzi':
 			Current.shunzi_percent = _modifiy_value(
-				Current.sunzi_percent,
+				Current.shunzi_percent,
 				level_up_three_card_array[2]['card_operate'],
 				level_up_three_card_array[2]['card_value']
 				)
@@ -767,7 +772,11 @@ func _on_stage_clear_button_pressed() -> void:
 	## 更新回合、关卡、当前分数、目标分数
 	Current.count_round = 0
 	Current.total_score = 0
-	Current.count_stage += 1
+	if Current.count_stage < 12:
+		Current.count_stage += 1
+	else:
+		## 游戏胜利
+		print("胜利")
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
@@ -776,7 +785,3 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 0
 	get_tree().paused = false
-
-func _on_change_power_ui(num: int) -> void:
-	Current.power = Current.power + num
-	power_label.text = str(Current.power) + '/' + str(Current.max_power)

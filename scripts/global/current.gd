@@ -104,8 +104,9 @@ var count_stage := 1:
 ## 关卡奖励金币数
 var count_add_coins := 0
 ## 金币总数
-var total_coins := 0:
+var total_coins: int:
 	set(v):
+		total_coins = v
 		game_manager.total_coins_label.text = str(v)
 ## 回合计数
 var count_round := 0:
@@ -209,7 +210,10 @@ var reroll_times: int:
 	get:
 		return int(game_manager.reroll_label.text)
 ## 当前等级
-var level := 1
+var level: int:
+	set(v):
+		level = v
+		game_manager.level_label.text = "Lv." + str(v)	
 ## 当前经验
 var hero_exp := 0
 ## 升级需要的经验
@@ -219,6 +223,9 @@ var doing_skill_attack := 0
 ## 最大能量
 var max_power := 2
 ## 当前能量
-var power := 0
+var power: int:
+	set(v):
+		power = v
+		game_manager.power_label.text = str(v) + "/" + str(Current.max_power)	
 ## 能量技能
 var power_skill := 0

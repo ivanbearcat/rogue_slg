@@ -38,7 +38,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light"):
 		## 增加能量
 		if Current.power < Current.max_power:
-			EventBus.event_emit("change_power_ui", [1])
+			Current.power += 1
 	self.queue_free()
 
 

@@ -1090,7 +1090,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ld40"]
-bg_color = Color(0, 0, 0, 0.913725)
+bg_color = Color(0, 0, 0, 0.980392)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jbj1t"]
 atlas = ExtResource("15_jkv2x")
@@ -1365,7 +1365,7 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
-text = "11"
+text = "10"
 label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -1394,7 +1394,7 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
-text = "12"
+text = "10"
 label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -1423,7 +1423,7 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
-text = "13"
+text = "10"
 label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -1452,7 +1452,7 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
-text = "14"
+text = "10"
 label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -1481,7 +1481,7 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
-text = "15"
+text = "10"
 label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -1510,7 +1510,7 @@ custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
-text = "16"
+text = "10"
 label_settings = ExtResource("3_h858a")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -1835,9 +1835,9 @@ grow_vertical = 2
 [node name="real_time_score" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -68.0
+offset_left = -71.75
 offset_top = 0.25
-offset_right = 10.0
+offset_right = 6.25
 offset_bottom = 8.25
 
 [node name="HBoxContainer" type="HBoxContainer" parent="real_time_score"]
@@ -1913,9 +1913,9 @@ texture = ExtResource("11_w4riq")
 [node name="dice_num" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -65.0
+offset_left = -69.0
 offset_top = -9.0
-offset_right = 5.0
+offset_right = 1.0
 offset_bottom = -1.0
 scale = Vector2(0.85, 0.85)
 
@@ -2224,6 +2224,7 @@ offset_top = 112.0
 offset_right = 714.0
 offset_bottom = 152.0
 texture = ExtResource("17_muem4")
+expand_mode = 1
 
 [node name="Label3" type="Label" parent="clear_stage_ui/TextureRect"]
 layout_mode = 0
@@ -2422,15 +2423,16 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect"]
+[node name="level_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.5
-offset_top = -7.25
-offset_right = -21.5
-offset_bottom = 1.75
+offset_left = 5.25
+offset_top = -7.5
+offset_right = 6.25
+offset_bottom = 1.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)

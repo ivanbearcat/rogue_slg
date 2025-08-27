@@ -70,7 +70,7 @@ func skill_attack():
 		await Tools.time_sleep(0.05)
 	## 如果是赋能技能就消耗能量,然后重置UI
 	if Current.power_skill:
-		EventBus.event_emit("change_power_ui", [-1])
+		Current.power -= 1
 		EventBus.event_emit("skill_power_reset")
 		EventBus.event_emit("skill_button_reset")
 	## 恢复技能UI弹起状态

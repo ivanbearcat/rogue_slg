@@ -6,6 +6,7 @@ extends MarginContainer
 @onready var mask_1: ColorRect = %mask1
 @onready var mask_2: ColorRect = %mask2
 @onready var mask_3: ColorRect = %mask3
+@onready var mask_4: ColorRect = %mask4
 
 
 var is_enterd := false
@@ -19,7 +20,7 @@ func _input(event: InputEvent) -> void:
 		if ["idle", "move", "skill_1", "skill_2", "skill_3"].has(Current.clicked_hero.hero_state_machine.state.name):
 			## 避免和alt+3冲突
 			if event.is_action_pressed("alt+3"): return
-			if Current.power_skill != 3: 
+			if mask_4.visible == true:
 				## 震屏，提示要能量才能使用
 				return
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \
