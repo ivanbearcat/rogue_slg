@@ -20,7 +20,7 @@ func _input(event: InputEvent) -> void:
 				Vector2(0, 0)
 			)
 			Current.mouse_status = 'default'
-			Current.reroll_times -= 1
+			Current.total_coins -= 1
 	## 鼠标变成重掷后的右键操作
 	if Current.mouse_status != 'default':
 		if event is InputEventMouseButton and \

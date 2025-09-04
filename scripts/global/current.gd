@@ -26,13 +26,20 @@ var all_hero_array: Array:
 var all_enemy_array: Array:
 	get:
 		return $"/root/game_manager/enemys".get_children()
-## 包含所有敌人位置的数组
+## 包含所有敌人格子的数组
 @onready var all_enemy_grid_index_array: Array:
 	get:
 		var grid_index_array: Array
 		for enemy in all_enemy_array:
 			grid_index_array.append(enemy.enemy_grid_index)
 		return grid_index_array
+## 包含所有敌人位置的数组
+@onready var all_enemy_position_array: Array:
+	get:
+		var position_array: Array
+		for enemy in all_enemy_array:
+			position_array.append(enemy.position)
+		return position_array
 ## 当前可移动的数组
 var movable_grid_index_array: Array
 ## 当前是移动状态英雄
@@ -44,26 +51,8 @@ var move_state_hero: Hero:
 		return null
 ## Astar计算的移动路径
 var id_path: Array
-## 史莱姆巢穴的数组
-var enemy_home_array: Array
-## 史莱姆巢穴图块位置的数组
-var enemy_home_grid_index_array: Array:
-	get:
-		var grid_index_array: Array
-		if enemy_home_array.size() > 0:
-			for enemy_home in enemy_home_array:
-				grid_index_array.append(enemy_home.enemy_home_grid_index)
-		return grid_index_array
 ## 敌我回合
 var turn: String = "hero_turn"
-## 可生成史莱姆的巢穴
-var available_enemy_home: Array:
-	get:
-		var available_array: Array
-		for enemy_home in enemy_home_array:
-			if not all_enemy_grid_index_array.has(enemy_home.enemy_home_grid_index):
-				available_array.append(enemy_home)
-		return available_array
 ## 正在移动的史莱姆
 var has_move_slime: bool:
 	get:
@@ -218,8 +207,8 @@ var level: int:
 var hero_exp := 0
 ## 升级需要的经验
 var require_exp := 3
-## 是否正在攻击结算
-var doing_skill_attack := 0
+## 持续动作锁
+var action_lock := false
 ## 最大能量
 var max_power := 2
 ## 当前能量
@@ -229,3 +218,5 @@ var power: int:
 		game_manager.power_label.text = str(v) + "/" + str(Current.max_power)	
 ## 能量技能
 var power_skill := 0
+## 存在红框
+var has_attack_grid := false

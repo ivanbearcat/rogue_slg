@@ -8,7 +8,7 @@ func _ready() -> void:
 		## 订阅显示攻击范围
 	EventBus.subscribe("show_skill_attack", show_skill_attack)
 	EventBus.subscribe("hide_skill_attack", hide_skill_attack)
-
+	EventBus.subscribe("skill_move", skill_move)
 
 func show_skill_range(hero_name, skill_num):
 	call("_show_" + hero_name + "_skill_" + skill_num + "_range")
@@ -26,23 +26,10 @@ func hide_skill_attack():
 		game_manager.all_grid_dict[attack_grid_index].attack.visible = false
 	_reset_dice_panel()
 
-## 鼠标点击红框之后	
+## 鼠标点击红框之后攻击	
 func skill_attack():
 	## 正在攻击结算
-	Current.doing_skill_attack = 1
-	## 判断是能量技能则置空能量史莱姆变量，可以重新生成
-	#var reset_flag = false
-	#if not Current.power_slime is Slime:
-		#match Current.skill_num:
-			#"1":
-				#if Current.power_slime == 0:
-					#reset_flag = true
-			#"2":
-				#if Current.power_slime == 1:
-					#reset_flag = true
-			#"3":
-				#if Current.power_slime == 2:
-					#reset_flag = true
+	Current.action_lock = true
 	## 史莱姆死亡
 	var _slime_die_array: Array
 	for slime in Current.all_enemy_array:
@@ -76,8 +63,60 @@ func skill_attack():
 	## 恢复技能UI弹起状态
 	hide_all_skill.emit()
 	Current.hero.hero_state_machine.transition_to("end")
-	Current.doing_skill_attack = 0
+	Current.action_lock = false
 
+## 鼠标点击红框之后移动
+func skill_move():
+	Current.action_lock = true
+	## 判断技能朝向
+	var position_offset: Vector2
+	var all_slime_array = Current.all_enemy_array.duplicate()
+	## 上
+	if Current.grid_index.x == Current.hero.hero_grid_index.x and \
+	Current.grid_index.y < Current.hero.hero_grid_index.y:
+		position_offset = Vector2(0, 16)
+		all_slime_array.sort_custom(func(a, b): return a.enemy_grid_index.y > b.enemy_grid_index.y)
+	## 下
+	if Current.grid_index.x == Current.hero.hero_grid_index.x and \
+	Current.grid_index.y > Current.hero.hero_grid_index.y:
+		position_offset = Vector2(0, -16)
+		all_slime_array.sort_custom(func(a, b): return a.enemy_grid_index.y < b.enemy_grid_index.y)
+	## 左
+	if Current.grid_index.y == Current.hero.hero_grid_index.y and \
+	Current.grid_index.x < Current.hero.hero_grid_index.x:
+		position_offset = Vector2(16, 0)
+		all_slime_array.sort_custom(func(a, b): return a.enemy_grid_index.x > b.enemy_grid_index.x)
+	## 右
+	if Current.grid_index.y == Current.hero.hero_grid_index.y and \
+	Current.grid_index.x > Current.hero.hero_grid_index.x:
+		position_offset = Vector2(-16, 0)
+		all_slime_array.sort_custom(func(a, b): return a.enemy_grid_index.x < b.enemy_grid_index.x)
+	## 史莱姆移动
+	for slime in all_slime_array:
+		if slime.enemy_grid_index in Current.skill_attack_range:
+			var target_position = slime.position + position_offset
+			if target_position not in Current.all_enemy_position_array:
+				slime.target_position = target_position
+				var old_position = slime.position
+				while slime.position == old_position:
+					await Tools.time_sleep(0.01)
+	## 如果是赋能技能就消耗能量,然后重置UI
+	if Current.power_skill:
+		Current.power -= 1
+		EventBus.event_emit("skill_power_reset")
+		EventBus.event_emit("skill_button_reset")
+	hide_all_skill.emit()
+	## 等待攻击动画完成
+	while Current.attack_animation_finished == 0:
+		await Tools.time_sleep(0.05)
+	## 切换状态
+	if Current.is_moved == false:
+		Current.hero.animated_sprite_2d.play(Current.hero.hero_name + "_idle")
+		Current.hero.hero_state_machine.transition_to("idle")
+	else:
+		Current.hero.animated_sprite_2d.play(Current.hero.hero_name + "_end")
+		Current.hero.hero_state_machine.transition_to("move")
+	Current.action_lock = false
 	
 func _show_soldier_skill_1_range():
 	Current.skill_target_range = []
@@ -201,6 +240,65 @@ func _show_soldier_skill_3_range():
 		
 func _show_soldier_skill_3_attack():
 	Current.skill_attack_range = []
+	for grid_index in Current.skill_target_range:
+			## 鼠标选中格子等于技能格子,显示伤害范围
+			if Current.grid_index == grid_index:
+				## 上
+				if grid_index.x == Current.clicked_hero.hero_grid_index.x and \
+				grid_index.y < Current.clicked_hero.hero_grid_index.y:
+					for attack_grid_index in [
+						grid_index + Vector2i(-1, 0),
+						grid_index + Vector2i(1, 0),
+						grid_index + Vector2i(-1, -1),
+					 	grid_index + Vector2i(0, -1),
+					 	grid_index + Vector2i(1, -1)
+					]:
+						if attack_grid_index in game_manager.all_grid_dict:
+							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+							Current.skill_attack_range.append(attack_grid_index)
+				## 下
+				if grid_index.x == Current.clicked_hero.hero_grid_index.x and \
+				grid_index.y > Current.clicked_hero.hero_grid_index.y:
+					for attack_grid_index in [
+						grid_index + Vector2i(-1, 0),
+						grid_index + Vector2i(1, 0),
+						grid_index + Vector2i(-1, 1),
+					 	grid_index + Vector2i(0, 1),
+					 	grid_index + Vector2i(1, 1)
+					]:
+						if attack_grid_index in game_manager.all_grid_dict:
+							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+							Current.skill_attack_range.append(attack_grid_index)
+				## 左
+				if grid_index.y == Current.clicked_hero.hero_grid_index.y and \
+				grid_index.x < Current.clicked_hero.hero_grid_index.x:
+					for attack_grid_index in [
+						grid_index + Vector2i(0, -1),
+						grid_index + Vector2i(0, 1),
+						grid_index + Vector2i(-1, 1),
+					 	grid_index + Vector2i(-1, 0),
+					 	grid_index + Vector2i(-1, -1)
+					]:
+						if attack_grid_index in game_manager.all_grid_dict:
+							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+							Current.skill_attack_range.append(attack_grid_index)
+				## 右
+				if grid_index.y == Current.clicked_hero.hero_grid_index.y and \
+				grid_index.x > Current.clicked_hero.hero_grid_index.x:
+					for attack_grid_index in [
+						grid_index + Vector2i(0, 1),
+						grid_index + Vector2i(0, -1),
+						grid_index + Vector2i(1, 1),
+					 	grid_index + Vector2i(1, 0),
+					 	grid_index + Vector2i(1, -1)
+					]:
+						if attack_grid_index in game_manager.all_grid_dict:
+							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
+							Current.skill_attack_range.append(attack_grid_index)
+		
+## 直线三格和直线到底
+func _show_soldier_skill_3_attack_bak():
+	Current.skill_attack_range = []
 	if Current.power_skill == 3:
 		var hero_grid_index = Current.clicked_hero.hero_grid_index
 		for grid_index in Current.skill_target_range:
@@ -213,7 +311,6 @@ func _show_soldier_skill_3_attack():
 					if attack_grid_index in game_manager.all_grid_dict:
 						Current.skill_attack_range.append(attack_grid_index)
 						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
-						print(Current.skill_attack_range)
 	else:
 		var hero_grid_index = Current.clicked_hero.hero_grid_index
 		for grid_index in Current.skill_target_range:
@@ -226,7 +323,6 @@ func _show_soldier_skill_3_attack():
 					if attack_grid_index in game_manager.all_grid_dict:
 						Current.skill_attack_range.append(attack_grid_index)
 						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
-						print(Current.skill_attack_range)
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#_count_dice_type([['red',1],['red',5],['blue',2]])
 	var dice_type_point = _count_dice_type(attack_slime_array_info)

@@ -18,13 +18,15 @@ func _on_area_2d_mouse_entered() -> void:
 	## 目标区域框出现且没有在播放攻击动画
 	if target.visible == true and Current.attack_animation_finished == 1:
 		emit_signal("grid_cmd", "show_skill_attack")
+		Current.has_attack_grid = true
 
 func _on_area_2d_mouse_exited() -> void:
 	cursor.hide()
-	if attack.visible == true:
+	if Current.has_attack_grid:
 		## 等待分数结算动画和计分完成
-		while Current.doing_skill_attack:
+		while Current.action_lock:
 			await Tools.time_sleep(0.05)
 		emit_signal("grid_cmd", "hide_skill_attack")
+		Current.has_attack_grid = false
 	
 	

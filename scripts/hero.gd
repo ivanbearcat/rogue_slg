@@ -15,7 +15,7 @@ var hero_grid_index: Vector2i:
 	get:
 		for hero in Current.all_hero_array:
 			if hero_name == hero.hero_name:
-				return get_node("/root/game_manager")._position_to_grid_index(position)
+				return get_node("/root/game_manager").position_to_grid_index(position)
 		return Vector2i.ZERO
 ## 英雄移动力
 var hero_movement: int
@@ -28,9 +28,9 @@ func _ready() -> void:
 	skill_2.show_skill_range.connect(_on_show_skill_range)
 	skill_2.hide_skill_range.connect(_on_hide_skill_range)
 	skill_2.skill_attack.connect(_on_skill_attack)
-	#skill_3.show_skill_range.connect(_on_show_skill_range)
-	#skill_3.hide_skill_range.connect(_on_hide_skill_range)
-	#skill_3.skill_attack.connect(_on_skill_attack)
+	skill_3.show_skill_range.connect(_on_show_skill_range)
+	skill_3.hide_skill_range.connect(_on_hide_skill_range)
+	skill_3.skill_attack.connect(_on_skill_attack)
 	skill_3.show_move_range.connect(_on_move_show_move_range)
 	skill_3.hide_move_range.connect(_on_move_hide_move_range)
 	skill_3.hero_move.connect(_on_move_hero_move)

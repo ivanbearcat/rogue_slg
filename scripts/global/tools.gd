@@ -1,7 +1,18 @@
 extends Node
 
+## game_manager节点
+@onready var game_manager: Node2D = get_node("/root/game_manager")
+
 func time_sleep(time):
 	await get_tree().create_timer(time).timeout
+
+func grid_index_to_position(grid_index: Vector2i) -> Vector2i:
+	return Vector2i(grid_index.x * game_manager.grid_size.x + game_manager.start_pos.x, \
+	grid_index.y * game_manager.grid_size.y + game_manager.start_pos.y)
+
+func position_to_grid_index(_position: Vector2i) -> Vector2i:
+	return Vector2i((_position.x - game_manager.start_pos.x) / game_manager.grid_size.x, \
+	(_position.y - game_manager.start_pos.y) / game_manager.grid_size.y)
 
 ## 获取史莱姆场景名
 func fetch_slime_scene(slime_scene):

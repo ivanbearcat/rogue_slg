@@ -6,7 +6,9 @@ class_name Slime
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 @onready var game_manager: Node2D = $"/root/game_manager"
 
-var enemy_grid_index: Vector2i
+var enemy_grid_index: Vector2i: 
+	get:
+		return Tools.position_to_grid_index(position)
 var enemy_hp: int = 1
 var target_position: Vector2
 var enemy_type: int = 1

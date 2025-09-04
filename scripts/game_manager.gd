@@ -1,9 +1,9 @@
 extends Node2D
 
 const hero_property = {
-	"soldier": {"name": "soldier", "movement": 2, "init_vec": Vector2i(3, 3), "class_icon": "res://images/soldier_icon.png"},
-	"archer": {"name": "archer", "movement": 1, "init_vec": Vector2i(3, 2)},
-	"mage": {"name": "mage", "movement": 1, "init_vec": Vector2i(2, 2)}
+	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2i(3, 3), "class_icon": "res://images/soldier_icon.png"},
+	"archer": {"name": "archer", "movement": 2, "init_vec": Vector2i(3, 2)},
+	"mage": {"name": "mage", "movement": 2, "init_vec": Vector2i(2, 2)}
 	}
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
@@ -95,13 +95,13 @@ var all_grid_dict: Dictionary
 var astar: AStarGrid2D
 ## 最大可移动的地图块
 var _removable_map_vec =  Vector2i(7, 7)
-## 史莱姆创建列表
+## 史莱姆创建数组
 var _slime_create_array: Array
 ## 带有骰子点数的动画图片索引
 var dice_point: Array = [0, 2, 4, 6, 8, 10]
-## 史莱姆场景列表
+## 史莱姆场景数组
 var slime_scene_array := ['slime_small', 'slime_small_red', 'slime_small_yellow', 'slime_small_blue']
-## 边缘格子列表
+## 边缘格子数组
 var _margin_grid: Array[Vector2i]
 ## 颜色
 var color := {
@@ -115,11 +115,11 @@ var level_up_three_card_array :Array
 ## 关卡数据
 var stage_info_json_data
 
+
+
 func _ready() -> void:
 	## 测试
-	print(round(11*1.05))
-	print(15*1.1)
-	
+	print(Vector2i(5,2) in [Vector2i(5,2)])
 	## 加载json数据
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
@@ -135,7 +135,7 @@ func _ready() -> void:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
 	## 初始化金币
-	Current.total_coins = 0
+		Current.total_coins = 0
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -165,14 +165,40 @@ func _ready() -> void:
 	_create_power_slime()
 	_enemy_turn()
 
-func _grid_index_to_position(grid_index: Vector2i) -> Vector2i:
+func grid_index_to_position(grid_index: Vector2i) -> Vector2i:
 	return Vector2i(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
 
-func _position_to_grid_index(_position: Vector2i) -> Vector2i:
+func position_to_grid_index(_position: Vector2i) -> Vector2i:
 	return Vector2i((_position.x - start_pos.x) / grid_size.x, (_position.y - start_pos.y) / grid_size.y)
 
-## 史莱姆生成
+## 生成史莱姆
 func _create_slime():
+	var available_grid_array: Array[Vector2i]
+	var create_slime_grid_index_array: Array[Vector2i]
+	var slime_num: int
+	## 计算可以生成史莱姆的空地块
+	for grid_index in all_grid_dict.keys():
+		if ! grid_index in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
+			available_grid_array.append(grid_index)
+	if available_grid_array.size() > 0:
+		slime_num = clamp(available_grid_array.size(), 1, 3)
+		while create_slime_grid_index_array.size() < slime_num:
+			var grid_index = available_grid_array.pick_random()
+			if ! grid_index in create_slime_grid_index_array:
+				create_slime_grid_index_array.append(grid_index)
+		for grid_index in create_slime_grid_index_array:
+			var slime_sence = slime_scene_array.pick_random()
+			var enemy_instantiate = SceneManager.create_scene(slime_sence)
+			enemy_instantiate.position = grid_index_to_position(grid_index)
+			enemy_instantiate.enemy_grid_index = grid_index
+			_slime_create_array.append(enemy_instantiate)
+			var grids_array = grids.get_children()
+			for grid in grids_array:
+				if grid.grid_index == grid_index:
+					grid.warning.visible = true
+
+## 边缘生成史莱姆
+func _create_slime_on_margin_grid():
 	## 边缘地块随机生成3个史莱姆
 	var available_grid_array: Array[Vector2i]
 	var create_slime_grid_index_array: Array[Vector2i]
@@ -189,13 +215,14 @@ func _create_slime():
 		for grid_index in create_slime_grid_index_array:
 			var slime_sence = slime_scene_array.pick_random()
 			var enemy_instantiate = SceneManager.create_scene(slime_sence)
-			enemy_instantiate.position = _grid_index_to_position(grid_index)
+			enemy_instantiate.position = grid_index_to_position(grid_index)
 			enemy_instantiate.enemy_grid_index = grid_index
 			_slime_create_array.append(enemy_instantiate)
 			var grids_array = grids.get_children()
 			for grid in grids_array:
 				if grid.grid_index == grid_index:
 					grid.warning.visible = true
+
 ## 添加能量史莱姆
 func _create_power_slime():
 	if Current.power_slime == null and Current.all_enemy_array:
@@ -213,7 +240,6 @@ func _slime_move_ai():
 			## 判断是否有英雄、史莱姆、巢穴占位者超出边界
 			if Current.all_hero_grid_index_array.has(next_grid_index) or \
 			Current.all_enemy_grid_index_array.has(next_grid_index) or \
-			Current.enemy_home_grid_index_array.has(next_grid_index) or \
 			next_grid_index.x < 0 or \
 			next_grid_index.x > _removable_map_vec.x - 1 or \
 			next_grid_index.y < 0 or \
@@ -223,7 +249,7 @@ func _slime_move_ai():
 		## 从可移动数组中随机一个移动
 		if movable_grid_array.size() > 0:
 			var target_grid = movable_grid_array.pick_random()
-			var target_position: Vector2 = _grid_index_to_position(target_grid)
+			var target_position: Vector2 = grid_index_to_position(target_grid)
 			enemy.target_position = target_position
 			enemy.enemy_grid_index = target_grid
 
@@ -242,7 +268,7 @@ func slime_reroll(slime: Node2D):
 	slime.queue_free()
 	var slime_sence = slime_scene_array.pick_random()
 	var slime_instantiate = SceneManager.create_scene(slime_sence)
-	slime_instantiate.position = _grid_index_to_position(slime_grid_index)
+	slime_instantiate.position = grid_index_to_position(slime_grid_index)
 	slime_instantiate.enemy_grid_index = slime_grid_index
 	enemys.add_child(slime_instantiate)
 	_roll_dice(slime_instantiate)	
@@ -309,6 +335,8 @@ func _check_and_level_up() -> void:
 		card_3_name.text = level_up_three_card_array[2]['card_name']
 		card_3_description.text = level_up_three_card_array[2]['card_description']
 		## 弹出升级卡牌选择
+		while get_tree().paused:
+			await Tools.time_sleep(0.1)
 		level_up_ui.show()
 		## 增加权重
 		for row in card_level_up_json_data:
@@ -322,7 +350,7 @@ func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_name = properties.name
 	Current.hero = hero
 	hero.hero_movement = properties.movement
-	hero.position = _grid_index_to_position(properties.init_vec)
+	hero.position = grid_index_to_position(properties.init_vec)
 	## 职业图标
 	class_icon.texture = load(properties.class_icon)
 	#Current.all_hero_dict[hero.hero_name] = hero
@@ -377,8 +405,7 @@ func show_move_range():
 				var next_grid_index = grid_index + offset
 				## 判断有英雄或者敌人占位
 				if Current.all_hero_grid_index_array.has(next_grid_index) or \
-				Current.all_enemy_grid_index_array.has(next_grid_index) or \
-				Current.enemy_home_grid_index_array.has(next_grid_index):
+				Current.all_enemy_grid_index_array.has(next_grid_index):
 					continue
 				## 判断是否已经加入可移动数组
 				if next_grid_index in Current.movable_grid_index_array:
@@ -437,7 +464,7 @@ func skill_attack():
 
 ## 重掷按钮按下
 func _on_reroll_button_pressed() -> void:
-	if Current.reroll_times > 0:
+	if Current.total_coins > 0:
 		CursorManager.change_cursor("reroll")
 	else:
 		## 无法重掷效果
@@ -453,14 +480,18 @@ func _on_turn_button_pressed() -> void:
 func _enemy_turn():
 	Current.turn = "enemy_turn"
 	turn_button.disabled = true
-	## 生成并移动史莱姆
+	## 生成史莱姆
 	var grids_array = grids.get_children()
 	for grid in grids_array:
 		grid.warning.visible = false
 	for enemy in _slime_create_array:
-		enemys.add_child(enemy)
-		_roll_dice(enemy)
-	_slime_move_ai()
+		if enemy.enemy_grid_index != Current.hero.hero_grid_index and \
+		enemy.enemy_grid_index not in Current.all_enemy_grid_index_array:
+			enemys.add_child(enemy)
+			_roll_dice(enemy)
+		else:
+			enemy.queue_free()
+	#_slime_move_ai()
 	while Current.has_move_slime:
 		await get_tree().create_timer(0.1).timeout
 	_slime_create_array.clear()
@@ -473,9 +504,6 @@ func _enemy_turn():
 	## 史莱姆预生成和告警信息
 	_create_slime()
 	_create_power_slime()
-	Current.turn = "hero_turn"
-	turn_button.disabled = false
-	Current.count_round += 1
 	## 重置英雄状态
 	for hero in Current.all_hero_array:
 		hero.hero_state_machine.transition_to("idle")
@@ -489,14 +517,20 @@ func _enemy_turn():
 	## 判断是否过关
 	if Current.total_score >= Current.target_score:
 		## 显示剩余回合奖励的金币
+		## 过关时剩余合金币数组
 		var coin_array_1_children = coin_array_1.get_children()
+		for coin_icon in coin_array_1_children:
+			coin_icon.hide()
 		var range_times = 10 - Current.count_round
 		if range_times > 3: range_times = 3
 		for i in range(range_times):
 			coin_array_1_children[i].show()
 		Current.count_add_coins += range_times
 		## 显示最高骰子数奖励的金币
+		## 过关时最高子数金币数组
 		var coin_array_2_children = coin_array_2.get_children()
+		for coin_icon in coin_array_2_children:
+			coin_icon.hide()
 		range_times = Current.highest_dice_num - 3
 		if  range_times > 3:
 			range_times = 3
@@ -507,6 +541,9 @@ func _enemy_turn():
 		Current.count_add_coins += range_times + 1
 		get_tree().paused = true
 		clear_stage_ui.show()
+	Current.turn = "hero_turn"
+	turn_button.disabled = false
+	Current.count_round += 1
 	## 测试
 	#var a = dice_list.get_children()[0]
 	#Tools.big_flow_effect(a)
