@@ -326,7 +326,7 @@ material = SubResource("ShaderMaterial_pdkmk")
 position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_8f80i")
-animation = &"die"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="warning" type="Sprite2D" parent="Area2D"]

@@ -12,9 +12,9 @@ const hero_property = {
 @onready var buildings: Node2D = $buildings
 @onready var enemys: Node2D = $enemys
 @onready var turn_button: Button = %turn_button
-@onready var reroll_label: Label = %reroll_label
+#@onready var reroll_label: Label = %reroll_label
 @onready var stage_label: Label = %stage_label
-@onready var turn_label: Label = %turn_label
+#@onready var turn_label: Label = %turn_label
 #@onready var left_side_ui: MarginContainer = $UI/left_side_ui
 @onready var hero_skill: Control = $hero_skill
 @onready var skill_system: Node2D = $skill_system
@@ -81,6 +81,7 @@ const hero_property = {
 ## UI
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
+@onready var ship: TextureRect = %ship
 
 
 ## 格子像素大小
@@ -119,7 +120,7 @@ var stage_info_json_data
 
 func _ready() -> void:
 	## 测试
-	print(Vector2i(5,2) in [Vector2i(5,2)])
+	ship.position += Vector2(7, 0) * 5
 	## 加载json数据
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')

@@ -73,13 +73,13 @@ var transformable_slime_array: Array
 ## 目标分数
 var target_score: int:
 	set(v):
-		game_manager.target_score.text = "目标: " + str(v)
+		game_manager.target_score.text = str(v)
 	get:
 		return int(game_manager.target_score.text)
 ## 当前总分
 var total_score: int:
 	set(v):
-		game_manager.total_score.text = "总分: " + str(v)
+		game_manager.total_score.text = str(v)
 	get:
 		return int(game_manager.total_score.text)
 ## 当前关卡
@@ -100,9 +100,15 @@ var total_coins: int:
 ## 回合计数
 var count_round := 0:
 	set(v):
-		game_manager.turn_label.text = "回合: " + str(v)
+		count_round = v
+		if v == 0:
+			game_manager.ship.position = Vector2(-3, 2)
+		else:
+			game_manager.ship.position = Vector2(-3, 2) + v * Vector2(7, 0)
+		#game_manager.turn_label.text = "回合: " + str(v)
 	get:
-		return int(game_manager.turn_label.text)
+		#return int(game_manager.turn_label.text)
+		return count_round
 ## 最高骰子数
 var highest_dice_num := 0
 ## 骰型板基础分数
@@ -193,11 +199,11 @@ var power_slime
 ## 鼠标状态
 var mouse_status := 'default'
 ## 重掷次数
-var reroll_times: int:
-	set(v):
-		game_manager.reroll_label.text = "重掷: " + str(v)
-	get:
-		return int(game_manager.reroll_label.text)
+#var reroll_times: int:
+	#set(v):
+		#game_manager.reroll_label.text = "重掷: " + str(v)
+	#get:
+		#return int(game_manager.reroll_label.text)
 ## 当前等级
 var level: int:
 	set(v):
