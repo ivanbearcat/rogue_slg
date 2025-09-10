@@ -11,10 +11,10 @@ const hero_property = {
 @onready var heros: Node2D = $heros
 @onready var buildings: Node2D = $buildings
 @onready var enemys: Node2D = $enemys
-@onready var turn_button: Button = %turn_button
+@onready var turn_button: TextureButton = %turn_button
 #@onready var reroll_label: Label = %reroll_label
 @onready var stage_label: Label = %stage_label
-#@onready var turn_label: Label = %turn_label
+@onready var turn_label: Label = %turn_label
 #@onready var left_side_ui: MarginContainer = $UI/left_side_ui
 @onready var hero_skill: Control = $hero_skill
 @onready var skill_system: Node2D = $skill_system
@@ -82,6 +82,8 @@ const hero_property = {
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
 @onready var ship: TextureRect = %ship
+@onready var turn_button_label: Control = %turn_button_label
+@onready var turn_coin_label: Label = %turn_coin_label
 
 
 ## 格子像素大小
@@ -387,8 +389,10 @@ func _on_grid_cmd(cmd_name):
 ## 投骰子动画
 func _roll_dice(slime_instantiate):
 	slime_instantiate.dice.play("roll")
+	slime_instantiate.animated_sprite_2d.play("roll")
 	await get_tree().create_timer(1.0).timeout
 	slime_instantiate.dice.stop()
+	slime_instantiate.animated_sprite_2d.play("idle")
 	slime_instantiate.dice.set_frame_and_progress(dice_point.pick_random(), 0)
 	
 
@@ -476,6 +480,12 @@ func _on_turn_button_pressed() -> void:
 	if Current.power < Current.max_power:
 		Current.power += 1
 	_enemy_turn()
+## 让label跟着按钮下降
+func _on_turn_button_button_down() -> void:
+	turn_button_label.position += Vector2(0, 1)
+## 让label跟着按钮回弹
+func _on_turn_button_button_up() -> void:
+	turn_button_label.position += Vector2(0, -1)
 	
 ## 敌人回合
 func _enemy_turn():
@@ -516,7 +526,7 @@ func _enemy_turn():
 	## 重置已移动标记
 	Current.is_moved = false
 	## 判断是否过关
-	if Current.total_score >= Current.target_score:
+	if Current.total_score >= Current.target_score and Current.count_round <= 10:
 		## 显示剩余回合奖励的金币
 		## 过关时剩余合金币数组
 		var coin_array_1_children = coin_array_1.get_children()
@@ -542,9 +552,15 @@ func _enemy_turn():
 		Current.count_add_coins += range_times + 1
 		get_tree().paused = true
 		clear_stage_ui.show()
+	##判断失败
+	Current.count_round += 1
+	if Current.count_round > 10:
+		print("游戏失败")
+		get_tree().paused = true
+	## 下回合开始
 	Current.turn = "hero_turn"
 	turn_button.disabled = false
-	Current.count_round += 1
+	
 	## 测试
 	#var a = dice_list.get_children()[0]
 	#Tools.big_flow_effect(a)
@@ -808,7 +824,7 @@ func _on_stage_clear_button_pressed() -> void:
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
 	## 更新回合、关卡、当前分数、目标分数
-	Current.count_round = 0
+	Current.count_round = 1
 	Current.total_score = 0
 	if Current.count_stage < 12:
 		Current.count_stage += 1

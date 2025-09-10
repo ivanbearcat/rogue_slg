@@ -98,14 +98,16 @@ var total_coins: int:
 		total_coins = v
 		game_manager.total_coins_label.text = str(v)
 ## 回合计数
-var count_round := 0:
+var count_round := 1:
 	set(v):
 		count_round = v
-		if v == 0:
-			game_manager.ship.position = Vector2(-3, 2)
-		else:
-			game_manager.ship.position = Vector2(-3, 2) + v * Vector2(7, 0)
-		#game_manager.turn_label.text = "回合: " + str(v)
+		if v == 1:
+			game_manager.ship.position = Vector2(4, 2)
+		if v > 1 and v < 11:
+			game_manager.ship.position = Vector2(4, 2) + ((v - 1) * Vector2(7, 0))
+		if v < 11:
+			game_manager.turn_label.text = "回合: " + str(v)
+			game_manager.turn_coin_label.text = str(10 - v)
 	get:
 		#return int(game_manager.turn_label.text)
 		return count_round

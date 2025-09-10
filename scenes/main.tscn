@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=90 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -1074,10 +1074,6 @@ region = Rect2(35, 19, 26, 26)
 atlas = ExtResource("20_gqmmt")
 region = Rect2(67, 19, 26, 26)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2wyq8"]
-atlas = ExtResource("6_bkbmf")
-region = Rect2(1, 81, 14, 14)
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_574tw"]
 diffuse_texture = ExtResource("9_njo2n")
 
@@ -1188,6 +1184,30 @@ outline_size = 9
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wyq8"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(144, 32, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fv21b"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(176, 32, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tel4y"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(160, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkpxi"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(96, 16, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5q0nq"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(144, 16, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgi5k"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(96, 32, 48, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_y6deb"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(65, 1, 78, 14)
@@ -1195,6 +1215,18 @@ region = Rect2(65, 1, 78, 14)
 [sub_resource type="AtlasTexture" id="AtlasTexture_og1vs"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(149, 4, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8jky"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(192, 7, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmb1v"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(210, 7, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fuf3a"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(228, 7, 18, 18)
 
 [node name="game_manager" type="Node2D"]
 scale = Vector2(4, 4)
@@ -1873,9 +1905,9 @@ grow_vertical = 2
 layout_mode = 3
 anchors_preset = 0
 offset_left = 134.0
-offset_top = 99.5
+offset_top = 98.25
 offset_right = 214.0
-offset_bottom = 132.5
+offset_bottom = 131.25
 
 [node name="Panel" type="Panel" parent="hero_skill2"]
 layout_mode = 1
@@ -1905,7 +1937,7 @@ stretch_mode = 5
 [node name="TextureButton2" type="TextureButton" parent="hero_skill2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture_normal = SubResource("AtlasTexture_2wyq8")
+texture_normal = SubResource("AtlasTexture_yq6so")
 texture_pressed = SubResource("AtlasTexture_vxglm")
 texture_hover = SubResource("AtlasTexture_2f3dj")
 stretch_mode = 5
@@ -1913,7 +1945,7 @@ stretch_mode = 5
 [node name="TextureButton3" type="TextureButton" parent="hero_skill2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture_normal = SubResource("AtlasTexture_2wyq8")
+texture_normal = SubResource("AtlasTexture_yq6so")
 texture_pressed = SubResource("AtlasTexture_vxglm")
 texture_hover = SubResource("AtlasTexture_2f3dj")
 stretch_mode = 5
@@ -1922,9 +1954,9 @@ stretch_mode = 5
 layout_mode = 3
 anchors_preset = 0
 offset_left = -71.75
-offset_top = 0.25
+offset_top = 0.5
 offset_right = 6.25
-offset_bottom = 8.25
+offset_bottom = 8.5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="real_time_score"]
 layout_mode = 1
@@ -1999,10 +2031,10 @@ texture = ExtResource("11_w4riq")
 [node name="dice_num" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -69.0
-offset_top = -9.0
-offset_right = 1.0
-offset_bottom = -1.0
+offset_left = -69.25
+offset_top = -8.25
+offset_right = 0.750008
+offset_bottom = -0.25
 scale = Vector2(0.85, 0.85)
 
 [node name="dice_list" type="HBoxContainer" parent="dice_num"]
@@ -2011,6 +2043,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -0.5
+offset_top = 0.294118
+offset_right = 0.5
+offset_bottom = 0.294118
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(28, 4)
@@ -2079,6 +2115,86 @@ size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="dice_num"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 2.64706
+offset_top = -4.41177
+offset_right = 17.6471
+offset_bottom = 18.5882
+scale = Vector2(0.2, 0.2)
+text = "1"
+
+[node name="Label2" type="Label" parent="dice_num"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 12.3529
+offset_top = -4.41177
+offset_right = 27.3529
+offset_bottom = 18.5882
+scale = Vector2(0.2, 0.2)
+text = "1"
+
+[node name="Label3" type="Label" parent="dice_num"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 21.4706
+offset_top = -4.11765
+offset_right = 36.4706
+offset_bottom = 18.8824
+scale = Vector2(0.2, 0.2)
+text = "2"
+
+[node name="Label4" type="Label" parent="dice_num"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 30.0
+offset_top = -3.82353
+offset_right = 45.0
+offset_bottom = 19.1765
+scale = Vector2(0.2, 0.2)
+text = "3"
+
+[node name="Label5" type="Label" parent="dice_num"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 39.1177
+offset_top = -3.82353
+offset_right = 54.1177
+offset_bottom = 19.1765
+scale = Vector2(0.2, 0.2)
+text = "4"
+
+[node name="Label6" type="Label" parent="dice_num"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 47.6471
+offset_top = -3.82353
+offset_right = 62.6471
+offset_bottom = 19.1765
+scale = Vector2(0.2, 0.2)
+text = "5"
+
+[node name="Label7" type="Label" parent="dice_num"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 56.7647
+offset_top = -3.82353
+offset_right = 71.7647
+offset_bottom = 19.1765
+scale = Vector2(0.2, 0.2)
+text = "6"
+
+[node name="Label8" type="Label" parent="dice_num"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 65.8824
+offset_top = -3.82353
+offset_right = 80.8824
+offset_bottom = 19.1765
+scale = Vector2(0.2, 0.2)
+text = "7"
 
 [node name="level_up_ui" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -2611,10 +2727,19 @@ vertical_alignment = 1
 [node name="coin_skill_trun_button" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 140.0
-offset_top = 137.0
-offset_right = 211.0
-offset_bottom = 149.0
+offset_left = 134.0
+offset_top = 132.5
+offset_right = 214.0
+offset_bottom = 146.5
+
+[node name="Panel" type="Panel" parent="coin_skill_trun_button"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="coin_skill_trun_button"]
 layout_mode = 1
@@ -2623,30 +2748,119 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.4, 0.4)
 pivot_offset = Vector2(58, 16)
+theme_override_constants/separation = 0
 
-[node name="reroll_button" type="Button" parent="coin_skill_trun_button/HBoxContainer"]
+[node name="reroll_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_76ilt")
-theme_override_font_sizes/font_size = 16
+size_flags_horizontal = 8
+texture_normal = SubResource("AtlasTexture_2wyq8")
+texture_pressed = SubResource("AtlasTexture_fv21b")
+texture_hover = SubResource("AtlasTexture_tel4y")
+stretch_mode = 5
+
+[node name="reroll_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/reroll_button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/reroll_button/reroll_button_label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.5
+offset_top = -4.25001
+offset_right = 9.5
+offset_bottom = 2.74999
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.4, 0.4)
+pivot_offset = Vector2(32, 11.5)
 text = "重掷"
 
-[node name="turn_button" type="Button" parent="coin_skill_trun_button/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/reroll_button/reroll_button_label"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_right = 13.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(24, 8)
+bbcode_enabled = true
+text = "[img=12]res://images/coin.png[/img] -1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="turn_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer"]
 unique_name_in_owner = true
+editor_description = "11"
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_76ilt")
-theme_override_font_sizes/font_size = 16
-text = "跳过回合"
+size_flags_horizontal = 10
+texture_normal = SubResource("AtlasTexture_qkpxi")
+texture_pressed = SubResource("AtlasTexture_5q0nq")
+texture_hover = SubResource("AtlasTexture_dgi5k")
+stretch_mode = 5
+
+[node name="turn_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/turn_button"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/turn_button/turn_button_label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.0
+offset_top = -4.00001
+offset_right = 10.0
+offset_bottom = 2.99999
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.4, 0.4)
+pivot_offset = Vector2(32, 11.5)
+text = "回合结束"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/turn_button/turn_button_label"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = -0.999994
+offset_right = 11.0
+offset_bottom = 7.00001
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(24, 8)
+bbcode_enabled = true
+text = "[img=12]res://images/power.png[/img] +1"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="round_process_bar" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 134.25
-offset_top = 85.0
+offset_top = 83.25
 offset_right = 212.25
-offset_bottom = 97.0
+offset_bottom = 95.25
 
 [node name="TextureRect" type="TextureRect" parent="round_process_bar"]
 layout_mode = 1
@@ -2661,15 +2875,16 @@ stretch_mode = 2
 [node name="ship" type="TextureRect" parent="round_process_bar"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = -3.0
+offset_left = 4.0
 offset_top = 2.0
-offset_right = 4.0
+offset_right = 11.0
 offset_bottom = 9.0
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_og1vs")
 stretch_mode = 2
 
-[node name="Label" type="Label" parent="round_process_bar"]
+[node name="turn_label" type="Label" parent="round_process_bar"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 offset_left = 3.5
@@ -2679,7 +2894,8 @@ offset_bottom = 15.0
 scale = Vector2(0.35, 0.35)
 text = "回合: 1"
 
-[node name="Label2" type="Label" parent="round_process_bar"]
+[node name="turn_coin_label" type="Label" parent="round_process_bar"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 offset_left = 67.75
@@ -2687,7 +2903,7 @@ offset_top = -8.0
 offset_right = 89.75
 offset_bottom = 15.0
 scale = Vector2(0.35, 0.35)
-text = "10"
+text = "9"
 horizontal_alignment = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="round_process_bar"]
@@ -2695,15 +2911,32 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 46.0
+offset_left = 47.5
 offset_top = -7.75003
-offset_right = 37.0
+offset_right = 38.5
 offset_bottom = 4.24997
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.35, 0.35)
 bbcode_enabled = true
-text = "奖励: [img=14]res://images/coin.png[/img]×"
+text = "奖励: [img=10 ]res://images/coin.png[/img] ×"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 199.5
+offset_top = -8.0
+offset_right = 217.5
+offset_bottom = 10.0
+
+[node name="TextureButton" type="TextureButton" parent="Control"]
+layout_mode = 0
+offset_right = 19.0
+offset_bottom = 20.0
+scale = Vector2(0.7, 0.7)
+texture_normal = SubResource("AtlasTexture_j8jky")
+texture_pressed = SubResource("AtlasTexture_kmb1v")
+texture_hover = SubResource("AtlasTexture_fuf3a")
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]
@@ -2712,4 +2945,6 @@ text = "奖励: [img=14]res://images/coin.png[/img]×"
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card3_button" to="." method="_on_card_3_button_pressed"]
 [connection signal="pressed" from="clear_stage_ui/TextureRect/stage_clear_button" to="." method="_on_stage_clear_button_pressed"]
 [connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/reroll_button" to="." method="_on_reroll_button_pressed"]
+[connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_down"]
+[connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_up"]
 [connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_pressed"]
