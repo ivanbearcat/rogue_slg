@@ -336,7 +336,7 @@ material = SubResource("ShaderMaterial_r8iat")
 position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_nc03e")
-animation = &"roll"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="warning" type="Sprite2D" parent="Area2D"]

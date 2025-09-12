@@ -83,7 +83,15 @@ const hero_property = {
 @onready var level_label: Label = %level_label
 @onready var ship: TextureRect = %ship
 @onready var turn_button_label: Control = %turn_button_label
+@onready var reroll_button_label: Control = %reroll_button_label
 @onready var turn_coin_label: Label = %turn_coin_label
+@onready var reroll_button: TextureButton = %reroll_button
+@onready var coin_skill_1: TextureButton = %coin_skill_1
+@onready var coin_skill_2: TextureButton = %coin_skill_2
+@onready var coin_skill_3: TextureButton = %coin_skill_3
+@onready var coin_skill_1_icon: TextureRect = %coin_skill_1_icon
+@onready var coin_skill_2_icon: TextureRect = %coin_skill_2_icon
+@onready var coin_skill_3_icon: TextureRect = %coin_skill_3_icon
 
 
 ## 格子像素大小
@@ -388,13 +396,14 @@ func _on_grid_cmd(cmd_name):
 
 ## 投骰子动画
 func _roll_dice(slime_instantiate):
+	turn_button.disabled = true
 	slime_instantiate.dice.play("roll")
 	slime_instantiate.animated_sprite_2d.play("roll")
 	await get_tree().create_timer(1.0).timeout
 	slime_instantiate.dice.stop()
 	slime_instantiate.animated_sprite_2d.play("idle")
 	slime_instantiate.dice.set_frame_and_progress(dice_point.pick_random(), 0)
-	
+	turn_button.disabled = false
 
 ## 显示英雄移动网格
 func show_move_range():
@@ -474,6 +483,12 @@ func _on_reroll_button_pressed() -> void:
 	else:
 		## 无法重掷效果
 		pass
+
+func _on_reroll_button_button_down() -> void:
+	reroll_button_label.position += Vector2(0, 1)
+
+func _on_reroll_button_button_up() -> void:
+	reroll_button_label.position += Vector2(0, -1)
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:

@@ -17,7 +17,7 @@ func _on_area_2d_mouse_entered() -> void:
 	#print(Current.grid_index)
 	## 目标区域框出现且没有在播放攻击动画
 	if target.visible == true and Current.attack_animation_finished == 1:
-		emit_signal("grid_cmd", "show_skill_attack")
+		EventBus.event_emit("show_skill_attack", [Current.hero.hero_name, Current.skill_num])
 		Current.has_attack_grid = true
 
 func _on_area_2d_mouse_exited() -> void:

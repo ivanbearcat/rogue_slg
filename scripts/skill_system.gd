@@ -19,6 +19,7 @@ func hide_skill_range():
 	hide_skill_attack()
 
 func show_skill_attack(hero_name, skill_num):
+	hide_skill_attack()
 	call("_show_" + hero_name + "_skill_" + skill_num + "_attack")
 	
 func hide_skill_attack():

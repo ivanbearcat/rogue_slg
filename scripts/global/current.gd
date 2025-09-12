@@ -97,11 +97,29 @@ var total_coins: int:
 	set(v):
 		total_coins = v
 		game_manager.total_coins_label.text = str(v)
+		if v == 0:
+			game_manager.reroll_button.disabled = true
+			game_manager.coin_skill_1.disabled = true
+			game_manager.coin_skill_2.disabled = true
+			game_manager.coin_skill_3.disabled = true
+			game_manager.reroll_button_label.modulate = Color(1, 1, 1, 0.3)
+			game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 0.3)
+			game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 0.3)
+			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 0.3)
+		else:
+			game_manager.reroll_button.disabled = false
+			game_manager.coin_skill_1.disabled = false
+			game_manager.coin_skill_2.disabled = false
+			game_manager.coin_skill_3.disabled = false
+			game_manager.reroll_button_label.modulate = Color(1, 1, 1, 1)
+			game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
+			game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
+			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
 ## 回合计数
-var count_round := 1:
+var count_round := 0:
 	set(v):
 		count_round = v
-		if v == 1:
+		if v == 0 or v == 1:
 			game_manager.ship.position = Vector2(4, 2)
 		if v > 1 and v < 11:
 			game_manager.ship.position = Vector2(4, 2) + ((v - 1) * Vector2(7, 0))
@@ -187,7 +205,7 @@ var base_score: int:
 var percent_score: float:
 	set(v):
 		if v != 0:
-			game_manager.percent_score.text = str(v) + "%"
+			game_manager.percent_score.text = str(int(v)) + "%"
 		else:
 			game_manager.percent_score.text = ''
 	get:

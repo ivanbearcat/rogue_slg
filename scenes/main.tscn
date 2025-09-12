@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=98 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -12,8 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://d2hsly64m27qi" path="res://images/yellow_background.png" id="9_njo2n"]
 [ext_resource type="Texture2D" uid="uid://0nyks62j7ihp" path="res://images/red_background.png" id="10_eplrr"]
 [ext_resource type="Texture2D" uid="uid://dsopuek2hk0wj" path="res://images/puls_times.png" id="11_w4riq"]
+[ext_resource type="Texture2D" uid="uid://cygk4q6m5um4y" path="res://images/coin_skill_icon/reroll_all.png" id="12_pm3ni"]
 [ext_resource type="Texture2D" uid="uid://dc7a6my34pjt5" path="res://images/process_bar.png" id="13_trceg"]
+[ext_resource type="Texture2D" uid="uid://dwiao6t4r8mq2" path="res://images/coin_skill_icon/reroll_dice.png" id="13_y6deb"]
 [ext_resource type="Texture2D" uid="uid://d2jlnocchatj6" path="res://images/card/card_level_up.png" id="14_a8y0u"]
+[ext_resource type="Texture2D" uid="uid://dbcui50h2j18a" path="res://images/coin_skill_icon/reroll_slime.png" id="14_og1vs"]
 [ext_resource type="StyleBox" uid="uid://nf1thu8lxm1v" path="res://resources/hover_button.tres" id="15_0ld40"]
 [ext_resource type="Texture2D" uid="uid://bd0mpn20yxg3u" path="res://images/shelves_announcements.png" id="15_jkv2x"]
 [ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="16_jbj1t"]
@@ -1074,6 +1077,18 @@ region = Rect2(35, 19, 26, 26)
 atlas = ExtResource("20_gqmmt")
 region = Rect2(67, 19, 26, 26)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pibwh"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(3, 51, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6pm6"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(3, 51, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5he1u"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(3, 51, 26, 26)
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_574tw"]
 diffuse_texture = ExtResource("9_njo2n")
 
@@ -1196,6 +1211,10 @@ region = Rect2(176, 32, 32, 16)
 atlas = ExtResource("20_gqmmt")
 region = Rect2(160, 0, 32, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5poiv"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(208, 32, 32, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkpxi"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(96, 16, 48, 16)
@@ -1207,6 +1226,10 @@ region = Rect2(144, 16, 48, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_dgi5k"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(96, 32, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cjbq"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(96, 48, 48, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y6deb"]
 atlas = ExtResource("20_gqmmt")
@@ -1234,6 +1257,7 @@ script = ExtResource("1_jbfvy")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
+position = Vector2(-0.75, -0.5)
 tile_map_data = PackedByteArray("AAABAAgAAAAIAAoAAAACAAgAAAAIAAoAAAADAAgAAAAIAAoAAAAEAAgAAAAIAAoAAAAFAAgAAAAIAAoAAAAGAAgAAAAIAAoAAAAHAAgAAAAIAAoAAAAHAAAAAAAIAAwAAAAIAAEAAAAHAAsAAAAIAAIAAAAHAAsAAAAIAAMAAAAHAAsAAAAIAAQAAAAHAAsAAAAIAAUAAAAHAAsAAAAIAAYAAAAHAAsAAAAIAAcAAAAHAAsAAAAIAAgAAAAKAAoAAAAIAAAAAAAKAAsAAAD9//7/AAAIAAsAAAD+//7/AAAIAAsAAAD///7/AAAIAAsAAAAAAP7/AAAIAAsAAAABAP7/AAAIAAsAAAACAP7/AAAIAAsAAAADAP7/AAAIAAsAAAAEAP7/AAAIAAsAAAAFAP7/AAAIAAsAAAAGAP7/AAAIAAsAAAAHAP7/AAAIAAsAAAAIAP7/AAAIAAsAAAAJAP7/AAAIAAsAAAAKAP7/AAAIAAsAAAALAP7/AAAIAAsAAAAMAP7/AAAIAAsAAAANAP7/AAAIAAsAAAAOAP7/AAAIAAsAAAAOAP//AAAIAAsAAAANAP//AAAIAAsAAAAMAP//AAAIAAsAAAALAP//AAAIAAsAAAAKAP//AAAIAAsAAAAJAP//AAAIAAsAAAAIAP//AAAIAAsAAAAHAP//AAAIAAsAAAAGAP//AAAIAAsAAAAFAP//AAAIAAsAAAAEAP//AAAIAAsAAAADAP//AAAIAAsAAAACAP//AAAIAAsAAAABAP//AAAIAAsAAAAAAP//AAAIAAsAAAD/////AAAIAAsAAAD+////AAAIAAsAAAD9////AAAIAAsAAAD8////AAAIAAsAAAD7////AAAIAAsAAAD6////AAAIAAsAAAD6//7/AAAIAAsAAAD7//7/AAAIAAsAAAD8//7/AAAIAAsAAAD6//3/AAAIAAsAAAD7//3/AAAIAAsAAAD8//3/AAAIAAsAAAD9//3/AAAIAAsAAAD+//3/AAAIAAsAAAD///3/AAAIAAsAAAAAAP3/AAAIAAsAAAABAP3/AAAIAAsAAAACAP3/AAAIAAsAAAADAP3/AAAIAAsAAAAEAP3/AAAIAAsAAAAFAP3/AAAIAAsAAAAGAP3/AAAIAAsAAAAHAPz/AAAIAAsAAAAIAPz/AAAIAAsAAAAJAPz/AAAIAAsAAAAKAPz/AAAIAAsAAAALAPz/AAAIAAsAAAALAP3/AAAIAAsAAAAMAP3/AAAIAAsAAAANAP3/AAAIAAsAAAANAPz/AAAIAAsAAAAOAPz/AAAIAAsAAAAOAP3/AAAIAAsAAAAKAP3/AAAIAAsAAAAJAP3/AAAIAAsAAAAIAP3/AAAIAAsAAAAHAP3/AAAIAAsAAAD6//z/AAAIAAsAAAD7//z/AAAIAAsAAAD8//z/AAAIAAsAAAD9//z/AAAIAAsAAAD+//z/AAAIAAsAAAD///z/AAAIAAsAAAAAAPz/AAAIAAsAAAABAPz/AAAIAAsAAAACAPz/AAAIAAsAAAADAPz/AAAIAAsAAAAEAPz/AAAIAAsAAAAFAPz/AAAIAAsAAAAMAPz/AAAIAAsAAAAGAPz/AAAIAAsAAAD6/wAAAAAIAAsAAAD7/wAAAAAIAAsAAAD8/wAAAAAIAAsAAAD9/wAAAAAIAAsAAAD+/wAAAAAIAAsAAAD//wAAAAAIAAsAAAD+/wEAAAAIAAsAAAD9/wEAAAAIAAsAAAD8/wEAAAAIAAsAAAD7/wEAAAAIAAsAAAD6/wEAAAAIAAsAAAD6/wIAAAAIAAsAAAD7/wIAAAAIAAsAAAD+/wIAAAAIAAsAAAD+/wMAAAAIAAsAAAD8/wMAAAAIAAsAAAD7/wMAAAAIAAsAAAD6/wMAAAAIAAsAAAD6/wQAAAAIAAsAAAD6/wUAAAAIAAsAAAAEAAkAAAAIAAsAAAAFAAkAAAAIAAsAAAAGAAkAAAAIAAsAAAAHAAkAAAAIAAsAAAAOAAkAAAAIAAsAAAAOAAEAAAAIAAsAAAAOAAAAAAAIAAsAAAAOAAIAAAAIAAsAAAAOAAMAAAAIAAsAAAAOAAQAAAAIAAsAAAAOAAUAAAAIAAsAAAANAAIAAAAIAAsAAAANAAEAAAAIAAsAAAANAAAAAAAIAAsAAAANAAMAAAAIAAsAAAANAAQAAAAIAAsAAAANAAUAAAAIAAsAAAAMAAQAAAAIAAsAAAAMAAUAAAAIAAsAAAAMAAAAAAAIAAsAAAAMAAEAAAAIAAsAAAAMAAIAAAAIAAsAAAALAAMAAAAIAAsAAAALAAQAAAAIAAsAAAAKAAUAAAAIAAsAAAAKAAYAAAAIAAsAAAAKAAcAAAAIAAsAAAAJAAwAAAAIAAsAAAALAAUAAAAIAAsAAAALAAIAAAAIAAsAAAALAAEAAAAIAAsAAAALAAYAAAAIAAsAAAALAAcAAAAIAAsAAAALAAAAAAAIAAsAAAAKAAEAAAAIAAsAAAAKAAIAAAAIAAsAAAAKAAMAAAAIAAsAAAAJAAMAAAAIAAsAAAAKAAQAAAAIAAsAAAAJAAgAAAAIAAsAAAAKAAAAAAAIAAsAAAAJAAAAAAAIAAsAAAAJAAEAAAAIAAsAAAAJAAIAAAAIAAsAAAAMAAMAAAAIAAsAAAAKAAwAAAAIAAsAAAANAAsAAAAIAAsAAAACAAwAAAAIAAsAAAABAAwAAAAIAAsAAAAAAAwAAAAIAAsAAAD//wwAAAAIAAsAAAD+/wwAAAAIAAsAAAD9/wwAAAAIAAsAAAALAAwAAAAIAAsAAAD6/woAAAAIAAsAAAD7/wQAAAAIAAsAAAD9/wYAAAAIAAsAAAD9/wUAAAAIAAsAAAD9/wQAAAAIAAsAAAD9/wgAAAAIAAsAAAD+/wcAAAAIAAsAAAD+/wYAAAAIAAsAAAD+/wgAAAAIAAsAAAD//wgAAAAIAAsAAAD+/wQAAAAIAAsAAAD+/wUAAAAIAAsAAAD9/wcAAAAIAAsAAAD8/wYAAAAIAAsAAAD8/wUAAAAIAAsAAAD8/wQAAAAIAAsAAAAOAAoAAAAIAAsAAAAOAAwAAAAIAAsAAAAOAAsAAAAIAAsAAAANAAwAAAAIAAsAAAAMAAwAAAAIAAsAAAD8/wwAAAAIAAsAAAD7/wwAAAAIAAsAAAD6/wwAAAAIAAsAAAD6/wsAAAAIAAsAAAD7/wsAAAAIAAsAAAACAAEAAAABAAIAAAADAAIAAAABAAAAAAAEAAIAAAACAAAAAAAEAAMAAAACAAAAAAAFAAMAAAACAAAAAAAFAAQAAAABAAEAAAAGAAUAAAACAAIAAAAGAAYAAAACAAIAAAAHAAYAAAACAAAAAAAHAAcAAAACAAEAAAAGAAcAAAABAAAAAAAFAAcAAAABAAEAAAAEAAcAAAABAAEAAAADAAcAAAABAAEAAAACAAcAAAABAAAAAAACAAYAAAACAAIAAAADAAYAAAABAAIAAAAEAAYAAAAAAAEAAAAFAAYAAAAAAAIAAAAHAAUAAAAAAAEAAAAHAAQAAAACAAEAAAAHAAMAAAABAAEAAAAHAAIAAAACAAAAAAAHAAEAAAACAAEAAAAGAAEAAAAAAAIAAAAFAAEAAAABAAEAAAAEAAEAAAABAAIAAAADAAEAAAACAAIAAAAFAAIAAAACAAAAAAAGAAMAAAABAAIAAAAGAAQAAAACAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAACAAAAAAADAAUAAAABAAEAAAACAAQAAAABAAIAAAADAAQAAAACAAAAAAADAAMAAAAAAAEAAAACAAMAAAABAAEAAAACAAIAAAAAAAEAAAAGAAIAAAACAAEAAAABAAcAAAAAAAIAAAD//wcAAAAIAAsAAAD//wYAAAAIAAsAAAD//wUAAAAIAAsAAAAAAAUAAAAJAAsAAAD//wQAAAAIAAsAAAAAAAQAAAAJAAsAAAABAAQAAAABAAIAAAAAAAEAAAAJAAsAAAAAAAIAAAAJAAsAAAABAAEAAAABAAAAAAABAAIAAAAAAAAAAAD//wIAAAAIAAsAAAD//wEAAAAIAAsAAAAAAAMAAAAJAAsAAAABAAMAAAABAAEAAAD//wMAAAAIAAsAAAD6/wcAAAAIAAsAAAD6/wgAAAAIAAsAAAD6/wYAAAAIAAsAAAD7/wYAAAAIAAsAAAD8/wcAAAAIAAsAAAD8/wkAAAAIAAsAAAD6/wkAAAAIAAsAAAD9/wsAAAAIAAsAAAD8/wsAAAAIAAsAAAD+/woAAAAIAAsAAAD+/wsAAAAIAAsAAAD+/wkAAAAIAAsAAAD//woAAAAIAAsAAAD//wsAAAAIAAsAAAD//wkAAAAIAAsAAAAAAAoAAAAIAAsAAAAAAAsAAAAIAAsAAAAAAAkAAAAIAAsAAAABAAoAAAAIAAsAAAABAAsAAAAIAAsAAAABAAkAAAAIAAsAAAACAAoAAAAIAAsAAAACAAsAAAAIAAsAAAACAAkAAAAIAAsAAAADAAoAAAAIAAsAAAADAAsAAAAIAAsAAAADAAkAAAAIAAsAAAAEAAoAAAAIAAsAAAAEAAsAAAAIAAsAAAAEAAwAAAAIAAsAAAADAAwAAAAIAAsAAAAFAAsAAAAIAAsAAAAFAAwAAAAIAAsAAAAFAAoAAAAIAAsAAAAGAAsAAAAIAAsAAAAGAAwAAAAIAAsAAAAGAAoAAAAIAAsAAAAHAAsAAAAIAAsAAAAHAAwAAAAIAAsAAAAHAAoAAAAIAAsAAAAIAAsAAAAIAAsAAAAIAAwAAAAIAAsAAAAIAAoAAAAIAAsAAAAJAAsAAAAIAAsAAAAJAAoAAAAIAAsAAAAIAAkAAAAIAAsAAAAJAAkAAAAIAAsAAAAKAAoAAAAIAAsAAAAKAAsAAAAIAAsAAAAKAAkAAAAIAAsAAAALAAoAAAAIAAsAAAALAAsAAAAIAAsAAAALAAkAAAAIAAsAAAAMAAoAAAAIAAsAAAAMAAsAAAAIAAsAAAAMAAkAAAAIAAsAAAANAAoAAAAIAAsAAAANAAkAAAAIAAsAAAANAAcAAAAIAAsAAAAMAAcAAAAIAAsAAAANAAYAAAAIAAsAAAAMAAYAAAAIAAsAAAD7/wUAAAAIAAsAAAAAAAgAAAALAAoAAAAAAAAAAAALAAsAAAABAAAAAAAIAAwAAAACAAAAAAAIAAwAAAADAAAAAAAIAAwAAAAEAAAAAAAIAAwAAAAFAAAAAAAIAAwAAAAGAAAAAAAIAAwAAAD7/wcAAAAIAAsAAAD7/wgAAAAIAAsAAAD8/wgAAAAIAAsAAAD9/wkAAAAIAAsAAAD9/woAAAAIAAsAAAD8/woAAAAIAAsAAAD7/woAAAAIAAsAAAD7/wkAAAAIAAsAAAAEAAQAAAABAAEAAAAJAAQAAAAIAAsAAAAJAAUAAAAIAAsAAAAJAAYAAAAIAAsAAAAJAAcAAAAIAAsAAAAKAAgAAAAIAAsAAAALAAgAAAAIAAsAAAAMAAgAAAAIAAsAAAANAAgAAAAIAAsAAAD8/wIAAAAIAAsAAAD9/wIAAAAIAAsAAAD9/wMAAAAIAAsAAAAOAAgAAAAIAAsAAAAOAAcAAAAIAAsAAAAOAAYAAAAIAAsAAAD5/woAAAAIAAsAAAD5/wkAAAAIAAsAAAD5/wgAAAAIAAsAAAD5/wcAAAAIAAsAAAD5/wYAAAAIAAsAAAD5/wUAAAAIAAsAAAD5//z/AAAIAAsAAAD5/wAAAAAIAAsAAAD5/wEAAAAIAAsAAAD5/wIAAAAIAAsAAAD5/wMAAAAIAAsAAAD5/wQAAAAIAAsAAAD5////AAAIAAsAAAD5//7/AAAIAAsAAAD5//3/AAAIAAsAAAD5/wsAAAAIAAsAAAD5/wwAAAAIAAsAAAAPAAwAAAAIAAsAAAAPAAsAAAAIAAsAAAAPAAoAAAAIAAsAAAAPAAkAAAAIAAsAAAAPAAgAAAAIAAsAAAAPAAcAAAAIAAsAAAAPAAYAAAAIAAsAAAAPAAUAAAAIAAsAAAAPAAQAAAAIAAsAAAAPAAMAAAAIAAsAAAAPAAIAAAAIAAsAAAAPAAEAAAAIAAsAAAAPAAAAAAAIAAsAAAAPAP//AAAIAAsAAAAPAP7/AAAIAAsAAAAPAP3/AAAIAAsAAAAPAPz/AAAIAAsAAAACAAUAAAACAAAAAAABAAUAAAACAAAAAAABAAYAAAABAAAAAAAAAAYAAAAJAAsAAAAAAAcAAAAJAAsAAAA=")
 tile_set = SubResource("TileSet_yxupo")
 
@@ -1919,35 +1943,88 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="hero_skill2"]
 layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_constants/separation = 1
+
+[node name="coin_skill_1" type="TextureButton" parent="hero_skill2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = SubResource("AtlasTexture_yq6so")
+texture_pressed = SubResource("AtlasTexture_vxglm")
+texture_hover = SubResource("AtlasTexture_2f3dj")
+texture_disabled = SubResource("AtlasTexture_pibwh")
+stretch_mode = 5
+
+[node name="coin_skill_1_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_1"]
+unique_name_in_owner = true
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = 3.25
+offset_right = 4.0
+offset_bottom = -3.75
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 1
-
-[node name="TextureButton" type="TextureButton" parent="hero_skill2/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = SubResource("AtlasTexture_yq6so")
-texture_pressed = SubResource("AtlasTexture_vxglm")
-texture_hover = SubResource("AtlasTexture_2f3dj")
+texture = ExtResource("12_pm3ni")
+expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton2" type="TextureButton" parent="hero_skill2/HBoxContainer"]
+[node name="coin_skill_2" type="TextureButton" parent="hero_skill2/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = SubResource("AtlasTexture_yq6so")
 texture_pressed = SubResource("AtlasTexture_vxglm")
 texture_hover = SubResource("AtlasTexture_2f3dj")
+texture_disabled = SubResource("AtlasTexture_c6pm6")
 stretch_mode = 5
 
-[node name="TextureButton3" type="TextureButton" parent="hero_skill2/HBoxContainer"]
+[node name="coin_skill_2_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_2"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.75
+offset_top = 3.25
+offset_right = 4.25
+offset_bottom = -3.75
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_y6deb")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="coin_skill_3" type="TextureButton" parent="hero_skill2/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = SubResource("AtlasTexture_yq6so")
 texture_pressed = SubResource("AtlasTexture_vxglm")
 texture_hover = SubResource("AtlasTexture_2f3dj")
+texture_disabled = SubResource("AtlasTexture_5he1u")
+stretch_mode = 5
+
+[node name="coin_skill_3_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_3"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = 3.25
+offset_right = 4.0
+offset_bottom = -3.75
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_og1vs")
+expand_mode = 2
 stretch_mode = 5
 
 [node name="real_time_score" type="Control" parent="."]
@@ -2758,9 +2835,11 @@ size_flags_horizontal = 8
 texture_normal = SubResource("AtlasTexture_2wyq8")
 texture_pressed = SubResource("AtlasTexture_fv21b")
 texture_hover = SubResource("AtlasTexture_tel4y")
+texture_disabled = SubResource("AtlasTexture_5poiv")
 stretch_mode = 5
 
 [node name="reroll_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/reroll_button"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2796,6 +2875,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.3, 0.3)
 pivot_offset = Vector2(24, 8)
+mouse_filter = 2
 bbcode_enabled = true
 text = "[img=12]res://images/coin.png[/img] -1"
 horizontal_alignment = 1
@@ -2803,12 +2883,12 @@ vertical_alignment = 1
 
 [node name="turn_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer"]
 unique_name_in_owner = true
-editor_description = "11"
 layout_mode = 2
 size_flags_horizontal = 10
 texture_normal = SubResource("AtlasTexture_qkpxi")
 texture_pressed = SubResource("AtlasTexture_5q0nq")
 texture_hover = SubResource("AtlasTexture_dgi5k")
+texture_disabled = SubResource("AtlasTexture_2cjbq")
 stretch_mode = 5
 
 [node name="turn_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/turn_button"]
@@ -2849,6 +2929,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.3, 0.3)
 pivot_offset = Vector2(24, 8)
+mouse_filter = 2
 bbcode_enabled = true
 text = "[img=12]res://images/power.png[/img] +1"
 horizontal_alignment = 1
@@ -2944,6 +3025,8 @@ texture_hover = SubResource("AtlasTexture_fuf3a")
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card2_button" to="." method="_on_card_2_button_pressed"]
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card3_button" to="." method="_on_card_3_button_pressed"]
 [connection signal="pressed" from="clear_stage_ui/TextureRect/stage_clear_button" to="." method="_on_stage_clear_button_pressed"]
+[connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/reroll_button" to="." method="_on_reroll_button_button_down"]
+[connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/reroll_button" to="." method="_on_reroll_button_button_up"]
 [connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/reroll_button" to="." method="_on_reroll_button_pressed"]
 [connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_down"]
 [connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_up"]
