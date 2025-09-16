@@ -7,6 +7,7 @@ signal hide_all_skill
 func _ready() -> void:
 		## 订阅显示攻击范围
 	EventBus.subscribe("show_skill_attack", show_skill_attack)
+	EventBus.subscribe("hide_skill_range", hide_skill_range)
 	EventBus.subscribe("hide_skill_attack", hide_skill_attack)
 	EventBus.subscribe("skill_move", skill_move)
 

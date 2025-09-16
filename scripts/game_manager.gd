@@ -92,6 +92,9 @@ const hero_property = {
 @onready var coin_skill_1_icon: TextureRect = %coin_skill_1_icon
 @onready var coin_skill_2_icon: TextureRect = %coin_skill_2_icon
 @onready var coin_skill_3_icon: TextureRect = %coin_skill_3_icon
+@onready var coin_skill_1_label: RichTextLabel = %coin_skill_1_label
+@onready var coin_skill_2_label: RichTextLabel = %coin_skill_2_label
+@onready var coin_skill_3_label: RichTextLabel = %coin_skill_3_label
 
 
 ## 格子像素大小
@@ -121,10 +124,13 @@ var color := {
 }
 ## 升级时的卡牌数据
 var card_level_up_json_data :Array
-## 随机选择出的3张升级时卡牌
-var level_up_three_card_array :Array
 ## 关卡数据
 var stage_info_json_data
+## 金币能数据
+var coin_skill_json_data
+## 随机选择出的3张升级时卡牌
+var level_up_three_card_array :Array
+
 
 
 
@@ -134,6 +140,7 @@ func _ready() -> void:
 	## 加载json数据
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
+	coin_skill_json_data = Tools.load_json_file('res://config/coin_skill.json')
 	## 设置基础倍率
 	Current.none_percent = 100
 	Current.duizi_percent = 150
@@ -146,7 +153,7 @@ func _ready() -> void:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
 	## 初始化金币
-		Current.total_coins = 0
+		Current.total_coins = 3
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -540,6 +547,10 @@ func _enemy_turn():
 		astar.set_point_solid(grid_index, true)
 	## 重置已移动标记
 	Current.is_moved = false
+	## 清空格子显示
+	EventBus.event_emit("hide_skill_range")
+	## 恢复鼠标
+	CursorManager.reset_cursor()
 	## 判断是否过关
 	if Current.total_score >= Current.target_score and Current.count_round <= 10:
 		## 显示剩余回合奖励的金币

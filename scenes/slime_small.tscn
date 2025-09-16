@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cyo82memmjeol" path="res://images/Slime_yellow.png" id="5_2c4jb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
-size = Vector2(14, 14)
+size = Vector2(13, 13)
 
 [sub_resource type="Shader" id="Shader_rlt5f"]
 code = "shader_type canvas_item;
@@ -339,7 +339,7 @@ scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_rlt5f")
 animation = &"roll"
 autoplay = "idle"
-frame_progress = 0.394215
+frame_progress = 0.712704
 
 [node name="warning" type="Sprite2D" parent="Area2D"]
 visible = false

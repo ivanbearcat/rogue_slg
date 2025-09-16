@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cyo82memmjeol" path="res://images/Slime_yellow.png" id="5_ua2ni"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
-size = Vector2(14, 14)
+size = Vector2(13, 13)
 
 [sub_resource type="Shader" id="Shader_nc03e"]
 code = "shader_type canvas_item;

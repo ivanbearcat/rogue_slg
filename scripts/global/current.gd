@@ -106,6 +106,9 @@ var total_coins: int:
 			game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 0.3)
 			game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 0.3)
 			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 0.3)
+			game_manager.coin_skill_1_label.self_modulate = Color(1, 1, 1, 0.3)
+			game_manager.coin_skill_2_label.self_modulate = Color(1, 1, 1, 0.3)
+			game_manager.coin_skill_3_label.self_modulate = Color(1, 1, 1, 0.3)
 		else:
 			game_manager.reroll_button.disabled = false
 			game_manager.coin_skill_1.disabled = false
@@ -115,6 +118,9 @@ var total_coins: int:
 			game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
 			game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
 			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
+			game_manager.coin_skill_1_label.self_modulate = Color(1, 1, 1, 1)
+			game_manager.coin_skill_2_label.self_modulate = Color(1, 1, 1, 1)
+			game_manager.coin_skill_3_label.self_modulate = Color(1, 1, 1, 1)
 ## 回合计数
 var count_round := 0:
 	set(v):

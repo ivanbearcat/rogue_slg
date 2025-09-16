@@ -1,0 +1,26 @@
+[
+    {
+        "coin_skill_id": "reroll_all",
+        "coin_skill_name": "重掷所有",
+        "coin_skill_icon": "res://images/coin_skill_icon/reroll_all.png",
+        "card_description": "重掷全场所有史莱姆的点数和颜色",
+        "coin_skill_cost": 3,
+        "null": null
+    },
+    {
+        "coin_skill_id": "reroll_dice",
+        "coin_skill_name": "重掷骰子",
+        "coin_skill_icon": "res://images/coin_skill_icon/reroll_dice.png",
+        "card_description": "重掷所选史莱姆的点数",
+        "coin_skill_cost": 2,
+        "null": null
+    },
+    {
+        "coin_skill_id": "reroll_color",
+        "coin_skill_name": "重掷颜色",
+        "coin_skill_icon": "res://images/coin_skill_icon/reroll_slime.png",
+        "card_description": "重掷所选史莱姆的颜色",
+        "coin_skill_cost": 2,
+        "null": null
+    }
+]
