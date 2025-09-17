@@ -7,8 +7,10 @@ var hero: Hero
 var slime: Slime
 ## 鼠标点击英雄
 var clicked_hero: Hero
-## 选中的图块索引
+## 选中的格子索引
 var grid_index: Vector2i
+## 鼠标在格子范围里
+var within_grid_area := true
 ## 包含所有英雄字典
 var all_hero_dict: Dictionary
 ## 包含所有英雄的数组:
@@ -97,30 +99,27 @@ var total_coins: int:
 	set(v):
 		total_coins = v
 		game_manager.total_coins_label.text = str(v)
-		if v == 0:
-			game_manager.reroll_button.disabled = true
-			game_manager.coin_skill_1.disabled = true
-			game_manager.coin_skill_2.disabled = true
-			game_manager.coin_skill_3.disabled = true
-			game_manager.reroll_button_label.modulate = Color(1, 1, 1, 0.3)
-			game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 0.3)
-			game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 0.3)
-			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 0.3)
-			game_manager.coin_skill_1_label.self_modulate = Color(1, 1, 1, 0.3)
-			game_manager.coin_skill_2_label.self_modulate = Color(1, 1, 1, 0.3)
-			game_manager.coin_skill_3_label.self_modulate = Color(1, 1, 1, 0.3)
-		else:
+		## 处理按钮和图标的禁用状态
+		game_manager.reroll_button.disabled = true
+		game_manager.coin_skill_1.disabled = true
+		game_manager.coin_skill_2.disabled = true
+		game_manager.coin_skill_3.disabled = true
+		game_manager.reroll_button_label.modulate = Color(1.0, 1.0, 1.0, 0.302)
+		game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 0.3)
+		game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 0.3)
+		game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 0.3)
+		if v > 0:
 			game_manager.reroll_button.disabled = false
-			game_manager.coin_skill_1.disabled = false
-			game_manager.coin_skill_2.disabled = false
-			game_manager.coin_skill_3.disabled = false
 			game_manager.reroll_button_label.modulate = Color(1, 1, 1, 1)
+		if v >= coin_skill_array_dict[0]["coin_skill_cost"]:
+			game_manager.coin_skill_1.disabled = false
 			game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
+		if v >= coin_skill_array_dict[1]["coin_skill_cost"]:
+			game_manager.coin_skill_2.disabled = false
 			game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
+		if v >= coin_skill_array_dict[2]["coin_skill_cost"]:
+			game_manager.coin_skill_3.disabled = false
 			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
-			game_manager.coin_skill_1_label.self_modulate = Color(1, 1, 1, 1)
-			game_manager.coin_skill_2_label.self_modulate = Color(1, 1, 1, 1)
-			game_manager.coin_skill_3_label.self_modulate = Color(1, 1, 1, 1)
 ## 回合计数
 var count_round := 0:
 	set(v):
@@ -173,32 +172,32 @@ var none_percent: int:
 	set(v):
 		game_manager.none_percent.text = str(v) + "%"
 	get:
-		return float(game_manager.none_percent.text)
+		return int(game_manager.none_percent.text)
 var duizi_percent: int:
 	set(v):
 		game_manager.duizi_percent.text = str(v) + "%"
 	get:
-		return float(game_manager.duizi_percent.text)
+		return int(game_manager.duizi_percent.text)
 var shunzi_percent: int:
 	set(v):
 		game_manager.shunzi_percent.text = str(v) + "%"
 	get:
-		return float(game_manager.shunzi_percent.text)
+		return int(game_manager.shunzi_percent.text)
 var tongse_percent: int:
 	set(v):
 		game_manager.tongse_percent.text = str(v) + "%"
 	get:
-		return float(game_manager.tongse_percent.text)
+		return int(game_manager.tongse_percent.text)
 var tongdui_percent: int:
 	set(v):
 		game_manager.tongdui_percent.text = str(v) + "%"
 	get:
-		return float(game_manager.tongdui_percent.text)
+		return int(game_manager.tongdui_percent.text)
 var tongshun_percent: int:
 	set(v):
 		game_manager.tongshun_percent.text = str(v) + "%"
 	get:
-		return float(game_manager.tongshun_percent.text)
+		return int(game_manager.tongshun_percent.text)
 ## 实时基础和倍率
 var base_score: int:
 	set(v):
@@ -252,3 +251,7 @@ var power: int:
 var power_skill := 0
 ## 存在红框
 var has_attack_grid := false
+## 金币技能
+var coin_skill_array_dict: Array
+## 所有格子
+var all_grids_array: Array

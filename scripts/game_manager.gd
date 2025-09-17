@@ -95,6 +95,9 @@ const hero_property = {
 @onready var coin_skill_1_label: RichTextLabel = %coin_skill_1_label
 @onready var coin_skill_2_label: RichTextLabel = %coin_skill_2_label
 @onready var coin_skill_3_label: RichTextLabel = %coin_skill_3_label
+@onready var q_texture: TextureRect = %Q_texture
+@onready var w_texture: TextureRect = %W_texture
+@onready var e_texture: TextureRect = %E_texture
 
 
 ## 格子像素大小
@@ -141,6 +144,11 @@ func _ready() -> void:
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
 	coin_skill_json_data = Tools.load_json_file('res://config/coin_skill.json')
+	## 临时
+	Current.coin_skill_array_dict = coin_skill_json_data.duplicate()
+	coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
+	coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
+	coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
 	## 设置基础倍率
 	Current.none_percent = 100
 	Current.duizi_percent = 150
@@ -163,6 +171,7 @@ func _ready() -> void:
 			all_grid_dict[Vector2i(x, y)] = grid
 			grids.add_child(grid)
 			grid.grid_cmd.connect(_on_grid_cmd)
+	Current.all_grids_array = grids.get_children()
 	## 生成英雄
 	var hero_instantiate = SceneManager.create_scene("hero")
 	_set_hero_properties(hero_instantiate, hero_property["soldier"])
@@ -273,7 +282,7 @@ func _slime_move_ai():
 
 
 ## 史莱姆重掷
-func slime_reroll(slime: Node2D):
+func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 	var slime_grid_index = slime.enemy_grid_index
 	## 获取史莱姆颜色
 	#var regex = RegEx.new()
@@ -283,13 +292,28 @@ func slime_reroll(slime: Node2D):
 	#if slime_color:
 		#var copy_slime_scene_array = slime_scene_array.duplicate()
 		#copy_slime_scene_array.pop_at(copy_slime_scene_array.find(slime_color))
-	slime.queue_free()
-	var slime_sence = slime_scene_array.pick_random()
-	var slime_instantiate = SceneManager.create_scene(slime_sence)
-	slime_instantiate.position = grid_index_to_position(slime_grid_index)
-	slime_instantiate.enemy_grid_index = slime_grid_index
-	enemys.add_child(slime_instantiate)
-	_roll_dice(slime_instantiate)	
+	if only_roll_dice:
+		_roll_dice(slime, 1, 0)
+	elif only_roll_color:
+		## 获取原始点数
+		var old_frame = slime.dice.frame
+		slime.queue_free()
+		var slime_sence = slime_scene_array.pick_random()
+		var slime_instantiate = SceneManager.create_scene(slime_sence)
+		slime_instantiate.position = grid_index_to_position(slime_grid_index)
+		slime_instantiate.enemy_grid_index = slime_grid_index
+		enemys.add_child(slime_instantiate)
+		## 设置点数
+		slime_instantiate.dice.set_frame_and_progress(old_frame, 0)
+		_roll_dice(slime_instantiate, 0, 1)
+	else:
+		slime.queue_free()
+		var slime_sence = slime_scene_array.pick_random()
+		var slime_instantiate = SceneManager.create_scene(slime_sence)
+		slime_instantiate.position = grid_index_to_position(slime_grid_index)
+		slime_instantiate.enemy_grid_index = slime_grid_index
+		enemys.add_child(slime_instantiate)
+		_roll_dice(slime_instantiate)
 
 
 ##设置验条刻度
@@ -402,14 +426,18 @@ func _on_grid_cmd(cmd_name):
 	call(cmd_name)
 
 ## 投骰子动画
-func _roll_dice(slime_instantiate):
+func _roll_dice(slime_instantiate, roll_dice=1, roll_color=1):
 	turn_button.disabled = true
-	slime_instantiate.dice.play("roll")
-	slime_instantiate.animated_sprite_2d.play("roll")
+	if roll_dice:
+		slime_instantiate.dice.play("roll")
+	if roll_color:
+		slime_instantiate.animated_sprite_2d.play("roll")
 	await get_tree().create_timer(1.0).timeout
-	slime_instantiate.dice.stop()
-	slime_instantiate.animated_sprite_2d.play("idle")
-	slime_instantiate.dice.set_frame_and_progress(dice_point.pick_random(), 0)
+	if roll_dice:
+		slime_instantiate.dice.stop()
+		slime_instantiate.dice.set_frame_and_progress(dice_point.pick_random(), 0)
+	if roll_color:
+		slime_instantiate.animated_sprite_2d.play("idle")
 	turn_button.disabled = false
 
 ## 显示英雄移动网格
@@ -485,11 +513,8 @@ func skill_attack():
 
 ## 重掷按钮按下
 func _on_reroll_button_pressed() -> void:
-	if Current.total_coins > 0:
-		CursorManager.change_cursor("reroll")
-	else:
-		## 无法重掷效果
-		pass
+	CursorManager.change_cursor("reroll")
+	EventBus.event_emit("reroll")
 
 func _on_reroll_button_button_down() -> void:
 	reroll_button_label.position += Vector2(0, 1)
@@ -607,12 +632,10 @@ func _modifiy_value(original_value: int, operate: String, value: float) -> int:
 	
 ## 鼠标移出可移动区域清除格子位置
 func _on_area_2d_mouse_entered() -> void:
-	Current.grid_index = Vector2.ZERO
-
+	Current.within_grid_area = false
 
 func _on_skill_system_hide_all_skill() -> void:
 	skill_1_ui.hide_all_skill()
-
 
 func _on_card_1_button_pressed() -> void:
 	match level_up_three_card_array[0]['card_id']:
@@ -865,3 +888,40 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 0
 	get_tree().paused = false
+
+
+func _on_coin_skill_1_pressed() -> void:
+	CursorManager.change_cursor(Current.coin_skill_array_dict[0]["coin_skill_id"])
+	EventBus.event_emit(Current.coin_skill_array_dict[0]["coin_skill_id"])
+
+#func _on_coin_skill_1_button_up() -> void:
+	#coin_skill_1_icon.position += Vector2(0, -1)
+	#q_texture.position += Vector2(0, -1)
+
+func _on_coin_skill_1_button_down() -> void:
+	coin_skill_1_icon.position += Vector2(0, 1)
+	q_texture.position += Vector2(0, 1)
+
+func _on_coin_skill_2_pressed() -> void:
+	CursorManager.change_cursor(Current.coin_skill_array_dict[1]["coin_skill_id"])
+	EventBus.event_emit(Current.coin_skill_array_dict[1]["coin_skill_id"])
+
+#func _on_coin_skill_2_button_up() -> void:
+	#coin_skill_2_icon.position += Vector2(0, -1)
+	#w_texture.position += Vector2(0, -1)
+
+func _on_coin_skill_2_button_down() -> void:
+	coin_skill_2_icon.position += Vector2(0, 1)
+	w_texture.position += Vector2(0, 1)
+
+func _on_coin_skill_3_pressed() -> void:
+	CursorManager.change_cursor(Current.coin_skill_array_dict[2]["coin_skill_id"])
+	EventBus.event_emit(Current.coin_skill_array_dict[2]["coin_skill_id"])
+
+#func _on_coin_skill_3_button_up() -> void:
+	#coin_skill_3_icon.position += Vector2(0, -1)
+	#e_texture.position += Vector2(0, -1)
+
+func _on_coin_skill_3_button_down() -> void:
+	coin_skill_3_icon.position += Vector2(0, 1)
+	e_texture.position += Vector2(0, 1)
