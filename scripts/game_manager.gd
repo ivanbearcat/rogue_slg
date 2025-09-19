@@ -511,17 +511,6 @@ func skill_attack():
 	await skill_system.skill_attack()
 	_enemy_turn()
 
-## 重掷按钮按下
-func _on_reroll_button_pressed() -> void:
-	CursorManager.change_cursor("reroll")
-	EventBus.event_emit("reroll")
-
-func _on_reroll_button_button_down() -> void:
-	reroll_button_label.position += Vector2(0, 1)
-
-func _on_reroll_button_button_up() -> void:
-	reroll_button_label.position += Vector2(0, -1)
-
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
 	if Current.power < Current.max_power:
@@ -572,10 +561,9 @@ func _enemy_turn():
 		astar.set_point_solid(grid_index, true)
 	## 重置已移动标记
 	Current.is_moved = false
-	## 清空格子显示
-	EventBus.event_emit("hide_skill_range")
 	## 恢复鼠标
 	CursorManager.reset_cursor()
+	EventBus.event_emit("hide_all_skills")
 	## 判断是否过关
 	if Current.total_score >= Current.target_score and Current.count_round <= 10:
 		## 显示剩余回合奖励的金币
@@ -889,39 +877,40 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.highest_dice_num = 0
 	get_tree().paused = false
 
+## 重掷按钮按下
+func _on_reroll_button_pressed() -> void:
+	if reroll_button.button_pressed == false:
+		reroll_button.button_pressed = true
+	else:
+		EventBus.event_emit("hide_skill_range")
+		EventBus.event_emit("reset_all_hero_skills")
+		CursorManager.change_cursor("reroll")
+		EventBus.event_emit("reroll")
+		
 
 func _on_coin_skill_1_pressed() -> void:
-	CursorManager.change_cursor(Current.coin_skill_array_dict[0]["coin_skill_id"])
-	EventBus.event_emit(Current.coin_skill_array_dict[0]["coin_skill_id"])
-
-#func _on_coin_skill_1_button_up() -> void:
-	#coin_skill_1_icon.position += Vector2(0, -1)
-	#q_texture.position += Vector2(0, -1)
-
-func _on_coin_skill_1_button_down() -> void:
-	coin_skill_1_icon.position += Vector2(0, 1)
-	q_texture.position += Vector2(0, 1)
+	if coin_skill_1.button_pressed == false:
+		coin_skill_1.button_pressed = true
+	else:
+		EventBus.event_emit("hide_skill_range")
+		EventBus.event_emit("reset_all_hero_skills")
+		CursorManager.change_cursor(Current.coin_skill_array_dict[0]["coin_skill_id"])
+		EventBus.event_emit(Current.coin_skill_array_dict[0]["coin_skill_id"])
 
 func _on_coin_skill_2_pressed() -> void:
-	CursorManager.change_cursor(Current.coin_skill_array_dict[1]["coin_skill_id"])
-	EventBus.event_emit(Current.coin_skill_array_dict[1]["coin_skill_id"])
-
-#func _on_coin_skill_2_button_up() -> void:
-	#coin_skill_2_icon.position += Vector2(0, -1)
-	#w_texture.position += Vector2(0, -1)
-
-func _on_coin_skill_2_button_down() -> void:
-	coin_skill_2_icon.position += Vector2(0, 1)
-	w_texture.position += Vector2(0, 1)
+	if coin_skill_2.button_pressed == false:
+		coin_skill_2.button_pressed = true
+	else:
+		EventBus.event_emit("hide_skill_range")
+		EventBus.event_emit("reset_all_hero_skills")
+		CursorManager.change_cursor(Current.coin_skill_array_dict[1]["coin_skill_id"])
+		EventBus.event_emit(Current.coin_skill_array_dict[1]["coin_skill_id"])
 
 func _on_coin_skill_3_pressed() -> void:
-	CursorManager.change_cursor(Current.coin_skill_array_dict[2]["coin_skill_id"])
-	EventBus.event_emit(Current.coin_skill_array_dict[2]["coin_skill_id"])
-
-#func _on_coin_skill_3_button_up() -> void:
-	#coin_skill_3_icon.position += Vector2(0, -1)
-	#e_texture.position += Vector2(0, -1)
-
-func _on_coin_skill_3_button_down() -> void:
-	coin_skill_3_icon.position += Vector2(0, 1)
-	e_texture.position += Vector2(0, 1)
+	if coin_skill_3.button_pressed == false:
+		coin_skill_3.button_pressed = true
+	else:
+		EventBus.event_emit("hide_skill_range")
+		EventBus.event_emit("reset_all_hero_skills")
+		CursorManager.change_cursor(Current.coin_skill_array_dict[2]["coin_skill_id"])
+		EventBus.event_emit(Current.coin_skill_array_dict[2]["coin_skill_id"])

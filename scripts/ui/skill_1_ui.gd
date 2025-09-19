@@ -19,8 +19,9 @@ var is_enterd := false
 
 func _ready() -> void:
 	EventBus.subscribe("skill_power_reset", _on_skill_power_reset)
-	EventBus.subscribe("hide_all_skills", hide_all_skill)
+	EventBus.subscribe("hide_all_skills", hide_all_skills)
 	EventBus.subscribe("skill_button_reset", _on_skill_button_reset)
+	EventBus.subscribe("reset_all_hero_skills", reset_all_hero_skills)
 
 func _input(event: InputEvent) -> void:
 	## 点击英雄才显示
@@ -34,6 +35,7 @@ func _input(event: InputEvent) -> void:
 			## 左键点击显示技能被按下的图
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \
 			event.is_pressed() == true and is_enterd == true or event.is_action_pressed("1"):
+				EventBus.event_emit("reset_cursor")
 				## 取消显示其他技能
 				mask_2.visible = false
 				nine_patch_rect_2.material.set_shader_parameter("is_high_light", false)
@@ -48,10 +50,18 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
 	event.is_pressed() == true or event.is_action_pressed("esc"):
 		if Current.clicked_hero.hero_state_machine.state.name in ["skill_1", "skill_2", "skill_3"]:
-			hide_all_skill()
+			hide_all_skills()
 			Current.clicked_hero.hero_state_machine.transition_to("move")
 
-func hide_all_skill():
+func reset_all_hero_skills():
+	if Current.clicked_hero.hero_state_machine.state.name in ["skill_1", "skill_2", "skill_3"]:
+		hide_all_skills()
+		if Current.is_moved == false:
+			Current.clicked_hero.hero_state_machine.transition_to("idle")
+		else:
+			Current.clicked_hero.hero_state_machine.transition_to("move")
+		
+func hide_all_skills():
 	mask_1.visible = false
 	nine_patch_rect.material.set_shader_parameter("is_high_light", false)
 	mask_2.visible = false

@@ -14,11 +14,13 @@ func _ready() -> void:
 func show_skill_range(hero_name, skill_num):
 	call("_show_" + hero_name + "_skill_" + skill_num + "_range")
 
+## 隐藏所有格子
 func hide_skill_range():
 	for target_grid_index in game_manager.all_grid_dict:
 		game_manager.all_grid_dict[target_grid_index].target.visible = false
 	hide_skill_attack()
 
+## 隐藏所有红色格子
 func show_skill_attack(hero_name, skill_num):
 	hide_skill_attack()
 	call("_show_" + hero_name + "_skill_" + skill_num + "_attack")

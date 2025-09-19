@@ -27,6 +27,6 @@ func input(event: InputEvent) -> void:
 			
 
 func exit():
-	print(owner.hero_name, "离开soldier_skill_2")
+	print(owner.hero_name, "离开soldier_skill_1")
 	emit_signal("hide_skill_range")
 	Current.skill_num = ""

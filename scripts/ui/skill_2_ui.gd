@@ -20,6 +20,7 @@ func _input(event: InputEvent) -> void:
 			if event.is_action_pressed("alt+2"): return
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \
 			event.is_pressed() == true and is_enterd == true  or event.is_action_pressed("2"):
+				EventBus.event_emit("reset_cursor")
 				## 取消显示其他技能
 				mask_1.visible = false
 				nine_patch_rect.material.set_shader_parameter("is_high_light", false)

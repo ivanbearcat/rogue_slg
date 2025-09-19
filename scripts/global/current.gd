@@ -10,7 +10,7 @@ var clicked_hero: Hero
 ## 选中的格子索引
 var grid_index: Vector2i
 ## 鼠标在格子范围里
-var within_grid_area := true
+var within_grid_area := false
 ## 包含所有英雄字典
 var all_hero_dict: Dictionary
 ## 包含所有英雄的数组:

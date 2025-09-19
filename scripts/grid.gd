@@ -64,7 +64,7 @@ func _on_area_2d_mouse_exited() -> void:
 					grid.attack.hide()
 		"reroll_dice":
 			self.attack.hide()
-		"reroll_clolr":
+		"reroll_color":
 			self.attack.hide()
 			
 	

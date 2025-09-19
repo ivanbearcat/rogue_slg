@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://d2hsly64m27qi" path="res://images/yellow_background.png" id="9_njo2n"]
 [ext_resource type="Texture2D" uid="uid://0nyks62j7ihp" path="res://images/red_background.png" id="10_eplrr"]
 [ext_resource type="Texture2D" uid="uid://dsopuek2hk0wj" path="res://images/puls_times.png" id="11_w4riq"]
-[ext_resource type="Texture2D" uid="uid://cygk4q6m5um4y" path="res://images/coin_skill_icon/reroll_all.png" id="12_pm3ni"]
+[ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="13_og1vs"]
 [ext_resource type="Texture2D" uid="uid://dc7a6my34pjt5" path="res://images/process_bar.png" id="13_trceg"]
 [ext_resource type="Texture2D" uid="uid://dwiao6t4r8mq2" path="res://images/coin_skill_icon/reroll_dice.png" id="13_y6deb"]
 [ext_resource type="Texture2D" uid="uid://d2jlnocchatj6" path="res://images/card/card_level_up.png" id="14_a8y0u"]
@@ -1345,6 +1345,10 @@ script = ExtResource("3_rragv")
 [node name="coin_skill_system" type="Node2D" parent="."]
 script = ExtResource("4_y6deb")
 
+[node name="Timer" type="Timer" parent="coin_skill_system"]
+wait_time = 0.05
+autostart = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(71.5, 68.5)
 
@@ -2010,6 +2014,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
 button_group = SubResource("ButtonGroup_y6deb")
 shortcut = SubResource("Shortcut_y6deb")
 texture_normal = SubResource("AtlasTexture_yq6so")
@@ -2030,7 +2036,7 @@ offset_right = 4.0
 offset_bottom = -3.75
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("12_pm3ni")
+texture = ExtResource("13_og1vs")
 expand_mode = 2
 stretch_mode = 5
 
@@ -2039,6 +2045,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
 button_group = SubResource("ButtonGroup_y6deb")
 shortcut = SubResource("Shortcut_2wyq8")
 texture_normal = SubResource("AtlasTexture_yq6so")
@@ -2068,6 +2076,8 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
 button_group = SubResource("ButtonGroup_y6deb")
 shortcut = SubResource("Shortcut_2f3dj")
 texture_normal = SubResource("AtlasTexture_yq6so")
@@ -2983,6 +2993,10 @@ theme_override_constants/separation = 0
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+button_group = SubResource("ButtonGroup_y6deb")
 shortcut = SubResource("Shortcut_og1vs")
 texture_normal = SubResource("AtlasTexture_2wyq8")
 texture_pressed = SubResource("AtlasTexture_fv21b")
@@ -3037,6 +3051,7 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
+keep_pressed_outside = true
 texture_normal = SubResource("AtlasTexture_qkpxi")
 texture_pressed = SubResource("AtlasTexture_5q0nq")
 texture_hover = SubResource("AtlasTexture_dgi5k")
@@ -3174,6 +3189,7 @@ texture_hover = SubResource("AtlasTexture_fuf3a")
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]
+[connection signal="timeout" from="coin_skill_system/Timer" to="coin_skill_system" method="_on_timer_timeout"]
 [connection signal="button_down" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_button_down"]
 [connection signal="button_up" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_button_up"]
 [connection signal="pressed" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_pressed"]

@@ -1,6 +1,7 @@
 extends Node2D
 @onready var game_manager: Node2D = $".."
 
+
 func _ready() -> void:
 	EventBus.subscribe("reset_all_button", reset_all_button)
 	EventBus.subscribe("reroll", reroll)
@@ -12,18 +13,53 @@ func _ready() -> void:
 	EventBus.subscribe("reroll_color", reroll_color)
 	EventBus.subscribe("reroll_color_clicked", reroll_color_clicked)
 
+func _on_timer_timeout():
+	## 重掷按钮
+	if game_manager.reroll_button.button_pressed == true:
+		game_manager.reroll_button_label.position.y = 1
+	else:
+		game_manager.reroll_button_label.position.y = 0
+	## 按钮1
+	if game_manager.coin_skill_1.button_pressed == true:
+		game_manager.coin_skill_1_icon.position.y = 4.25
+		game_manager.q_texture.position.y = 3
+	else:
+		game_manager.coin_skill_1_icon.position.y = 3.25
+		game_manager.q_texture.position.y = 2
+	## 按钮2
+	if game_manager.coin_skill_2.button_pressed == true:
+		game_manager.coin_skill_2_icon.position.y = 4.25
+		game_manager.w_texture.position.y = 4
+	else:
+		game_manager.coin_skill_2_icon.position.y = 3.25
+		game_manager.w_texture.position.y = 3
+	## 按钮3
+	if game_manager.coin_skill_3.button_pressed == true:
+		game_manager.coin_skill_3_icon.position.y = 4.25
+		game_manager.e_texture.position.y = 4
+	else:
+		game_manager.coin_skill_3_icon.position.y = 3.25
+		game_manager.e_texture.position.y = 3
+
 func reset_all_button():
-	for button in [game_manager.coin_skill_1, game_manager.coin_skill_2, game_manager.coin_skill_3]:
+	for button in [
+		game_manager.reroll_button,
+		game_manager.coin_skill_1, 
+		game_manager.coin_skill_2, 
+		game_manager.coin_skill_3
+		]:
 		if button.button_pressed == true:
 			button.button_pressed = false
-	for icon in [game_manager.coin_skill_1_icon, game_manager.coin_skill_1_icon, game_manager.coin_skill_1_icon]:
+	if game_manager.reroll_button_label.position.y != 0:
+		game_manager.reroll_button_label.position.y = 0
+	for icon in [game_manager.coin_skill_1_icon, game_manager.coin_skill_2_icon, game_manager.coin_skill_3_icon]:
 		if icon.position.y != 3.25:
-			icon.position += Vector2(0, -1)
+			icon.position.y = 3.25
 	if game_manager.q_texture.position.y != 2:
-		game_manager.q_texture.position += Vector2(0, -1)
+		game_manager.q_texture.position.y = 2
 	for texture in [game_manager.w_texture, game_manager.e_texture]:
 		if texture.position.y != 3:
-			texture.position += Vector2(0, -1)
+			texture.position.y = 3
 
 func reroll():
 	var all_slime_array = Current.all_enemy_grid_index_array
@@ -40,7 +76,7 @@ func reroll_clicked():
 		game_manager.slime_reroll(Current.slime)
 		## 恢复鼠标重置状态
 		CursorManager.reset_cursor()
-		reset_all_button()
+		#reset_all_button()
 		Current.total_coins -= 1
 		
 
