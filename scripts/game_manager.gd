@@ -145,7 +145,12 @@ func _ready() -> void:
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
 	coin_skill_json_data = Tools.load_json_file('res://config/coin_skill.json')
 	## 临时
-	Current.coin_skill_array_dict = coin_skill_json_data.duplicate()
+	for row in coin_skill_json_data:
+		if row["coin_skill_id"] in ["reroll_all","add_power","reroll_dice"]:
+			Current.coin_skill_array_dict.append(row)
+	coin_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
+	coin_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
+	coin_skill_3_icon.texture = load(Current.coin_skill_array_dict[2]["coin_skill_icon"])
 	coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
 	coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
 	coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
@@ -623,7 +628,7 @@ func _on_area_2d_mouse_entered() -> void:
 	Current.within_grid_area = false
 
 func _on_skill_system_hide_all_skill() -> void:
-	skill_1_ui.hide_all_skill()
+	skill_1_ui.hide_all_skills()
 
 func _on_card_1_button_pressed() -> void:
 	match level_up_three_card_array[0]['card_id']:

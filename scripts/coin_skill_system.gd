@@ -12,6 +12,8 @@ func _ready() -> void:
 	EventBus.subscribe("reroll_dice_clicked", reroll_dice_clicked)
 	EventBus.subscribe("reroll_color", reroll_color)
 	EventBus.subscribe("reroll_color_clicked", reroll_color_clicked)
+	EventBus.subscribe("add_power", add_power)
+	EventBus.subscribe("add_power_clicked", add_power_clicked)
 
 func _on_timer_timeout():
 	## 重掷按钮
@@ -40,6 +42,14 @@ func _on_timer_timeout():
 	else:
 		game_manager.coin_skill_3_icon.position.y = 3.25
 		game_manager.e_texture.position.y = 3
+
+func _clicked_public_action(coin_skill_name):
+	## 扣除费用
+	for row in Current.coin_skill_array_dict:
+		if row["coin_skill_id"] == coin_skill_name:
+			Current.total_coins -= row["coin_skill_cost"]
+	## 恢复所有UI初始状态
+	CursorManager.reset_cursor()
 
 func reset_all_button():
 	for button in [
@@ -76,9 +86,7 @@ func reroll_clicked():
 		game_manager.slime_reroll(Current.slime)
 		## 恢复鼠标重置状态
 		CursorManager.reset_cursor()
-		#reset_all_button()
 		Current.total_coins -= 1
-		
 
 func reroll_all():
 	for grid in Current.all_grids_array:
@@ -91,10 +99,7 @@ func reroll_all_clicked():
 	if Current.within_grid_area:
 		for slime in Current.all_enemy_array:
 			game_manager.slime_reroll(slime)
-		CursorManager.reset_cursor()
-		reset_all_button()
-		Current.total_coins -= Current.coin_skill_array_dict[0]["coin_skill_cost"]
-		
+		_clicked_public_action("reroll_all")
 		
 func reroll_dice():
 	var all_slime_array = Current.all_enemy_grid_index_array
@@ -109,10 +114,7 @@ func reroll_dice():
 func reroll_dice_clicked():
 	if Current.slime:
 		game_manager.slime_reroll(Current.slime, 1, 0)
-		## 恢复鼠标重置状态
-		CursorManager.reset_cursor()
-		reset_all_button()
-		Current.total_coins -= 1
+		_clicked_public_action("reroll_dice")
 		
 func reroll_color():
 	var all_slime_array = Current.all_enemy_grid_index_array
@@ -127,7 +129,16 @@ func reroll_color():
 func reroll_color_clicked():
 	if Current.slime:
 		game_manager.slime_reroll(Current.slime, 0, 1)
-		## 恢复鼠标重置状态
+		_clicked_public_action("reroll_color")
+		
+func add_power():
+	for grid in Current.all_grids_array:
+		if Current.hero.hero_grid_index == grid.grid_index:
+			grid.target.show()
+
+func add_power_clicked():
+	if Current.grid_index == Current.hero.hero_grid_index and Current.power < Current.max_power:
+		Current.power += 1
+		_clicked_public_action("add_power")
+	else:
 		CursorManager.reset_cursor()
-		reset_all_button()
-		Current.total_coins -= 1

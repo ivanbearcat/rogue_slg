@@ -39,7 +39,7 @@ func _ready() -> void:
 
 
 func _on_area_2d_mouse_entered() -> void:
-	Current.hero = self
+	#Current.hero = self
 	if hero_state_machine.state == hero_state_machine.get_node("idle"):
 		animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 

@@ -12,7 +12,9 @@ func enter():
 
 func input(event: InputEvent) -> void:
 	if Current.is_moved == false:
-		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
+		if event is InputEventMouseButton and \
+		event.button_index == MOUSE_BUTTON_LEFT and \
+		event.is_pressed() == true:
 			emit_signal("hero_move")
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
 		event.is_pressed() == true or event.is_action_pressed("esc"):

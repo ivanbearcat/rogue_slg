@@ -15,9 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://dsopuek2hk0wj" path="res://images/puls_times.png" id="11_w4riq"]
 [ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="13_og1vs"]
 [ext_resource type="Texture2D" uid="uid://dc7a6my34pjt5" path="res://images/process_bar.png" id="13_trceg"]
-[ext_resource type="Texture2D" uid="uid://dwiao6t4r8mq2" path="res://images/coin_skill_icon/reroll_dice.png" id="13_y6deb"]
 [ext_resource type="Texture2D" uid="uid://d2jlnocchatj6" path="res://images/card/card_level_up.png" id="14_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://dbcui50h2j18a" path="res://images/coin_skill_icon/reroll_slime.png" id="14_og1vs"]
+[ext_resource type="Texture2D" uid="uid://bu0tsff2lanig" path="res://images/coin_skill_icon/double_score.png" id="14_y6deb"]
 [ext_resource type="StyleBox" uid="uid://nf1thu8lxm1v" path="res://resources/hover_button.tres" id="15_0ld40"]
 [ext_resource type="Texture2D" uid="uid://bd0mpn20yxg3u" path="res://images/shelves_announcements.png" id="15_jkv2x"]
 [ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="16_jbj1t"]
@@ -2044,6 +2044,7 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "分数翻倍"
 toggle_mode = true
 action_mode = 0
 keep_pressed_outside = true
@@ -2067,7 +2068,7 @@ offset_right = 4.25
 offset_bottom = -3.75
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("13_y6deb")
+texture = ExtResource("14_y6deb")
 expand_mode = 2
 stretch_mode = 5
 

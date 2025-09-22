@@ -15,11 +15,11 @@ func _ready():
 	state.enter()
 
 func _unhandled_input(event: InputEvent)->void:
-	if is_selected_hero():
+	if is_selected_hero() and Current.mouse_status == "default":
 		state.unhandled_input(event)
 
 func _input(event: InputEvent)->void:
-	if is_selected_hero():
+	if is_selected_hero() and Current.mouse_status == "default":
 		state.input(event)
 
 func _process(delta):

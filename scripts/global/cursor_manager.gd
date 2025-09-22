@@ -29,7 +29,6 @@ func _input(event: InputEvent) -> void:
 			reset_cursor()
 
 func reset_cursor() -> void:
-	Current.mouse_status = 'default'
 	Input.set_custom_mouse_cursor(
 		load('res://images/pointer_scifi_a.svg'),
 		Input.CURSOR_ARROW,
@@ -39,6 +38,9 @@ func reset_cursor() -> void:
 	_reset_grid()
 	## 恢复按钮UI
 	EventBus.event_emit("reset_all_button")
+	## 延时改状态，不然INPUT事件会因为速度快而异常获取到
+	await Tools.time_sleep(0.01)
+	Current.mouse_status = 'default'
 
 func change_cursor(cursor_name):
 	var cursor_name_dict = {
@@ -46,6 +48,7 @@ func change_cursor(cursor_name):
 		"reroll_all": ["res://images/mouse_target.png", Vector2(18, 18)],
 		"reroll_dice": ["res://images/mouse_target.png", Vector2(18, 18)],
 		"reroll_color": ["res://images/mouse_target.png", Vector2(18, 18)],
+		"add_power": ["res://images/mouse_target.png", Vector2(18, 18)],
 	}
 	## 修改鼠标态和显示图案
 	Current.mouse_status = cursor_name

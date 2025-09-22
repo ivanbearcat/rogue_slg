@@ -22,7 +22,7 @@ func _on_area_2d_mouse_entered() -> void:
 			if target.visible == true and Current.attack_animation_finished == 1:
 				EventBus.event_emit("show_skill_attack", [Current.hero.hero_name, Current.skill_num])
 				Current.has_attack_grid = true
-		"reroll":
+		"reroll", "reroll_dice", "reroll_color":
 			## 设置延迟保证当前史莱姆被设置完成
 			await Tools.time_sleep(0.05)
 			if Current.slime:
@@ -31,18 +31,9 @@ func _on_area_2d_mouse_entered() -> void:
 		"reroll_all":
 			for grid in Current.all_grids_array:
 				grid.attack.show()
-		"reroll_dice":
-			## 设置延迟保证当前史莱姆被设置完成
-			await Tools.time_sleep(0.05)
-			if Current.slime:
-				if Current.slime.enemy_grid_index == self.grid_index:
-					self.attack.show()
-		"reroll_color":
-			## 设置延迟保证当前史莱姆被设置完成
-			await Tools.time_sleep(0.05)
-			if Current.slime:
-				if Current.slime.enemy_grid_index == self.grid_index:
-					self.attack.show()
+		"add_power":
+			if Current.hero.hero_grid_index == self.grid_index:
+				self.attack.show()
 
 func _on_area_2d_mouse_exited() -> void:
 	cursor.hide()
@@ -54,18 +45,16 @@ func _on_area_2d_mouse_exited() -> void:
 					await Tools.time_sleep(0.05)
 				emit_signal("grid_cmd", "hide_skill_attack")
 				Current.has_attack_grid = false
-		"reroll":
-			self.attack.hide()
 		"reroll_all":
 			## 移出格子区域不显示红框
 			await Tools.time_sleep(0.05)
 			if not Current.within_grid_area:
 				for grid in Current.all_grids_array:
 					grid.attack.hide()
-		"reroll_dice":
-			self.attack.hide()
-		"reroll_color":
-			self.attack.hide()
+		_:
+			EventBus.event_emit("hide_skill_attack")
+			
+
 			
 	
 	

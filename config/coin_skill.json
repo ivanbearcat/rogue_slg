@@ -3,24 +3,63 @@
         "coin_skill_id": "reroll_all",
         "coin_skill_name": "重掷所有",
         "coin_skill_icon": "res://images/coin_skill_icon/reroll_all.png",
-        "card_description": "重掷全场所有史莱姆的点数和颜色",
-        "coin_skill_cost": 3,
-        "null": null
+        "card_description": "重掷全场所有史莱姆",
+        "coin_skill_cost": 3
     },
     {
         "coin_skill_id": "reroll_dice",
         "coin_skill_name": "重掷骰子",
         "coin_skill_icon": "res://images/coin_skill_icon/reroll_dice.png",
         "card_description": "重掷所选史莱姆的点数",
-        "coin_skill_cost": 2,
-        "null": null
+        "coin_skill_cost": 2
     },
     {
         "coin_skill_id": "reroll_color",
         "coin_skill_name": "重掷颜色",
         "coin_skill_icon": "res://images/coin_skill_icon/reroll_slime.png",
         "card_description": "重掷所选史莱姆的颜色",
-        "coin_skill_cost": 2,
-        "null": null
+        "coin_skill_cost": 2
+    },
+    {
+        "coin_skill_id": "add_power",
+        "coin_skill_name": "能量+1",
+        "coin_skill_icon": "res://images/coin_skill_icon/add_power.png",
+        "card_description": "能量+1",
+        "coin_skill_cost": 1
+    },
+    {
+        "coin_skill_id": "cloud",
+        "coin_skill_name": "吹风",
+        "coin_skill_icon": "res://images/coin_skill_icon/cloud.png",
+        "card_description": "所有史莱姆被吹向一个所选的方向一格",
+        "coin_skill_cost": 3
+    },
+    {
+        "coin_skill_id": "dice_add_1",
+        "coin_skill_name": "骰子点数+1",
+        "coin_skill_icon": "res://images/coin_skill_icon/dice+1.png",
+        "card_description": "骰子点数+1",
+        "coin_skill_cost": 2
+    },
+    {
+        "coin_skill_id": "dice_sub_1",
+        "coin_skill_name": "骰子点数-1",
+        "coin_skill_icon": "res://images/coin_skill_icon/dice-1.png",
+        "card_description": "骰子点数-1",
+        "coin_skill_cost": 2
+    },
+    {
+        "coin_skill_id": "double_score",
+        "coin_skill_name": "得分翻倍",
+        "coin_skill_icon": "res://images/coin_skill_icon/double_score.png",
+        "card_description": "下一次得分翻倍",
+        "coin_skill_cost": 5
+    },
+    {
+        "coin_skill_id": "move",
+        "coin_skill_name": "移动",
+        "coin_skill_icon": "res://images/coin_skill_icon/move.png",
+        "card_description": "额外移动一次",
+        "coin_skill_cost": 1
     }
 ]
