@@ -49,11 +49,16 @@ func change_cursor(cursor_name):
 		"reroll_dice": ["res://images/mouse_target.png", Vector2(18, 18)],
 		"reroll_color": ["res://images/mouse_target.png", Vector2(18, 18)],
 		"add_power": ["res://images/mouse_target.png", Vector2(18, 18)],
+		"dice_add_1": ["res://images/mouse_target.png", Vector2(18, 18)],
+		"dice_sub_1": ["res://images/mouse_target.png", Vector2(18, 18)],
+		"double_score": ["res://images/mouse_target.png", Vector2(18, 18)],
+		#"cloud": ["res://images/mouse_target.png", Vector2(18, 18)],
 	}
-	## 修改鼠标态和显示图案
-	Current.mouse_status = cursor_name
-	Input.set_custom_mouse_cursor(
-		load(cursor_name_dict[cursor_name][0]),
-		Input.CURSOR_ARROW,
-		cursor_name_dict[cursor_name][1]
-			)
+	if not cursor_name in ["move"]:
+		## 修改鼠标态和显示图案
+		Current.mouse_status = cursor_name
+		Input.set_custom_mouse_cursor(
+			load(cursor_name_dict[cursor_name][0]),
+			Input.CURSOR_ARROW,
+			cursor_name_dict[cursor_name][1]
+				)

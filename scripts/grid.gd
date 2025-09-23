@@ -22,7 +22,7 @@ func _on_area_2d_mouse_entered() -> void:
 			if target.visible == true and Current.attack_animation_finished == 1:
 				EventBus.event_emit("show_skill_attack", [Current.hero.hero_name, Current.skill_num])
 				Current.has_attack_grid = true
-		"reroll", "reroll_dice", "reroll_color":
+		"reroll", "reroll_dice", "reroll_color", "dice_add_1", "dice_sub_1":
 			## 设置延迟保证当前史莱姆被设置完成
 			await Tools.time_sleep(0.05)
 			if Current.slime:

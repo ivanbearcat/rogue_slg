@@ -15,7 +15,7 @@ func _input(event: InputEvent) -> void:
 		return
 	else:
 		## 移动状态才显示
-		if ["idle", "move", "skill_1", "skill_2", "skill_3"].has(Current.clicked_hero.hero_state_machine.state.name):
+		if ["idle", "move", "skill_1", "skill_2", "skill_3", "coin_skill_move"].has(Current.clicked_hero.hero_state_machine.state.name):
 			## ## 避免和alt+2冲突
 			if event.is_action_pressed("alt+2"): return
 			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and \

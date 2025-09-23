@@ -4,26 +4,29 @@ signal show_move_range
 signal hide_move_range
 signal hero_move
 
-## 使用能量标记，保证一次技能只消耗一次能量
-var power_flag: int
-
 func enter():
-	print(owner.hero_name + "进入soldier_skill_3")
+	print(owner.hero_name + "进入coin_skill_move")
 	owner.animated_sprite_2d.play(owner.hero_name + "_move")
-	emit_signal("show_move_range")
-	power_flag = 1
-	
-
+	emit_signal("show_move_range")	
 
 func input(event: InputEvent) -> void:
 	## 点击释放技能的格子触发技能信号
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
 		emit_signal("hero_move")
-		print(Current.power)
-		Current.power -= power_flag
-		power_flag = 0
-		EventBus.event_emit("skill_button_reset")
-		EventBus.event_emit("skill_power_reset")
+		## 恢复鼠标重置状态
+		CursorManager.reset_cursor()
+		## 扣除费用
+		for row in Current.coin_skill_array_dict:
+			if row["coin_skill_id"] == "move":
+				Current.total_coins -= row["coin_skill_cost"]
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
+		event.is_pressed() == true or event.is_action_pressed("esc"):
+			EventBus.event_emit("reset_cursor")
+			if Current.is_moved == true:
+				Current.clicked_hero.hero_state_machine.transition_to("move")
+				owner.animated_sprite_2d.play(owner.hero_name + "_end")
+			else:
+				Current.clicked_hero.hero_state_machine.transition_to("idle")
 
 func update(_delta: float) -> void:
 	if ! Current.id_path.is_empty():
@@ -44,7 +47,7 @@ func update(_delta: float) -> void:
 			EventBus.event_emit("hide_all_skills")
 
 func exit():
-	print(owner.hero_name, "离开soldier_skill_3")
+	print(owner.hero_name, "离开coin_skill_move")
 	emit_signal("hide_move_range")
 	
 	

@@ -13,11 +13,15 @@ func enter():
 func input(event: InputEvent) -> void:
 	## 点击释放技能的格子触发技能信号
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
-		## 判断点击的格子在技能范围:
-		if Current.grid_index in Current.skill_target_range:
-			Current.attack_animation_finished = 0
-			owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
-			EventBus.event_emit("skill_move")
+		## 判断是否赋能
+		if Current.power_skill == 0:
+			EventBus.event_emit("reset_all_hero_skills")
+		else:
+			## 判断点击的格子在技能范围:
+			if Current.grid_index in Current.skill_target_range:
+				Current.attack_animation_finished = 0
+				owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
+				EventBus.event_emit("skill_move")
 			
 
 func exit():

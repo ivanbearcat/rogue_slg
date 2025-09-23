@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://bgm08y6mwa1xl"]
+[gd_scene load_steps=51 format=3 uid="uid://bgm08y6mwa1xl"]
 
 [ext_resource type="Script" uid="uid://ut48jmydioy2" path="res://scripts/hero.gd" id="1_2jlbh"]
 [ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="1_ufarh"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://covcj4hn2ii1i" path="res://scripts/move.gd" id="7_duu28"]
 [ext_resource type="Script" uid="uid://peuw3ycxprmr" path="res://scripts/end.gd" id="8_2fhne"]
 [ext_resource type="Script" uid="uid://0crxqf10lvx8" path="res://scripts/skills_state/soldier_skill_1.gd" id="10_27sfp"]
+[ext_resource type="Script" uid="uid://dlerl2kndcri1" path="res://scripts/skills_state/coin_skill_move.gd" id="12_sryfu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y1qti"]
 size = Vector2(16, 16)
@@ -380,9 +381,15 @@ script = ExtResource("10_27sfp")
 [node name="skill_3" type="Node2D" parent="hero_state_machine"]
 script = ExtResource("10_27sfp")
 
+[node name="coin_skill_move" type="Node2D" parent="hero_state_machine"]
+script = ExtResource("12_sryfu")
+
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
 [connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="hero_move" from="hero_state_machine/move" to="." method="_on_move_hero_move"]
 [connection signal="hide_move_range" from="hero_state_machine/move" to="." method="_on_move_hide_move_range"]
 [connection signal="show_move_range" from="hero_state_machine/move" to="." method="_on_move_show_move_range"]
+[connection signal="hero_move" from="hero_state_machine/coin_skill_move" to="." method="_on_move_hero_move"]
+[connection signal="hide_move_range" from="hero_state_machine/coin_skill_move" to="." method="_on_move_hide_move_range"]
+[connection signal="show_move_range" from="hero_state_machine/coin_skill_move" to="." method="_on_move_show_move_range"]

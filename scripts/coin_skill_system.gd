@@ -14,6 +14,11 @@ func _ready() -> void:
 	EventBus.subscribe("reroll_color_clicked", reroll_color_clicked)
 	EventBus.subscribe("add_power", add_power)
 	EventBus.subscribe("add_power_clicked", add_power_clicked)
+	EventBus.subscribe("dice_add_1", dice_add_1)
+	EventBus.subscribe("dice_add_1_clicked", dice_add_1_clicked)
+	EventBus.subscribe("dice_sub_1", dice_sub_1)
+	EventBus.subscribe("dice_sub_1_clicked", dice_sub_1_clicked)
+	EventBus.subscribe("move", move)
 
 func _on_timer_timeout():
 	## 重掷按钮
@@ -142,3 +147,37 @@ func add_power_clicked():
 		_clicked_public_action("add_power")
 	else:
 		CursorManager.reset_cursor()
+		
+func dice_add_1():
+	reroll_dice()
+	
+func dice_add_1_clicked():
+	if Current.slime:
+		var _old_dice_point = Current.slime.dice_point
+		var _new_dice_point: int
+		if _old_dice_point != 6:
+			_new_dice_point = _old_dice_point + 1
+		else:
+			_new_dice_point = 1
+		Current.slime.dice.set_frame_and_progress(Current.slime.dice_to_frame_dice[_new_dice_point], 0)
+		_clicked_public_action("reroll_dice")
+
+func dice_sub_1():
+	reroll_dice()
+	
+func dice_sub_1_clicked():
+	if Current.slime:
+		var _old_dice_point = Current.slime.dice_point
+		var _new_dice_point: int
+		if _old_dice_point != 1:
+			_new_dice_point = _old_dice_point - 1
+		else:
+			_new_dice_point = 6
+		Current.slime.dice.set_frame_and_progress(Current.slime.dice_to_frame_dice[_new_dice_point], 0)
+		_clicked_public_action("reroll_dice")
+
+func move():
+	Current.hero.hero_state_machine.transition_to("coin_skill_move")
+	
+func cloud():
+	pass

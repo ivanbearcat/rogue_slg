@@ -146,7 +146,7 @@ func _ready() -> void:
 	coin_skill_json_data = Tools.load_json_file('res://config/coin_skill.json')
 	## 临时
 	for row in coin_skill_json_data:
-		if row["coin_skill_id"] in ["reroll_all","add_power","reroll_dice"]:
+		if row["coin_skill_id"] in ["reroll_all","move","reroll_dice"]:
 			Current.coin_skill_array_dict.append(row)
 	coin_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
 	coin_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])

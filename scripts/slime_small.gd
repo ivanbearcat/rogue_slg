@@ -23,6 +23,16 @@ var dice_real_point: Dictionary = {
 var dice_point: int:
 	get:
 		return dice_real_point[self.dice.frame]
+	
+var dice_to_frame_dice: Dictionary = {
+	1: 2,
+	2: 0,
+	3: 10,
+	4: 6,
+	5: 8,
+	6: 4
+}
+	
 
 
 func _process(delta: float) -> void:
