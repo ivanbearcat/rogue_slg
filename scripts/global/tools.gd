@@ -72,3 +72,11 @@ var num_to_cnnum: Dictionary = {
 	11: "十一",
 	12: "十二"
 }
+
+## 飘字效果
+func float_number_effect(float_num, gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50)) -> Node2D:
+	var float_number_instantiate = SceneManager.create_scene("float_number")
+	float_number_instantiate.float_num = float_num
+	float_number_instantiate.gravity = gravity
+	float_number_instantiate.velocity = velocity
+	return float_number_instantiate

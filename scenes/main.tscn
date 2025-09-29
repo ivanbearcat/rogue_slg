@@ -1,11 +1,13 @@
-[gd_scene load_steps=111 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=130 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
 [ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="3_h858a"]
 [ext_resource type="Script" uid="uid://ce3nrlk8drkh7" path="res://scripts/skill_system.gd" id="3_rragv"]
+[ext_resource type="Script" uid="uid://becu711kgnik1" path="res://scripts/buff_system.gd" id="4_2wyq8"]
 [ext_resource type="FontFile" uid="uid://bp53tlinpuypa" path="res://fonts/SourceHanSansCN-Normal.otf" id="4_76ilt"]
 [ext_resource type="Script" uid="uid://bw7e86ldckpca" path="res://scripts/coin_skill_system.gd" id="4_y6deb"]
+[ext_resource type="Texture2D" uid="uid://ced52aughmndv" path="res://images/ui_icon/direction_icon.png" id="5_og1vs"]
 [ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="6_1gmj2"]
 [ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="6_bkbmf"]
 [ext_resource type="Texture2D" uid="uid://c17wcqa1otoo2" path="res://images/dice_one.tres" id="6_vreof"]
@@ -23,6 +25,7 @@
 [ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="16_jbj1t"]
 [ext_resource type="Texture2D" uid="uid://5i5yb8m23rea" path="res://images/coin.png" id="17_muem4"]
 [ext_resource type="LabelSettings" uid="uid://dwens7d1jb5s2" path="res://fonts/clear_stage.tres" id="18_gqmmt"]
+[ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="19_vxglm"]
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
@@ -844,6 +847,64 @@ size = Vector2(90.24997, 112)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oscie"]
 size = Vector2(18.5, 289.5)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_og1vs"]
+bg_color = Color(0, 0, 0, 0.9411765)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txyw0"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vc5cj"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvyfr"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty1g6"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2jfr"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjg73"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu4jf"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7ddy"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0loja"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ids8r"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnhof"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v6qk"]
+atlas = ExtResource("5_og1vs")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="InputEventKey" id="InputEventKey_2wyq8"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_vxglm"]
+events = [SubResource("InputEventKey_2wyq8")]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ny6h8"]
 atlas = ExtResource("6_bkbmf")
 region = Rect2(0, 96, 48, 32)
@@ -1206,21 +1267,19 @@ region = Rect2(16, 30, 76, 18)
 
 [sub_resource type="LabelSettings" id="LabelSettings_trceg"]
 line_spacing = 0.0
-font = ExtResource("4_76ilt")
 font_size = 20
 font_color = Color(0.886, 0.848566, 0, 1)
-outline_size = 3
-outline_color = Color(1, 0.991023, 0.281845, 1)
+outline_size = 8
+outline_color = Color(0.50390625, 0.49995404, 0.1422794, 1)
 shadow_size = 11
 shadow_color = Color(0, 0, 0, 0.541176)
 
 [sub_resource type="LabelSettings" id="LabelSettings_0ld40"]
 line_spacing = 0.0
-font = ExtResource("4_76ilt")
 font_size = 20
-font_color = Color(0.0850419, 0.835938, 0.33458, 1)
-outline_size = 3
-outline_color = Color(0.0992366, 1, 0.40458, 1)
+font_color = Color(0, 1, 1, 1)
+outline_size = 8
+outline_color = Color(0, 0.4, 0.4, 1)
 shadow_size = 11
 shadow_color = Color(0, 0, 0, 0.541176)
 
@@ -1234,10 +1293,9 @@ region = Rect2(16, 19, 64, 10)
 
 [sub_resource type="LabelSettings" id="LabelSettings_a8y0u"]
 line_spacing = 0.0
-font = ExtResource("4_76ilt")
-outline_size = 9
+outline_size = 8
 outline_color = Color(0, 0, 0, 1)
-shadow_size = 0
+shadow_size = 11
 
 [sub_resource type="InputEventKey" id="InputEventKey_y6deb"]
 device = -1
@@ -1299,6 +1357,13 @@ region = Rect2(210, 7, 18, 18)
 atlas = ExtResource("20_gqmmt")
 region = Rect2(228, 7, 18, 18)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxglm"]
+bg_color = Color(0, 0, 0, 0.19607843)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [node name="game_manager" type="Node2D"]
 scale = Vector2(4, 4)
 script = ExtResource("1_jbfvy")
@@ -1342,6 +1407,9 @@ shape = SubResource("RectangleShape2D_oscie")
 unique_name_in_owner = true
 script = ExtResource("3_rragv")
 
+[node name="buff_system" type="Node2D" parent="."]
+script = ExtResource("4_2wyq8")
+
 [node name="coin_skill_system" type="Node2D" parent="."]
 script = ExtResource("4_y6deb")
 
@@ -1349,46 +1417,105 @@ script = ExtResource("4_y6deb")
 wait_time = 0.05
 autostart = true
 
-[node name="direction" type="CanvasLayer" parent="coin_skill_system"]
+[node name="direction_ui" type="CanvasLayer" parent="coin_skill_system"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
 
-[node name="GridContainer" type="GridContainer" parent="coin_skill_system/direction"]
+[node name="Panel" type="Panel" parent="coin_skill_system/direction_ui"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_og1vs")
+
+[node name="Label" type="Label" parent="coin_skill_system/direction_ui"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 503.0
+offset_top = 161.0
+offset_right = -498.0
+offset_bottom = -439.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "选择方向"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="coin_skill_system/direction_ui"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -101.0
+offset_right = -54.0
+offset_bottom = -45.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(4, 4)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 3
 
-[node name="TextureButton" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
+[node name="TextureButton" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
 layout_mode = 2
 
-[node name="up_button" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
+[node name="up_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_txyw0")
+texture_pressed = SubResource("AtlasTexture_vc5cj")
+texture_hover = SubResource("AtlasTexture_nvyfr")
+
+[node name="TextureButton3" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
 layout_mode = 2
 
-[node name="TextureButton3" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
+[node name="left_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ty1g6")
+texture_pressed = SubResource("AtlasTexture_j2jfr")
+texture_hover = SubResource("AtlasTexture_bjg73")
+
+[node name="TextureButton5" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
 layout_mode = 2
 
-[node name="left_button" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
+[node name="right_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_bu4jf")
+texture_pressed = SubResource("AtlasTexture_o7ddy")
+texture_hover = SubResource("AtlasTexture_0loja")
+
+[node name="TextureButton7" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
 layout_mode = 2
 
-[node name="TextureButton5" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
+[node name="down_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ids8r")
+texture_pressed = SubResource("AtlasTexture_dnhof")
+texture_hover = SubResource("AtlasTexture_1v6qk")
+
+[node name="TextureButton9" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
 layout_mode = 2
 
-[node name="right_button" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
-layout_mode = 2
-
-[node name="TextureButton7" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
-layout_mode = 2
-
-[node name="down_button" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
-layout_mode = 2
-
-[node name="TextureButton9" type="TextureButton" parent="coin_skill_system/direction/GridContainer"]
-layout_mode = 2
+[node name="cancel_direction_button" type="Button" parent="coin_skill_system/direction_ui"]
+unique_name_in_owner = true
+offset_left = 554.0
+offset_top = 468.0
+offset_right = 604.0
+offset_bottom = 506.0
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 21
+theme_override_styles/hover = ExtResource("15_0ld40")
+shortcut = SubResource("Shortcut_vxglm")
+text = "取消"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(71.5, 68.5)
@@ -1742,7 +1869,7 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer"]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
-text = "  无    "
+text = "  无  "
 label_settings = ExtResource("3_h858a")
 
 [node name="none_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer"]
@@ -2019,9 +2146,10 @@ mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="hero_skill"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 0.75
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -2245,6 +2373,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="real_time_score/HBoxContainer"]
+material = ExtResource("19_vxglm")
+use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("CanvasTexture_574tw")
@@ -2950,7 +3080,7 @@ anchor_top = 0.352
 anchor_right = 0.818
 anchor_bottom = 0.5
 offset_right = 55.0
-offset_bottom = 30.0
+offset_bottom = 35.216026
 grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)
@@ -2988,7 +3118,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 offset_top = 4.25
-offset_right = 177.0
+offset_right = 182.99997
 offset_bottom = 28.25
 grow_horizontal = 2
 grow_vertical = 2
@@ -3229,9 +3359,63 @@ texture_normal = SubResource("AtlasTexture_j8jky")
 texture_pressed = SubResource("AtlasTexture_kmb1v")
 texture_hover = SubResource("AtlasTexture_fuf3a")
 
+[node name="buff_ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 11.0
+offset_top = -12.5
+offset_right = 132.75
+offset_bottom = 9.5
+
+[node name="Panel" type="Panel" parent="buff_ui"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -1.0
+offset_right = -1.75
+offset_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vxglm")
+
+[node name="HFlowContainer" type="HFlowContainer" parent="buff_ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="buff_ui/HFlowContainer"]
+custom_minimum_size = Vector2(0, 11)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("14_y6deb")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="buff_ui/HFlowContainer"]
+custom_minimum_size = Vector2(0, 11)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("14_y6deb")
+expand_mode = 2
+stretch_mode = 5
+
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]
 [connection signal="timeout" from="coin_skill_system/Timer" to="coin_skill_system" method="_on_timer_timeout"]
+[connection signal="pressed" from="coin_skill_system/direction_ui/GridContainer/up_button" to="." method="_on_up_button_pressed"]
+[connection signal="pressed" from="coin_skill_system/direction_ui/GridContainer/left_button" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="coin_skill_system/direction_ui/GridContainer/right_button" to="." method="_on_right_button_pressed"]
+[connection signal="pressed" from="coin_skill_system/direction_ui/GridContainer/down_button" to="." method="_on_down_button_pressed"]
+[connection signal="pressed" from="coin_skill_system/direction_ui/cancel_direction_button" to="." method="_on_cancel_direction_button_pressed"]
 [connection signal="button_down" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_button_down"]
 [connection signal="button_up" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_button_up"]
 [connection signal="pressed" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_pressed"]

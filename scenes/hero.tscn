@@ -384,6 +384,15 @@ script = ExtResource("10_27sfp")
 [node name="coin_skill_move" type="Node2D" parent="hero_state_machine"]
 script = ExtResource("12_sryfu")
 
+[node name="buff_icon" type="TextureRect" parent="."]
+anchors_preset = -1
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 9.0
+offset_bottom = 9.0
+expand_mode = 2
+stretch_mode = 5
+
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
 [connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -19,6 +19,13 @@ func _ready() -> void:
 	EventBus.subscribe("dice_sub_1", dice_sub_1)
 	EventBus.subscribe("dice_sub_1_clicked", dice_sub_1_clicked)
 	EventBus.subscribe("move", move)
+	EventBus.subscribe("cloud", cloud)
+	EventBus.subscribe("mouse_up_clicked", mouse_up_clicked)
+	EventBus.subscribe("mouse_left_clicked", mouse_left_clicked)
+	EventBus.subscribe("mouse_right_clicked", mouse_right_clicked)
+	EventBus.subscribe("mouse_down_clicked", mouse_down_clicked)
+	EventBus.subscribe("double_score", double_score)
+	EventBus.subscribe("double_score_clicked", double_score_clicked)
 
 func _on_timer_timeout():
 	## 重掷按钮
@@ -180,4 +187,89 @@ func move():
 	Current.hero.hero_state_machine.transition_to("coin_skill_move")
 	
 func cloud():
-	pass
+	get_tree().paused = true
+	game_manager.direction_ui.show()
+
+func cloud_clicked(direction):
+	match direction:
+		"up":
+			var all_slime_array = Current.all_enemy_array.duplicate()
+			all_slime_array.sort_custom(func(a, b): return a.enemy_grid_index.y < b.enemy_grid_index.y)
+			for slime in all_slime_array:
+				var target_position = slime.position + Vector2(0, -16)
+				if target_position not in Current.all_enemy_position_array and \
+				target_position != Current.hero.position and \
+				target_position.x <= 7 * 16 and \
+				target_position.x >= 16 and \
+				target_position.y <= 7 * 16 and \
+				target_position.y >= 16:
+					slime.target_position = target_position
+					var old_position = slime.position
+					while slime.position == old_position:
+						await Tools.time_sleep(0.01)
+		"left":
+			var all_slime_array = Current.all_enemy_array.duplicate()
+			all_slime_array.sort_custom(func(a, b): return a.enemy_grid_index.x < b.enemy_grid_index.x)
+			for slime in all_slime_array:
+				var target_position = slime.position + Vector2(-16, 0)
+				if target_position not in Current.all_enemy_position_array and \
+				target_position != Current.hero.position and \
+				target_position.x <= 7 * 16 and \
+				target_position.x >= 16 and \
+				target_position.y <= 7 * 16 and \
+				target_position.y >= 16:
+					slime.target_position = target_position
+					var old_position = slime.position
+					while slime.position == old_position:
+						await Tools.time_sleep(0.01)
+		"right":
+			var all_slime_array = Current.all_enemy_array.duplicate()
+			all_slime_array.sort_custom(func(a, b): return a.enemy_grid_index.x > b.enemy_grid_index.x)
+			for slime in all_slime_array:
+				var target_position = slime.position + Vector2(16, 0)
+				if target_position not in Current.all_enemy_position_array and \
+				target_position != Current.hero.position and \
+				target_position.x <= 7 * 16 and \
+				target_position.x >= 16 and \
+				target_position.y <= 7 * 16 and \
+				target_position.y >= 16:
+					slime.target_position = target_position
+					var old_position = slime.position
+					while slime.position == old_position:
+						await Tools.time_sleep(0.01)
+		"down":
+			var all_slime_array = Current.all_enemy_array.duplicate()
+			all_slime_array.sort_custom(func(a, b): return a.enemy_grid_index.y > b.enemy_grid_index.y)
+			for slime in all_slime_array:
+				var target_position = slime.position + Vector2(0, 16)
+				if target_position not in Current.all_enemy_position_array and \
+				target_position != Current.hero.position and \
+				target_position.x <= 7 * 16 and \
+				target_position.x >= 16 and \
+				target_position.y <= 7 * 16 and \
+				target_position.y >= 16:
+					slime.target_position = target_position
+					var old_position = slime.position
+					while slime.position == old_position:
+						await Tools.time_sleep(0.01)
+	_clicked_public_action("cloud")
+		
+func mouse_up_clicked():
+	cloud_clicked("up")
+
+func mouse_left_clicked():
+	cloud_clicked("left")
+	
+func mouse_right_clicked():
+	cloud_clicked("right")
+
+func mouse_down_clicked():
+	cloud_clicked("down")
+
+func double_score():
+	add_power()
+	
+func double_score_clicked():
+	if Current.grid_index == Current.hero.hero_grid_index:
+		BuffSystem.set_after_action_buff_once("double_score")
+		_clicked_public_action("double_score")

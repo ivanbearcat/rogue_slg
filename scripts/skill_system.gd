@@ -34,6 +34,9 @@ func hide_skill_attack():
 func skill_attack():
 	## 正在攻击结算
 	Current.action_lock = true
+	## 行动前buff
+	EventBus.event_emit("do_before_action_buff_once")
+	EventBus.event_emit("do_before_action_buff")
 	## 史莱姆死亡
 	var _slime_die_array: Array
 	for slime in Current.all_enemy_array:
@@ -48,16 +51,18 @@ func skill_attack():
 			dice_num += 1
 			Tools.big_flow_effect(dice_array[index])
 			if index == 1: continue
-			var float_number_instantiate = SceneManager.create_scene("float_number")
-			float_number_instantiate.float_num = Current.dice_type_point
-			float_number_instantiate.velocity = Vector2(0, -10)
-			dice_array[index].add_child(float_number_instantiate)
+			var float_number_instantiate = Tools.float_number_effect(Current.dice_type_point)
+			Current.hero.add_child(float_number_instantiate)
 			await Tools.time_sleep(0.5)
 			Current.total_score += Current.dice_type_point
+			Current.once_total_score += Current.dice_type_point
+	## 行动后buff
+	EventBus.event_emit("do_after_action_buff_once")
+	EventBus.event_emit("do_after_action_buff")
 	## 保留最高骰子数
 	if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
-	## 等待攻击动画完成
-	while Current.attack_animation_finished == 0:
+	## 等待攻击动画完成和公共锁释放
+	while Current.attack_animation_finished == 0 or Current.public_lock_array:
 		await Tools.time_sleep(0.05)
 	## 如果是赋能技能就消耗能量,然后重置UI
 	if Current.power_skill:
@@ -67,6 +72,8 @@ func skill_attack():
 	## 恢复技能UI弹起状态
 	hide_all_skill.emit()
 	Current.hero.hero_state_machine.transition_to("end")
+	## 清空单次总分
+	Current.once_total_score = 0
 	Current.action_lock = false
 
 ## 鼠标点击红框之后移动

@@ -8,14 +8,13 @@ var float_num: int:
 
 var velocity := Vector2.ZERO
 var gravity := Vector2.ZERO
-var mass := 100
 
 func _ready() -> void:
 	var tween := create_tween()
-	tween.tween_property($Label, "modulate:a", 0, 0.8).set_delay(0.2)
+	tween.tween_property($Label, "modulate:a", 0, 1).set_delay(0.5)
 
 
 func _process(delta: float) -> void:
-	velocity += gravity * mass * delta
+	velocity += gravity * delta
 	position += velocity * delta
 	

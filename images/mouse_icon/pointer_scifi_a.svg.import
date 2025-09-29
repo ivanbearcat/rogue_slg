@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwtnrc2k82jus"
-path="res://.godot/imported/green_button.png-efa7be0b182365289c238f28f277eb99.ctex"
+uid="uid://bpju5go2i81aa"
+path="res://.godot/imported/pointer_scifi_a.svg-55073939fd9248c0108c4f0b9a2d0617.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/green_button.png"
-dest_files=["res://.godot/imported/green_button.png-efa7be0b182365289c238f28f277eb99.ctex"]
+source_file="res://images/mouse_icon/pointer_scifi_a.svg"
+dest_files=["res://.godot/imported/pointer_scifi_a.svg-55073939fd9248c0108c4f0b9a2d0617.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

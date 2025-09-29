@@ -16,5 +16,5 @@ shader = ExtResource("1_xneil")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_qf8i0")
 shader_parameter/noise_speed = 0.3
 shader_parameter/noise_size = 0.2
-shader_parameter/edge_color = Color(1, 0.574052, 0.12776, 1)
+shader_parameter/edge_color = Color(1, 0.56111485, 0.16450071, 1)
 shader_parameter/enable = false

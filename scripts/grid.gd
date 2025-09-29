@@ -13,6 +13,7 @@ var grid_index: Vector2i
 
 func _on_area_2d_mouse_entered() -> void:
 	#print(Current.grid_index)
+	#print(self.position)
 	Current.within_grid_area = true
 	Current.grid_index = self.grid_index
 	cursor.show()
@@ -28,7 +29,7 @@ func _on_area_2d_mouse_entered() -> void:
 			if Current.slime:
 				if Current.slime.enemy_grid_index == self.grid_index:
 					self.attack.show()
-		"reroll_all":
+		"reroll_all", "mouse_up", "mouse_left", "mouse_right", "mouse_down":
 			for grid in Current.all_grids_array:
 				grid.attack.show()
 		"add_power":
@@ -45,7 +46,7 @@ func _on_area_2d_mouse_exited() -> void:
 					await Tools.time_sleep(0.05)
 				emit_signal("grid_cmd", "hide_skill_attack")
 				Current.has_attack_grid = false
-		"reroll_all":
+		"reroll_all", "mouse_up", "mouse_left", "mouse_right", "mouse_down":
 			## 移出格子区域不显示红框
 			await Tools.time_sleep(0.05)
 			if not Current.within_grid_area:

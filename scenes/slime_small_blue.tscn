@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://btvvwmetc2oyv"]
+[gd_scene load_steps=47 format=3 uid="uid://btvvwmetc2oyv"]
 
 [ext_resource type="Script" uid="uid://ka44hpx6jsu0" path="res://scripts/slime_small.gd" id="1_tqd4j"]
 [ext_resource type="Texture2D" uid="uid://b4voe758sxvk5" path="res://images/Slime_blue.png" id="2_dkde8"]
@@ -42,8 +42,8 @@ void fragment(){
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r8iat"]
 resource_local_to_scene = true
 shader = SubResource("Shader_nc03e")
-shader_parameter/width = 1.1
-shader_parameter/outline_color = Color(0, 100, 100, 1)
+shader_parameter/width = 1.0000000475
+shader_parameter/outline_color = Color(0, 100.00648, 100.00648, 1)
 shader_parameter/is_high_light = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_al54p"]
@@ -315,12 +315,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Environment" id="Environment_4dbh4"]
-background_mode = 3
-glow_enabled = true
-glow_intensity = 8.0
-glow_strength = 0.44
-
 [node name="slime_small" type="Node2D"]
 z_index = 1
 script = ExtResource("1_tqd4j")
@@ -351,9 +345,6 @@ scale = Vector2(-0.196884, -0.190505)
 sprite_frames = SubResource("SpriteFrames_aldak")
 animation = &"roll"
 frame_progress = 0.944284
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_4dbh4")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

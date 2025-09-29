@@ -8,6 +8,7 @@ signal hero_cmd
 @onready var skill_1: Node2D = $hero_state_machine/skill_1
 @onready var skill_2: Node2D = $hero_state_machine/skill_2
 @onready var skill_3: Node2D = $hero_state_machine/skill_3
+@onready var buff_icon: TextureRect = $buff_icon
 
 
 var hero_name: String

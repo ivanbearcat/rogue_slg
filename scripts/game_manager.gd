@@ -98,6 +98,12 @@ const hero_property = {
 @onready var q_texture: TextureRect = %Q_texture
 @onready var w_texture: TextureRect = %W_texture
 @onready var e_texture: TextureRect = %E_texture
+@onready var direction_ui: CanvasLayer = %direction_ui
+@onready var cancel_direction_button: Button = %cancel_direction_button
+@onready var up_button: TextureButton = %up_button
+@onready var left_button: TextureButton = %left_button
+@onready var right_button: TextureButton = %right_button
+@onready var down_button: TextureButton = %down_button
 
 
 ## 格子像素大小
@@ -146,7 +152,7 @@ func _ready() -> void:
 	coin_skill_json_data = Tools.load_json_file('res://config/coin_skill.json')
 	## 临时
 	for row in coin_skill_json_data:
-		if row["coin_skill_id"] in ["reroll_all","move","reroll_dice"]:
+		if row["coin_skill_id"] in ["reroll_all","double_score","reroll_dice"]:
 			Current.coin_skill_array_dict.append(row)
 	coin_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
 	coin_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
@@ -166,7 +172,7 @@ func _ready() -> void:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
 	## 初始化金币
-		Current.total_coins = 3
+		Current.total_coins = 5
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -919,3 +925,32 @@ func _on_coin_skill_3_pressed() -> void:
 		EventBus.event_emit("reset_all_hero_skills")
 		CursorManager.change_cursor(Current.coin_skill_array_dict[2]["coin_skill_id"])
 		EventBus.event_emit(Current.coin_skill_array_dict[2]["coin_skill_id"])
+
+func _on_cancel_direction_button_pressed() -> void:
+	EventBus.event_emit("reset_cursor")
+	direction_ui.hide()
+	get_tree().paused = false
+
+
+func _on_up_button_pressed() -> void:
+	direction_ui.hide()
+	get_tree().paused = false
+	CursorManager.change_cursor("mouse_up")
+
+
+func _on_left_button_pressed() -> void:
+	direction_ui.hide()
+	get_tree().paused = false
+	CursorManager.change_cursor("mouse_left")
+
+
+func _on_right_button_pressed() -> void:
+	direction_ui.hide()
+	get_tree().paused = false
+	CursorManager.change_cursor("mouse_right")
+
+
+func _on_down_button_pressed() -> void:
+	direction_ui.hide()
+	get_tree().paused = false
+	CursorManager.change_cursor("mouse_down")

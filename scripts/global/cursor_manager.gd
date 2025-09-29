@@ -30,7 +30,7 @@ func _input(event: InputEvent) -> void:
 
 func reset_cursor() -> void:
 	Input.set_custom_mouse_cursor(
-		load('res://images/pointer_scifi_a.svg'),
+		load('res://images/mouse_icon/pointer_scifi_a.svg'),
 		Input.CURSOR_ARROW,
 		Vector2(0, 0)
 	)
@@ -44,17 +44,20 @@ func reset_cursor() -> void:
 
 func change_cursor(cursor_name):
 	var cursor_name_dict = {
-		"reroll": ["res://images/mouse_target.png", Vector2(18, 18)],
-		"reroll_all": ["res://images/mouse_target.png", Vector2(18, 18)],
-		"reroll_dice": ["res://images/mouse_target.png", Vector2(18, 18)],
-		"reroll_color": ["res://images/mouse_target.png", Vector2(18, 18)],
-		"add_power": ["res://images/mouse_target.png", Vector2(18, 18)],
-		"dice_add_1": ["res://images/mouse_target.png", Vector2(18, 18)],
-		"dice_sub_1": ["res://images/mouse_target.png", Vector2(18, 18)],
-		"double_score": ["res://images/mouse_target.png", Vector2(18, 18)],
-		#"cloud": ["res://images/mouse_target.png", Vector2(18, 18)],
+		"reroll": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
+		"reroll_all": ["res://images/mouse_icon/mouse_up.png", Vector2(18, 18)],
+		"reroll_dice": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
+		"reroll_color": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
+		"add_power": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
+		"dice_add_1": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
+		"dice_sub_1": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
+		"double_score": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
+		"mouse_up": ["res://images/mouse_icon/mouse_up.png", Vector2(18, 18)],
+		"mouse_left": ["res://images/mouse_icon/mouse_left.png", Vector2(18, 18)],
+		"mouse_right": ["res://images/mouse_icon/mouse_right.png", Vector2(18, 18)],
+		"mouse_down": ["res://images/mouse_icon/mouse_down.png", Vector2(18, 18)],
 	}
-	if not cursor_name in ["move"]:
+	if not cursor_name in ["move", "cloud"]:
 		## 修改鼠标态和显示图案
 		Current.mouse_status = cursor_name
 		Input.set_custom_mouse_cursor(

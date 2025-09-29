@@ -84,6 +84,8 @@ var total_score: int:
 		game_manager.total_score.text = str(v)
 	get:
 		return int(game_manager.total_score.text)
+## 单次总分
+var once_total_score: int
 ## 当前关卡
 var count_stage := 1:
 	set(v):
@@ -255,3 +257,5 @@ var has_attack_grid := false
 var coin_skill_array_dict: Array
 ## 所有格子
 var all_grids_array: Array
+## 公共锁
+var public_lock_array := []

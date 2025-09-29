@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dlcvu46gg8kr3"]
+[gd_scene load_steps=47 format=3 uid="uid://dlcvu46gg8kr3"]
 
 [ext_resource type="Script" uid="uid://ka44hpx6jsu0" path="res://scripts/slime_small.gd" id="1_tf0m4"]
 [ext_resource type="Texture2D" uid="uid://cyo82memmjeol" path="res://images/Slime_yellow.png" id="2_h1rea"]
@@ -42,8 +42,8 @@ void fragment(){
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_66urm"]
 resource_local_to_scene = true
 shader = SubResource("Shader_oqfto")
-shader_parameter/width = 1.1
-shader_parameter/outline_color = Color(0, 100, 100, 1)
+shader_parameter/width = 1.0000000475
+shader_parameter/outline_color = Color(0, 100.00648, 100.00648, 1)
 shader_parameter/is_high_light = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idiap"]
@@ -315,12 +315,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Environment" id="Environment_60co2"]
-background_mode = 3
-glow_enabled = true
-glow_intensity = 8.0
-glow_strength = 0.44
-
 [node name="slime_small" type="Node2D"]
 z_index = 1
 script = ExtResource("1_tf0m4")
@@ -336,7 +330,7 @@ material = SubResource("ShaderMaterial_66urm")
 position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_oqfto")
-animation = &"roll"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="warning" type="Sprite2D" parent="Area2D"]
@@ -351,9 +345,6 @@ scale = Vector2(-0.197, -0.191)
 sprite_frames = SubResource("SpriteFrames_aldak")
 animation = &"roll"
 frame_progress = 0.944284
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_60co2")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
