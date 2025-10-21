@@ -45,7 +45,7 @@ func reset_cursor() -> void:
 func change_cursor(cursor_name):
 	var cursor_name_dict = {
 		"reroll": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
-		"reroll_all": ["res://images/mouse_icon/mouse_up.png", Vector2(18, 18)],
+		"reroll_all": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
 		"reroll_dice": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
 		"reroll_color": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
 		"add_power": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],

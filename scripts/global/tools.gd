@@ -25,17 +25,6 @@ func fetch_slime_scene(slime_scene):
 	else:
 		return null
 
-## 把图片放大並抖动的动画效果
-func big_flow_effect(object):
-	var tween = create_tween()
-	tween.tween_property(object, "scale:x", 1.5, 0.07)
-	tween.parallel().tween_property(object, "pivot_offset:x", 4, 0.07)
-	tween.parallel().tween_property(object, "scale:y", 1.5, 0.07)
-	tween.parallel().tween_property(object, "pivot_offset:y", 4, 0.07)
-	tween.tween_property(object, "scale:x", 1, 0.07)
-	tween.parallel().tween_property(object, "pivot_offset:x", 8, 0.07)
-	tween.parallel().tween_property(object, "scale:y", 1, 0.07)
-	tween.parallel().tween_property(object, "pivot_offset:y", 8, 0.07)
 
 ## 加载json配置文件
 func load_json_file(file_path: String) -> Array:
@@ -72,11 +61,3 @@ var num_to_cnnum: Dictionary = {
 	11: "十一",
 	12: "十二"
 }
-
-## 飘字效果
-func float_number_effect(float_num, gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50)) -> Node2D:
-	var float_number_instantiate = SceneManager.create_scene("float_number")
-	float_number_instantiate.float_num = float_num
-	float_number_instantiate.gravity = gravity
-	float_number_instantiate.velocity = velocity
-	return float_number_instantiate

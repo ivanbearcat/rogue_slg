@@ -1,4 +1,5 @@
 extends Node
+#var tween = create_tween()
 ## game_manager节点
 @onready var game_manager: Node2D = get_node("/root/game_manager")
 ## 鼠标指向的英雄
@@ -82,6 +83,7 @@ var target_score: int:
 var total_score: int:
 	set(v):
 		game_manager.total_score.text = str(v)
+		EffectManager.big_flow_effect(game_manager.total_score)
 	get:
 		return int(game_manager.total_score.text)
 ## 单次总分
@@ -248,7 +250,7 @@ var max_power := 2
 var power: int:
 	set(v):
 		power = v
-		game_manager.power_label.text = str(v) + "/" + str(Current.max_power)	
+		game_manager.power_label.text = str(v) + "/" + str(Current.max_power)
 ## 能量技能
 var power_skill := 0
 ## 存在红框

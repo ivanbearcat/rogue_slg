@@ -5,11 +5,11 @@
 [ext_resource type="Shader" uid="uid://bvwarcrhlc6ea" path="res://shaders/high_light.gdshader" id="2_c5gmw"]
 [ext_resource type="Texture2D" uid="uid://t17pqkrha6od" path="res://images/Archer-Green.png" id="2_mxpjn"]
 [ext_resource type="Texture2D" uid="uid://c3rdthe31eav6" path="res://images/Mage-Cyan.png" id="3_ciahd"]
-[ext_resource type="Script" uid="uid://c8w5syikihkgg" path="res://scripts/hero_state_machine.gd" id="5_fgiwk"]
+[ext_resource type="Script" uid="uid://c8w5syikihkgg" path="res://scripts/hero_state/hero_state_machine.gd" id="5_fgiwk"]
 [ext_resource type="Texture2D" uid="uid://bfsd05fvcyf6u" path="res://images/soldier_skill_icon.png" id="6_d6xj2"]
-[ext_resource type="Script" uid="uid://bdld8nwmy5adl" path="res://scripts/idle.gd" id="6_yiwd7"]
-[ext_resource type="Script" uid="uid://covcj4hn2ii1i" path="res://scripts/move.gd" id="7_duu28"]
-[ext_resource type="Script" uid="uid://peuw3ycxprmr" path="res://scripts/end.gd" id="8_2fhne"]
+[ext_resource type="Script" uid="uid://bdld8nwmy5adl" path="res://scripts/hero_state/idle.gd" id="6_yiwd7"]
+[ext_resource type="Script" uid="uid://covcj4hn2ii1i" path="res://scripts/hero_state/move.gd" id="7_duu28"]
+[ext_resource type="Script" uid="uid://peuw3ycxprmr" path="res://scripts/hero_state/end.gd" id="8_2fhne"]
 [ext_resource type="Script" uid="uid://0crxqf10lvx8" path="res://scripts/skills_state/soldier_skill_1.gd" id="10_27sfp"]
 [ext_resource type="Script" uid="uid://dlerl2kndcri1" path="res://scripts/skills_state/coin_skill_move.gd" id="12_sryfu"]
 
@@ -385,7 +385,6 @@ script = ExtResource("10_27sfp")
 script = ExtResource("12_sryfu")
 
 [node name="buff_icon" type="TextureRect" parent="."]
-anchors_preset = -1
 offset_left = -3.0
 offset_top = -3.0
 offset_right = 9.0

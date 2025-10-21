@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://bi3753khyy75"]
+[gd_scene load_steps=48 format=3 uid="uid://bi3753khyy75"]
 
 [ext_resource type="Texture2D" uid="uid://tnl7iet676i7" path="res://images/Slime.png" id="1_1jsnh"]
 [ext_resource type="Script" uid="uid://ka44hpx6jsu0" path="res://scripts/slime_small.gd" id="1_huabk"]
@@ -316,15 +316,6 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="Environment" id="Environment_wtrt3"]
-background_mode = 3
-glow_enabled = true
-glow_levels/2 = 1.0
-glow_levels/3 = 0.0
-glow_levels/5 = 0.0
-glow_intensity = 1.5
-adjustment_enabled = true
-
 [node name="slime_small" type="Node2D"]
 z_index = 1
 script = ExtResource("1_huabk")
@@ -360,9 +351,6 @@ sprite_frames = SubResource("SpriteFrames_aldak")
 animation = &"roll"
 frame = 1
 frame_progress = 0.0943156
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_wtrt3")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

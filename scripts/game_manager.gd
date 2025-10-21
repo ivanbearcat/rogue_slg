@@ -12,7 +12,6 @@ const hero_property = {
 @onready var buildings: Node2D = $buildings
 @onready var enemys: Node2D = $enemys
 @onready var turn_button: TextureButton = %turn_button
-#@onready var reroll_label: Label = %reroll_label
 @onready var stage_label: Label = %stage_label
 @onready var turn_label: Label = %turn_label
 #@onready var left_side_ui: MarginContainer = $UI/left_side_ui
@@ -69,11 +68,22 @@ const hero_property = {
 @onready var card_3: TextureRect = %card3
 @onready var card_3_name: Label = %card3_name
 @onready var card_3_description: RichTextLabel = %card3_description
+@onready var hide_level_up_ui_button: Button = %hide_level_up_ui_button
 ## 过关界面
 @onready var clear_stage_ui: CanvasLayer = $clear_stage_ui
 @onready var clear_stage_label: Label = %clear_stage_label
-@onready var coin_array_1: HBoxContainer = %coin_array1
-@onready var coin_array_2: HBoxContainer = %coin_array2
+@onready var stage_clear_label_1: Label = %stage_clear_label_1
+@onready var stage_clear_label_2: Label = %stage_clear_label_2
+@onready var stage_clear_label_3: Label = %stage_clear_label_3
+@onready var stage_coin_label_1: Label = %stage_coin_label_1
+@onready var stage_coin_label_2: Label = %stage_coin_label_2
+@onready var stage_coin_label_3: Label = %stage_coin_label_3
+@onready var stage_coin_label_4: Label = %stage_coin_label_4
+@onready var stage_coin_rlabel_1: RichTextLabel = %stage_coin_rlabel_1
+@onready var stage_coin_rlabel_2: RichTextLabel = %stage_coin_rlabel_2
+@onready var stage_coin_rlabel_3: RichTextLabel = %stage_coin_rlabel_3
+@onready var stage_coin_rlabel_4: RichTextLabel = %stage_coin_rlabel_4
+@onready var paper_texture: TextureRect = %paper_texture
 ## 帮助按钮
 @onready var help_button: TextureButton = %help_button
 ## 职业图标
@@ -104,6 +114,8 @@ const hero_property = {
 @onready var left_button: TextureButton = %left_button
 @onready var right_button: TextureButton = %right_button
 @onready var down_button: TextureButton = %down_button
+
+
 
 
 ## 格子像素大小
@@ -145,7 +157,9 @@ var level_up_three_card_array :Array
 
 func _ready() -> void:
 	## 测试
-	ship.position += Vector2(7, 0) * 5
+	#clear_stage_ui.show()
+	#_do_stage_clear_effect()
+	
 	## 加载json数据
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
@@ -202,6 +216,7 @@ func _ready() -> void:
 	_create_slime()
 	_create_power_slime()
 	_enemy_turn()
+	_pre_turn_begin()
 
 func grid_index_to_position(grid_index: Vector2i) -> Vector2i:
 	return Vector2i(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
@@ -339,7 +354,7 @@ func add_exp(new_exp: int) -> void:
 	_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
 	## 等待1秒让一次攻击下的史莱姆经验全加上再升级
 	await Tools.time_sleep(1)
-	_check_and_level_up()
+	await _check_and_level_up()
 
 
 ## 检查并升级
@@ -520,13 +535,18 @@ func hide_skill_attack():
 ## 技能结算
 func skill_attack():
 	await skill_system.skill_attack()
+	await _check_stage_clear()
+	while clear_stage_ui.visible == true:
+		await Tools.time_sleep(0.2)
 	_enemy_turn()
+	_pre_turn_begin()
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
 	if Current.power < Current.max_power:
 		Current.power += 1
 	_enemy_turn()
+	_pre_turn_begin()
 ## 让label跟着按钮下降
 func _on_turn_button_button_down() -> void:
 	turn_button_label.position += Vector2(0, 1)
@@ -536,6 +556,8 @@ func _on_turn_button_button_up() -> void:
 	
 ## 敌人回合
 func _enemy_turn():
+	EventBus.event_emit("reset_all_hero_skills")
+	EventBus.event_emit("reset_cursor")
 	Current.turn = "enemy_turn"
 	turn_button.disabled = true
 	## 生成史莱姆
@@ -553,15 +575,20 @@ func _enemy_turn():
 	while Current.has_move_slime:
 		await get_tree().create_timer(0.1).timeout
 	_slime_create_array.clear()
-	## 史莱姆重掷
-	#_slime_grow_up_ai()
-	#for slime in Current.transformable_slime_array:
-		#slime.warning.visible = false
-	#Current.transformable_slime_array.clear()
-	#await get_tree().create_timer(0.1).timeout
 	## 史莱姆预生成和告警信息
 	_create_slime()
 	_create_power_slime()
+	## 测试
+	#var a = dice_list.get_children()[0]
+	#EffectManager.big_flow_effect(a)
+
+func _pre_turn_begin():
+	## 增加回合数
+	Current.count_round += 1
+	## 判断失败
+	if Current.count_round > 10:
+		print("游戏失败")
+		get_tree().paused = true
 	## 重置英雄状态
 	for hero in Current.all_hero_array:
 		hero.hero_state_machine.transition_to("idle")
@@ -575,46 +602,64 @@ func _enemy_turn():
 	## 恢复鼠标
 	CursorManager.reset_cursor()
 	EventBus.event_emit("hide_all_skills")
-	## 判断是否过关
-	if Current.total_score >= Current.target_score and Current.count_round <= 10:
-		## 显示剩余回合奖励的金币
-		## 过关时剩余合金币数组
-		var coin_array_1_children = coin_array_1.get_children()
-		for coin_icon in coin_array_1_children:
-			coin_icon.hide()
-		var range_times = 10 - Current.count_round
-		if range_times > 3: range_times = 3
-		for i in range(range_times):
-			coin_array_1_children[i].show()
-		Current.count_add_coins += range_times
-		## 显示最高骰子数奖励的金币
-		## 过关时最高子数金币数组
-		var coin_array_2_children = coin_array_2.get_children()
-		for coin_icon in coin_array_2_children:
-			coin_icon.hide()
-		range_times = Current.highest_dice_num - 3
-		if  range_times > 3:
-			range_times = 3
-		elif range_times < 0:
-			range_times = 0
-		for i in range(range_times):
-			coin_array_2_children[i].show()
-		Current.count_add_coins += range_times + 1
-		get_tree().paused = true
-		clear_stage_ui.show()
-	##判断失败
-	Current.count_round += 1
-	if Current.count_round > 10:
-		print("游戏失败")
-		get_tree().paused = true
+	turn_button.disabled = false
 	## 下回合开始
 	Current.turn = "hero_turn"
-	turn_button.disabled = false
-	
-	## 测试
-	#var a = dice_list.get_children()[0]
-	#Tools.big_flow_effect(a)
 
+## 判断是否过关
+func _check_stage_clear():
+	if Current.total_score >= Current.target_score and Current.count_round <= 10:
+		## 回合固定金币
+		var stage_add_coin = 1
+		Current.count_add_coins += stage_add_coin
+		## 显示剩余回合奖励的金币
+		var round_add_coin = 10 - Current.count_round
+		Current.count_add_coins += round_add_coin
+		var add_coin := 0
+		for i in range(10 - Current.count_round):
+			add_coin += 1
+			stage_coin_label_2.text = str(add_coin)
+			await Tools.time_sleep(0.3)
+		## 过关时最高子数金币数组
+		var highest_dice_add_coin = Current.highest_dice_num - 1
+		Current.count_add_coins += highest_dice_add_coin
+		_do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin)
+
+func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin):
+	while get_tree().paused:
+		await Tools.time_sleep(0.1)
+	get_tree().paused = true
+	## 纸
+	clear_stage_ui.show()
+	await EffectManager.top_to_bottom_effect(paper_texture, 0.5)
+	## 标题
+	clear_stage_label.show()
+	## 第一行
+	stage_clear_label_1.show()
+	await EffectManager.typewriter_effect(stage_clear_label_1, stage_clear_label_1.text, 1)
+	stage_coin_rlabel_1.show()
+	stage_coin_label_1.show()
+	await EffectManager.label_num_rolling_effect(stage_coin_label_1, stage_add_coin)
+	## 第二行
+	stage_clear_label_2.show()
+	await EffectManager.typewriter_effect(stage_clear_label_2, stage_clear_label_2.text, 1)
+	stage_coin_rlabel_2.show()
+	stage_coin_label_2.show()
+	await EffectManager.label_num_rolling_effect(stage_coin_label_2, round_add_coin)
+	## 第三行
+	stage_clear_label_3.show()
+	await EffectManager.typewriter_effect(stage_clear_label_3, stage_clear_label_3.text, 1)
+	stage_coin_rlabel_3.show()
+	stage_coin_label_3.show()
+	await EffectManager.label_num_rolling_effect(stage_coin_label_3, highest_dice_add_coin)
+	## 汇总金币
+	stage_coin_rlabel_4.show()
+	stage_coin_label_4.show()
+	await EffectManager.label_num_rolling_effect(
+		stage_coin_label_4,
+		stage_add_coin + round_add_coin + highest_dice_add_coin
+		)
+	
 ## 修改数值
 func _modifiy_value(original_value: int, operate: String, value: float) -> int:
 	var modified_value: float
@@ -872,7 +917,7 @@ func _on_stage_clear_button_pressed() -> void:
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
 	## 更新回合、关卡、当前分数、目标分数
-	Current.count_round = 1
+	Current.count_round = 0
 	Current.total_score = 0
 	if Current.count_stage < 12:
 		Current.count_stage += 1
@@ -887,6 +932,7 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 0
 	get_tree().paused = false
+
 
 ## 重掷按钮按下
 func _on_reroll_button_pressed() -> void:
@@ -903,7 +949,6 @@ func _on_coin_skill_1_pressed() -> void:
 	if coin_skill_1.button_pressed == false:
 		coin_skill_1.button_pressed = true
 	else:
-		EventBus.event_emit("hide_skill_range")
 		EventBus.event_emit("reset_all_hero_skills")
 		CursorManager.change_cursor(Current.coin_skill_array_dict[0]["coin_skill_id"])
 		EventBus.event_emit(Current.coin_skill_array_dict[0]["coin_skill_id"])
@@ -912,7 +957,6 @@ func _on_coin_skill_2_pressed() -> void:
 	if coin_skill_2.button_pressed == false:
 		coin_skill_2.button_pressed = true
 	else:
-		EventBus.event_emit("hide_skill_range")
 		EventBus.event_emit("reset_all_hero_skills")
 		CursorManager.change_cursor(Current.coin_skill_array_dict[1]["coin_skill_id"])
 		EventBus.event_emit(Current.coin_skill_array_dict[1]["coin_skill_id"])
@@ -921,7 +965,6 @@ func _on_coin_skill_3_pressed() -> void:
 	if coin_skill_3.button_pressed == false:
 		coin_skill_3.button_pressed = true
 	else:
-		EventBus.event_emit("hide_skill_range")
 		EventBus.event_emit("reset_all_hero_skills")
 		CursorManager.change_cursor(Current.coin_skill_array_dict[2]["coin_skill_id"])
 		EventBus.event_emit(Current.coin_skill_array_dict[2]["coin_skill_id"])
@@ -954,3 +997,16 @@ func _on_down_button_pressed() -> void:
 	direction_ui.hide()
 	get_tree().paused = false
 	CursorManager.change_cursor("mouse_down")
+
+
+func _on_hide_level_up_ui_button_pressed() -> void:
+	if hide_level_up_ui_button.text == "隐藏":
+		for object in level_up_ui.get_children():
+			if object.name != "hide_level_up_ui_button":
+				object.hide()
+		hide_level_up_ui_button.text = "显示"
+	else:
+		for object in level_up_ui.get_children():
+			if object.name != "hide_level_up_ui_button":
+				object.show()
+		hide_level_up_ui_button.text = "隐藏"

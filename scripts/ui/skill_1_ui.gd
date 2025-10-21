@@ -54,7 +54,7 @@ func _input(event: InputEvent) -> void:
 			Current.clicked_hero.hero_state_machine.transition_to("move")
 
 func reset_all_hero_skills():
-	if Current.clicked_hero.hero_state_machine.state.name in ["skill_1", "skill_2", "skill_3"]:
+	if Current.hero.hero_state_machine.state.name in ["move", "skill_1", "skill_2", "skill_3"]:
 		hide_all_skills()
 		if Current.is_moved == false:
 			Current.clicked_hero.hero_state_machine.transition_to("idle")

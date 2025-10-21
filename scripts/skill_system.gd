@@ -34,9 +34,9 @@ func hide_skill_attack():
 func skill_attack():
 	## 正在攻击结算
 	Current.action_lock = true
-	## 行动前buff
-	EventBus.event_emit("do_before_action_buff_once")
-	EventBus.event_emit("do_before_action_buff")
+	## 攻击前buff
+	EventBus.event_emit("do_before_attack_buff_once")
+	EventBus.event_emit("do_before_attack_buff")
 	## 史莱姆死亡
 	var _slime_die_array: Array
 	for slime in Current.all_enemy_array:
@@ -49,15 +49,16 @@ func skill_attack():
 		#print(index)
 		if dice_array[index].get_self_modulate() == Color(1, 1, 1, 1):
 			dice_num += 1
-			Tools.big_flow_effect(dice_array[index])
+			EffectManager.big_flow_effect(dice_array[index])
 			if index == 1: continue
-			var float_number_instantiate = Tools.float_number_effect(Current.dice_type_point)
+			var float_number_instantiate = EffectManager.float_number_effect(Current.dice_type_point)
 			Current.hero.add_child(float_number_instantiate)
 			await Tools.time_sleep(0.5)
 			Current.total_score += Current.dice_type_point
+			#Current.set_total_score_with_effect(Current.total_score + Current.dice_type_point)
 			Current.once_total_score += Current.dice_type_point
-	## 行动后buff
-	EventBus.event_emit("do_after_action_buff_once")
+	## 攻击后buff
+	EventBus.event_emit("do_after_attack_buff_once")
 	EventBus.event_emit("do_after_action_buff")
 	## 保留最高骰子数
 	if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num

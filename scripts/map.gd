@@ -15,6 +15,3 @@ func _ready() -> void:
 			print(Vector2i(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y))
 			grid.position = Vector2i(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
 			grids.add_child(grid)
-
-func _process(delta: float) -> void:
-	pass

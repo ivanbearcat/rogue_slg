@@ -23,6 +23,7 @@ Tools="*res://scripts/global/tools.gd"
 EventBus="*res://scripts/global/event_bus.gd"
 CursorManager="*res://scripts/global/cursor_manager.gd"
 BuffSystem="*res://scripts/buff_system.gd"
+EffectManager="*res://scripts/global/effect_manager.gd"
 
 [display]
 

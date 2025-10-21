@@ -271,5 +271,5 @@ func double_score():
 	
 func double_score_clicked():
 	if Current.grid_index == Current.hero.hero_grid_index:
-		BuffSystem.set_after_action_buff_once("double_score")
+		BuffSystem.set_after_attack_buff_once(DoubleScoreBuff)
 		_clicked_public_action("double_score")
