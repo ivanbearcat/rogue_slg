@@ -35,8 +35,7 @@ func skill_attack():
 	## 正在攻击结算
 	Current.action_lock = true
 	## 攻击前buff
-	EventBus.event_emit("do_before_attack_buff_once")
-	EventBus.event_emit("do_before_attack_buff")
+	EventBus.event_emit("do_pre_attack_buff")
 	## 史莱姆死亡
 	var _slime_die_array: Array
 	for slime in Current.all_enemy_array:
@@ -58,8 +57,7 @@ func skill_attack():
 			#Current.set_total_score_with_effect(Current.total_score + Current.dice_type_point)
 			Current.once_total_score += Current.dice_type_point
 	## 攻击后buff
-	EventBus.event_emit("do_after_attack_buff_once")
-	EventBus.event_emit("do_after_action_buff")
+	EventBus.event_emit("do_post_attack_buff")
 	## 保留最高骰子数
 	if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
 	## 等待攻击动画完成和公共锁释放

@@ -1,12 +1,19 @@
-extends Resource
+extends Node2D
 class_name Buff
 
+var game_manager: Node2D
+var buff_meta: Dictionary
+var debuff_texture: TextureRect
 
-static func set_buff():
+func _init(meta: Dictionary = {}, game_manager_node: Node2D = null) -> void:
+	buff_meta = meta
+	game_manager = game_manager_node
+	
+func set_buff():
 	pass
 	
-static func process_buff():
+func process_buff():
 	pass
 	
-static func drop_buff():
+func clear_buff():
 	pass

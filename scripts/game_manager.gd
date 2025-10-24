@@ -14,7 +14,6 @@ const hero_property = {
 @onready var turn_button: TextureButton = %turn_button
 @onready var stage_label: Label = %stage_label
 @onready var turn_label: Label = %turn_label
-#@onready var left_side_ui: MarginContainer = $UI/left_side_ui
 @onready var hero_skill: Control = $hero_skill
 @onready var skill_system: Node2D = $skill_system
 @onready var skill_1_ui: MarginContainer
@@ -88,6 +87,8 @@ const hero_property = {
 @onready var help_button: TextureButton = %help_button
 ## 职业图标
 @onready var class_icon: TextureRect = %class_icon
+## debuff UI
+@onready var debuff_container: HFlowContainer = %debuff_container
 ## UI
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
@@ -146,9 +147,11 @@ var color := {
 ## 升级时的卡牌数据
 var card_level_up_json_data :Array
 ## 关卡数据
-var stage_info_json_data
+var stage_info_json_data: Array
 ## 金币能数据
-var coin_skill_json_data
+var coin_skill_json_data: Array
+## debuff数据
+var debuff_json_data: Array
 ## 随机选择出的3张升级时卡牌
 var level_up_three_card_array :Array
 
@@ -164,6 +167,7 @@ func _ready() -> void:
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
 	coin_skill_json_data = Tools.load_json_file('res://config/coin_skill.json')
+	debuff_json_data = Tools.load_json_file('res://config/debuff.json')
 	## 临时
 	for row in coin_skill_json_data:
 		if row["coin_skill_id"] in ["reroll_all","double_score","reroll_dice"]:
@@ -174,6 +178,8 @@ func _ready() -> void:
 	coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
 	coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
 	coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
+	
+	
 	## 设置基础倍率
 	Current.none_percent = 100
 	Current.duizi_percent = 150
@@ -217,6 +223,12 @@ func _ready() -> void:
 	_create_power_slime()
 	_enemy_turn()
 	_pre_turn_begin()
+	## 测试
+	for row in debuff_json_data:
+		if row["debuff_id"] == "disable_one":
+			var disable_one_buff = load(row["debuff_res"]).new(row, self)
+			BuffSystem.set_pre_turn_buff(disable_one_buff, BuffSystem.buff_type.STAGE)
+			
 
 func grid_index_to_position(grid_index: Vector2i) -> Vector2i:
 	return Vector2i(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
@@ -547,6 +559,12 @@ func _on_turn_button_pressed() -> void:
 		Current.power += 1
 	_enemy_turn()
 	_pre_turn_begin()
+	## 测试
+	#for row in debuff_json_data:
+		#if row["debuff_id"] == "disable_one":
+			#var instance = load(row["debuff_res"]).new(row)
+			#instance.set_buff()
+	
 ## 让label跟着按钮下降
 func _on_turn_button_button_down() -> void:
 	turn_button_label.position += Vector2(0, 1)
@@ -579,10 +597,14 @@ func _enemy_turn():
 	_create_slime()
 	_create_power_slime()
 	## 测试
-	#var a = dice_list.get_children()[0]
-	#EffectManager.big_flow_effect(a)
+	
 
 func _pre_turn_begin():
+	## 清理关卡buff
+	if Current.count_round == 0:
+		EventBus.event_emit("clear_stage_buff")
+	## 回合前buff
+	
 	## 增加回合数
 	Current.count_round += 1
 	## 判断失败

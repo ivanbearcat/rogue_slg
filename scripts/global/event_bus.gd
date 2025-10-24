@@ -32,7 +32,9 @@ func event_emit(event_name: String, param: Array = []) -> void:
 		print("[EventBus] Pushing event: %s with param: %s" % [event_name, param])
 	param = [event_name] + param
 	# 发送事件
+	assert(self.has_signal(event_name), "没有注册的信号：%s" % event_name)
 	callv("emit_signal", param)
+
 	
 
 

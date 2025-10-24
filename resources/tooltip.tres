@@ -1,0 +1,31 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://c7fy6qc45ak5d"]
+
+[ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="1_rkoh8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rkoh8"]
+bg_color = Color(0.6, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qkpxi"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0, 0, 0, 0.98039216)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.98039216, 1, 1, 0.5882353)
+shadow_size = 3
+
+[resource]
+default_font = ExtResource("1_rkoh8")
+default_font_size = 20
+TooltipLabel/colors/font_color = Color(1, 1, 1, 1)
+TooltipPanel/styles/embedded_border = SubResource("StyleBoxFlat_rkoh8")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_qkpxi")
