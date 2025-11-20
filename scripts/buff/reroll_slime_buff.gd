@@ -6,14 +6,12 @@ func set_buff():
 	debuff_texture.texture = texture
 	game_manager.debuff_container.add_child(debuff_texture)
 	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
-	data["one_score"] = Current.one_score
-	Current.one_score = 0
-	
+
 func process_buff():
-	data["one_score"] += Current.one_score
-	Current.one_score = 0
+	#await game_manager.wait_for_dice_animation()
+	for slime in Current.all_enemy_array:
+		if not slime in Current.last_slime_create_array:
+			game_manager.slime_reroll(slime)
 	
 func clear_buff():
-	Current.one_score = data["one_score"]
-	data.erase("one_score")
 	debuff_texture.queue_free()

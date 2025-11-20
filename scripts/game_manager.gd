@@ -1,9 +1,9 @@
 extends Node2D
 
 const hero_property = {
-	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2i(3, 3), "class_icon": "res://images/soldier_icon.png"},
-	"archer": {"name": "archer", "movement": 2, "init_vec": Vector2i(3, 2)},
-	"mage": {"name": "mage", "movement": 2, "init_vec": Vector2i(2, 2)}
+	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2(3, 3), "class_icon": "res://images/soldier_icon.png"},
+	"archer": {"name": "archer", "movement": 2, "init_vec": Vector2(3, 2)},
+	"mage": {"name": "mage", "movement": 2, "init_vec": Vector2(2, 2)}
 	}
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
@@ -120,17 +120,17 @@ const hero_property = {
 
 
 ## 格子像素大小
-var grid_size = Vector2i(16, 16)
+var grid_size = Vector2(16, 16)
 ## 起始格子位置
-var start_pos = Vector2i(16, 16)
+var start_pos = Vector2(16, 16)
 ## 格子位置上下左右偏移
-const grid_offset = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1)]
+const grid_offset = [Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0), Vector2(0, -1)]
 ## 所有格子字典
 var all_grid_dict: Dictionary
 ## astar寻路
 var astar: AStarGrid2D
 ## 最大可移动的地图块
-var _removable_map_vec =  Vector2i(7, 7)
+var _removable_map_vec =  Vector2(7, 7)
 ## 史莱姆创建数组
 var _slime_create_array: Array
 ## 带有骰子点数的动画图片索引
@@ -138,7 +138,7 @@ var dice_point: Array = [0, 2, 4, 6, 8, 10]
 ## 史莱姆场景数组
 var slime_scene_array := ['slime_small', 'slime_small_red', 'slime_small_yellow', 'slime_small_blue']
 ## 边缘格子数组
-var _margin_grid: Array[Vector2i]
+var _margin_grid: Array[Vector2]
 ## 颜色
 var color := {
 	"alpha0": "cc080800",
@@ -168,9 +168,9 @@ func _ready() -> void:
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
 	coin_skill_json_data = Tools.load_json_file('res://config/coin_skill.json')
 	debuff_json_data = Tools.load_json_file('res://config/debuff.json')
-	## 临时
+	## 临时测试金币技能
 	for row in coin_skill_json_data:
-		if row["coin_skill_id"] in ["reroll_all","double_score","reroll_dice"]:
+		if row["coin_skill_id"] in ["reroll_all","double_score","cloud"]:
 			Current.coin_skill_array_dict.append(row)
 	coin_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
 	coin_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
@@ -178,7 +178,6 @@ func _ready() -> void:
 	coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
 	coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
 	coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
-	
 	
 	## 设置基础倍率
 	Current.none_percent = 100
@@ -197,9 +196,9 @@ func _ready() -> void:
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
 			var grid = SceneManager.create_scene("grid")
-			grid.grid_index = Vector2i(x, y)
-			grid.position = Vector2i(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
-			all_grid_dict[Vector2i(x, y)] = grid
+			grid.grid_index = Vector2(x, y)
+			grid.position = Vector2(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
+			all_grid_dict[Vector2(x, y)] = grid
 			grids.add_child(grid)
 			grid.grid_cmd.connect(_on_grid_cmd)
 	Current.all_grids_array = grids.get_children()
@@ -217,29 +216,29 @@ func _ready() -> void:
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
 			if x == 0 or x == range(_removable_map_vec.x).max() or y == 0 or y == range(_removable_map_vec.y).max():
-				_margin_grid.append(Vector2i(x, y))
+				_margin_grid.append(Vector2(x, y))
 	## 预生成史莱姆和警告信息
 	_create_slime()
 	_create_power_slime()
 	_enemy_turn()
-	_pre_turn_begin()
-	## 测试
+	_pre_hero_turn_begin()
+	## 临时测试debuff
 	for row in debuff_json_data:
-		if row["debuff_id"] == "disable_one":
-			var disable_one_buff = load(row["debuff_res"]).new(row, self)
-			BuffSystem.set_pre_turn_buff(disable_one_buff, BuffSystem.buff_type.STAGE)
-			
+		if row["debuff_id"] == "reroll_slime":
+			var buff = load(row["debuff_res"]).new(row, self)
+			BuffSystem.set_pre_turn_buff(buff, BuffSystem.buff_type.STAGE)
 
-func grid_index_to_position(grid_index: Vector2i) -> Vector2i:
-	return Vector2i(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
 
-func position_to_grid_index(_position: Vector2i) -> Vector2i:
-	return Vector2i((_position.x - start_pos.x) / grid_size.x, (_position.y - start_pos.y) / grid_size.y)
+func grid_index_to_position(grid_index: Vector2) -> Vector2:
+	return Vector2(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
+
+func position_to_grid_index(_position: Vector2) -> Vector2:
+	return Vector2((_position.x - start_pos.x) / grid_size.x, (_position.y - start_pos.y) / grid_size.y)
 
 ## 生成史莱姆
 func _create_slime():
-	var available_grid_array: Array[Vector2i]
-	var create_slime_grid_index_array: Array[Vector2i]
+	var available_grid_array: Array[Vector2]
+	var create_slime_grid_index_array: Array[Vector2]
 	var slime_num: int
 	## 计算可以生成史莱姆的空地块
 	for grid_index in all_grid_dict.keys():
@@ -265,8 +264,8 @@ func _create_slime():
 ## 边缘生成史莱姆
 func _create_slime_on_margin_grid():
 	## 边缘地块随机生成3个史莱姆
-	var available_grid_array: Array[Vector2i]
-	var create_slime_grid_index_array: Array[Vector2i]
+	var available_grid_array: Array[Vector2]
+	var create_slime_grid_index_array: Array[Vector2]
 	var slime_num: int
 	for grid_index in _margin_grid:
 		if ! grid_index in Current.all_enemy_grid_index_array:
@@ -297,26 +296,35 @@ func _create_power_slime():
 
 		
 ## 史莱姆移动
-func _slime_move_ai():
+func slime_move_ai():
+	var target_position_array: Array
+	var slime_create_grid_index_array: Array
 	for enemy in Current.all_enemy_array:
 		var movable_grid_array: Array
 		for offset in grid_offset:
 			var next_grid_index = enemy.enemy_grid_index + offset
-			## 判断是否有英雄、史莱姆、巢穴占位者超出边界
-			if Current.all_hero_grid_index_array.has(next_grid_index) or \
-			Current.all_enemy_grid_index_array.has(next_grid_index) or \
+			## 获取所有即将出生的史莱姆位置
+			for slime in _slime_create_array:
+				slime_create_grid_index_array.append(slime.enemy_grid_index)
+			## 判断是否有英雄、史莱姆、出生点、超出边界
+			if Current.hero.hero_grid_index == next_grid_index or \
+			target_position_array.has(Tools.grid_index_to_position(next_grid_index)) or \
+			slime_create_grid_index_array.has(next_grid_index) or \
 			next_grid_index.x < 0 or \
 			next_grid_index.x > _removable_map_vec.x - 1 or \
 			next_grid_index.y < 0 or \
 			next_grid_index.y > _removable_map_vec.y - 1:
 				continue
+			
+				
 			movable_grid_array.append(next_grid_index)
 		## 从可移动数组中随机一个移动
 		if movable_grid_array.size() > 0:
-			var target_grid = movable_grid_array.pick_random()
-			var target_position: Vector2 = grid_index_to_position(target_grid)
+			var target_grid_index = movable_grid_array.pick_random()
+			var target_position: Vector2 = grid_index_to_position(target_grid_index)
 			enemy.target_position = target_position
-			enemy.enemy_grid_index = target_grid
+			target_position_array.append(target_position)
+			await Tools.time_sleep(0.01)			
 
 
 ## 史莱姆重掷
@@ -551,14 +559,14 @@ func skill_attack():
 	while clear_stage_ui.visible == true:
 		await Tools.time_sleep(0.2)
 	_enemy_turn()
-	_pre_turn_begin()
+	_pre_hero_turn_begin()
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
 	if Current.power < Current.max_power:
 		Current.power += 1
 	_enemy_turn()
-	_pre_turn_begin()
+	_pre_hero_turn_begin()
 	## 测试
 	#for row in debuff_json_data:
 		#if row["debuff_id"] == "disable_one":
@@ -589,22 +597,20 @@ func _enemy_turn():
 			_roll_dice(enemy)
 		else:
 			enemy.queue_free()
-	#_slime_move_ai()
 	while Current.has_move_slime:
 		await get_tree().create_timer(0.1).timeout
+	Current.last_slime_create_array = _slime_create_array.duplicate()
 	_slime_create_array.clear()
+	Current.last_slime_create_array
 	## 史莱姆预生成和告警信息
 	_create_slime()
 	_create_power_slime()
 	## 测试
 	
 
-func _pre_turn_begin():
-	## 清理关卡buff
-	if Current.count_round == 0:
-		EventBus.event_emit("clear_stage_buff")
+func _pre_hero_turn_begin():
 	## 回合前buff
-	
+	EventBus.event_emit("do_pre_turn_buff")
 	## 增加回合数
 	Current.count_round += 1
 	## 判断失败
@@ -615,10 +621,7 @@ func _pre_turn_begin():
 	for hero in Current.all_hero_array:
 		hero.hero_state_machine.transition_to("idle")
 	## 重新计算不可移动地块
-	for grid in grids.get_children():
-		astar.set_point_solid(grid.grid_index, false)
-	for grid_index in Current.all_enemy_grid_index_array:
-		astar.set_point_solid(grid_index, true)
+	reset_astar_solid()
 	## 重置已移动标记
 	Current.is_moved = false
 	## 恢复鼠标
@@ -627,6 +630,21 @@ func _pre_turn_begin():
 	turn_button.disabled = false
 	## 下回合开始
 	Current.turn = "hero_turn"
+	
+func reset_astar_solid() -> void:
+	## 重新计算不可移动地块
+	for grid in grids.get_children():
+		astar.set_point_solid(grid.grid_index, false)
+	for grid_index in Current.all_enemy_grid_index_array:
+		astar.set_point_solid(grid_index, true)
+
+## 等待骰子动画完成
+func wait_for_dice_animation():
+	print(Current.all_enemy_array)
+	for slime in Current.all_enemy_array:
+		print(slime, slime.dice.is_playing())
+		if slime.dice.is_playing():
+			await Tools.time_sleep(0.05)
 
 ## 判断是否过关
 func _check_stage_clear():
@@ -646,6 +664,8 @@ func _check_stage_clear():
 		var highest_dice_add_coin = Current.highest_dice_num - 1
 		Current.count_add_coins += highest_dice_add_coin
 		_do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin)
+		## 清理关卡buff
+		EventBus.event_emit("clear_stage_buff")
 
 func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin):
 	while get_tree().paused:
@@ -658,19 +678,19 @@ func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coi
 	clear_stage_label.show()
 	## 第一行
 	stage_clear_label_1.show()
-	await EffectManager.typewriter_effect(stage_clear_label_1, stage_clear_label_1.text, 1)
+	await EffectManager.typewriter_effect(stage_clear_label_1, stage_clear_label_1.text, 0.5)
 	stage_coin_rlabel_1.show()
 	stage_coin_label_1.show()
 	await EffectManager.label_num_rolling_effect(stage_coin_label_1, stage_add_coin)
 	## 第二行
 	stage_clear_label_2.show()
-	await EffectManager.typewriter_effect(stage_clear_label_2, stage_clear_label_2.text, 1)
+	await EffectManager.typewriter_effect(stage_clear_label_2, stage_clear_label_2.text, 0.5)
 	stage_coin_rlabel_2.show()
 	stage_coin_label_2.show()
 	await EffectManager.label_num_rolling_effect(stage_coin_label_2, round_add_coin)
 	## 第三行
 	stage_clear_label_3.show()
-	await EffectManager.typewriter_effect(stage_clear_label_3, stage_clear_label_3.text, 1)
+	await EffectManager.typewriter_effect(stage_clear_label_3, stage_clear_label_3.text, 0.5)
 	stage_coin_rlabel_3.show()
 	stage_coin_label_3.show()
 	await EffectManager.label_num_rolling_effect(stage_coin_label_3, highest_dice_add_coin)

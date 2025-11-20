@@ -675,7 +675,7 @@ func navigate_list(list: ItemList, index: int, amount: int):
 func get_center_editor_rect() -> Rect2i:
 	var script_editor: ScriptEditor = EditorInterface.get_script_editor()
 
-	var size: Vector2i = Vector2i(400, 500)
+	var size: Vector2 = Vector2(400, 500)
 	var x: int
 	var y: int
 
@@ -690,7 +690,7 @@ func get_center_editor_rect() -> Rect2i:
 		x = script_editor.global_position.x + script_editor.size.x / 2 - size.x / 2
 		y = script_editor.global_position.y + script_editor.size.y / 2 - size.y / 2
 
-	return Rect2i(Vector2i(x, y), size)
+	return Rect2i(Vector2(x, y), size)
 
 func open_outline_popup():
 	var button_flags: Array[bool] = []

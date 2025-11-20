@@ -1,0 +1,149 @@
+[
+    {
+        "debuff_id": "disable_one",
+        "debuff_name": "禁用一点",
+        "debuff_icon": "res://images/enemy_icon/disable_one.png",
+        "debuff_tooltip": "1点的基础分数变为0",
+        "debuff_res": "res://scripts/buff/disable_one_buff.gd"
+    },
+    {
+        "debuff_id": "disable_two",
+        "debuff_name": "禁用二点",
+        "debuff_icon": "res://images/enemy_icon/disable_two.png",
+        "debuff_tooltip": "2点的基础分数变为0",
+        "debuff_res": "res://scripts/buff/disable_two_buff.gd"
+    },
+    {
+        "debuff_id": "disable_three",
+        "debuff_name": "禁用三点",
+        "debuff_icon": "res://images/enemy_icon/disable_three.png",
+        "debuff_tooltip": "3点的基础分数变为0",
+        "debuff_res": "res://scripts/buff/disable_three_buff.gd"
+    },
+    {
+        "debuff_id": "disable_four",
+        "debuff_name": "禁用四点",
+        "debuff_icon": "res://images/enemy_icon/disable_four.png",
+        "debuff_tooltip": "4点的基础分数变为0",
+        "debuff_res": "res://scripts/buff/disable_four_buff.gd"
+    },
+    {
+        "debuff_id": "disable_five",
+        "debuff_name": "禁用五点",
+        "debuff_icon": "res://images/enemy_icon/disable_five.png",
+        "debuff_tooltip": "5点的基础分数变为0",
+        "debuff_res": "res://scripts/buff/disable_five_buff.gd"
+    },
+    {
+        "debuff_id": "disable_six",
+        "debuff_name": "禁用六点",
+        "debuff_icon": "res://images/enemy_icon/disable_six.png",
+        "debuff_tooltip": "6点的基础分数变为0",
+        "debuff_res": "res://scripts/buff/disable_six_buff.gd"
+    },
+    {
+        "debuff_id": "disable_none",
+        "debuff_name": "禁用无骰型",
+        "debuff_icon": "res://images/enemy_icon/disable_none.png",
+        "debuff_tooltip": "无骰型的倍率变为0%",
+        "debuff_res": "res://scripts/buff/disable_none_buff.gd"
+    },
+    {
+        "debuff_id": "disable_duizi",
+        "debuff_name": "禁用对子骰型",
+        "debuff_icon": "res://images/enemy_icon/disable_duizi.png",
+        "debuff_tooltip": "对子骰型的倍率变为0%",
+        "debuff_res": "res://scripts/buff/disable_duizi_buff.gd"
+    },
+    {
+        "debuff_id": "disable_shunzi",
+        "debuff_name": "禁用顺子骰型",
+        "debuff_icon": "res://images/enemy_icon/disable_shunzi.png",
+        "debuff_tooltip": "顺子骰型的倍率变为0%",
+        "debuff_res": "res://scripts/buff/disable_shunzi_buff.gd"
+    },
+    {
+        "debuff_id": "disable_tongse",
+        "debuff_name": "禁用同色骰型",
+        "debuff_icon": "res://images/enemy_icon/disable_tongse.png",
+        "debuff_tooltip": "同色骰型的倍率变为0%",
+        "debuff_res": "res://scripts/buff/disable_tongse_buff.gd"
+    },
+    {
+        "debuff_id": "disable_tongdui",
+        "debuff_name": "禁用同对骰型",
+        "debuff_icon": "res://images/enemy_icon/disable_tongdui.png",
+        "debuff_tooltip": "同对骰型的倍率变为0%",
+        "debuff_res": "res://scripts/buff/disable_tongdui_buff.gd"
+    },
+    {
+        "debuff_id": "disable_tongshun",
+        "debuff_name": "禁用同顺骰型",
+        "debuff_icon": "res://images/enemy_icon/disable_tongshun.png",
+        "debuff_tooltip": "同顺骰型的倍率变为0%",
+        "debuff_res": "res://scripts/buff/disable_tongshun_buff.gd"
+    },
+    {
+        "debuff_id": "target_score_up",
+        "debuff_name": "目标分数上升",
+        "debuff_icon": "res://images/enemy_icon/target_score_up.png",
+        "debuff_tooltip": "回合结束时目标分数每回合+1%",
+        "debuff_res": "res://scripts/buff/target_score_up_buff.gd"
+    },
+    {
+        "debuff_id": "current_score_down",
+        "debuff_name": "当前分数下降",
+        "debuff_icon": "res://images/enemy_icon/current_score_down.png",
+        "debuff_tooltip": "回合结束时当前分数-5%",
+        "debuff_res": "res://scripts/buff/current_score_down_buff.gd"
+    },
+    {
+        "debuff_id": "move_current_score_down",
+        "debuff_name": "移动下降分数",
+        "debuff_icon": "res://images/enemy_icon/move_current_score_down.png",
+        "debuff_tooltip": "每移动一格当前分数-2%",
+        "debuff_res": "res://scripts/buff/move_current_score_down_buff.gd"
+    },
+    {
+        "debuff_id": "move_down",
+        "debuff_name": "移动力下降",
+        "debuff_icon": "res://images/enemy_icon/move_down.png",
+        "debuff_tooltip": "移动力-1",
+        "debuff_res": "res://scripts/buff/move_down_buff.gd"
+    },
+    {
+        "debuff_id": "no_power_slime",
+        "debuff_name": "无能量史莱姆",
+        "debuff_icon": "res://images/enemy_icon/no_power_slime.png",
+        "debuff_tooltip": "不生成能量史莱姆",
+        "debuff_res": "res://scripts/buff/no_power_slime_buff.gd"
+    },
+    {
+        "debuff_id": "power_current_score_down",
+        "debuff_name": "使用能量扣分",
+        "debuff_icon": "res://images/enemy_icon/power_current_score_down.png",
+        "debuff_tooltip": "使用能量时当前分数-10%",
+        "debuff_res": "res://scripts/buff/power_current_score_down_buff.gd"
+    },
+    {
+        "debuff_id": "reroll_slime",
+        "debuff_name": "重掷史莱姆",
+        "debuff_icon": "res://images/enemy_icon/reroll_slime.png",
+        "debuff_tooltip": "每回合都会重掷所有史莱姆",
+        "debuff_res": "res://scripts/buff/reroll_slime_buff.gd"
+    },
+    {
+        "debuff_id": "slime_current_score_down",
+        "debuff_name": "史莱姆下降分数",
+        "debuff_icon": "res://images/enemy_icon/slime_current_score_down.png",
+        "debuff_tooltip": "每有一个史莱姆当前分数-1",
+        "debuff_res": "res://scripts/buff/slime_current_score_down_buff.gd"
+    },
+    {
+        "debuff_id": "slime_move",
+        "debuff_name": "史莱姆移动",
+        "debuff_icon": "res://images/enemy_icon/slime_move.png",
+        "debuff_tooltip": "每个回合史莱姆都会移动一格",
+        "debuff_res": "res://scripts/buff/slime_move_buff.gd"
+    }
+]

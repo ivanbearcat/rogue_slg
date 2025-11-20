@@ -8,7 +8,7 @@ signal grid_cmd
 @onready var target: Sprite2D = $Area2D/target
 @onready var attack: Sprite2D = $Area2D/attack
 
-var grid_index: Vector2i
+var grid_index: Vector2
 
 
 func _on_area_2d_mouse_entered() -> void:

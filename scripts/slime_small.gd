@@ -6,7 +6,7 @@ class_name Slime
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 @onready var game_manager: Node2D = $"/root/game_manager"
 
-var enemy_grid_index: Vector2i: 
+var enemy_grid_index: Vector2: 
 	get:
 		return Tools.position_to_grid_index(position)
 var enemy_hp: int = 1
@@ -39,6 +39,7 @@ func _process(delta: float) -> void:
 	if target_position:
 		if self.position == target_position:
 			target_position = Vector2.ZERO
+			game_manager.reset_astar_solid()
 		else:
 			self.position = self.position.move_toward(target_position, 15 * delta)
 			
@@ -61,3 +62,7 @@ func _on_area_2d_mouse_entered() -> void:
 
 func _on_area_2d_mouse_exited() -> void:
 	Current.slime = null
+
+
+func _on_dice_animation_finished() -> void:
+	print(dice.frame)

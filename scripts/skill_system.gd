@@ -149,24 +149,24 @@ func _show_soldier_skill_1_attack():
 				if grid_index.x == Current.clicked_hero.hero_grid_index.x:
 					var offset = grid_index.y - Current.clicked_hero.hero_grid_index.y
 					for attack_grid_index in \
-					[grid_index + Vector2i(-1, 0),
+					[grid_index + Vector2(-1, 0),
 					grid_index,
-					grid_index + Vector2i(1, 0),
-					grid_index + Vector2i(-1, offset),
-					grid_index + Vector2i(0, offset),
-					grid_index + Vector2i(1, offset)]:
+					grid_index + Vector2(1, 0),
+					grid_index + Vector2(-1, offset),
+					grid_index + Vector2(0, offset),
+					grid_index + Vector2(1, offset)]:
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 							Current.skill_attack_range.append(attack_grid_index)
 				if grid_index.y == Current.clicked_hero.hero_grid_index.y:
 					var offset = grid_index.x - Current.clicked_hero.hero_grid_index.x
 					for attack_grid_index in \
-					[grid_index + Vector2i(0, -1),
+					[grid_index + Vector2(0, -1),
 					grid_index,
-					grid_index + Vector2i(0, 1),
-					grid_index + Vector2i(offset, -1),
-					grid_index + Vector2i(offset, 0),
-					grid_index + Vector2i(offset, 1)]:
+					grid_index + Vector2(0, 1),
+					grid_index + Vector2(offset, -1),
+					grid_index + Vector2(offset, 0),
+					grid_index + Vector2(offset, 1)]:
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 							Current.skill_attack_range.append(attack_grid_index)
@@ -176,13 +176,13 @@ func _show_soldier_skill_1_attack():
 			if Current.grid_index == grid_index:
 				if grid_index.x == Current.clicked_hero.hero_grid_index.x:
 					for attack_grid_index in \
-					[grid_index + Vector2i(-1, 0), grid_index, grid_index + Vector2i(1, 0)]:
+					[grid_index + Vector2(-1, 0), grid_index, grid_index + Vector2(1, 0)]:
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 							Current.skill_attack_range.append(attack_grid_index)
 				if grid_index.y == Current.clicked_hero.hero_grid_index.y:
 					for attack_grid_index in \
-					[grid_index + Vector2i(0, -1), grid_index, grid_index + Vector2i(0, 1)]:
+					[grid_index + Vector2(0, -1), grid_index, grid_index + Vector2(0, 1)]:
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 							Current.skill_attack_range.append(attack_grid_index)
@@ -215,7 +215,7 @@ func _show_soldier_skill_2_attack():
 			if Current.grid_index == grid_index:
 				Current.skill_attack_range = Current.skill_target_range.duplicate()
 				## 加入英雄围四个角的坐标
-				var offset_list = [Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]
+				var offset_list = [Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(-1, -1)]
 				for offset in offset_list:
 					Current.skill_attack_range.append(Current.clicked_hero.hero_grid_index + offset)
 				for attack_grid_index in Current.skill_attack_range:
@@ -257,11 +257,11 @@ func _show_soldier_skill_3_attack():
 				if grid_index.x == Current.clicked_hero.hero_grid_index.x and \
 				grid_index.y < Current.clicked_hero.hero_grid_index.y:
 					for attack_grid_index in [
-						grid_index + Vector2i(-1, 0),
-						grid_index + Vector2i(1, 0),
-						grid_index + Vector2i(-1, -1),
-					 	grid_index + Vector2i(0, -1),
-					 	grid_index + Vector2i(1, -1)
+						grid_index + Vector2(-1, 0),
+						grid_index + Vector2(1, 0),
+						grid_index + Vector2(-1, -1),
+					 	grid_index + Vector2(0, -1),
+					 	grid_index + Vector2(1, -1)
 					]:
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
@@ -270,11 +270,11 @@ func _show_soldier_skill_3_attack():
 				if grid_index.x == Current.clicked_hero.hero_grid_index.x and \
 				grid_index.y > Current.clicked_hero.hero_grid_index.y:
 					for attack_grid_index in [
-						grid_index + Vector2i(-1, 0),
-						grid_index + Vector2i(1, 0),
-						grid_index + Vector2i(-1, 1),
-					 	grid_index + Vector2i(0, 1),
-					 	grid_index + Vector2i(1, 1)
+						grid_index + Vector2(-1, 0),
+						grid_index + Vector2(1, 0),
+						grid_index + Vector2(-1, 1),
+					 	grid_index + Vector2(0, 1),
+					 	grid_index + Vector2(1, 1)
 					]:
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
@@ -283,11 +283,11 @@ func _show_soldier_skill_3_attack():
 				if grid_index.y == Current.clicked_hero.hero_grid_index.y and \
 				grid_index.x < Current.clicked_hero.hero_grid_index.x:
 					for attack_grid_index in [
-						grid_index + Vector2i(0, -1),
-						grid_index + Vector2i(0, 1),
-						grid_index + Vector2i(-1, 1),
-					 	grid_index + Vector2i(-1, 0),
-					 	grid_index + Vector2i(-1, -1)
+						grid_index + Vector2(0, -1),
+						grid_index + Vector2(0, 1),
+						grid_index + Vector2(-1, 1),
+					 	grid_index + Vector2(-1, 0),
+					 	grid_index + Vector2(-1, -1)
 					]:
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
@@ -296,11 +296,11 @@ func _show_soldier_skill_3_attack():
 				if grid_index.y == Current.clicked_hero.hero_grid_index.y and \
 				grid_index.x > Current.clicked_hero.hero_grid_index.x:
 					for attack_grid_index in [
-						grid_index + Vector2i(0, 1),
-						grid_index + Vector2i(0, -1),
-						grid_index + Vector2i(1, 1),
-					 	grid_index + Vector2i(1, 0),
-					 	grid_index + Vector2i(1, -1)
+						grid_index + Vector2(0, 1),
+						grid_index + Vector2(0, -1),
+						grid_index + Vector2(1, 1),
+					 	grid_index + Vector2(1, 0),
+					 	grid_index + Vector2(1, -1)
 					]:
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true

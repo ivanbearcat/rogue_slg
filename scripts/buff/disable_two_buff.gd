@@ -6,14 +6,14 @@ func set_buff():
 	debuff_texture.texture = texture
 	game_manager.debuff_container.add_child(debuff_texture)
 	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
-	data["one_score"] = Current.one_score
-	Current.one_score = 0
+	data["two_score"] = Current.two_score
+	Current.two_score = 0
 	
 func process_buff():
-	data["one_score"] += Current.one_score
-	Current.one_score = 0
+	data["two_score"] += Current.two_score
+	Current.two_score = 0
 	
 func clear_buff():
-	Current.one_score = data["one_score"]
-	data.erase("one_score")
+	Current.two_score = data["two_score"]
+	data.erase("two_score")
 	debuff_texture.queue_free()

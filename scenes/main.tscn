@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=133 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -28,7 +28,6 @@
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="19_vxglm"]
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
-[ext_resource type="PackedScene" uid="uid://kqagud0bpv43" path="res://scenes/debuff_texture.tscn" id="25_2f3dj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
 texture = ExtResource("2_nsbfg")
@@ -3063,9 +3062,6 @@ offset_left = 2.25
 offset_top = 4.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="TextureRect" parent="debuff_ui/debuff_container" instance=ExtResource("25_2f3dj")]
-layout_mode = 2
 
 [node name="buff_ui" type="Control" parent="."]
 layout_mode = 3

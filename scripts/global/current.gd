@@ -9,7 +9,7 @@ var slime: Slime
 ## 鼠标点击英雄
 var clicked_hero: Hero
 ## 选中的格子索引
-var grid_index: Vector2i
+var grid_index: Vector2
 ## 鼠标在格子范围里
 var within_grid_area := false
 ## 包含所有英雄字典
@@ -261,3 +261,5 @@ var coin_skill_array_dict: Array
 var all_grids_array: Array
 ## 公共锁
 var public_lock_array := []
+## 上回合生成史莱姆
+var last_slime_create_array: Array

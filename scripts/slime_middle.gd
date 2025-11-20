@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var warning: Sprite2D = $Area2D/warning
 
-var enemy_grid_index: Vector2i
+var enemy_grid_index: Vector2
 var enemy_hp: int = 2
 var target_position: Vector2
 var enemy_type: int = 2
