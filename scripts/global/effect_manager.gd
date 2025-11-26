@@ -20,6 +20,8 @@ func big_flow_effect(object, scale_size=1.5, duration=0.07):
 	
 ## 飘字效果
 func float_number_effect(float_num, gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50)) -> Node2D:
+	if float_num >-1 and float_num < 1:
+		return
 	var float_number_instantiate = SceneManager.create_scene("float_number")
 	float_number_instantiate.float_num = float_num
 	float_number_instantiate.gravity = gravity

@@ -1,5 +1,7 @@
 extends Node2D
 
+signal slime_reroll_finished
+
 const hero_property = {
 	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2(3, 3), "class_icon": "res://images/soldier_icon.png"},
 	"archer": {"name": "archer", "movement": 2, "init_vec": Vector2(3, 2)},
@@ -142,7 +144,8 @@ var _margin_grid: Array[Vector2]
 ## 颜色
 var color := {
 	"alpha0": "cc080800",
-	"red": "cc0808"
+	"red": "cc0808",
+	"green": "0fff5b"
 }
 ## 升级时的卡牌数据
 var card_level_up_json_data :Array
@@ -160,8 +163,6 @@ var level_up_three_card_array :Array
 
 func _ready() -> void:
 	## 测试
-	#clear_stage_ui.show()
-	#_do_stage_clear_effect()
 	
 	## 加载json数据
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
@@ -186,12 +187,12 @@ func _ready() -> void:
 	Current.tongse_percent = 140
 	Current.tongdui_percent = 300
 	Current.tongshun_percent = 320
+	## 初始化金币
+	Current.total_coins = 5
 	## 设置目标分数
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
-	## 初始化金币
-		Current.total_coins = 5
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -217,16 +218,15 @@ func _ready() -> void:
 		for y in range(_removable_map_vec.y):
 			if x == 0 or x == range(_removable_map_vec.x).max() or y == 0 or y == range(_removable_map_vec.y).max():
 				_margin_grid.append(Vector2(x, y))
-	## 预生成史莱姆和警告信息
-	_create_slime()
-	_create_power_slime()
-	_enemy_turn()
-	_pre_hero_turn_begin()
+	## 预生成史莱姆
+	_pre_create_slime()
+	## 回合处理
+	_turn_process()
 	## 临时测试debuff
 	for row in debuff_json_data:
-		if row["debuff_id"] == "reroll_slime":
+		if row["debuff_id"] == "current_score_down":
 			var buff = load(row["debuff_res"]).new(row, self)
-			BuffSystem.set_pre_turn_buff(buff, BuffSystem.buff_type.STAGE)
+			BuffSystem.set_pre_enemy_turn_buff(buff, BuffSystem.buff_type.STAGE)
 
 
 func grid_index_to_position(grid_index: Vector2) -> Vector2:
@@ -236,13 +236,13 @@ func position_to_grid_index(_position: Vector2) -> Vector2:
 	return Vector2((_position.x - start_pos.x) / grid_size.x, (_position.y - start_pos.y) / grid_size.y)
 
 ## 生成史莱姆
-func _create_slime():
+func _pre_create_slime():
 	var available_grid_array: Array[Vector2]
 	var create_slime_grid_index_array: Array[Vector2]
 	var slime_num: int
 	## 计算可以生成史莱姆的空地块
 	for grid_index in all_grid_dict.keys():
-		if ! grid_index in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
+		if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
 			available_grid_array.append(grid_index)
 	if available_grid_array.size() > 0:
 		slime_num = clamp(available_grid_array.size(), 1, 3)
@@ -260,6 +260,23 @@ func _create_slime():
 			for grid in grids_array:
 				if grid.grid_index == grid_index:
 					grid.warning.visible = true
+
+func _create_slime():
+	## 生成史莱姆
+	var grids_array = grids.get_children()
+	for grid in grids_array:
+		grid.warning.visible = false
+	for enemy in _slime_create_array:
+		if enemy.enemy_grid_index != Current.hero.hero_grid_index and \
+		enemy.enemy_grid_index not in Current.all_enemy_grid_index_array:
+			enemys.add_child(enemy)
+			while enemy not in Current.all_enemy_array:
+				await Tools.time_sleep(0.01)
+			_roll_dice(enemy)
+		else:
+			enemy.queue_free()
+	Current.last_slime_create_array = _slime_create_array.duplicate()
+	_slime_create_array.clear()
 
 ## 边缘生成史莱姆
 func _create_slime_on_margin_grid():
@@ -289,10 +306,11 @@ func _create_slime_on_margin_grid():
 
 ## 添加能量史莱姆
 func _create_power_slime():
-	if Current.power_slime == null and Current.all_enemy_array:
-		Current.power_slime = Current.all_enemy_array.pick_random()
-		if Current.power_slime is Slime:
-			Current.power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+	if Current.power_slime_array.size() < Current.power_slime_num and Current.all_enemy_array.size() > 0:
+		for i in range(Current.power_slime_num - Current.power_slime_array.size()):
+			var power_slime = Current.all_enemy_array.pick_random()
+			if power_slime not in Current.power_slime_array:
+				power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 
 		
 ## 史莱姆移动
@@ -308,6 +326,7 @@ func slime_move_ai():
 				slime_create_grid_index_array.append(slime.enemy_grid_index)
 			## 判断是否有英雄、史莱姆、出生点、超出边界
 			if Current.hero.hero_grid_index == next_grid_index or \
+			Current.all_enemy_grid_index_array.has(next_grid_index) or \
 			target_position_array.has(Tools.grid_index_to_position(next_grid_index)) or \
 			slime_create_grid_index_array.has(next_grid_index) or \
 			next_grid_index.x < 0 or \
@@ -315,8 +334,6 @@ func slime_move_ai():
 			next_grid_index.y < 0 or \
 			next_grid_index.y > _removable_map_vec.y - 1:
 				continue
-			
-				
 			movable_grid_array.append(next_grid_index)
 		## 从可移动数组中随机一个移动
 		if movable_grid_array.size() > 0:
@@ -324,8 +341,8 @@ func slime_move_ai():
 			var target_position: Vector2 = grid_index_to_position(target_grid_index)
 			enemy.target_position = target_position
 			target_position_array.append(target_position)
-			await Tools.time_sleep(0.01)			
-
+			while target_position not in target_position_array:
+				await Tools.time_sleep(0.01)
 
 ## 史莱姆重掷
 func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
@@ -339,7 +356,7 @@ func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 		#var copy_slime_scene_array = slime_scene_array.duplicate()
 		#copy_slime_scene_array.pop_at(copy_slime_scene_array.find(slime_color))
 	if only_roll_dice:
-		_roll_dice(slime, 1, 0)
+		await _roll_dice(slime, 1, 0)
 	elif only_roll_color:
 		## 获取原始点数
 		var old_frame = slime.dice.frame
@@ -351,7 +368,7 @@ func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 		enemys.add_child(slime_instantiate)
 		## 设置点数
 		slime_instantiate.dice.set_frame_and_progress(old_frame, 0)
-		_roll_dice(slime_instantiate, 0, 1)
+		await _roll_dice(slime_instantiate, 0, 1)
 	else:
 		slime.queue_free()
 		var slime_sence = slime_scene_array.pick_random()
@@ -359,7 +376,8 @@ func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 		slime_instantiate.position = grid_index_to_position(slime_grid_index)
 		slime_instantiate.enemy_grid_index = slime_grid_index
 		enemys.add_child(slime_instantiate)
-		_roll_dice(slime_instantiate)
+		await _roll_dice(slime_instantiate)
+	slime_reroll_finished.emit()
 
 
 ##设置验条刻度
@@ -552,21 +570,41 @@ func show_skill_attack():
 func hide_skill_attack():
 	skill_system.hide_skill_attack()
 
+## 回合操作
+func _turn_process():
+	## 执行敌人回合前buff
+	EventBus.event_emit("do_pre_enemy_turn_buff")
+	## 敌人回合
+	_turn_clean()
+	### 执行玩家回合前buff
+	#EventBus.event_emit("do_pre_turn_buff")
+	## 生成史莱姆加入节点
+	await _create_slime()
+	## 史莱姆预生成和告警信息
+	_pre_create_slime()
+	## 保证骰子动画完成
+	while "reroll_slime_buff" in Current.public_lock_array:
+		await Tools.time_sleep(0.05)
+	## 生成能量史莱姆
+	_create_power_slime()
+	## 玩家回合前
+	_pre_hero_turn_begin()
+	## 执行玩家回合前buff
+	EventBus.event_emit("do_pre_hero_turn_buff")
+
 ## 技能结算
 func skill_attack():
 	await skill_system.skill_attack()
 	await _check_stage_clear()
 	while clear_stage_ui.visible == true:
 		await Tools.time_sleep(0.2)
-	_enemy_turn()
-	_pre_hero_turn_begin()
+	_turn_process()
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
 	if Current.power < Current.max_power:
 		Current.power += 1
-	_enemy_turn()
-	_pre_hero_turn_begin()
+	_turn_process()
 	## 测试
 	#for row in debuff_json_data:
 		#if row["debuff_id"] == "disable_one":
@@ -580,37 +618,16 @@ func _on_turn_button_button_down() -> void:
 func _on_turn_button_button_up() -> void:
 	turn_button_label.position += Vector2(0, -1)
 	
-## 敌人回合
-func _enemy_turn():
+## 回合的清理工作
+func _turn_clean():
+	## 重置英雄能
 	EventBus.event_emit("reset_all_hero_skills")
+	## 重置金币技能
 	EventBus.event_emit("reset_cursor")
+	## 进入敌人回合
 	Current.turn = "enemy_turn"
-	turn_button.disabled = true
-	## 生成史莱姆
-	var grids_array = grids.get_children()
-	for grid in grids_array:
-		grid.warning.visible = false
-	for enemy in _slime_create_array:
-		if enemy.enemy_grid_index != Current.hero.hero_grid_index and \
-		enemy.enemy_grid_index not in Current.all_enemy_grid_index_array:
-			enemys.add_child(enemy)
-			_roll_dice(enemy)
-		else:
-			enemy.queue_free()
-	while Current.has_move_slime:
-		await get_tree().create_timer(0.1).timeout
-	Current.last_slime_create_array = _slime_create_array.duplicate()
-	_slime_create_array.clear()
-	Current.last_slime_create_array
-	## 史莱姆预生成和告警信息
-	_create_slime()
-	_create_power_slime()
-	## 测试
-	
 
 func _pre_hero_turn_begin():
-	## 回合前buff
-	EventBus.event_emit("do_pre_turn_buff")
 	## 增加回合数
 	Current.count_round += 1
 	## 判断失败
@@ -627,7 +644,6 @@ func _pre_hero_turn_begin():
 	## 恢复鼠标
 	CursorManager.reset_cursor()
 	EventBus.event_emit("hide_all_skills")
-	turn_button.disabled = false
 	## 下回合开始
 	Current.turn = "hero_turn"
 	

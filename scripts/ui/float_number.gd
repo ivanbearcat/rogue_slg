@@ -1,8 +1,18 @@
 extends Node2D
 
+var color := {
+	"green": "0fff5b",
+	"red": "ff0000"
+}
+
 var float_num: int:
 	set(v):
-		$Label.text = "+" + str(v)
+		if v >= 0:
+			$Label.label_settings.font_color = Color.html(color["green"])
+			$Label.text = "+" + str(v)
+		else:
+			$Label.label_settings.font_color = Color.html(color["red"])
+			$Label.text = str(v)
 	get:
 		return $Label.text
 

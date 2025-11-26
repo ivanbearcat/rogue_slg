@@ -6,7 +6,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_hmpp3"]
 font = ExtResource("2_o6ttq")
 font_size = 32
-font_color = Color(0.058537006, 1, 0.35725856, 1)
+font_color = Color(1, 0, 0, 1)
 shadow_size = 4
 shadow_color = Color(0, 0.48046875, 0, 1)
 

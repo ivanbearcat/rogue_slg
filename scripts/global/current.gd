@@ -224,7 +224,15 @@ var dice_type_point: int
 ## 攻击动画是否完成
 var attack_animation_finished = 1
 ## 能量史莱姆或强化技能编号
-var power_slime
+var power_slime_array: Array:
+	get:
+		var _power_slime_array = []
+		for _slime in all_enemy_array:
+			if _slime.animated_sprite_2d.material.get_shader_parameter("is_high_light") == true:
+				_power_slime_array.append(_slime)
+		return _power_slime_array
+## 能量史莱姆总数
+var power_slime_num := 1
 ## 鼠标状态
 var mouse_status := 'default'
 ## 重掷次数
