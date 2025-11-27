@@ -8,11 +8,12 @@ func set_buff():
 	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
 
 func process_buff():
-	var sub_num = int(Current.total_score * 0.05)
-	var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
+	var add_num = int(Current.target_score * 0.01)
+	var float_number_instantiate = EffectManager.float_number_effect(add_num, "purple")
 	Current.hero.add_child(float_number_instantiate)
 	await Tools.time_sleep(0.5)
-	Current.total_score -= sub_num
+	Current.target_score += add_num
+	EffectManager.big_flow_effect(game_manager.target_score)
 	
 func clear_buff():
 	debuff_texture.queue_free()

@@ -82,6 +82,8 @@ var target_score: int:
 ## 当前总分
 var total_score: int:
 	set(v):
+		if v < 0:
+			v = 0
 		game_manager.total_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.total_score)
 	get:

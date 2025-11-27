@@ -35,7 +35,7 @@ func skill_attack():
 	## 正在攻击结算
 	Current.action_lock = true
 	## 攻击前buff
-	EventBus.event_emit("do_pre_attack_buff")
+	#EventBus.event_emit("do_pre_attack_buff")
 	## 史莱姆死亡
 	var _slime_die_array: Array
 	for slime in Current.all_enemy_array:

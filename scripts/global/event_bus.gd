@@ -10,7 +10,7 @@ enum Priority {
 ## 事件历史记录
 var _event_history: Array[Dictionary] = []
 ## 事件优先级表 {事件名: {object_id: {priority, once, filter}}}
-var _event_metadata: Dictionary = {}
+#var _event_metadata: Dictionary = {}
 ## 是否记录事件历史
 @export var enable_history: bool = false
 ## 历史记录最大长度
@@ -19,9 +19,9 @@ var _event_metadata: Dictionary = {}
 @export var debug_mode: bool = false
 
 ## 信号：事件被推送时触发
-signal event_pushed(event_name: String, payload: Array)
+#signal event_pushed(event_name: String, payload: Array)
 ## 信号：事件处理完成时触发
-signal event_handled(event_name: String, payload: Array)
+#signal event_handled(event_name: String, payload: Array)
 
 ## 推送事件
 ## [param event_name] 事件名
@@ -44,7 +44,7 @@ func event_emit(event_name: String, param: Array = []) -> void:
 ## [param priority] 优先级
 ## [param once] 是否只执行一次
 ## [param filter] 过滤器
-func subscribe(event_name: String, callback: Callable, priority: Priority=Priority.NORMAL, once: bool=false,) -> void:
+func subscribe(event_name: String, callback: Callable, priority: Priority=Priority.NORMAL) -> void:
 	# 动态添加信号（如果不存在）
 	if not has_signal(event_name):
 		add_user_signal(event_name)

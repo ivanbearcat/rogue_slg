@@ -224,9 +224,9 @@ func _ready() -> void:
 	_turn_process()
 	## 临时测试debuff
 	for row in debuff_json_data:
-		if row["debuff_id"] == "current_score_down":
+		if row["debuff_id"] == "power_current_score_down":
 			var buff = load(row["debuff_res"]).new(row, self)
-			BuffSystem.set_pre_enemy_turn_buff(buff, BuffSystem.buff_type.STAGE)
+			BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 
 
 func grid_index_to_position(grid_index: Vector2) -> Vector2:
@@ -496,7 +496,7 @@ func _roll_dice(slime_instantiate, roll_dice=1, roll_color=1):
 		slime_instantiate.dice.play("roll")
 	if roll_color:
 		slime_instantiate.animated_sprite_2d.play("roll")
-	await get_tree().create_timer(1.0).timeout
+	await Tools.time_sleep(1)
 	if roll_dice:
 		slime_instantiate.dice.stop()
 		slime_instantiate.dice.set_frame_and_progress(dice_point.pick_random(), 0)
@@ -553,6 +553,7 @@ func hero_move():
 		return
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	print(Current.id_path)
+	EventBus.event_emit("do_post_hero_move_buff")
 
 ## 显示技能可点击范围
 func show_skill_range():
@@ -602,6 +603,9 @@ func skill_attack():
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
+	## 等待英雄移动完
+	while Current.id_path.size() > 0:
+		await Tools.time_sleep(0.01)
 	if Current.power < Current.max_power:
 		Current.power += 1
 	_turn_process()

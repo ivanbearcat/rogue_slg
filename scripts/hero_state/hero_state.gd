@@ -7,10 +7,10 @@ var hero: Hero
 func _ready():
 	await owner.ready
 
-func unhandled_input(event: InputEvent):
+func unhandled_input(_event: InputEvent):
 	pass
 
-func input(event: InputEvent):
+func input(_event: InputEvent):
 	pass
 
 func update(_delta: float) -> void:

@@ -1,5 +1,11 @@
 extends Node
 
+var color := {
+	"green": "00ff00",
+	"red": "ff0000",
+	"purple": "ff00ff"
+}
+
 var _content: String
 var _object: Object
 
@@ -15,14 +21,16 @@ func big_flow_effect(object, scale_size=1.5, duration=0.07):
 	tween.tween_property(object, "scale:x", 1, duration/1.5)
 	tween.parallel().tween_property(object, "scale:y", 1, duration/1.5)
 	await tween.finished
-	tween.tween_property(object, "pivot_offset:x", 0, 0)
-	tween.tween_property(object, "pivot_offset:y", 0, 0)
+	var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween2.tween_property(object, "pivot_offset:x", 0, 0)
+	tween2.tween_property(object, "pivot_offset:y", 0, 0)
 	
 ## 飘字效果
-func float_number_effect(float_num, gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50)) -> Node2D:
+func float_number_effect(float_num, num_color="green", gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50)) -> Node2D:
 	if float_num >-1 and float_num < 1:
 		return
 	var float_number_instantiate = SceneManager.create_scene("float_number")
+	float_number_instantiate.num_color = color[num_color]
 	float_number_instantiate.float_num = float_num
 	float_number_instantiate.gravity = gravity
 	float_number_instantiate.velocity = velocity
