@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dhj30d6t7jryv"]
+
+[ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="1_hstje"]
+
+[resource]
+line_spacing = 0.0
+font = ExtResource("1_hstje")
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)

@@ -133,7 +133,14 @@ var count_round := 0:
 		if v == 0 or v == 1:
 			game_manager.ship.position = Vector2(4, 2)
 		if v > 1 and v < 11:
-			game_manager.ship.position = Vector2(4, 2) + ((v - 1) * Vector2(7, 0))
+			#game_manager.ship.position = Vector2(4, 2) + ((v - 1) * Vector2(7, 0))
+			var position = Vector2(4, 2) + ((v - 1) * Vector2(7, 0))
+			Current.public_lock_array.append("turn_ship_animation")
+			var tween = create_tween()
+			tween.tween_property(game_manager.ship, "position:x", position.x, 0.4)
+			tween.tween_property(game_manager.ship, "position:y", position.y, 0.4)
+			await tween.finished
+			Current.public_lock_array.erase("turn_ship_animation")
 		if v < 11:
 			game_manager.turn_label.text = "回合: " + str(v)
 			game_manager.turn_coin_label.text = str(10 - v)

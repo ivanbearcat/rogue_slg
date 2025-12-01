@@ -117,7 +117,8 @@ const hero_property = {
 @onready var left_button: TextureButton = %left_button
 @onready var right_button: TextureButton = %right_button
 @onready var down_button: TextureButton = %down_button
-
+## 关卡切换效果
+@onready var stage_effect_ui: Control = $stage_effect_ui
 
 
 
@@ -163,7 +164,8 @@ var level_up_three_card_array :Array
 
 func _ready() -> void:
 	## 测试
-	
+	#await Tools.time_sleep(0.5)
+	#EffectManager.stage_change_effect()
 	## 加载json数据
 	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
 	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
@@ -577,8 +579,9 @@ func _turn_process():
 	EventBus.event_emit("do_pre_enemy_turn_buff")
 	## 敌人回合
 	_turn_clean()
-	### 执行玩家回合前buff
-	#EventBus.event_emit("do_pre_turn_buff")
+	## 等待回合船动画
+	while "turn_ship_animation" in Current.public_lock_array:
+		await Tools.time_sleep(0.05)
 	## 生成史莱姆加入节点
 	await _create_slime()
 	## 史莱姆预生成和告警信息
@@ -628,12 +631,12 @@ func _turn_clean():
 	EventBus.event_emit("reset_all_hero_skills")
 	## 重置金币技能
 	EventBus.event_emit("reset_cursor")
+	## 增加回合数
+	Current.count_round += 1
 	## 进入敌人回合
 	Current.turn = "enemy_turn"
 
 func _pre_hero_turn_begin():
-	## 增加回合数
-	Current.count_round += 1
 	## 判断失败
 	if Current.count_round > 10:
 		print("游戏失败")

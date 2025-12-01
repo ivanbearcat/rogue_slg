@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://crnuiion2nv84"]
+[gd_scene load_steps=4 format=3 uid="uid://c23x6d1nminu6"]
 
 [ext_resource type="Script" uid="uid://c1hbdjx1pfv88" path="res://scripts/ui/float_number.gd" id="2_j1ws4"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="2_o6ttq"]
@@ -6,10 +6,10 @@
 [sub_resource type="LabelSettings" id="LabelSettings_hmpp3"]
 resource_local_to_scene = true
 font = ExtResource("2_o6ttq")
-font_size = 32
-font_color = Color(1, 0, 0, 1)
-shadow_size = 4
-shadow_color = Color(0, 0.48046875, 0, 1)
+font_size = 36
+font_color = Color(0, 1, 0.06949854, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("2_j1ws4")

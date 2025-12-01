@@ -1,5 +1,7 @@
 extends Node
 
+@onready var game_manager: Node2D = get_node("/root/game_manager")
+
 var color := {
 	"green": "00ff00",
 	"red": "ff0000",
@@ -80,3 +82,16 @@ func top_to_bottom_effect(object, duration, sync=1):
 	tween.tween_property(object, "position:y", postion_y, duration*0.2)
 	if sync:
 		await tween.finished
+
+## 关卡切换效果	
+func stage_change_effect():
+	var tween = create_tween().set_ease(Tween.EASE_OUT)
+	game_manager.stage_effect_ui.scale.y = 0
+	tween.tween_property(game_manager.stage_effect_ui, "scale:y", 1, 0.3)
+	await Tools.time_sleep(2)
+	var tween2 = create_tween()
+	tween2.tween_property(game_manager.stage_effect_ui, "scale:y", 0, 0.1)
+
+## 回合切换效果(走船)
+#func turn_change_effect():
+	#var tween = create_tween()

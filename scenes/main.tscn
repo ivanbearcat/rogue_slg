@@ -1,4 +1,4 @@
-[gd_scene load_steps=133 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=137 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://d2hsly64m27qi" path="res://images/yellow_background.png" id="9_njo2n"]
 [ext_resource type="Texture2D" uid="uid://0nyks62j7ihp" path="res://images/red_background.png" id="10_eplrr"]
 [ext_resource type="Texture2D" uid="uid://dsopuek2hk0wj" path="res://images/puls_times.png" id="11_w4riq"]
+[ext_resource type="LabelSettings" uid="uid://dhj30d6t7jryv" path="res://resources/pixel_num.tres" id="12_yq6so"]
 [ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="13_og1vs"]
 [ext_resource type="Texture2D" uid="uid://dc7a6my34pjt5" path="res://images/process_bar.png" id="13_trceg"]
 [ext_resource type="Texture2D" uid="uid://d2jlnocchatj6" path="res://images/card/card_level_up.png" id="14_a8y0u"]
@@ -28,6 +29,7 @@
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="19_vxglm"]
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
+[ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
 texture = ExtResource("2_nsbfg")
@@ -1382,6 +1384,14 @@ font_size = 30
 outline_size = 12
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_augu2"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(160, 54, 80, 19)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tm6hj"]
+font = ExtResource("30_fv21b")
+font_size = 12
+
 [node name="game_manager" type="Node2D"]
 scale = Vector2(4, 4)
 script = ExtResource("1_jbfvy")
@@ -1697,7 +1707,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "10"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -1726,7 +1736,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "10"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -1755,7 +1765,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "10"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -1784,7 +1794,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "10"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -1813,7 +1823,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "10"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -1842,7 +1852,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "10"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -1901,7 +1911,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "100%"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -1936,7 +1946,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "150%"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -1971,7 +1981,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "160%"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -2006,7 +2016,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "140%"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -2041,7 +2051,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "300%"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -2077,7 +2087,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "200%"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -2112,7 +2122,7 @@ offset_top = 11.25
 offset_right = 64.5
 offset_bottom = 35.25
 scale = Vector2(0.6, 0.6)
-text = "关卡一"
+text = "关卡 一"
 label_settings = ExtResource("3_h858a")
 
 [node name="GridContainer" type="GridContainer" parent="stage_score"]
@@ -2142,7 +2152,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 text = "0"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 
 [node name="Label2" type="Label" parent="stage_score/GridContainer"]
 layout_mode = 2
@@ -2155,7 +2165,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 text = "0"
-label_settings = ExtResource("3_h858a")
+label_settings = ExtResource("12_yq6so")
 
 [node name="hero_skill" type="Control" parent="."]
 layout_mode = 3
@@ -3674,6 +3684,78 @@ offset_bottom = 322.0
 theme_override_fonts/font = ExtResource("16_jbj1t")
 theme_override_font_sizes/font_size = 20
 text = "0"
+
+[node name="stage_effect_ui" type="Control" parent="."]
+z_index = 2
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = 57.0
+offset_right = 218.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1e-05)
+pivot_offset = Vector2(146, 10)
+
+[node name="ColorRect" type="ColorRect" parent="stage_effect_ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.9411765)
+
+[node name="TextureRect" type="TextureRect" parent="stage_effect_ui"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_right = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_augu2")
+
+[node name="Label" type="Label" parent="stage_effect_ui/TextureRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.75
+offset_top = 1.5
+offset_right = -52.25
+offset_bottom = -1.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "关卡 十一"
+label_settings = SubResource("LabelSettings_tm6hj")
+vertical_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="stage_effect_ui/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.75
+offset_top = 2.75
+offset_right = -7.0
+offset_bottom = -3.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("30_fv21b")
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "关卡 一"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]
