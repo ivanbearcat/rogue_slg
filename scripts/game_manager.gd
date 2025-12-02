@@ -85,6 +85,7 @@ const hero_property = {
 @onready var stage_coin_rlabel_3: RichTextLabel = %stage_coin_rlabel_3
 @onready var stage_coin_rlabel_4: RichTextLabel = %stage_coin_rlabel_4
 @onready var paper_texture: TextureRect = %paper_texture
+@onready var stage_clear_button: Button = %stage_clear_button
 ## 帮助按钮
 @onready var help_button: TextureButton = %help_button
 ## 职业图标
@@ -117,8 +118,13 @@ const hero_property = {
 @onready var left_button: TextureButton = %left_button
 @onready var right_button: TextureButton = %right_button
 @onready var down_button: TextureButton = %down_button
+@onready var difficulty_icon: TextureRect = %difficulty_icon
 ## 关卡切换效果
 @onready var stage_effect_ui: Control = $stage_effect_ui
+@onready var stage_effect_label: RichTextLabel = %stage_effect_label
+## 诅咒切换效果
+@onready var debuff_effect_ui: Control = $debuff_effect_ui
+@onready var debuff_effect_label: RichTextLabel = %debuff_effect_label
 
 
 
@@ -224,11 +230,13 @@ func _ready() -> void:
 	_pre_create_slime()
 	## 回合处理
 	_turn_process()
+	## 关卡切换效果
+	await EffectManager.stage_change_effect()
 	## 临时测试debuff
-	for row in debuff_json_data:
-		if row["debuff_id"] == "power_current_score_down":
-			var buff = load(row["debuff_res"]).new(row, self)
-			BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+	#for row in debuff_json_data:
+		#if row["debuff_id"] == "power_current_score_down":
+			#var buff = load(row["debuff_res"]).new(row, self)
+			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 
 
 func grid_index_to_position(grid_index: Vector2) -> Vector2:
@@ -381,6 +389,11 @@ func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 		await _roll_dice(slime_instantiate)
 	slime_reroll_finished.emit()
 
+func _set_stage_debuff():
+	var debuff_row = debuff_json_data.pick_random()
+	var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
+	BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+	debuff_effect_label.text = "获得诅咒  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
@@ -661,14 +674,6 @@ func reset_astar_solid() -> void:
 	for grid_index in Current.all_enemy_grid_index_array:
 		astar.set_point_solid(grid_index, true)
 
-## 等待骰子动画完成
-func wait_for_dice_animation():
-	print(Current.all_enemy_array)
-	for slime in Current.all_enemy_array:
-		print(slime, slime.dice.is_playing())
-		if slime.dice.is_playing():
-			await Tools.time_sleep(0.05)
-
 ## 判断是否过关
 func _check_stage_clear():
 	if Current.total_score >= Current.target_score and Current.count_round <= 10:
@@ -724,6 +729,7 @@ func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coi
 		stage_coin_label_4,
 		stage_add_coin + round_add_coin + highest_dice_add_coin
 		)
+	stage_clear_button.show()
 	
 ## 修改数值
 func _modifiy_value(original_value: int, operate: String, value: float) -> int:
@@ -977,6 +983,21 @@ func _on_card_3_button_pressed() -> void:
 	get_tree().paused = false
 	level_up_ui.hide()
 
+func _hide_al_clear_stage_ui():
+	clear_stage_label.hide()
+	stage_clear_label_1.hide()
+	stage_coin_rlabel_1.hide()
+	stage_coin_label_1.hide()
+	stage_clear_label_2.hide()
+	stage_coin_rlabel_2.hide()
+	stage_coin_label_2.hide()
+	stage_clear_label_3.hide()
+	stage_coin_rlabel_3.hide()
+	stage_coin_label_3.hide()
+	stage_coin_rlabel_4.hide()
+	stage_coin_label_4.hide()
+	stage_clear_button.hide()
+	clear_stage_ui.hide()
 
 func _on_stage_clear_button_pressed() -> void:
 	## 增加金币
@@ -992,11 +1013,19 @@ func _on_stage_clear_button_pressed() -> void:
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
-	clear_stage_ui.hide()
+			difficulty_icon.texture = load(row["stage_type_icon"])
+			difficulty_icon.tooltip_text = row["stage_type"]
+	## 隐藏结算显示内容
+	_hide_al_clear_stage_ui()
 	## 清空一关金币奖励数和最高骰子奖励数
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 0
 	get_tree().paused = false
+	## 关卡切换效果
+	await EffectManager.stage_change_effect()
+	if Current.count_stage in [3, 6, 9]:
+		_set_stage_debuff()
+		await EffectManager.debuff_change_effect()
 
 
 ## 重掷按钮按下

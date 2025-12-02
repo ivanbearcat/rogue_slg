@@ -94,8 +94,14 @@ var once_total_score: int
 var count_stage := 1:
 	set(v):
 		count_stage = v
-		game_manager.stage_label.text = "关卡" + Tools.num_to_cnnum[v]
-		game_manager.clear_stage_label.text = "关卡" + Tools.num_to_cnnum[v]
+		var stage_icon
+		for row in game_manager.stage_info_json_data:
+			if row["stage_num"] == Current.count_stage:
+				stage_icon = row["stage_type_icon"]
+		game_manager.stage_label.text = "关卡 " + Tools.num_to_cnnum[v]
+		game_manager.clear_stage_label.text = "关卡 " + Tools.num_to_cnnum[v]
+		game_manager.stage_effect_label.text = "关卡 " + Tools.num_to_cnnum[v] + \
+		" [img=17]" + stage_icon + "[/img]"
 	get:
 		return count_stage
 ## 关卡奖励金币数

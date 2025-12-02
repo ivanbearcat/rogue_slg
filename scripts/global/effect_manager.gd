@@ -85,13 +85,19 @@ func top_to_bottom_effect(object, duration, sync=1):
 
 ## 关卡切换效果	
 func stage_change_effect():
-	var tween = create_tween().set_ease(Tween.EASE_OUT)
+	var tween = create_tween().set_ease(Tween.EASE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	game_manager.stage_effect_ui.scale.y = 0
-	tween.tween_property(game_manager.stage_effect_ui, "scale:y", 1, 0.3)
-	await Tools.time_sleep(2)
-	var tween2 = create_tween()
+	tween.tween_property(game_manager.stage_effect_ui, "scale:y", 1, 0.2)
+	await Tools.time_sleep(1.5)
+	var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween2.tween_property(game_manager.stage_effect_ui, "scale:y", 0, 0.1)
+	
 
-## 回合切换效果(走船)
-#func turn_change_effect():
-	#var tween = create_tween()
+## 获得诅咒效果
+func debuff_change_effect():
+	var tween = create_tween().set_ease(Tween.EASE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	game_manager.debuff_effect_ui.scale.y = 0
+	tween.tween_property(game_manager.debuff_effect_ui, "scale:y", 1, 0.2)
+	await Tools.time_sleep(1.5)
+	var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween2.tween_property(game_manager.debuff_effect_ui, "scale:y", 0, 0.1)

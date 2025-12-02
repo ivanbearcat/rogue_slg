@@ -7,9 +7,9 @@ bg_color = Color(0.6, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qkpxi"]
 content_margin_left = 20.0
-content_margin_top = 20.0
+content_margin_top = 10.0
 content_margin_right = 20.0
-content_margin_bottom = 20.0
+content_margin_bottom = 10.0
 bg_color = Color(0, 0, 0, 0.98039216)
 border_width_left = 3
 border_width_top = 3

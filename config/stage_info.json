@@ -3,72 +3,84 @@
         "stage_num": 1,
         "target_score": 200,
         "stage_type": "普通",
-        "reward_coin": 3
+        "reward_coin": 3,
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 2,
         "target_score": 300,
         "stage_type": "普通",
-        "reward_coin": 3
+        "reward_coin": 3,
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 3,
         "target_score": 450,
         "stage_type": "精英",
-        "reward_coin": 5
+        "reward_coin": 5,
+        "stage_type_icon": "res://images/enemy_icon/elite.png"
     },
     {
         "stage_num": 4,
         "target_score": 675,
         "stage_type": "普通",
-        "reward_coin": 3
+        "reward_coin": 3,
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 5,
         "target_score": 1000,
         "stage_type": "普通",
-        "reward_coin": 3
+        "reward_coin": 3,
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 6,
         "target_score": 1500,
         "stage_type": "精英",
-        "reward_coin": 5
+        "reward_coin": 5,
+        "stage_type_icon": "res://images/enemy_icon/elite.png"
     },
     {
         "stage_num": 7,
         "target_score": 2250,
         "stage_type": "普通",
-        "reward_coin": 3
+        "reward_coin": 3,
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 8,
         "target_score": 3375,
         "stage_type": "普通",
-        "reward_coin": 3
+        "reward_coin": 3,
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 9,
         "target_score": 5000,
         "stage_type": "精英",
-        "reward_coin": 5
+        "reward_coin": 5,
+        "stage_type_icon": "res://images/enemy_icon/elite.png"
     },
     {
         "stage_num": 10,
         "target_score": 11250,
         "stage_type": "普通",
-        "reward_coin": 3
+        "reward_coin": 3,
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 11,
         "target_score": 16875,
         "stage_type": "普通",
-        "reward_coin": 3
+        "reward_coin": 3,
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 12,
         "target_score": 25000,
         "stage_type": "BOSS",
-        "reward_coin": 10
+        "reward_coin": 10,
+        "stage_type_icon": "res://images/enemy_icon/boss.png"
     }
 ]
