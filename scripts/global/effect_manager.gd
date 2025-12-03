@@ -12,20 +12,26 @@ var _content: String
 var _object: Object
 
 ## 把图片对象快速放大恢复的效果
-func big_flow_effect(object, scale_size=1.5, duration=0.07):
+func big_flow_effect(object, auto_pivot_offset=1, scale_size=1.5, duration=0.07):
 	var tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	## 放大
-	tween.tween_property(object, "pivot_offset:x", object.size.x/2, 0)
-	tween.tween_property(object, "pivot_offset:y", object.size.y/1.5, 0)
+	if auto_pivot_offset == 1:
+		object.pivot_offset.x = object.size.x/2
+		object.pivot_offset.y = object.size.x/1.5
+	#tween.tween_property(object, "pivot_offset:x", object.size.x/2, 0)
+	#tween.tween_property(object, "pivot_offset:y", object.size.y/1.5, 0)
 	tween.tween_property(object, "scale:x", scale_size, duration)
 	tween.parallel().tween_property(object, "scale:y", scale_size, duration)
 	## 缩小
 	tween.tween_property(object, "scale:x", 1, duration/1.5)
 	tween.parallel().tween_property(object, "scale:y", 1, duration/1.5)
 	await tween.finished
-	var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween2.tween_property(object, "pivot_offset:x", 0, 0)
-	tween2.tween_property(object, "pivot_offset:y", 0, 0)
+	#var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	#tween2.tween_property(object, "pivot_offset:x", 0, 0)
+	#tween2.tween_property(object, "pivot_offset:y", 0, 0)
+	if auto_pivot_offset == 1:
+		object.pivot_offset.x = 0
+		object.pivot_offset.y = 0
 	
 ## 飘字效果
 func float_number_effect(float_num, num_color="green", gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50)) -> Node2D:
@@ -47,7 +53,7 @@ func label_num_rolling_effect(object, value, sync=1):
 		await tween.finished
 func label_num_rolling_update_text(value):
 	_object.text = str(value)
-	EffectManager.big_flow_effect(_object)
+	EffectManager.big_flow_effect(_object, 0)
 	
 
 ## 打字机效果

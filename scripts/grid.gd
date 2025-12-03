@@ -37,6 +37,7 @@ func _on_area_2d_mouse_entered() -> void:
 				self.attack.show()
 
 func _on_area_2d_mouse_exited() -> void:
+	Current.grid_index = Vector2.ZERO
 	cursor.hide()
 	match Current.mouse_status:
 		"default":

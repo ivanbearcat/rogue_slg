@@ -61,7 +61,7 @@ func skill_attack():
 	## 保留最高骰子数
 	if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
 	## 等待攻击动画完成和公共锁释放
-	while Current.attack_animation_finished == 0 or Current.public_lock_array:
+	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)
 	## 如果是赋能技能就消耗能量,然后重置UI
 	if Current.power_skill:

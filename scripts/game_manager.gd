@@ -170,6 +170,7 @@ var level_up_three_card_array :Array
 
 func _ready() -> void:
 	## 测试
+	#_do_stage_clear_effect(7, 8 ,9)
 	#await Tools.time_sleep(0.5)
 	#EffectManager.stage_change_effect()
 	## 加载json数据
@@ -226,12 +227,13 @@ func _ready() -> void:
 		for y in range(_removable_map_vec.y):
 			if x == 0 or x == range(_removable_map_vec.x).max() or y == 0 or y == range(_removable_map_vec.y).max():
 				_margin_grid.append(Vector2(x, y))
+	## 关卡切换效果
+	await EffectManager.stage_change_effect()
 	## 预生成史莱姆
 	_pre_create_slime()
 	## 回合处理
-	_turn_process()
-	## 关卡切换效果
-	await EffectManager.stage_change_effect()
+	await _turn_process()
+	
 	## 临时测试debuff
 	#for row in debuff_json_data:
 		#if row["debuff_id"] == "power_current_score_down":
@@ -611,20 +613,26 @@ func _turn_process():
 
 ## 技能结算
 func skill_attack():
+	## 攻击的时候禁用合结束按钮
+	turn_button.disabled = true
 	await skill_system.skill_attack()
+	Current.public_lock_array.erase("skill_attack")
 	await _check_stage_clear()
 	while clear_stage_ui.visible == true:
 		await Tools.time_sleep(0.2)
-	_turn_process()
+	await _turn_process()
+	#turn_button.disabled = false
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
+	turn_button.disabled = true
 	## 等待英雄移动完
 	while Current.id_path.size() > 0:
 		await Tools.time_sleep(0.01)
 	if Current.power < Current.max_power:
 		Current.power += 1
-	_turn_process()
+	await _turn_process()
+	#turn_button.disabled = false
 	## 测试
 	#for row in debuff_json_data:
 		#if row["debuff_id"] == "disable_one":

@@ -14,9 +14,11 @@ func input(event: InputEvent) -> void:
 	## 点击释放技能的格子触发技能信号
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
 		## 判断点击的格子在技能范围:
-		if Current.grid_index in Current.skill_target_range:
+		if Current.grid_index in Current.skill_target_range and \
+		"skill_attack" not in Current.public_lock_array:
 			Current.attack_animation_finished = 0
 			owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
+			Current.public_lock_array.append("skill_attack")
 			emit_signal("skill_attack")
 			
 
