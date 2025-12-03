@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=138 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -17,10 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://0nyks62j7ihp" path="res://images/red_background.png" id="10_eplrr"]
 [ext_resource type="Texture2D" uid="uid://dsopuek2hk0wj" path="res://images/puls_times.png" id="11_w4riq"]
 [ext_resource type="LabelSettings" uid="uid://dhj30d6t7jryv" path="res://resources/pixel_num.tres" id="12_yq6so"]
-[ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="13_og1vs"]
 [ext_resource type="Texture2D" uid="uid://dc7a6my34pjt5" path="res://images/process_bar.png" id="13_trceg"]
 [ext_resource type="Texture2D" uid="uid://d2jlnocchatj6" path="res://images/card/card_level_up.png" id="14_a8y0u"]
-[ext_resource type="Texture2D" uid="uid://dbcui50h2j18a" path="res://images/coin_skill_icon/reroll_slime.png" id="14_og1vs"]
 [ext_resource type="Texture2D" uid="uid://bu0tsff2lanig" path="res://images/coin_skill_icon/double_score.png" id="14_y6deb"]
 [ext_resource type="StyleBox" uid="uid://nf1thu8lxm1v" path="res://resources/hover_button.tres" id="15_0ld40"]
 [ext_resource type="Texture2D" uid="uid://bd0mpn20yxg3u" path="res://images/shelves_announcements.png" id="15_jkv2x"]
@@ -1346,9 +1344,13 @@ corner_radius_bottom_left = 2
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qkpxi"]
 load_path = "res://.godot/imported/sea_process_bar.png-7e45f3cae0704af80db2f6a76ae32239.ctex"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_augu2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tm6hj"]
 atlas = SubResource("CompressedTexture2D_qkpxi")
 region = Rect2(160, 50, 80, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_augu2"]
+atlas = SubResource("CompressedTexture2D_qkpxi")
+region = Rect2(160, 71, 80, 19)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkv2x"]
 bg_color = Color(0, 0, 0, 0.9411765)
@@ -2229,6 +2231,8 @@ theme_override_constants/separation = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "未获得技能"
+theme = ExtResource("17_qkpxi")
 toggle_mode = true
 action_mode = 0
 keep_pressed_outside = true
@@ -2252,7 +2256,6 @@ offset_right = 4.0
 offset_bottom = -3.75
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("13_og1vs")
 expand_mode = 2
 stretch_mode = 5
 
@@ -2260,7 +2263,8 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "分数翻倍"
+tooltip_text = "未获得技能"
+theme = ExtResource("17_qkpxi")
 toggle_mode = true
 action_mode = 0
 keep_pressed_outside = true
@@ -2284,7 +2288,6 @@ offset_right = 4.25
 offset_bottom = -3.75
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("14_y6deb")
 expand_mode = 2
 stretch_mode = 5
 
@@ -2292,6 +2295,8 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "未获得技能"
+theme = ExtResource("17_qkpxi")
 toggle_mode = true
 action_mode = 0
 keep_pressed_outside = true
@@ -2315,7 +2320,6 @@ offset_right = 4.0
 offset_bottom = -3.75
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("14_og1vs")
 expand_mode = 2
 stretch_mode = 5
 
@@ -2329,7 +2333,6 @@ offset_right = 55.0
 offset_bottom = 49.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
-text = "[img=12]res://images/coin.png[/img] -2"
 
 [node name="coin_skill_2_label" type="RichTextLabel" parent="hero_skill2"]
 unique_name_in_owner = true
@@ -2341,7 +2344,6 @@ offset_right = 82.25
 offset_bottom = 49.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
-text = "[img=12]res://images/coin.png[/img] -2"
 
 [node name="coin_skill_3_label" type="RichTextLabel" parent="hero_skill2"]
 unique_name_in_owner = true
@@ -2353,7 +2355,6 @@ offset_right = 108.5
 offset_bottom = 49.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
-text = "[img=12]res://images/coin.png[/img] -2"
 
 [node name="Q_texture" type="TextureRect" parent="hero_skill2"]
 unique_name_in_owner = true
@@ -3333,7 +3334,6 @@ offset_right = 218.0
 offset_bottom = 79.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1, 1e-05)
 pivot_offset = Vector2(146, 10)
 
 [node name="ColorRect" type="ColorRect" parent="stage_effect_ui"]
@@ -3355,16 +3355,16 @@ offset_left = -32.0
 offset_right = 32.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("AtlasTexture_augu2")
+texture = SubResource("AtlasTexture_tm6hj")
 
 [node name="MarginContainer" type="MarginContainer" parent="stage_effect_ui/TextureRect"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.499998
+offset_left = 9.0
 offset_top = 4.0
-offset_right = 11.285713
+offset_right = 17.571426
 offset_bottom = 1.1428528
 grow_horizontal = 2
 grow_vertical = 2

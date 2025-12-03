@@ -125,7 +125,16 @@ const hero_property = {
 ## 诅咒切换效果
 @onready var debuff_effect_ui: Control = $debuff_effect_ui
 @onready var debuff_effect_label: RichTextLabel = %debuff_effect_label
-
+## 升级时的卡牌数据
+@onready var card_level_up_json_data :Array = Tools.load_json_file('res://config/card_level_up.json')
+## 关卡数据
+@onready var stage_info_json_data: Array = Tools.load_json_file('res://config/stage_info.json')
+## 金币能数据
+@onready var coin_skill_json_data: Array = Tools.load_json_file('res://config/coin_skill.json')
+## debuff数据
+@onready var debuff_json_data: Array = Tools.load_json_file('res://config/debuff.json')
+## boss debuff数据
+@onready var boss_debuff_json_data: Array = Tools.load_json_file('res://config/boss_debuff.json')
 
 
 ## 格子像素大小
@@ -154,30 +163,19 @@ var color := {
 	"red": "cc0808",
 	"green": "0fff5b"
 }
-## 升级时的卡牌数据
-var card_level_up_json_data :Array
-## 关卡数据
-var stage_info_json_data: Array
-## 金币能数据
-var coin_skill_json_data: Array
-## debuff数据
-var debuff_json_data: Array
 ## 随机选择出的3张升级时卡牌
 var level_up_three_card_array :Array
-
+## BOSS诅咒信息
+var boss_debuff_row: Dictionary
 
 
 
 func _ready() -> void:
 	## 测试
+	Current.count_stage = 12
 	#_do_stage_clear_effect(7, 8 ,9)
 	#await Tools.time_sleep(0.5)
 	#EffectManager.stage_change_effect()
-	## 加载json数据
-	card_level_up_json_data = Tools.load_json_file('res://config/card_level_up.json')
-	stage_info_json_data = Tools.load_json_file('res://config/stage_info.json')
-	coin_skill_json_data = Tools.load_json_file('res://config/coin_skill.json')
-	debuff_json_data = Tools.load_json_file('res://config/debuff.json')
 	## 临时测试金币技能
 	for row in coin_skill_json_data:
 		if row["coin_skill_id"] in ["reroll_all","double_score","cloud"]:
@@ -198,6 +196,8 @@ func _ready() -> void:
 	Current.tongshun_percent = 320
 	## 初始化金币
 	Current.total_coins = 5
+	## 随机择BOSS
+	boss_debuff_row = boss_debuff_json_data.pick_random()
 	## 设置目标分数
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
@@ -235,8 +235,10 @@ func _ready() -> void:
 	await _turn_process()
 	
 	## 临时测试debuff
-	#for row in debuff_json_data:
-		#if row["debuff_id"] == "power_current_score_down":
+	_set_stage_debuff(1)
+	await EffectManager.debuff_change_effect()
+	#for row in boss_debuff_json_data:
+		#if row["debuff_id"] == "attack_score_down":
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 
@@ -391,11 +393,16 @@ func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 		await _roll_dice(slime_instantiate)
 	slime_reroll_finished.emit()
 
-func _set_stage_debuff():
-	var debuff_row = debuff_json_data.pick_random()
-	var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
-	BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
-	debuff_effect_label.text = "获得诅咒  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+func _set_stage_debuff(boss=0):
+	if boss == 0:
+		var debuff_row = debuff_json_data.pick_random()
+		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
+		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+		debuff_effect_label.text = "获得诅咒  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+	else:
+		var buff = load(boss_debuff_row["debuff_res"]).new(boss_debuff_row, self)
+		BuffSystem.callv("set_" + boss_debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+		debuff_effect_label.text = "获得诅咒  [img=15 ]" + boss_debuff_row["debuff_icon"] + "[/img]"
 
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
@@ -1033,6 +1040,9 @@ func _on_stage_clear_button_pressed() -> void:
 	await EffectManager.stage_change_effect()
 	if Current.count_stage in [3, 6, 9]:
 		_set_stage_debuff()
+		await EffectManager.debuff_change_effect()
+	if Current.count_stage == 12:
+		_set_stage_debuff(1)
 		await EffectManager.debuff_change_effect()
 
 

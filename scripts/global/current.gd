@@ -123,15 +123,18 @@ var total_coins: int:
 		if v > 0:
 			game_manager.reroll_button.disabled = false
 			game_manager.reroll_button_label.modulate = Color(1, 1, 1, 1)
-		if v >= coin_skill_array_dict[0]["coin_skill_cost"]:
-			game_manager.coin_skill_1.disabled = false
-			game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
-		if v >= coin_skill_array_dict[1]["coin_skill_cost"]:
-			game_manager.coin_skill_2.disabled = false
-			game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
-		if v >= coin_skill_array_dict[2]["coin_skill_cost"]:
-			game_manager.coin_skill_3.disabled = false
-			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
+		if coin_skill_array_dict.get(0):
+			if v >= coin_skill_array_dict[0]["coin_skill_cost"]:
+				game_manager.coin_skill_1.disabled = false
+				game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
+		if coin_skill_array_dict.get(1):
+			if v >= coin_skill_array_dict[1]["coin_skill_cost"]:
+				game_manager.coin_skill_2.disabled = false
+				game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
+		if coin_skill_array_dict.get(2):
+			if v >= coin_skill_array_dict[2]["coin_skill_cost"]:
+				game_manager.coin_skill_3.disabled = false
+				game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
 ## 回合计数
 var count_round := 0:
 	set(v):

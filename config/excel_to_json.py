@@ -29,7 +29,7 @@ def excel_to_json(excel_file, sheet_name=None):
 
 if __name__ == '__main__':
     excel_file = "config_table.xlsx"
-    sheet_name_list = ["card_level_up", "stage_info", "coin_skill", "debuff"]
+    sheet_name_list = ["card_level_up", "stage_info", "coin_skill", "debuff", "boss_debuff"]
 
     for sheet_name in sheet_name_list:
         json_output = excel_to_json(excel_file, sheet_name=sheet_name)  # 可选 sheet_name

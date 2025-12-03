@@ -1,0 +1,10 @@
+[
+    {
+        "debuff_id": "attack_score_down",
+        "debuff_name": "攻击得分下降",
+        "debuff_icon": "res://images/enemy_icon/attack_score_down.png",
+        "debuff_tooltip": "每次攻击的得分-20%",
+        "debuff_res": "res://scripts/buff/attack_score_down_buff.gd",
+        "debuff_type": "post_attack_buff"
+    }
+]
