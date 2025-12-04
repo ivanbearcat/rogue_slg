@@ -1,4 +1,4 @@
-[gd_scene load_steps=138 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=142 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -30,6 +30,8 @@
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
+[ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="30_qkpxi"]
+[ext_resource type="Texture2D" uid="uid://brksrpkqqyai1" path="res://images/coin_skill_icon/cloud.png" id="31_5q0nq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
 texture = ExtResource("2_nsbfg")
@@ -1358,7 +1360,7 @@ bg_color = Color(0, 0, 0, 0.9411765)
 [sub_resource type="LabelSettings" id="LabelSettings_2f3dj"]
 line_spacing = 0.0
 font = ExtResource("16_jbj1t")
-font_size = 26
+font_size = 32
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
@@ -1380,6 +1382,30 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dgi5k"]
+bg_color = Color(0.22745098, 0.26666668, 0.4, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j8jky"]
+bg_color = Color(0.22745098, 0.26666668, 0.4, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ld40"]
 bg_color = Color(0, 0, 0, 0.980392)
@@ -3334,6 +3360,7 @@ offset_right = 218.0
 offset_bottom = 79.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1, 1e-05)
 pivot_offset = Vector2(146, 10)
 
 [node name="ColorRect" type="ColorRect" parent="stage_effect_ui"]
@@ -3635,6 +3662,102 @@ theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = ExtResource("15_0ld40")
 text = "隐藏"
 
+[node name="get_coin_skill_ui" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 2
+
+[node name="Panel" type="Panel" parent="get_coin_skill_ui"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jkv2x")
+
+[node name="Label" type="Label" parent="get_coin_skill_ui"]
+offset_left = 442.0
+offset_top = 164.0
+offset_right = 700.0
+offset_bottom = 216.0
+text = "选择获得一个技能"
+label_settings = SubResource("LabelSettings_2f3dj")
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="get_coin_skill_ui"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 700
+theme_override_constants/margin_top = 260
+theme_override_constants/margin_right = 700
+theme_override_constants/margin_bottom = 190
+
+[node name="VBoxContainer" type="VBoxContainer" parent="get_coin_skill_ui/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 32
+
+[node name="get_coin_skill_tooltip_1" type="PanelContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("17_qkpxi")
+theme_override_styles/panel = SubResource("StyleBoxFlat_dgi5k")
+
+[node name="get_coin_skill_1" type="TextureRect" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer/get_coin_skill_tooltip_1"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("30_qkpxi")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="get_coin_skill_tooltip_2" type="PanelContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("17_qkpxi")
+theme_override_styles/panel = SubResource("StyleBoxFlat_j8jky")
+
+[node name="get_coin_skill_2" type="TextureRect" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer/get_coin_skill_tooltip_2"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("31_5q0nq")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="get_coin_skill_1_button" type="Button" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_styles/hover = ExtResource("15_0ld40")
+text = "选择"
+
+[node name="get_coin_skill_2_button" type="Button" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_styles/hover = SubResource("StyleBoxFlat_a8y0u")
+text = "选择"
+
+[node name="hide_get_coin_skill_ui_button" type="Button" parent="get_coin_skill_ui"]
+unique_name_in_owner = true
+offset_left = 556.0
+offset_top = 544.0
+offset_right = 596.0
+offset_bottom = 575.0
+size_flags_horizontal = 6
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_styles/hover = ExtResource("15_0ld40")
+text = "隐藏"
+
 [node name="clear_stage_ui" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 process_mode = 2
@@ -3854,4 +3977,7 @@ text = "0"
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card2_button" to="." method="_on_card_2_button_pressed"]
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card3_button" to="." method="_on_card_3_button_pressed"]
 [connection signal="pressed" from="level_up_ui/hide_level_up_ui_button" to="." method="_on_hide_level_up_ui_button_pressed"]
+[connection signal="pressed" from="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2/get_coin_skill_1_button" to="." method="_on_get_coin_skill_1_button_pressed"]
+[connection signal="pressed" from="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2/get_coin_skill_2_button" to="." method="_on_get_coin_skill_2_button_pressed"]
+[connection signal="pressed" from="get_coin_skill_ui/hide_get_coin_skill_ui_button" to="." method="_on_hide_get_coin_skill_ui_button_pressed"]
 [connection signal="pressed" from="clear_stage_ui/Panel/paper_texture/stage_clear_button" to="." method="_on_stage_clear_button_pressed"]

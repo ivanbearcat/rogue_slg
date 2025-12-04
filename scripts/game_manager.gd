@@ -119,6 +119,12 @@ const hero_property = {
 @onready var right_button: TextureButton = %right_button
 @onready var down_button: TextureButton = %down_button
 @onready var difficulty_icon: TextureRect = %difficulty_icon
+@onready var get_coin_skill_ui: CanvasLayer = %get_coin_skill_ui
+@onready var get_coin_skill_1: TextureRect = %get_coin_skill_1
+@onready var get_coin_skill_2: TextureRect = %get_coin_skill_2
+@onready var get_coin_skill_tooltip_1: PanelContainer = %get_coin_skill_tooltip_1
+@onready var get_coin_skill_tooltip_2: PanelContainer = %get_coin_skill_tooltip_2
+@onready var hide_get_coin_skill_ui_button: Button = %hide_get_coin_skill_ui_button
 ## 关卡切换效果
 @onready var stage_effect_ui: Control = $stage_effect_ui
 @onready var stage_effect_label: RichTextLabel = %stage_effect_label
@@ -167,25 +173,28 @@ var color := {
 var level_up_three_card_array :Array
 ## BOSS诅咒信息
 var boss_debuff_row: Dictionary
-
+## 金币技能选项1
+var coin_skill_row_1: Dictionary
+## 金币技能选项2
+var coin_skill_row_2: Dictionary
 
 
 func _ready() -> void:
 	## 测试
-	Current.count_stage = 12
+	#_get_coin_skill()
 	#_do_stage_clear_effect(7, 8 ,9)
 	#await Tools.time_sleep(0.5)
 	#EffectManager.stage_change_effect()
 	## 临时测试金币技能
-	for row in coin_skill_json_data:
-		if row["coin_skill_id"] in ["reroll_all","double_score","cloud"]:
-			Current.coin_skill_array_dict.append(row)
-	coin_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
-	coin_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
-	coin_skill_3_icon.texture = load(Current.coin_skill_array_dict[2]["coin_skill_icon"])
-	coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
-	coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
-	coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
+	#for row in coin_skill_json_data:
+		#if row["coin_skill_id"] in ["reroll_all","double_score","cloud"]:
+			#Current.coin_skill_array_dict.append(row)
+	#coin_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
+	#coin_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
+	#coin_skill_3_icon.texture = load(Current.coin_skill_array_dict[2]["coin_skill_icon"])
+	#coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
+	#coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
+	#coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
 	
 	## 设置基础倍率
 	Current.none_percent = 100
@@ -235,8 +244,9 @@ func _ready() -> void:
 	await _turn_process()
 	
 	## 临时测试debuff
-	_set_stage_debuff(1)
-	await EffectManager.debuff_change_effect()
+	#_set_stage_debuff(1)
+	#await EffectManager.debuff_change_effect()
+	
 	#for row in boss_debuff_json_data:
 		#if row["debuff_id"] == "attack_score_down":
 			#var buff = load(row["debuff_res"]).new(row, self)
@@ -998,7 +1008,7 @@ func _on_card_3_button_pressed() -> void:
 	get_tree().paused = false
 	level_up_ui.hide()
 
-func _hide_al_clear_stage_ui():
+func _hide_all_clear_stage_ui():
 	clear_stage_label.hide()
 	stage_clear_label_1.hide()
 	stage_coin_rlabel_1.hide()
@@ -1015,6 +1025,7 @@ func _hide_al_clear_stage_ui():
 	clear_stage_ui.hide()
 
 func _on_stage_clear_button_pressed() -> void:
+	
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
 	## 更新回合、关卡、当前分数、目标分数
@@ -1031,19 +1042,25 @@ func _on_stage_clear_button_pressed() -> void:
 			difficulty_icon.texture = load(row["stage_type_icon"])
 			difficulty_icon.tooltip_text = row["stage_type"]
 	## 隐藏结算显示内容
-	_hide_al_clear_stage_ui()
+	_hide_all_clear_stage_ui()
 	## 清空一关金币奖励数和最高骰子奖励数
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 0
 	get_tree().paused = false
 	## 关卡切换效果
 	await EffectManager.stage_change_effect()
+	## 3、6、9关设置诅咒
 	if Current.count_stage in [3, 6, 9]:
 		_set_stage_debuff()
 		await EffectManager.debuff_change_effect()
+	## 4、7、10关获得金币技能
+	if Current.count_stage in [4, 7, 10]:
+		_get_coin_skill()
+	## 12关设置BOSS诅咒
 	if Current.count_stage == 12:
 		_set_stage_debuff(1)
 		await EffectManager.debuff_change_effect()
+	
 
 
 ## 重掷按钮按下
@@ -1056,6 +1073,22 @@ func _on_reroll_button_pressed() -> void:
 		CursorManager.change_cursor("reroll")
 		EventBus.event_emit("reroll")
 		
+func _get_coin_skill():
+	## 设置选择UI的图标和提示
+	coin_skill_row_1 = coin_skill_json_data.pick_random()
+	coin_skill_json_data.erase(coin_skill_row_1)
+	get_coin_skill_1.texture = load(coin_skill_row_1["coin_skill_icon"])
+	get_coin_skill_tooltip_1.tooltip_text = coin_skill_row_1["coin_skill_tooltip"]
+	coin_skill_row_2 = coin_skill_json_data.pick_random()
+	coin_skill_json_data.erase(coin_skill_row_2)
+	get_coin_skill_2.texture = load(coin_skill_row_2["coin_skill_icon"])
+	get_coin_skill_tooltip_2.tooltip_text = coin_skill_row_2["coin_skill_tooltip"]
+	## 弹出选则UI
+	while get_tree().paused:
+		await Tools.time_sleep(0.1)
+	get_coin_skill_ui.show()
+	get_tree().paused = true
+	
 
 func _on_coin_skill_1_pressed() -> void:
 	if coin_skill_1.button_pressed == false:
@@ -1122,3 +1155,53 @@ func _on_hide_level_up_ui_button_pressed() -> void:
 			if object.name != "hide_level_up_ui_button":
 				object.show()
 		hide_level_up_ui_button.text = "隐藏"
+
+
+func _on_hide_get_coin_skill_ui_button_pressed() -> void:
+	if hide_get_coin_skill_ui_button.text == "隐藏":
+		for object in get_coin_skill_ui.get_children():
+			if object.name != "hide_get_coin_skill_ui_button":
+				object.hide()
+		hide_get_coin_skill_ui_button.text = "显示"
+	else:
+		for object in get_coin_skill_ui.get_children():
+			if object.name != "hide_get_coin_skill_ui_button":
+				object.show()
+		hide_get_coin_skill_ui_button.text = "隐藏"
+
+## 设置技能到技能栏
+func _set_coin_skill(coin_skill_row):
+	match Current.coin_skill_array_dict.size():
+		0:
+			Current.coin_skill_array_dict.append(coin_skill_row)
+			coin_skill_1_icon.texture = load(coin_skill_row["coin_skill_icon"])
+			coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + \
+			str(int(coin_skill_row["coin_skill_cost"]))
+			coin_skill_1.tooltip_text = coin_skill_row["coin_skill_tooltip"]
+		1:
+			Current.coin_skill_array_dict.append(coin_skill_row)
+			coin_skill_2_icon.texture = load(coin_skill_row["coin_skill_icon"])
+			coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + \
+			str(int(coin_skill_row["coin_skill_cost"]))
+			coin_skill_2.tooltip_text = coin_skill_row["coin_skill_tooltip"]
+		2:
+			Current.coin_skill_array_dict.append(coin_skill_row)
+			coin_skill_3_icon.texture = load(coin_skill_row["coin_skill_icon"])
+			coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + \
+			str(int(coin_skill_row["coin_skill_cost"]))
+			coin_skill_3.tooltip_text = coin_skill_row["coin_skill_tooltip"]
+
+func _on_get_coin_skill_1_button_pressed() -> void:
+	_set_coin_skill(coin_skill_row_1)
+	## 设置金币会刷新技能可用性
+	Current.total_coins = Current.total_coins
+	get_tree().paused = false
+	get_coin_skill_ui.hide()
+
+func _on_get_coin_skill_2_button_pressed() -> void:
+	_set_coin_skill(coin_skill_row_2)
+	## 设置金币会刷新技能可用性
+	Current.total_coins = Current.total_coins
+	get_tree().paused = false
+	get_coin_skill_ui.hide()
+	
