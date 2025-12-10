@@ -670,7 +670,7 @@ func _turn_clean():
 	## 重置金币技能
 	EventBus.event_emit("reset_cursor")
 	## 增加回合数
-	Current.count_round += 1
+	#Current.count_round += 1
 	## 进入敌人回合
 	Current.turn = "enemy_turn"
 
@@ -721,6 +721,8 @@ func _check_stage_clear():
 		EventBus.event_emit("clear_stage_buff")
 
 func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin):
+	## 万一有升级让升级先出现
+	await Tools.time_sleep(0.5)
 	while get_tree().paused:
 		await Tools.time_sleep(0.1)
 	get_tree().paused = true

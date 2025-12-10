@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=160 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -29,9 +29,27 @@
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="19_vxglm"]
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
+[ext_resource type="Texture2D" uid="uid://68vp3c6a8wlj" path="res://images/buff_icon/slime_base_score_increase.png" id="26_5q0nq"]
+[ext_resource type="Texture2D" uid="uid://dptf45htsc12l" path="res://images/buff_icon/movement_plus_one.png" id="27_pibwh"]
+[ext_resource type="Texture2D" uid="uid://dto6g0qq2afo4" path="res://images/buff_icon/move_attack_score_increase.png" id="28_c6pm6"]
+[ext_resource type="Texture2D" uid="uid://c26f1hxsl5p2l" path="res://images/buff_icon/slime_current_score_increase.png" id="29_5he1u"]
+[ext_resource type="Texture2D" uid="uid://dotpvn07fxy2m" path="res://images/buff_icon/slime_plus_one.png" id="30_5poiv"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
 [ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="30_qkpxi"]
+[ext_resource type="Texture2D" uid="uid://bakl7q604pysi" path="res://images/buff_icon/turn_plus_one.png" id="31_2cjbq"]
 [ext_resource type="Texture2D" uid="uid://brksrpkqqyai1" path="res://images/coin_skill_icon/cloud.png" id="31_5q0nq"]
+[ext_resource type="Texture2D" uid="uid://bqqopdlvkoveg" path="res://images/buff_icon/slime_percent_score_increase.png" id="32_chjal"]
+[ext_resource type="Texture2D" uid="uid://b7hvl1jw5op7n" path="res://images/buff_icon/full_range_slime_double_score.png" id="33_cjqg0"]
+[ext_resource type="Texture2D" uid="uid://c1vvliwajb2tk" path="res://images/buff_icon/no_attack.png" id="34_vchkt"]
+[ext_resource type="Texture2D" uid="uid://cda7fkfl5c5ii" path="res://images/buff_icon/attack_over_five.png" id="35_txyw0"]
+[ext_resource type="Texture2D" uid="uid://u7ww8vmbao7u" path="res://images/buff_icon/attack_over_six.png" id="36_vc5cj"]
+[ext_resource type="Texture2D" uid="uid://ckba5dqm7mpuv" path="res://images/buff_icon/turn_coin_increase.png" id="37_j2jfr"]
+[ext_resource type="Texture2D" uid="uid://bdv875sbrrsun" path="res://images/buff_icon/coin_attack_score_increase.png" id="38_bjg73"]
+[ext_resource type="Texture2D" uid="uid://cp2fjw0m60c45" path="res://images/buff_icon/power_slime_plus_one.png" id="39_bu4jf"]
+[ext_resource type="Texture2D" uid="uid://weem0p3riybh" path="res://images/buff_icon/attack_power_slime_score_increase.png" id="40_o7ddy"]
+[ext_resource type="Texture2D" uid="uid://ujgnwh3q0qsk" path="res://images/buff_icon/max_power_puls_one.png" id="41_0loja"]
+[ext_resource type="Texture2D" uid="uid://dmk6cnp5dubc" path="res://images/buff_icon/power_attack_score_increase.png" id="42_ids8r"]
+[ext_resource type="Texture2D" uid="uid://dp2r48mlfcyj0" path="res://images/buff_icon/free_refresh_one_times.png" id="43_dnhof"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
 texture = ExtResource("2_nsbfg")
@@ -3153,7 +3171,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("26_5q0nq")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3162,7 +3180,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("27_pibwh")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3171,7 +3189,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("28_c6pm6")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3180,7 +3198,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("29_5he1u")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3189,7 +3207,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("30_5poiv")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3198,7 +3216,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("31_2cjbq")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3207,7 +3225,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("32_chjal")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3216,7 +3234,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("33_cjqg0")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3225,7 +3243,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("34_vchkt")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3234,7 +3252,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("35_txyw0")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3243,7 +3261,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("35_txyw0")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3252,7 +3270,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("36_vc5cj")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3261,7 +3279,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("28_c6pm6")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3270,7 +3288,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("37_j2jfr")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3279,7 +3297,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("38_bjg73")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3288,7 +3306,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("39_bu4jf")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3297,7 +3315,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("40_o7ddy")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3306,7 +3324,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("41_0loja")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3315,7 +3333,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("42_ids8r")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3324,7 +3342,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("43_dnhof")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3665,6 +3683,7 @@ text = "隐藏"
 [node name="get_coin_skill_ui" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 process_mode = 2
+visible = false
 
 [node name="Panel" type="Panel" parent="get_coin_skill_ui"]
 anchors_preset = 15
