@@ -48,10 +48,15 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	game_manager.add_exp(1)
 	if self in Current.transformable_slime_array:
 		Current.transformable_slime_array.erase(self)
-	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light"):
-		## 增加能量
+	## 增加能量
+	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light") and \
+	self.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(0.0, 18.892, 18.892):
 		if Current.power < Current.max_power:
 			Current.power += 1
+	## 增加金币
+	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light") and \
+	self.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(18.892, 18.892, 0.0):
+		Current.total_coins += 1
 	self.queue_free()
 
 

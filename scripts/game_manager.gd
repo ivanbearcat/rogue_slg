@@ -332,10 +332,19 @@ func _create_slime_on_margin_grid():
 func _create_power_slime():
 	if Current.power_slime_array.size() < Current.power_slime_num and Current.all_enemy_array.size() > 0:
 		for i in range(Current.power_slime_num - Current.power_slime_array.size()):
-			var power_slime = Current.all_enemy_array.pick_random()
+			var power_slime = Current.normal_slime_array.pick_random()
 			if power_slime not in Current.power_slime_array:
+				power_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(0.0, 18.892, 18.892))
 				power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 
+## 添加金币史莱姆
+func _create_coin_slime():
+	if Current.coin_slime_array.size() < Current.coin_slime_num and Current.all_enemy_array.size() > 0:
+		for i in range(Current.coin_slime_num - Current.coin_slime_array.size()):
+			var coin_slime = Current.normal_slime_array.pick_random()
+			if coin_slime not in Current.coin_slime_array:
+				coin_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 18.892, 0.0))
+				coin_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 		
 ## 史莱姆移动
 func slime_move_ai():
@@ -623,6 +632,8 @@ func _turn_process():
 		await Tools.time_sleep(0.05)
 	## 生成能量史莱姆
 	_create_power_slime()
+	## 生成金币史莱姆
+	_create_coin_slime()
 	## 玩家回合前
 	_pre_hero_turn_begin()
 	## 执行玩家回合前buff

@@ -241,16 +241,36 @@ var percent_score: float:
 var dice_type_point: int
 ## 攻击动画是否完成
 var attack_animation_finished = 1
-## 能量史莱姆或强化技能编号
+## 能量史莱姆数组
 var power_slime_array: Array:
 	get:
 		var _power_slime_array = []
 		for _slime in all_enemy_array:
-			if _slime.animated_sprite_2d.material.get_shader_parameter("is_high_light") == true:
+			if _slime.animated_sprite_2d.material.get_shader_parameter("is_high_light") == true and \
+			_slime.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(0.0, 18.892, 18.892):
 				_power_slime_array.append(_slime)
 		return _power_slime_array
 ## 能量史莱姆总数
 var power_slime_num := 1
+## 金币史莱姆数组
+var coin_slime_array: Array:
+	get:
+		var _coin_slime_array = []
+		for _slime in all_enemy_array:
+			if _slime.animated_sprite_2d.material.get_shader_parameter("is_high_light") == true and \
+			_slime.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(18.892, 18.892, 0.0):
+				_coin_slime_array.append(_slime)
+		return _coin_slime_array
+## 金币史莱姆总数
+var coin_slime_num := 1
+## 普通史莱姆（非能量和金币）
+var normal_slime_array: Array:
+	get:
+		var _normal_slime_array = []
+		for _slime in all_enemy_array:
+			if _slime.animated_sprite_2d.material.get_shader_parameter("is_high_light") == false:
+				_normal_slime_array.append(_slime)
+		return _normal_slime_array
 ## 鼠标状态
 var mouse_status := 'default'
 ## 重掷次数

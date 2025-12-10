@@ -1,4 +1,4 @@
-[gd_scene load_steps=160 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=163 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -19,7 +19,6 @@
 [ext_resource type="LabelSettings" uid="uid://dhj30d6t7jryv" path="res://resources/pixel_num.tres" id="12_yq6so"]
 [ext_resource type="Texture2D" uid="uid://dc7a6my34pjt5" path="res://images/process_bar.png" id="13_trceg"]
 [ext_resource type="Texture2D" uid="uid://d2jlnocchatj6" path="res://images/card/card_level_up.png" id="14_a8y0u"]
-[ext_resource type="Texture2D" uid="uid://bu0tsff2lanig" path="res://images/coin_skill_icon/double_score.png" id="14_y6deb"]
 [ext_resource type="StyleBox" uid="uid://nf1thu8lxm1v" path="res://resources/hover_button.tres" id="15_0ld40"]
 [ext_resource type="Texture2D" uid="uid://bd0mpn20yxg3u" path="res://images/shelves_announcements.png" id="15_jkv2x"]
 [ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="16_jbj1t"]
@@ -29,17 +28,18 @@
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="19_vxglm"]
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
-[ext_resource type="Texture2D" uid="uid://68vp3c6a8wlj" path="res://images/buff_icon/slime_base_score_increase.png" id="26_5q0nq"]
-[ext_resource type="Texture2D" uid="uid://dptf45htsc12l" path="res://images/buff_icon/movement_plus_one.png" id="27_pibwh"]
+[ext_resource type="Texture2D" uid="uid://b4sbd73i2l2ng" path="res://images/buff_icon/red_slime_probability_increase.png" id="26_bu4jf"]
+[ext_resource type="Texture2D" uid="uid://drenvl5t2u23w" path="res://images/buff_icon/yellow_slime_probability_increase.png" id="27_o7ddy"]
+[ext_resource type="Texture2D" uid="uid://d32y3igipa1yr" path="res://images/buff_icon/one_point_probability_increase.png" id="28_0loja"]
 [ext_resource type="Texture2D" uid="uid://dto6g0qq2afo4" path="res://images/buff_icon/move_attack_score_increase.png" id="28_c6pm6"]
-[ext_resource type="Texture2D" uid="uid://c26f1hxsl5p2l" path="res://images/buff_icon/slime_current_score_increase.png" id="29_5he1u"]
-[ext_resource type="Texture2D" uid="uid://dotpvn07fxy2m" path="res://images/buff_icon/slime_plus_one.png" id="30_5poiv"]
+[ext_resource type="Texture2D" uid="uid://crp10y4drtoj5" path="res://images/buff_icon/two_point_probability_increase.png" id="29_ids8r"]
+[ext_resource type="Texture2D" uid="uid://dnmnqloiuh4qx" path="res://images/buff_icon/three_point_probability_increase.png" id="30_dnhof"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
 [ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="30_qkpxi"]
-[ext_resource type="Texture2D" uid="uid://bakl7q604pysi" path="res://images/buff_icon/turn_plus_one.png" id="31_2cjbq"]
+[ext_resource type="Texture2D" uid="uid://b87l53xghrh7t" path="res://images/buff_icon/four_point_probability_increase.png" id="31_1v6qk"]
 [ext_resource type="Texture2D" uid="uid://brksrpkqqyai1" path="res://images/coin_skill_icon/cloud.png" id="31_5q0nq"]
-[ext_resource type="Texture2D" uid="uid://bqqopdlvkoveg" path="res://images/buff_icon/slime_percent_score_increase.png" id="32_chjal"]
-[ext_resource type="Texture2D" uid="uid://b7hvl1jw5op7n" path="res://images/buff_icon/full_range_slime_double_score.png" id="33_cjqg0"]
+[ext_resource type="Texture2D" uid="uid://b1vv5ao8mfog" path="res://images/buff_icon/five_point_probability_increase.png" id="32_augu2"]
+[ext_resource type="Texture2D" uid="uid://bmm7s88nrg0if" path="res://images/buff_icon/six_point_probability_increase.png" id="33_tm6hj"]
 [ext_resource type="Texture2D" uid="uid://c1vvliwajb2tk" path="res://images/buff_icon/no_attack.png" id="34_vchkt"]
 [ext_resource type="Texture2D" uid="uid://cda7fkfl5c5ii" path="res://images/buff_icon/attack_over_five.png" id="35_txyw0"]
 [ext_resource type="Texture2D" uid="uid://u7ww8vmbao7u" path="res://images/buff_icon/attack_over_six.png" id="36_vc5cj"]
@@ -50,6 +50,8 @@
 [ext_resource type="Texture2D" uid="uid://ujgnwh3q0qsk" path="res://images/buff_icon/max_power_puls_one.png" id="41_0loja"]
 [ext_resource type="Texture2D" uid="uid://dmk6cnp5dubc" path="res://images/buff_icon/power_attack_score_increase.png" id="42_ids8r"]
 [ext_resource type="Texture2D" uid="uid://dp2r48mlfcyj0" path="res://images/buff_icon/free_refresh_one_times.png" id="43_dnhof"]
+[ext_resource type="Texture2D" uid="uid://dy02tyei3p57d" path="res://images/buff_icon/green_slime_probability_increase.png" id="45_kf5aa"]
+[ext_resource type="Texture2D" uid="uid://kdlkobjugji7" path="res://images/buff_icon/blue_slime_probability_increase.png" id="46_t5ykj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
 texture = ExtResource("2_nsbfg")
@@ -1438,6 +1440,13 @@ font = ExtResource("16_jbj1t")
 font_size = 30
 outline_size = 12
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Environment" id="Environment_bu4jf"]
+background_mode = 3
+glow_enabled = true
+glow_levels/2 = 1.0
+glow_levels/3 = 0.0
+glow_levels/5 = 0.0
 
 [node name="game_manager" type="Node2D"]
 scale = Vector2(4, 4)
@@ -3171,7 +3180,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("26_5q0nq")
+texture = ExtResource("26_bu4jf")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3180,7 +3189,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("27_pibwh")
+texture = ExtResource("27_o7ddy")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3189,7 +3198,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("28_c6pm6")
+texture = ExtResource("28_0loja")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3198,7 +3207,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("29_5he1u")
+texture = ExtResource("29_ids8r")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3207,7 +3216,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("30_5poiv")
+texture = ExtResource("30_dnhof")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3216,7 +3225,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("31_2cjbq")
+texture = ExtResource("31_1v6qk")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3225,7 +3234,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("32_chjal")
+texture = ExtResource("32_augu2")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3234,7 +3243,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("33_cjqg0")
+texture = ExtResource("33_tm6hj")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3351,7 +3360,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("45_kf5aa")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3360,7 +3369,7 @@ custom_minimum_size = Vector2(0, 11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("14_y6deb")
+texture = ExtResource("46_t5ykj")
 expand_mode = 2
 stretch_mode = 5
 
@@ -3968,6 +3977,9 @@ pivot_offset = Vector2(6, 16)
 theme_override_fonts/font = ExtResource("16_jbj1t")
 theme_override_font_sizes/font_size = 20
 text = "0"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bu4jf")
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]
