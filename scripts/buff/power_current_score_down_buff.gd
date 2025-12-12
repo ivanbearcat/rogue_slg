@@ -9,11 +9,14 @@ func set_buff():
 
 func process_buff():
 	if Current.power_skill:
+		Current.public_lock_array.append("power_current_score_down_buff")
 		var sub_num = int(Current.total_score * 0.1)
 		var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
 		Current.hero.add_child(float_number_instantiate)
-		await Tools.time_sleep(0.5)
+		EffectManager.big_flow_effect(debuff_texture)
+		await Tools.time_sleep(1.5)
 		Current.total_score -= sub_num
+		Current.public_lock_array.erase("power_current_score_down_buff")
 	
 func clear_buff():
 	debuff_texture.queue_free()

@@ -65,6 +65,8 @@ var has_move_slime: bool:
 		return false
 ## 是否移动过
 var is_moved: bool
+## 是否攻击过
+var is_attacked: bool
 ## 选中的技能编号
 var skill_num: String
 ## 技能选择范围
@@ -309,5 +311,13 @@ var coin_skill_array_dict: Array
 var all_grids_array: Array
 ## 公共锁
 var public_lock_array := []
+## 含有buff的锁
+var buff_lock_array: Array:
+	get:
+		var _buff_lock_array := []
+		for lock_name in public_lock_array:
+			if "buff" in lock_name:
+				_buff_lock_array.append(lock_name)
+		return _buff_lock_array
 ## 上回合生成史莱姆
 var last_slime_create_array: Array

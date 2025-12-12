@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwgx1f2tbp8yp"]
+
+[ext_resource type="Theme" uid="uid://c7fy6qc45ak5d" path="res://resources/tooltip.tres" id="1_t6aa2"]
+[ext_resource type="Texture2D" uid="uid://b4sbd73i2l2ng" path="res://images/buff_icon/red_slime_probability_increase.png" id="2_iuw46"]
+
+[node name="TextureRect" type="TextureRect"]
+custom_minimum_size = Vector2(0, 11)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+tooltip_text = "1"
+theme = ExtResource("1_t6aa2")
+texture = ExtResource("2_iuw46")
+expand_mode = 2
+stretch_mode = 5

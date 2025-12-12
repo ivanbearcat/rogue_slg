@@ -185,7 +185,7 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
-	print("buff" in "")
+	print("buff" in "skill_attack")
 	#_get_coin_skill()
 	#_do_stage_clear_effect(7, 8 ,9)
 	#await Tools.time_sleep(0.5)
@@ -252,13 +252,13 @@ func _ready() -> void:
 	#_set_stage_debuff(1)
 	#await EffectManager.debuff_change_effect()
 	
-	#for row in boss_debuff_json_data:
-		#if row["debuff_id"] == "attack_score_down":
+	#for row in debuff_json_data:
+		#if row["debuff_id"] == "power_current_score_down":
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 	## 临时测试buff
 	for row in buff_json_data:
-		if row["buff_id"] == "slime_sum_score_increase":
+		if row["buff_id"] == "slime_attack_score_increase":
 			var buff = load(row["buff_res"]).new(row, self)
 			BuffSystem.callv("set_" + row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
 	
@@ -650,8 +650,6 @@ func _turn_process():
 	_create_coin_slime()
 	## 玩家回合前
 	_pre_hero_turn_begin()
-	## 执行玩家回合前buff
-	EventBus.event_emit("do_pre_hero_turn_buff")
 
 ## 技能结算
 func skill_attack():
@@ -659,13 +657,11 @@ func skill_attack():
 	turn_button.disabled = true
 	await skill_system.skill_attack()
 	Current.public_lock_array.erase("skill_attack")
+	Current.is_attacked = true
 	## 执行敌人回合前buff
 	EventBus.event_emit("do_pre_enemy_turn_buff")
 	## 等待buff处理完成
-	while Current.public_lock_array.size() > 0:
-		for lock_name in Current.public_lock_array:
-			if "buff" in lock_name:
-				await Tools.time_sleep(0.05)
+	await wait_for_buff_finish()
 	## 检查过关
 	await _check_stage_clear()
 	## 等待过关结算
@@ -673,7 +669,15 @@ func skill_attack():
 		await Tools.time_sleep(0.2)
 	## 敌人回合
 	await _turn_process()
+	## 执行玩家回合前buff
+	EventBus.event_emit("do_pre_hero_turn_buff")
 	#turn_button.disabled = false
+
+##等待buff执行完成
+func wait_for_buff_finish():
+		while Current.buff_lock_array.size() > 0:
+			for lock_name in Current.buff_lock_array:
+				await Tools.time_sleep(0.05)
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
@@ -686,10 +690,7 @@ func _on_turn_button_pressed() -> void:
 	## 执行敌人回合前buff
 	EventBus.event_emit("do_pre_enemy_turn_buff")
 	## 等待buff处理完成
-	while Current.public_lock_array.size() > 0:
-		for lock_name in Current.public_lock_array:
-			if "buff" in lock_name:
-				await Tools.time_sleep(0.05)
+	await wait_for_buff_finish()
 	## 检查过关
 	await _check_stage_clear()
 	## 等待过关结算
@@ -697,6 +698,8 @@ func _on_turn_button_pressed() -> void:
 		await Tools.time_sleep(0.2)
 	## 回合处理
 	await _turn_process()
+	## 执行玩家回合前buff
+	EventBus.event_emit("do_pre_hero_turn_buff")
 	#turn_button.disabled = false
 	## 测试
 	#for row in debuff_json_data:
@@ -734,6 +737,8 @@ func _pre_hero_turn_begin():
 	reset_astar_solid()
 	## 重置已移动标记
 	Current.is_moved = false
+	## 重掷已攻击标记
+	Current.is_attacked = false
 	## 恢复鼠标
 	CursorManager.reset_cursor()
 	EventBus.event_emit("hide_all_skills")

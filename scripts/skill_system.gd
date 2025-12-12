@@ -56,24 +56,27 @@ func skill_attack():
 			Current.total_score += Current.dice_type_point
 			#Current.set_total_score_with_effect(Current.total_score + Current.dice_type_point)
 			Current.once_total_score += Current.dice_type_point
-	## 攻击后buff
-	EventBus.event_emit("do_post_attack_buff")
 	## 保留最高骰子数
 	if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
 	## 等待攻击动画完成和公共锁释放
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)
+	Current.hero.hero_state_machine.transition_to("end")
+	Current.action_lock = false
+	### 攻击后buff
+	EventBus.event_emit("do_post_attack_buff")
+	## 等待buff处理完成
+	await game_manager.wait_for_buff_finish()
 	## 如果是赋能技能就消耗能量,然后重置UI
 	if Current.power_skill:
 		Current.power -= 1
 		EventBus.event_emit("skill_power_reset")
 		EventBus.event_emit("skill_button_reset")
-	## 恢复技能UI弹起状态
-	hide_all_skill.emit()
-	Current.hero.hero_state_machine.transition_to("end")
 	## 清空单次总分
 	Current.once_total_score = 0
-	Current.action_lock = false
+	## 恢复技能UI弹起状态
+	hide_all_skill.emit()
+	
 
 ## 鼠标点击红框之后移动
 func skill_move():

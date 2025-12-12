@@ -11,7 +11,7 @@ func process_buff():
 	var sub_num = int(Current.total_score * 0.2)
 	var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
 	Current.hero.add_child(float_number_instantiate)
-	await Tools.time_sleep(0.5)
+	await Tools.time_sleep(1.5)
 	Current.total_score -= sub_num
 	
 func clear_buff():
