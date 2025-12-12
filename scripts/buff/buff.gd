@@ -3,6 +3,7 @@ class_name Buff
 
 var game_manager: Node2D
 var buff_meta: Dictionary
+var buff_texture: TextureRect
 var debuff_texture: TextureRect
 var data: Dictionary
 

@@ -92,6 +92,8 @@ const hero_property = {
 @onready var class_icon: TextureRect = %class_icon
 ## debuff UI
 @onready var debuff_container: HFlowContainer = %debuff_container
+## buff UI
+@onready var buff_container: HFlowContainer = %buff_container
 ## UI
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
@@ -141,6 +143,8 @@ const hero_property = {
 @onready var debuff_json_data: Array = Tools.load_json_file('res://config/debuff.json')
 ## boss debuff数据
 @onready var boss_debuff_json_data: Array = Tools.load_json_file('res://config/boss_debuff.json')
+## buff数据
+@onready var buff_json_data: Array = Tools.load_json_file('res://config/buff.json')
 
 
 ## 格子像素大小
@@ -181,6 +185,7 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
+	print("buff" in "")
 	#_get_coin_skill()
 	#_do_stage_clear_effect(7, 8 ,9)
 	#await Tools.time_sleep(0.5)
@@ -251,6 +256,17 @@ func _ready() -> void:
 		#if row["debuff_id"] == "attack_score_down":
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+	## 临时测试buff
+	for row in buff_json_data:
+		if row["buff_id"] == "slime_sum_score_increase":
+			var buff = load(row["buff_res"]).new(row, self)
+			BuffSystem.callv("set_" + row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
+	
+	## 临时测试BOSS debuff
+	#for row in boss_debuff_json_data:
+		#if row["debuff_id"] == "attack_score_down":
+			#var buff = load(row["debuff_res"]).new(row, self)
+			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 
 
 func grid_index_to_position(grid_index: Vector2) -> Vector2:
@@ -259,18 +275,18 @@ func grid_index_to_position(grid_index: Vector2) -> Vector2:
 func position_to_grid_index(_position: Vector2) -> Vector2:
 	return Vector2((_position.x - start_pos.x) / grid_size.x, (_position.y - start_pos.y) / grid_size.y)
 
-## 生成史莱姆
+## 预生成史莱姆
 func _pre_create_slime():
 	var available_grid_array: Array[Vector2]
 	var create_slime_grid_index_array: Array[Vector2]
-	var slime_num: int
+	var slime_create_num: int
 	## 计算可以生成史莱姆的空地块
 	for grid_index in all_grid_dict.keys():
 		if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
 			available_grid_array.append(grid_index)
 	if available_grid_array.size() > 0:
-		slime_num = clamp(available_grid_array.size(), 1, 3)
-		while create_slime_grid_index_array.size() < slime_num:
+		slime_create_num = clamp(available_grid_array.size(), 1, Current.slime_create_num)
+		while create_slime_grid_index_array.size() < slime_create_num:
 			var grid_index = available_grid_array.pick_random()
 			if ! grid_index in create_slime_grid_index_array:
 				create_slime_grid_index_array.append(grid_index)
@@ -616,8 +632,6 @@ func hide_skill_attack():
 
 ## 回合操作
 func _turn_process():
-	## 执行敌人回合前buff
-	EventBus.event_emit("do_pre_enemy_turn_buff")
 	## 敌人回合
 	_turn_clean()
 	## 等待回合船动画
@@ -645,9 +659,19 @@ func skill_attack():
 	turn_button.disabled = true
 	await skill_system.skill_attack()
 	Current.public_lock_array.erase("skill_attack")
+	## 执行敌人回合前buff
+	EventBus.event_emit("do_pre_enemy_turn_buff")
+	## 等待buff处理完成
+	while Current.public_lock_array.size() > 0:
+		for lock_name in Current.public_lock_array:
+			if "buff" in lock_name:
+				await Tools.time_sleep(0.05)
+	## 检查过关
 	await _check_stage_clear()
+	## 等待过关结算
 	while clear_stage_ui.visible == true:
 		await Tools.time_sleep(0.2)
+	## 敌人回合
 	await _turn_process()
 	#turn_button.disabled = false
 
@@ -659,6 +683,19 @@ func _on_turn_button_pressed() -> void:
 		await Tools.time_sleep(0.01)
 	if Current.power < Current.max_power:
 		Current.power += 1
+	## 执行敌人回合前buff
+	EventBus.event_emit("do_pre_enemy_turn_buff")
+	## 等待buff处理完成
+	while Current.public_lock_array.size() > 0:
+		for lock_name in Current.public_lock_array:
+			if "buff" in lock_name:
+				await Tools.time_sleep(0.05)
+	## 检查过关
+	await _check_stage_clear()
+	## 等待过关结算
+	while clear_stage_ui.visible == true:
+		await Tools.time_sleep(0.2)
+	## 回合处理
 	await _turn_process()
 	#turn_button.disabled = false
 	## 测试
@@ -681,7 +718,7 @@ func _turn_clean():
 	## 重置金币技能
 	EventBus.event_emit("reset_cursor")
 	## 增加回合数
-	#Current.count_round += 1
+	Current.count_round += 1
 	## 进入敌人回合
 	Current.turn = "enemy_turn"
 
@@ -718,24 +755,25 @@ func _check_stage_clear():
 		Current.count_add_coins += stage_add_coin
 		## 显示剩余回合奖励的金币
 		var round_add_coin = 10 - Current.count_round
+		stage_coin_label_2.text = str(round_add_coin)
 		Current.count_add_coins += round_add_coin
-		var add_coin := 0
-		for i in range(10 - Current.count_round):
-			add_coin += 1
-			stage_coin_label_2.text = str(add_coin)
-			await Tools.time_sleep(0.3)
+		#var add_coin := 0
+		#for i in range(10 - Current.count_round):
+			#add_coin += 1
+			#stage_coin_label_2.text = str(add_coin)
+			#await Tools.time_sleep(0.1)
 		## 过关时最高子数金币数组
 		var highest_dice_add_coin = Current.highest_dice_num - 1
 		Current.count_add_coins += highest_dice_add_coin
-		_do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin)
+		await _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin)
 		## 清理关卡buff
 		EventBus.event_emit("clear_stage_buff")
 
 func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin):
 	## 万一有升级让升级先出现
-	await Tools.time_sleep(0.5)
+	await Tools.time_sleep(0.1)
 	while get_tree().paused:
-		await Tools.time_sleep(0.1)
+		await Tools.time_sleep(0.05)
 	get_tree().paused = true
 	## 纸
 	clear_stage_ui.show()
@@ -1038,7 +1076,6 @@ func _hide_all_clear_stage_ui():
 	clear_stage_ui.hide()
 
 func _on_stage_clear_button_pressed() -> void:
-	
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
 	## 更新回合、关卡、当前分数、目标分数
@@ -1058,7 +1095,7 @@ func _on_stage_clear_button_pressed() -> void:
 	_hide_all_clear_stage_ui()
 	## 清空一关金币奖励数和最高骰子奖励数
 	Current.count_add_coins = 0
-	Current.highest_dice_num = 0
+	Current.highest_dice_num = 1
 	get_tree().paused = false
 	## 关卡切换效果
 	await EffectManager.stage_change_effect()

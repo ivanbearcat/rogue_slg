@@ -157,7 +157,7 @@ var count_round := 0:
 		#return int(game_manager.turn_label.text)
 		return count_round
 ## 最高骰子数
-var highest_dice_num := 0
+var highest_dice_num := 1
 ## 骰型板基础分数
 var one_score: int:
 	set(v):
@@ -241,6 +241,8 @@ var percent_score: float:
 var dice_type_point: int
 ## 攻击动画是否完成
 var attack_animation_finished = 1
+## 史莱姆生成数量
+var slime_create_num := 3
 ## 能量史莱姆数组
 var power_slime_array: Array:
 	get:

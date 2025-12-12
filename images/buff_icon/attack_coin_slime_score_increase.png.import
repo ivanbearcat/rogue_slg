@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c26f1hxsl5p2l"
-path="res://.godot/imported/slime_current_score_increase.png-7fb5142414ae0aa6956f9dd61820ad31.ctex"
+uid="uid://57oyou3ef2xv"
+path="res://.godot/imported/attack_coin_slime_score_increase.png-1e7ee22fd12608908e657f72ca55c7a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/buff_icon/slime_current_score_increase.png"
-dest_files=["res://.godot/imported/slime_current_score_increase.png-7fb5142414ae0aa6956f9dd61820ad31.ctex"]
+source_file="res://images/buff_icon/attack_coin_slime_score_increase.png"
+dest_files=["res://.godot/imported/attack_coin_slime_score_increase.png-1e7ee22fd12608908e657f72ca55c7a6.ctex"]
 
 [params]
 
