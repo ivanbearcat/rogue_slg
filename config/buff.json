@@ -37,7 +37,7 @@
         "buff_icon": "res://images/buff_icon/attack_over_four.png",
         "buff_tooltip": "一次击杀4个及以上，以这次得分为基础，额外增加20%倍率的分数",
         "buff_res": "res://scripts/buff/attack_over_four_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "attack_over_five",
@@ -45,7 +45,7 @@
         "buff_icon": "res://images/buff_icon/attack_over_five.png",
         "buff_tooltip": "一次击杀5个及以上，以这次得分为基础，额外增加40%倍率的分数",
         "buff_res": "res://scripts/buff/attack_over_five_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "attack_over_six",
@@ -53,23 +53,23 @@
         "buff_icon": "res://images/buff_icon/attack_over_six.png",
         "buff_tooltip": "一次击杀6个及以上，以这次得分为基础，额外增加60%倍率的分数",
         "buff_res": "res://scripts/buff/attack_over_six_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "full_range_slime_double_score",
         "buff_name": "技能打满分数翻倍",
         "buff_icon": "res://images/buff_icon/full_range_slime_double_score.png",
-        "buff_tooltip": "技能的攻击范围内都有史莱姆，以这次得分为基础，额外增加100%倍率的分数",
+        "buff_tooltip": "技能的攻击范围内都有史莱姆，以这次得分为基础，额外增加50%倍率的分数",
         "buff_res": "res://scripts/buff/full_range_slime_double_score_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "move_current_score_increase",
         "buff_name": "移动加分",
         "buff_icon": "res://images/buff_icon/move_current_score_increase.png",
-        "buff_tooltip": "每移动1格，增加1%的当前分数",
+        "buff_tooltip": "每移动1格，增加2%的当前分数",
         "buff_res": "res://scripts/buff/move_current_score_increase_buff.gd",
-        "buff_type": null
+        "buff_type": "post_hero_move_buff"
     },
     {
         "buff_id": "movement_plus_one",
@@ -77,15 +77,15 @@
         "buff_icon": "res://images/buff_icon/movement_plus_one.png",
         "buff_tooltip": "移动力+1",
         "buff_res": "res://scripts/buff/movement_plus_one_buff.gd",
-        "buff_type": null
+        "buff_type": "pre_enemy_turn_buff"
     },
     {
         "buff_id": "move_attack_score_increase",
         "buff_name": "移动力击杀额外加分",
         "buff_icon": "res://images/buff_icon/move_attack_score_increase.png",
-        "buff_tooltip": "攻击后，每有1点移动力，以这次得分为基础，额外增加10%倍率的分数",
+        "buff_tooltip": "攻击后，每有1点移动力，以这次得分为基础，额外增加5%倍率的分数",
         "buff_res": "res://scripts/buff/move_attack_score_increase_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "coin_slime_plus_one",
@@ -93,7 +93,7 @@
         "buff_icon": "res://images/buff_icon/coin_slime_plus_one.png",
         "buff_tooltip": "金币史莱姆总量+1",
         "buff_res": "res://scripts/buff/coin_slime_plus_one_buff.gd",
-        "buff_type": null
+        "buff_type": "pre_enemy_turn_buff"
     },
     {
         "buff_id": "attack_coin_slime_score_increase",
@@ -101,7 +101,7 @@
         "buff_icon": "res://images/buff_icon/attack_coin_slime_score_increase.png",
         "buff_tooltip": "击杀金币史莱姆，增加20%的当前分数",
         "buff_res": "res://scripts/buff/attack_coin_slime_score_increase_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "turn_coin_increase",

@@ -70,13 +70,13 @@ func set_post_attack_buff(buff: Object, type: buff_type):
 
 func do_post_attack_buff():
 	for buff in post_attack_buff_once:
-		buff.process_buff()
+		await buff.process_buff()
 		buff.clear_buff()
 	post_attack_buff_once = []
 	for buff in post_attack_buff_stage:
-		buff.process_buff()
+		await buff.process_buff()
 	for buff in post_attack_buff_always:
-		buff.process_buff()
+		await buff.process_buff()
 
 ## 敌人回合前
 func set_pre_enemy_turn_buff(buff: Object, type: buff_type):
@@ -91,13 +91,13 @@ func set_pre_enemy_turn_buff(buff: Object, type: buff_type):
 	
 func do_pre_enemy_turn_buff():
 	for buff in pre_enemy_turn_buff_once:
-		buff.process_buff()
+		await buff.process_buff()
 		buff.clear_buff()
 	pre_enemy_turn_buff_once = []
 	for buff in pre_enemy_turn_buff_stage:
-		buff.process_buff()
+		await buff.process_buff()
 	for buff in pre_enemy_turn_buff_always:
-		buff.process_buff()
+		await buff.process_buff()
 
 ## 玩家回合前
 func set_pre_hero_turn_buff(buff: Object, type: buff_type):
@@ -112,13 +112,13 @@ func set_pre_hero_turn_buff(buff: Object, type: buff_type):
 	
 func do_pre_hero_turn_buff():
 	for buff in pre_hero_turn_buff_once:
-		buff.process_buff()
+		await buff.process_buff()
 		buff.clear_buff()
 	pre_hero_turn_buff_once = []
 	for buff in pre_hero_turn_buff_stage:
-		buff.process_buff()
+		await buff.process_buff()
 	for buff in pre_hero_turn_buff_always:
-		buff.process_buff()
+		await buff.process_buff()
 
 ## 玩家移动后
 func set_post_hero_move_buff(buff: Object, type: buff_type):
@@ -133,10 +133,10 @@ func set_post_hero_move_buff(buff: Object, type: buff_type):
 
 func do_post_hero_move_buff():
 	for buff in post_hero_move_buff_once:
-		buff.process_buff()
+		await buff.process_buff()
 		buff.clear_buff()
 	post_hero_move_buff_once = []
 	for buff in post_hero_move_buff_stage:
-		buff.process_buff()
+		await buff.process_buff()
 	for buff in post_hero_move_buff_always:
-		buff.process_buff()
+		await buff.process_buff()

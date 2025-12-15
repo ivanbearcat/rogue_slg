@@ -37,9 +37,10 @@ func skill_attack():
 	## 攻击前buff
 	#EventBus.event_emit("do_pre_attack_buff")
 	## 史莱姆死亡
-	var _slime_die_array: Array
+	Current.slime_die_sum = 0
 	for slime in Current.all_enemy_array:
 		if slime.enemy_grid_index in Current.skill_attack_range:
+			Current.slime_die_sum += 1
 			slime.animated_sprite_2d.play("die")
 	var dice_array = game_manager.dice_list.get_children()
 	## 根据骰子数量条计算分数并统计骰子数

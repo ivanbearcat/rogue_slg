@@ -321,3 +321,7 @@ var buff_lock_array: Array:
 		return _buff_lock_array
 ## 上回合生成史莱姆
 var last_slime_create_array: Array
+## 史莱姆死亡数组
+var slime_die_sum: int
+## 击杀过金币史莱姆
+var killed_coin_slime := false

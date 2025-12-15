@@ -6,17 +6,16 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
-	
+
 func process_buff():
-	Current.public_lock_array.append("slime_attack_score_increase_buff")
-	var add_num = int(Current.once_total_score * (Current.all_enemy_array.size() * 0.02))
+	Current.public_lock_array.append("move_attack_score_increase_buff")
+	var add_num = int(Current.hero.hero_movement * 0.05 * Current.once_total_score)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num)
 	Current.hero.add_child(float_number_instantiate)
 	EffectManager.big_flow_effect(buff_texture)
-	## 等待飘字结束
 	await Tools.time_sleep(1.5)
 	Current.total_score += add_num
-	Current.public_lock_array.erase("slime_attack_score_increase_buff")
+	Current.public_lock_array.erase("move_attack_score_increase_buff")
 	
 func clear_buff():
 	pass

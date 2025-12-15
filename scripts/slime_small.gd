@@ -56,6 +56,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	## 增加金币
 	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light") and \
 	self.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(18.892, 18.892, 0.0):
+		Current.killed_coin_slime = true
 		Current.total_coins += 1
 	self.queue_free()
 

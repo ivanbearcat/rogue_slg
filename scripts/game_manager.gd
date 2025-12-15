@@ -258,7 +258,7 @@ func _ready() -> void:
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 	## 临时测试buff
 	for row in buff_json_data:
-		if row["buff_id"] == "slime_attack_score_increase":
+		if row["buff_id"] in ["attack_over_four"]:
 			var buff = load(row["buff_res"]).new(row, self)
 			BuffSystem.callv("set_" + row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
 	
@@ -451,6 +451,7 @@ func add_exp(new_exp: int) -> void:
 	_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
 	## 等待1秒让一次攻击下的史莱姆经验全加上再升级
 	await Tools.time_sleep(1)
+	await wait_for_buff_finish()
 	await _check_and_level_up()
 
 
@@ -720,6 +721,8 @@ func _turn_clean():
 	EventBus.event_emit("reset_all_hero_skills")
 	## 重置金币技能
 	EventBus.event_emit("reset_cursor")
+	## 重置击杀过金币史莱姆标记
+	Current.killed_coin_slime = false
 	## 增加回合数
 	Current.count_round += 1
 	## 进入敌人回合
