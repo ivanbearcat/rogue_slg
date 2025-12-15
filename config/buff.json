@@ -77,7 +77,7 @@
         "buff_icon": "res://images/buff_icon/movement_plus_one.png",
         "buff_tooltip": "移动力+1",
         "buff_res": "res://scripts/buff/movement_plus_one_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_hero_turn_buff"
     },
     {
         "buff_id": "move_attack_score_increase",
@@ -93,7 +93,7 @@
         "buff_icon": "res://images/buff_icon/coin_slime_plus_one.png",
         "buff_tooltip": "金币史莱姆总量+1",
         "buff_res": "res://scripts/buff/coin_slime_plus_one_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_hero_turn_buff"
     },
     {
         "buff_id": "attack_coin_slime_score_increase",
@@ -109,7 +109,7 @@
         "buff_icon": "res://images/buff_icon/turn_coin_increase.png",
         "buff_tooltip": "回合结束金币+1",
         "buff_res": "res://scripts/buff/turn_coin_increase_buff.gd",
-        "buff_type": null
+        "buff_type": "pre_enemy_turn_buff"
     },
     {
         "buff_id": "coin_attack_score_increase",
@@ -117,7 +117,7 @@
         "buff_icon": "res://images/buff_icon/coin_attack_score_increase.png",
         "buff_tooltip": "攻击后，每有1个金币，以这次得分为基础，额外增加1%倍率的分数",
         "buff_res": "res://scripts/buff/coin_attack_score_increase_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "power_slime_plus_one",
@@ -125,7 +125,7 @@
         "buff_icon": "res://images/buff_icon/power_slime_plus_one.png",
         "buff_tooltip": "能量史莱姆总量+1",
         "buff_res": "res://scripts/buff/power_slime_plus_one_buff.gd",
-        "buff_type": null
+        "buff_type": "pre_hero_turn_buff"
     },
     {
         "buff_id": "attack_power_slime_score_increase",
@@ -133,7 +133,7 @@
         "buff_icon": "res://images/buff_icon/attack_power_slime_score_increase.png",
         "buff_tooltip": "击杀能量史莱姆，增加20%的当前分数",
         "buff_res": "res://scripts/buff/attack_power_slime_score_increase_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "max_power_puls_one",
@@ -141,7 +141,7 @@
         "buff_icon": "res://images/buff_icon/max_power_puls_one.png",
         "buff_tooltip": "能量上限+1",
         "buff_res": "res://scripts/buff/max_power_puls_one_buff.gd",
-        "buff_type": null
+        "buff_type": "pre_hero_turn_buff"
     },
     {
         "buff_id": "power_attack_score_increase",
@@ -149,7 +149,7 @@
         "buff_icon": "res://images/buff_icon/power_attack_score_increase.png",
         "buff_tooltip": "攻击后，如果使用了能量，以这次得分为基础，额外增加20%倍率的分数",
         "buff_res": "res://scripts/buff/power_attack_score_increase_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "slime_base_score_increase",
@@ -157,7 +157,7 @@
         "buff_icon": "res://images/buff_icon/slime_base_score_increase.png",
         "buff_tooltip": "每击杀1个史莱姆，随机1个点数分值+1",
         "buff_res": "res://scripts/buff/slime_base_score_increase_buff.gd",
-        "buff_type": null
+        "buff_type": "post_attack_buff"
     },
     {
         "buff_id": "slime_percent_score_increase",

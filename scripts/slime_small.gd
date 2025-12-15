@@ -51,6 +51,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	## 增加能量
 	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light") and \
 	self.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(0.0, 18.892, 18.892):
+		Current.killed_power_slime = true
 		if Current.power < Current.max_power:
 			Current.power += 1
 	## 增加金币

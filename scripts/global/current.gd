@@ -164,31 +164,37 @@ var highest_dice_num := 1
 var one_score: int:
 	set(v):
 		game_manager.one_score.text = str(v)
+		EffectManager.big_flow_effect(game_manager.one_score)
 	get:
 		return int(game_manager.one_score.text)
 var two_score: int:
 	set(v):
 		game_manager.two_score.text = str(v)
+		EffectManager.big_flow_effect(game_manager.two_score)
 	get:
 		return int(game_manager.two_score.text)
 var three_score: int:
 	set(v):
 		game_manager.three_score.text = str(v)
+		EffectManager.big_flow_effect(game_manager.three_score)
 	get:
 		return int(game_manager.three_score.text)
 var four_score: int:
 	set(v):
 		game_manager.four_score.text = str(v)
+		EffectManager.big_flow_effect(game_manager.four_score)
 	get:
 		return int(game_manager.four_score.text)
 var five_score: int:
 	set(v):
 		game_manager.five_score.text = str(v)
+		EffectManager.big_flow_effect(game_manager.five_score)
 	get:
 		return int(game_manager.five_score.text)
 var six_score: int:
 	set(v):
 		game_manager.six_score.text = str(v)
+		EffectManager.big_flow_effect(game_manager.six_score)
 	get:
 		return int(game_manager.six_score.text)
 ## 骰型板倍率
@@ -323,5 +329,7 @@ var buff_lock_array: Array:
 var last_slime_create_array: Array
 ## 史莱姆死亡数组
 var slime_die_sum: int
+## 击杀过能量史莱姆
+var killed_power_slime := false
 ## 击杀过金币史莱姆
 var killed_coin_slime := false
