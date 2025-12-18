@@ -258,10 +258,10 @@ func _ready() -> void:
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 	## 临时测试buff
 	for row in buff_json_data:
-		if row["buff_id"] in ["slime_base_score_increase"]:
+		if row["buff_id"] in ["six_point_probability_increase"]:
 			var buff = load(row["buff_res"]).new(row, self)
 			BuffSystem.callv("set_" + row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
-	
+
 	## 临时测试BOSS debuff
 	#for row in boss_debuff_json_data:
 		#if row["debuff_id"] == "attack_score_down":

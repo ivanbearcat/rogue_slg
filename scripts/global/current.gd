@@ -201,31 +201,37 @@ var six_score: int:
 var none_percent: int:
 	set(v):
 		game_manager.none_percent.text = str(v) + "%"
+		EffectManager.big_flow_effect(game_manager.none_percent)
 	get:
 		return int(game_manager.none_percent.text)
 var duizi_percent: int:
 	set(v):
 		game_manager.duizi_percent.text = str(v) + "%"
+		EffectManager.big_flow_effect(game_manager.duizi_percent)
 	get:
 		return int(game_manager.duizi_percent.text)
 var shunzi_percent: int:
 	set(v):
 		game_manager.shunzi_percent.text = str(v) + "%"
+		EffectManager.big_flow_effect(game_manager.shunzi_percent)
 	get:
 		return int(game_manager.shunzi_percent.text)
 var tongse_percent: int:
 	set(v):
 		game_manager.tongse_percent.text = str(v) + "%"
+		EffectManager.big_flow_effect(game_manager.tongse_percent)
 	get:
 		return int(game_manager.tongse_percent.text)
 var tongdui_percent: int:
 	set(v):
 		game_manager.tongdui_percent.text = str(v) + "%"
+		EffectManager.big_flow_effect(game_manager.tongdui_percent)
 	get:
 		return int(game_manager.tongdui_percent.text)
 var tongshun_percent: int:
 	set(v):
 		game_manager.tongshun_percent.text = str(v) + "%"
+		EffectManager.big_flow_effect(game_manager.tongshun_percent)
 	get:
 		return int(game_manager.tongshun_percent.text)
 ## 实时基础和倍率
@@ -333,3 +339,5 @@ var slime_die_sum: int
 var killed_power_slime := false
 ## 击杀过金币史莱姆
 var killed_coin_slime := false
+## 第一次刷新0金币
+var zero_coin_refresh := false
