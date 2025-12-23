@@ -1,4 +1,4 @@
-[gd_scene load_steps=162 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=180 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -51,6 +51,7 @@
 [ext_resource type="Texture2D" uid="uid://dmk6cnp5dubc" path="res://images/buff_icon/power_attack_score_increase.png" id="42_ids8r"]
 [ext_resource type="Texture2D" uid="uid://dp2r48mlfcyj0" path="res://images/buff_icon/free_refresh_one_times.png" id="43_dnhof"]
 [ext_resource type="Texture2D" uid="uid://dy02tyei3p57d" path="res://images/buff_icon/green_slime_probability_increase.png" id="45_kf5aa"]
+[ext_resource type="Texture2D" uid="uid://57oyou3ef2xv" path="res://images/buff_icon/attack_coin_slime_score_increase.png" id="52_bu4jf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
 texture = ExtResource("2_nsbfg")
@@ -1439,6 +1440,71 @@ font = ExtResource("16_jbj1t")
 font_size = 30
 outline_size = 12
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjg73"]
+bg_color = Color(0, 0, 0, 0.9019608)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kf5aa"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(155, 25, 95, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhfw6"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(0, 128, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro3en"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(3, 32, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e755i"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(3, 64, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_od4ux"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(3, 48, 24, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o7ddy"]
+load_path = "res://.godot/imported/shelves_announcements.png-0e98b761984cefdc57adb62a3099d1ff.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5ykj"]
+atlas = SubResource("CompressedTexture2D_o7ddy")
+region = Rect2(114, 161, 11, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y57op"]
+atlas = SubResource("CompressedTexture2D_o7ddy")
+region = Rect2(114, 161, 11, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlv25"]
+atlas = SubResource("CompressedTexture2D_o7ddy")
+region = Rect2(130, 161, 11, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a82wo"]
+atlas = SubResource("CompressedTexture2D_o7ddy")
+region = Rect2(130, 193, 11, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdvew"]
+atlas = SubResource("CompressedTexture2D_o7ddy")
+region = Rect2(114, 193, 11, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjtvk"]
+atlas = SubResource("CompressedTexture2D_o7ddy")
+region = Rect2(114, 161, 11, 30)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bu4jf"]
+load_path = "res://.godot/imported/shelves_announcements.png-0e98b761984cefdc57adb62a3099d1ff.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1epgm"]
+atlas = SubResource("CompressedTexture2D_bu4jf")
+region = Rect2(112, 128, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_152kg"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(112, 144, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4e17"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(80, 128, 32, 16)
 
 [sub_resource type="Environment" id="Environment_bu4jf"]
 background_mode = 3
@@ -3962,6 +4028,391 @@ pivot_offset = Vector2(6, 16)
 theme_override_fonts/font = ExtResource("16_jbj1t")
 theme_override_font_sizes/font_size = 20
 text = "0"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bjg73")
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 536.0
+offset_top = 73.0
+offset_right = 609.0
+offset_bottom = 121.0
+text = "商店"
+label_settings = SubResource("LabelSettings_2f3dj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -413.54022
+offset_top = -185.0
+offset_right = 413.54022
+offset_bottom = 186.75
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_kf5aa")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HFlowContainer" type="HFlowContainer" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 258.54022
+offset_top = 55.0
+offset_right = 564.5402
+offset_bottom = 119.0
+theme_override_constants/h_separation = 48
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+texture = ExtResource("52_bu4jf")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect"]
+visible = false
+layout_mode = 0
+offset_left = 7.0
+offset_top = -29.0
+offset_right = 59.0
+offset_bottom = 8.0
+texture = SubResource("AtlasTexture_xhfw6")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect/TextureRect"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 52.0
+offset_bottom = 31.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 52"
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -37.0
+offset_right = 62.0
+offset_bottom = 7.0
+texture_normal = SubResource("AtlasTexture_ro3en")
+texture_pressed = SubResource("AtlasTexture_e755i")
+texture_hover = SubResource("AtlasTexture_od4ux")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect/TextureButton"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 25"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+texture = ExtResource("35_txyw0")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect2"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -37.0
+offset_right = 62.0
+offset_bottom = 7.0
+texture_normal = SubResource("AtlasTexture_ro3en")
+texture_pressed = SubResource("AtlasTexture_e755i")
+texture_hover = SubResource("AtlasTexture_od4ux")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect2/TextureButton"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 3"
+horizontal_alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+texture = ExtResource("38_bjg73")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect3"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -37.0
+offset_right = 62.0
+offset_bottom = 7.0
+texture_normal = SubResource("AtlasTexture_ro3en")
+texture_pressed = SubResource("AtlasTexture_e755i")
+texture_hover = SubResource("AtlasTexture_od4ux")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect3/TextureButton"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 1"
+horizontal_alignment = 1
+
+[node name="HFlowContainer2" type="HFlowContainer" parent="CanvasLayer/Panel/TextureRect"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = 258.54022
+offset_top = 163.0
+offset_right = 564.5402
+offset_bottom = 227.0
+theme_override_constants/h_separation = 48
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+texture = ExtResource("52_bu4jf")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect"]
+visible = false
+layout_mode = 0
+offset_left = 7.0
+offset_top = -29.0
+offset_right = 59.0
+offset_bottom = 8.0
+texture = SubResource("AtlasTexture_xhfw6")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect/TextureRect"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 52.0
+offset_bottom = 31.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 52"
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -37.0
+offset_right = 62.0
+offset_bottom = 7.0
+texture_normal = SubResource("AtlasTexture_ro3en")
+texture_pressed = SubResource("AtlasTexture_e755i")
+texture_hover = SubResource("AtlasTexture_od4ux")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect/TextureButton"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 25"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+texture = ExtResource("35_txyw0")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect2"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -37.0
+offset_right = 62.0
+offset_bottom = 7.0
+texture_normal = SubResource("AtlasTexture_ro3en")
+texture_pressed = SubResource("AtlasTexture_e755i")
+texture_hover = SubResource("AtlasTexture_od4ux")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect2/TextureButton"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 3"
+horizontal_alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+texture = ExtResource("38_bjg73")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect3"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -37.0
+offset_right = 62.0
+offset_bottom = 7.0
+texture_normal = SubResource("AtlasTexture_ro3en")
+texture_pressed = SubResource("AtlasTexture_e755i")
+texture_hover = SubResource("AtlasTexture_od4ux")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect3/TextureButton"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 1"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 0
+offset_left = 222.54022
+offset_top = 266.0
+offset_right = 303.54022
+offset_bottom = 336.0
+tooltip_text = "补满所有能量"
+theme = ExtResource("17_qkpxi")
+texture = SubResource("AtlasTexture_t5ykj")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 0
+offset_left = 249.54022
+offset_top = 266.0
+offset_right = 330.54022
+offset_bottom = 336.0
+tooltip_text = "补满所有能量"
+theme = ExtResource("17_qkpxi")
+texture = SubResource("AtlasTexture_y57op")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 0
+offset_left = 367.54022
+offset_top = 266.0
+offset_right = 448.54022
+offset_bottom = 336.0
+tooltip_text = "补满所有能量"
+theme = ExtResource("17_qkpxi")
+texture = SubResource("AtlasTexture_mlv25")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 0
+offset_left = 425.54022
+offset_top = 266.0
+offset_right = 506.54022
+offset_bottom = 336.0
+tooltip_text = "补满所有能量"
+theme = ExtResource("17_qkpxi")
+texture = SubResource("AtlasTexture_a82wo")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 0
+offset_left = 310.54022
+offset_top = 158.0
+offset_right = 391.54022
+offset_bottom = 228.0
+tooltip_text = "补满所有能量"
+theme = ExtResource("17_qkpxi")
+texture = SubResource("AtlasTexture_gdvew")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect6" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 0
+offset_left = 470.54022
+offset_top = 158.0
+offset_right = 551.5402
+offset_bottom = 228.0
+tooltip_text = "补满所有能量"
+theme = ExtResource("17_qkpxi")
+texture = SubResource("AtlasTexture_kjtvk")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect"]
+layout_mode = 0
+offset_left = 582.5402
+offset_top = 50.0
+offset_right = 696.5402
+offset_bottom = 102.0
+texture_normal = SubResource("AtlasTexture_1epgm")
+texture_pressed = SubResource("AtlasTexture_152kg")
+texture_hover = SubResource("AtlasTexture_r4e17")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/TextureButton"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 6.0
+offset_right = 103.0
+offset_bottom = 36.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "换一批[img=14 ]res://images/coin.png[/img]1"
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_bu4jf")
