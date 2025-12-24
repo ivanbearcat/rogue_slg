@@ -1,4 +1,4 @@
-[gd_scene load_steps=180 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=183 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -1448,10 +1448,6 @@ bg_color = Color(0, 0, 0, 0.9019608)
 atlas = ExtResource("15_jkv2x")
 region = Rect2(155, 25, 95, 72)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xhfw6"]
-atlas = ExtResource("15_jkv2x")
-region = Rect2(0, 128, 24, 16)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ro3en"]
 atlas = ExtResource("15_jkv2x")
 region = Rect2(3, 32, 24, 16)
@@ -1464,6 +1460,18 @@ region = Rect2(3, 64, 24, 16)
 atlas = ExtResource("15_jkv2x")
 region = Rect2(3, 48, 24, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjtvk"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(7, 212, 17, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrs0c"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(72, 212, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xljpf"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(39, 212, 17, 18)
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o7ddy"]
 load_path = "res://.godot/imported/shelves_announcements.png-0e98b761984cefdc57adb62a3099d1ff.ctex"
 
@@ -1475,21 +1483,24 @@ region = Rect2(114, 161, 11, 30)
 atlas = SubResource("CompressedTexture2D_o7ddy")
 region = Rect2(114, 161, 11, 30)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0loja"]
+load_path = "res://.godot/imported/shelves_announcements.png-0e98b761984cefdc57adb62a3099d1ff.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_mlv25"]
-atlas = SubResource("CompressedTexture2D_o7ddy")
-region = Rect2(130, 161, 11, 30)
+atlas = SubResource("CompressedTexture2D_0loja")
+region = Rect2(130, 193, 11, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a82wo"]
-atlas = SubResource("CompressedTexture2D_o7ddy")
+atlas = ExtResource("15_jkv2x")
 region = Rect2(130, 193, 11, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gdvew"]
-atlas = SubResource("CompressedTexture2D_o7ddy")
+atlas = ExtResource("15_jkv2x")
 region = Rect2(114, 193, 11, 30)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kjtvk"]
-atlas = SubResource("CompressedTexture2D_o7ddy")
-region = Rect2(114, 161, 11, 30)
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhfw6"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(114, 193, 11, 30)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bu4jf"]
 load_path = "res://.godot/imported/shelves_announcements.png-0e98b761984cefdc57adb62a3099d1ff.ctex"
@@ -4029,9 +4040,10 @@ theme_override_fonts/font = ExtResource("16_jbj1t")
 theme_override_font_sizes/font_size = 20
 text = "0"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="shop_ui" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
 
-[node name="Panel" type="Panel" parent="CanvasLayer"]
+[node name="Panel" type="Panel" parent="shop_ui"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -4039,7 +4051,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bjg73")
 
-[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+[node name="Label" type="Label" parent="shop_ui/Panel"]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 536.0
@@ -4051,7 +4063,7 @@ label_settings = SubResource("LabelSettings_2f3dj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel"]
+[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -4068,7 +4080,7 @@ texture = SubResource("AtlasTexture_kf5aa")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="HFlowContainer" type="HFlowContainer" parent="CanvasLayer/Panel/TextureRect"]
+[node name="HFlowContainer" type="HFlowContainer" parent="shop_ui/Panel/TextureRect"]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 258.54022
@@ -4077,47 +4089,39 @@ offset_right = 564.5402
 offset_bottom = 119.0
 theme_override_constants/h_separation = 48
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer"]
+[node name="buff_shop_icon_1" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+theme = ExtResource("17_qkpxi")
 texture = ExtResource("52_bu4jf")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect"]
-visible = false
-layout_mode = 0
-offset_left = 7.0
-offset_top = -29.0
-offset_right = 59.0
-offset_bottom = 8.0
-texture = SubResource("AtlasTexture_xhfw6")
-expand_mode = 2
-stretch_mode = 5
+[node name="Panel" type="Panel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect/TextureRect"]
+[node name="buff_shop_button_1" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 6.0
-offset_top = 3.0
-offset_right = 52.0
-offset_bottom = 31.0
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "[img=13 ]res://images/coin.png[/img] 52"
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect"]
-layout_mode = 0
-offset_left = 7.0
+offset_left = 19.0
 offset_top = -37.0
-offset_right = 62.0
+offset_right = 74.0
 offset_bottom = 7.0
 texture_normal = SubResource("AtlasTexture_ro3en")
 texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect/TextureButton"]
+[node name="buff_shop_rlabel_1" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1/buff_shop_button_1"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4130,25 +4134,52 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -10.0
+offset_top = -34.0
+offset_right = 19.0
+offset_bottom = -4.0
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kjtvk")
+texture_pressed = SubResource("AtlasTexture_xrs0c")
+texture_hover = SubResource("AtlasTexture_xljpf")
+stretch_mode = 5
+
+[node name="buff_shop_icon_2" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+theme = ExtResource("17_qkpxi")
 texture = ExtResource("35_txyw0")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect2"]
+[node name="Panel" type="Panel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="buff_shop_button_2" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 7.0
+offset_left = 19.0
 offset_top = -37.0
-offset_right = 62.0
+offset_right = 74.0
 offset_bottom = 7.0
 texture_normal = SubResource("AtlasTexture_ro3en")
 texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect2/TextureButton"]
+[node name="buff_shop_rlabel_2" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2/buff_shop_button_2"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4158,28 +4189,55 @@ mouse_filter = 1
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "[img=13 ]res://images/coin.png[/img] 3"
+text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -10.0
+offset_top = -34.0
+offset_right = 19.0
+offset_bottom = -4.0
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kjtvk")
+texture_pressed = SubResource("AtlasTexture_xrs0c")
+texture_hover = SubResource("AtlasTexture_xljpf")
+stretch_mode = 5
+
+[node name="buff_shop_icon_3" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+theme = ExtResource("17_qkpxi")
 texture = ExtResource("38_bjg73")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect3"]
+[node name="Panel" type="Panel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="buff_shop_button_3" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 7.0
+offset_left = 19.0
 offset_top = -37.0
-offset_right = 62.0
+offset_right = 74.0
 offset_bottom = 7.0
 texture_normal = SubResource("AtlasTexture_ro3en")
 texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer/TextureRect3/TextureButton"]
+[node name="buff_shop_rlabel_3" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3/buff_shop_button_3"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4189,10 +4247,23 @@ mouse_filter = 1
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "[img=13 ]res://images/coin.png[/img] 1"
+text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="HFlowContainer2" type="HFlowContainer" parent="CanvasLayer/Panel/TextureRect"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -10.0
+offset_top = -34.0
+offset_right = 19.0
+offset_bottom = -4.0
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kjtvk")
+texture_pressed = SubResource("AtlasTexture_xrs0c")
+texture_hover = SubResource("AtlasTexture_xljpf")
+stretch_mode = 5
+
+[node name="HFlowContainer2" type="HFlowContainer" parent="shop_ui/Panel/TextureRect"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -4202,36 +4273,14 @@ offset_right = 564.5402
 offset_bottom = 227.0
 theme_override_constants/h_separation = 48
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2"]
+[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer2"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("52_bu4jf")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect"]
-visible = false
-layout_mode = 0
-offset_left = 7.0
-offset_top = -29.0
-offset_right = 59.0
-offset_bottom = 8.0
-texture = SubResource("AtlasTexture_xhfw6")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect/TextureRect"]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 3.0
-offset_right = 52.0
-offset_bottom = 31.0
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "[img=13 ]res://images/coin.png[/img] 52"
-
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -4242,7 +4291,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect/TextureButton"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4255,14 +4304,14 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer2"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("35_txyw0")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect2"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect2"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -4273,7 +4322,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect2/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect2/TextureButton"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4286,14 +4335,14 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 3"
 horizontal_alignment = 1
 
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2"]
+[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer2"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("38_bjg73")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect3"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect3"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -4304,7 +4353,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/HFlowContainer2/TextureRect3/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect3/TextureButton"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4317,7 +4366,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 1"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
 layout_mode = 0
 offset_left = 222.54022
 offset_top = 266.0
@@ -4329,7 +4378,32 @@ texture = SubResource("AtlasTexture_t5ykj")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+[node name="power_bottle_button" type="TextureButton" parent="shop_ui/Panel/TextureRect/TextureRect"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 73.0
+offset_top = -32.0
+offset_right = 128.0
+offset_bottom = 12.0
+texture_normal = SubResource("AtlasTexture_ro3en")
+texture_pressed = SubResource("AtlasTexture_e755i")
+texture_hover = SubResource("AtlasTexture_od4ux")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/TextureRect/power_bottle_button"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 2"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
 layout_mode = 0
 offset_left = 249.54022
 offset_top = 266.0
@@ -4341,55 +4415,101 @@ texture = SubResource("AtlasTexture_y57op")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
 layout_mode = 0
-offset_left = 367.54022
+offset_left = 350.54022
 offset_top = 266.0
-offset_right = 448.54022
+offset_right = 431.54022
 offset_bottom = 336.0
-tooltip_text = "补满所有能量"
+tooltip_text = "经验值+1"
 theme = ExtResource("17_qkpxi")
 texture = SubResource("AtlasTexture_mlv25")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+[node name="exp_bottle_button" type="TextureButton" parent="shop_ui/Panel/TextureRect/TextureRect3"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 425.54022
+offset_left = 73.0
+offset_top = -32.0
+offset_right = 128.0
+offset_bottom = 12.0
+texture_normal = SubResource("AtlasTexture_ro3en")
+texture_pressed = SubResource("AtlasTexture_e755i")
+texture_hover = SubResource("AtlasTexture_od4ux")
+stretch_mode = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/TextureRect3/exp_bottle_button"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[img=13 ]res://images/coin.png[/img] 1"
+horizontal_alignment = 1
+
+[node name="TextureRect4" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
+layout_mode = 0
+offset_left = 377.54022
 offset_top = 266.0
-offset_right = 506.54022
+offset_right = 458.54022
 offset_bottom = 336.0
-tooltip_text = "补满所有能量"
+tooltip_text = "经验值+1"
 theme = ExtResource("17_qkpxi")
 texture = SubResource("AtlasTexture_a82wo")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect5" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+[node name="TextureRect5" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
 layout_mode = 0
 offset_left = 310.54022
 offset_top = 158.0
 offset_right = 391.54022
 offset_bottom = 228.0
-tooltip_text = "补满所有能量"
 theme = ExtResource("17_qkpxi")
 texture = SubResource("AtlasTexture_gdvew")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect6" type="TextureRect" parent="CanvasLayer/Panel/TextureRect"]
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
 layout_mode = 0
-offset_left = 470.54022
+offset_left = 340.54022
 offset_top = 158.0
-offset_right = 551.5402
+offset_right = 421.54022
 offset_bottom = 228.0
-tooltip_text = "补满所有能量"
 theme = ExtResource("17_qkpxi")
-texture = SubResource("AtlasTexture_kjtvk")
+texture = SubResource("AtlasTexture_gdvew")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Panel/TextureRect"]
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/TextureRect/TextureRect8"]
+layout_mode = 0
+offset_left = 187.0
+offset_top = 108.0
+offset_right = 268.0
+offset_bottom = 178.0
+theme = ExtResource("17_qkpxi")
+texture = SubResource("AtlasTexture_xhfw6")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/TextureRect/TextureRect8/TextureRect8"]
+layout_mode = 0
+offset_left = -55.0
+offset_top = -106.0
+offset_right = 26.0
+offset_bottom = -36.0
+theme = ExtResource("17_qkpxi")
+texture = SubResource("AtlasTexture_xhfw6")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="buff_refresh_button" type="TextureButton" parent="shop_ui/Panel/TextureRect"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 582.5402
 offset_top = 50.0
@@ -4400,7 +4520,7 @@ texture_pressed = SubResource("AtlasTexture_152kg")
 texture_hover = SubResource("AtlasTexture_r4e17")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel/TextureRect/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/buff_refresh_button"]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 6.0

@@ -94,6 +94,23 @@ const hero_property = {
 @onready var debuff_container: HFlowContainer = %debuff_container
 ## buff UI
 @onready var buff_container: HFlowContainer = %buff_container
+## 商店UI
+@onready var shop_ui: CanvasLayer = %shop_ui
+@onready var buff_shop_icon_1: TextureRect = %buff_shop_icon_1
+@onready var buff_shop_icon_2: TextureRect = %buff_shop_icon_2
+@onready var buff_shop_icon_3: TextureRect = %buff_shop_icon_3
+@onready var buff_shop_rlabel_1: RichTextLabel = %buff_shop_rlabel_1
+@onready var buff_shop_rlabel_2: RichTextLabel = %buff_shop_rlabel_2
+@onready var buff_shop_rlabel_3: RichTextLabel = %buff_shop_rlabel_3
+@onready var buff_shop_button_1: TextureButton = %buff_shop_button_1
+@onready var buff_shop_button_2: TextureButton = %buff_shop_button_2
+@onready var buff_shop_button_3: TextureButton = %buff_shop_button_3
+@onready var power_bottle_button: TextureButton = %power_bottle_button
+@onready var exp_bottle_button: TextureButton = %exp_bottle_button
+@onready var buff_refresh_button: TextureButton = %buff_refresh_button
+var shop_buff_1: Dictionary
+var shop_buff_2: Dictionary
+var shop_buff_3: Dictionary
 ## UI
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
@@ -185,11 +202,7 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
-	print("buff" in "skill_attack")
-	#_get_coin_skill()
-	#_do_stage_clear_effect(7, 8 ,9)
-	#await Tools.time_sleep(0.5)
-	#EffectManager.stage_change_effect()
+	_set_shop_buff()
 	## 临时测试金币技能
 	#for row in coin_skill_json_data:
 		#if row["coin_skill_id"] in ["reroll_all","double_score","cloud"]:
@@ -454,6 +467,39 @@ func add_exp(new_exp: int) -> void:
 	await wait_for_buff_finish()
 	await _check_and_level_up()
 
+func _set_level_up_card():
+	## 生成3个随机卡牌
+	var total_weight := 0
+	## 计算总权重
+	for row in card_level_up_json_data:
+		if row['weight'] > 0:
+			total_weight += row['weight']
+	## 累加权重匹配随机项，获取3条不重复的随机项到组
+	var tmp_weight := 0
+	level_up_three_card_array = []
+	while level_up_three_card_array.size() < 3:
+		## 随机总权重
+		var random_weight_num = randi_range(1, total_weight)
+		for row in card_level_up_json_data:
+			if row['weight'] > 0:
+				tmp_weight += row['weight']
+				if tmp_weight > random_weight_num:
+					if row not in level_up_three_card_array:
+						level_up_three_card_array.append(row)
+						break
+	## 根据随机结果将数据填入卡牌
+	var card_1_texture = load(level_up_three_card_array[0]['card_textrue'])
+	card_1.texture = card_1_texture
+	card_1_name.text = level_up_three_card_array[0]['card_name']
+	card_1_description.text = level_up_three_card_array[0]['card_description']
+	var card_2_texture = load(level_up_three_card_array[1]['card_textrue'])
+	card_2.texture = card_2_texture
+	card_2_name.text = level_up_three_card_array[1]['card_name']
+	card_2_description.text = level_up_three_card_array[1]['card_description']
+	var card_3_texture = load(level_up_three_card_array[2]['card_textrue'])
+	card_3.texture = card_3_texture
+	card_3_name.text = level_up_three_card_array[2]['card_name']
+	card_3_description.text = level_up_three_card_array[2]['card_description']
 
 ## 检查并升级
 func _check_and_level_up() -> void:
@@ -468,38 +514,8 @@ func _check_and_level_up() -> void:
 		exp_bar.max_value = Current.require_exp
 		## 设置经验label
 		_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
-		## 生成3个随机卡牌
-		var total_weight := 0
-		## 计算总权重
-		for row in card_level_up_json_data:
-			if row['weight'] > 0:
-				total_weight += row['weight']
-		## 累加权重匹配随机项，获取3条不重复的随机项到组
-		var tmp_weight := 0
-		level_up_three_card_array = []
-		while level_up_three_card_array.size() < 3:
-			## 随机总权重
-			var random_weight_num = randi_range(1, total_weight)
-			for row in card_level_up_json_data:
-				if row['weight'] > 0:
-					tmp_weight += row['weight']
-					if tmp_weight > random_weight_num:
-						if row not in level_up_three_card_array:
-							level_up_three_card_array.append(row)
-							break
-		## 根据随机结果将数据填入卡牌
-		var card_1_texture = load(level_up_three_card_array[0]['card_textrue'])
-		card_1.texture = card_1_texture
-		card_1_name.text = level_up_three_card_array[0]['card_name']
-		card_1_description.text = level_up_three_card_array[0]['card_description']
-		var card_2_texture = load(level_up_three_card_array[1]['card_textrue'])
-		card_2.texture = card_2_texture
-		card_2_name.text = level_up_three_card_array[1]['card_name']
-		card_2_description.text = level_up_three_card_array[1]['card_description']
-		var card_3_texture = load(level_up_three_card_array[2]['card_textrue'])
-		card_3.texture = card_3_texture
-		card_3_name.text = level_up_three_card_array[2]['card_name']
-		card_3_description.text = level_up_three_card_array[2]['card_description']
+		## 设置升级时卡牌UI
+		_set_level_up_card()
 		## 弹出升级卡牌选择
 		while get_tree().paused:
 			await Tools.time_sleep(0.1)
@@ -1083,6 +1099,27 @@ func _hide_all_clear_stage_ui():
 	stage_clear_button.hide()
 	clear_stage_ui.hide()
 
+func _set_shop_buff():
+	shop_buff_1 = buff_json_data.pick_random()
+	buff_json_data.erase(shop_buff_1)
+	shop_buff_2 = buff_json_data.pick_random()
+	buff_json_data.erase(shop_buff_2)
+	shop_buff_3 = buff_json_data.pick_random()
+	buff_json_data.erase(shop_buff_3)
+	buff_shop_icon_1.texture = load(shop_buff_1["buff_icon"])
+	buff_shop_icon_2.texture = load(shop_buff_2["buff_icon"])
+	buff_shop_icon_3.texture = load(shop_buff_3["buff_icon"])
+	buff_shop_icon_1.tooltip_text = shop_buff_1["buff_tooltip"]
+	buff_shop_icon_2.tooltip_text = shop_buff_2["buff_tooltip"]
+	buff_shop_icon_3.tooltip_text = shop_buff_3["buff_tooltip"]
+	buff_shop_rlabel_1.text = "[img=13 ]res://images/coin.png[/img] " + \
+		str(int(shop_buff_1["buff_price"]))
+	buff_shop_rlabel_2.text = "[img=13 ]res://images/coin.png[/img] " + \
+		str(int(shop_buff_2["buff_price"]))
+	buff_shop_rlabel_3.text = "[img=13 ]res://images/coin.png[/img] " + \
+		str(int(shop_buff_3["buff_price"]))
+	
+	
 func _on_stage_clear_button_pressed() -> void:
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
@@ -1094,13 +1131,18 @@ func _on_stage_clear_button_pressed() -> void:
 	else:
 		## 游戏胜利
 		print("胜利")
+	## 隐藏结算显示内容
+	_hide_all_clear_stage_ui()
+	## 设置商店buff和价格UI
+	_set_shop_buff()
+	## 商店
+	shop_ui.show()
+	
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
 			difficulty_icon.texture = load(row["stage_type_icon"])
 			difficulty_icon.tooltip_text = row["stage_type"]
-	## 隐藏结算显示内容
-	_hide_all_clear_stage_ui()
 	## 清空一关金币奖励数和最高骰子奖励数
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 1

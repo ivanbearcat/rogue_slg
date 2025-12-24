@@ -5,7 +5,8 @@
         "buff_icon": "res://images/buff_icon/slime_plus_one.png",
         "buff_tooltip": "每回合多生成1个史莱姆",
         "buff_res": "res://scripts/buff/slime_plus_one_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "slime_sum_score_increase",
@@ -13,7 +14,8 @@
         "buff_icon": "res://images/buff_icon/slime_sum_score_increase.png",
         "buff_tooltip": "回合结束时，每有1个史莱姆获得10分",
         "buff_res": "res://scripts/buff/slime_sum_score_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "no_attack",
@@ -21,7 +23,8 @@
         "buff_icon": "res://images/buff_icon/no_attack.png",
         "buff_tooltip": "本回合没有攻击，当前分数增加10%",
         "buff_res": "res://scripts/buff/no_attack_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "slime_attack_score_increase",
@@ -29,7 +32,8 @@
         "buff_icon": "res://images/buff_icon/slime_attack_score_increase.png",
         "buff_tooltip": "攻击后，每有1个史莱姆，以这次得分为基础，额外增加2%倍率的分数",
         "buff_res": "res://scripts/buff/slime_attack_score_increase_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 7
     },
     {
         "buff_id": "attack_over_four",
@@ -37,7 +41,8 @@
         "buff_icon": "res://images/buff_icon/attack_over_four.png",
         "buff_tooltip": "一次击杀4个及以上，以这次得分为基础，额外增加20%倍率的分数",
         "buff_res": "res://scripts/buff/attack_over_four_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "attack_over_five",
@@ -45,7 +50,8 @@
         "buff_icon": "res://images/buff_icon/attack_over_five.png",
         "buff_tooltip": "一次击杀5个及以上，以这次得分为基础，额外增加40%倍率的分数",
         "buff_res": "res://scripts/buff/attack_over_five_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "attack_over_six",
@@ -53,7 +59,8 @@
         "buff_icon": "res://images/buff_icon/attack_over_six.png",
         "buff_tooltip": "一次击杀6个及以上，以这次得分为基础，额外增加60%倍率的分数",
         "buff_res": "res://scripts/buff/attack_over_six_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "full_range_slime_double_score",
@@ -61,7 +68,8 @@
         "buff_icon": "res://images/buff_icon/full_range_slime_double_score.png",
         "buff_tooltip": "技能的攻击范围内都有史莱姆，以这次得分为基础，额外增加50%倍率的分数",
         "buff_res": "res://scripts/buff/full_range_slime_double_score_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 7
     },
     {
         "buff_id": "move_current_score_increase",
@@ -69,7 +77,8 @@
         "buff_icon": "res://images/buff_icon/move_current_score_increase.png",
         "buff_tooltip": "每移动1格，增加2%的当前分数",
         "buff_res": "res://scripts/buff/move_current_score_increase_buff.gd",
-        "buff_type": "post_hero_move_buff"
+        "buff_type": "post_hero_move_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "movement_plus_one",
@@ -77,7 +86,8 @@
         "buff_icon": "res://images/buff_icon/movement_plus_one.png",
         "buff_tooltip": "移动力+1",
         "buff_res": "res://scripts/buff/movement_plus_one_buff.gd",
-        "buff_type": "pre_hero_turn_buff"
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "move_attack_score_increase",
@@ -85,7 +95,8 @@
         "buff_icon": "res://images/buff_icon/move_attack_score_increase.png",
         "buff_tooltip": "攻击后，每有1点移动力，以这次得分为基础，额外增加5%倍率的分数",
         "buff_res": "res://scripts/buff/move_attack_score_increase_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 7
     },
     {
         "buff_id": "coin_slime_plus_one",
@@ -93,7 +104,8 @@
         "buff_icon": "res://images/buff_icon/coin_slime_plus_one.png",
         "buff_tooltip": "金币史莱姆总量+1",
         "buff_res": "res://scripts/buff/coin_slime_plus_one_buff.gd",
-        "buff_type": "pre_hero_turn_buff"
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "attack_coin_slime_score_increase",
@@ -101,7 +113,8 @@
         "buff_icon": "res://images/buff_icon/attack_coin_slime_score_increase.png",
         "buff_tooltip": "击杀金币史莱姆，增加20%的当前分数",
         "buff_res": "res://scripts/buff/attack_coin_slime_score_increase_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "turn_coin_increase",
@@ -109,7 +122,8 @@
         "buff_icon": "res://images/buff_icon/turn_coin_increase.png",
         "buff_tooltip": "回合结束金币+1",
         "buff_res": "res://scripts/buff/turn_coin_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "coin_attack_score_increase",
@@ -117,7 +131,8 @@
         "buff_icon": "res://images/buff_icon/coin_attack_score_increase.png",
         "buff_tooltip": "攻击后，每有1个金币，以这次得分为基础，额外增加1%倍率的分数",
         "buff_res": "res://scripts/buff/coin_attack_score_increase_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 7
     },
     {
         "buff_id": "power_slime_plus_one",
@@ -125,7 +140,8 @@
         "buff_icon": "res://images/buff_icon/power_slime_plus_one.png",
         "buff_tooltip": "能量史莱姆总量+1",
         "buff_res": "res://scripts/buff/power_slime_plus_one_buff.gd",
-        "buff_type": "pre_hero_turn_buff"
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "attack_power_slime_score_increase",
@@ -133,7 +149,8 @@
         "buff_icon": "res://images/buff_icon/attack_power_slime_score_increase.png",
         "buff_tooltip": "击杀能量史莱姆，增加20%的当前分数",
         "buff_res": "res://scripts/buff/attack_power_slime_score_increase_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "max_power_puls_one",
@@ -141,7 +158,8 @@
         "buff_icon": "res://images/buff_icon/max_power_puls_one.png",
         "buff_tooltip": "能量上限+1",
         "buff_res": "res://scripts/buff/max_power_puls_one_buff.gd",
-        "buff_type": "pre_hero_turn_buff"
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "power_attack_score_increase",
@@ -149,7 +167,8 @@
         "buff_icon": "res://images/buff_icon/power_attack_score_increase.png",
         "buff_tooltip": "攻击后，如果使用了能量，以这次得分为基础，额外增加20%倍率的分数",
         "buff_res": "res://scripts/buff/power_attack_score_increase_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 7
     },
     {
         "buff_id": "slime_base_score_increase",
@@ -157,7 +176,8 @@
         "buff_icon": "res://images/buff_icon/slime_base_score_increase.png",
         "buff_tooltip": "每击杀1个史莱姆，随机1个点数分值+1",
         "buff_res": "res://scripts/buff/slime_base_score_increase_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 7
     },
     {
         "buff_id": "slime_percent_score_increase",
@@ -165,7 +185,8 @@
         "buff_icon": "res://images/buff_icon/slime_percent_score_increase.png",
         "buff_tooltip": "每击杀1个史莱姆，随机1个骰型倍率+2%",
         "buff_res": "res://scripts/buff/slime_percent_score_increase_buff.gd",
-        "buff_type": "post_attack_buff"
+        "buff_type": "post_attack_buff",
+        "buff_price": 7
     },
     {
         "buff_id": "turn_plus_one",
@@ -173,7 +194,8 @@
         "buff_icon": "res://images/buff_icon/turn_plus_one.png",
         "buff_tooltip": "第一回合不会增加回合数",
         "buff_res": "res://scripts/buff/turn_plus_one_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "free_refresh_one_times",
@@ -181,7 +203,8 @@
         "buff_icon": "res://images/buff_icon/free_refresh_one_times.png",
         "buff_tooltip": "免费刷新商店一次",
         "buff_res": "res://scripts/buff/free_refresh_one_times_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "green_slime_probability_increase",
@@ -189,7 +212,8 @@
         "buff_icon": "res://images/buff_icon/green_slime_probability_increase.png",
         "buff_tooltip": "绿色史莱姆概率上升",
         "buff_res": "res://scripts/buff/green_slime_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "red_slime_probability_increase",
@@ -197,7 +221,8 @@
         "buff_icon": "res://images/buff_icon/red_slime_probability_increase.png",
         "buff_tooltip": "红色史莱姆概率上升",
         "buff_res": "res://scripts/buff/red_slime_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "blue_slime_probability_increase",
@@ -205,7 +230,8 @@
         "buff_icon": "res://images/buff_icon/blue_slime_probability_increase.png",
         "buff_tooltip": "蓝色史莱姆概率上升",
         "buff_res": "res://scripts/buff/blue_slime_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "yellow_slime_probability_increase",
@@ -213,7 +239,8 @@
         "buff_icon": "res://images/buff_icon/yellow_slime_probability_increase.png",
         "buff_tooltip": "黄色史莱姆概率上升",
         "buff_res": "res://scripts/buff/yellow_slime_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5
     },
     {
         "buff_id": "one_point_probability_increase",
@@ -221,7 +248,8 @@
         "buff_icon": "res://images/buff_icon/one_point_probability_increase.png",
         "buff_tooltip": "一点骰子概率上升",
         "buff_res": "res://scripts/buff/one_point_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 3
     },
     {
         "buff_id": "two_point_probability_increase",
@@ -229,7 +257,8 @@
         "buff_icon": "res://images/buff_icon/two_point_probability_increase.png",
         "buff_tooltip": "二点骰子概率上升",
         "buff_res": "res://scripts/buff/two_point_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 3
     },
     {
         "buff_id": "three_point_probability_increase",
@@ -237,7 +266,8 @@
         "buff_icon": "res://images/buff_icon/three_point_probability_increase.png",
         "buff_tooltip": "三点骰子概率上升",
         "buff_res": "res://scripts/buff/three_point_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 3
     },
     {
         "buff_id": "four_point_probability_increase",
@@ -245,7 +275,8 @@
         "buff_icon": "res://images/buff_icon/four_point_probability_increase.png",
         "buff_tooltip": "四点骰子概率上升",
         "buff_res": "res://scripts/buff/four_point_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 3
     },
     {
         "buff_id": "five_point_probability_increase",
@@ -253,7 +284,8 @@
         "buff_icon": "res://images/buff_icon/five_point_probability_increase.png",
         "buff_tooltip": "五点骰子概率上升",
         "buff_res": "res://scripts/buff/five_point_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 3
     },
     {
         "buff_id": "six_point_probability_increase",
@@ -261,6 +293,7 @@
         "buff_icon": "res://images/buff_icon/six_point_probability_increase.png",
         "buff_tooltip": "六点骰子概率上升",
         "buff_res": "res://scripts/buff/six_point_probability_increase_buff.gd",
-        "buff_type": "pre_enemy_turn_buff"
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 3
     }
 ]
