@@ -105,12 +105,18 @@ const hero_property = {
 @onready var buff_shop_button_1: TextureButton = %buff_shop_button_1
 @onready var buff_shop_button_2: TextureButton = %buff_shop_button_2
 @onready var buff_shop_button_3: TextureButton = %buff_shop_button_3
+@onready var buff_lock_button_1: TextureButton = %buff_lock_button_1
+@onready var buff_lock_button_2: TextureButton = %buff_lock_button_2
+@onready var buff_lock_button_3: TextureButton = %buff_lock_button_3
 @onready var power_bottle_button: TextureButton = %power_bottle_button
 @onready var exp_bottle_button: TextureButton = %exp_bottle_button
 @onready var buff_refresh_button: TextureButton = %buff_refresh_button
+@onready var buff_refresh_rlabel: RichTextLabel = %buff_refresh_rlabel
+@onready var shop_next_level_button: Button = %shop_next_level_button
 var shop_buff_1: Dictionary
 var shop_buff_2: Dictionary
 var shop_buff_3: Dictionary
+var buff_refresh_cost := 1
 ## UI
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
@@ -162,8 +168,6 @@ var shop_buff_3: Dictionary
 @onready var boss_debuff_json_data: Array = Tools.load_json_file('res://config/boss_debuff.json')
 ## buff数据
 @onready var buff_json_data: Array = Tools.load_json_file('res://config/buff.json')
-
-
 ## 格子像素大小
 var grid_size = Vector2(16, 16)
 ## 起始格子位置
@@ -222,7 +226,7 @@ func _ready() -> void:
 	Current.tongdui_percent = 300
 	Current.tongshun_percent = 320
 	## 初始化金币
-	Current.total_coins = 5
+	Current.total_coins = 15
 	## 随机择BOSS
 	boss_debuff_row = boss_debuff_json_data.pick_random()
 	## 设置目标分数
@@ -270,10 +274,10 @@ func _ready() -> void:
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 	## 临时测试buff
-	for row in buff_json_data:
-		if row["buff_id"] in ["six_point_probability_increase"]:
-			var buff = load(row["buff_res"]).new(row, self)
-			BuffSystem.callv("set_" + row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
+	#for row in buff_json_data:
+		#if row["buff_id"] in ["six_point_probability_increase"]:
+			#var buff = load(row["buff_res"]).new(row, self)
+			#BuffSystem.callv("set_" + row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
 
 	## 临时测试BOSS debuff
 	#for row in boss_debuff_json_data:
@@ -451,6 +455,10 @@ func _set_stage_debuff(boss=0):
 		var buff = load(boss_debuff_row["debuff_res"]).new(boss_debuff_row, self)
 		BuffSystem.callv("set_" + boss_debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 		debuff_effect_label.text = "获得诅咒  [img=15 ]" + boss_debuff_row["debuff_icon"] + "[/img]"
+
+func _set_buff(buff_row):
+	var buff = load(buff_row["buff_res"]).new(buff_row, self)
+	BuffSystem.callv("set_" + buff_row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
 
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
@@ -1100,12 +1108,24 @@ func _hide_all_clear_stage_ui():
 	clear_stage_ui.hide()
 
 func _set_shop_buff():
-	shop_buff_1 = buff_json_data.pick_random()
-	buff_json_data.erase(shop_buff_1)
-	shop_buff_2 = buff_json_data.pick_random()
-	buff_json_data.erase(shop_buff_2)
-	shop_buff_3 = buff_json_data.pick_random()
-	buff_json_data.erase(shop_buff_3)
+	## 显示商品
+	buff_shop_icon_1.modulate.a = 1
+	buff_shop_icon_2.modulate.a = 1
+	buff_shop_icon_3.modulate.a = 1
+	## 没有锁的抽取buff
+	if buff_lock_button_1.button_pressed == false:
+		shop_buff_1 = buff_json_data.pick_random()
+		buff_json_data.erase(shop_buff_1)
+	if buff_lock_button_2.button_pressed == false:
+		shop_buff_2 = buff_json_data.pick_random()
+		buff_json_data.erase(shop_buff_2)
+	if buff_lock_button_3.button_pressed == false:
+		shop_buff_3 = buff_json_data.pick_random()
+	## 没有锁buff的加回数组
+	if buff_lock_button_1.button_pressed == false:
+		buff_json_data.append(shop_buff_1)
+	if buff_lock_button_2.button_pressed == false:
+		buff_json_data.append(shop_buff_2)
 	buff_shop_icon_1.texture = load(shop_buff_1["buff_icon"])
 	buff_shop_icon_2.texture = load(shop_buff_2["buff_icon"])
 	buff_shop_icon_3.texture = load(shop_buff_3["buff_icon"])
@@ -1136,8 +1156,12 @@ func _on_stage_clear_button_pressed() -> void:
 	## 设置商店buff和价格UI
 	_set_shop_buff()
 	## 商店
+	get_tree().paused = true
+	Current.public_lock_array.append("shop_ui")
 	shop_ui.show()
-	
+	## 等待商店关闭
+	while "shop_ui" in Current.public_lock_array:
+		await Tools.time_sleep(0.1)
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
@@ -1304,4 +1328,45 @@ func _on_get_coin_skill_2_button_pressed() -> void:
 	Current.total_coins = Current.total_coins
 	get_tree().paused = false
 	get_coin_skill_ui.hide()
-	
+
+func _on_buff_refresh_button_pressed() -> void:
+	## 扣除刷新费用
+	Current.total_coins -= buff_refresh_cost
+	## 刷新费用增长
+	buff_refresh_cost += 1
+	## 复制触发修改按钮状态
+	Current.total_coins = Current.total_coins
+	buff_refresh_rlabel.text = "换一批[img=14 ]res://images/coin.png[/img]" + \
+		str(buff_refresh_cost)
+	_set_shop_buff()
+
+func _on_power_bottle_button_pressed() -> void:
+	Current.total_coins -= 2
+	Current.power = Current.max_power
+
+func _on_exp_bottle_button_pressed() -> void:
+	Current.total_coins -= 1
+	add_exp(1)
+
+func _on_buff_shop_button_1_pressed() -> void:
+	Current.total_coins -= shop_buff_1["buff_price"]
+	_set_buff(shop_buff_1)
+	buff_shop_icon_1.modulate.a = 0
+	buff_lock_button_1.button_pressed = false
+
+func _on_buff_shop_button_2_pressed() -> void:
+	Current.total_coins -= shop_buff_2["buff_price"]
+	_set_buff(shop_buff_2)
+	buff_shop_icon_2.modulate.a = 0
+	buff_lock_button_2.button_pressed = false
+
+func _on_buff_shop_button_3_pressed() -> void:
+	Current.total_coins -= shop_buff_3["buff_price"]
+	_set_buff(shop_buff_3)
+	buff_shop_icon_3.modulate.a = 0
+	buff_lock_button_3.button_pressed = false
+
+func _on_shop_next_level_button_pressed() -> void:
+	get_tree().paused = false
+	shop_ui.hide()
+	Current.public_lock_array.erase("shop_ui")

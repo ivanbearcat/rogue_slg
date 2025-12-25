@@ -137,6 +137,43 @@ var total_coins: int:
 			if v >= coin_skill_array_dict[2]["coin_skill_cost"]:
 				game_manager.coin_skill_3.disabled = false
 				game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
+		## 商店购买按钮
+		if v < game_manager.buff_refresh_cost:
+			game_manager.buff_refresh_button.disabled = true
+			game_manager.buff_refresh_button.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.buff_refresh_button.disabled = false
+			game_manager.buff_refresh_button.modulate = Color(1, 1, 1, 1)
+		if v < 2 or power == max_power:
+			game_manager.power_bottle_button.disabled = true
+			game_manager.power_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.power_bottle_button.disabled = false
+			game_manager.power_bottle_button.modulate = Color(1, 1, 1, 1)
+		if v < 1:
+			game_manager.exp_bottle_button.disabled = true
+			game_manager.exp_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.exp_bottle_button.disabled = false
+			game_manager.exp_bottle_button.modulate = Color(1, 1, 1, 1)
+		if v < game_manager.shop_buff_1["buff_price"]:
+			game_manager.buff_shop_button_1.disabled = true
+			game_manager.buff_shop_button_1.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.buff_shop_button_1.disabled = false
+			game_manager.buff_shop_button_1.modulate = Color(1, 1, 1, 1)
+		if v < game_manager.shop_buff_2["buff_price"]:
+			game_manager.buff_shop_button_2.disabled = true
+			game_manager.buff_shop_button_2.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.buff_shop_button_2.disabled = false
+			game_manager.buff_shop_button_2.modulate = Color(1, 1, 1, 1)
+		if v < game_manager.shop_buff_3["buff_price"]:
+			game_manager.buff_shop_button_3.disabled = true
+			game_manager.buff_shop_button_3.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.buff_shop_button_3.disabled = false
+			game_manager.buff_shop_button_3.modulate = Color(1, 1, 1, 1)
 ## 回合计数
 var count_round := 0:
 	set(v):
@@ -313,6 +350,12 @@ var power: int:
 	set(v):
 		power = v
 		game_manager.power_label.text = str(v) + "/" + str(Current.max_power)
+		if v == max_power:
+			game_manager.power_bottle_button.disabled = true
+			game_manager.power_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.power_bottle_button.disabled = false
+			game_manager.power_bottle_button.modulate = Color(1, 1, 1, 1)
 ## 能量技能
 var power_skill := 0
 ## 存在红框
