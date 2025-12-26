@@ -98,7 +98,6 @@ func stage_change_effect():
 	var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween2.tween_property(game_manager.stage_effect_ui, "scale:y", 0, 0.1)
 	
-
 ## 获得诅咒效果
 func debuff_change_effect():
 	var tween = create_tween().set_ease(Tween.EASE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -107,3 +106,15 @@ func debuff_change_effect():
 	await Tools.time_sleep(1.5)
 	var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween2.tween_property(game_manager.debuff_effect_ui, "scale:y", 0, 0.1)
+
+## level_up飘字
+func level_up_effect(object):
+	var label = SceneManager.create_scene("level_up_label")
+	object.add_child(label)
+	# 动画
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(label, "position:y", label.position.y - 35, 0.9)
+	tween.tween_property(label, "modulate:a", 0.2, 0.9).set_ease(Tween.EASE_OUT).set_delay(0.1)
+	await tween.finished
+	label.queue_free()

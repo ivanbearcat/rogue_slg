@@ -24,6 +24,8 @@ EventBus="*res://scripts/global/event_bus.gd"
 CursorManager="*res://scripts/global/cursor_manager.gd"
 BuffSystem="*res://scripts/buff_system.gd"
 EffectManager="*res://scripts/global/effect_manager.gd"
+VFX="*res://addons/vfx_library/vfx.gd"
+EnvVFX="*res://addons/vfx_library/env_vfx.gd"
 
 [display]
 
@@ -32,7 +34,7 @@ mouse_cursor/custom_image="res://images/mouse_icon/pointer_scifi_a.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/vfx_library/plugin.cfg")
 
 [input]
 

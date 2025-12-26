@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://chegvtursqou5"]
+
+[ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="1_h1706"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_h1706"]
+font = ExtResource("1_h1706")
+font_color = Color(1, 1, 0, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(32, 16)
+text = "Level up"
+label_settings = SubResource("LabelSettings_h1706")
+horizontal_alignment = 1
+vertical_alignment = 2

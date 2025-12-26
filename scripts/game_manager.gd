@@ -208,6 +208,7 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
+	
 	#_set_shop_buff()
 	## 临时测试金币技能
 	#for row in coin_skill_json_data:
@@ -736,10 +737,11 @@ func _on_turn_button_pressed() -> void:
 	EventBus.event_emit("do_pre_hero_turn_buff")
 	#turn_button.disabled = false
 	## 测试
-	#for row in debuff_json_data:
-		#if row["debuff_id"] == "disable_one":
-			#var instance = load(row["debuff_res"]).new(row)
-			#instance.set_buff()
+	var a = EnvVFX.create_fireflies(Current.hero.animated_sprite_2d, Current.hero.animated_sprite_2d.position)
+	EffectManager.level_up_effect(Current.hero.animated_sprite_2d)
+	await Tools.time_sleep(1)
+	a.queue_free()
+	
 	
 ## 让label跟着按钮下降
 func _on_turn_button_button_down() -> void:
