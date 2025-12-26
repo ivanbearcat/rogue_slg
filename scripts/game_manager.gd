@@ -113,6 +113,8 @@ const hero_property = {
 @onready var buff_refresh_button: TextureButton = %buff_refresh_button
 @onready var buff_refresh_rlabel: RichTextLabel = %buff_refresh_rlabel
 @onready var shop_next_level_button: Button = %shop_next_level_button
+@onready var shop_label: Label = %shop_label
+@onready var shop_texture_ui: TextureRect = %shop_texture_ui
 var shop_buff_1: Dictionary
 var shop_buff_2: Dictionary
 var shop_buff_3: Dictionary
@@ -206,7 +208,7 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
-	_set_shop_buff()
+	#_set_shop_buff()
 	## 临时测试金币技能
 	#for row in coin_skill_json_data:
 		#if row["coin_skill_id"] in ["reroll_all","double_score","cloud"]:
@@ -527,10 +529,17 @@ func _check_and_level_up() -> void:
 		## 弹出升级卡牌选择
 		while get_tree().paused:
 			await Tools.time_sleep(0.1)
+		## 等待他升级界面完成
+		while "level_up_ui" in Current.public_lock_array:
+			await Tools.time_sleep(0.1)
+		Current.public_lock_array.append("level_up_ui")
+		## 弹出升级卡牌选择
 		level_up_ui.show()
 		## 增加权重
 		for row in card_level_up_json_data:
 			row["weight"] += 10
+		## 防止切换面paused切换导致暂停没有成功
+		await Tools.time_sleep(0.1)
 		## 暂停
 		get_tree().paused = true
 
@@ -936,6 +945,7 @@ func _on_card_1_button_pressed() -> void:
 				)
 	get_tree().paused = false
 	level_up_ui.hide()
+	Current.public_lock_array.erase("level_up_ui")
 
 func _on_card_2_button_pressed() -> void:
 	match level_up_three_card_array[1]['card_id']:
@@ -1013,6 +1023,7 @@ func _on_card_2_button_pressed() -> void:
 				)
 	get_tree().paused = false
 	level_up_ui.hide()
+	Current.public_lock_array.erase("level_up_ui")
 
 func _on_card_3_button_pressed() -> void:
 	match level_up_three_card_array[2]['card_id']:
@@ -1090,6 +1101,7 @@ func _on_card_3_button_pressed() -> void:
 				)
 	get_tree().paused = false
 	level_up_ui.hide()
+	Current.public_lock_array.erase("level_up_ui")
 
 func _hide_all_clear_stage_ui():
 	clear_stage_label.hide()
@@ -1159,6 +1171,9 @@ func _on_stage_clear_button_pressed() -> void:
 	get_tree().paused = true
 	Current.public_lock_array.append("shop_ui")
 	shop_ui.show()
+	## 商店UI效果
+	await EffectManager.top_to_bottom_effect(shop_texture_ui, 0.5)
+	
 	## 等待商店关闭
 	while "shop_ui" in Current.public_lock_array:
 		await Tools.time_sleep(0.1)

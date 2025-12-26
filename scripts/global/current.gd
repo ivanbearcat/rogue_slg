@@ -156,19 +156,19 @@ var total_coins: int:
 		else:
 			game_manager.exp_bottle_button.disabled = false
 			game_manager.exp_bottle_button.modulate = Color(1, 1, 1, 1)
-		if v < game_manager.shop_buff_1["buff_price"]:
+		if v < game_manager.shop_buff_1.get("buff_price", 0):
 			game_manager.buff_shop_button_1.disabled = true
 			game_manager.buff_shop_button_1.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
 			game_manager.buff_shop_button_1.disabled = false
 			game_manager.buff_shop_button_1.modulate = Color(1, 1, 1, 1)
-		if v < game_manager.shop_buff_2["buff_price"]:
+		if v < game_manager.shop_buff_2.get("buff_price", 0):
 			game_manager.buff_shop_button_2.disabled = true
 			game_manager.buff_shop_button_2.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
 			game_manager.buff_shop_button_2.disabled = false
 			game_manager.buff_shop_button_2.modulate = Color(1, 1, 1, 1)
-		if v < game_manager.shop_buff_3["buff_price"]:
+		if v < game_manager.shop_buff_3.get("buff_price", 0):
 			game_manager.buff_shop_button_3.disabled = true
 			game_manager.buff_shop_button_3.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:

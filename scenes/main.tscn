@@ -1,4 +1,4 @@
-[gd_scene load_steps=183 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=165 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -28,29 +28,11 @@
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="19_vxglm"]
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
-[ext_resource type="PackedScene" uid="uid://cwgx1f2tbp8yp" path="res://scenes/buff_texture.tscn" id="26_bjg73"]
-[ext_resource type="Texture2D" uid="uid://drenvl5t2u23w" path="res://images/buff_icon/yellow_slime_probability_increase.png" id="27_o7ddy"]
-[ext_resource type="Texture2D" uid="uid://d32y3igipa1yr" path="res://images/buff_icon/one_point_probability_increase.png" id="28_0loja"]
-[ext_resource type="Texture2D" uid="uid://dto6g0qq2afo4" path="res://images/buff_icon/move_attack_score_increase.png" id="28_c6pm6"]
-[ext_resource type="Texture2D" uid="uid://crp10y4drtoj5" path="res://images/buff_icon/two_point_probability_increase.png" id="29_ids8r"]
-[ext_resource type="Texture2D" uid="uid://dnmnqloiuh4qx" path="res://images/buff_icon/three_point_probability_increase.png" id="30_dnhof"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
 [ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="30_qkpxi"]
-[ext_resource type="Texture2D" uid="uid://b87l53xghrh7t" path="res://images/buff_icon/four_point_probability_increase.png" id="31_1v6qk"]
 [ext_resource type="Texture2D" uid="uid://brksrpkqqyai1" path="res://images/coin_skill_icon/cloud.png" id="31_5q0nq"]
-[ext_resource type="Texture2D" uid="uid://b1vv5ao8mfog" path="res://images/buff_icon/five_point_probability_increase.png" id="32_augu2"]
-[ext_resource type="Texture2D" uid="uid://bmm7s88nrg0if" path="res://images/buff_icon/six_point_probability_increase.png" id="33_tm6hj"]
-[ext_resource type="Texture2D" uid="uid://o5jv04j0affv" path="res://images/buff_icon/slime_sum_score_increase.png" id="34_bu4jf"]
 [ext_resource type="Texture2D" uid="uid://cda7fkfl5c5ii" path="res://images/buff_icon/attack_over_five.png" id="35_txyw0"]
-[ext_resource type="Texture2D" uid="uid://u7ww8vmbao7u" path="res://images/buff_icon/attack_over_six.png" id="36_vc5cj"]
-[ext_resource type="Texture2D" uid="uid://ckba5dqm7mpuv" path="res://images/buff_icon/turn_coin_increase.png" id="37_j2jfr"]
 [ext_resource type="Texture2D" uid="uid://bdv875sbrrsun" path="res://images/buff_icon/coin_attack_score_increase.png" id="38_bjg73"]
-[ext_resource type="Texture2D" uid="uid://cp2fjw0m60c45" path="res://images/buff_icon/power_slime_plus_one.png" id="39_bu4jf"]
-[ext_resource type="Texture2D" uid="uid://weem0p3riybh" path="res://images/buff_icon/attack_power_slime_score_increase.png" id="40_o7ddy"]
-[ext_resource type="Texture2D" uid="uid://ujgnwh3q0qsk" path="res://images/buff_icon/max_power_puls_one.png" id="41_0loja"]
-[ext_resource type="Texture2D" uid="uid://dmk6cnp5dubc" path="res://images/buff_icon/power_attack_score_increase.png" id="42_ids8r"]
-[ext_resource type="Texture2D" uid="uid://dp2r48mlfcyj0" path="res://images/buff_icon/free_refresh_one_times.png" id="43_dnhof"]
-[ext_resource type="Texture2D" uid="uid://dy02tyei3p57d" path="res://images/buff_icon/green_slime_probability_increase.png" id="45_kf5aa"]
 [ext_resource type="Texture2D" uid="uid://57oyou3ef2xv" path="res://images/buff_icon/attack_coin_slime_score_increase.png" id="52_bu4jf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31gv"]
@@ -3252,189 +3234,6 @@ grow_vertical = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 
-[node name="TextureRect" parent="buff_ui/buff_container" instance=ExtResource("26_bjg73")]
-layout_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("27_o7ddy")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect3" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("28_0loja")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect4" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("29_ids8r")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect5" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("30_dnhof")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect6" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("31_1v6qk")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect7" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("32_augu2")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect8" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("33_tm6hj")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect9" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("34_bu4jf")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect10" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("35_txyw0")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect11" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("35_txyw0")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect12" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("36_vc5cj")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect13" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("28_c6pm6")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect14" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("37_j2jfr")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect15" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("38_bjg73")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect16" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("39_bu4jf")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect17" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("40_o7ddy")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect18" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("41_0loja")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect19" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("42_ids8r")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect20" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("43_dnhof")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="TextureRect21" type="TextureRect" parent="buff_ui/buff_container"]
-custom_minimum_size = Vector2(0, 11)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("45_kf5aa")
-expand_mode = 2
-stretch_mode = 5
-
 [node name="stage_effect_ui" type="Control" parent="."]
 z_index = 2
 layout_mode = 3
@@ -3847,6 +3646,7 @@ text = "0"
 
 [node name="shop_ui" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+process_mode = 2
 visible = false
 
 [node name="Panel" type="Panel" parent="shop_ui"]
@@ -3857,7 +3657,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bjg73")
 
-[node name="Label" type="Label" parent="shop_ui/Panel"]
+[node name="shop_label" type="Label" parent="shop_ui/Panel"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 offset_left = 536.0
@@ -3869,7 +3670,8 @@ label_settings = SubResource("LabelSettings_2f3dj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel"]
+[node name="shop_texture_ui" type="TextureRect" parent="shop_ui/Panel"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3886,7 +3688,7 @@ texture = SubResource("AtlasTexture_kf5aa")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="HFlowContainer" type="HFlowContainer" parent="shop_ui/Panel/TextureRect"]
+[node name="HFlowContainer" type="HFlowContainer" parent="shop_ui/Panel/shop_texture_ui"]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 258.54022
@@ -3895,7 +3697,7 @@ offset_right = 564.5402
 offset_bottom = 119.0
 theme_override_constants/h_separation = 48
 
-[node name="buff_shop_icon_1" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer"]
+[node name="buff_shop_icon_1" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
@@ -3904,7 +3706,7 @@ texture = ExtResource("52_bu4jf")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1"]
+[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1"]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -3914,7 +3716,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="buff_shop_button_1" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1"]
+[node name="buff_shop_button_1" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 19.0
@@ -3926,7 +3728,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="buff_shop_rlabel_1" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1/buff_shop_button_1"]
+[node name="buff_shop_rlabel_1" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1/buff_shop_button_1"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
@@ -3940,7 +3742,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="buff_lock_button_1" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1"]
+[node name="buff_lock_button_1" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -3954,7 +3756,7 @@ texture_pressed = SubResource("AtlasTexture_xrs0c")
 texture_hover = SubResource("AtlasTexture_xljpf")
 stretch_mode = 5
 
-[node name="buff_shop_icon_2" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer"]
+[node name="buff_shop_icon_2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
@@ -3963,7 +3765,7 @@ texture = ExtResource("35_txyw0")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2"]
+[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2"]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -3973,7 +3775,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="buff_shop_button_2" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2"]
+[node name="buff_shop_button_2" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 19.0
@@ -3985,7 +3787,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="buff_shop_rlabel_2" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2/buff_shop_button_2"]
+[node name="buff_shop_rlabel_2" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2/buff_shop_button_2"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
@@ -3999,7 +3801,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="buff_lock_button_2" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2"]
+[node name="buff_lock_button_2" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4013,7 +3815,7 @@ texture_pressed = SubResource("AtlasTexture_xrs0c")
 texture_hover = SubResource("AtlasTexture_xljpf")
 stretch_mode = 5
 
-[node name="buff_shop_icon_3" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer"]
+[node name="buff_shop_icon_3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
@@ -4022,7 +3824,7 @@ texture = ExtResource("38_bjg73")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3"]
+[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3"]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -4032,7 +3834,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="buff_shop_button_3" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3"]
+[node name="buff_shop_button_3" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 19.0
@@ -4044,7 +3846,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="buff_shop_rlabel_3" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3/buff_shop_button_3"]
+[node name="buff_shop_rlabel_3" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3/buff_shop_button_3"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
@@ -4058,7 +3860,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="buff_lock_button_3" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3"]
+[node name="buff_lock_button_3" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4072,7 +3874,7 @@ texture_pressed = SubResource("AtlasTexture_xrs0c")
 texture_hover = SubResource("AtlasTexture_xljpf")
 stretch_mode = 5
 
-[node name="HFlowContainer2" type="HFlowContainer" parent="shop_ui/Panel/TextureRect"]
+[node name="HFlowContainer2" type="HFlowContainer" parent="shop_ui/Panel/shop_texture_ui"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -4082,14 +3884,14 @@ offset_right = 564.5402
 offset_bottom = 227.0
 theme_override_constants/h_separation = 48
 
-[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer2"]
+[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("52_bu4jf")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -4100,7 +3902,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect/TextureButton"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4113,14 +3915,14 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("35_txyw0")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect2"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect2"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -4131,7 +3933,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect2/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect2/TextureButton"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4144,14 +3946,14 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 3"
 horizontal_alignment = 1
 
-[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/TextureRect/HFlowContainer2"]
+[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("38_bjg73")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect3"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect3"]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -4162,7 +3964,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/HFlowContainer2/TextureRect3/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect3/TextureButton"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4175,7 +3977,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 1"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
+[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
 layout_mode = 0
 offset_left = 222.54022
 offset_top = 266.0
@@ -4187,7 +3989,7 @@ texture = SubResource("AtlasTexture_t5ykj")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="power_bottle_button" type="TextureButton" parent="shop_ui/Panel/TextureRect/TextureRect"]
+[node name="power_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 73.0
@@ -4199,7 +4001,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/TextureRect/power_bottle_button"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect/power_bottle_button"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4212,7 +4014,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 2"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
+[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
 layout_mode = 0
 offset_left = 249.54022
 offset_top = 266.0
@@ -4224,7 +4026,7 @@ texture = SubResource("AtlasTexture_y57op")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
+[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
 layout_mode = 0
 offset_left = 350.54022
 offset_top = 266.0
@@ -4236,7 +4038,7 @@ texture = SubResource("AtlasTexture_mlv25")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="exp_bottle_button" type="TextureButton" parent="shop_ui/Panel/TextureRect/TextureRect3"]
+[node name="exp_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect3"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 73.0
@@ -4248,7 +4050,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/TextureRect3/exp_bottle_button"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect3/exp_bottle_button"]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4261,7 +4063,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 1"
 horizontal_alignment = 1
 
-[node name="TextureRect4" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
+[node name="TextureRect4" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
 layout_mode = 0
 offset_left = 377.54022
 offset_top = 266.0
@@ -4273,7 +4075,7 @@ texture = SubResource("AtlasTexture_a82wo")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect5" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
+[node name="TextureRect5" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
 layout_mode = 0
 offset_left = 310.54022
 offset_top = 158.0
@@ -4284,7 +4086,7 @@ texture = SubResource("AtlasTexture_gdvew")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/TextureRect"]
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
 layout_mode = 0
 offset_left = 340.54022
 offset_top = 158.0
@@ -4295,7 +4097,7 @@ texture = SubResource("AtlasTexture_gdvew")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/TextureRect/TextureRect8"]
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/TextureRect8"]
 layout_mode = 0
 offset_left = 187.0
 offset_top = 108.0
@@ -4306,7 +4108,7 @@ texture = SubResource("AtlasTexture_xhfw6")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/TextureRect/TextureRect8/TextureRect8"]
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/TextureRect8/TextureRect8"]
 layout_mode = 0
 offset_left = -55.0
 offset_top = -106.0
@@ -4317,7 +4119,7 @@ texture = SubResource("AtlasTexture_xhfw6")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="buff_refresh_button" type="TextureButton" parent="shop_ui/Panel/TextureRect"]
+[node name="buff_refresh_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 582.5402
@@ -4329,7 +4131,7 @@ texture_pressed = SubResource("AtlasTexture_152kg")
 texture_hover = SubResource("AtlasTexture_r4e17")
 stretch_mode = 5
 
-[node name="buff_refresh_rlabel" type="RichTextLabel" parent="shop_ui/Panel/TextureRect/buff_refresh_button"]
+[node name="buff_refresh_rlabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/buff_refresh_button"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 13.0
@@ -4582,12 +4384,12 @@ environment = SubResource("Environment_bu4jf")
 [connection signal="pressed" from="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2/get_coin_skill_2_button" to="." method="_on_get_coin_skill_2_button_pressed"]
 [connection signal="pressed" from="get_coin_skill_ui/hide_get_coin_skill_ui_button" to="." method="_on_hide_get_coin_skill_ui_button_pressed"]
 [connection signal="pressed" from="clear_stage_ui/Panel/paper_texture/stage_clear_button" to="." method="_on_stage_clear_button_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_1/buff_shop_button_1" to="." method="_on_buff_shop_button_1_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_2/buff_shop_button_2" to="." method="_on_buff_shop_button_2_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/TextureRect/HFlowContainer/buff_shop_icon_3/buff_shop_button_3" to="." method="_on_buff_shop_button_3_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/TextureRect/TextureRect/power_bottle_button" to="." method="_on_power_bottle_button_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/TextureRect/TextureRect3/exp_bottle_button" to="." method="_on_exp_bottle_button_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/TextureRect/buff_refresh_button" to="." method="_on_buff_refresh_button_pressed"]
+[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1/buff_shop_button_1" to="." method="_on_buff_shop_button_1_pressed"]
+[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2/buff_shop_button_2" to="." method="_on_buff_shop_button_2_pressed"]
+[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3/buff_shop_button_3" to="." method="_on_buff_shop_button_3_pressed"]
+[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/TextureRect/power_bottle_button" to="." method="_on_power_bottle_button_pressed"]
+[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/TextureRect3/exp_bottle_button" to="." method="_on_exp_bottle_button_pressed"]
+[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/buff_refresh_button" to="." method="_on_buff_refresh_button_pressed"]
 [connection signal="pressed" from="shop_ui/Panel/shop_next_level_button" to="." method="_on_shop_next_level_button_pressed"]
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card1_button" to="." method="_on_card_1_button_pressed"]
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card2_button" to="." method="_on_card_2_button_pressed"]
