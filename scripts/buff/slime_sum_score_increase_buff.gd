@@ -9,7 +9,7 @@ func set_buff():
 	
 func process_buff():
 	Current.public_lock_array.append("slime_sum_score_increase_buff")
-	var add_num = Current.all_enemy_array.size() * 10
+	var add_num = int(Current.all_enemy_array.size() * Current.target_score * 0.001)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num)
 	Current.hero.add_child(float_number_instantiate)
 	EffectManager.big_flow_effect(buff_texture)

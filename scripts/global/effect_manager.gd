@@ -116,5 +116,7 @@ func level_up_effect(object):
 	tween.set_parallel(true)
 	tween.tween_property(label, "position:y", label.position.y - 35, 0.9)
 	tween.tween_property(label, "modulate:a", 0.2, 0.9).set_ease(Tween.EASE_OUT).set_delay(0.1)
+	var fireflies_effect = EnvVFX.create_fireflies(Current.hero.animated_sprite_2d, Current.hero.animated_sprite_2d.position)
 	await tween.finished
+	fireflies_effect.queue_free()
 	label.queue_free()

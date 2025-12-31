@@ -10,7 +10,7 @@ func set_buff():
 func process_buff():
 	if Current.is_attacked == false:
 		Current.public_lock_array.append("no_attack_buff")
-		var add_num = int(Current.total_score * 0.1)
+		var add_num = int(Current.target_score * 0.05)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.big_flow_effect(buff_texture)

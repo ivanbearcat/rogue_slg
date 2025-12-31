@@ -382,5 +382,7 @@ var slime_die_sum: int
 var killed_power_slime := false
 ## 击杀过金币史莱姆
 var killed_coin_slime := false
-## 第一次刷新0金币
-var zero_coin_refresh := false
+## 刷新buff无花费的最大次数
+var zero_coin_refresh_max_times := 0
+## 刷新buff无花费的当前次数
+var zero_coin_refresh_times := 0

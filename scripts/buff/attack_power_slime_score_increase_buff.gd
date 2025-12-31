@@ -10,7 +10,7 @@ func set_buff():
 func process_buff():
 	if Current.killed_power_slime:
 		Current.public_lock_array.append("attack_power_slime_score_increase_buff")
-		var add_num = int(Current.total_score * 0.2)
+		var add_num = int(Current.target_score * 0.1)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.big_flow_effect(buff_texture)

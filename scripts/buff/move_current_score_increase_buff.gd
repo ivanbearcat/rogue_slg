@@ -10,7 +10,7 @@ func set_buff():
 func process_buff():
 	if Current.id_path.size() > 0:
 		Current.public_lock_array.append("move_current_score_increase_buff")
-		var add_num = int((Current.id_path.size() - 1) * 0.02 * Current.total_score)
+		var add_num = int((Current.id_path.size() - 1) * 0.01 * Current.target_score)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.big_flow_effect(buff_texture)

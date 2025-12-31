@@ -118,7 +118,14 @@ const hero_property = {
 var shop_buff_1: Dictionary
 var shop_buff_2: Dictionary
 var shop_buff_3: Dictionary
-var buff_refresh_cost := 1
+var buff_refresh_cost := 1:
+	set(v):
+		buff_refresh_cost = v
+		if Current.zero_coin_refresh_times > 0:
+			buff_refresh_rlabel.text = "换一批[img=14 ]res://images/coin.png[/img]0"
+		else:
+			buff_refresh_rlabel.text = "换一批[img=14 ]res://images/coin.png[/img]" + \
+			str(buff_refresh_cost)
 ## UI
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
@@ -527,13 +534,14 @@ func _check_and_level_up() -> void:
 		_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
 		## 设置升级时卡牌UI
 		_set_level_up_card()
-		## 弹出升级卡牌选择
 		while get_tree().paused:
 			await Tools.time_sleep(0.1)
 		## 等待他升级界面完成
 		while "level_up_ui" in Current.public_lock_array:
 			await Tools.time_sleep(0.1)
 		Current.public_lock_array.append("level_up_ui")
+		## 升级效果
+		await EffectManager.level_up_effect(Current.hero.animated_sprite_2d)
 		## 弹出升级卡牌选择
 		level_up_ui.show()
 		## 增加权重
@@ -737,10 +745,9 @@ func _on_turn_button_pressed() -> void:
 	EventBus.event_emit("do_pre_hero_turn_buff")
 	#turn_button.disabled = false
 	## 测试
-	var a = EnvVFX.create_fireflies(Current.hero.animated_sprite_2d, Current.hero.animated_sprite_2d.position)
-	EffectManager.level_up_effect(Current.hero.animated_sprite_2d)
-	await Tools.time_sleep(1)
-	a.queue_free()
+	
+	
+
 	
 	
 ## 让label跟着按钮下降
@@ -1188,6 +1195,9 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 1
 	get_tree().paused = false
+	## 等待升级选卡
+	while "level_up_ui" in Current.public_lock_array:
+		await Tools.time_sleep(0.1)
 	## 关卡切换效果
 	await EffectManager.stage_change_effect()
 	## 3、6、9关设置诅咒
@@ -1347,15 +1357,18 @@ func _on_get_coin_skill_2_button_pressed() -> void:
 	get_coin_skill_ui.hide()
 
 func _on_buff_refresh_button_pressed() -> void:
-	## 扣除刷新费用
-	Current.total_coins -= buff_refresh_cost
-	## 刷新费用增长
-	buff_refresh_cost += 1
-	## 复制触发修改按钮状态
-	Current.total_coins = Current.total_coins
-	buff_refresh_rlabel.text = "换一批[img=14 ]res://images/coin.png[/img]" + \
-		str(buff_refresh_cost)
-	_set_shop_buff()
+	if Current.zero_coin_refresh_times > 0:
+		Current.zero_coin_refresh_times -= 1
+		buff_refresh_cost = buff_refresh_cost
+		_set_shop_buff()
+	else:
+		## 扣除刷新费用
+		Current.total_coins -= buff_refresh_cost
+		## 刷新费用增长
+		buff_refresh_cost += 1
+		## 复制触发修改按钮状态
+		Current.total_coins = Current.total_coins
+		_set_shop_buff()
 
 func _on_power_bottle_button_pressed() -> void:
 	Current.total_coins -= 2
@@ -1370,20 +1383,27 @@ func _on_buff_shop_button_1_pressed() -> void:
 	_set_buff(shop_buff_1)
 	buff_shop_icon_1.modulate.a = 0
 	buff_lock_button_1.button_pressed = false
+	buff_json_data.erase(shop_buff_1)
 
 func _on_buff_shop_button_2_pressed() -> void:
 	Current.total_coins -= shop_buff_2["buff_price"]
 	_set_buff(shop_buff_2)
 	buff_shop_icon_2.modulate.a = 0
 	buff_lock_button_2.button_pressed = false
+	buff_json_data.erase(shop_buff_2)
 
 func _on_buff_shop_button_3_pressed() -> void:
 	Current.total_coins -= shop_buff_3["buff_price"]
 	_set_buff(shop_buff_3)
 	buff_shop_icon_3.modulate.a = 0
 	buff_lock_button_3.button_pressed = false
+	buff_json_data.erase(shop_buff_3)
 
 func _on_shop_next_level_button_pressed() -> void:
+	## 重置刷新buff的金币费用
+	buff_refresh_cost = 1
+	## 重置免费刷新次数
+	Current.zero_coin_refresh_times = Current.zero_coin_refresh_max_times
 	get_tree().paused = false
 	shop_ui.hide()
 	Current.public_lock_array.erase("shop_ui")
