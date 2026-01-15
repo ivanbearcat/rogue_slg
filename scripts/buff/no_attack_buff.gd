@@ -15,7 +15,7 @@ func process_buff():
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.big_flow_effect(buff_texture)
 		## 等待飘字结束
-		await Tools.time_sleep(1.5)
+		await Tools.time_sleep(1)
 		Current.total_score += add_num
 		Current.public_lock_array.erase("no_attack_buff")
 	

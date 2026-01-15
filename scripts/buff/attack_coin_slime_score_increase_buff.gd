@@ -14,7 +14,7 @@ func process_buff():
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.big_flow_effect(buff_texture)
-		await Tools.time_sleep(1.5)
+		await Tools.time_sleep(1)
 		Current.total_score += add_num
 		Current.public_lock_array.erase("attack_coin_slime_score_increase_buff")
 	

@@ -11,7 +11,7 @@ func process_buff():
 	var add_num = int(Current.target_score * 0.01)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num, "purple")
 	Current.hero.add_child(float_number_instantiate)
-	await Tools.time_sleep(1.5)
+	await Tools.time_sleep(1)
 	Current.target_score += add_num
 	EffectManager.big_flow_effect(game_manager.target_score)
 	

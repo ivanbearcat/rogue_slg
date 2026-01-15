@@ -167,7 +167,7 @@ func dice_add_1_clicked():
 		else:
 			_new_dice_point = 1
 		Current.slime.dice.set_frame_and_progress(Current.slime.dice_to_frame_dice[_new_dice_point], 0)
-		_clicked_public_action("reroll_dice")
+		_clicked_public_action("dice_add_1")
 
 func dice_sub_1():
 	reroll_dice()
@@ -181,7 +181,7 @@ func dice_sub_1_clicked():
 		else:
 			_new_dice_point = 6
 		Current.slime.dice.set_frame_and_progress(Current.slime.dice_to_frame_dice[_new_dice_point], 0)
-		_clicked_public_action("reroll_dice")
+		_clicked_public_action("dice_sub_1")
 
 func move():
 	Current.hero.hero_state_machine.transition_to("coin_skill_move")

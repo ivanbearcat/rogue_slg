@@ -53,6 +53,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	self.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(0.0, 18.892, 18.892):
 		Current.killed_power_slime = true
 		if Current.power < Current.max_power:
+			## 等待攻击动作，解决满能量时击杀能量史莱姆，由于先加能量导致能量白加
+			while "skill_attack" in Current.public_lock_array:
+				await Tools.time_sleep(0.1)
 			Current.power += 1
 	## 增加金币
 	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light") and \
@@ -63,7 +66,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 
 func _on_area_2d_mouse_entered() -> void:
-	if Current.mouse_status != 'default':
+	#if Current.mouse_status != 'default':
 		Current.slime = self
 
 

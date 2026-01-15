@@ -763,6 +763,8 @@ func _turn_clean():
 	EventBus.event_emit("reset_all_hero_skills")
 	## 重置金币技能
 	EventBus.event_emit("reset_cursor")
+	## 重置击杀过能量史莱姆标记
+	Current.killed_power_slime = false
 	## 重置击杀过金币史莱姆标记
 	Current.killed_coin_slime = false
 	## 增加回合数
