@@ -109,6 +109,7 @@ func debuff_change_effect():
 
 ## level_up飘字
 func level_up_effect(object):
+	Current.public_lock_array.append("level_up_effect")
 	var label = SceneManager.create_scene("level_up_label")
 	object.add_child(label)
 	# 动画
@@ -120,3 +121,4 @@ func level_up_effect(object):
 	await tween.finished
 	fireflies_effect.queue_free()
 	label.queue_free()
+	Current.public_lock_array.erase("level_up_effect")

@@ -1,10 +1,10 @@
-[gd_scene load_steps=165 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
 [ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="3_h858a"]
 [ext_resource type="Script" uid="uid://ce3nrlk8drkh7" path="res://scripts/skill_system.gd" id="3_rragv"]
-[ext_resource type="Script" uid="uid://becu711kgnik1" path="res://scripts/buff_system.gd" id="4_2wyq8"]
+[ext_resource type="Script" uid="uid://becu711kgnik1" path="res://scripts/autoload/buff_system.gd" id="4_2wyq8"]
 [ext_resource type="FontFile" uid="uid://bp53tlinpuypa" path="res://fonts/SourceHanSansCN-Normal.otf" id="4_76ilt"]
 [ext_resource type="Script" uid="uid://bw7e86ldckpca" path="res://scripts/coin_skill_system.gd" id="4_y6deb"]
 [ext_resource type="Texture2D" uid="uid://ced52aughmndv" path="res://images/ui_icon/direction_icon.png" id="5_og1vs"]
@@ -1502,73 +1502,72 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="Environment" id="Environment_bu4jf"]
 background_mode = 3
 glow_enabled = true
-glow_levels/2 = 1.0
-glow_levels/3 = 0.0
-glow_levels/5 = 0.0
+glow_levels/2 = 2.0
+glow_blend_mode = 2
 
-[node name="game_manager" type="Node2D"]
+[node name="game_manager" type="Node2D" unique_id=2014847854]
 scale = Vector2(4, 4)
 script = ExtResource("1_jbfvy")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=470953061]
 texture_filter = 1
 position = Vector2(-0.75, -0.5)
 tile_map_data = PackedByteArray("AAABAAgAAAAIAAoAAAACAAgAAAAIAAoAAAADAAgAAAAIAAoAAAAEAAgAAAAIAAoAAAAFAAgAAAAIAAoAAAAGAAgAAAAIAAoAAAAHAAgAAAAIAAoAAAAHAAAAAAAIAAwAAAAIAAEAAAAHAAsAAAAIAAIAAAAHAAsAAAAIAAMAAAAHAAsAAAAIAAQAAAAHAAsAAAAIAAUAAAAHAAsAAAAIAAYAAAAHAAsAAAAIAAcAAAAHAAsAAAAIAAgAAAAKAAoAAAAIAAAAAAAKAAsAAAD9//7/AAAIAAsAAAD+//7/AAAIAAsAAAD///7/AAAIAAsAAAAAAP7/AAAIAAsAAAABAP7/AAAIAAsAAAACAP7/AAAIAAsAAAADAP7/AAAIAAsAAAAEAP7/AAAIAAsAAAAFAP7/AAAIAAsAAAAGAP7/AAAIAAsAAAAHAP7/AAAIAAsAAAAIAP7/AAAIAAsAAAAJAP7/AAAIAAsAAAAKAP7/AAAIAAsAAAALAP7/AAAIAAsAAAAMAP7/AAAIAAsAAAANAP7/AAAIAAsAAAAOAP7/AAAIAAsAAAAOAP//AAAIAAsAAAANAP//AAAIAAsAAAAMAP//AAAIAAsAAAALAP//AAAIAAsAAAAKAP//AAAIAAsAAAAJAP//AAAIAAsAAAAIAP//AAAIAAsAAAAHAP//AAAIAAsAAAAGAP//AAAIAAsAAAAFAP//AAAIAAsAAAAEAP//AAAIAAsAAAADAP//AAAIAAsAAAACAP//AAAIAAsAAAABAP//AAAIAAsAAAAAAP//AAAIAAsAAAD/////AAAIAAsAAAD+////AAAIAAsAAAD9////AAAIAAsAAAD8////AAAIAAsAAAD7////AAAIAAsAAAD6////AAAIAAsAAAD6//7/AAAIAAsAAAD7//7/AAAIAAsAAAD8//7/AAAIAAsAAAD6//3/AAAIAAsAAAD7//3/AAAIAAsAAAD8//3/AAAIAAsAAAD9//3/AAAIAAsAAAD+//3/AAAIAAsAAAD///3/AAAIAAsAAAAAAP3/AAAIAAsAAAABAP3/AAAIAAsAAAACAP3/AAAIAAsAAAADAP3/AAAIAAsAAAAEAP3/AAAIAAsAAAAFAP3/AAAIAAsAAAAGAP3/AAAIAAsAAAAHAPz/AAAIAAsAAAAIAPz/AAAIAAsAAAAJAPz/AAAIAAsAAAAKAPz/AAAIAAsAAAALAPz/AAAIAAsAAAALAP3/AAAIAAsAAAAMAP3/AAAIAAsAAAANAP3/AAAIAAsAAAANAPz/AAAIAAsAAAAOAPz/AAAIAAsAAAAOAP3/AAAIAAsAAAAKAP3/AAAIAAsAAAAJAP3/AAAIAAsAAAAIAP3/AAAIAAsAAAAHAP3/AAAIAAsAAAD6//z/AAAIAAsAAAD7//z/AAAIAAsAAAD8//z/AAAIAAsAAAD9//z/AAAIAAsAAAD+//z/AAAIAAsAAAD///z/AAAIAAsAAAAAAPz/AAAIAAsAAAABAPz/AAAIAAsAAAACAPz/AAAIAAsAAAADAPz/AAAIAAsAAAAEAPz/AAAIAAsAAAAFAPz/AAAIAAsAAAAMAPz/AAAIAAsAAAAGAPz/AAAIAAsAAAD6/wAAAAAIAAsAAAD7/wAAAAAIAAsAAAD8/wAAAAAIAAsAAAD9/wAAAAAIAAsAAAD+/wAAAAAIAAsAAAD//wAAAAAIAAsAAAD+/wEAAAAIAAsAAAD9/wEAAAAIAAsAAAD8/wEAAAAIAAsAAAD7/wEAAAAIAAsAAAD6/wEAAAAIAAsAAAD6/wIAAAAIAAsAAAD7/wIAAAAIAAsAAAD+/wIAAAAIAAsAAAD+/wMAAAAIAAsAAAD8/wMAAAAIAAsAAAD7/wMAAAAIAAsAAAD6/wMAAAAIAAsAAAD6/wQAAAAIAAsAAAD6/wUAAAAIAAsAAAAEAAkAAAAIAAsAAAAFAAkAAAAIAAsAAAAGAAkAAAAIAAsAAAAHAAkAAAAIAAsAAAAOAAkAAAAIAAsAAAAOAAEAAAAIAAsAAAAOAAAAAAAIAAsAAAAOAAIAAAAIAAsAAAAOAAMAAAAIAAsAAAAOAAQAAAAIAAsAAAAOAAUAAAAIAAsAAAANAAIAAAAIAAsAAAANAAEAAAAIAAsAAAANAAAAAAAIAAsAAAANAAMAAAAIAAsAAAANAAQAAAAIAAsAAAANAAUAAAAIAAsAAAAMAAQAAAAIAAsAAAAMAAUAAAAIAAsAAAAMAAAAAAAIAAsAAAAMAAEAAAAIAAsAAAAMAAIAAAAIAAsAAAALAAMAAAAIAAsAAAALAAQAAAAIAAsAAAAKAAUAAAAIAAsAAAAKAAYAAAAIAAsAAAAKAAcAAAAIAAsAAAAJAAwAAAAIAAsAAAALAAUAAAAIAAsAAAALAAIAAAAIAAsAAAALAAEAAAAIAAsAAAALAAYAAAAIAAsAAAALAAcAAAAIAAsAAAALAAAAAAAIAAsAAAAKAAEAAAAIAAsAAAAKAAIAAAAIAAsAAAAKAAMAAAAIAAsAAAAJAAMAAAAIAAsAAAAKAAQAAAAIAAsAAAAJAAgAAAAIAAsAAAAKAAAAAAAIAAsAAAAJAAAAAAAIAAsAAAAJAAEAAAAIAAsAAAAJAAIAAAAIAAsAAAAMAAMAAAAIAAsAAAAKAAwAAAAIAAsAAAANAAsAAAAIAAsAAAACAAwAAAAIAAsAAAABAAwAAAAIAAsAAAAAAAwAAAAIAAsAAAD//wwAAAAIAAsAAAD+/wwAAAAIAAsAAAD9/wwAAAAIAAsAAAALAAwAAAAIAAsAAAD6/woAAAAIAAsAAAD7/wQAAAAIAAsAAAD9/wYAAAAIAAsAAAD9/wUAAAAIAAsAAAD9/wQAAAAIAAsAAAD9/wgAAAAIAAsAAAD+/wcAAAAIAAsAAAD+/wYAAAAIAAsAAAD+/wgAAAAIAAsAAAD//wgAAAAIAAsAAAD+/wQAAAAIAAsAAAD+/wUAAAAIAAsAAAD9/wcAAAAIAAsAAAD8/wYAAAAIAAsAAAD8/wUAAAAIAAsAAAD8/wQAAAAIAAsAAAAOAAoAAAAIAAsAAAAOAAwAAAAIAAsAAAAOAAsAAAAIAAsAAAANAAwAAAAIAAsAAAAMAAwAAAAIAAsAAAD8/wwAAAAIAAsAAAD7/wwAAAAIAAsAAAD6/wwAAAAIAAsAAAD6/wsAAAAIAAsAAAD7/wsAAAAIAAsAAAACAAEAAAABAAIAAAADAAIAAAABAAAAAAAEAAIAAAACAAAAAAAEAAMAAAACAAAAAAAFAAMAAAACAAAAAAAFAAQAAAABAAEAAAAGAAUAAAACAAIAAAAGAAYAAAACAAIAAAAHAAYAAAACAAAAAAAHAAcAAAACAAEAAAAGAAcAAAABAAAAAAAFAAcAAAABAAEAAAAEAAcAAAABAAEAAAADAAcAAAABAAEAAAACAAcAAAABAAAAAAACAAYAAAACAAIAAAADAAYAAAABAAIAAAAEAAYAAAAAAAEAAAAFAAYAAAAAAAIAAAAHAAUAAAAAAAEAAAAHAAQAAAACAAEAAAAHAAMAAAABAAEAAAAHAAIAAAACAAAAAAAHAAEAAAACAAEAAAAGAAEAAAAAAAIAAAAFAAEAAAABAAEAAAAEAAEAAAABAAIAAAADAAEAAAACAAIAAAAFAAIAAAACAAAAAAAGAAMAAAABAAIAAAAGAAQAAAACAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAACAAAAAAADAAUAAAABAAEAAAACAAQAAAABAAIAAAADAAQAAAACAAAAAAADAAMAAAAAAAEAAAACAAMAAAABAAEAAAACAAIAAAAAAAEAAAAGAAIAAAACAAEAAAABAAcAAAAAAAIAAAD//wcAAAAIAAsAAAD//wYAAAAIAAsAAAD//wUAAAAIAAsAAAAAAAUAAAAJAAsAAAD//wQAAAAIAAsAAAAAAAQAAAAJAAsAAAABAAQAAAABAAIAAAAAAAEAAAAJAAsAAAAAAAIAAAAJAAsAAAABAAEAAAABAAAAAAABAAIAAAAAAAAAAAD//wIAAAAIAAsAAAD//wEAAAAIAAsAAAAAAAMAAAAJAAsAAAABAAMAAAABAAEAAAD//wMAAAAIAAsAAAD6/wcAAAAIAAsAAAD6/wgAAAAIAAsAAAD6/wYAAAAIAAsAAAD7/wYAAAAIAAsAAAD8/wcAAAAIAAsAAAD8/wkAAAAIAAsAAAD6/wkAAAAIAAsAAAD9/wsAAAAIAAsAAAD8/wsAAAAIAAsAAAD+/woAAAAIAAsAAAD+/wsAAAAIAAsAAAD+/wkAAAAIAAsAAAD//woAAAAIAAsAAAD//wsAAAAIAAsAAAD//wkAAAAIAAsAAAAAAAoAAAAIAAsAAAAAAAsAAAAIAAsAAAAAAAkAAAAIAAsAAAABAAoAAAAIAAsAAAABAAsAAAAIAAsAAAABAAkAAAAIAAsAAAACAAoAAAAIAAsAAAACAAsAAAAIAAsAAAACAAkAAAAIAAsAAAADAAoAAAAIAAsAAAADAAsAAAAIAAsAAAADAAkAAAAIAAsAAAAEAAoAAAAIAAsAAAAEAAsAAAAIAAsAAAAEAAwAAAAIAAsAAAADAAwAAAAIAAsAAAAFAAsAAAAIAAsAAAAFAAwAAAAIAAsAAAAFAAoAAAAIAAsAAAAGAAsAAAAIAAsAAAAGAAwAAAAIAAsAAAAGAAoAAAAIAAsAAAAHAAsAAAAIAAsAAAAHAAwAAAAIAAsAAAAHAAoAAAAIAAsAAAAIAAsAAAAIAAsAAAAIAAwAAAAIAAsAAAAIAAoAAAAIAAsAAAAJAAsAAAAIAAsAAAAJAAoAAAAIAAsAAAAIAAkAAAAIAAsAAAAJAAkAAAAIAAsAAAAKAAoAAAAIAAsAAAAKAAsAAAAIAAsAAAAKAAkAAAAIAAsAAAALAAoAAAAIAAsAAAALAAsAAAAIAAsAAAALAAkAAAAIAAsAAAAMAAoAAAAIAAsAAAAMAAsAAAAIAAsAAAAMAAkAAAAIAAsAAAANAAoAAAAIAAsAAAANAAkAAAAIAAsAAAANAAcAAAAIAAsAAAAMAAcAAAAIAAsAAAANAAYAAAAIAAsAAAAMAAYAAAAIAAsAAAD7/wUAAAAIAAsAAAAAAAgAAAALAAoAAAAAAAAAAAALAAsAAAABAAAAAAAIAAwAAAACAAAAAAAIAAwAAAADAAAAAAAIAAwAAAAEAAAAAAAIAAwAAAAFAAAAAAAIAAwAAAAGAAAAAAAIAAwAAAD7/wcAAAAIAAsAAAD7/wgAAAAIAAsAAAD8/wgAAAAIAAsAAAD9/wkAAAAIAAsAAAD9/woAAAAIAAsAAAD8/woAAAAIAAsAAAD7/woAAAAIAAsAAAD7/wkAAAAIAAsAAAAEAAQAAAABAAEAAAAJAAQAAAAIAAsAAAAJAAUAAAAIAAsAAAAJAAYAAAAIAAsAAAAJAAcAAAAIAAsAAAAKAAgAAAAIAAsAAAALAAgAAAAIAAsAAAAMAAgAAAAIAAsAAAANAAgAAAAIAAsAAAD8/wIAAAAIAAsAAAD9/wIAAAAIAAsAAAD9/wMAAAAIAAsAAAAOAAgAAAAIAAsAAAAOAAcAAAAIAAsAAAAOAAYAAAAIAAsAAAD5/woAAAAIAAsAAAD5/wkAAAAIAAsAAAD5/wgAAAAIAAsAAAD5/wcAAAAIAAsAAAD5/wYAAAAIAAsAAAD5/wUAAAAIAAsAAAD5//z/AAAIAAsAAAD5/wAAAAAIAAsAAAD5/wEAAAAIAAsAAAD5/wIAAAAIAAsAAAD5/wMAAAAIAAsAAAD5/wQAAAAIAAsAAAD5////AAAIAAsAAAD5//7/AAAIAAsAAAD5//3/AAAIAAsAAAD5/wsAAAAIAAsAAAD5/wwAAAAIAAsAAAAPAAwAAAAIAAsAAAAPAAsAAAAIAAsAAAAPAAoAAAAIAAsAAAAPAAkAAAAIAAsAAAAPAAgAAAAIAAsAAAAPAAcAAAAIAAsAAAAPAAYAAAAIAAsAAAAPAAUAAAAIAAsAAAAPAAQAAAAIAAsAAAAPAAMAAAAIAAsAAAAPAAIAAAAIAAsAAAAPAAEAAAAIAAsAAAAPAAAAAAAIAAsAAAAPAP//AAAIAAsAAAAPAP7/AAAIAAsAAAAPAP3/AAAIAAsAAAAPAPz/AAAIAAsAAAACAAUAAAACAAAAAAABAAUAAAACAAAAAAABAAYAAAABAAAAAAAAAAYAAAAJAAsAAAAAAAcAAAAJAAsAAAA=")
 tile_set = SubResource("TileSet_yxupo")
 metadata/_edit_lock_ = true
 
-[node name="Area2D" type="Area2D" parent="TileMapLayer"]
+[node name="Area2D" type="Area2D" parent="TileMapLayer" unique_id=1225938262]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/Area2D" unique_id=1865640186]
 position = Vector2(-46.625, 72)
 shape = SubResource("RectangleShape2D_2g1gk")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMapLayer/Area2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMapLayer/Area2D" unique_id=1707247841]
 position = Vector2(72.12501, 138.87498)
 rotation = -1.5708
 shape = SubResource("RectangleShape2D_m0m5b")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="TileMapLayer/Area2D"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="TileMapLayer/Area2D" unique_id=288419426]
 position = Vector2(172.125, 71.99991)
 rotation = 3.14159
 shape = SubResource("RectangleShape2D_2li3q")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="TileMapLayer/Area2D"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="TileMapLayer/Area2D" unique_id=80495412]
 position = Vector2(72.00001, 8.75)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_oscie")
 
-[node name="heros" type="Node2D" parent="."]
+[node name="heros" type="Node2D" parent="." unique_id=1246748135]
 
-[node name="enemys" type="Node2D" parent="."]
+[node name="enemys" type="Node2D" parent="." unique_id=1078606102]
 
-[node name="grids" type="Node2D" parent="."]
+[node name="grids" type="Node2D" parent="." unique_id=1864718338]
 
-[node name="buildings" type="Node2D" parent="."]
+[node name="buildings" type="Node2D" parent="." unique_id=1665092985]
 
-[node name="skill_system" type="Node2D" parent="."]
+[node name="skill_system" type="Node2D" parent="." unique_id=7079874]
 unique_name_in_owner = true
 script = ExtResource("3_rragv")
 
-[node name="buff_system" type="Node2D" parent="."]
+[node name="buff_system" type="Node2D" parent="." unique_id=875467952]
 script = ExtResource("4_2wyq8")
 
-[node name="Node2D" type="Node2D" parent="buff_system"]
+[node name="Node2D" type="Node2D" parent="buff_system" unique_id=1665510518]
 script = ExtResource("5_yq6so")
 
-[node name="coin_skill_system" type="Node2D" parent="."]
+[node name="coin_skill_system" type="Node2D" parent="." unique_id=1479494585]
 script = ExtResource("4_y6deb")
 
-[node name="Timer" type="Timer" parent="coin_skill_system"]
+[node name="Timer" type="Timer" parent="coin_skill_system" unique_id=964155765]
 wait_time = 0.05
 autostart = true
 
-[node name="direction_ui" type="CanvasLayer" parent="coin_skill_system"]
+[node name="direction_ui" type="CanvasLayer" parent="coin_skill_system" unique_id=2060431763]
 unique_name_in_owner = true
 process_mode = 2
 visible = false
 
-[node name="Panel" type="Panel" parent="coin_skill_system/direction_ui"]
+[node name="Panel" type="Panel" parent="coin_skill_system/direction_ui" unique_id=1629947118]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1576,7 +1575,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_og1vs")
 
-[node name="Label" type="Label" parent="coin_skill_system/direction_ui"]
+[node name="Label" type="Label" parent="coin_skill_system/direction_ui" unique_id=330960679]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1591,7 +1590,7 @@ text = "选择方向"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="coin_skill_system/direction_ui"]
+[node name="GridContainer" type="GridContainer" parent="coin_skill_system/direction_ui" unique_id=1580787091]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1608,50 +1607,50 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 3
 
-[node name="TextureButton" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="TextureButton" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=1310356304]
 layout_mode = 2
 
-[node name="up_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="up_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=504715688]
 unique_name_in_owner = true
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_txyw0")
 texture_pressed = SubResource("AtlasTexture_vc5cj")
 texture_hover = SubResource("AtlasTexture_nvyfr")
 
-[node name="TextureButton3" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="TextureButton3" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=581597056]
 layout_mode = 2
 
-[node name="left_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="left_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=93246553]
 unique_name_in_owner = true
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_ty1g6")
 texture_pressed = SubResource("AtlasTexture_j2jfr")
 texture_hover = SubResource("AtlasTexture_bjg73")
 
-[node name="TextureButton5" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="TextureButton5" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=652253888]
 layout_mode = 2
 
-[node name="right_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="right_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=697292895]
 unique_name_in_owner = true
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_bu4jf")
 texture_pressed = SubResource("AtlasTexture_o7ddy")
 texture_hover = SubResource("AtlasTexture_0loja")
 
-[node name="TextureButton7" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="TextureButton7" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=408640363]
 layout_mode = 2
 
-[node name="down_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="down_button" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=251282076]
 unique_name_in_owner = true
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_ids8r")
 texture_pressed = SubResource("AtlasTexture_dnhof")
 texture_hover = SubResource("AtlasTexture_1v6qk")
 
-[node name="TextureButton9" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer"]
+[node name="TextureButton9" type="TextureButton" parent="coin_skill_system/direction_ui/GridContainer" unique_id=522999192]
 layout_mode = 2
 
-[node name="cancel_direction_button" type="Button" parent="coin_skill_system/direction_ui"]
+[node name="cancel_direction_button" type="Button" parent="coin_skill_system/direction_ui" unique_id=1147908520]
 unique_name_in_owner = true
 offset_left = 554.0
 offset_top = 468.0
@@ -1663,10 +1662,10 @@ theme_override_styles/hover = ExtResource("15_0ld40")
 shortcut = SubResource("Shortcut_vxglm")
 text = "取消"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1863199772]
 position = Vector2(71.5, 68.5)
 
-[node name="score_panal" type="Control" parent="."]
+[node name="score_panal" type="Control" parent="." unique_id=996372507]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1679,7 +1678,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="score_panal"]
+[node name="NinePatchRect" type="NinePatchRect" parent="score_panal" unique_id=535026048]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1692,7 +1691,7 @@ patch_margin_top = 6
 patch_margin_right = 5
 patch_margin_bottom = 5
 
-[node name="MarginContainer" type="MarginContainer" parent="score_panal/NinePatchRect"]
+[node name="MarginContainer" type="MarginContainer" parent="score_panal/NinePatchRect" unique_id=1722381302]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1704,11 +1703,11 @@ theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 7
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer" unique_id=453685627]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="NinePatchRect" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer" unique_id=933716549]
 layout_mode = 2
 size_flags_vertical = 3
 texture = SubResource("AtlasTexture_2xggs")
@@ -1717,7 +1716,7 @@ patch_margin_top = 2
 patch_margin_right = 2
 patch_margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect"]
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect" unique_id=876199133]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 3.0
@@ -1727,21 +1726,21 @@ offset_bottom = 25.0
 scale = Vector2(0.25, 0.25)
 theme_override_constants/separation = 1
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer" unique_id=688211835]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "点数"
 label_settings = SubResource("LabelSettings_62n0d")
 
-[node name="Label2" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer"]
+[node name="Label2" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer" unique_id=2144388498]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 text = "分值"
 label_settings = SubResource("LabelSettings_62n0d")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect" unique_id=18630030]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -1752,27 +1751,27 @@ offset_bottom = 24.0
 scale = Vector2(0.25, 0.25)
 theme_override_constants/separation = 40
 
-[node name="Label4" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer2"]
+[node name="Label4" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer2" unique_id=1503697683]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "骰型"
 label_settings = SubResource("LabelSettings_62n0d")
 
-[node name="Label5" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer2"]
+[node name="Label5" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/NinePatchRect/HBoxContainer2" unique_id=390325855]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "倍率"
 label_settings = SubResource("LabelSettings_62n0d")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer" unique_id=1238703604]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 theme_override_constants/separation = 0
 
-[node name="NinePatchRect2" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="NinePatchRect2" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer" unique_id=528246368]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
@@ -1782,7 +1781,7 @@ patch_margin_top = 2
 patch_margin_right = 2
 patch_margin_bottom = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2"]
+[node name="MarginContainer" type="MarginContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2" unique_id=1185047306]
 layout_mode = 1
 offset_right = 108.0
 offset_bottom = 276.0
@@ -1792,21 +1791,21 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer" unique_id=995511350]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="one_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
+[node name="one_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer" unique_id=1074319593]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_31t0e")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame"]
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame" unique_id=1569861702]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame/HBoxContainer" unique_id=1049126524]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1814,7 +1813,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_tlte2")
 stretch_mode = 3
 
-[node name="one_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame/HBoxContainer"]
+[node name="one_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/one_score_frame/HBoxContainer" unique_id=2074180151]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1825,17 +1824,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="two_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
+[node name="two_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer" unique_id=1009627182]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_bt6xe")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame" unique_id=1490360662]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame/HBoxContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame/HBoxContainer2" unique_id=1041183349]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1843,7 +1842,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_612w7")
 stretch_mode = 3
 
-[node name="two_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame/HBoxContainer2"]
+[node name="two_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/two_score_frame/HBoxContainer2" unique_id=586401304]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1854,17 +1853,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="three_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
+[node name="three_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer" unique_id=930172372]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_jqdd3")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame" unique_id=1704905640]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame/HBoxContainer3"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame/HBoxContainer3" unique_id=442137988]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1872,7 +1871,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_eok4h")
 stretch_mode = 3
 
-[node name="three_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame/HBoxContainer3"]
+[node name="three_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/three_score_frame/HBoxContainer3" unique_id=783254440]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1883,17 +1882,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="four_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
+[node name="four_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer" unique_id=1153758601]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_tuil3")
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame" unique_id=1052775621]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame/HBoxContainer4"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame/HBoxContainer4" unique_id=964177458]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1901,7 +1900,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_kpq8t")
 stretch_mode = 3
 
-[node name="four_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame/HBoxContainer4"]
+[node name="four_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/four_score_frame/HBoxContainer4" unique_id=2135573539]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1912,17 +1911,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="five_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
+[node name="five_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer" unique_id=32747070]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_edkoa")
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame" unique_id=689869737]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame/HBoxContainer5"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame/HBoxContainer5" unique_id=1715019639]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1930,7 +1929,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_sdjh4")
 stretch_mode = 3
 
-[node name="five_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame/HBoxContainer5"]
+[node name="five_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/five_score_frame/HBoxContainer5" unique_id=540487655]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1941,17 +1940,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="six_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer"]
+[node name="six_score_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer" unique_id=879669115]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_luxfg")
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame" unique_id=1507970528]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame/HBoxContainer6"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame/HBoxContainer6" unique_id=257101236]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1959,7 +1958,7 @@ size_flags_stretch_ratio = 3.0
 texture = SubResource("AtlasTexture_a0si6")
 stretch_mode = 3
 
-[node name="six_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame/HBoxContainer6"]
+[node name="six_score" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect2/MarginContainer/VBoxContainer/six_score_frame/HBoxContainer6" unique_id=1288547486]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -1970,7 +1969,7 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="NinePatchRect3" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="NinePatchRect3" type="NinePatchRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer" unique_id=259971280]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
@@ -1980,7 +1979,7 @@ patch_margin_top = 2
 patch_margin_right = 2
 patch_margin_bottom = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3"]
+[node name="MarginContainer2" type="MarginContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3" unique_id=1581029594]
 layout_mode = 1
 offset_right = 164.0
 offset_bottom = 276.0
@@ -1990,21 +1989,21 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2" unique_id=969526587]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="none_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
+[node name="none_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=1249082530]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_2yld4")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame"]
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame" unique_id=1694153316]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer" unique_id=35355299]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2012,13 +2011,13 @@ size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_2wq0j")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer" unique_id=505735527]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "  无  "
 label_settings = ExtResource("3_h858a")
 
-[node name="none_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer"]
+[node name="none_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer" unique_id=577244844]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -2029,17 +2028,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="duizi_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
+[node name="duizi_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=453042372]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_bhkwd")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame" unique_id=1553349324]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2" unique_id=387224678]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2047,13 +2046,13 @@ size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_surj8")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2" unique_id=95860909]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "对子"
 label_settings = ExtResource("3_h858a")
 
-[node name="duizi_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2"]
+[node name="duizi_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2" unique_id=1470673988]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -2064,17 +2063,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="shunzi_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
+[node name="shunzi_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=243894478]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_7h2xm")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame" unique_id=1124805664]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3" unique_id=339421267]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2082,13 +2081,13 @@ size_flags_stretch_ratio = 2.0
 texture = ExtResource("6_vreof")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3" unique_id=1561156609]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "顺子"
 label_settings = ExtResource("3_h858a")
 
-[node name="shunzi_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3"]
+[node name="shunzi_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3" unique_id=567660362]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -2099,17 +2098,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="tongse_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
+[node name="tongse_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=1705341106]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_7hhd2")
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame" unique_id=1514099946]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4" unique_id=2127169815]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2117,13 +2116,13 @@ size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_lur3c")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4" unique_id=1609317647]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "同色"
 label_settings = ExtResource("3_h858a")
 
-[node name="tongse_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4"]
+[node name="tongse_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4" unique_id=615334844]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -2134,17 +2133,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="tongdui_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
+[node name="tongdui_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=1360145157]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_yqm5u")
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame" unique_id=221769472]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5" unique_id=124500099]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2152,13 +2151,13 @@ size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_a1xmg")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5" unique_id=1710176051]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "同对"
 label_settings = ExtResource("3_h858a")
 
-[node name="tongdui_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5"]
+[node name="tongdui_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5" unique_id=1837470020]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -2169,17 +2168,17 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="tongshun_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2"]
+[node name="tongshun_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=1964655923]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_opren")
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame" unique_id=1255762361]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6"]
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6" unique_id=3801725]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2188,13 +2187,13 @@ texture = SubResource("AtlasTexture_hkjfj")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6"]
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6" unique_id=51965382]
 layout_mode = 2
 size_flags_stretch_ratio = 2.0
 text = "同顺"
 label_settings = ExtResource("3_h858a")
 
-[node name="tongshun_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6"]
+[node name="tongshun_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6" unique_id=1467144425]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -2205,7 +2204,7 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="stage_score" type="Control" parent="."]
+[node name="stage_score" type="Control" parent="." unique_id=1742009904]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 132.0
@@ -2214,7 +2213,7 @@ offset_right = 214.0
 offset_bottom = 69.0
 mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="stage_score"]
+[node name="TextureRect" type="TextureRect" parent="stage_score" unique_id=1043565781]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2227,7 +2226,7 @@ texture = SubResource("AtlasTexture_gqmmt")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="stage_label" type="Label" parent="stage_score"]
+[node name="stage_label" type="Label" parent="stage_score" unique_id=867867446]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2239,7 +2238,7 @@ scale = Vector2(0.6, 0.6)
 text = "关卡 一"
 label_settings = ExtResource("3_h858a")
 
-[node name="difficulty_icon" type="TextureRect" parent="stage_score"]
+[node name="difficulty_icon" type="TextureRect" parent="stage_score" unique_id=1503488061]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2253,7 +2252,7 @@ texture = ExtResource("18_5q0nq")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GridContainer" type="GridContainer" parent="stage_score"]
+[node name="GridContainer" type="GridContainer" parent="stage_score" unique_id=638288209]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -2269,33 +2268,33 @@ theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 2
 
-[node name="Label" type="Label" parent="stage_score/GridContainer"]
+[node name="Label" type="Label" parent="stage_score/GridContainer" unique_id=1550810110]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "目标"
 label_settings = ExtResource("3_h858a")
 
-[node name="target_score" type="Label" parent="stage_score/GridContainer"]
+[node name="target_score" type="Label" parent="stage_score/GridContainer" unique_id=856809216]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 text = "0"
 label_settings = ExtResource("12_yq6so")
 
-[node name="Label2" type="Label" parent="stage_score/GridContainer"]
+[node name="Label2" type="Label" parent="stage_score/GridContainer" unique_id=796020708]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "分数"
 label_settings = ExtResource("3_h858a")
 
-[node name="total_score" type="Label" parent="stage_score/GridContainer"]
+[node name="total_score" type="Label" parent="stage_score/GridContainer" unique_id=470402135]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 text = "0"
 label_settings = ExtResource("12_yq6so")
 
-[node name="hero_skill" type="Control" parent="."]
+[node name="hero_skill" type="Control" parent="." unique_id=1328754025]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -69.5
@@ -2304,7 +2303,7 @@ offset_right = 10.5
 offset_bottom = 132.5
 mouse_filter = 1
 
-[node name="Panel" type="Panel" parent="hero_skill"]
+[node name="Panel" type="Panel" parent="hero_skill" unique_id=510269311]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -2313,7 +2312,7 @@ offset_bottom = 0.75
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="hero_skill2" type="Control" parent="."]
+[node name="hero_skill2" type="Control" parent="." unique_id=745728063]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 134.0
@@ -2322,7 +2321,7 @@ offset_right = 214.0
 offset_bottom = 131.25
 mouse_filter = 1
 
-[node name="Panel" type="Panel" parent="hero_skill2"]
+[node name="Panel" type="Panel" parent="hero_skill2" unique_id=1640712488]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2330,7 +2329,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="hero_skill2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="hero_skill2" unique_id=1820879773]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -2338,7 +2337,7 @@ offset_bottom = 26.0
 grow_horizontal = 2
 theme_override_constants/separation = 1
 
-[node name="coin_skill_1" type="TextureButton" parent="hero_skill2/HBoxContainer"]
+[node name="coin_skill_1" type="TextureButton" parent="hero_skill2/HBoxContainer" unique_id=751279766]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2355,7 +2354,7 @@ texture_hover = SubResource("AtlasTexture_2f3dj")
 texture_disabled = SubResource("AtlasTexture_pibwh")
 stretch_mode = 5
 
-[node name="coin_skill_1_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_1"]
+[node name="coin_skill_1_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_1" unique_id=1966699711]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -2370,7 +2369,7 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 5
 
-[node name="coin_skill_2" type="TextureButton" parent="hero_skill2/HBoxContainer"]
+[node name="coin_skill_2" type="TextureButton" parent="hero_skill2/HBoxContainer" unique_id=108088973]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2387,7 +2386,7 @@ texture_hover = SubResource("AtlasTexture_2f3dj")
 texture_disabled = SubResource("AtlasTexture_c6pm6")
 stretch_mode = 5
 
-[node name="coin_skill_2_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_2"]
+[node name="coin_skill_2_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_2" unique_id=1954636359]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -2402,7 +2401,7 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 5
 
-[node name="coin_skill_3" type="TextureButton" parent="hero_skill2/HBoxContainer"]
+[node name="coin_skill_3" type="TextureButton" parent="hero_skill2/HBoxContainer" unique_id=889346777]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2419,7 +2418,7 @@ texture_hover = SubResource("AtlasTexture_2f3dj")
 texture_disabled = SubResource("AtlasTexture_5he1u")
 stretch_mode = 5
 
-[node name="coin_skill_3_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_3"]
+[node name="coin_skill_3_icon" type="TextureRect" parent="hero_skill2/HBoxContainer/coin_skill_3" unique_id=146180243]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -2434,7 +2433,7 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 5
 
-[node name="coin_skill_1_label" type="RichTextLabel" parent="hero_skill2"]
+[node name="coin_skill_1_label" type="RichTextLabel" parent="hero_skill2" unique_id=902664237]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2445,7 +2444,7 @@ offset_bottom = 49.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
 
-[node name="coin_skill_2_label" type="RichTextLabel" parent="hero_skill2"]
+[node name="coin_skill_2_label" type="RichTextLabel" parent="hero_skill2" unique_id=19463575]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2456,7 +2455,7 @@ offset_bottom = 49.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
 
-[node name="coin_skill_3_label" type="RichTextLabel" parent="hero_skill2"]
+[node name="coin_skill_3_label" type="RichTextLabel" parent="hero_skill2" unique_id=897676190]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2467,7 +2466,7 @@ offset_bottom = 49.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
 
-[node name="Q_texture" type="TextureRect" parent="hero_skill2"]
+[node name="Q_texture" type="TextureRect" parent="hero_skill2" unique_id=638718843]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2483,7 +2482,7 @@ texture = SubResource("AtlasTexture_chjal")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="W_texture" type="TextureRect" parent="hero_skill2"]
+[node name="W_texture" type="TextureRect" parent="hero_skill2" unique_id=1735523902]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2499,7 +2498,7 @@ texture = SubResource("AtlasTexture_cjqg0")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="E_texture" type="TextureRect" parent="hero_skill2"]
+[node name="E_texture" type="TextureRect" parent="hero_skill2" unique_id=1555671543]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2515,7 +2514,7 @@ texture = SubResource("AtlasTexture_vchkt")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="real_time_score" type="Control" parent="."]
+[node name="real_time_score" type="Control" parent="." unique_id=2012097737]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -71.75
@@ -2523,7 +2522,7 @@ offset_top = 0.5
 offset_right = 6.25
 offset_bottom = 8.5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="real_time_score"]
+[node name="HBoxContainer" type="HBoxContainer" parent="real_time_score" unique_id=503553274]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2531,7 +2530,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="real_time_score/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="real_time_score/HBoxContainer" unique_id=1415134561]
 material = ExtResource("19_vxglm")
 use_parent_material = true
 layout_mode = 2
@@ -2540,7 +2539,7 @@ texture = SubResource("CanvasTexture_574tw")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="real_time_score/HBoxContainer/TextureRect"]
+[node name="MarginContainer" type="MarginContainer" parent="real_time_score/HBoxContainer/TextureRect" unique_id=2109562139]
 layout_mode = 1
 offset_left = 7.0
 offset_top = 2.84
@@ -2549,21 +2548,21 @@ offset_bottom = 20.797447
 scale = Vector2(0.47, 0.47)
 pivot_offset = Vector2(0, -3)
 
-[node name="base_score" type="Label" parent="real_time_score/HBoxContainer/TextureRect/MarginContainer"]
+[node name="base_score" type="Label" parent="real_time_score/HBoxContainer/TextureRect/MarginContainer" unique_id=133355526]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 label_settings = SubResource("LabelSettings_yq6so")
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="real_time_score/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="real_time_score/HBoxContainer" unique_id=882094695]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("CanvasTexture_oy8gc")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="real_time_score/HBoxContainer/TextureRect2"]
+[node name="MarginContainer2" type="MarginContainer" parent="real_time_score/HBoxContainer/TextureRect2" unique_id=573831346]
 layout_mode = 1
 offset_left = 4.0
 offset_top = 2.84
@@ -2572,14 +2571,14 @@ offset_bottom = 20.797447
 scale = Vector2(0.47, 0.47)
 pivot_offset = Vector2(0, -3)
 
-[node name="percent_score" type="Label" parent="real_time_score/HBoxContainer/TextureRect2/MarginContainer2"]
+[node name="percent_score" type="Label" parent="real_time_score/HBoxContainer/TextureRect2/MarginContainer2" unique_id=1006686569]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 label_settings = SubResource("LabelSettings_fv21b")
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="real_time_score"]
+[node name="TextureRect" type="TextureRect" parent="real_time_score" unique_id=1114800716]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2597,7 +2596,7 @@ scale = Vector2(0.65, 0.65)
 pivot_offset = Vector2(16, 16)
 texture = ExtResource("11_w4riq")
 
-[node name="dice_num" type="Control" parent="."]
+[node name="dice_num" type="Control" parent="." unique_id=1995404102]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -69.25
@@ -2606,7 +2605,7 @@ offset_right = 0.750008
 offset_bottom = -0.25
 scale = Vector2(0.85, 0.85)
 
-[node name="dice_list" type="HBoxContainer" parent="dice_num"]
+[node name="dice_list" type="HBoxContainer" parent="dice_num" unique_id=1244454149]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -2621,7 +2620,7 @@ grow_vertical = 2
 pivot_offset = Vector2(28, 4)
 theme_override_constants/separation = 1
 
-[node name="dice1" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice1" type="TextureRect" parent="dice_num/dice_list" unique_id=465774939]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2629,7 +2628,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice2" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice2" type="TextureRect" parent="dice_num/dice_list" unique_id=1846937570]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2637,7 +2636,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice3" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice3" type="TextureRect" parent="dice_num/dice_list" unique_id=1994800597]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2645,7 +2644,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice4" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice4" type="TextureRect" parent="dice_num/dice_list" unique_id=1352034533]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2653,7 +2652,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice5" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice5" type="TextureRect" parent="dice_num/dice_list" unique_id=703296544]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2661,7 +2660,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice6" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice6" type="TextureRect" parent="dice_num/dice_list" unique_id=1823350847]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2669,7 +2668,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice7" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice7" type="TextureRect" parent="dice_num/dice_list" unique_id=1999895469]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2677,7 +2676,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="dice8" type="TextureRect" parent="dice_num/dice_list"]
+[node name="dice8" type="TextureRect" parent="dice_num/dice_list" unique_id=1913359242]
 self_modulate = Color(1, 1, 1, 0.301961)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -2685,7 +2684,7 @@ texture = SubResource("AtlasTexture_d2e1i")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="dice_num"]
+[node name="Label" type="Label" parent="dice_num" unique_id=1052540123]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 2.64706
@@ -2695,7 +2694,7 @@ offset_bottom = 18.5882
 scale = Vector2(0.2, 0.2)
 text = "1"
 
-[node name="Label2" type="Label" parent="dice_num"]
+[node name="Label2" type="Label" parent="dice_num" unique_id=1089592866]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 12.3529
@@ -2705,7 +2704,7 @@ offset_bottom = 18.5882
 scale = Vector2(0.2, 0.2)
 text = "1"
 
-[node name="Label3" type="Label" parent="dice_num"]
+[node name="Label3" type="Label" parent="dice_num" unique_id=110154984]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 21.4706
@@ -2715,7 +2714,7 @@ offset_bottom = 18.8824
 scale = Vector2(0.2, 0.2)
 text = "2"
 
-[node name="Label4" type="Label" parent="dice_num"]
+[node name="Label4" type="Label" parent="dice_num" unique_id=646924879]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 30.0
@@ -2725,7 +2724,7 @@ offset_bottom = 19.1765
 scale = Vector2(0.2, 0.2)
 text = "3"
 
-[node name="Label5" type="Label" parent="dice_num"]
+[node name="Label5" type="Label" parent="dice_num" unique_id=1632531956]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 39.1177
@@ -2735,7 +2734,7 @@ offset_bottom = 19.1765
 scale = Vector2(0.2, 0.2)
 text = "4"
 
-[node name="Label6" type="Label" parent="dice_num"]
+[node name="Label6" type="Label" parent="dice_num" unique_id=762199122]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 47.6471
@@ -2745,7 +2744,7 @@ offset_bottom = 19.1765
 scale = Vector2(0.2, 0.2)
 text = "5"
 
-[node name="Label7" type="Label" parent="dice_num"]
+[node name="Label7" type="Label" parent="dice_num" unique_id=1034537936]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 56.7647
@@ -2755,7 +2754,7 @@ offset_bottom = 19.1765
 scale = Vector2(0.2, 0.2)
 text = "6"
 
-[node name="Label8" type="Label" parent="dice_num"]
+[node name="Label8" type="Label" parent="dice_num" unique_id=1833139875]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 65.8824
@@ -2765,7 +2764,7 @@ offset_bottom = 19.1765
 scale = Vector2(0.2, 0.2)
 text = "7"
 
-[node name="buttom_ui" type="Control" parent="."]
+[node name="buttom_ui" type="Control" parent="." unique_id=1608300649]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -69.0
@@ -2774,7 +2773,7 @@ offset_right = 133.0
 offset_bottom = 148.0
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="buttom_ui"]
+[node name="Panel" type="Panel" parent="buttom_ui" unique_id=1217846610]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2782,7 +2781,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="buttom_ui"]
+[node name="MarginContainer" type="MarginContainer" parent="buttom_ui" unique_id=1275946500]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2792,14 +2791,14 @@ grow_vertical = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_right = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="buttom_ui/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="buttom_ui/MarginContainer" unique_id=1248139096]
 layout_mode = 2
 
-[node name="level_gold_power" type="Control" parent="buttom_ui/MarginContainer/HBoxContainer"]
+[node name="level_gold_power" type="Control" parent="buttom_ui/MarginContainer/HBoxContainer" unique_id=356800548]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="help_button" type="TextureButton" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power"]
+[node name="help_button" type="TextureButton" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power" unique_id=1001113303]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 4
@@ -2817,7 +2816,7 @@ texture_pressed = SubResource("AtlasTexture_jscy8")
 texture_hover = SubResource("AtlasTexture_pm3ni")
 stretch_mode = 3
 
-[node name="TextureButton" type="TextureButton" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power"]
+[node name="TextureButton" type="TextureButton" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power" unique_id=446991050]
 layout_mode = 0
 offset_left = -1.5
 offset_top = 3.5
@@ -2828,7 +2827,7 @@ texture_normal = SubResource("AtlasTexture_j8jky")
 texture_pressed = SubResource("AtlasTexture_kmb1v")
 texture_hover = SubResource("AtlasTexture_fuf3a")
 
-[node name="TextureRect" type="TextureRect" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power"]
+[node name="TextureRect" type="TextureRect" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power" unique_id=1803923321]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.17
@@ -2845,7 +2844,7 @@ texture = SubResource("AtlasTexture_0ld40")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="class_icon" type="TextureRect" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect"]
+[node name="class_icon" type="TextureRect" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect" unique_id=732873581]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2860,7 +2859,7 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 5
 
-[node name="level_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect"]
+[node name="level_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect" unique_id=1639854922]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -2876,7 +2875,7 @@ scale = Vector2(0.25, 0.25)
 pivot_offset = Vector2(14.5, 11.5)
 text = "Lv.0"
 
-[node name="MarginContainer2" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect"]
+[node name="MarginContainer2" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect" unique_id=392202429]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -2891,14 +2890,14 @@ grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)
 
-[node name="total_coins_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect/MarginContainer2"]
+[node name="total_coins_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect/MarginContainer2" unique_id=2053982907]
 unique_name_in_owner = true
 layout_mode = 2
 text = "20000"
 label_settings = SubResource("LabelSettings_trceg")
 horizontal_alignment = 2
 
-[node name="MarginContainer3" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect"]
+[node name="MarginContainer3" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect" unique_id=1223198027]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.693
@@ -2911,19 +2910,19 @@ grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)
 
-[node name="power_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect/MarginContainer3"]
+[node name="power_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect/MarginContainer3" unique_id=1125354769]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0/2"
 label_settings = SubResource("LabelSettings_0ld40")
 horizontal_alignment = 2
 
-[node name="exp_bar" type="Control" parent="buttom_ui/MarginContainer/HBoxContainer"]
+[node name="exp_bar" type="Control" parent="buttom_ui/MarginContainer/HBoxContainer" unique_id=1380486809]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.55
 
-[node name="exp_bar" type="TextureProgressBar" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar"]
+[node name="exp_bar" type="TextureProgressBar" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar" unique_id=675857324]
 unique_name_in_owner = true
 layout_mode = 0
 offset_top = 4.0
@@ -2939,7 +2938,7 @@ stretch_margin_bottom = 4
 texture_under = SubResource("AtlasTexture_a8y0u")
 texture_progress = SubResource("AtlasTexture_trceg")
 
-[node name="MarginContainer" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar"]
+[node name="MarginContainer" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar" unique_id=1328952508]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -2950,7 +2949,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.4, 0.4)
 
-[node name="exp_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar/MarginContainer"]
+[node name="exp_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar/MarginContainer" unique_id=750578200]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -2959,7 +2958,7 @@ label_settings = SubResource("LabelSettings_a8y0u")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="coin_skill_trun_button" type="Control" parent="."]
+[node name="coin_skill_trun_button" type="Control" parent="." unique_id=166978644]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 134.0
@@ -2968,7 +2967,7 @@ offset_right = 214.0
 offset_bottom = 146.5
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="coin_skill_trun_button"]
+[node name="Panel" type="Panel" parent="coin_skill_trun_button" unique_id=1572027941]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -2977,7 +2976,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="coin_skill_trun_button"]
+[node name="HBoxContainer" type="HBoxContainer" parent="coin_skill_trun_button" unique_id=691138148]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2987,7 +2986,7 @@ grow_vertical = 2
 pivot_offset = Vector2(58, 16)
 theme_override_constants/separation = 0
 
-[node name="reroll_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer"]
+[node name="reroll_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=16992813]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -3002,7 +3001,7 @@ texture_hover = SubResource("AtlasTexture_tel4y")
 texture_disabled = SubResource("AtlasTexture_5poiv")
 stretch_mode = 5
 
-[node name="reroll_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/reroll_button"]
+[node name="reroll_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/reroll_button" unique_id=183205884]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -3012,7 +3011,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/reroll_button/reroll_button_label"]
+[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/reroll_button/reroll_button_label" unique_id=1484212810]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -3027,7 +3026,7 @@ scale = Vector2(0.4, 0.4)
 pivot_offset = Vector2(32, 11.5)
 text = "重掷"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/reroll_button/reroll_button_label"]
+[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/reroll_button/reroll_button_label" unique_id=195880399]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3045,7 +3044,7 @@ text = "[img=12]res://images/coin.png[/img] -1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="turn_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer"]
+[node name="turn_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=1888353913]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
@@ -3056,7 +3055,7 @@ texture_hover = SubResource("AtlasTexture_dgi5k")
 texture_disabled = SubResource("AtlasTexture_2cjbq")
 stretch_mode = 5
 
-[node name="turn_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/turn_button"]
+[node name="turn_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/turn_button" unique_id=1523877493]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -3066,7 +3065,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/turn_button/turn_button_label"]
+[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/turn_button/turn_button_label" unique_id=1835283480]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -3081,7 +3080,7 @@ scale = Vector2(0.4, 0.4)
 pivot_offset = Vector2(32, 11.5)
 text = "回合结束"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/turn_button/turn_button_label"]
+[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/turn_button/turn_button_label" unique_id=139684833]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3100,7 +3099,7 @@ text = "[img=15]res://images/power.png[/img] +1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="round_process_bar" type="Control" parent="."]
+[node name="round_process_bar" type="Control" parent="." unique_id=127789570]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 134.25
@@ -3109,7 +3108,7 @@ offset_right = 212.25
 offset_bottom = 95.25
 mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="round_process_bar"]
+[node name="TextureRect" type="TextureRect" parent="round_process_bar" unique_id=1136231641]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3119,7 +3118,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_y6deb")
 stretch_mode = 2
 
-[node name="ship" type="TextureRect" parent="round_process_bar"]
+[node name="ship" type="TextureRect" parent="round_process_bar" unique_id=839515720]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 4.0
@@ -3130,7 +3129,7 @@ size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_og1vs")
 stretch_mode = 2
 
-[node name="turn_label" type="Label" parent="round_process_bar"]
+[node name="turn_label" type="Label" parent="round_process_bar" unique_id=2014676744]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -3141,7 +3140,7 @@ offset_bottom = 15.0
 scale = Vector2(0.35, 0.35)
 text = "回合: 1"
 
-[node name="turn_coin_label" type="Label" parent="round_process_bar"]
+[node name="turn_coin_label" type="Label" parent="round_process_bar" unique_id=1819923862]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -3153,7 +3152,7 @@ scale = Vector2(0.35, 0.35)
 text = "9"
 horizontal_alignment = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="round_process_bar"]
+[node name="RichTextLabel" type="RichTextLabel" parent="round_process_bar" unique_id=58004596]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -3168,7 +3167,7 @@ scale = Vector2(0.35, 0.35)
 bbcode_enabled = true
 text = "奖励: [img=10 ]res://images/coin.png[/img] ×"
 
-[node name="debuff_ui" type="Control" parent="."]
+[node name="debuff_ui" type="Control" parent="." unique_id=92682175]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 132.0
@@ -3176,7 +3175,7 @@ offset_top = -12.0
 offset_right = 214.0
 offset_bottom = 10.0
 
-[node name="Panel" type="Panel" parent="debuff_ui"]
+[node name="Panel" type="Panel" parent="debuff_ui" unique_id=827604636]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -3189,7 +3188,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vxglm")
 
-[node name="debuff_container" type="HFlowContainer" parent="debuff_ui"]
+[node name="debuff_container" type="HFlowContainer" parent="debuff_ui" unique_id=1091247567]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -3200,7 +3199,7 @@ offset_top = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="buff_ui" type="Control" parent="."]
+[node name="buff_ui" type="Control" parent="." unique_id=312982425]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 11.0
@@ -3208,7 +3207,7 @@ offset_top = -11.75
 offset_right = 132.75
 offset_bottom = 9.25
 
-[node name="Panel" type="Panel" parent="buff_ui"]
+[node name="Panel" type="Panel" parent="buff_ui" unique_id=50846860]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -3221,7 +3220,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vxglm")
 
-[node name="buff_container" type="HFlowContainer" parent="buff_ui"]
+[node name="buff_container" type="HFlowContainer" parent="buff_ui" unique_id=548133465]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -3234,7 +3233,7 @@ grow_vertical = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 
-[node name="stage_effect_ui" type="Control" parent="."]
+[node name="stage_effect_ui" type="Control" parent="." unique_id=240491243]
 z_index = 2
 layout_mode = 3
 anchors_preset = 8
@@ -3251,7 +3250,7 @@ grow_vertical = 2
 scale = Vector2(1, 1e-05)
 pivot_offset = Vector2(146, 10)
 
-[node name="ColorRect" type="ColorRect" parent="stage_effect_ui"]
+[node name="ColorRect" type="ColorRect" parent="stage_effect_ui" unique_id=1957422465]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3260,7 +3259,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.9411765)
 
-[node name="TextureRect" type="TextureRect" parent="stage_effect_ui"]
+[node name="TextureRect" type="TextureRect" parent="stage_effect_ui" unique_id=412495425]
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
@@ -3272,7 +3271,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_tm6hj")
 
-[node name="MarginContainer" type="MarginContainer" parent="stage_effect_ui/TextureRect"]
+[node name="MarginContainer" type="MarginContainer" parent="stage_effect_ui/TextureRect" unique_id=1261451304]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -3285,7 +3284,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7, 0.7)
 
-[node name="stage_effect_label" type="RichTextLabel" parent="stage_effect_ui/TextureRect/MarginContainer"]
+[node name="stage_effect_label" type="RichTextLabel" parent="stage_effect_ui/TextureRect/MarginContainer" unique_id=1866816655]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("30_fv21b")
@@ -3295,7 +3294,7 @@ text = "关卡 一[img=17]res://images/enemy_icon/normal.png[/img]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="debuff_effect_ui" type="Control" parent="."]
+[node name="debuff_effect_ui" type="Control" parent="." unique_id=1711590225]
 z_index = 2
 layout_mode = 3
 anchors_preset = 8
@@ -3312,7 +3311,7 @@ grow_vertical = 2
 scale = Vector2(1, 1e-05)
 pivot_offset = Vector2(146, 10)
 
-[node name="ColorRect" type="ColorRect" parent="debuff_effect_ui"]
+[node name="ColorRect" type="ColorRect" parent="debuff_effect_ui" unique_id=1138699700]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3321,7 +3320,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.9411765)
 
-[node name="TextureRect" type="TextureRect" parent="debuff_effect_ui"]
+[node name="TextureRect" type="TextureRect" parent="debuff_effect_ui" unique_id=1225033837]
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
@@ -3333,7 +3332,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_augu2")
 
-[node name="MarginContainer" type="MarginContainer" parent="debuff_effect_ui/TextureRect"]
+[node name="MarginContainer" type="MarginContainer" parent="debuff_effect_ui/TextureRect" unique_id=39154080]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -3346,7 +3345,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7, 0.7)
 
-[node name="debuff_effect_label" type="RichTextLabel" parent="debuff_effect_ui/TextureRect/MarginContainer"]
+[node name="debuff_effect_label" type="RichTextLabel" parent="debuff_effect_ui/TextureRect/MarginContainer" unique_id=863343073]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("30_fv21b")
@@ -3355,12 +3354,12 @@ bbcode_enabled = true
 text = "获得诅咒  [img=15 ]res://images/enemy_icon/disable_five.png[/img]"
 vertical_alignment = 1
 
-[node name="get_coin_skill_ui" type="CanvasLayer" parent="."]
+[node name="get_coin_skill_ui" type="CanvasLayer" parent="." unique_id=1683892254]
 unique_name_in_owner = true
 process_mode = 2
 visible = false
 
-[node name="Panel" type="Panel" parent="get_coin_skill_ui"]
+[node name="Panel" type="Panel" parent="get_coin_skill_ui" unique_id=510601325]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3368,7 +3367,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_jkv2x")
 
-[node name="Label" type="Label" parent="get_coin_skill_ui"]
+[node name="Label" type="Label" parent="get_coin_skill_ui" unique_id=1458379471]
 offset_left = 442.0
 offset_top = 164.0
 offset_right = 700.0
@@ -3377,7 +3376,7 @@ text = "选择获得一个技能"
 label_settings = SubResource("LabelSettings_2f3dj")
 horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="get_coin_skill_ui"]
+[node name="MarginContainer" type="MarginContainer" parent="get_coin_skill_ui" unique_id=442289946]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3388,60 +3387,60 @@ theme_override_constants/margin_top = 260
 theme_override_constants/margin_right = 700
 theme_override_constants/margin_bottom = 190
 
-[node name="VBoxContainer" type="VBoxContainer" parent="get_coin_skill_ui/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="get_coin_skill_ui/MarginContainer" unique_id=1260511147]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="HBoxContainer" type="HBoxContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer" unique_id=763036823]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 32
 
-[node name="get_coin_skill_tooltip_1" type="PanelContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="get_coin_skill_tooltip_1" type="PanelContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer" unique_id=391165080]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
 theme_override_styles/panel = SubResource("StyleBoxFlat_dgi5k")
 
-[node name="get_coin_skill_1" type="TextureRect" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer/get_coin_skill_tooltip_1"]
+[node name="get_coin_skill_1" type="TextureRect" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer/get_coin_skill_tooltip_1" unique_id=404491506]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("30_qkpxi")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="get_coin_skill_tooltip_2" type="PanelContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="get_coin_skill_tooltip_2" type="PanelContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1960443005]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
 theme_override_styles/panel = SubResource("StyleBoxFlat_j8jky")
 
-[node name="get_coin_skill_2" type="TextureRect" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer/get_coin_skill_tooltip_2"]
+[node name="get_coin_skill_2" type="TextureRect" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer/get_coin_skill_tooltip_2" unique_id=1548920094]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("31_5q0nq")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="get_coin_skill_ui/MarginContainer/VBoxContainer" unique_id=2041304435]
 layout_mode = 2
 theme_override_constants/separation = 32
 
-[node name="get_coin_skill_1_button" type="Button" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="get_coin_skill_1_button" type="Button" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1318160341]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = ExtResource("15_0ld40")
 text = "选择"
 
-[node name="get_coin_skill_2_button" type="Button" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="get_coin_skill_2_button" type="Button" parent="get_coin_skill_ui/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=88800458]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = SubResource("StyleBoxFlat_a8y0u")
 text = "选择"
 
-[node name="hide_get_coin_skill_ui_button" type="Button" parent="get_coin_skill_ui"]
+[node name="hide_get_coin_skill_ui_button" type="Button" parent="get_coin_skill_ui" unique_id=2008878799]
 unique_name_in_owner = true
 offset_left = 556.0
 offset_top = 544.0
@@ -3452,12 +3451,12 @@ theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = ExtResource("15_0ld40")
 text = "隐藏"
 
-[node name="clear_stage_ui" type="CanvasLayer" parent="."]
+[node name="clear_stage_ui" type="CanvasLayer" parent="." unique_id=302915227]
 unique_name_in_owner = true
 process_mode = 2
 visible = false
 
-[node name="Panel" type="Panel" parent="clear_stage_ui"]
+[node name="Panel" type="Panel" parent="clear_stage_ui" unique_id=648384630]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3465,7 +3464,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0ld40")
 
-[node name="paper_texture" type="TextureRect" parent="clear_stage_ui/Panel"]
+[node name="paper_texture" type="TextureRect" parent="clear_stage_ui/Panel" unique_id=402206364]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -3483,7 +3482,7 @@ texture = SubResource("AtlasTexture_jbj1t")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="clear_stage_label" type="Label" parent="clear_stage_ui/Panel/paper_texture"]
+[node name="clear_stage_label" type="Label" parent="clear_stage_ui/Panel/paper_texture" unique_id=41863794]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3494,7 +3493,7 @@ offset_bottom = 84.0
 text = "关卡 一"
 label_settings = SubResource("LabelSettings_muem4")
 
-[node name="stage_clear_label_1" type="Label" parent="clear_stage_ui/Panel/paper_texture"]
+[node name="stage_clear_label_1" type="Label" parent="clear_stage_ui/Panel/paper_texture" unique_id=103593281]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3505,7 +3504,7 @@ offset_bottom = 145.0
 text = "通过奖励"
 label_settings = ExtResource("18_gqmmt")
 
-[node name="stage_coin_rlabel_1" type="RichTextLabel" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_1"]
+[node name="stage_coin_rlabel_1" type="RichTextLabel" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_1" unique_id=1508658606]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3518,7 +3517,7 @@ bbcode_enabled = true
 text = "[img=15
  ]res://images/coin.png[/img] ×"
 
-[node name="stage_coin_label_1" type="Label" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_1"]
+[node name="stage_coin_label_1" type="Label" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_1" unique_id=1270681235]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3532,7 +3531,7 @@ theme_override_fonts/font = ExtResource("16_jbj1t")
 theme_override_font_sizes/font_size = 20
 text = "0"
 
-[node name="stage_clear_label_2" type="Label" parent="clear_stage_ui/Panel/paper_texture"]
+[node name="stage_clear_label_2" type="Label" parent="clear_stage_ui/Panel/paper_texture" unique_id=472220707]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3543,7 +3542,7 @@ offset_bottom = 208.0
 text = "剩余回合奖励"
 label_settings = ExtResource("18_gqmmt")
 
-[node name="stage_coin_rlabel_2" type="RichTextLabel" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_2"]
+[node name="stage_coin_rlabel_2" type="RichTextLabel" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_2" unique_id=840332223]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3556,7 +3555,7 @@ bbcode_enabled = true
 text = "[img=15
  ]res://images/coin.png[/img] ×"
 
-[node name="stage_coin_label_2" type="Label" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_2"]
+[node name="stage_coin_label_2" type="Label" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_2" unique_id=1854680935]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3569,7 +3568,7 @@ theme_override_fonts/font = ExtResource("16_jbj1t")
 theme_override_font_sizes/font_size = 20
 text = "0"
 
-[node name="stage_clear_label_3" type="Label" parent="clear_stage_ui/Panel/paper_texture"]
+[node name="stage_clear_label_3" type="Label" parent="clear_stage_ui/Panel/paper_texture" unique_id=730211588]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3580,7 +3579,7 @@ offset_bottom = 274.0
 text = "骰子数奖励"
 label_settings = ExtResource("18_gqmmt")
 
-[node name="stage_coin_rlabel_3" type="RichTextLabel" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_3"]
+[node name="stage_coin_rlabel_3" type="RichTextLabel" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_3" unique_id=111869469]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3593,7 +3592,7 @@ bbcode_enabled = true
 text = "[img=15
  ]res://images/coin.png[/img] ×"
 
-[node name="stage_coin_label_3" type="Label" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_3"]
+[node name="stage_coin_label_3" type="Label" parent="clear_stage_ui/Panel/paper_texture/stage_clear_label_3" unique_id=282573873]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3606,7 +3605,7 @@ theme_override_fonts/font = ExtResource("16_jbj1t")
 theme_override_font_sizes/font_size = 20
 text = "0"
 
-[node name="stage_clear_button" type="Button" parent="clear_stage_ui/Panel/paper_texture"]
+[node name="stage_clear_button" type="Button" parent="clear_stage_ui/Panel/paper_texture" unique_id=1046503819]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3618,7 +3617,7 @@ theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = ExtResource("15_0ld40")
 text = "获得"
 
-[node name="stage_coin_rlabel_4" type="RichTextLabel" parent="clear_stage_ui/Panel/paper_texture"]
+[node name="stage_coin_rlabel_4" type="RichTextLabel" parent="clear_stage_ui/Panel/paper_texture" unique_id=588582014]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3631,7 +3630,7 @@ bbcode_enabled = true
 text = "[img=15
  ]res://images/coin.png[/img] ×"
 
-[node name="stage_coin_label_4" type="Label" parent="clear_stage_ui/Panel/paper_texture"]
+[node name="stage_coin_label_4" type="Label" parent="clear_stage_ui/Panel/paper_texture" unique_id=1782334515]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -3644,12 +3643,12 @@ theme_override_fonts/font = ExtResource("16_jbj1t")
 theme_override_font_sizes/font_size = 20
 text = "0"
 
-[node name="shop_ui" type="CanvasLayer" parent="."]
+[node name="shop_ui" type="CanvasLayer" parent="." unique_id=1870582776]
 unique_name_in_owner = true
 process_mode = 2
 visible = false
 
-[node name="Panel" type="Panel" parent="shop_ui"]
+[node name="Panel" type="Panel" parent="shop_ui" unique_id=1676068150]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3657,7 +3656,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bjg73")
 
-[node name="shop_label" type="Label" parent="shop_ui/Panel"]
+[node name="shop_label" type="Label" parent="shop_ui/Panel" unique_id=1764860151]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -3670,7 +3669,7 @@ label_settings = SubResource("LabelSettings_2f3dj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="shop_texture_ui" type="TextureRect" parent="shop_ui/Panel"]
+[node name="shop_texture_ui" type="TextureRect" parent="shop_ui/Panel" unique_id=2055691808]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -3688,7 +3687,7 @@ texture = SubResource("AtlasTexture_kf5aa")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="HFlowContainer" type="HFlowContainer" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="HFlowContainer" type="HFlowContainer" parent="shop_ui/Panel/shop_texture_ui" unique_id=467789553]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 258.54022
@@ -3697,7 +3696,7 @@ offset_right = 564.5402
 offset_bottom = 119.0
 theme_override_constants/h_separation = 48
 
-[node name="buff_shop_icon_1" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer"]
+[node name="buff_shop_icon_1" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer" unique_id=326833650]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
@@ -3706,7 +3705,7 @@ texture = ExtResource("52_bu4jf")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1"]
+[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1" unique_id=903310303]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -3716,7 +3715,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="buff_shop_button_1" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1"]
+[node name="buff_shop_button_1" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1" unique_id=1830438778]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 19.0
@@ -3728,7 +3727,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="buff_shop_rlabel_1" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1/buff_shop_button_1"]
+[node name="buff_shop_rlabel_1" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1/buff_shop_button_1" unique_id=1700396455]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
@@ -3742,7 +3741,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="buff_lock_button_1" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1"]
+[node name="buff_lock_button_1" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1" unique_id=1063295726]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -3756,7 +3755,7 @@ texture_pressed = SubResource("AtlasTexture_xrs0c")
 texture_hover = SubResource("AtlasTexture_xljpf")
 stretch_mode = 5
 
-[node name="buff_shop_icon_2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer"]
+[node name="buff_shop_icon_2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer" unique_id=22062430]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
@@ -3765,7 +3764,7 @@ texture = ExtResource("35_txyw0")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2"]
+[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2" unique_id=1254433845]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -3775,7 +3774,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="buff_shop_button_2" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2"]
+[node name="buff_shop_button_2" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2" unique_id=763874547]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 19.0
@@ -3787,7 +3786,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="buff_shop_rlabel_2" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2/buff_shop_button_2"]
+[node name="buff_shop_rlabel_2" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2/buff_shop_button_2" unique_id=1883140881]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
@@ -3801,7 +3800,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="buff_lock_button_2" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2"]
+[node name="buff_lock_button_2" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2" unique_id=1555236075]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -3815,7 +3814,7 @@ texture_pressed = SubResource("AtlasTexture_xrs0c")
 texture_hover = SubResource("AtlasTexture_xljpf")
 stretch_mode = 5
 
-[node name="buff_shop_icon_3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer"]
+[node name="buff_shop_icon_3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer" unique_id=571783370]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
@@ -3824,7 +3823,7 @@ texture = ExtResource("38_bjg73")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3"]
+[node name="Panel" type="Panel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3" unique_id=1198889756]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -3834,7 +3833,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="buff_shop_button_3" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3"]
+[node name="buff_shop_button_3" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3" unique_id=1358448531]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 19.0
@@ -3846,7 +3845,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="buff_shop_rlabel_3" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3/buff_shop_button_3"]
+[node name="buff_shop_rlabel_3" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3/buff_shop_button_3" unique_id=354497214]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0
@@ -3860,7 +3859,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="buff_lock_button_3" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3"]
+[node name="buff_lock_button_3" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3" unique_id=1984849017]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -3874,7 +3873,7 @@ texture_pressed = SubResource("AtlasTexture_xrs0c")
 texture_hover = SubResource("AtlasTexture_xljpf")
 stretch_mode = 5
 
-[node name="HFlowContainer2" type="HFlowContainer" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="HFlowContainer2" type="HFlowContainer" parent="shop_ui/Panel/shop_texture_ui" unique_id=1111610463]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -3884,14 +3883,14 @@ offset_right = 564.5402
 offset_bottom = 227.0
 theme_override_constants/h_separation = 48
 
-[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2"]
+[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2" unique_id=1566867297]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("52_bu4jf")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect" unique_id=46342939]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -3902,7 +3901,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect/TextureButton" unique_id=925802183]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -3915,14 +3914,14 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 25"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2" unique_id=1824032048]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("35_txyw0")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect2"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect2" unique_id=1620030638]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -3933,7 +3932,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect2/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect2/TextureButton" unique_id=568840152]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -3946,14 +3945,14 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 3"
 horizontal_alignment = 1
 
-[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2"]
+[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2" unique_id=1456659142]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 texture = ExtResource("38_bjg73")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect3"]
+[node name="TextureButton" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect3" unique_id=1228915182]
 layout_mode = 0
 offset_left = 7.0
 offset_top = -37.0
@@ -3964,7 +3963,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect3/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer2/TextureRect3/TextureButton" unique_id=133030923]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -3977,7 +3976,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 1"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="TextureRect" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui" unique_id=601901887]
 layout_mode = 0
 offset_left = 222.54022
 offset_top = 266.0
@@ -3989,7 +3988,7 @@ texture = SubResource("AtlasTexture_t5ykj")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="power_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect"]
+[node name="power_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect" unique_id=884091838]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 73.0
@@ -4001,7 +4000,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect/power_bottle_button"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect/power_bottle_button" unique_id=981620090]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4014,7 +4013,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 2"
 horizontal_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui" unique_id=468501550]
 layout_mode = 0
 offset_left = 249.54022
 offset_top = 266.0
@@ -4026,7 +4025,7 @@ texture = SubResource("AtlasTexture_y57op")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="TextureRect3" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui" unique_id=391886793]
 layout_mode = 0
 offset_left = 350.54022
 offset_top = 266.0
@@ -4038,7 +4037,7 @@ texture = SubResource("AtlasTexture_mlv25")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="exp_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect3"]
+[node name="exp_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect3" unique_id=1522516341]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 73.0
@@ -4050,7 +4049,7 @@ texture_pressed = SubResource("AtlasTexture_e755i")
 texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect3/exp_bottle_button"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect3/exp_bottle_button" unique_id=1376481997]
 layout_mode = 0
 offset_left = 9.0
 offset_top = 7.0
@@ -4063,7 +4062,7 @@ bbcode_enabled = true
 text = "[img=13 ]res://images/coin.png[/img] 1"
 horizontal_alignment = 1
 
-[node name="TextureRect4" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="TextureRect4" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui" unique_id=1738261671]
 layout_mode = 0
 offset_left = 377.54022
 offset_top = 266.0
@@ -4075,7 +4074,7 @@ texture = SubResource("AtlasTexture_a82wo")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect5" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="TextureRect5" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui" unique_id=1253618557]
 layout_mode = 0
 offset_left = 310.54022
 offset_top = 158.0
@@ -4086,7 +4085,7 @@ texture = SubResource("AtlasTexture_gdvew")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui" unique_id=194799619]
 layout_mode = 0
 offset_left = 340.54022
 offset_top = 158.0
@@ -4097,7 +4096,7 @@ texture = SubResource("AtlasTexture_gdvew")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/TextureRect8"]
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/TextureRect8" unique_id=1151997194]
 layout_mode = 0
 offset_left = 187.0
 offset_top = 108.0
@@ -4108,7 +4107,7 @@ texture = SubResource("AtlasTexture_xhfw6")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/TextureRect8/TextureRect8"]
+[node name="TextureRect8" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/TextureRect8/TextureRect8" unique_id=1564409142]
 layout_mode = 0
 offset_left = -55.0
 offset_top = -106.0
@@ -4119,7 +4118,7 @@ texture = SubResource("AtlasTexture_xhfw6")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="buff_refresh_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui"]
+[node name="buff_refresh_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui" unique_id=1392673198]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 582.5402
@@ -4131,7 +4130,7 @@ texture_pressed = SubResource("AtlasTexture_152kg")
 texture_hover = SubResource("AtlasTexture_r4e17")
 stretch_mode = 5
 
-[node name="buff_refresh_rlabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/buff_refresh_button"]
+[node name="buff_refresh_rlabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/buff_refresh_button" unique_id=2104422320]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 13.0
@@ -4146,7 +4145,7 @@ text = "换一批[img=14 ]res://images/coin.png[/img]1"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="shop_next_level_button" type="Button" parent="shop_ui/Panel"]
+[node name="shop_next_level_button" type="Button" parent="shop_ui/Panel" unique_id=1916505668]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 532.0
@@ -4159,12 +4158,12 @@ theme_override_font_sizes/font_size = 20
 theme_override_styles/hover = ExtResource("15_0ld40")
 text = "下一关"
 
-[node name="level_up_ui" type="CanvasLayer" parent="."]
+[node name="level_up_ui" type="CanvasLayer" parent="." unique_id=919118643]
 unique_name_in_owner = true
 process_mode = 2
 visible = false
 
-[node name="Panel" type="Panel" parent="level_up_ui"]
+[node name="Panel" type="Panel" parent="level_up_ui" unique_id=212884636]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -4172,7 +4171,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_jkv2x")
 
-[node name="Label" type="Label" parent="level_up_ui"]
+[node name="Label" type="Label" parent="level_up_ui" unique_id=1152520177]
 offset_left = 442.0
 offset_top = 148.0
 offset_right = 779.0
@@ -4180,7 +4179,7 @@ offset_bottom = 200.0
 text = "选择一张卡牌进行强化"
 label_settings = SubResource("LabelSettings_2f3dj")
 
-[node name="MarginContainer" type="MarginContainer" parent="level_up_ui"]
+[node name="MarginContainer" type="MarginContainer" parent="level_up_ui" unique_id=568378956]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -4191,22 +4190,22 @@ theme_override_constants/margin_top = 260
 theme_override_constants/margin_right = 700
 theme_override_constants/margin_bottom = 190
 
-[node name="VBoxContainer" type="VBoxContainer" parent="level_up_ui/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="level_up_ui/MarginContainer" unique_id=1471240706]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="level_up_ui/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="level_up_ui/MarginContainer/VBoxContainer" unique_id=131326102]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="card1" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="card1" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2026260505]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("14_a8y0u")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="card1_name" type="Label" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card1"]
+[node name="card1_name" type="Label" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card1" unique_id=820454882]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4222,7 +4221,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 2
 
-[node name="card1_description" type="RichTextLabel" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card1"]
+[node name="card1_description" type="RichTextLabel" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card1" unique_id=1841018394]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4239,14 +4238,14 @@ text = "倍率增加[color=green]16%[/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="card2" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="card2" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1516716080]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("14_a8y0u")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="card2_name" type="Label" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card2"]
+[node name="card2_name" type="Label" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card2" unique_id=1629143983]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4262,7 +4261,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 2
 
-[node name="card2_description" type="RichTextLabel" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card2"]
+[node name="card2_description" type="RichTextLabel" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card2" unique_id=1637833536]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4279,14 +4278,14 @@ text = "倍率增加[color=green]16%[/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="card3" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="card3" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1915215548]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("14_a8y0u")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="card3_name" type="Label" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card3"]
+[node name="card3_name" type="Label" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card3" unique_id=1695668464]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4302,7 +4301,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 2
 
-[node name="card3_description" type="RichTextLabel" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card3"]
+[node name="card3_description" type="RichTextLabel" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer/card3" unique_id=193623383]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4319,31 +4318,31 @@ text = "倍率增加[color=green]16%[/color]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="level_up_ui/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="level_up_ui/MarginContainer/VBoxContainer" unique_id=528383087]
 layout_mode = 2
 
-[node name="card1_button" type="Button" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="card1_button" type="Button" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1637322537]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = ExtResource("15_0ld40")
 text = "选择"
 
-[node name="card2_button" type="Button" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="card2_button" type="Button" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1610789049]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = SubResource("StyleBoxFlat_a8y0u")
 text = "选择"
 
-[node name="card3_button" type="Button" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="card3_button" type="Button" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1342667333]
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = SubResource("StyleBoxFlat_a8y0u")
 text = "选择"
 
-[node name="hide_level_up_ui_button" type="Button" parent="level_up_ui"]
+[node name="hide_level_up_ui_button" type="Button" parent="level_up_ui" unique_id=600934550]
 unique_name_in_owner = true
 offset_left = 556.0
 offset_top = 544.0
@@ -4354,7 +4353,7 @@ theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_styles/hover = ExtResource("15_0ld40")
 text = "隐藏"
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1719211985]
 environment = SubResource("Environment_bu4jf")
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]

@@ -8,24 +8,28 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="rogue_slg"
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Current="*res://scripts/global/current.gd"
-SceneManager="*res://scripts/global/scene_manager.gd"
-Tools="*res://scripts/global/tools.gd"
-EventBus="*res://scripts/global/event_bus.gd"
-CursorManager="*res://scripts/global/cursor_manager.gd"
-BuffSystem="*res://scripts/buff_system.gd"
-EffectManager="*res://scripts/global/effect_manager.gd"
-VFX="*res://addons/vfx_library/vfx.gd"
-EnvVFX="*res://addons/vfx_library/env_vfx.gd"
+Current="*res://scripts/autoload/current.gd"
+SceneManager="*res://scripts/autoload/scene_manager.gd"
+Tools="*res://scripts/autoload/tools.gd"
+EventBus="*res://scripts/autoload/event_bus.gd"
+CursorManager="*res://scripts/autoload/cursor_manager.gd"
+BuffSystem="*res://scripts/autoload/buff_system.gd"
+EffectManager="*res://scripts/autoload/effect_manager.gd"
+VFX="*uid://ecyiymmaj3jv"
+EnvVFX="*uid://qomyut16hnoi"
 
 [display]
 

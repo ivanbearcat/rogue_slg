@@ -215,7 +215,7 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
-	
+
 	#_set_shop_buff()
 	## 临时测试金币技能
 	#for row in coin_skill_json_data:
@@ -309,10 +309,20 @@ func _pre_create_slime():
 	var slime_create_num: int
 	## 计算可以生成史莱姆的空地块
 	for grid_index in all_grid_dict.keys():
-		if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
-			available_grid_array.append(grid_index)
+		## 判断和已有史莱姆距离小于等于3范围的格子
+		if Current.all_enemy_grid_index_array != []:
+			for slime_grid_index in Current.all_enemy_grid_index_array:
+				if grid_index.distance_to(slime_grid_index) <= 3:
+					if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
+						available_grid_array.append(grid_index)
+						break
+		else:
+			if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
+				available_grid_array.append(grid_index)
 	if available_grid_array.size() > 0:
 		slime_create_num = clamp(available_grid_array.size(), 1, Current.slime_create_num)
+		## 计算距离小于等于3的格子数组
+		
 		while create_slime_grid_index_array.size() < slime_create_num:
 			var grid_index = available_grid_array.pick_random()
 			if ! grid_index in create_slime_grid_index_array:
@@ -480,8 +490,8 @@ func add_exp(new_exp: int) -> void:
 	Current.hero_exp += new_exp
 	exp_bar.value = Current.hero_exp
 	_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
-	## 等待1秒让一次攻击下的史莱姆经验全加上再升级
-	await Tools.time_sleep(1)
+	## 等待一会让一次攻击下的史莱姆经验全加上再升级
+	await Tools.time_sleep(0.2)
 	await wait_for_buff_finish()
 	await _check_and_level_up()
 
@@ -534,6 +544,7 @@ func _check_and_level_up() -> void:
 		_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
 		## 设置升级时卡牌UI
 		_set_level_up_card()
+		## 有其他全局界面操作时等待
 		while get_tree().paused:
 			await Tools.time_sleep(0.1)
 		## 等待他升级界面完成
@@ -546,7 +557,7 @@ func _check_and_level_up() -> void:
 		level_up_ui.show()
 		## 增加权重
 		for row in card_level_up_json_data:
-			row["weight"] += 10
+			row["weight"] += 40
 		## 防止切换面paused切换导致暂停没有成功
 		await Tools.time_sleep(0.1)
 		## 暂停
@@ -705,6 +716,13 @@ func skill_attack():
 	EventBus.event_emit("do_pre_enemy_turn_buff")
 	## 等待buff处理完成
 	await wait_for_buff_finish()
+	## 等待一会让升级先弹出
+	await Tools.time_sleep(0.4)
+	## 有其他全局界面操作时等待（主要是升级）
+	while "level_up_effect" in Current.public_lock_array:
+		await Tools.time_sleep(0.1)
+	while get_tree().paused:
+		await Tools.time_sleep(0.1)
 	## 检查过关
 	await _check_stage_clear()
 	## 等待过关结算
