@@ -215,7 +215,9 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
-
+	var dice_array = [['red',1],['red',5],['blue',2]]
+	print(ScoringAlgorithm.count_total_score(dice_array))
+	print(ScoringAlgorithm.count_highest_score(dice_array))
 	#_set_shop_buff()
 	## 临时测试金币技能
 	#for row in coin_skill_json_data:
@@ -227,7 +229,13 @@ func _ready() -> void:
 	#coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
 	#coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
 	#coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
-	
+	## 设置基础点数分值
+	Current.one_score = 10
+	Current.two_score = 10
+	Current.three_score = 10
+	Current.four_score = 10
+	Current.five_score = 10
+	Current.six_score = 10
 	## 设置基础倍率
 	Current.none_percent = 100
 	Current.duizi_percent = 150

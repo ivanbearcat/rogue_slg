@@ -191,9 +191,9 @@ func _show_soldier_skill_1_attack():
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 							Current.skill_attack_range.append(attack_grid_index)
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
-	#_count_dice_type([['red',1],['red',5],['blue',2]])
+	#count_highest_score([['red',1],['red',5],['blue',2]])
 	#var dice_type_point = _count_dice_type(attack_slime_array_info)
-	var dice_type_point = ScoringAlgorithm.count_dice_type(attack_slime_array_info)
+	var dice_type_point = ScoringAlgorithm.count_highest_score(attack_slime_array_info)
 	Current.dice_type_point = dice_type_point[1]
 	#print(dice_type_point)
 	_show_dice_panel(dice_type_point)
@@ -237,7 +237,7 @@ func _show_soldier_skill_2_attack():
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#_count_dice_type([['red',1],['red',5],['blue',2]])
 	#var dice_type_point = _count_dice_type(attack_slime_array_info)
-	var dice_type_point = ScoringAlgorithm.count_dice_type(attack_slime_array_info)
+	var dice_type_point = ScoringAlgorithm.count_highest_score(attack_slime_array_info)
 	Current.dice_type_point = dice_type_point[1]
 	#print(dice_type_point)
 	_show_dice_panel(dice_type_point)
@@ -341,7 +341,7 @@ func _show_soldier_skill_3_attack_bak():
 						game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#_count_dice_type([['red',1],['red',5],['blue',2]])
-	var dice_type_point = _count_dice_type(attack_slime_array_info)
+	var dice_type_point = ScoringAlgorithm.count_highest_score(attack_slime_array_info)
 	Current.dice_type_point = dice_type_point[1]
 	#print(dice_type_point)
 	_show_dice_panel(dice_type_point)

@@ -2,10 +2,69 @@ extends RefCounted
 
 class_name ScoringAlgorithm
 
+## 计算最高分（递归）
+## 输入参数范例: [["red"， 3]， ["blue", 3]]
+static func count_total_score(attack_slime_array_info):
+	var score_dict := {
+		1: Current.one_score,
+		2: Current.two_score,
+		3: Current.three_score,
+		4: Current.four_score,
+		5: Current.five_score,
+		6: Current.six_score
+	}
+	## 空数组返回0分和空骰型
+	if attack_slime_array_info == []:
+		#return [0, []]
+		return 0
+	## 初始化高分
+	var highest_score := 0
+	## 基准骰子
+	var base_dice: Array = attack_slime_array_info[0]
+	## 剩余骰子
+	var other_dice_array: Array
+	if attack_slime_array_info.size() > 2:
+		other_dice_array = attack_slime_array_info.slice(1)
+	else:
+		other_dice_array = []
+	## 基准骰子单独情况
+	var base_score: int = score_dict[base_dice[1]]
+	var other_dice_score: int = count_total_score(other_dice_array)
+	highest_score = base_score + other_dice_score
+	## 剩余骰子数量
+	var dice_num: int = other_dice_array.size()
+	## 遍历除了单骰子情况其余情况
+	#for mask in range(1, 2 ^ dice_num - 1 ):
+	for mask in range(1, 1 << dice_num):
+		## 当前骰子组合
+		var current_dice_group: Array = [base_dice]
+		## 剩余骰子组合
+		var other_dice_group: Array = []
+		
+		## 根据位掩码创建组合
+		for dice_index in range(dice_num):
+			if (mask >> dice_index) & 1 == 1:
+				## 剩余骰子[dice_index] 加入 当前骰子组合
+				current_dice_group.append(other_dice_array[dice_index])
+			else:
+				## 剩余骰子[dice_index] 加入 剩余骰子组合
+				other_dice_group.append(other_dice_array[dice_index])
+		## 计算当前骰子组的高分
+		var current_dice_group_score = count_highest_score(current_dice_group)[1]
+		## 递归计算剩余骰子组总分
+		var other_dice_group_score = count_total_score(other_dice_group)
+		## 这种组合的分
+		var total_score = current_dice_group_score + other_dice_group_score
+		## 更新最高分
+		if total_score > highest_score:
+			highest_score = total_score
+		## 返回最高分组合
+	return highest_score
+
 ## 计算选中的最高最终骰型
 ## return ['none', round(none_score_dice[0]), none_score_dice[1]]
 ## [<类型>, <分数>, <参与计算的骰子数组>]
-static func count_dice_type(attack_slime_array_info):
+static func count_highest_score(attack_slime_array_info):
 	var duizi_score_dice = _count_duizi(attack_slime_array_info)
 	var shunzi_score_dice = _count_shunzi(attack_slime_array_info)
 	var tongse_score_dice = _count_tongse(attack_slime_array_info)
