@@ -23,7 +23,7 @@ static func count_total_score(attack_slime_array_info):
 	var base_dice: Array = attack_slime_array_info[0]
 	## 剩余骰子
 	var other_dice_array: Array
-	if attack_slime_array_info.size() > 2:
+	if attack_slime_array_info.size() > 1:
 		other_dice_array = attack_slime_array_info.slice(1)
 	else:
 		other_dice_array = []
@@ -105,23 +105,20 @@ static func _count_duizi(attack_slime_array_info):
 		5: Current.five_score,
 		6: Current.six_score
 	}
-	var resut_dict := {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+	var point_dict := {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
 	for point in attack_slime_array_info:
-		resut_dict[point[1]].append(point[1])
+		point_dict[point[1]].append(point[1])
 	var score := 0.0
-	var tmp_score := 0.0
 	var tmp_item := []
-	for v in resut_dict.values():
-		if tmp_item:
-			if v.size() >= tmp_item.size():
+	for v in point_dict.values():
+		var tmp_score := 0.0
+		if v.size() >= 2:
+			for point in v:
+				tmp_score += score_dict[point]
+			tmp_score = tmp_score * (Current.duizi_percent / 100.0)
+			if tmp_score > score:
+				score = tmp_score
 				tmp_item = v
-		else:
-			if v.size() >= 2:
-				tmp_item = v
-	if tmp_item:
-		for point in tmp_item:
-			tmp_score += score_dict[point]
-		score = tmp_score * (Current.duizi_percent / 100.0)
 	return [score, tmp_item]
 
 ## 顺子算法
@@ -137,46 +134,33 @@ static func _count_shunzi(attack_slime_array_info):
 	var score := 0.0
 	var tmp_score := 0.0
 	var tmp_item := []
-	var flag := 0
-	var tmp_array_1 := []
-	var tmp_array_2 := []
+	var tmp_array := []
 	var unique_porint_array := []
 	for point in attack_slime_array_info:
 		if not unique_porint_array.has(point[1]):
 			unique_porint_array.append(point[1])
 	unique_porint_array.sort()
+	tmp_array.append(unique_porint_array.pop_front())
 	for point in unique_porint_array:
-		if flag == 0:
-			if tmp_array_1:
-				if point - 1 == tmp_array_1[tmp_array_1.size() - 1]:
-					tmp_array_1.append(point)
-				else:
-					if tmp_array_1.size() > 2:
-						tmp_item = tmp_array_1
-						break
-					else:
-						flag += 1
-						tmp_array_2.append(point)
-						continue
-			else:
-				tmp_array_1.append(point)
+		if point == tmp_array[-1] + 1:
+			tmp_array.append(point)
 		else:
-			if point - 1 == tmp_array_2[tmp_array_2.size() - 1]:
-				tmp_array_2.append(point)
-			else:
-				tmp_item = tmp_array_2
-				break
-	if tmp_array_2.size() >= 2:
-		tmp_item = tmp_array_2
-	else:
-		if tmp_array_1.size() >= 2:
-			tmp_item = tmp_array_1
-		else:
-			tmp_item = []
-	if tmp_item:
-		for point in tmp_item:
-			tmp_score += score_dict[point]
-		score = tmp_score * (Current.shunzi_percent / 100.0)
+			if tmp_array.size() >= 2:
+				for sub_point in tmp_array:
+					tmp_score += score_dict[sub_point]
+				tmp_score = tmp_score * (Current.shunzi_percent / 100.0)
+				if tmp_score > score:
+					score = tmp_score
+					tmp_item = tmp_array
+				tmp_score = 0
+			tmp_array = [point]
+	if tmp_array.size() >= 2:
+		for sub_point in tmp_array:
+			tmp_score += score_dict[sub_point]
+		tmp_score = tmp_score * (Current.shunzi_percent / 100.0)
+		if tmp_score > score:
+			score = tmp_score
+			tmp_item = tmp_array
 	return [score, tmp_item]
 
 ## 同色算法
@@ -189,32 +173,20 @@ static func _count_tongse(attack_slime_array_info):
 		5: Current.five_score,
 		6: Current.six_score
 	}
-	var resut_dict := {"red": [], "yellow": [], "green": [], "blue": []}
+	var color_dict := {"red": [], "yellow": [], "green": [], "blue": []}
 	for point in attack_slime_array_info:
-		resut_dict[point[0]].append(point[1])
+		color_dict[point[0]].append(point[1])
 	var score := 0.0
-	var tmp_score := 0.0
 	var tmp_item := []
-	for v in resut_dict.values():
-		if tmp_item:
-			if v.size() == tmp_item.size():
-				var count_1 = 0
-				for i in v:
-					count_1 += i
-				var count_2 = 0
-				for i in tmp_item:
-					count_2 += i
-				if count_1 > count_2:
-					tmp_item = v
-			if v.size() > tmp_item.size():
+	for v in color_dict.values():
+		var tmp_score := 0.0
+		if  v.size() >= 2:
+			for point in v:
+				tmp_score += score_dict[point]
+			tmp_score = tmp_score * (Current.tongse_percent / 100.0)
+			if tmp_score > score:
+				score = tmp_score
 				tmp_item = v
-		else:
-			if v.size() >= 2:
-				tmp_item = v
-	if tmp_item:
-		for point in tmp_item:
-			tmp_score += score_dict[point]
-		score = tmp_score * (Current.tongse_percent / 100.0)
 	return [score, tmp_item]
 
 ## 同色对子算法
@@ -227,43 +199,28 @@ static func _count_tongdui(attack_slime_array_info):
 		5: Current.five_score,
 		6: Current.six_score
 	}
-	var resut_dict := {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+	var color_dict := {"red": [], "yellow": [], "green": [], "blue": []}
 	for point in attack_slime_array_info:
-		resut_dict[point[1]].append(point)
-	var tmp_item := []
-	for v in resut_dict.values():
-		if tmp_item:
-			if v.size() >= tmp_item.size():
-				tmp_item = v
-		else:
-			if v.size() >= 2:
-				tmp_item = v
-	resut_dict = {"red": [], "yellow": [], "green": [], "blue": []}
-	for point in tmp_item:
-		resut_dict[point[0]].append(point[1])
+		color_dict[point[0]].append(point[1])
 	var score := 0.0
-	var tmp_score := 0.0
-	tmp_item = []
-	for v in resut_dict.values():
-		if tmp_item:
-			if v.size() == tmp_item.size():
-				var count_1 = 0
-				for i in v:
-					count_1 += i
-				var count_2 = 0
-				for i in tmp_item:
-					count_2 += i
-				if count_1 > count_2:
-					tmp_item = v
-			if v.size() > tmp_item.size():
-				tmp_item = v
-		else:
+	var tmp_array := []
+	var tmp_item := []
+	for v in color_dict.values():
+		if  v.size() >= 2:
+			tmp_array.append(v)
+	for same_color in tmp_array:
+		var point_dict := {1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+		for point in same_color:
+			point_dict[point].append(point)
+		for v in point_dict.values():
+			var tmp_score := 0.0
 			if v.size() >= 2:
-				tmp_item = v
-	if tmp_item:
-		for point in tmp_item:
-			tmp_score += score_dict[point]
-		score = tmp_score * (Current.tongdui_percent / 100.0)
+				for sub_point in v:
+					tmp_score += score_dict[sub_point]
+				tmp_score = tmp_score * (Current.tongdui_percent / 100.0)
+				if tmp_score > score:
+					score = tmp_score
+					tmp_item = v
 	return [score, tmp_item]
 
 ## 同色顺子算法
@@ -276,70 +233,46 @@ static func _count_tongshun(attack_slime_array_info):
 		5: Current.five_score,
 		6: Current.six_score
 	}
+	var color_dict := {"red": [], "yellow": [], "green": [], "blue": []}
+	for point in attack_slime_array_info:
+		color_dict[point[0]].append(point[1])
 	var score := 0.0
 	var tmp_score := 0.0
+	var same_color_array := []
 	var tmp_item := []
-	## 计算同色组
-	var resut_dict := {"red": [], "yellow": [], "green": [], "blue": []}
-	for point in attack_slime_array_info:
-		resut_dict[point[0]].append(point[1])
-	for v in resut_dict.values():
-		if tmp_item:
-			if v.size() == tmp_item.size():
-				var count_1 = 0
-				for i in v:
-					count_1 += i
-				var count_2 = 0
-				for i in tmp_item:
-					count_2 += i
-				if count_1 > count_2:
-					tmp_item = v
-			if v.size() > tmp_item.size():
-				tmp_item = v
-		else:
-			if v.size() >= 2:
-				tmp_item = v
-	## 计算顺子
-	var flag := 0
-	var tmp_array_1 := []
-	var tmp_array_2 := []
-	var unique_porint_array := []
-	for point in tmp_item:
-		if not unique_porint_array.has(point):
-			unique_porint_array.append(point)
-	unique_porint_array.sort()
-	for point in unique_porint_array:
-		if flag == 0:
-			if tmp_array_1:
-				if point - 1 == tmp_array_1[tmp_array_1.size() - 1]:
-					tmp_array_1.append(point)
-				else:
-					if tmp_array_1.size() > 2:
-						tmp_item = tmp_array_1
-						break
-					else:
-						flag += 1
-						tmp_array_2.append(point)
-						continue
+	for v in color_dict.values():
+		if  v.size() >= 2:
+			same_color_array.append(v)
+	for same_color in same_color_array:
+		var tmp_array := []
+		var unique_porint_array := []
+		for point in same_color:
+			if not unique_porint_array.has(point):
+				unique_porint_array.append(point)
+		unique_porint_array.sort()
+		tmp_array.append(unique_porint_array.pop_front())
+		for point in unique_porint_array:
+			if point == tmp_array[-1] + 1:
+				tmp_array.append(point)
 			else:
-				tmp_array_1.append(point)
-		else:
-			if point - 1 == tmp_array_2[tmp_array_2.size() - 1]:
-				tmp_array_2.append(point)
-			else:
-				tmp_item = tmp_array_2
-				break
-	if tmp_array_2.size() >= 2:
-		tmp_item = tmp_array_2
-	else:
-		if tmp_array_1.size() >= 2:
-			tmp_item = tmp_array_1
-		else:
-			tmp_item = []
-	if tmp_item:
-		for point in tmp_item:
-			tmp_score += score_dict[point]
-		score = tmp_score * (Current.tongshun_percent / 100.0)
+				if tmp_array.size() >= 2:
+					for sub_point in tmp_array:
+						tmp_score += score_dict[sub_point]
+					tmp_score = tmp_score * (Current.tongshun_percent / 100.0)
+					if tmp_score > score:
+						score = tmp_score
+						tmp_item = tmp_array
+					tmp_score = 0
+				tmp_array = [point]
+		print(tmp_array)
+		if tmp_array.size() >= 2:
+			for sub_point in tmp_array:
+				tmp_score += score_dict[sub_point]
+			tmp_score = tmp_score * (Current.tongshun_percent / 100.0)
+			if tmp_score > score:
+				score = tmp_score
+				tmp_item = tmp_array
+			tmp_score = 0
 	return [score, tmp_item]
 
 ## 无骰型法
