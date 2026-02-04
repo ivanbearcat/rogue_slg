@@ -264,7 +264,6 @@ static func _count_tongshun(attack_slime_array_info):
 						tmp_item = tmp_array
 					tmp_score = 0
 				tmp_array = [point]
-		print(tmp_array)
 		if tmp_array.size() >= 2:
 			for sub_point in tmp_array:
 				tmp_score += score_dict[sub_point]

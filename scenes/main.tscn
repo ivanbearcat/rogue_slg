@@ -1,4 +1,4 @@
-[gd_scene load_steps=165 format=4 uid="uid://18r2fm65t68x"]
+[gd_scene load_steps=174 format=4 uid="uid://18r2fm65t68x"]
 
 [ext_resource type="Script" uid="uid://diyhy2lncf2ab" path="res://scripts/game_manager.gd" id="1_jbfvy"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_nsbfg"]
@@ -28,6 +28,7 @@
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="19_vxglm"]
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
+[ext_resource type="Texture2D" uid="uid://cvuyfprspmcs4" path="res://images/score_bar.png" id="27_j8jky"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
 [ext_resource type="Texture2D" uid="uid://hno6r6efdvam" path="res://images/coin_skill_icon/add_power.png" id="30_qkpxi"]
 [ext_resource type="Texture2D" uid="uid://brksrpkqqyai1" path="res://images/coin_skill_icon/cloud.png" id="31_5q0nq"]
@@ -1356,6 +1357,38 @@ region = Rect2(160, 50, 80, 19)
 atlas = SubResource("CompressedTexture2D_qkpxi")
 region = Rect2(160, 71, 80, 19)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4bwh"]
+atlas = ExtResource("27_j8jky")
+region = Rect2(0, 7, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksmap"]
+atlas = ExtResource("27_j8jky")
+region = Rect2(8, 7, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygd8o"]
+atlas = ExtResource("27_j8jky")
+region = Rect2(16, 7, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2s0kr"]
+atlas = ExtResource("27_j8jky")
+region = Rect2(24, 7, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xaipn"]
+atlas = ExtResource("27_j8jky")
+region = Rect2(32, 7, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndrjj"]
+atlas = ExtResource("27_j8jky")
+region = Rect2(40, 7, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ih3m7"]
+atlas = ExtResource("27_j8jky")
+region = Rect2(48, 7, 8, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11yus"]
+atlas = ExtResource("27_j8jky")
+region = Rect2(56, 7, 8, 20)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkv2x"]
 bg_color = Color(0, 0, 0, 0.9411765)
 
@@ -2514,6 +2547,7 @@ expand_mode = 2
 stretch_mode = 5
 
 [node name="real_time_score" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -71.75
@@ -2596,6 +2630,7 @@ pivot_offset = Vector2(16, 16)
 texture = ExtResource("11_w4riq")
 
 [node name="dice_num" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -69.25
@@ -3352,6 +3387,79 @@ theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "获得诅咒  [img=15 ]res://images/enemy_icon/disable_five.png[/img]"
 vertical_alignment = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -67.0
+offset_top = -9.75
+offset_right = -3.25
+offset_bottom = 5.5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_j4bwh")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ksmap")
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ygd8o")
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_2s0kr")
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xaipn")
+stretch_mode = 5
+
+[node name="TextureRect6" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ndrjj")
+stretch_mode = 5
+
+[node name="TextureRect7" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ih3m7")
+stretch_mode = 5
+
+[node name="TextureRect8" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_11yus")
+stretch_mode = 5
 
 [node name="get_coin_skill_ui" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

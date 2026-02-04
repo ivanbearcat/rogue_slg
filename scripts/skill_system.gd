@@ -42,23 +42,28 @@ func skill_attack():
 		if slime.enemy_grid_index in Current.skill_attack_range:
 			Current.slime_die_sum += 1
 			slime.animated_sprite_2d.play("die")
-	var dice_array = game_manager.dice_list.get_children()
+	## 得分特效
+	var float_number_instantiate = EffectManager.float_number_effect(Current.dice_type_point)
+	Current.hero.add_child(float_number_instantiate)
+	await Tools.time_sleep(0.5)
+	Current.total_score += Current.dice_type_point
 	## 根据骰子数量条计算分数并统计骰子数
-	var dice_num = 0
-	for index in range(dice_array.size() - 1, -1, -1):
-		#print(index)
-		if dice_array[index].get_self_modulate() == Color(1, 1, 1, 1):
-			dice_num += 1
-			EffectManager.big_flow_effect(dice_array[index])
-			if index == 1: continue
-			var float_number_instantiate = EffectManager.float_number_effect(Current.dice_type_point)
-			Current.hero.add_child(float_number_instantiate)
-			await Tools.time_sleep(0.5)
-			Current.total_score += Current.dice_type_point
-			#Current.set_total_score_with_effect(Current.total_score + Current.dice_type_point)
-			Current.once_total_score += Current.dice_type_point
+	#var dice_array = game_manager.dice_list.get_children()
+	#var dice_num = 0
+	#for index in range(dice_array.size() - 1, -1, -1):
+		##print(index)
+		#if dice_array[index].get_self_modulate() == Color(1, 1, 1, 1):
+			#dice_num += 1
+			#EffectManager.big_flow_effect(dice_array[index])
+			#if index == 1: continue
+			#var float_number_instantiate = EffectManager.float_number_effect(Current.dice_type_point)
+			#Current.hero.add_child(float_number_instantiate)
+			#await Tools.time_sleep(0.5)
+			#Current.total_score += Current.dice_type_point
+			##Current.set_total_score_with_effect(Current.total_score + Current.dice_type_point)
+			#Current.once_total_score += Current.dice_type_point
 	## 保留最高骰子数
-	if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
+	#if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
 	## 等待攻击动画完成和公共锁释放
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)
@@ -374,9 +379,9 @@ func _fetch_attack_slime_array_info(slime_array):
 
 ## 骰型板展示史莱姆对应的点数和骰型
 func _show_dice_panel(dice_type_point):
-	var dice_array = game_manager.dice_list.get_children()
-	for num in range(dice_type_point[2].size()):
-		dice_array[num].set_self_modulate(Color(1, 1, 1, 1))
+	#var dice_array = game_manager.dice_list.get_children()
+	#for num in range(dice_type_point[2].size()):
+		#dice_array[num].set_self_modulate(Color(1, 1, 1, 1))
 	var frame_dict = {
 		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
 		2: game_manager.two_score_frame.get("theme_override_styles/panel"),
@@ -391,35 +396,35 @@ func _show_dice_panel(dice_type_point):
 		'tongdui': game_manager.tongdui_percent_frame.get("theme_override_styles/panel"),
 		'tongshun': game_manager.tongshun_percent_frame.get("theme_override_styles/panel")
 	}
-	var percent_dict = {
-		'none': Current.none_percent,
-		'duizi': Current.duizi_percent,
-		'shunzi': Current.shunzi_percent,
-		'tongse': Current.tongse_percent,
-		'tongdui': Current.tongdui_percent,
-		'tongshun': Current.tongshun_percent
-	}
-	var score_dict := {
-		1: Current.one_score,
-		2: Current.two_score,
-		3: Current.three_score,
-		4: Current.four_score,
-		5: Current.five_score,
-		6: Current.six_score
-	}
+	#var percent_dict = {
+		#'none': Current.none_percent,
+		#'duizi': Current.duizi_percent,
+		#'shunzi': Current.shunzi_percent,
+		#'tongse': Current.tongse_percent,
+		#'tongdui': Current.tongdui_percent,
+		#'tongshun': Current.tongshun_percent
+	#}
+	#var score_dict := {
+		#1: Current.one_score,
+		#2: Current.two_score,
+		#3: Current.three_score,
+		#4: Current.four_score,
+		#5: Current.five_score,
+		#6: Current.six_score
+	#}
 	#sb.border_color = Color.html(color["red"])
 	if dice_type_point[2]:
 		## 骰面框线
-		for point in dice_type_point[2]:
-			frame_dict[point].border_color = Color.html(game_manager.color["red"])
+		#for point in dice_type_point[2]:
+			#frame_dict[point].border_color = Color.html(game_manager.color["red"])
 		## 骰型框线
 		frame_dict[dice_type_point[0]].border_color = Color.html(game_manager.color["red"])
-	var total_score := 0
-	for point in dice_type_point[2]:
-		total_score += score_dict[point]
-	Current.base_score = total_score
-	if Current.base_score:
-		Current.percent_score = percent_dict[dice_type_point[0]]
+	#var total_score := 0
+	#for point in dice_type_point[2]:
+		#total_score += score_dict[point]
+	#Current.base_score = total_score
+	#if Current.base_score:
+		#Current.percent_score = percent_dict[dice_type_point[0]]
 	
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
