@@ -377,11 +377,42 @@ func _fetch_attack_slime_array_info(slime_array):
 			assert(false, "slime have not color")
 	return attack_slime_array_info
 
-## 骰型板展示史莱姆对应的点数和骰型
+## 骰型板展示待攻击史莱姆的分值条和骰型
 func _show_dice_panel(dice_type_point):
-	#var dice_array = game_manager.dice_list.get_children()
-	#for num in range(dice_type_point[2].size()):
-		#dice_array[num].set_self_modulate(Color(1, 1, 1, 1))
+	## 分值条
+	var score_bar_child_array = game_manager.score_bar.get_children()
+	var iter_times = 0
+	var score_bar_label_text = ""
+	var score = dice_type_point[1]
+	if score > 0 and score <= 10:
+		iter_times = 1
+		score_bar_label_text = "10+"
+	elif score > 10 and score <= 50:
+		iter_times = 2
+		score_bar_label_text = "50+"
+	elif score > 50 and score <= 100:
+		iter_times = 3
+		score_bar_label_text = "100+"
+	elif score > 100 and score <= 200:
+		iter_times = 4
+		score_bar_label_text = "200+"
+	elif score > 200 and score <= 400:
+		iter_times = 5
+		score_bar_label_text = "400+"
+	elif score > 400 and score <= 800:
+		iter_times = 6
+		score_bar_label_text = "800+"
+	elif score > 800 and score <= 1200:
+		iter_times = 7
+		score_bar_label_text = "1200+"
+	elif score > 1200 and score <= 2400:
+		iter_times = 8	
+		score_bar_label_text = "2400+"
+	for num in range(iter_times):
+		score_bar_child_array[num].set_self_modulate(Color(1, 1, 1, 1))
+	game_manager.score_bar_label.text = score_bar_label_text
+	game_manager.score_bar_label.show()
+
 	var frame_dict = {
 		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
 		2: game_manager.two_score_frame.get("theme_override_styles/panel"),
@@ -396,41 +427,18 @@ func _show_dice_panel(dice_type_point):
 		'tongdui': game_manager.tongdui_percent_frame.get("theme_override_styles/panel"),
 		'tongshun': game_manager.tongshun_percent_frame.get("theme_override_styles/panel")
 	}
-	#var percent_dict = {
-		#'none': Current.none_percent,
-		#'duizi': Current.duizi_percent,
-		#'shunzi': Current.shunzi_percent,
-		#'tongse': Current.tongse_percent,
-		#'tongdui': Current.tongdui_percent,
-		#'tongshun': Current.tongshun_percent
-	#}
-	#var score_dict := {
-		#1: Current.one_score,
-		#2: Current.two_score,
-		#3: Current.three_score,
-		#4: Current.four_score,
-		#5: Current.five_score,
-		#6: Current.six_score
-	#}
-	#sb.border_color = Color.html(color["red"])
+	## 骰型框线
 	if dice_type_point[2]:
-		## 骰面框线
-		#for point in dice_type_point[2]:
-			#frame_dict[point].border_color = Color.html(game_manager.color["red"])
-		## 骰型框线
 		frame_dict[dice_type_point[0]].border_color = Color.html(game_manager.color["red"])
-	#var total_score := 0
-	#for point in dice_type_point[2]:
-		#total_score += score_dict[point]
-	#Current.base_score = total_score
-	#if Current.base_score:
-		#Current.percent_score = percent_dict[dice_type_point[0]]
+
 	
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
-	var dice_array = game_manager.dice_list.get_children()
-	for dice in dice_array:
-		dice.set_self_modulate(Color(1, 1, 1, 0.3))
+	var score_bar_child_array = game_manager.score_bar.get_children()
+	for child in score_bar_child_array:
+		child.set_self_modulate(Color(1, 1, 1, 0.3))
+	game_manager.score_bar_label.text = ""
+	game_manager.score_bar_label.hide()
 	var frame_dict = {
 		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
 		2: game_manager.two_score_frame.get("theme_override_styles/panel"),

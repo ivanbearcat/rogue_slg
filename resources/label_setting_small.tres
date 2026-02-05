@@ -1,9 +1,10 @@
 [gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cluhn5stgbt1d"]
 
-[ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="1_x1igh"]
+[ext_resource type="FontFile" uid="uid://6oc5e4qxi5oy" path="res://fonts/SourceHanSansCN-Medium.otf" id="1_x1igh"]
 
 [resource]
 line_spacing = 0.0
 font = ExtResource("1_x1igh")
+font_size = 14
 outline_size = 6
 outline_color = Color(0, 0, 0, 1)

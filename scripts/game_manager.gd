@@ -49,8 +49,10 @@ const hero_property = {
 @onready var tongse_percent_frame: PanelContainer = %tongse_percent_frame
 @onready var tongdui_percent_frame: PanelContainer = %tongdui_percent_frame
 @onready var tongshun_percent_frame: PanelContainer = %tongshun_percent_frame
-## 骰子UI父级
-@onready var dice_list: HBoxContainer = %dice_list
+## 分值条UI父级和分值
+@onready var score_bar: HBoxContainer = %score_bar
+@onready var score_bar_label: Label = %score_bar_label
+#@onready var dice_list: HBoxContainer = %dice_list
 ## 经验条
 @onready var exp_bar: TextureProgressBar = %exp_bar
 ## 金币总数
