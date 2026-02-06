@@ -217,12 +217,12 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
-	#var dice_array = [['red',1],['red',2],['blue',5],['blue',6],['blue',5],['blue',6],['blue',5],['blue',6]]
-	#var start = Time.get_ticks_msec()
-	#print(ScoringAlgorithm.count_total_score(dice_array))
-	#var end = Time.get_ticks_msec()
-	#print("耗时毫秒" + str(end-start))
-	#print(ScoringAlgorithm.count_highest_score(dice_array))
+	var dice_array = [['red',1],['red',2],['blue',5]]
+	var start = Time.get_ticks_msec()
+	print(ScoringAlgorithm.count_total_score(dice_array))
+	var end = Time.get_ticks_msec()
+	print("耗时毫秒" + str(end-start))
+	print(ScoringAlgorithm.count_highest_score(dice_array))
 	#_set_shop_buff()
 	## 临时测试金币技能
 	#for row in coin_skill_json_data:

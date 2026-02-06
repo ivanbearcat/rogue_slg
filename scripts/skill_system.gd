@@ -198,8 +198,8 @@ func _show_soldier_skill_1_attack():
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#count_highest_score([['red',1],['red',5],['blue',2]])
 	#var dice_type_point = _count_dice_type(attack_slime_array_info)
-	var dice_type_point = ScoringAlgorithm.count_highest_score(attack_slime_array_info)
-	Current.dice_type_point = dice_type_point[1]
+	var dice_type_point = ScoringAlgorithm.count_total_score(attack_slime_array_info)
+	Current.dice_type_point = dice_type_point[0]
 	#print(dice_type_point)
 	_show_dice_panel(dice_type_point)
 		
@@ -242,8 +242,8 @@ func _show_soldier_skill_2_attack():
 	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
 	#_count_dice_type([['red',1],['red',5],['blue',2]])
 	#var dice_type_point = _count_dice_type(attack_slime_array_info)
-	var dice_type_point = ScoringAlgorithm.count_highest_score(attack_slime_array_info)
-	Current.dice_type_point = dice_type_point[1]
+	var dice_type_point = ScoringAlgorithm.count_total_score(attack_slime_array_info)
+	Current.dice_type_point = dice_type_point[0]
 	#print(dice_type_point)
 	_show_dice_panel(dice_type_point)
 
@@ -383,29 +383,32 @@ func _show_dice_panel(dice_type_point):
 	var score_bar_child_array = game_manager.score_bar.get_children()
 	var iter_times = 0
 	var score_bar_label_text = ""
-	var score = dice_type_point[1]
+	var score = dice_type_point[0]
 	if score > 0 and score <= 10:
+		iter_times = 0
+		score_bar_label_text = ""
+	elif score > 10 and score <= 50:
 		iter_times = 1
 		score_bar_label_text = "10+"
-	elif score > 10 and score <= 50:
+	elif score > 50 and score <= 100:
 		iter_times = 2
 		score_bar_label_text = "50+"
-	elif score > 50 and score <= 100:
+	elif score > 100 and score <= 200:
 		iter_times = 3
 		score_bar_label_text = "100+"
-	elif score > 100 and score <= 200:
+	elif score > 200 and score <= 400:
 		iter_times = 4
 		score_bar_label_text = "200+"
-	elif score > 200 and score <= 400:
+	elif score > 400 and score <= 800:
 		iter_times = 5
 		score_bar_label_text = "400+"
-	elif score > 400 and score <= 800:
+	elif score > 800 and score <= 1200:
 		iter_times = 6
 		score_bar_label_text = "800+"
-	elif score > 800 and score <= 1200:
-		iter_times = 7
-		score_bar_label_text = "1200+"
 	elif score > 1200 and score <= 2400:
+		iter_times = 7	
+		score_bar_label_text = "1200+"
+	elif score > 2400:
 		iter_times = 8	
 		score_bar_label_text = "2400+"
 	for num in range(iter_times):
@@ -428,8 +431,8 @@ func _show_dice_panel(dice_type_point):
 		'tongshun': game_manager.tongshun_percent_frame.get("theme_override_styles/panel")
 	}
 	## 骰型框线
-	if dice_type_point[2]:
-		frame_dict[dice_type_point[0]].border_color = Color.html(game_manager.color["red"])
+	for type in dice_type_point[1]:
+		frame_dict[type].border_color = Color.html(game_manager.color["red"])
 
 	
 ## 清空板展示史莱姆对应的点数和骰型
