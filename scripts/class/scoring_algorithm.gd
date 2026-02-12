@@ -3,7 +3,7 @@ extends RefCounted
 class_name ScoringAlgorithm
 
 ## 计算最高分（递归）
-## 输入参数范例: [["red"， 3]， ["blue", 3]]
+## 输入参数范例: [["red", 3], ["blue", 3]]
 ## 返回：[分数, ["骰型", "骰型"]]
 static func count_total_score(attack_slime_array_info):
 	var score_dict := {
@@ -14,12 +14,69 @@ static func count_total_score(attack_slime_array_info):
 		5: Current.five_score,
 		6: Current.six_score
 	}
+	### 空数组返回0分和空骰型
+	#if attack_slime_array_info == []:
+		#return [0, []]
+	### 初始化最高分和最高分组合名称数组
+	#var highest_score := 0
+	#var highest_type_array := []
+	### 基准骰子
+	#var base_dice: Array = attack_slime_array_info[0]
+	### 剩余骰子
+	#var other_dice_array: Array
+	#if attack_slime_array_info.size() > 1:
+		#other_dice_array = attack_slime_array_info.slice(1)
+	#else:
+		#other_dice_array = []
+	### 基准骰子单独情况
+	#var base_score: int = score_dict[base_dice[1]]
+	#var count_total_score_tmp = count_total_score(other_dice_array)
+	#var other_dice_score: int = count_total_score_tmp[0]
+	#var other_type_array = count_total_score_tmp[1]
+	#highest_score = base_score + other_dice_score
+	#highest_type_array = ["none"] + other_type_array
+	### 剩余骰子数量
+	#var dice_num: int = other_dice_array.size()
+	### 遍历除了单骰子情况其余情况
+	##for mask in range(1, 2 ^ dice_num - 1 ):
+	#for mask in range(1, 1 << dice_num):
+		### 当前骰子组合
+		#var current_dice_group: Array = [base_dice]
+		### 剩余骰子组合
+		#var other_dice_group: Array = []
+		### 根据位掩码创建组合
+		#for dice_index in range(dice_num):
+			#if (mask >> dice_index) & 1 == 1:
+				### 剩余骰子[dice_index] 加入 当前骰子组合
+				#current_dice_group.append(other_dice_array[dice_index])
+			#else:
+				### 剩余骰子[dice_index] 加入 剩余骰子组合
+				#other_dice_group.append(other_dice_array[dice_index])
+		### 计算当前骰子组的最高分和最高分组合名
+		#var count_highest_score_result = count_highest_score(current_dice_group)
+		#var current_dice_group_score = count_highest_score_result[1]
+		#var current_dice_type_array = count_highest_score_result[0]
+		### 递归计算剩余骰子组总分和组合名称
+		#var count_total_score_result = count_total_score(other_dice_group)
+		#var other_dice_group_score = count_total_score_result[0]
+		#var iter_dice_type_array = count_total_score_result[1]
+		### 这种组合的得分和组合名
+		#var total_score = current_dice_group_score + other_dice_group_score
+		#var all_dice_type_array = [current_dice_type_array] + iter_dice_type_array
+		### 更新最高分和组合名称
+		#if total_score > highest_score:
+			#highest_score = total_score
+			#highest_type_array = all_dice_type_array
+		### 返回最高分组合
+	#return [highest_score, highest_type_array]
+	
 	## 空数组返回0分和空骰型
 	if attack_slime_array_info == []:
-		return [0, []]
+		return [0, [], []]
 	## 初始化最高分和最高分组合名称数组
 	var highest_score := 0
 	var highest_type_array := []
+	var highest_dice_array := []
 	## 基准骰子
 	var base_dice: Array = attack_slime_array_info[0]
 	## 剩余骰子
@@ -33,8 +90,10 @@ static func count_total_score(attack_slime_array_info):
 	var count_total_score_tmp = count_total_score(other_dice_array)
 	var other_dice_score: int = count_total_score_tmp[0]
 	var other_type_array = count_total_score_tmp[1]
+	var other_dice_group_array = count_total_score_tmp[2]
 	highest_score = base_score + other_dice_score
 	highest_type_array = ["none"] + other_type_array
+	highest_dice_array = [2] + other_dice_group_array
 	## 剩余骰子数量
 	var dice_num: int = other_dice_array.size()
 	## 遍历除了单骰子情况其余情况
@@ -56,19 +115,23 @@ static func count_total_score(attack_slime_array_info):
 		var count_highest_score_result = count_highest_score(current_dice_group)
 		var current_dice_group_score = count_highest_score_result[1]
 		var current_dice_type_array = count_highest_score_result[0]
+		var current_dice_group_size = count_highest_score_result[2].size()
 		## 递归计算剩余骰子组总分和组合名称
 		var count_total_score_result = count_total_score(other_dice_group)
 		var other_dice_group_score = count_total_score_result[0]
 		var iter_dice_type_array = count_total_score_result[1]
+		var iter_dice_group_array = count_total_score_result[2]
 		## 这种组合的得分和组合名
 		var total_score = current_dice_group_score + other_dice_group_score
 		var all_dice_type_array = [current_dice_type_array] + iter_dice_type_array
+		var all_dice_group_size = [current_dice_group_size] + iter_dice_group_array
 		## 更新最高分和组合名称
 		if total_score > highest_score:
 			highest_score = total_score
 			highest_type_array = all_dice_type_array
+			highest_dice_array = all_dice_group_size
 		## 返回最高分组合
-	return [highest_score, highest_type_array]
+	return [highest_score, highest_type_array, highest_dice_array]
 
 ## 计算选中的最高最终骰型
 ## return ['none', round(none_score_dice[0]), none_score_dice[1]]
@@ -124,7 +187,7 @@ static func _count_duizi(attack_slime_array_info):
 		if v.size() >= 2:
 			for point in v:
 				tmp_score += score_dict[point]
-			tmp_score = tmp_score * (Current.duizi_percent / 100.0)
+			tmp_score = tmp_score * (Current.dice_multiplier_dict[v.size()]["duizi"] / 100.0)
 			if tmp_score > score:
 				score = tmp_score
 				tmp_item = v
@@ -157,7 +220,7 @@ static func _count_shunzi(attack_slime_array_info):
 			if tmp_array.size() >= 2:
 				for sub_point in tmp_array:
 					tmp_score += score_dict[sub_point]
-				tmp_score = tmp_score * (Current.shunzi_percent / 100.0)
+				tmp_score = tmp_score * (Current.dice_multiplier_dict[tmp_array.size()]["shunzi"] / 100.0)
 				if tmp_score > score:
 					score = tmp_score
 					tmp_item = tmp_array
@@ -166,7 +229,7 @@ static func _count_shunzi(attack_slime_array_info):
 	if tmp_array.size() >= 2:
 		for sub_point in tmp_array:
 			tmp_score += score_dict[sub_point]
-		tmp_score = tmp_score * (Current.shunzi_percent / 100.0)
+		tmp_score = tmp_score * (Current.dice_multiplier_dict[tmp_array.size()]["shunzi"] / 100.0)
 		if tmp_score > score:
 			score = tmp_score
 			tmp_item = tmp_array
@@ -192,7 +255,7 @@ static func _count_tongse(attack_slime_array_info):
 		if  v.size() >= 2:
 			for point in v:
 				tmp_score += score_dict[point]
-			tmp_score = tmp_score * (Current.tongse_percent / 100.0)
+			tmp_score = tmp_score * (Current.dice_multiplier_dict[v.size()]["tongse"] / 100.0)
 			if tmp_score > score:
 				score = tmp_score
 				tmp_item = v
@@ -226,7 +289,7 @@ static func _count_tongdui(attack_slime_array_info):
 			if v.size() >= 2:
 				for sub_point in v:
 					tmp_score += score_dict[sub_point]
-				tmp_score = tmp_score * (Current.tongdui_percent / 100.0)
+				tmp_score = tmp_score * (Current.dice_multiplier_dict[v.size()]["tongdui"] / 100.0)
 				if tmp_score > score:
 					score = tmp_score
 					tmp_item = v
@@ -267,7 +330,7 @@ static func _count_tongshun(attack_slime_array_info):
 				if tmp_array.size() >= 2:
 					for sub_point in tmp_array:
 						tmp_score += score_dict[sub_point]
-					tmp_score = tmp_score * (Current.tongshun_percent / 100.0)
+					tmp_score = tmp_score * (Current.dice_multiplier_dict[tmp_array.size()]["tongshun"] / 100.0)
 					if tmp_score > score:
 						score = tmp_score
 						tmp_item = tmp_array
@@ -276,7 +339,7 @@ static func _count_tongshun(attack_slime_array_info):
 		if tmp_array.size() >= 2:
 			for sub_point in tmp_array:
 				tmp_score += score_dict[sub_point]
-			tmp_score = tmp_score * (Current.tongshun_percent / 100.0)
+			tmp_score = tmp_score * (Current.dice_multiplier_dict[tmp_array.size()]["tongshun"] / 100.0)
 			if tmp_score > score:
 				score = tmp_score
 				tmp_item = tmp_array

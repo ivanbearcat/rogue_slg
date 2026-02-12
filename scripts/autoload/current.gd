@@ -386,3 +386,5 @@ var killed_coin_slime := false
 var zero_coin_refresh_max_times := 0
 ## 刷新buff无花费的当前次数
 var zero_coin_refresh_times := 0
+## 骰型倍率表
+var dice_multiplier_dict: Dictionary

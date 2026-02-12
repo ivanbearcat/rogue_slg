@@ -1,8 +1,16 @@
 extends Node2D
 @onready var game_manager: Node2D = $".."
 
-signal hide_all_skill
+@onready var dice_type_dict := {
+	"shunzi": "shunzi_percent",
+	"tongse": "tongse_percent",
+	"duizi": "duizi_percent",
+	"tongshun": "tongshun_percent",
+	"tongdui": "tongdui_percent",
+	"none": "none_percent"
+}
 
+signal hide_all_skill
 
 func _ready() -> void:
 		## 订阅显示攻击范围
@@ -10,6 +18,7 @@ func _ready() -> void:
 	EventBus.subscribe("hide_skill_range", hide_skill_range)
 	EventBus.subscribe("hide_skill_attack", hide_skill_attack)
 	EventBus.subscribe("skill_move", skill_move)
+	
 
 func show_skill_range(hero_name, skill_num):
 	call("_show_" + hero_name + "_skill_" + skill_num + "_range")
@@ -384,38 +393,39 @@ func _show_dice_panel(dice_type_point):
 	var iter_times = 0
 	var score_bar_label_text = ""
 	var score = dice_type_point[0]
-	if score > 0 and score <= 10:
+	if score > 0 and score < 10:
 		iter_times = 0
 		score_bar_label_text = ""
-	elif score > 10 and score <= 50:
+	elif score >= 10 and score < 50:
 		iter_times = 1
 		score_bar_label_text = "10+"
-	elif score > 50 and score <= 100:
+	elif score >= 50 and score < 100:
 		iter_times = 2
 		score_bar_label_text = "50+"
-	elif score > 100 and score <= 200:
+	elif score >= 100 and score < 200:
 		iter_times = 3
 		score_bar_label_text = "100+"
-	elif score > 200 and score <= 400:
+	elif score >= 200 and score < 400:
 		iter_times = 4
 		score_bar_label_text = "200+"
-	elif score > 400 and score <= 800:
+	elif score >= 400 and score < 800:
 		iter_times = 5
 		score_bar_label_text = "400+"
-	elif score > 800 and score <= 1200:
+	elif score >= 800 and score < 1200:
 		iter_times = 6
 		score_bar_label_text = "800+"
-	elif score > 1200 and score <= 2400:
+	elif score >= 1200 and score < 2400:
 		iter_times = 7	
 		score_bar_label_text = "1200+"
-	elif score > 2400:
+	elif score >= 2400:
 		iter_times = 8	
 		score_bar_label_text = "2400+"
 	for num in range(iter_times):
 		score_bar_child_array[num].set_self_modulate(Color(1, 1, 1, 1))
 	game_manager.score_bar_label.text = score_bar_label_text
 	game_manager.score_bar_label.show()
-
+	
+	
 	var frame_dict = {
 		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
 		2: game_manager.two_score_frame.get("theme_override_styles/panel"),
@@ -430,10 +440,13 @@ func _show_dice_panel(dice_type_point):
 		'tongdui': game_manager.tongdui_percent_frame.get("theme_override_styles/panel"),
 		'tongshun': game_manager.tongshun_percent_frame.get("theme_override_styles/panel")
 	}
-	## 骰型框线
-	for type in dice_type_point[1]:
-		frame_dict[type].border_color = Color.html(game_manager.color["red"])
-
+	
+	## 骰型框线和设置倍率
+	#for type in dice_type_point[1]:
+		#frame_dict[type].border_color = Color.html(game_manager.color["red"])
+	for index in range(dice_type_point[1].size()):
+		frame_dict[dice_type_point[1][index]].border_color = Color.html(game_manager.color["red"])
+		Current.set(dice_type_dict[dice_type_point[1][index]], Current.dice_multiplier_dict[dice_type_point[2][index]][dice_type_point[1][index]])
 	
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
@@ -460,6 +473,10 @@ func _reset_dice_panel():
 		i.border_color = Color.html(game_manager.color["alpha0"])
 	Current.base_score = 0
 	Current.percent_score = 0
+	## 恢复初始lv1倍率
+	for key in dice_type_dict.keys():
+		if Current.get(dice_type_dict[key]) != Current.dice_multiplier_dict[2][key]:
+			Current.set(dice_type_dict[key], Current.dice_multiplier_dict[2][key])
 
 ## 计算选中的最高最终骰型
 ## return ['none', round(none_score_dice[0]), none_score_dice[1]]

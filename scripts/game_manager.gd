@@ -179,6 +179,8 @@ var buff_refresh_cost := 1:
 @onready var boss_debuff_json_data: Array = Tools.load_json_file('res://config/boss_debuff.json')
 ## buff数据
 @onready var buff_json_data: Array = Tools.load_json_file('res://config/buff.json')
+## 骰型倍率
+@onready var dice_multiplier_json_data: Array = Tools.load_json_file("res://config/dice_multiplier.json")
 ## 格子像素大小
 var grid_size = Vector2(16, 16)
 ## 起始格子位置
@@ -217,12 +219,7 @@ var coin_skill_row_2: Dictionary
 
 func _ready() -> void:
 	## 测试
-	var dice_array = [['red',1],['red',2],['blue',5]]
-	var start = Time.get_ticks_msec()
-	print(ScoringAlgorithm.count_total_score(dice_array))
-	var end = Time.get_ticks_msec()
-	print("耗时毫秒" + str(end-start))
-	print(ScoringAlgorithm.count_highest_score(dice_array))
+
 	#_set_shop_buff()
 	## 临时测试金币技能
 	#for row in coin_skill_json_data:
@@ -241,13 +238,18 @@ func _ready() -> void:
 	Current.four_score = 10
 	Current.five_score = 10
 	Current.six_score = 10
-	## 设置基础倍率
-	Current.none_percent = 100
-	Current.duizi_percent = 150
-	Current.shunzi_percent = 160
-	Current.tongse_percent = 140
-	Current.tongdui_percent = 300
-	Current.tongshun_percent = 320
+	## 设置倍率
+	for row in dice_multiplier_json_data:
+		Current.dice_multiplier_dict[int(row["dice_sum"])] = row
+	Current.none_percent = Current.dice_multiplier_dict[2]["none"]
+	Current.duizi_percent = Current.dice_multiplier_dict[2]["duizi"]
+	Current.shunzi_percent = Current.dice_multiplier_dict[2]["shunzi"]
+	Current.tongse_percent = Current.dice_multiplier_dict[2]["tongse"]
+	Current.tongdui_percent = Current.dice_multiplier_dict[2]["tongdui"]
+	Current.tongshun_percent = Current.dice_multiplier_dict[2]["tongshun"]
+	## 测试倍率
+	var result = ScoringAlgorithm.count_total_score([["red", 3], ["blue", 3], ["blue", 3], ["blue", 2], ["blue", 1], ["blue", 6]])
+	print(result)
 	## 初始化金币
 	Current.total_coins = 15
 	## 随机择BOSS
@@ -330,7 +332,9 @@ func _pre_create_slime():
 						available_grid_array.append(grid_index)
 						break
 		else:
-			if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
+			if grid_index not in Current.all_enemy_grid_index_array and \
+			grid_index != Current.hero.hero_grid_index and \
+			grid_index not in _margin_grid:
 				available_grid_array.append(grid_index)
 	if available_grid_array.size() > 0:
 		slime_create_num = clamp(available_grid_array.size(), 1, Current.slime_create_num)
