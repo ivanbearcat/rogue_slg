@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx67eybmq4vsu"]
+[gd_scene format=3 uid="uid://bx67eybmq4vsu"]
 
 [ext_resource type="Script" uid="uid://d18cc55ayi4ja" path="res://scripts/grid.gd" id="1_p7jgk"]
 [ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="2_70vec"]
@@ -25,39 +25,39 @@ region = Rect2(352, 64, 16, 16)
 atlas = ExtResource("2_70vec")
 region = Rect2(352, 80, 16, 16)
 
-[node name="grid" type="Node2D"]
+[node name="grid" type="Node2D" unique_id=561312025]
 script = ExtResource("1_p7jgk")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1938325138]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1401551176]
 position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_3sbim")
 
-[node name="target" type="Sprite2D" parent="Area2D"]
+[node name="target" type="Sprite2D" parent="Area2D" unique_id=1162831615]
 visible = false
 material = SubResource("ShaderMaterial_6omwm")
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_ejc5a")
 
-[node name="warning" type="Sprite2D" parent="Area2D"]
+[node name="warning" type="Sprite2D" parent="Area2D" unique_id=10383752]
 visible = false
 position = Vector2(8, 9)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_whhth")
 
-[node name="range" type="Sprite2D" parent="Area2D"]
+[node name="range" type="Sprite2D" parent="Area2D" unique_id=707289956]
 visible = false
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_kyn0y")
 
-[node name="attack" type="Sprite2D" parent="Area2D"]
+[node name="attack" type="Sprite2D" parent="Area2D" unique_id=699917401]
 visible = false
 z_index = 1
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_n1vvw")
 
-[node name="cursor" type="Sprite2D" parent="Area2D"]
+[node name="cursor" type="Sprite2D" parent="Area2D" unique_id=150335868]
 visible = false
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_fnun3")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bi3753khyy75"]
+[gd_scene format=3 uid="uid://bi3753khyy75"]
 
 [ext_resource type="Texture2D" uid="uid://tnl7iet676i7" path="res://images/Slime.png" id="1_1jsnh"]
 [ext_resource type="Script" uid="uid://ka44hpx6jsu0" path="res://scripts/slime_small.gd" id="1_huabk"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cyo82memmjeol" path="res://images/Slime_yellow.png" id="5_2c4jb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
-size = Vector2(13, 13)
+size = Vector2(14, 14)
 
 [sub_resource type="Shader" id="Shader_rlt5f"]
 code = "shader_type canvas_item;
@@ -316,17 +316,17 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="slime_small" type="Node2D"]
+[node name="slime_small" type="Node2D" unique_id=1421416677]
 z_index = 1
 script = ExtResource("1_huabk")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=455449153]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=374017296]
 position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_ilaur")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D" unique_id=2121476575]
 material = SubResource("ShaderMaterial_354rs")
 position = Vector2(7, 11)
 scale = Vector2(0.6, 0.6)
@@ -335,7 +335,7 @@ animation = &"roll"
 autoplay = "idle"
 frame_progress = 0.712704
 
-[node name="warning" type="Sprite2D" parent="Area2D"]
+[node name="warning" type="Sprite2D" parent="Area2D" unique_id=1938993126]
 visible = false
 modulate = Color(0, 1, 0.36875, 1)
 self_modulate = Color(0.165817, 1, 0.379638, 1)
@@ -344,7 +344,7 @@ position = Vector2(7.49707, 3.82962)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_au6rk")
 
-[node name="dice" type="AnimatedSprite2D" parent="Area2D"]
+[node name="dice" type="AnimatedSprite2D" parent="Area2D" unique_id=1009891085]
 position = Vector2(12.2809, 5.30422)
 scale = Vector2(-0.196884, -0.190505)
 sprite_frames = SubResource("SpriteFrames_aldak")
