@@ -231,13 +231,8 @@ func _ready() -> void:
 	#coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
 	#coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
 	#coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
-	## 设置基础点数分值
-	Current.one_score = 10
-	Current.two_score = 10
-	Current.three_score = 10
-	Current.four_score = 10
-	Current.five_score = 10
-	Current.six_score = 10
+	## 设置基础点数分值（随机分配）
+	_randomize_base_scores()
 	## 设置倍率
 	for row in dice_multiplier_json_data:
 		Current.dice_multiplier_dict[int(row["dice_sum"])] = row
@@ -310,6 +305,22 @@ func _ready() -> void:
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 
+## 随机分配基础分值
+## 将总共60点基础分随机分配到1-6点数的骰子上，最低5最高15
+func _randomize_base_scores():
+	var scores = [5, 5, 5, 5, 5, 5]
+	var remaining := 60 - 30  # 剩余30点
+	while remaining > 0:
+		var idx = randi_range(0, 5)
+		if scores[idx] < 15:
+			scores[idx] += 1
+			remaining -= 1
+	Current.one_score = scores[0]
+	Current.two_score = scores[1]
+	Current.three_score = scores[2]
+	Current.four_score = scores[3]
+	Current.five_score = scores[4]
+	Current.six_score = scores[5]
 
 func grid_index_to_position(grid_index: Vector2) -> Vector2:
 	return Vector2(grid_index.x * grid_size.x + start_pos.x, grid_index.y * grid_size.y + start_pos.y)
