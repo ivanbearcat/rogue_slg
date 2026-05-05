@@ -125,18 +125,19 @@ var total_coins: int:
 		if v > 0:
 			game_manager.reroll_button.disabled = false
 			game_manager.reroll_button_label.modulate = Color(1, 1, 1, 1)
-		if coin_skill_array_dict.get(0):
-			if v >= coin_skill_array_dict[0]["coin_skill_cost"]:
-				game_manager.coin_skill_1.disabled = false
-				game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
-		if coin_skill_array_dict.get(1):
-			if v >= coin_skill_array_dict[1]["coin_skill_cost"]:
-				game_manager.coin_skill_2.disabled = false
-				game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
-		if coin_skill_array_dict.get(2):
-			if v >= coin_skill_array_dict[2]["coin_skill_cost"]:
-				game_manager.coin_skill_3.disabled = false
-				game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
+		## 技能按钮：根据本关是否已使用来判断
+		## 技能1：存在且本关未使用时启用
+		if coin_skill_array_dict.size() > 0 and coin_skill_used.size() > 0 and coin_skill_used[0] == false:
+			game_manager.coin_skill_1.disabled = false
+			game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
+		## 技能2：存在且本关未使用时启用
+		if coin_skill_array_dict.size() > 1 and coin_skill_used.size() > 1 and coin_skill_used[1] == false:
+			game_manager.coin_skill_2.disabled = false
+			game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
+		## 技能3：存在且本关未使用时启用
+		if coin_skill_array_dict.size() > 2 and coin_skill_used.size() > 2 and coin_skill_used[2] == false:
+			game_manager.coin_skill_3.disabled = false
+			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
 		## 商店购买按钮
 		if v < game_manager.buff_refresh_cost:
 			game_manager.buff_refresh_button.disabled = true
@@ -174,6 +175,29 @@ var total_coins: int:
 		else:
 			game_manager.buff_shop_button_3.disabled = false
 			game_manager.buff_shop_button_3.modulate = Color(1, 1, 1, 1)
+
+## 刷新金币技能按钮的启用/禁用状态（根据coin_skill_used数组）
+func refresh_coin_skill_buttons():
+	## 先禁用所有技能按钮和图标
+	game_manager.coin_skill_1.disabled = true
+	game_manager.coin_skill_2.disabled = true
+	game_manager.coin_skill_3.disabled = true
+	game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 0.3)
+	game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 0.3)
+	game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 0.3)
+	## 技能1：存在且本关未使用时启用
+	if coin_skill_array_dict.size() > 0 and coin_skill_used.size() > 0 and coin_skill_used[0] == false:
+		game_manager.coin_skill_1.disabled = false
+		game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
+	## 技能2：存在且本关未使用时启用
+	if coin_skill_array_dict.size() > 1 and coin_skill_used.size() > 1 and coin_skill_used[1] == false:
+		game_manager.coin_skill_2.disabled = false
+		game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
+	## 技能3：存在且本关未使用时启用
+	if coin_skill_array_dict.size() > 2 and coin_skill_used.size() > 2 and coin_skill_used[2] == false:
+		game_manager.coin_skill_3.disabled = false
+		game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
+
 ## 回合计数
 var count_round := 0:
 	set(v):
@@ -275,7 +299,7 @@ var tongshun_percent: int:
 var base_score: int:
 	set(v):
 		if v != 0:
-			game_manager.base_score.text = str(v)	
+			game_manager.base_score.text = str(v)
 		else:
 			game_manager.base_score.text = ''
 	get:
@@ -336,7 +360,7 @@ var mouse_status := 'default'
 var level: int:
 	set(v):
 		level = v
-		game_manager.level_label.text = "Lv." + str(v)	
+		game_manager.level_label.text = "Lv." + str(v)
 ## 当前经验
 var hero_exp := 0
 ## 升级需要的经验
@@ -362,6 +386,8 @@ var power_skill := 0
 var has_attack_grid := false
 ## 金币技能
 var coin_skill_array_dict: Array
+## 金币技能本关是否已使用（索引对应coin_skill_array_dict，true=已使用）
+var coin_skill_used: Array = []
 ## 所有格子
 var all_grids_array: Array
 ## 公共锁

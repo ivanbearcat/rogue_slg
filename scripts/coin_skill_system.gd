@@ -56,12 +56,24 @@ func _on_timer_timeout():
 		game_manager.e_texture.position.y = 3
 
 func _clicked_public_action(coin_skill_name):
-	## 扣除费用
-	for row in Current.coin_skill_array_dict:
-		if row["coin_skill_id"] == coin_skill_name:
-			Current.total_coins -= row["coin_skill_cost"]
 	## 恢复所有UI初始状态
 	CursorManager.reset_cursor()
+	## 标记该技能本关已使用，并禁用对应技能按钮
+	for i in range(Current.coin_skill_array_dict.size()):
+		if Current.coin_skill_array_dict[i]["coin_skill_id"] == coin_skill_name:
+			Current.coin_skill_used[i] = true
+			## 禁用对应索引的技能按钮和图标
+			match i:
+				0:
+					game_manager.coin_skill_1.disabled = true
+					game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 0.3)
+				1:
+					game_manager.coin_skill_2.disabled = true
+					game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 0.3)
+				2:
+					game_manager.coin_skill_3.disabled = true
+					game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 0.3)
+			break
 
 func reset_all_button():
 	for button in [
@@ -98,7 +110,6 @@ func reroll_clicked():
 		game_manager.slime_reroll(Current.slime)
 		## 恢复鼠标重置状态
 		CursorManager.reset_cursor()
-		Current.total_coins -= 1
 
 func reroll_all():
 	for grid in Current.all_grids_array:

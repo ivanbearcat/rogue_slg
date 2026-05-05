@@ -117,6 +117,19 @@ const hero_property = {
 @onready var shop_next_level_button: Button = %shop_next_level_button
 @onready var shop_label: Label = %shop_label
 @onready var shop_texture_ui: TextureRect = %shop_texture_ui
+## 商店金币技能相关节点
+@onready var shop_coin_skill_icon: TextureRect = %shop_coin_skill_icon
+@onready var shop_coin_skill_rlabel: RichTextLabel = %shop_coin_skill_rlabel
+@onready var shop_coin_skill_button: TextureButton = %shop_coin_skill_button
+## 技能替换UI相关节点
+@onready var replace_skill_ui: CanvasLayer = %replace_skill_ui
+@onready var replace_skill_1: TextureButton = %replace_skill_1
+@onready var replace_skill_2: TextureButton = %replace_skill_2
+@onready var replace_skill_3: TextureButton = %replace_skill_3
+@onready var replace_skill_1_icon: TextureRect = %replace_skill_1_icon
+@onready var replace_skill_2_icon: TextureRect = %replace_skill_2_icon
+@onready var replace_skill_3_icon: TextureRect = %replace_skill_3_icon
+@onready var cancel_replace_button: Button = %cancel_replace_button
 var shop_buff_1: Dictionary
 var shop_buff_2: Dictionary
 var shop_buff_3: Dictionary
@@ -155,12 +168,6 @@ var buff_refresh_cost := 1:
 @onready var right_button: TextureButton = %right_button
 @onready var down_button: TextureButton = %down_button
 @onready var difficulty_icon: TextureRect = %difficulty_icon
-@onready var get_coin_skill_ui: CanvasLayer = %get_coin_skill_ui
-@onready var get_coin_skill_1: TextureRect = %get_coin_skill_1
-@onready var get_coin_skill_2: TextureRect = %get_coin_skill_2
-@onready var get_coin_skill_tooltip_1: PanelContainer = %get_coin_skill_tooltip_1
-@onready var get_coin_skill_tooltip_2: PanelContainer = %get_coin_skill_tooltip_2
-@onready var hide_get_coin_skill_ui_button: Button = %hide_get_coin_skill_ui_button
 ## 关卡切换效果
 @onready var stage_effect_ui: Control = $stage_effect_ui
 @onready var stage_effect_label: RichTextLabel = %stage_effect_label
@@ -211,10 +218,12 @@ var color := {
 var level_up_three_card_array :Array
 ## BOSS诅咒信息
 var boss_debuff_row: Dictionary
-## 金币技能选项1
-var coin_skill_row_1: Dictionary
 ## 金币技能选项2
 var coin_skill_row_2: Dictionary
+## 商店当前展示的金币技能数据行
+var shop_coin_skill_row: Dictionary = {}
+## 待处理的商店技能（购买后等待添加或替换）
+var pending_shop_skill: Dictionary = {}
 
 
 func _ready() -> void:
@@ -1209,6 +1218,114 @@ func _set_shop_buff():
 		str(int(shop_buff_3["buff_price"]))
 	
 	
+## 设置商店金币技能（每关随机1个技能展示在商店）
+func _set_shop_coin_skill():
+	## 从金币技能配置中随机抽取1个技能
+	shop_coin_skill_row = coin_skill_json_data.pick_random()
+	## 设置商店技能图标
+	shop_coin_skill_icon.texture = load(shop_coin_skill_row["coin_skill_icon"])
+	shop_coin_skill_icon.tooltip_text = shop_coin_skill_row["coin_skill_tooltip"]
+	## 设置商店技能价格标签
+	shop_coin_skill_rlabel.text = "[img=13 ]res://images/coin.png[/img] " + str(int(shop_coin_skill_row["coin_skill_shop_cost"]))
+	## 显示商店技能按钮
+	shop_coin_skill_button.disabled = false
+	shop_coin_skill_icon.modulate.a = 1
+
+## 商店金币技能购买按钮按下
+func _on_shop_coin_skill_button_pressed() -> void:
+	## 判断金币是否足够
+	if Current.total_coins < int(shop_coin_skill_row["coin_skill_shop_cost"]):
+		return
+	## 扣除金币
+	Current.total_coins -= int(shop_coin_skill_row["coin_skill_shop_cost"])
+	## 判断技能栏是否已满（3个技能）
+	if Current.coin_skill_array_dict.size() >= 3:
+		## 技能栏已满，保存待处理技能，显示替换选择UI
+		pending_shop_skill = shop_coin_skill_row
+		_show_replace_skill_ui()
+	else:
+		## 技能栏未满，直接添加技能
+		_set_coin_skill(shop_coin_skill_row)
+		## 禁用已购买的商店技能按钮
+		shop_coin_skill_button.disabled = true
+		shop_coin_skill_icon.modulate.a = 0.3
+
+## 显示技能替换选择UI
+func _show_replace_skill_ui():
+	## 设置3个已有技能的图标和tooltip
+	replace_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
+	replace_skill_1.tooltip_text = Current.coin_skill_array_dict[0]["coin_skill_name"] + ": " + Current.coin_skill_array_dict[0]["coin_skill_tooltip"]
+	replace_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
+	replace_skill_2.tooltip_text = Current.coin_skill_array_dict[1]["coin_skill_name"] + ": " + Current.coin_skill_array_dict[1]["coin_skill_tooltip"]
+	replace_skill_3_icon.texture = load(Current.coin_skill_array_dict[2]["coin_skill_icon"])
+	replace_skill_3.tooltip_text = Current.coin_skill_array_dict[2]["coin_skill_name"] + ": " + Current.coin_skill_array_dict[2]["coin_skill_tooltip"]
+	## 显示替换UI
+	replace_skill_ui.show()
+
+## 替换技能1按钮按下
+func _on_replace_skill_1_pressed() -> void:
+	## 替换第1个技能槽位
+	_replace_coin_skill(0, pending_shop_skill)
+	## 关闭替换UI
+	replace_skill_ui.hide()
+	## 禁用已购买的商店技能按钮
+	shop_coin_skill_button.disabled = true
+	shop_coin_skill_icon.modulate.a = 0.3
+
+## 替换技能2按钮按下
+func _on_replace_skill_2_pressed() -> void:
+	## 替换第2个技能槽位
+	_replace_coin_skill(1, pending_shop_skill)
+	## 关闭替换UI
+	replace_skill_ui.hide()
+	## 禁用已购买的商店技能按钮
+	shop_coin_skill_button.disabled = true
+	shop_coin_skill_icon.modulate.a = 0.3
+
+## 替换技能3按钮按下
+func _on_replace_skill_3_pressed() -> void:
+	## 替换第3个技能槽位
+	_replace_coin_skill(2, pending_shop_skill)
+	## 关闭替换UI
+	replace_skill_ui.hide()
+	## 禁用已购买的商店技能按钮
+	shop_coin_skill_button.disabled = true
+	shop_coin_skill_icon.modulate.a = 0.3
+
+## 取消替换按钮按下
+func _on_cancel_replace_button_pressed() -> void:
+	## 关闭替换UI，不替换，不退费
+	replace_skill_ui.hide()
+
+## 替换指定索引的金币技能
+func _replace_coin_skill(index: int, new_skill_row: Dictionary):
+	## 更新技能栏数据
+	Current.coin_skill_array_dict[index] = new_skill_row
+	## 重置该技能的本关使用状态为未使用
+	Current.coin_skill_used[index] = false
+	## 更新技能栏UI
+	match index:
+		0:
+			coin_skill_1_icon.texture = load(new_skill_row["coin_skill_icon"])
+			coin_skill_1_label.text = new_skill_row["coin_skill_name"]
+			coin_skill_1.tooltip_text = new_skill_row["coin_skill_tooltip"]
+			coin_skill_1.disabled = false
+			coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
+		1:
+			coin_skill_2_icon.texture = load(new_skill_row["coin_skill_icon"])
+			coin_skill_2_label.text = new_skill_row["coin_skill_name"]
+			coin_skill_2.tooltip_text = new_skill_row["coin_skill_tooltip"]
+			coin_skill_2.disabled = false
+			coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
+		2:
+			coin_skill_3_icon.texture = load(new_skill_row["coin_skill_icon"])
+			coin_skill_3_label.text = new_skill_row["coin_skill_name"]
+			coin_skill_3.tooltip_text = new_skill_row["coin_skill_tooltip"]
+			coin_skill_3.disabled = false
+			coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
+	## 清空待处理技能
+	pending_shop_skill = {}
+
 func _on_stage_clear_button_pressed() -> void:
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
@@ -1217,6 +1334,12 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.total_score = 0
 	if Current.count_stage < 12:
 		Current.count_stage += 1
+		## 重置所有金币技能本关使用状态为未使用
+		Current.coin_skill_used = []
+		for i in range(Current.coin_skill_array_dict.size()):
+			Current.coin_skill_used.append(false)
+		## 重置后刷新技能按钮状态
+		Current.refresh_coin_skill_buttons()
 	else:
 		## 游戏胜利
 		print("胜利")
@@ -1224,6 +1347,8 @@ func _on_stage_clear_button_pressed() -> void:
 	_hide_all_clear_stage_ui()
 	## 设置商店buff和价格UI
 	_set_shop_buff()
+	## 设置商店金币技能
+	_set_shop_coin_skill()
 	## 商店
 	get_tree().paused = true
 	Current.public_lock_array.append("shop_ui")
@@ -1252,10 +1377,7 @@ func _on_stage_clear_button_pressed() -> void:
 	if Current.count_stage in [3, 6, 9]:
 		_set_stage_debuff()
 		await EffectManager.debuff_change_effect()
-	## 4、7、10关获得金币技能
-	if Current.count_stage in [4, 7, 10]:
-		_get_coin_skill()
-	## 12关设置BOSS诅咒
+		## 12关设置BOSS诅咒
 	if Current.count_stage == 12:
 		_set_stage_debuff(1)
 		await EffectManager.debuff_change_effect()
@@ -1272,22 +1394,6 @@ func _on_reroll_button_pressed() -> void:
 		CursorManager.change_cursor("reroll")
 		EventBus.event_emit("reroll")
 		
-func _get_coin_skill():
-	## 设置选择UI的图标和提示
-	coin_skill_row_1 = coin_skill_json_data.pick_random()
-	coin_skill_json_data.erase(coin_skill_row_1)
-	get_coin_skill_1.texture = load(coin_skill_row_1["coin_skill_icon"])
-	get_coin_skill_tooltip_1.tooltip_text = coin_skill_row_1["coin_skill_tooltip"]
-	coin_skill_row_2 = coin_skill_json_data.pick_random()
-	coin_skill_json_data.erase(coin_skill_row_2)
-	get_coin_skill_2.texture = load(coin_skill_row_2["coin_skill_icon"])
-	get_coin_skill_tooltip_2.tooltip_text = coin_skill_row_2["coin_skill_tooltip"]
-	## 弹出选则UI
-	while get_tree().paused:
-		await Tools.time_sleep(0.1)
-	get_coin_skill_ui.show()
-	get_tree().paused = true
-	
 
 func _on_coin_skill_1_pressed() -> void:
 	if coin_skill_1.button_pressed == false:
@@ -1356,53 +1462,30 @@ func _on_hide_level_up_ui_button_pressed() -> void:
 		hide_level_up_ui_button.text = "隐藏"
 
 
-func _on_hide_get_coin_skill_ui_button_pressed() -> void:
-	if hide_get_coin_skill_ui_button.text == "隐藏":
-		for object in get_coin_skill_ui.get_children():
-			if object.name != "hide_get_coin_skill_ui_button":
-				object.hide()
-		hide_get_coin_skill_ui_button.text = "显示"
-	else:
-		for object in get_coin_skill_ui.get_children():
-			if object.name != "hide_get_coin_skill_ui_button":
-				object.show()
-		hide_get_coin_skill_ui_button.text = "隐藏"
-
 ## 设置技能到技能栏
 func _set_coin_skill(coin_skill_row):
 	match Current.coin_skill_array_dict.size():
 		0:
 			Current.coin_skill_array_dict.append(coin_skill_row)
+			Current.coin_skill_used.append(false)
 			coin_skill_1_icon.texture = load(coin_skill_row["coin_skill_icon"])
-			coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + \
-			str(int(coin_skill_row["coin_skill_cost"]))
+			coin_skill_1_label.text = coin_skill_row["coin_skill_name"]
 			coin_skill_1.tooltip_text = coin_skill_row["coin_skill_tooltip"]
 		1:
 			Current.coin_skill_array_dict.append(coin_skill_row)
+			Current.coin_skill_used.append(false)
 			coin_skill_2_icon.texture = load(coin_skill_row["coin_skill_icon"])
-			coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + \
-			str(int(coin_skill_row["coin_skill_cost"]))
+			coin_skill_2_label.text = coin_skill_row["coin_skill_name"]
 			coin_skill_2.tooltip_text = coin_skill_row["coin_skill_tooltip"]
 		2:
 			Current.coin_skill_array_dict.append(coin_skill_row)
+			Current.coin_skill_used.append(false)
 			coin_skill_3_icon.texture = load(coin_skill_row["coin_skill_icon"])
-			coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + \
-			str(int(coin_skill_row["coin_skill_cost"]))
+			coin_skill_3_label.text = coin_skill_row["coin_skill_name"]
 			coin_skill_3.tooltip_text = coin_skill_row["coin_skill_tooltip"]
+	## 添加技能后刷新按钮状态
+	Current.refresh_coin_skill_buttons()
 
-func _on_get_coin_skill_1_button_pressed() -> void:
-	_set_coin_skill(coin_skill_row_1)
-	## 设置金币会刷新技能可用性
-	Current.total_coins = Current.total_coins
-	get_tree().paused = false
-	get_coin_skill_ui.hide()
-
-func _on_get_coin_skill_2_button_pressed() -> void:
-	_set_coin_skill(coin_skill_row_2)
-	## 设置金币会刷新技能可用性
-	Current.total_coins = Current.total_coins
-	get_tree().paused = false
-	get_coin_skill_ui.hide()
 
 func _on_buff_refresh_button_pressed() -> void:
 	if Current.zero_coin_refresh_times > 0:
