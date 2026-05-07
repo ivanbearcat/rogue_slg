@@ -5535,6 +5535,8 @@ label_settings = SubResource("LabelSettings_xljpf")
 
 [node name="replace_skill_ui" type="CanvasLayer" parent="." unique_id=915307986]
 unique_name_in_owner = true
+layer = 10
+process_mode = 2
 visible = false
 
 [node name="Panel" type="Panel" parent="replace_skill_ui" unique_id=1314354006]
@@ -5577,7 +5579,6 @@ theme_override_constants/separation = 20
 
 [node name="replace_skill_1" type="TextureButton" parent="replace_skill_ui/Panel/VBoxContainer" unique_id=1025844151]
 unique_name_in_owner = true
-unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 64)
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
@@ -5587,7 +5588,6 @@ texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
 [node name="replace_skill_1_icon" type="TextureRect" parent="replace_skill_ui/Panel/VBoxContainer/replace_skill_1" unique_id=173654694]
-unique_name_in_owner = true
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 5.0
@@ -5599,7 +5599,6 @@ stretch_mode = 5
 
 [node name="replace_skill_2" type="TextureButton" parent="replace_skill_ui/Panel/VBoxContainer" unique_id=993224002]
 unique_name_in_owner = true
-unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 64)
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
@@ -5609,7 +5608,6 @@ texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
 [node name="replace_skill_2_icon" type="TextureRect" parent="replace_skill_ui/Panel/VBoxContainer/replace_skill_2" unique_id=1721151719]
-unique_name_in_owner = true
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 5.0
@@ -5621,7 +5619,6 @@ stretch_mode = 5
 
 [node name="replace_skill_3" type="TextureButton" parent="replace_skill_ui/Panel/VBoxContainer" unique_id=982805492]
 unique_name_in_owner = true
-unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 64)
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
@@ -5632,7 +5629,6 @@ stretch_mode = 5
 
 [node name="replace_skill_3_icon" type="TextureRect" parent="replace_skill_ui/Panel/VBoxContainer/replace_skill_3" unique_id=645014290]
 unique_name_in_owner = true
-unique_name_in_owner = true
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -5642,7 +5638,6 @@ expand_mode = 2
 stretch_mode = 5
 
 [node name="cancel_replace_button" type="Button" parent="replace_skill_ui/Panel/VBoxContainer" unique_id=1806602301]
-unique_name_in_owner = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -6184,7 +6179,6 @@ theme_override_constants/h_separation = 48
 
 [node name="shop_coin_skill_icon" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer3" unique_id=534399422]
 unique_name_in_owner = true
-unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
@@ -6204,7 +6198,6 @@ mouse_filter = 1
 
 [node name="shop_coin_skill_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer3/shop_coin_skill_icon" unique_id=603608204]
 unique_name_in_owner = true
-unique_name_in_owner = true
 layout_mode = 0
 offset_left = 19.0
 offset_top = -37.0
@@ -6216,7 +6209,6 @@ texture_hover = SubResource("AtlasTexture_od4ux")
 stretch_mode = 5
 
 [node name="shop_coin_skill_rlabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/HFlowContainer3/shop_coin_skill_icon/shop_coin_skill_button" unique_id=384608054]
-unique_name_in_owner = true
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 9.0

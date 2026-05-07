@@ -224,6 +224,8 @@ var coin_skill_row_2: Dictionary
 var shop_coin_skill_row: Dictionary = {}
 ## 待处理的商店技能（购买后等待添加或替换）
 var pending_shop_skill: Dictionary = {}
+## 已在商店出现过的金币技能ID列表（防止重复出现）
+var appeared_coin_skill_ids: Array = []
 
 
 func _ready() -> void:
@@ -570,12 +572,13 @@ func _set_level_up_card():
 func _check_and_level_up() -> void:
 	if Current.hero_exp >= Current.require_exp:
 		Current.level += 1
-		## 最多增加到7个史莱姆可以升级
-		if Current.require_exp < 7:
+		var overflow_exp = Current.hero_exp - Current.require_exp
+		## 最多增加到10个史莱姆可以升级
+		if Current.require_exp < 10:
 			Current.require_exp += 1
-		Current.hero_exp = 0
-		exp_bar.value = 0
+		Current.hero_exp = overflow_exp
 		## 设置经验条数值
+		exp_bar.value = overflow_exp
 		exp_bar.max_value = Current.require_exp
 		## 设置经验label
 		_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
@@ -926,7 +929,141 @@ func _modifiy_value(original_value: int, operate: String, value: float) -> int:
 			modified_value = original_value * value
 		'div':
 			modified_value = original_value / value
-	return round(modified_value)
+	return maxi(roundi(modified_value), 0)
+
+## 应用卡牌效果（支持多效果链）
+func _apply_card_effect(effect: Dictionary):
+	var target = effect["target"]
+	var operate = effect["operate"]
+	var value = effect["value"]
+	## 所有点数基础分名称数组
+	var score_names = ["one_score", "two_score", "three_score", "four_score", "five_score", "six_score"]
+	## 所有倍率名称数组
+	var percent_names = ["none_percent", "duizi_percent", "shunzi_percent", "tongse_percent", "tongdui_percent", "tongshun_percent"]
+	## 处理特殊target
+	match target:
+		"all_score":
+			## 对所有点数基础分执行操作
+			for score_name in score_names:
+				var current_val = Current.get(score_name)
+				Current.set(score_name, _modifiy_value(current_val, operate, value))
+			return
+		"all_percent":
+			## 对所有倍率执行操作
+			for percent_name in percent_names:
+				var current_val = Current.get(percent_name)
+				var new_val = _modifiy_value(current_val, operate, value)
+				Current.set(percent_name, new_val)
+				_update_multiplier_dict(percent_name, operate, value)
+			return
+		"random_score":
+			## 随机选择一个点数
+			var random_name = score_names[randi_range(0, 5)]
+			if operate == "set":
+				Current.set(random_name, maxi(int(value), 0))
+			elif operate == "set_to_avg":
+				var avg = _get_score_average()
+				Current.set(random_name, maxi(avg, 0))
+			else:
+				var current_val = Current.get(random_name)
+				Current.set(random_name, _modifiy_value(current_val, operate, value))
+			return
+		"min_score":
+			## 最低点数
+			var min_name = _get_min_score_name()
+			if operate == "set_to_max":
+				var max_val = _get_max_score_value()
+				Current.set(min_name, maxi(max_val, 0))
+			else:
+				var current_val = Current.get(min_name)
+				Current.set(min_name, _modifiy_value(current_val, operate, value))
+			return
+		"max_score":
+			## 最高点数
+			var max_name = _get_max_score_name()
+			if operate == "swap":
+				## 交换最高和最低点数
+				var min_name = _get_min_score_name()
+				var max_val = Current.get(max_name)
+				var min_val = Current.get(min_name)
+				Current.set(max_name, maxi(min_val, 0))
+				Current.set(min_name, maxi(max_val, 0))
+			else:
+				var current_val = Current.get(max_name)
+				Current.set(max_name, _modifiy_value(current_val, operate, value))
+			return
+	## 处理普通target
+	if operate == "swap":
+		## 交换两个属性的值
+		var from_name = value
+		var target_val = Current.get(target)
+		var from_val = Current.get(from_name)
+		Current.set(target, maxi(from_val, 0))
+		Current.set(from_name, target_val)
+	elif operate == "copy_from":
+		## 将来源属性的值复制到目标
+		var from_name = value
+		var from_val = Current.get(from_name)
+		Current.set(target, maxi(from_val, 0))
+	elif operate == "set_to_max":
+		## 将目标设为所有点数中的最大值
+		var max_val = _get_max_score_value()
+		Current.set(target, maxi(max_val, 0))
+	elif operate == "set_to_avg":
+		## 将目标设为所有点数的平均值
+		var avg = _get_score_average()
+		Current.set(target, avg)
+	elif operate == "set":
+		## 将目标设为指定值
+		Current.set(target, maxi(int(value), 0))
+	else:
+		## add/sub/mul/div 操作
+		var current_val = Current.get(target)
+		var new_val = _modifiy_value(current_val, operate, value)
+		Current.set(target, new_val)
+		## 如果是倍率属性，同步更新 dice_multiplier_dict
+		if target.ends_with("_percent"):
+			_update_multiplier_dict(target, operate, value)
+
+## 同步更新 dice_multiplier_dict 中所有骰子数量的倍率值
+func _update_multiplier_dict(percent_name: String, operate: String, value: float):
+	var dict_key = percent_name.replace("_percent", "")
+	for dice_sum in Current.dice_multiplier_dict.keys():
+		var old_val = int(Current.dice_multiplier_dict[dice_sum][dict_key])
+		var new_val = _modifiy_value(old_val, operate, value)
+		Current.dice_multiplier_dict[dice_sum][dict_key] = new_val
+
+## 获取所有点数基础分的平均值（四舍五入）
+func _get_score_average() -> int:
+	var total = Current.one_score + Current.two_score + Current.three_score + Current.four_score + Current.five_score + Current.six_score
+	return roundi(total / 6.0)
+
+## 获取值最大的点数名称
+func _get_max_score_name() -> String:
+	var scores = {"one_score": Current.one_score, "two_score": Current.two_score, "three_score": Current.three_score, "four_score": Current.four_score, "five_score": Current.five_score, "six_score": Current.six_score}
+	var max_name = "one_score"
+	var max_val = Current.one_score
+	for name in scores:
+		if scores[name] > max_val:
+			max_val = scores[name]
+			max_name = name
+	return max_name
+
+## 获取值最大的点数值
+func _get_max_score_value() -> int:
+	return max(Current.one_score, Current.two_score, Current.three_score, Current.four_score, Current.five_score, Current.six_score)
+
+## 获取值最小的点数名称
+func _get_min_score_name() -> String:
+	var scores = {"one_score": Current.one_score, "two_score": Current.two_score, "three_score": Current.three_score, "four_score": Current.four_score, "five_score": Current.five_score, "six_score": Current.six_score}
+	var min_name = "one_score"
+	var min_val = Current.one_score
+	for name in scores:
+		if scores[name] < min_val:
+			min_val = scores[name]
+			min_name = name
+	return min_name
+
 	
 ## 鼠标移出可移动区域清除格子位置
 func _on_area_2d_mouse_entered() -> void:
@@ -936,238 +1073,31 @@ func _on_skill_system_hide_all_skill() -> void:
 	skill_1_ui.hide_all_skills()
 
 func _on_card_1_button_pressed() -> void:
-	match level_up_three_card_array[0]['card_id']:
-		'card_one':
-			Current.one_score = _modifiy_value(
-				Current.one_score,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_two':
-			Current.two_score = _modifiy_value(
-				Current.two_score,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_three':
-			Current.three_score = _modifiy_value(
-				Current.three_score,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_four':
-			Current.four_score = _modifiy_value(
-				Current.four_score,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_five':
-			Current.five_score = _modifiy_value(
-				Current.five_score,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_six':
-			Current.six_score = _modifiy_value(
-				Current.six_score,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_none':
-			Current.none_percent = _modifiy_value(
-				Current.none_percent,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_duizi':
-			Current.duizi_percent = _modifiy_value(
-				Current.duizi_percent,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_shunzi':
-			Current.shunzi_percent = _modifiy_value(
-				Current.shunzi_percent,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_tongse':
-			Current.tongse_percent = _modifiy_value(
-				Current.tongse_percent,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_tongdui':
-			Current.tongdui_percent = _modifiy_value(
-				Current.tongdui_percent,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
-		'card_tongshun':
-			Current.tongshun_percent = _modifiy_value(
-				Current.tongshun_percent,
-				level_up_three_card_array[0]['card_operate'],
-				level_up_three_card_array[0]['card_value']
-				)
+	## 遍历卡牌效果列表，逐一应用
+	for effect in level_up_three_card_array[0]["card_effects"]:
+		_apply_card_effect(effect)
 	get_tree().paused = false
 	level_up_ui.hide()
 	Current.public_lock_array.erase("level_up_ui")
+
 
 func _on_card_2_button_pressed() -> void:
-	match level_up_three_card_array[1]['card_id']:
-		'card_one':
-			Current.one_score = _modifiy_value(
-				Current.one_score,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_two':
-			Current.two_score = _modifiy_value(
-				Current.two_score,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_three':
-			Current.three_score = _modifiy_value(
-				Current.three_score,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_four':
-			Current.four_score = _modifiy_value(
-				Current.four_score,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_five':
-			Current.five_score = _modifiy_value(
-				Current.five_score,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_six':
-			Current.six_score = _modifiy_value(
-				Current.six_score,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_none':
-			Current.none_percent = _modifiy_value(
-				Current.none_percent,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_duizi':
-			Current.duizi_percent = _modifiy_value(
-				Current.duizi_percent,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_shunzi':
-			Current.shunzi_percent = _modifiy_value(
-				Current.shunzi_percent,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_tongse':
-			Current.tongse_percent = _modifiy_value(
-				Current.tongse_percent,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_tongdui':
-			Current.tongdui_percent = _modifiy_value(
-				Current.tongdui_percent,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
-		'card_tongshun':
-			Current.tongshun_percent = _modifiy_value(
-				Current.tongshun_percent,
-				level_up_three_card_array[1]['card_operate'],
-				level_up_three_card_array[1]['card_value']
-				)
+	## 遍历卡牌效果列表，逐一应用
+	for effect in level_up_three_card_array[1]["card_effects"]:
+		_apply_card_effect(effect)
 	get_tree().paused = false
 	level_up_ui.hide()
 	Current.public_lock_array.erase("level_up_ui")
 
+
 func _on_card_3_button_pressed() -> void:
-	match level_up_three_card_array[2]['card_id']:
-		'card_one':
-			Current.one_score = _modifiy_value(
-				Current.one_score,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_two':
-			Current.two_score = _modifiy_value(
-				Current.two_score,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_three':
-			Current.three_score = _modifiy_value(
-				Current.three_score,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_four':
-			Current.four_score = _modifiy_value(
-				Current.four_score,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_five':
-			Current.five_score = _modifiy_value(
-				Current.five_score,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_six':
-			Current.six_score = _modifiy_value(
-				Current.six_score,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_none':
-			Current.none_percent = _modifiy_value(
-				Current.none_percent,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_duizi':
-			Current.duizi_percent = _modifiy_value(
-				Current.duizi_percent,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_shunzi':
-			Current.shunzi_percent = _modifiy_value(
-				Current.shunzi_percent,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_tongse':
-			Current.tongse_percent = _modifiy_value(
-				Current.tongse_percent,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_tongdui':
-			Current.tongdui_percent = _modifiy_value(
-				Current.tongdui_percent,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
-		'card_tongshun':
-			Current.tongshun_percent = _modifiy_value(
-				Current.tongshun_percent,
-				level_up_three_card_array[2]['card_operate'],
-				level_up_three_card_array[2]['card_value']
-				)
+	## 遍历卡牌效果列表，逐一应用
+	for effect in level_up_three_card_array[2]["card_effects"]:
+		_apply_card_effect(effect)
 	get_tree().paused = false
 	level_up_ui.hide()
 	Current.public_lock_array.erase("level_up_ui")
+
 
 func _hide_all_clear_stage_ui():
 	clear_stage_label.hide()
@@ -1220,8 +1150,17 @@ func _set_shop_buff():
 	
 ## 设置商店金币技能（每关随机1个技能展示在商店）
 func _set_shop_coin_skill():
-	## 从金币技能配置中随机抽取1个技能
-	shop_coin_skill_row = coin_skill_json_data.pick_random()
+	## 从尚未出现过的金币技能中随机抽取1个（所有技能概率相同，不重复）
+	var available_skills: Array = []
+	for row in coin_skill_json_data:
+		if row["coin_skill_id"] not in appeared_coin_skill_ids:
+			available_skills.append(row)
+	## 如果所有技能都已出现过，重置出现记录
+	if available_skills.is_empty():
+		appeared_coin_skill_ids.clear()
+		available_skills = coin_skill_json_data.duplicate()
+	shop_coin_skill_row = available_skills.pick_random()
+	appeared_coin_skill_ids.append(shop_coin_skill_row["coin_skill_id"])
 	## 设置商店技能图标
 	shop_coin_skill_icon.texture = load(shop_coin_skill_row["coin_skill_icon"])
 	shop_coin_skill_icon.tooltip_text = shop_coin_skill_row["coin_skill_tooltip"]
@@ -1238,6 +1177,9 @@ func _on_shop_coin_skill_button_pressed() -> void:
 		return
 	## 扣除金币
 	Current.total_coins -= int(shop_coin_skill_row["coin_skill_shop_cost"])
+	## 禁用商店技能购买按钮，防止重复购买
+	shop_coin_skill_button.disabled = true
+	shop_coin_skill_icon.modulate.a = 0.3
 	## 判断技能栏是否已满（3个技能）
 	if Current.coin_skill_array_dict.size() >= 3:
 		## 技能栏已满，保存待处理技能，显示替换选择UI
@@ -1246,9 +1188,6 @@ func _on_shop_coin_skill_button_pressed() -> void:
 	else:
 		## 技能栏未满，直接添加技能
 		_set_coin_skill(shop_coin_skill_row)
-		## 禁用已购买的商店技能按钮
-		shop_coin_skill_button.disabled = true
-		shop_coin_skill_icon.modulate.a = 0.3
 
 ## 显示技能替换选择UI
 func _show_replace_skill_ui():
