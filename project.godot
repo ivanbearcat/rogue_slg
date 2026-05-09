@@ -30,6 +30,7 @@ BuffSystem="*res://scripts/autoload/buff_system.gd"
 EffectManager="*res://scripts/autoload/effect_manager.gd"
 VFX="*uid://ecyiymmaj3jv"
 EnvVFX="*uid://qomyut16hnoi"
+MCPRuntime="*uid://duhpmbat6u2mk"
 
 [display]
 
@@ -38,7 +39,7 @@ mouse_cursor/custom_image="res://images/mouse_icon/pointer_scifi_a.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/vfx_library/plugin.cfg")
+enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/godot_mcp/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/vfx_library/plugin.cfg")
 
 [input]
 
