@@ -393,33 +393,14 @@ func _show_dice_panel(dice_type_point):
 	var iter_times = 0
 	var score_bar_label_text = ""
 	var score = dice_type_point[0]
-	if score > 0 and score < 10:
+	var thresholds = [10, 50, 100, 200, 400, 800, 1200, 2400]
+	if score > 0 and score < thresholds[0]:
 		iter_times = 0
-		score_bar_label_text = ""
-	elif score >= 10 and score < 50:
-		iter_times = 1
-		score_bar_label_text = "10+"
-	elif score >= 50 and score < 100:
-		iter_times = 2
-		score_bar_label_text = "50+"
-	elif score >= 100 and score < 200:
-		iter_times = 3
-		score_bar_label_text = "100+"
-	elif score >= 200 and score < 400:
-		iter_times = 4
-		score_bar_label_text = "200+"
-	elif score >= 400 and score < 800:
-		iter_times = 5
-		score_bar_label_text = "400+"
-	elif score >= 800 and score < 1200:
-		iter_times = 6
-		score_bar_label_text = "800+"
-	elif score >= 1200 and score < 2400:
-		iter_times = 7	
-		score_bar_label_text = "1200+"
-	elif score >= 2400:
-		iter_times = 8	
-		score_bar_label_text = "2400+"
+	else:
+		for i in range(thresholds.size()):
+			if score >= thresholds[i]:
+				iter_times = i + 1
+	score_bar_label_text = str(score)
 	for num in range(iter_times):
 		score_bar_child_array[num].set_self_modulate(Color(1, 1, 1, 1))
 	game_manager.score_bar_label.text = score_bar_label_text
