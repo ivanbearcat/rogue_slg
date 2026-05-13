@@ -10,7 +10,6 @@ signal grid_cmd
 
 var grid_index: Vector2
 
-
 func _on_area_2d_mouse_entered() -> void:
 	#print(Current.grid_index)
 	#print(self.position)
@@ -55,8 +54,3 @@ func _on_area_2d_mouse_exited() -> void:
 					grid.attack.hide()
 		_:
 			EventBus.event_emit("hide_skill_attack")
-			
-
-			
-	
-	

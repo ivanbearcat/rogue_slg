@@ -10,7 +10,7 @@ func set_buff():
 
 func process_buff():
 	pass
-	
+
 func clear_buff():
 	debuff_texture.queue_free()
 	Current.hero.hero_movement += 1

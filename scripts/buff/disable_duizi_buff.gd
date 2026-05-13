@@ -8,11 +8,11 @@ func set_buff():
 	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
 	data["duizi_percent"] = Current.duizi_percent
 	Current.duizi_percent = 0
-	
+
 func process_buff():
 	data["duizi_percent"] += Current.duizi_percent
 	Current.duizi_percent = 0
-	
+
 func clear_buff():
 	Current.duizi_percent = data["duizi_percent"]
 	data.erase("duizi_percent")

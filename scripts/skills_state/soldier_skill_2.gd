@@ -20,7 +20,6 @@ func input(event: InputEvent) -> void:
 			owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
 			Current.public_lock_array.append("skill_attack")
 			emit_signal("skill_attack")
-			
 
 func exit():
 	print(owner.hero_name, "离开soldier_skill_2")

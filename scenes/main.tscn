@@ -5535,8 +5535,8 @@ label_settings = SubResource("LabelSettings_xljpf")
 
 [node name="replace_skill_ui" type="CanvasLayer" parent="." unique_id=915307986]
 unique_name_in_owner = true
-layer = 10
 process_mode = 2
+layer = 10
 visible = false
 
 [node name="Panel" type="Panel" parent="replace_skill_ui" unique_id=1314354006]
@@ -6447,7 +6447,6 @@ theme_override_constants/separation = 0
 [node name="card1" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1945616921]
 unique_name_in_owner = true
 layout_mode = 2
-texture = null
 expand_mode = 2
 stretch_mode = 5
 
@@ -6487,7 +6486,6 @@ vertical_alignment = 1
 [node name="card2" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer" unique_id=862030436]
 unique_name_in_owner = true
 layout_mode = 2
-texture = null
 expand_mode = 2
 stretch_mode = 5
 
@@ -6527,7 +6525,6 @@ vertical_alignment = 1
 [node name="card3" type="TextureRect" parent="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1640774312]
 unique_name_in_owner = true
 layout_mode = 2
-texture = null
 expand_mode = 2
 stretch_mode = 5
 

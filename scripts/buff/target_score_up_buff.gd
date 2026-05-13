@@ -14,6 +14,6 @@ func process_buff():
 	await Tools.time_sleep(1)
 	Current.target_score += add_num
 	EffectManager.big_flow_effect(game_manager.target_score)
-	
+
 func clear_buff():
 	debuff_texture.queue_free()

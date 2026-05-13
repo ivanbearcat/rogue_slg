@@ -1,7 +1,6 @@
 extends Object
 class_name SfxrGlobals
 
-
 enum WAVE_SHAPES {
     SQUARE,
     SAWTOOTH,

@@ -16,6 +16,6 @@ func process_buff():
 	await Tools.time_sleep(1)
 	Current.total_score += add_num
 	Current.public_lock_array.erase("move_attack_score_increase_buff")
-	
+
 func clear_buff():
 	pass

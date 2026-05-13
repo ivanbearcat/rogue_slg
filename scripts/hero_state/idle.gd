@@ -1,6 +1,5 @@
 extends HeroState
 
-
 func enter():
 	print(owner.hero_name, "进入idle")
 	owner.animated_sprite_2d.play(owner.hero_name + "_idle")
@@ -12,7 +11,7 @@ func unhandled_input(event: InputEvent) -> void:
 		var grid_index = Current.grid_index
 		if grid_index in Current.all_hero_grid_index_array and \
 		Current.turn == "hero_turn":
-			hero_state_machine.transition_to("move")		
+			hero_state_machine.transition_to("move")
 
 func exit():
 	print(owner.hero_name, "离开idle")

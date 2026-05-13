@@ -6,7 +6,7 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
-	
+
 func process_buff():
 	if Current.is_attacked == false:
 		Current.public_lock_array.append("no_attack_buff")
@@ -18,6 +18,6 @@ func process_buff():
 		await Tools.time_sleep(1)
 		Current.total_score += add_num
 		Current.public_lock_array.erase("no_attack_buff")
-	
+
 func clear_buff():
 	pass

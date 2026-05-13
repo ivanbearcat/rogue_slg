@@ -20,9 +20,9 @@ func process_buff():
 		await Tools.time_sleep(0.05)
 	count_slime_reroll = 0
 	Current.public_lock_array.erase("reroll_slime_buff")
-	
+
 func count_slime_reroll_finished():
 	count_slime_reroll += 1
-		
+
 func clear_buff():
 	debuff_texture.queue_free()

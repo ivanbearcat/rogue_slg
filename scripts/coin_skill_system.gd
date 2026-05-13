@@ -1,7 +1,6 @@
 extends Node2D
 @onready var game_manager: Node2D = $".."
 
-
 func _ready() -> void:
 	EventBus.subscribe("reset_all_button", reset_all_button)
 	EventBus.subscribe("reroll", reroll)
@@ -78,8 +77,8 @@ func _clicked_public_action(coin_skill_name):
 func reset_all_button():
 	for button in [
 		game_manager.reroll_button,
-		game_manager.coin_skill_1, 
-		game_manager.coin_skill_2, 
+		game_manager.coin_skill_1,
+		game_manager.coin_skill_2,
 		game_manager.coin_skill_3
 		]:
 		if button.button_pressed == true:
@@ -104,8 +103,8 @@ func reroll():
 		for grid in Current.all_grids_array:
 			if Current.grid_index == grid.grid_index:
 				grid.attack.show()
-			
-func reroll_clicked():	
+
+func reroll_clicked():
 	if Current.slime:
 		game_manager.slime_reroll(Current.slime)
 		## 恢复鼠标重置状态
@@ -117,13 +116,13 @@ func reroll_all():
 	if Current.within_grid_area:
 		for grid in Current.all_grids_array:
 			grid.attack.show()
-			
+
 func reroll_all_clicked():
 	if Current.within_grid_area:
 		for slime in Current.all_enemy_array:
 			game_manager.slime_reroll(slime)
 		_clicked_public_action("reroll_all")
-		
+
 func reroll_dice():
 	var all_slime_array = Current.all_enemy_grid_index_array
 	for grid in Current.all_grids_array:
@@ -133,12 +132,12 @@ func reroll_dice():
 		for grid in Current.all_grids_array:
 			if Current.grid_index == grid.grid_index:
 				grid.attack.show()
-	
+
 func reroll_dice_clicked():
 	if Current.slime:
 		game_manager.slime_reroll(Current.slime, 1, 0)
 		_clicked_public_action("reroll_dice")
-		
+
 func reroll_color():
 	var all_slime_array = Current.all_enemy_grid_index_array
 	for grid in Current.all_grids_array:
@@ -153,7 +152,7 @@ func reroll_color_clicked():
 	if Current.slime:
 		game_manager.slime_reroll(Current.slime, 0, 1)
 		_clicked_public_action("reroll_color")
-		
+
 func add_power():
 	for grid in Current.all_grids_array:
 		if Current.hero.hero_grid_index == grid.grid_index:
@@ -165,10 +164,10 @@ func add_power_clicked():
 		_clicked_public_action("add_power")
 	else:
 		CursorManager.reset_cursor()
-		
+
 func dice_add_1():
 	reroll_dice()
-	
+
 func dice_add_1_clicked():
 	if Current.slime:
 		var _old_dice_point = Current.slime.dice_point
@@ -182,7 +181,7 @@ func dice_add_1_clicked():
 
 func dice_sub_1():
 	reroll_dice()
-	
+
 func dice_sub_1_clicked():
 	if Current.slime:
 		var _old_dice_point = Current.slime.dice_point
@@ -196,7 +195,7 @@ func dice_sub_1_clicked():
 
 func move():
 	Current.hero.hero_state_machine.transition_to("coin_skill_move")
-	
+
 func cloud():
 	get_tree().paused = true
 	game_manager.direction_ui.show()
@@ -264,13 +263,13 @@ func cloud_clicked(direction):
 					while slime.position == old_position:
 						await Tools.time_sleep(0.01)
 	_clicked_public_action("cloud")
-		
+
 func mouse_up_clicked():
 	cloud_clicked("up")
 
 func mouse_left_clicked():
 	cloud_clicked("left")
-	
+
 func mouse_right_clicked():
 	cloud_clicked("right")
 
@@ -279,7 +278,7 @@ func mouse_down_clicked():
 
 func double_score():
 	add_power()
-	
+
 func double_score_clicked():
 	if Current.grid_index == Current.hero.hero_grid_index:
 		BuffSystem.set_post_attack_buff(DoubleScoreBuff.new(), BuffSystem.buff_type.ONCE)

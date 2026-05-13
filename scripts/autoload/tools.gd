@@ -25,7 +25,6 @@ func fetch_slime_scene(slime_scene):
 	else:
 		return null
 
-
 ## 加载json配置文件
 func load_json_file(file_path: String) -> Array:
 	## 检查文件是否存在

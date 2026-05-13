@@ -33,13 +33,11 @@ func screen_shake(intensity: float = 10.0, duration: float = 0.2) -> void:
 	# 恢复
 	tween.tween_property(camera, "offset", original_offset, 0.05)
 
-
 # 时间冻结（受击暂停）
 func freeze_frame(duration: float = 0.1, time_scale: float = 0.05) -> void:
 	Engine.time_scale = time_scale
 	await get_tree().create_timer(duration, true, false, true).timeout
 	Engine.time_scale = 1.0
-
 
 # 暴击特效
 func critical_hit(pos: Vector2) -> void:
@@ -47,23 +45,21 @@ func critical_hit(pos: Vector2) -> void:
 	freeze_frame(0.12, 0.05)
 	spawn_particles(pos, Color(1, 0.8, 0), 15)
 
-
 # 击杀特效
 func kill_effect(pos: Vector2) -> void:
 	screen_shake(12.0, 0.2)
 	freeze_frame(0.08, 0.1)
 	spawn_particles(pos, Color(1, 0.3, 0.3), 20)
 
-
 # 生成粒子（使用场景）
 func spawn_particles(pos: Vector2, particle_color: Color, count: int = 15) -> void:
 	var particles = COMBAT_PARTICLE_SCENE.instantiate()
 	get_tree().current_scene.add_child(particles)
 	particles.global_position = pos
-	
+
 	# 设置粒子数量
 	particles.amount = count
-	
+
 	# 动态创建颜色渐变
 	var gradient = Gradient.new()
 	gradient.offsets = PackedFloat32Array([0.0, 0.5, 1.0])
@@ -73,15 +69,14 @@ func spawn_particles(pos: Vector2, particle_color: Color, count: int = 15) -> vo
 		Color(particle_color.r * 0.3, particle_color.g * 0.3, particle_color.b * 0.3, 0.0)
 	])
 	particles.color_ramp = gradient
-	
+
 	# 触发发射
 	particles.emitting = true
-	
+
 	# 自动删除
 	await get_tree().create_timer(1.2).timeout
 	if is_instance_valid(particles):
 		particles.queue_free()
-
 
 # 闪光效果
 func flash_white(node: CanvasItem, duration: float = 0.1) -> void:
@@ -93,7 +88,6 @@ func flash_white(node: CanvasItem, duration: float = 0.1) -> void:
 
 	var tween = create_tween()
 	tween.tween_property(node, "modulate", original_modulate, duration)
-
 
 # 伤害数字（简单版）
 func spawn_damage_number(pos: Vector2, damage: int, is_critical: bool = false) -> void:
@@ -116,7 +110,6 @@ func spawn_damage_number(pos: Vector2, damage: int, is_critical: bool = false) -
 	await tween.finished
 	label.queue_free()
 
-
 # ===== 新增战斗特效 =====
 
 # 血液飞溅
@@ -128,7 +121,6 @@ func spawn_blood_splash(pos: Vector2) -> void:
 	await get_tree().create_timer(1.0).timeout
 	if is_instance_valid(blood):
 		blood.queue_free()
-
 
 # 能量爆发
 func spawn_energy_burst(pos: Vector2, color: Color = Color(0.5, 0.8, 1.0)) -> void:
@@ -149,7 +141,6 @@ func spawn_energy_burst(pos: Vector2, color: Color = Color(0.5, 0.8, 1.0)) -> vo
 	if is_instance_valid(energy):
 		energy.queue_free()
 
-
 # 治疗粒子
 func spawn_heal_effect(pos: Vector2) -> void:
 	var heal = HEAL_PARTICLES_SCENE.instantiate()
@@ -159,7 +150,6 @@ func spawn_heal_effect(pos: Vector2) -> void:
 	await get_tree().create_timer(2.0).timeout
 	if is_instance_valid(heal):
 		heal.queue_free()
-
 
 # 护盾破碎
 func spawn_shield_break(pos: Vector2) -> void:
@@ -171,7 +161,6 @@ func spawn_shield_break(pos: Vector2) -> void:
 	if is_instance_valid(shield):
 		shield.queue_free()
 
-
 # 连击特效
 func spawn_combo_ring(pos: Vector2) -> void:
 	var combo = COMBO_RING_SCENE.instantiate()
@@ -181,7 +170,6 @@ func spawn_combo_ring(pos: Vector2) -> void:
 	await get_tree().create_timer(0.6).timeout
 	if is_instance_valid(combo):
 		combo.queue_free()
-
 
 # ===== 移动特效 =====
 
@@ -193,7 +181,6 @@ func create_dash_trail(parent: Node, offset: Vector2 = Vector2.ZERO) -> CPUParti
 	trail.emitting = true
 	return trail
 
-
 # 跳跃尘土
 func spawn_jump_dust(pos: Vector2) -> void:
 	var dust = JUMP_DUST_SCENE.instantiate()
@@ -203,7 +190,6 @@ func spawn_jump_dust(pos: Vector2) -> void:
 	await get_tree().create_timer(0.5).timeout
 	if is_instance_valid(dust):
 		dust.queue_free()
-
 
 # 墙壁滑行火花（持续发射）
 func create_wall_slide_spark(parent: Node, offset: Vector2 = Vector2.ZERO) -> CPUParticles2D:

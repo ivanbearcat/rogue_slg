@@ -18,7 +18,6 @@ func _ready() -> void:
 	EventBus.subscribe("hide_skill_range", hide_skill_range)
 	EventBus.subscribe("hide_skill_attack", hide_skill_attack)
 	EventBus.subscribe("skill_move", skill_move)
-	
 
 func show_skill_range(hero_name, skill_num):
 	call("_show_" + hero_name + "_skill_" + skill_num + "_range")
@@ -28,23 +27,23 @@ func hide_skill_range():
 	for target_grid_index in game_manager.all_grid_dict:
 		game_manager.all_grid_dict[target_grid_index].target.visible = false
 	hide_skill_attack()
-	
+
 ## 隐藏所有红色格子
 func show_skill_attack(hero_name, skill_num):
 	hide_skill_attack()
 	call("_show_" + hero_name + "_skill_" + skill_num + "_attack")
-	
+
 func hide_skill_attack():
 	for attack_grid_index in game_manager.all_grid_dict:
 		game_manager.all_grid_dict[attack_grid_index].attack.visible = false
 	_reset_dice_panel()
 
-## 鼠标点击红框之后攻击	
+## 鼠标点击红框之后攻击
 func skill_attack():
 	## 正在攻击结算
 	Current.action_lock = true
 	## 攻击前buff
-	#EventBus.event_emit("do_pre_attack_buff")
+	EventBus.event_emit("do_pre_attack_buff")
 	## 史莱姆死亡
 	Current.slime_die_sum = 0
 	for slime in Current.all_enemy_array:
@@ -56,6 +55,7 @@ func skill_attack():
 	Current.hero.add_child(float_number_instantiate)
 	await Tools.time_sleep(0.5)
 	Current.total_score += Current.dice_type_point
+	Current.once_total_score = Current.dice_type_point
 	## 根据骰子数量条计算分数并统计骰子数
 	#var dice_array = game_manager.dice_list.get_children()
 	#var dice_num = 0
@@ -91,7 +91,6 @@ func skill_attack():
 	Current.once_total_score = 0
 	## 恢复技能UI弹起状态
 	hide_all_skill.emit()
-	
 
 ## 鼠标点击红框之后移动
 func skill_move():
@@ -145,7 +144,7 @@ func skill_move():
 		Current.hero.animated_sprite_2d.play(Current.hero.hero_name + "_end")
 		Current.hero.hero_state_machine.transition_to("move")
 	Current.action_lock = false
-	
+
 func _show_soldier_skill_1_range():
 	Current.skill_target_range = []
 	var hero_grid_index = Current.clicked_hero.hero_grid_index
@@ -156,8 +155,8 @@ func _show_soldier_skill_1_range():
 			game_manager.all_grid_dict[target_grid_index].target.visible = true
 			Current.skill_target_range.append(target_grid_index)
 	if Current.grid_index in Current.skill_target_range:
-		_show_soldier_skill_1_attack()	
-		
+		_show_soldier_skill_1_attack()
+
 func _show_soldier_skill_1_attack():
 	Current.skill_attack_range = []
 	if Current.power_skill == 1:
@@ -211,8 +210,6 @@ func _show_soldier_skill_1_attack():
 	Current.dice_type_point = dice_type_point[0]
 	#print(dice_type_point)
 	_show_dice_panel(dice_type_point)
-		
-	
 
 func _show_soldier_skill_2_range():
 	Current.skill_target_range = []
@@ -224,8 +221,8 @@ func _show_soldier_skill_2_range():
 			game_manager.all_grid_dict[target_grid_index].target.visible = true
 			Current.skill_target_range.append(target_grid_index)
 	if Current.grid_index in Current.skill_target_range:
-		_show_soldier_skill_2_attack()	
-		
+		_show_soldier_skill_2_attack()
+
 func _show_soldier_skill_2_attack():
 	Current.skill_attack_range = []
 	if Current.power_skill == 2:
@@ -266,8 +263,8 @@ func _show_soldier_skill_3_range():
 			game_manager.all_grid_dict[target_grid_index].target.visible = true
 			Current.skill_target_range.append(target_grid_index)
 	if Current.grid_index in Current.skill_target_range:
-		_show_soldier_skill_3_attack()	
-		
+		_show_soldier_skill_3_attack()
+
 func _show_soldier_skill_3_attack():
 	Current.skill_attack_range = []
 	for grid_index in Current.skill_target_range:
@@ -325,7 +322,7 @@ func _show_soldier_skill_3_attack():
 						if attack_grid_index in game_manager.all_grid_dict:
 							game_manager.all_grid_dict[attack_grid_index].attack.visible = true
 							Current.skill_attack_range.append(attack_grid_index)
-		
+
 ## 直线三格和直线到底
 func _show_soldier_skill_3_attack_bak():
 	Current.skill_attack_range = []
@@ -405,8 +402,7 @@ func _show_dice_panel(dice_type_point):
 		score_bar_child_array[num].set_self_modulate(Color(1, 1, 1, 1))
 	game_manager.score_bar_label.text = score_bar_label_text
 	game_manager.score_bar_label.show()
-	
-	
+
 	var frame_dict = {
 		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
 		2: game_manager.two_score_frame.get("theme_override_styles/panel"),
@@ -421,14 +417,14 @@ func _show_dice_panel(dice_type_point):
 		'tongdui': game_manager.tongdui_percent_frame.get("theme_override_styles/panel"),
 		'tongshun': game_manager.tongshun_percent_frame.get("theme_override_styles/panel")
 	}
-	
+
 	## 骰型框线和设置倍率
 	#for type in dice_type_point[1]:
 		#frame_dict[type].border_color = Color.html(game_manager.color["red"])
 	for index in range(dice_type_point[1].size()):
 		frame_dict[dice_type_point[1][index]].border_color = Color.html(game_manager.color["red"])
 		Current.set(dice_type_dict[dice_type_point[1][index]], Current.dice_multiplier_dict[dice_type_point[2][index]][dice_type_point[1][index]])
-	
+
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
 	var score_bar_child_array = game_manager.score_bar.get_children()
@@ -492,7 +488,7 @@ func _count_dice_type(attack_slime_array_info):
 		#print(['none', round(_count_none(attack_slime_array_info))])
 		var none_score_dice = _count_none(attack_slime_array_info)
 		return ['none', round(none_score_dice[0]), none_score_dice[1]]
-	
+
 ## 对子算法
 func _count_duizi(attack_slime_array_info):
 	var score_dict := {

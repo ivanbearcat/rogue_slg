@@ -1,7 +1,6 @@
 @tool
 extends AudioStreamPlayer
 
-
 # Wave Shape
 var wave_type: int
 
@@ -52,66 +51,51 @@ var sample_rate: float
 # Sfx Generation
 var sfx_timer: SceneTreeTimer
 
-
 ##################################
 # Inspector Properties
 ##################################
 
-
 func _get_property_list() -> Array:
     return SfxrStreamPlayerInterface.object_get_property_list()
-
 
 func _get(property):
     return SfxrStreamPlayerInterface.object_get(self, property)
 
-
 func _set(property, value) -> bool:
     return SfxrStreamPlayerInterface.object_set(self, property, value)
-
 
 ##################################
 # Defaults
 ##################################
 
-
 func _init():
     SfxrStreamPlayerInterface.object_set_defaults(self)
-
 
 func property_can_revert(property: StringName):
     return SfxrStreamPlayerInterface.object_property_can_revert(property)
 
-
 func property_get_revert(property: StringName):
     return SfxrStreamPlayerInterface.object_property_get_revert(property)
-
 
 ##################################
 # Presets
 ##################################
 
-
 func random_preset() -> bool:
     return SfxrStreamPlayerInterface.random_preset(self)
 
-
 func preset_values(preset_key: int) -> bool:
     return SfxrStreamPlayerInterface.preset_values(self, preset_key)
-
 
 ##################################
 # Playback
 ##################################
 
-
 func _on_sfx_timer_timeout(timer: SceneTreeTimer, play_after_build: bool):
     SfxrStreamPlayerInterface._on_sfx_timer_timeout(self, timer, play_after_build)
 
-
 func build_sfx(play_after_build: bool = false):
     SfxrStreamPlayerInterface.build_sfx(self, play_after_build)
-
 
 func play(from_position: float = 0.0):
     if playing:

@@ -7,9 +7,9 @@ func set_buff():
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
 	game_manager.slime_scene_array.append("slime_small")
-	
+
 func process_buff():
 	pass
-	
+
 func clear_buff():
 	pass

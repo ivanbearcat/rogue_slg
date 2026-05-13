@@ -7,9 +7,9 @@ func set_buff():
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
 	Current.slime_create_num += 1
-	
+
 func process_buff():
 	pass
-	
+
 func clear_buff():
 	pass

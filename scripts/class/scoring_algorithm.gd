@@ -69,7 +69,7 @@ static func count_total_score(attack_slime_array_info):
 			#highest_type_array = all_dice_type_array
 		### 返回最高分组合
 	#return [highest_score, highest_type_array]
-	
+
 	## 空数组返回0分和空骰型
 	if attack_slime_array_info == []:
 		return [0, [], []]
@@ -166,7 +166,7 @@ static func count_highest_score(attack_slime_array_info):
 		#print(['none', round(_count_none(attack_slime_array_info))])
 		var none_score_dice = _count_none(attack_slime_array_info)
 		return ['none', round(none_score_dice[0]), none_score_dice[1]]
-	
+
 ## 对子算法
 static func _count_duizi(attack_slime_array_info):
 	var score_dict := {

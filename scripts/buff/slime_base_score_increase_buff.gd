@@ -6,7 +6,7 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
-	
+
 func process_buff():
 	for i in range(Current.slime_die_sum):
 		var _rand_num = randi_range(1, 6)
@@ -24,7 +24,6 @@ func process_buff():
 				Current.five_score += 1
 			6:
 				Current.six_score += 1
-				
-			
+
 func clear_buff():
 	pass

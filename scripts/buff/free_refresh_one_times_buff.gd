@@ -9,9 +9,9 @@ func set_buff():
 	Current.zero_coin_refresh_max_times += 1
 	Current.zero_coin_refresh_times += 1
 	game_manager.buff_refresh_cost = game_manager.buff_refresh_cost
-	
+
 func process_buff():
 	pass
-		
+
 func clear_buff():
 	pass

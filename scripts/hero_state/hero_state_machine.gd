@@ -36,14 +36,9 @@ func transition_to(target_state_name :String):
 	state.exit()
 	state = get_node(target_state_name)
 	state.enter()
-	
+
 func is_selected_hero():
 	if Current.clicked_hero != null:
 		return Current.clicked_hero.hero_name == owner.hero_name
 	if Current.hero != null:
 		return Current.hero.hero_name == owner.hero_name
-	
-
-
-
-			

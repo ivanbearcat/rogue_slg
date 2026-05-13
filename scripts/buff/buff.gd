@@ -10,12 +10,12 @@ var data: Dictionary
 func _init(meta: Dictionary = {}, game_manager_node: Node2D = null) -> void:
 	buff_meta = meta
 	game_manager = game_manager_node
-	
+
 func set_buff():
 	pass
-	
+
 func process_buff():
 	pass
-	
+
 func clear_buff():
 	pass

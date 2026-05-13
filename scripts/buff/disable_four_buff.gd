@@ -8,11 +8,11 @@ func set_buff():
 	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
 	data["four_score"] = Current.four_score
 	Current.four_score = 0
-	
+
 func process_buff():
 	data["four_score"] += Current.four_score
 	Current.four_score = 0
-	
+
 func clear_buff():
 	Current.four_score = data["four_score"]
 	data.erase("four_score")

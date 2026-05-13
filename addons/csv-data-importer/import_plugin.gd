@@ -4,14 +4,11 @@ extends EditorImportPlugin
 enum Presets { CSV, CSV_HEADER, TSV, TSV_HEADER }
 enum Delimiters { COMMA, TAB }
 
-
 func _get_importer_name():
 	return "com.timothyqiu.godot-csv-importer"
 
-
 func _get_visible_name():
 	return "CSV Data"
-
 
 func _get_priority():
 	# The built-in Translation importer needs a restart to switch to other importer
@@ -23,18 +20,14 @@ func _get_import_order():
 func _get_recognized_extensions():
 	return ["csv", "tsv"]
 
-
 func _get_save_extension():
 	return "res"
-
 
 func _get_resource_type():
 	return "Resource"
 
-
 func _get_preset_count():
 	return Presets.size()
-
 
 func _get_preset_name(preset):
 	match preset:
@@ -48,7 +41,6 @@ func _get_preset_name(preset):
 			return "TSV with headers"
 		_:
 			return "Unknown"
-
 
 func _get_import_options(_path, preset):
 	var delimiter = Delimiters.COMMA
@@ -69,13 +61,11 @@ func _get_import_options(_path, preset):
 		{name="force_float", default_value=true},
 	]
 
-
 func _get_option_visibility(_path, option, options):
 	return true	# Godot does not update the visibility immediately
 	if option == "force_float":
 		return options.detect_numbers
 	return true
-
 
 func _import(source_file, save_path, options, platform_variants, gen_files):
 	var delim: String

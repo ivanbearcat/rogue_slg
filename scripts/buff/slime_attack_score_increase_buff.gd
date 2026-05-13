@@ -6,7 +6,7 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
-	
+
 func process_buff():
 	Current.public_lock_array.append("slime_attack_score_increase_buff")
 	var add_num = int(Current.once_total_score * (Current.all_enemy_array.size() * 0.02))
@@ -17,6 +17,6 @@ func process_buff():
 	await Tools.time_sleep(1)
 	Current.total_score += add_num
 	Current.public_lock_array.erase("slime_attack_score_increase_buff")
-	
+
 func clear_buff():
 	pass

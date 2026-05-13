@@ -7,9 +7,9 @@ func set_buff():
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
 	game_manager.dice_point.append(10)
-	
+
 func process_buff():
 	pass
-	
+
 func clear_buff():
 	pass

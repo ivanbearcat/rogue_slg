@@ -1,9 +1,7 @@
 @tool
 extends EditorPlugin
 
-
 var audio_player: AudioStreamPlayer
-
 
 func _enter_tree() -> void:
     add_custom_type(
@@ -22,7 +20,6 @@ func _enter_tree() -> void:
     audio_player = AudioStreamPlayer.new()
     audio_player.add_to_group("SfxrInternalAudioPlayer")
     get_tree().root.add_child.call_deferred(audio_player)
-
 
 func _exit_tree() -> void:
     remove_custom_type("SfxrStreamPlayer")

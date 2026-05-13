@@ -35,9 +35,6 @@ func event_emit(event_name: String, param: Array = []) -> void:
 	assert(self.has_signal(event_name), "没有注册的信号：%s" % event_name)
 	callv("emit_signal", param)
 
-	
-
-
 ## 订阅事件
 ## [param event_name] 事件名
 ## [param callback] 回调函数
@@ -59,7 +56,6 @@ func subscribe(event_name: String, callback: Callable, priority: Priority=Priori
 	# 连接信号
 	connect(event_name, callback)
 
-	
 	if debug_mode:
 		print("[EventBus] Subscribed to event: %s with priority: %s" % [event_name, priority])
 
@@ -69,14 +65,13 @@ func subscribe(event_name: String, callback: Callable, priority: Priority=Priori
 func unsubscribe(event_name: String, callback: Callable) -> void:
 	if not has_signal(event_name):
 		return
-		
+
 	# 断开连接
 	if is_connected(event_name, callback):
 		disconnect(event_name, callback)
-		
+
 	if debug_mode:
 		print("[EventBus] Unsubscribed from event: %s" % event_name)
-
 
 ## 取消订阅所有事件
 ## [param callback] 回调函数
@@ -90,7 +85,7 @@ func clear_subscriptions() -> void:
 	for event_name in _get_all_signals():
 		for conn in get_signal_connection_list(event_name):
 			disconnect(event_name, conn["callable"])
-	
+
 	if debug_mode:
 		print("[EventBus] All subscriptions cleared")
 
@@ -110,7 +105,6 @@ func get_event_history() -> Array[Dictionary]:
 func clear_event_history() -> void:
 	_event_history.clear()
 
-
 ## 获取所有可用信号
 func _get_all_signals() -> Array[String]:
 	var signal_list: Array[String] = []
@@ -119,7 +113,6 @@ func _get_all_signals() -> Array[String]:
 			signal_list.append(signal_dict["name"])
 	return signal_list
 
-		
 ## 获取订阅数量（测试用）
 func get_subscription_counts() -> Dictionary:
 	var result = {}

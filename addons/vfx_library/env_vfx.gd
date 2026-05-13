@@ -29,7 +29,6 @@ const CAMPFIRE_SMOKE_SCENE = preload("res://addons/vfx_library/effects/campfire_
 const CANDLE_FLAME_SCENE = preload("res://addons/vfx_library/effects/candle_flame.tscn")
 const ASH_PARTICLES_SCENE = preload("res://addons/vfx_library/effects/ash_particles.tscn")
 
-
 ## 火把/火焰效果
 func create_torch(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CPUParticles2D:
     var fire = TORCH_FIRE_SCENE.instantiate()
@@ -38,14 +37,12 @@ func create_torch(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CPUParticle
     fire.z_index = -1  # 在物体后面
     return fire
 
-
 ## 萤火虫环境光效
 func create_fireflies(parent: Node2D, area_size: Vector2 = Vector2(200, 100)) -> CPUParticles2D:
     var fireflies = FIREFLIES_SCENE.instantiate()
     parent.add_child(fireflies)
     fireflies.emission_rect_extents = area_size / 2
     return fireflies
-
 
 ## 落叶效果
 func create_falling_leaves(parent: Node2D, width: float = 300.0) -> CPUParticles2D:
@@ -55,7 +52,6 @@ func create_falling_leaves(parent: Node2D, width: float = 300.0) -> CPUParticles
     leaves.emission_rect_extents = Vector2(width / 2, 10)
     return leaves
 
-
 ## 蒸汽/烟雾效果（用于温泉、通风口等）
 func create_steam(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CPUParticles2D:
     var steam = STEAM_SCENE.instantiate()
@@ -63,7 +59,6 @@ func create_steam(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CPUParticle
     steam.position = offset
     steam.emitting = true
     return steam
-
 
 ## 电火花效果（用于机关、电线、陷阱）
 func create_sparks(parent: Node2D, offset: Vector2 = Vector2.ZERO, continuous: bool = false) -> CPUParticles2D:
@@ -73,7 +68,6 @@ func create_sparks(parent: Node2D, offset: Vector2 = Vector2.ZERO, continuous: b
     sparks.emitting = continuous
     sparks.one_shot = !continuous
     return sparks
-
 
 ## 木屑飞溅（箱子破碎、木板断裂）
 func create_wood_debris(pos: Vector2, direction: Vector2 = Vector2.RIGHT, parent: Node = null) -> void:
@@ -89,7 +83,6 @@ func create_wood_debris(pos: Vector2, direction: Vector2 = Vector2.RIGHT, parent
     # 自动删除
     await get_tree().create_timer(2.0).timeout
     debris.queue_free()
-
 
 ## 水花飞溅
 func create_water_splash(pos: Vector2, size: float = 1.0, parent: Node = null) -> void:
@@ -112,7 +105,6 @@ func create_water_splash(pos: Vector2, size: float = 1.0, parent: Node = null) -
     await get_tree().create_timer(1.0).timeout
     splash.queue_free()
 
-
 ## 尘土扬起（角色落地、重物掉落）
 func create_dust_cloud(pos: Vector2, size: float = 1.0, parent: Node = null) -> void:
     if parent == null:
@@ -133,18 +125,17 @@ func create_dust_cloud(pos: Vector2, size: float = 1.0, parent: Node = null) -> 
     if dust:
         dust.queue_free()
 
-
 ## 魔法光环（用于传送门、神秘物体）
 func create_magic_aura(parent: Node2D, color: Color = Color(0.5, 0.3, 1.0), radius: float = 60.0) -> GPUParticles2D:
     var aura = MAGIC_AURA_SCENE.instantiate()
     parent.add_child(aura)
-    
+
     # 获取 ParticleProcessMaterial 来设置环形半径
     var material = aura.process_material as ParticleProcessMaterial
     if material:
         material.emission_ring_radius = radius
         material.emission_ring_inner_radius = radius - 7.0
-        
+
         # 只有当传入的颜色不是默认紫色时，才自定义颜色
         if not color.is_equal_approx(Color(0.5, 0.3, 1.0)):
             # 创建5点渐变，匹配场景文件的结构
@@ -161,7 +152,6 @@ func create_magic_aura(parent: Node2D, color: Color = Color(0.5, 0.3, 1.0), radi
         # 否则使用场景文件中预设的漂亮渐变
 
     return aura
-
 
 ## 毒雾效果（毒气陷阱、毒液）
 func create_poison_cloud(pos: Vector2, size: float = 1.0, parent: Node = null) -> CPUParticles2D:
@@ -181,7 +171,6 @@ func create_poison_cloud(pos: Vector2, size: float = 1.0, parent: Node = null) -
 
     return poison
 
-
 # ===== 新增法术/技能特效 =====
 
 ## 传送门漩涡
@@ -192,19 +181,17 @@ func create_portal(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CPUParticl
     portal.emitting = true
     return portal
 
-
 ## 闪电链
 func spawn_lightning_chain(pos: Vector2) -> void:
     var lightning = LIGHTNING_CHAIN_SCENE.instantiate()
     get_tree().current_scene.add_child(lightning)
     lightning.global_position = pos
-    
+
     # 闪电链是 Node2D 容器，包含多个粒子发射器，它们已经在场景中设置为自动发射
     # 不需要手动设置 emitting，等待所有链完成后清理
     await get_tree().create_timer(0.4).timeout
     if is_instance_valid(lightning):
         lightning.queue_free()
-
 
 ## 冰霜效果
 func spawn_ice_frost(pos: Vector2) -> void:
@@ -216,7 +203,6 @@ func spawn_ice_frost(pos: Vector2) -> void:
     if is_instance_valid(frost):
         frost.queue_free()
 
-
 ## 火球拖尾（持续发射）
 func create_fireball_trail(parent: Node, offset: Vector2 = Vector2.ZERO) -> CPUParticles2D:
     var trail = FIREBALL_TRAIL_SCENE.instantiate()
@@ -224,7 +210,6 @@ func create_fireball_trail(parent: Node, offset: Vector2 = Vector2.ZERO) -> CPUP
     trail.position = offset
     trail.emitting = true
     return trail
-
 
 ## 召唤阵
 func create_summon_circle(parent: Node2D, offset: Vector2 = Vector2.ZERO, radius: float = 50.0) -> CPUParticles2D:
@@ -234,7 +219,6 @@ func create_summon_circle(parent: Node2D, offset: Vector2 = Vector2.ZERO, radius
     circle.emission_rect_extents = Vector2(radius, 5.0)
     circle.emitting = true
     return circle
-
 
 # ===== 新增环境特效 =====
 
@@ -246,7 +230,6 @@ func create_rain(parent: Node2D, area_width: float = 600.0) -> CPUParticles2D:
     rain.emitting = true
     return rain
 
-
 ## 雪花
 func create_snow(parent: Node2D, area_width: float = 600.0) -> CPUParticles2D:
     var snow = SNOW_FLAKES_SCENE.instantiate()
@@ -254,7 +237,6 @@ func create_snow(parent: Node2D, area_width: float = 600.0) -> CPUParticles2D:
     snow.emission_rect_extents = Vector2(area_width / 2, 10)
     snow.emitting = true
     return snow
-
 
 ## 瀑布水雾
 func create_waterfall_mist(parent: Node2D, offset: Vector2 = Vector2.ZERO, width: float = 80.0) -> CPUParticles2D:
@@ -265,7 +247,6 @@ func create_waterfall_mist(parent: Node2D, offset: Vector2 = Vector2.ZERO, width
     mist.emitting = true
     return mist
 
-
 ## 篝火烟雾
 func create_campfire_smoke(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CPUParticles2D:
     var smoke = CAMPFIRE_SMOKE_SCENE.instantiate()
@@ -274,7 +255,6 @@ func create_campfire_smoke(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CP
     smoke.emitting = true
     return smoke
 
-
 ## 蜡烛火焰
 func create_candle_flame(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CPUParticles2D:
     var candle = CANDLE_FLAME_SCENE.instantiate()
@@ -282,7 +262,6 @@ func create_candle_flame(parent: Node2D, offset: Vector2 = Vector2.ZERO) -> CPUP
     candle.position = offset
     candle.emitting = true
     return candle
-
 
 ## 灰烬飘散
 func create_ash_particles(parent: Node2D, area_size: Vector2 = Vector2(60, 20)) -> CPUParticles2D:

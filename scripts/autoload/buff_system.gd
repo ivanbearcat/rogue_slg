@@ -31,7 +31,7 @@ enum buff_type{
 	STAGE,
 	ALWAYS
 }
-	
+
 ## 清理关卡buff
 func clear_stage_buff():
 	for buff in pre_attack_buff_stage:
@@ -51,11 +51,25 @@ func clear_stage_buff():
 	post_hero_move_buff_stage.clear()
 
 ## 攻击前
-#func set_pre_attack_buff(buff: Object, _type: buff_type):
-	#pass
+func set_pre_attack_buff(buff: Object, type: buff_type):
+	buff.set_buff()
+	match type:
+		buff_type.ONCE:
+			pre_attack_buff_once.append(buff)
+		buff_type.STAGE:
+			pre_attack_buff_stage.append(buff)
+		buff_type.ALWAYS:
+			pre_attack_buff_always.append(buff)
 
 func do_pre_attack_buff():
-	pass
+	for buff in pre_attack_buff_once:
+		await buff.process_buff()
+		buff.clear_buff()
+	pre_attack_buff_once = []
+	for buff in pre_attack_buff_stage:
+		await buff.process_buff()
+	for buff in pre_attack_buff_always:
+		await buff.process_buff()
 
 ## 攻击后
 func set_post_attack_buff(buff: Object, type: buff_type):
@@ -88,7 +102,7 @@ func set_pre_enemy_turn_buff(buff: Object, type: buff_type):
 			pre_enemy_turn_buff_stage.append(buff)
 		buff_type.ALWAYS:
 			pre_enemy_turn_buff_always.append(buff)
-	
+
 func do_pre_enemy_turn_buff():
 	for buff in pre_enemy_turn_buff_once:
 		await buff.process_buff()
@@ -109,7 +123,7 @@ func set_pre_hero_turn_buff(buff: Object, type: buff_type):
 			pre_hero_turn_buff_stage.append(buff)
 		buff_type.ALWAYS:
 			pre_hero_turn_buff_always.append(buff)
-	
+
 func do_pre_hero_turn_buff():
 	for buff in pre_hero_turn_buff_once:
 		await buff.process_buff()

@@ -6,10 +6,10 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
-	
+
 func process_buff():
 	EffectManager.big_flow_effect(buff_texture)
 	Current.total_coins += 1
-	
+
 func clear_buff():
 	pass

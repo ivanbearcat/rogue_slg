@@ -22,7 +22,6 @@ func input(event: InputEvent) -> void:
 				Current.attack_animation_finished = 0
 				owner.animated_sprite_2d.play(owner.hero_name + "_skill_" + Current.skill_num)
 				EventBus.event_emit("skill_move")
-			
 
 func exit():
 	print(owner.hero_name, "离开soldier_skill_3")

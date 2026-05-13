@@ -45,7 +45,7 @@ func _input(event: InputEvent) -> void:
 				mask_1.visible = true
 				nine_patch_rect.material.set_shader_parameter("is_high_light", true)
 				Current.clicked_hero.hero_state_machine.transition_to("skill_1")
-		
+
 	## 右键点击恢复
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
 	event.is_pressed() == true or event.is_action_pressed("esc"):
@@ -60,7 +60,7 @@ func reset_all_hero_skills():
 			Current.clicked_hero.hero_state_machine.transition_to("idle")
 		else:
 			Current.clicked_hero.hero_state_machine.transition_to("move")
-		
+
 func hide_all_skills():
 	mask_1.visible = false
 	nine_patch_rect.material.set_shader_parameter("is_high_light", false)
@@ -100,7 +100,7 @@ func _skill_power_up(skill_num: int) -> void:
 	else:
 		## 没有能量赋能（震屏，弹提示）
 		skill_dict[skill_num][0].button_pressed = false
-	
+
 func _on_skill_power_reset() -> void:
 	var skill_ui_list = [hero_ui_1, hero_ui_2]
 	for skill in skill_ui_list:
@@ -118,7 +118,7 @@ func _on_skill_1_button_pressed() -> void:
 	if Current.skill_num == "1":
 		EventBus.event_emit("hide_skill_attack")
 		EventBus.event_emit("show_skill_attack", [Current.clicked_hero.hero_name, str(1)])
-	
+
 func _on_skill_2_button_pressed() -> void:
 	_skill_power_up(2)
 	if Current.skill_num == "2":
@@ -130,4 +130,3 @@ func _on_skill_3_button_pressed() -> void:
 	if Current.skill_num == "3":
 		EventBus.event_emit("hide_skill_attack")
 		EventBus.event_emit("show_skill_attack", [Current.clicked_hero.hero_name, str(3)])
-	

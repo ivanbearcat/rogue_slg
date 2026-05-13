@@ -227,6 +227,10 @@ var pending_shop_skill: Dictionary = {}
 ## 已在商店出现过的金币技能ID列表（防止重复出现）
 var appeared_coin_skill_ids: Array = []
 
+## 骰型分数Label映射
+var _dice_score_labels: Dictionary
+## 骰型倍率Label映射
+var _dice_multiplier_labels: Dictionary
 
 func _ready() -> void:
 	## 测试
@@ -295,11 +299,11 @@ func _ready() -> void:
 	_pre_create_slime()
 	## 回合处理
 	await _turn_process()
-	
+
 	## 临时测试debuff
 	#_set_stage_debuff(1)
 	#await EffectManager.debuff_change_effect()
-	
+
 	#for row in debuff_json_data:
 		#if row["debuff_id"] == "power_current_score_down":
 			#var buff = load(row["debuff_res"]).new(row, self)
@@ -361,7 +365,7 @@ func _pre_create_slime():
 	if available_grid_array.size() > 0:
 		slime_create_num = clamp(available_grid_array.size(), 1, Current.slime_create_num)
 		## 计算距离小于等于3的格子数组
-		
+
 		while create_slime_grid_index_array.size() < slime_create_num:
 			var grid_index = available_grid_array.pick_random()
 			if ! grid_index in create_slime_grid_index_array:
@@ -437,7 +441,7 @@ func _create_coin_slime():
 			if coin_slime not in Current.coin_slime_array:
 				coin_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 18.892, 0.0))
 				coin_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-		
+
 ## 史莱姆移动
 func slime_move_ai():
 	var target_position_array: Array
@@ -523,7 +527,6 @@ func _set_buff(buff_row):
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
 	exp_label.text = str(num_now) + '/' + str(num_max)
 
-
 ## 增加经验
 func add_exp(new_exp: int) -> void:
 	Current.hero_exp += new_exp
@@ -603,7 +606,6 @@ func _check_and_level_up() -> void:
 		## 暂停
 		get_tree().paused = true
 
-
 ## 设置英雄信息
 func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_name = properties.name
@@ -619,9 +621,8 @@ func _set_hero_properties(hero: Hero, properties: Dictionary):
 	## onready后无法获取到代码新增的节点skill_1_ui，在此处添加了场景树之后可以获取，但无法使用唯一标识获取
 	var hero_skill_child = hero_skill.get_child(1)
 	skill_1_ui = hero_skill_child.get_node("%skill_1")
-	
+
 	#skill_1_ui = hero_skill.get_node("MarginContainer/HBoxContainer/skill_1")
-	
 
 ## 设置3技能的状态脚本
 func _set_hero_skill_scripts(hero: Hero):
@@ -638,7 +639,7 @@ func _set_hero_skill_scripts(hero: Hero):
 ## 可变参数信号
 func _on_hero_cmd(cmd_name):
 	call(cmd_name)
-	
+
 func _on_grid_cmd(cmd_name):
 	call(cmd_name)
 
@@ -686,14 +687,14 @@ func show_move_range():
 	for grid_index in all_grid_dict:
 		if grid_index in Current.movable_grid_index_array:
 			all_grid_dict[grid_index].range.visible = true
-	
+
 ## 隐藏英雄移动网格
 func hide_move_range():
 	Current.movable_grid_index_array = []
 	for grid_index in all_grid_dict:
 		all_grid_dict[grid_index].range.visible = false
 
-## 英雄移动路径	
+## 英雄移动路径
 func hero_move():
 	if Current.id_path.size() > 0:
 		return
@@ -772,7 +773,7 @@ func skill_attack():
 	await _turn_process()
 	## 执行玩家回合前buff
 	EventBus.event_emit("do_pre_hero_turn_buff")
-	#turn_button.disabled = false
+	turn_button.disabled = false
 
 ##等待buff执行完成
 func wait_for_buff_finish():
@@ -801,20 +802,16 @@ func _on_turn_button_pressed() -> void:
 	await _turn_process()
 	## 执行玩家回合前buff
 	EventBus.event_emit("do_pre_hero_turn_buff")
-	#turn_button.disabled = false
+	turn_button.disabled = false
 	## 测试
-	
-	
 
-	
-	
 ## 让label跟着按钮下降
 func _on_turn_button_button_down() -> void:
 	turn_button_label.position += Vector2(0, 1)
 ## 让label跟着按钮回弹
 func _on_turn_button_button_up() -> void:
 	turn_button_label.position += Vector2(0, -1)
-	
+
 ## 回合的清理工作
 func _turn_clean():
 	## 重置英雄能
@@ -835,6 +832,8 @@ func _pre_hero_turn_begin():
 	if Current.count_round > 10:
 		print("游戏失败")
 		get_tree().paused = true
+	## 兜底恢复回合按钮
+	turn_button.disabled = false
 	## 重置英雄状态
 	for hero in Current.all_hero_array:
 		hero.hero_state_machine.transition_to("idle")
@@ -849,7 +848,7 @@ func _pre_hero_turn_begin():
 	EventBus.event_emit("hide_all_skills")
 	## 下回合开始
 	Current.turn = "hero_turn"
-	
+
 func reset_astar_solid() -> void:
 	## 重新计算不可移动地块
 	for grid in grids.get_children():
@@ -916,7 +915,7 @@ func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coi
 		stage_add_coin + round_add_coin + highest_dice_add_coin
 		)
 	stage_clear_button.show()
-	
+
 ## 修改数值
 func _modifiy_value(original_value: int, operate: String, value: float) -> int:
 	var modified_value: float
@@ -1064,7 +1063,6 @@ func _get_min_score_name() -> String:
 			min_name = name
 	return min_name
 
-	
 ## 鼠标移出可移动区域清除格子位置
 func _on_area_2d_mouse_entered() -> void:
 	Current.within_grid_area = false
@@ -1080,7 +1078,6 @@ func _on_card_1_button_pressed() -> void:
 	level_up_ui.hide()
 	Current.public_lock_array.erase("level_up_ui")
 
-
 func _on_card_2_button_pressed() -> void:
 	## 遍历卡牌效果列表，逐一应用
 	for effect in level_up_three_card_array[1]["card_effects"]:
@@ -1089,7 +1086,6 @@ func _on_card_2_button_pressed() -> void:
 	level_up_ui.hide()
 	Current.public_lock_array.erase("level_up_ui")
 
-
 func _on_card_3_button_pressed() -> void:
 	## 遍历卡牌效果列表，逐一应用
 	for effect in level_up_three_card_array[2]["card_effects"]:
@@ -1097,7 +1093,6 @@ func _on_card_3_button_pressed() -> void:
 	get_tree().paused = false
 	level_up_ui.hide()
 	Current.public_lock_array.erase("level_up_ui")
-
 
 func _hide_all_clear_stage_ui():
 	clear_stage_label.hide()
@@ -1146,8 +1141,7 @@ func _set_shop_buff():
 		str(int(shop_buff_2["buff_price"]))
 	buff_shop_rlabel_3.text = "[img=13 ]res://images/coin.png[/img] " + \
 		str(int(shop_buff_3["buff_price"]))
-	
-	
+
 ## 设置商店金币技能（每关随机1个技能展示在商店）
 func _set_shop_coin_skill():
 	## 从尚未出现过的金币技能中随机抽取1个（所有技能概率相同，不重复）
@@ -1294,7 +1288,7 @@ func _on_stage_clear_button_pressed() -> void:
 	shop_ui.show()
 	## 商店UI效果
 	await EffectManager.top_to_bottom_effect(shop_texture_ui, 0.5)
-	
+
 	## 等待商店关闭
 	while "shop_ui" in Current.public_lock_array:
 		await Tools.time_sleep(0.1)
@@ -1320,8 +1314,6 @@ func _on_stage_clear_button_pressed() -> void:
 	if Current.count_stage == 12:
 		_set_stage_debuff(1)
 		await EffectManager.debuff_change_effect()
-	
-
 
 ## 重掷按钮按下
 func _on_reroll_button_pressed() -> void:
@@ -1332,7 +1324,6 @@ func _on_reroll_button_pressed() -> void:
 		EventBus.event_emit("reset_all_hero_skills")
 		CursorManager.change_cursor("reroll")
 		EventBus.event_emit("reroll")
-		
 
 func _on_coin_skill_1_pressed() -> void:
 	if coin_skill_1.button_pressed == false:
@@ -1363,30 +1354,25 @@ func _on_cancel_direction_button_pressed() -> void:
 	direction_ui.hide()
 	get_tree().paused = false
 
-
 func _on_up_button_pressed() -> void:
 	direction_ui.hide()
 	get_tree().paused = false
 	CursorManager.change_cursor("mouse_up")
-
 
 func _on_left_button_pressed() -> void:
 	direction_ui.hide()
 	get_tree().paused = false
 	CursorManager.change_cursor("mouse_left")
 
-
 func _on_right_button_pressed() -> void:
 	direction_ui.hide()
 	get_tree().paused = false
 	CursorManager.change_cursor("mouse_right")
 
-
 func _on_down_button_pressed() -> void:
 	direction_ui.hide()
 	get_tree().paused = false
 	CursorManager.change_cursor("mouse_down")
-
 
 func _on_hide_level_up_ui_button_pressed() -> void:
 	if hide_level_up_ui_button.text == "隐藏":
@@ -1399,7 +1385,6 @@ func _on_hide_level_up_ui_button_pressed() -> void:
 			if object.name != "hide_level_up_ui_button":
 				object.show()
 		hide_level_up_ui_button.text = "隐藏"
-
 
 ## 设置技能到技能栏
 func _set_coin_skill(coin_skill_row):
@@ -1424,7 +1409,6 @@ func _set_coin_skill(coin_skill_row):
 			coin_skill_3.tooltip_text = coin_skill_row["coin_skill_tooltip"]
 	## 添加技能后刷新按钮状态
 	Current.refresh_coin_skill_buttons()
-
 
 func _on_buff_refresh_button_pressed() -> void:
 	if Current.zero_coin_refresh_times > 0:

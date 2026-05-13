@@ -50,7 +50,7 @@ var move_state_hero: Hero:
 	get:
 		for _hero in all_hero_array:
 			if _hero.hero_state_machine.state.name == "move":
-				return hero
+				return _hero
 		return null
 ## Astar计算的移动路径
 var id_path: Array
@@ -82,14 +82,16 @@ var target_score: int:
 	get:
 		return int(game_manager.target_score.text)
 ## 当前总分
+var _total_score: int = 0
 var total_score: int:
 	set(v):
 		if v < 0:
 			v = 0
+		_total_score = v
 		game_manager.total_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.total_score)
 	get:
-		return int(game_manager.total_score.text)
+		return _total_score
 ## 单次总分
 var once_total_score: int
 ## 当前关卡
@@ -222,96 +224,124 @@ var count_round := 0:
 ## 最高骰子数
 var highest_dice_num := 1
 ## 骰型板基础分数
+var _one_score: int = 0
 var one_score: int:
 	set(v):
+		_one_score = v
 		game_manager.one_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.one_score)
 	get:
-		return int(game_manager.one_score.text)
+		return _one_score
+var _two_score: int = 0
 var two_score: int:
 	set(v):
+		_two_score = v
 		game_manager.two_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.two_score)
 	get:
-		return int(game_manager.two_score.text)
+		return _two_score
+var _three_score: int = 0
 var three_score: int:
 	set(v):
+		_three_score = v
 		game_manager.three_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.three_score)
 	get:
-		return int(game_manager.three_score.text)
+		return _three_score
+var _four_score: int = 0
 var four_score: int:
 	set(v):
+		_four_score = v
 		game_manager.four_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.four_score)
 	get:
-		return int(game_manager.four_score.text)
+		return _four_score
+var _five_score: int = 0
 var five_score: int:
 	set(v):
+		_five_score = v
 		game_manager.five_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.five_score)
 	get:
-		return int(game_manager.five_score.text)
+		return _five_score
+var _six_score: int = 0
 var six_score: int:
 	set(v):
+		_six_score = v
 		game_manager.six_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.six_score)
 	get:
-		return int(game_manager.six_score.text)
+		return _six_score
 ## 骰型板倍率
+var _none_percent: int = 0
 var none_percent: int:
 	set(v):
+		_none_percent = v
 		game_manager.none_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.none_percent)
 	get:
-		return int(game_manager.none_percent.text)
+		return _none_percent
+var _duizi_percent: int = 0
 var duizi_percent: int:
 	set(v):
+		_duizi_percent = v
 		game_manager.duizi_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.duizi_percent)
 	get:
-		return int(game_manager.duizi_percent.text)
+		return _duizi_percent
+var _shunzi_percent: int = 0
 var shunzi_percent: int:
 	set(v):
+		_shunzi_percent = v
 		game_manager.shunzi_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.shunzi_percent)
 	get:
-		return int(game_manager.shunzi_percent.text)
+		return _shunzi_percent
+var _tongse_percent: int = 0
 var tongse_percent: int:
 	set(v):
+		_tongse_percent = v
 		game_manager.tongse_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.tongse_percent)
 	get:
-		return int(game_manager.tongse_percent.text)
+		return _tongse_percent
+var _tongdui_percent: int = 0
 var tongdui_percent: int:
 	set(v):
+		_tongdui_percent = v
 		game_manager.tongdui_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.tongdui_percent)
 	get:
-		return int(game_manager.tongdui_percent.text)
+		return _tongdui_percent
+var _tongshun_percent: int = 0
 var tongshun_percent: int:
 	set(v):
+		_tongshun_percent = v
 		game_manager.tongshun_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.tongshun_percent)
 	get:
-		return int(game_manager.tongshun_percent.text)
+		return _tongshun_percent
 ## 实时基础和倍率
+var _base_score: int = 0
 var base_score: int:
 	set(v):
+		_base_score = v
 		if v != 0:
 			game_manager.base_score.text = str(v)
 		else:
 			game_manager.base_score.text = ''
 	get:
-		return int(game_manager.base_score.text)
+		return _base_score
+var _percent_score: float = 0.0
 var percent_score: float:
 	set(v):
+		_percent_score = v
 		if v != 0:
 			game_manager.percent_score.text = str(int(v)) + "%"
 		else:
 			game_manager.percent_score.text = ''
 	get:
-		return int(game_manager.percent_score.text)
+		return _percent_score
 ## 单次骰型的分数
 var dice_type_point: int
 ## 攻击动画是否完成

@@ -1,7 +1,6 @@
 extends RefCounted
 class_name SfxrGenerator
 
-
 var params
 
 var wave_shape: int
@@ -40,7 +39,6 @@ var flanger_offset_slide: float
 
 var gain: float
 var sample_rate: float
-
 
 func init_params(stream_player) -> void:
     params = stream_player
@@ -88,7 +86,6 @@ func init_params(stream_player) -> void:
     gain = exp(params.sound_vol) - 1.0
     sample_rate = params.sample_rate
 
-
 func prepare_values() -> void:
     elapsed_since_repeat = 0.0
 
@@ -108,7 +105,6 @@ func prepare_values() -> void:
     arpeggio_time = floor(pow(1.0 - params.p_arp_speed, 2.0) * 20000.0 + 32.0)
     if (params.p_arp_speed == 1.0):
         arpeggio_time = 0
-
 
 func get_raw_buffer() -> Array:
     randomize()
@@ -296,7 +292,6 @@ func get_raw_buffer() -> Array:
         _buffer.append(sample)
 
     return _buffer
-
 
 func build_sample(stream_player):
     init_params(stream_player)

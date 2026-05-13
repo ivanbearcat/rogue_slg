@@ -17,6 +17,6 @@ func process_buff():
 		await Tools.time_sleep(1)
 		Current.total_score -= sub_num
 		Current.public_lock_array.erase("power_current_score_down_buff")
-	
+
 func clear_buff():
 	debuff_texture.queue_free()

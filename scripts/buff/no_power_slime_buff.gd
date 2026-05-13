@@ -10,6 +10,6 @@ func set_buff():
 func process_buff():
 	for power_slime in Current.power_slime_array:
 		power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", false)
-	
+
 func clear_buff():
 	debuff_texture.queue_free()

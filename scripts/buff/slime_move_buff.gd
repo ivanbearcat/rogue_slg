@@ -7,9 +7,8 @@ func set_buff():
 	game_manager.debuff_container.add_child(debuff_texture)
 	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
 
-	
 func process_buff():
 	game_manager.slime_move_ai()
-	
+
 func clear_buff():
 	debuff_texture.queue_free()

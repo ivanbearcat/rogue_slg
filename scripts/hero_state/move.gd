@@ -33,7 +33,6 @@ func update(_delta: float) -> void:
 			Current.is_moved = true
 			owner.animated_sprite_2d.play(owner.hero_name + "_end")
 			emit_signal("hide_move_range")
-				
 
 func exit():
 	print(owner.hero_name, "离开move")

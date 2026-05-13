@@ -8,7 +8,6 @@ extends MarginContainer
 @onready var mask_3: ColorRect = %mask3
 @onready var mask_4: ColorRect = %mask4
 
-
 var is_enterd := false
 
 func _input(event: InputEvent) -> void:
@@ -39,7 +38,6 @@ func _input(event: InputEvent) -> void:
 func _on_mouse_entered() -> void:
 	nine_patch_rect_3.material.set_shader_parameter("is_high_light", true)
 	is_enterd = true
-
 
 func _on_mouse_exited() -> void:
 	if mask_3.visible == false:

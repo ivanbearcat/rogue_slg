@@ -6,7 +6,7 @@ class_name Slime
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 @onready var game_manager: Node2D = $"/root/game_manager"
 
-var enemy_grid_index: Vector2: 
+var enemy_grid_index: Vector2:
 	get:
 		return Tools.position_to_grid_index(position)
 var enemy_hp: int = 1
@@ -23,7 +23,7 @@ var dice_real_point: Dictionary = {
 var dice_point: int:
 	get:
 		return dice_real_point[self.dice.frame]
-	
+
 var dice_to_frame_dice: Dictionary = {
 	1: 2,
 	2: 0,
@@ -32,8 +32,6 @@ var dice_to_frame_dice: Dictionary = {
 	5: 8,
 	6: 4
 }
-	
-
 
 func _process(delta: float) -> void:
 	if target_position:
@@ -42,8 +40,7 @@ func _process(delta: float) -> void:
 			game_manager.reset_astar_solid()
 		else:
 			self.position = self.position.move_toward(target_position, 15 * delta)
-			
-			
+
 func _on_animated_sprite_2d_animation_finished() -> void:
 	game_manager.add_exp(1)
 	if self in Current.transformable_slime_array:
@@ -64,15 +61,12 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		Current.total_coins += 1
 	self.queue_free()
 
-
 func _on_area_2d_mouse_entered() -> void:
 	#if Current.mouse_status != 'default':
 		Current.slime = self
 
-
 func _on_area_2d_mouse_exited() -> void:
 	Current.slime = null
-
 
 func _on_dice_animation_finished() -> void:
 	print(dice.frame)

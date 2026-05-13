@@ -17,6 +17,6 @@ func process_buff():
 		await Tools.time_sleep(1)
 		Current.total_score += add_num
 		Current.public_lock_array.erase("full_range_slime_double_score_buff")
-	
+
 func clear_buff():
 	pass

@@ -13,6 +13,6 @@ func process_buff():
 	Current.hero.add_child(float_number_instantiate)
 	await Tools.time_sleep(1)
 	Current.total_score -= sub_num
-	
+
 func clear_buff():
 	debuff_texture.queue_free()

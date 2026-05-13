@@ -8,11 +8,11 @@ func set_buff():
 	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
 	data["tongshun_percent"] = Current.tongshun_percent
 	Current.tongshun_percent = 0
-	
+
 func process_buff():
 	data["tongshun_percent"] += Current.tongshun_percent
 	Current.tongshun_percent = 0
-	
+
 func clear_buff():
 	Current.tongshun_percent = data["tongshun_percent"]
 	data.erase("tongshun_percent")

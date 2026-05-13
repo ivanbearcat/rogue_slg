@@ -10,7 +10,6 @@ signal hero_cmd
 @onready var skill_3: Node2D = $hero_state_machine/skill_3
 @onready var buff_icon: TextureRect = $buff_icon
 
-
 var hero_name: String
 var hero_grid_index: Vector2:
 	get:
@@ -36,9 +35,6 @@ func _ready() -> void:
 	skill_3.hide_move_range.connect(_on_move_hide_move_range)
 	skill_3.hero_move.connect(_on_move_hero_move)
 
-	
-
-
 func _on_area_2d_mouse_entered() -> void:
 	#Current.hero = self
 	if hero_state_machine.state == hero_state_machine.get_node("idle"):
@@ -59,13 +55,12 @@ func _on_move_hero_move() -> void:
 
 func _on_show_skill_range() -> void:
 	emit_signal("hero_cmd", "show_skill_range")
-	
+
 func _on_hide_skill_range() -> void:
 	emit_signal("hero_cmd", "hide_skill_range")
 
 func _on_skill_attack():
 	emit_signal("hero_cmd", "skill_attack")
-
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	Current.attack_animation_finished = 1
