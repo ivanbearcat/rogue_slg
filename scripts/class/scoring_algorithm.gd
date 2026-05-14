@@ -3,8 +3,9 @@ extends RefCounted
 class_name ScoringAlgorithm
 
 ## 计算最高分（递归）
-## 输入参数范例: [["red", 3], ["blue", 3]]
-## 返回：[分数, ["骰型", "骰型"]]
+## 输入参数范例: [[\"red\", 3], [\"blue\", 3]]
+## 返回：[分数, 骰型名称数组, 骰型骰子数数组, 参与计分的骰子信息数组]
+## 第四个元素为参与计分骰型的骰子原始数据，用于掉落格子判断哪些骰子未参与计分
 static func count_total_score(attack_slime_array_info):
 	var score_dict := {
 		1: Current.one_score,
@@ -72,11 +73,12 @@ static func count_total_score(attack_slime_array_info):
 
 	## 空数组返回0分和空骰型
 	if attack_slime_array_info == []:
-		return [0, [], []]
+		return [0, [], [], []]
 	## 初始化最高分和最高分组合名称数组
 	var highest_score := 0
 	var highest_type_array := []
 	var highest_dice_array := []
+	var highest_scored_dice_info := []
 	## 基准骰子
 	var base_dice: Array = attack_slime_array_info[0]
 	## 剩余骰子
@@ -85,15 +87,17 @@ static func count_total_score(attack_slime_array_info):
 		other_dice_array = attack_slime_array_info.slice(1)
 	else:
 		other_dice_array = []
-	## 基准骰子单独情况
-	var base_score: int = score_dict[base_dice[1]]
+	## 基准骰子单独情况（无骰型，不计分）
+	var base_score: int = 0  ## 无骰型不计分
 	var count_total_score_tmp = count_total_score(other_dice_array)
 	var other_dice_score: int = count_total_score_tmp[0]
 	var other_type_array = count_total_score_tmp[1]
 	var other_dice_group_array = count_total_score_tmp[2]
+	var other_scored_dice_info = count_total_score_tmp[3]
 	highest_score = base_score + other_dice_score
 	highest_type_array = ["none"] + other_type_array
 	highest_dice_array = [2] + other_dice_group_array
+	highest_scored_dice_info = [] + other_scored_dice_info
 	## 剩余骰子数量
 	var dice_num: int = other_dice_array.size()
 	## 遍历除了单骰子情况其余情况
@@ -116,22 +120,29 @@ static func count_total_score(attack_slime_array_info):
 		var current_dice_group_score = count_highest_score_result[1]
 		var current_dice_type_array = count_highest_score_result[0]
 		var current_dice_group_size = count_highest_score_result[2].size()
+		## 参与计分的骰子信息
+		var current_scored_dice_info: Array = []
+		if current_dice_type_array != "none":
+			current_scored_dice_info = current_dice_group
 		## 递归计算剩余骰子组总分和组合名称
 		var count_total_score_result = count_total_score(other_dice_group)
 		var other_dice_group_score = count_total_score_result[0]
 		var iter_dice_type_array = count_total_score_result[1]
 		var iter_dice_group_array = count_total_score_result[2]
+		var iter_scored_dice_info = count_total_score_result[3]
 		## 这种组合的得分和组合名
 		var total_score = current_dice_group_score + other_dice_group_score
 		var all_dice_type_array = [current_dice_type_array] + iter_dice_type_array
 		var all_dice_group_size = [current_dice_group_size] + iter_dice_group_array
+		var all_scored_dice_info = current_scored_dice_info + iter_scored_dice_info
 		## 更新最高分和组合名称
 		if total_score > highest_score:
 			highest_score = total_score
 			highest_type_array = all_dice_type_array
 			highest_dice_array = all_dice_group_size
-		## 返回最高分组合
-	return [highest_score, highest_type_array, highest_dice_array]
+			highest_scored_dice_info = all_scored_dice_info
+	## 返回最高分组合
+	return [highest_score, highest_type_array, highest_dice_array, highest_scored_dice_info]
 
 ## 计算选中的最高最终骰型
 ## return ['none', round(none_score_dice[0]), none_score_dice[1]]
@@ -163,9 +174,8 @@ static func count_highest_score(attack_slime_array_info):
 		#print(biggest_score)
 		return biggest_score
 	else:
-		#print(['none', round(_count_none(attack_slime_array_info))])
-		var none_score_dice = _count_none(attack_slime_array_info)
-		return ['none', round(none_score_dice[0]), none_score_dice[1]]
+		## 没有任何骰型组合 → 返回分数0
+		return ['none', 0, []]
 
 ## 对子算法
 static func _count_duizi(attack_slime_array_info):
@@ -344,24 +354,4 @@ static func _count_tongshun(attack_slime_array_info):
 				score = tmp_score
 				tmp_item = tmp_array
 			tmp_score = 0
-	return [score, tmp_item]
-
-## 无骰型法
-static func _count_none(attack_slime_array_info):
-	var score_dict := {
-		1: Current.one_score,
-		2: Current.two_score,
-		3: Current.three_score,
-		4: Current.four_score,
-		5: Current.five_score,
-		6: Current.six_score
-	}
-	var score := 0.0
-	var tmp_score := 0.0
-	var tmp_item := []
-	for point in attack_slime_array_info:
-		tmp_item.append(point[1])
-		tmp_score += score_dict[point[1]]
-	if tmp_score:
-		score = tmp_score * (Current.none_percent / 100.0)
 	return [score, tmp_item]

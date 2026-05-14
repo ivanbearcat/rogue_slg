@@ -6,8 +6,7 @@ extends Node2D
 	"tongse": "tongse_percent",
 	"duizi": "duizi_percent",
 	"tongshun": "tongshun_percent",
-	"tongdui": "tongdui_percent",
-	"none": "none_percent"
+	"tongdui": "tongdui_percent"
 }
 
 signal hide_all_skill
@@ -44,6 +43,11 @@ func skill_attack():
 	Current.action_lock = true
 	## 攻击前buff
 	EventBus.event_emit("do_pre_attack_buff")
+	## 收集攻击骰子信息（含掉落格子骰子）
+	var attack_slime_array_info = _fetch_attack_slime_array_info(_fetch_attack_slime_array())
+	## 计算骰型得分
+	var dice_type_result = ScoringAlgorithm.count_total_score(attack_slime_array_info)
+	Current.dice_type_point = dice_type_result[0]
 	## 史莱姆死亡
 	Current.slime_die_sum = 0
 	for slime in Current.all_enemy_array:
@@ -52,27 +56,11 @@ func skill_attack():
 			slime.animated_sprite_2d.play("die")
 	## 得分特效
 	var float_number_instantiate = EffectManager.float_number_effect(Current.dice_type_point)
-	Current.hero.add_child(float_number_instantiate)
+	if float_number_instantiate != null:
+		Current.hero.add_child(float_number_instantiate)
 	await Tools.time_sleep(0.5)
 	Current.total_score += Current.dice_type_point
 	Current.once_total_score = Current.dice_type_point
-	## 根据骰子数量条计算分数并统计骰子数
-	#var dice_array = game_manager.dice_list.get_children()
-	#var dice_num = 0
-	#for index in range(dice_array.size() - 1, -1, -1):
-		##print(index)
-		#if dice_array[index].get_self_modulate() == Color(1, 1, 1, 1):
-			#dice_num += 1
-			#EffectManager.big_flow_effect(dice_array[index])
-			#if index == 1: continue
-			#var float_number_instantiate = EffectManager.float_number_effect(Current.dice_type_point)
-			#Current.hero.add_child(float_number_instantiate)
-			#await Tools.time_sleep(0.5)
-			#Current.total_score += Current.dice_type_point
-			##Current.set_total_score_with_effect(Current.total_score + Current.dice_type_point)
-			#Current.once_total_score += Current.dice_type_point
-	## 保留最高骰子数
-	#if dice_num > Current.highest_dice_num: Current.highest_dice_num = dice_num
 	## 等待攻击动画完成和公共锁释放
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)
@@ -87,12 +75,65 @@ func skill_attack():
 		Current.power -= 1
 		EventBus.event_emit("skill_power_reset")
 		EventBus.event_emit("skill_button_reset")
+	## 处理掉落骰子
+	await _process_dropped_dice(attack_slime_array_info, dice_type_result)
 	## 清空单次总分
 	Current.once_total_score = 0
 	## 恢复技能UI弹起状态
 	hide_all_skill.emit()
 
-## 鼠标点击红框之后移动
+## 处理掉落骰子：从攻击结果中提取未参与骰型的骰子，让玩家选择保留1个
+func _process_dropped_dice(attack_slime_array_info: Array, dice_type_result: Array):
+	var scored_dice_info: Array = dice_type_result[3]  ## 参与计分的骰子
+	## 计算掉落骰子 = 所有输入骰子 - 参与计分的骰子
+	var dropped_dice: Array = []
+	var scored_copy = scored_dice_info.duplicate()
+	for dice in attack_slime_array_info:
+		var found := false
+		for i in range(scored_copy.size()):
+			if scored_copy[i][0] == dice[0] and scored_copy[i][1] == dice[1]:
+				scored_copy.remove_at(i)
+				found = true
+				break
+		if not found:
+			dropped_dice.append(dice.duplicate())
+	## 如果掉落格子骰子参与了计分，则从格子中消耗
+	## （它已经在dropped_dice中不存在了，因为它是scored_dice的一部分）
+	## 如果掉落格子骰子没有参与计分，它已经在dropped_dice中
+	## 清空掉落格子（骰子已被消耗或已加入dropped_dice）
+	var old_drop_slot = Current.drop_slot_dice
+	Current._drop_slot_dice = null  ## 临时清空，不触发UI更新
+	## 如果没有掉落骰子，格子变空
+	if dropped_dice.size() == 0:
+		Current.drop_slot_dice = null
+		return
+	## 弹出掉落选择界面
+	await _show_drop_selection(dropped_dice)
+
+## 显示掉落骰子选择界面，玩家选择1个保留在掉落格子
+func _show_drop_selection(dropped_dice: Array):
+	## 如果掉落格子已有骰子（不应该有，因为上面已清空，但防御性编程）
+	## 玩家从所有掉落骰子中选1个保留
+	if dropped_dice.size() == 0:
+		return
+	## 如果只有1个掉落骰子，直接放入格子
+	if dropped_dice.size() == 1:
+		Current.drop_slot_dice = dropped_dice[0]
+		return
+	## 多个掉落骰子，弹出选择界面
+	Current.public_lock_array.append("drop_selection")
+	var drop_selection_ui = game_manager.get_node("drop_selection_ui")
+	drop_selection_ui.setup(dropped_dice)
+	## 等待玩家选择完成
+	while "drop_selection" in Current.public_lock_array:
+		await Tools.time_sleep(0.05)
+	## 选择结果存储在 Current 的 meta 中
+	if Current.has_meta("drop_selection_result"):
+		Current.drop_slot_dice = Current.get_meta("drop_selection_result")
+		Current.remove_meta("drop_selection_result")
+	else:
+		## 玩家未选择（不应该发生），保留第一个
+		Current.drop_slot_dice = dropped_dice[0]
 func skill_move():
 	Current.action_lock = true
 	## 判断技能朝向
@@ -366,7 +407,8 @@ func _fetch_attack_slime_array():
 	return slime_array
 
 ## 统计史莱姆骰子的颜色、点数、数量, return: [[<color>, <dice_num>], ...]
-## example: [["red"， 3]， ["blue", 3]]
+## example: [[\"red\"， 3]， [\"blue\", 3]]
+## 包含掉落格子骰子（如果有）
 func _fetch_attack_slime_array_info(slime_array):
 	var slime_color_dict := {
 		"slime_small": "green",
@@ -381,6 +423,9 @@ func _fetch_attack_slime_array_info(slime_array):
 			attack_slime_array_info.append([slime_color, slime.dice_point])
 		else:
 			assert(false, "slime have not color")
+	## 追加掉落格子骰子
+	if Current.drop_slot_dice != null:
+		attack_slime_array_info.append(Current.drop_slot_dice.duplicate())
 	return attack_slime_array_info
 
 ## 骰型板展示待攻击史莱姆的分值条和骰型
@@ -410,7 +455,6 @@ func _show_dice_panel(dice_type_point):
 		4: game_manager.four_score_frame.get("theme_override_styles/panel"),
 		5: game_manager.five_score_frame.get("theme_override_styles/panel"),
 		6: game_manager.six_score_frame.get("theme_override_styles/panel"),
-		'none': game_manager.none_percent_frame.get("theme_override_styles/panel"),
 		'duizi': game_manager.duizi_percent_frame.get("theme_override_styles/panel"),
 		'shunzi': game_manager.shunzi_percent_frame.get("theme_override_styles/panel"),
 		'tongse': game_manager.tongse_percent_frame.get("theme_override_styles/panel"),
@@ -422,8 +466,12 @@ func _show_dice_panel(dice_type_point):
 	#for type in dice_type_point[1]:
 		#frame_dict[type].border_color = Color.html(game_manager.color["red"])
 	for index in range(dice_type_point[1].size()):
-		frame_dict[dice_type_point[1][index]].border_color = Color.html(game_manager.color["red"])
-		Current.set(dice_type_dict[dice_type_point[1][index]], Current.dice_multiplier_dict[dice_type_point[2][index]][dice_type_point[1][index]])
+		var dice_type = dice_type_point[1][index]
+		## "none"类型不再显示框线和倍率
+		if dice_type == "none":
+			continue
+		frame_dict[dice_type].border_color = Color.html(game_manager.color["red"])
+		Current.set(dice_type_dict[dice_type], Current.dice_multiplier_dict[dice_type_point[2][index]][dice_type])
 
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
@@ -439,7 +487,6 @@ func _reset_dice_panel():
 		4: game_manager.four_score_frame.get("theme_override_styles/panel"),
 		5: game_manager.five_score_frame.get("theme_override_styles/panel"),
 		6: game_manager.six_score_frame.get("theme_override_styles/panel"),
-		'none': game_manager.none_percent_frame.get("theme_override_styles/panel"),
 		'duizi': game_manager.duizi_percent_frame.get("theme_override_styles/panel"),
 		'shunzi': game_manager.shunzi_percent_frame.get("theme_override_styles/panel"),
 		'tongse': game_manager.tongse_percent_frame.get("theme_override_styles/panel"),
@@ -485,9 +532,8 @@ func _count_dice_type(attack_slime_array_info):
 		#print(biggest_score)
 		return biggest_score
 	else:
-		#print(['none', round(_count_none(attack_slime_array_info))])
-		var none_score_dice = _count_none(attack_slime_array_info)
-		return ['none', round(none_score_dice[0]), none_score_dice[1]]
+		## 没有任何骰型组合 → 返回分数0
+		return ['none', 0, []]
 
 ## 对子算法
 func _count_duizi(attack_slime_array_info):
@@ -734,24 +780,4 @@ func _count_tongshun(attack_slime_array_info):
 		for point in tmp_item:
 			tmp_score += score_dict[point]
 		score = tmp_score * (Current.tongshun_percent / 100.0)
-	return [score, tmp_item]
-
-## 无骰型法
-func _count_none(attack_slime_array_info):
-	var score_dict := {
-		1: Current.one_score,
-		2: Current.two_score,
-		3: Current.three_score,
-		4: Current.four_score,
-		5: Current.five_score,
-		6: Current.six_score
-	}
-	var score := 0.0
-	var tmp_score := 0.0
-	var tmp_item := []
-	for point in attack_slime_array_info:
-		tmp_item.append(point[1])
-		tmp_score += score_dict[point[1]]
-	if tmp_score:
-		score = tmp_score * (Current.none_percent / 100.0)
 	return [score, tmp_item]

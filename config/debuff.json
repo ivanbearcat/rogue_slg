@@ -48,14 +48,6 @@
         "debuff_type": "pre_hero_turn_buff"
     },
     {
-        "debuff_id": "disable_none",
-        "debuff_name": "禁用无骰型",
-        "debuff_icon": "res://images/enemy_icon/disable_none.png",
-        "debuff_tooltip": "无骰型的倍率变为0%",
-        "debuff_res": "res://scripts/buff/disable_none_buff.gd",
-        "debuff_type": "pre_hero_turn_buff"
-    },
-    {
         "debuff_id": "disable_duizi",
         "debuff_name": "禁用对子骰型",
         "debuff_icon": "res://images/enemy_icon/disable_duizi.png",

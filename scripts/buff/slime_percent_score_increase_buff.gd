@@ -13,7 +13,7 @@ func process_buff():
 		EffectManager.big_flow_effect(buff_texture)
 		match _rand_num:
 			1:
-				Current.none_percent += int(Current.none_percent * 0.02)
+				Current.duizi_percent += int(Current.duizi_percent * 0.02)
 			2:
 				Current.duizi_percent += int(Current.duizi_percent * 0.02)
 			3:

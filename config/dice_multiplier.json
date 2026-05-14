@@ -1,7 +1,6 @@
 [
     {
         "dice_sum": 2,
-        "none": 100,
         "shunzi": 150,
         "tongse": 160,
         "duizi": 200,
@@ -10,7 +9,6 @@
     },
     {
         "dice_sum": 3,
-        "none": 500,
         "shunzi": 300,
         "tongse": 350,
         "duizi": 550,
@@ -19,7 +17,6 @@
     },
     {
         "dice_sum": 4,
-        "none": 0,
         "shunzi": 500,
         "tongse": 600,
         "duizi": 1000,
@@ -28,7 +25,6 @@
     },
     {
         "dice_sum": 5,
-        "none": 0,
         "shunzi": 700,
         "tongse": 850,
         "duizi": 1450,
@@ -37,7 +33,6 @@
     },
     {
         "dice_sum": 6,
-        "none": 0,
         "shunzi": 900,
         "tongse": 1100,
         "duizi": 1900,
@@ -46,7 +41,6 @@
     },
     {
         "dice_sum": 7,
-        "none": 0,
         "shunzi": 900,
         "tongse": 1100,
         "duizi": 1900,
@@ -55,7 +49,6 @@
     },
     {
         "dice_sum": 8,
-        "none": 0,
         "shunzi": 900,
         "tongse": 1100,
         "duizi": 1900,

@@ -28,7 +28,7 @@ const hero_property = {
 @onready var four_score: Label = %four_score
 @onready var five_score: Label = %five_score
 @onready var six_score: Label = %six_score
-@onready var none_percent: Label = %none_percent
+
 @onready var duizi_percent: Label = %duizi_percent
 @onready var shunzi_percent: Label = %shunzi_percent
 @onready var tongse_percent: Label = %tongse_percent
@@ -43,7 +43,7 @@ const hero_property = {
 @onready var four_score_frame: PanelContainer = %four_score_frame
 @onready var five_score_frame: PanelContainer = %five_score_frame
 @onready var six_score_frame: PanelContainer = %six_score_frame
-@onready var none_percent_frame: PanelContainer = %none_percent_frame
+
 @onready var duizi_percent_frame: PanelContainer = %duizi_percent_frame
 @onready var shunzi_percent_frame: PanelContainer = %shunzi_percent_frame
 @onready var tongse_percent_frame: PanelContainer = %tongse_percent_frame
@@ -251,7 +251,6 @@ func _ready() -> void:
 	## 设置倍率
 	for row in dice_multiplier_json_data:
 		Current.dice_multiplier_dict[int(row["dice_sum"])] = row
-	Current.none_percent = Current.dice_multiplier_dict[2]["none"]
 	Current.duizi_percent = Current.dice_multiplier_dict[2]["duizi"]
 	Current.shunzi_percent = Current.dice_multiplier_dict[2]["shunzi"]
 	Current.tongse_percent = Current.dice_multiplier_dict[2]["tongse"]
@@ -787,8 +786,24 @@ func _on_turn_button_pressed() -> void:
 	## 等待英雄移动完
 	while Current.id_path.size() > 0:
 		await Tools.time_sleep(0.01)
-	if Current.power < Current.max_power:
-		Current.power += 1
+	## 跳过回合：生成随机骰子放入掉落格子，不再+1能量
+	var color_options := ["red", "green", "blue", "yellow"]
+	var random_color: String = color_options[randi_range(0, 3)]
+	var random_point: int = randi_range(1, 6)
+	var random_dice: Array = [random_color, random_point]
+	## 如果掉落格子已有骰子，弹出选择
+	if Current.drop_slot_dice != null:
+		Current.public_lock_array.append("drop_selection")
+		var drop_selection_ui = get_node("drop_selection_ui")
+		drop_selection_ui.setup([Current.drop_slot_dice.duplicate(), random_dice])
+		## 等待玩家选择完成
+		while "drop_selection" in Current.public_lock_array:
+			await Tools.time_sleep(0.05)
+		if Current.has_meta("drop_selection_result"):
+			Current.drop_slot_dice = Current.get_meta("drop_selection_result")
+			Current.remove_meta("drop_selection_result")
+	else:
+		Current.drop_slot_dice = random_dice
 	## 执行敌人回合前buff
 	EventBus.event_emit("do_pre_enemy_turn_buff")
 	## 等待buff处理完成
@@ -938,7 +953,7 @@ func _apply_card_effect(effect: Dictionary):
 	## 所有点数基础分名称数组
 	var score_names = ["one_score", "two_score", "three_score", "four_score", "five_score", "six_score"]
 	## 所有倍率名称数组
-	var percent_names = ["none_percent", "duizi_percent", "shunzi_percent", "tongse_percent", "tongdui_percent", "tongshun_percent"]
+	var percent_names = ["duizi_percent", "shunzi_percent", "tongse_percent", "tongdui_percent", "tongshun_percent"]
 	## 处理特殊target
 	match target:
 		"all_score":
@@ -1265,6 +1280,7 @@ func _on_stage_clear_button_pressed() -> void:
 	## 更新回合、关卡、当前分数、目标分数
 	Current.count_round = 0
 	Current.total_score = 0
+	Current.drop_slot_dice = null
 	if Current.count_stage < 12:
 		Current.count_stage += 1
 		## 重置所有金币技能本关使用状态为未使用

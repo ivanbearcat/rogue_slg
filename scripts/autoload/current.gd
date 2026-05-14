@@ -272,15 +272,31 @@ var six_score: int:
 		EffectManager.big_flow_effect(game_manager.six_score)
 	get:
 		return _six_score
-## 骰型板倍率
-var _none_percent: int = 0
-var none_percent: int:
+## 掉落格子骰子 [color, point] 或 null
+var _drop_slot_dice = null
+var drop_slot_dice:
 	set(v):
-		_none_percent = v
-		game_manager.none_percent.text = str(v) + "%"
-		EffectManager.big_flow_effect(game_manager.none_percent)
+		_drop_slot_dice = v
+		_update_drop_slot_ui()
 	get:
-		return _none_percent
+		return _drop_slot_dice
+
+## 更新掉落格子UI显示
+func _update_drop_slot_ui():
+	if game_manager.has_node("stage_score/drop_slot_container"):
+		var drop_slot_container = game_manager.get_node("stage_score/drop_slot_container")
+		var drop_slot_color_label = drop_slot_container.get_node("drop_slot_color_label")
+		var drop_slot_point_label = drop_slot_container.get_node("drop_slot_point_label")
+		if _drop_slot_dice == null:
+			drop_slot_color_label.text = ""
+			drop_slot_color_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.3))
+			drop_slot_point_label.text = ""
+		else:
+			var color_name_map := {"green": "绿", "red": "红", "blue": "蓝", "yellow": "黄"}
+			var color_value_map := {"green": Color(0.3, 0.8, 0.3), "red": Color(0.9, 0.3, 0.3), "blue": Color(0.3, 0.5, 0.9), "yellow": Color(0.9, 0.85, 0.2)}
+			drop_slot_color_label.text = color_name_map[_drop_slot_dice[0]]
+			drop_slot_color_label.add_theme_color_override("font_color", color_value_map[_drop_slot_dice[0]])
+			drop_slot_point_label.text = str(_drop_slot_dice[1])
 var _duizi_percent: int = 0
 var duizi_percent: int:
 	set(v):

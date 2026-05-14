@@ -135,14 +135,7 @@
 		"card_effects": [{"target": "tongshun_percent", "operate": "add", "value": 10}],
 		"weight": 90
 	},
-	{
-		"card_id": "white_none_mul",
-		"card_name": "无骰型强化",
-		"card_textrue": "res://images/card/card_none.png",
-		"card_description": "无骰型倍率[color=green]+10%[/color]",
-		"card_effects": [{"target": "none_percent", "operate": "add", "value": 10}],
-		"weight": 80
-	},
+
 	{
 		"card_id": "blue_gamble_high",
 		"card_name": "孤注一掷",
@@ -163,8 +156,8 @@
 		"card_id": "blue_duizi_overdraft",
 		"card_name": "对子透支",
 		"card_textrue": "res://images/card/card_duizi_blue.png",
-		"card_description": "对子倍率[color=green]+20%[/color]，无骰型[color=red]-15%[/color]",
-		"card_effects": [{"target": "duizi_percent", "operate": "add", "value": 20}, {"target": "none_percent", "operate": "sub", "value": 15}],
+		"card_description": "对子倍率[color=green]+20%[/color]",
+		"card_effects": [{"target": "duizi_percent", "operate": "add", "value": 20}],
 		"weight": 35
 	},
 	{
@@ -179,8 +172,8 @@
 		"card_id": "blue_tongse_bet",
 		"card_name": "同色押注",
 		"card_textrue": "res://images/card/card_tongse_blue.png",
-		"card_description": "同色倍率[color=green]+20%[/color]，无骰型[color=red]-10%[/color]",
-		"card_effects": [{"target": "tongse_percent", "operate": "add", "value": 20}, {"target": "none_percent", "operate": "sub", "value": 10}],
+		"card_description": "同色倍率[color=green]+20%[/color]",
+		"card_effects": [{"target": "tongse_percent", "operate": "add", "value": 20}],
 		"weight": 35
 	},
 	{
@@ -227,8 +220,8 @@
 		"card_id": "purple_frenzy",
 		"card_name": "走火入魔",
 		"card_textrue": "res://images/card/card_none_purple.png",
-		"card_description": "所有点数[color=green]+5[/color]，无骰型[color=red]-30%[/color]",
-		"card_effects": [{"target": "all_score", "operate": "add", "value": 5}, {"target": "none_percent", "operate": "sub", "value": 30}],
+		"card_description": "所有点数[color=green]+5[/color]",
+		"card_effects": [{"target": "all_score", "operate": "add", "value": 5}],
 		"weight": 0
 	},
 	{

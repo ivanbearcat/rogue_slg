@@ -18,15 +18,6 @@
         "buff_price": 5
     },
     {
-        "buff_id": "no_attack",
-        "buff_name": "不攻击加分",
-        "buff_icon": "res://images/buff_icon/no_attack.png",
-        "buff_tooltip": "本回合没有攻击，增加目标分数5%的分数",
-        "buff_res": "res://scripts/buff/no_attack_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5
-    },
-    {
         "buff_id": "slime_attack_score_increase",
         "buff_name": "史莱姆数量攻击加分",
         "buff_icon": "res://images/buff_icon/slime_attack_score_increase.png",
