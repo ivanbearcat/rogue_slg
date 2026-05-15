@@ -379,6 +379,99 @@ func _pre_create_slime():
 			for grid in grids_array:
 				if grid.grid_index == grid_index:
 					grid.warning.visible = true
+		## 出生锁定：保证出生列表中有对应颜色/点数的史莱姆
+		_apply_spawn_lock(_slime_create_array)
+
+## 出生锁定：统一处理颜色和点数锁定，每个锁定分配不同史莱姆
+## 颜色锁定在出生列表阶段替换场景，点数锁定记录待修改的帧索引
+var _pending_point_locks: Array = []  ## [frame1, frame2, ...] 按顺序记录待修改的骰子帧
+
+func _apply_spawn_lock(slime_array: Array) -> void:
+	if slime_array.is_empty():
+		return
+	var color_map := {
+		"green_lock": "slime_small",
+		"red_lock": "slime_small_red",
+		"blue_lock": "slime_small_blue",
+		"yellow_lock": "slime_small_yellow",
+	}
+	var point_map := {
+		"one_lock": 0, "two_lock": 2, "three_lock": 4,
+		"four_lock": 6, "five_lock": 8, "six_lock": 10,
+	}
+	## 收集所有激活的锁定buff（颜色+点数）
+	var active_locks: Array[String] = []
+	var buff_sys = BuffSystem
+	for buff_list in [buff_sys.pre_enemy_turn_buff_once, buff_sys.pre_enemy_turn_buff_stage, buff_sys.pre_enemy_turn_buff_always]:
+		for buff in buff_list:
+			var lock_id: String = buff.buff_meta.get("buff_id", "")
+			if (lock_id in color_map or lock_id in point_map) and lock_id not in active_locks:
+				active_locks.append(lock_id)
+	## 锁定总量不能超过出生数量
+	if active_locks.size() > slime_array.size():
+		active_locks = active_locks.slice(0, slime_array.size())
+	## 清空待修改点数列表
+	_pending_point_locks.clear()
+	## 记录已被锁定使用的索引
+	var used_indices: Array[int] = []
+	## 对每个锁定，分配一个史莱姆
+	for lock_id in active_locks:
+		if lock_id in color_map:
+			## 颜色锁定：检查是否已有对应颜色的未使用史莱姆
+			var target_scene: String = color_map[lock_id]
+			var found := false
+			for i in range(slime_array.size()):
+				if i not in used_indices and slime_array[i].scene_file_path.get_file().get_basename() == target_scene:
+					used_indices.append(i)
+					found = true
+					break
+			if not found:
+				## 从未使用的索引中随机选一个替换为目标颜色场景
+				var available_indices: Array[int] = []
+				for i in range(slime_array.size()):
+					if i not in used_indices:
+						available_indices.append(i)
+				if available_indices.is_empty():
+					continue
+				var replace_index = available_indices[randi() % available_indices.size()]
+				var old_slime = slime_array[replace_index]
+				var new_slime = SceneManager.create_scene(target_scene)
+				new_slime.position = old_slime.position
+				new_slime.enemy_grid_index = old_slime.enemy_grid_index
+				old_slime.queue_free()
+				slime_array[replace_index] = new_slime
+				used_indices.append(replace_index)
+		elif lock_id in point_map:
+			## 点数锁定：先分配一个未使用的索引，记录待修改的帧
+			var target_frame: int = point_map[lock_id]
+			var available_indices: Array[int] = []
+			for i in range(slime_array.size()):
+				if i not in used_indices:
+					available_indices.append(i)
+			if available_indices.is_empty():
+				continue
+			var assign_index = available_indices[randi() % available_indices.size()]
+			used_indices.append(assign_index)
+			_pending_point_locks.append(target_frame)
+
+## 点数锁定：在骰子掷完后根据 _pending_point_locks 修改帧
+func _apply_point_lock() -> void:
+	if _pending_point_locks.is_empty():
+		return
+	## 收集本回合实际出生的史莱姆（按 last_slime_create_array 的原始顺序）
+	var spawned_slimes: Array = []
+	for enemy in Current.last_slime_create_array:
+		if enemy in Current.all_enemy_array:
+			spawned_slimes.append(enemy)
+	if spawned_slimes.is_empty():
+		return
+	## 按 _pending_point_locks 的顺序逐个修改骰子帧
+	var lock_idx := 0
+	for target_frame in _pending_point_locks:
+		if lock_idx < spawned_slimes.size():
+			spawned_slimes[lock_idx].dice.set_frame_and_progress(target_frame, 0)
+			lock_idx += 1
+	_pending_point_locks.clear()
 
 func _create_slime():
 	## 生成史莱姆
@@ -391,11 +484,13 @@ func _create_slime():
 			enemys.add_child(enemy)
 			while enemy not in Current.all_enemy_array:
 				await Tools.time_sleep(0.01)
-			_roll_dice(enemy)
+			await _roll_dice(enemy)
 		else:
 			enemy.queue_free()
 	Current.last_slime_create_array = _slime_create_array.duplicate()
 	_slime_create_array.clear()
+	## 点数锁定：根据之前记录的待修改列表修改骰子帧
+	_apply_point_lock()
 
 ## 边缘生成史莱姆
 func _create_slime_on_margin_grid():
@@ -728,6 +823,14 @@ func hide_skill_attack():
 func _turn_process():
 	## 敌人回合
 	_turn_clean()
+	## 后期回合（8-10回合）史莱姆生成翻倍
+	Current.slime_create_num = 3  ## 重置为基础值
+	if Current.count_round >= 8 and Current.count_round <= 10:
+		Current.slime_create_num = 6
+	## 第8回合显示危险提示
+	if Current.count_round == 8:
+		stage_effect_label.text = "危险⚠️"
+		await EffectManager.stage_change_effect()
 	## 等待回合船动画
 	while "turn_ship_animation" in Current.public_lock_array:
 		await Tools.time_sleep(0.05)
@@ -786,6 +889,8 @@ func _on_turn_button_pressed() -> void:
 	## 等待英雄移动完
 	while Current.id_path.size() > 0:
 		await Tools.time_sleep(0.01)
+	## 跳过回合：断连击（连击风暴用）
+	Current.last_turn_attacked = false
 	## 跳过回合：生成随机骰子放入掉落格子，不再+1能量
 	var color_options := ["red", "green", "blue", "yellow"]
 	var random_color: String = color_options[randi_range(0, 3)]
@@ -804,6 +909,9 @@ func _on_turn_button_pressed() -> void:
 			Current.remove_meta("drop_selection_result")
 	else:
 		Current.drop_slot_dice = random_dice
+	## 跳过回合也会掉落骰子，触发掉落奖励buff
+	Current.dropped_dice_count = 1  ## 跳过回合只掉落1个新骰子
+	await _trigger_drop_bonus()
 	## 执行敌人回合前buff
 	EventBus.event_emit("do_pre_enemy_turn_buff")
 	## 等待buff处理完成
@@ -841,6 +949,21 @@ func _turn_clean():
 	Current.count_round += 1
 	## 进入敌人回合
 	Current.turn = "enemy_turn"
+
+## 触发掉落奖励buff（跳过回合时也需要触发）
+func _trigger_drop_bonus():
+	if Current.dropped_dice_count <= 0:
+		return
+	var buff_sys = BuffSystem
+	for buff_list in [buff_sys.post_attack_buff_once, buff_sys.post_attack_buff_stage, buff_sys.post_attack_buff_always]:
+		for buff in buff_list:
+			if buff.buff_meta.get("buff_id", "") == "drop_bonus":
+				await buff.process_buff()
+				## ONCE类型用完移除
+				if buff_list == buff_sys.post_attack_buff_once:
+					buff_list.erase(buff)
+					buff.clear_buff()
+				return
 
 func _pre_hero_turn_begin():
 	## 判断失败

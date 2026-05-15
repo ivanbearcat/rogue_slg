@@ -10,7 +10,7 @@ func set_buff():
 func process_buff():
 	if Current.slime_die_sum == Current.skill_attack_range.size():
 		Current.public_lock_array.append("full_range_slime_double_score_buff")
-		var add_num = int(Current.once_total_score * 0.5)
+		var add_num = int(Current.once_total_score * 0.4)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.big_flow_effect(buff_texture)

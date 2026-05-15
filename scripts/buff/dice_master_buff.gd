@@ -8,15 +8,12 @@ func set_buff():
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
 
 func process_buff():
-	if Current.power_skill:
-		Current.public_lock_array.append("power_attack_score_increase_buff")
-		var add_num = int(Current.once_total_score * 0.25)
+	if Current.dice_type_count >= 2:
+		Current.public_lock_array.append("dice_master_buff")
+		var add_num = int(Current.once_total_score * 0.50)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.big_flow_effect(buff_texture)
 		await Tools.time_sleep(1)
 		Current.total_score += add_num
-		Current.public_lock_array.erase("power_attack_score_increase_buff")
-
-func clear_buff():
-	pass
+		Current.public_lock_array.erase("dice_master_buff")

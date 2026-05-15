@@ -99,17 +99,9 @@
         "debuff_id": "current_score_down",
         "debuff_name": "当前分数下降",
         "debuff_icon": "res://images/enemy_icon/current_score_down.png",
-        "debuff_tooltip": "回合结束时当前分数-5%",
+        "debuff_tooltip": "回合结束时当前分数-3%",
         "debuff_res": "res://scripts/buff/current_score_down_buff.gd",
         "debuff_type": "pre_enemy_turn_buff"
-    },
-    {
-        "debuff_id": "move_current_score_down",
-        "debuff_name": "移动下降分数",
-        "debuff_icon": "res://images/enemy_icon/move_current_score_down.png",
-        "debuff_tooltip": "每移动一格当前分数-2%",
-        "debuff_res": "res://scripts/buff/move_current_score_down_buff.gd",
-        "debuff_type": "post_hero_move_buff"
     },
     {
         "debuff_id": "move_down",
@@ -147,7 +139,7 @@
         "debuff_id": "slime_current_score_down",
         "debuff_name": "史莱姆下降分数",
         "debuff_icon": "res://images/enemy_icon/slime_current_score_down.png",
-        "debuff_tooltip": "每有一个史莱姆当前分数-1",
+        "debuff_tooltip": "每有1个史莱姆当前分数-0.5%",
         "debuff_res": "res://scripts/buff/slime_current_score_down_buff.gd",
         "debuff_type": "pre_enemy_turn_buff"
     },
@@ -158,5 +150,45 @@
         "debuff_tooltip": "每个回合史莱姆都会移动一格",
         "debuff_res": "res://scripts/buff/slime_move_buff.gd",
         "debuff_type": "pre_hero_turn_buff"
+    },
+    {
+        "debuff_id": "no_drop_slot",
+        "debuff_name": "禁用掉落格子",
+        "debuff_icon": "res://icon.svg",
+        "debuff_tooltip": "掉落格子无法使用，掉落骰子直接消失",
+        "debuff_res": "res://scripts/buff/no_drop_slot_buff.gd",
+        "debuff_type": "pre_hero_turn_buff"
+    },
+    {
+        "debuff_id": "score_cap",
+        "debuff_name": "得分上限",
+        "debuff_icon": "res://icon.svg",
+        "debuff_tooltip": "单次攻击得分不超过目标分数的30%",
+        "debuff_res": "res://scripts/buff/score_cap_buff.gd",
+        "debuff_type": "post_attack_buff"
+    },
+    {
+        "debuff_id": "color_chaos",
+        "debuff_name": "颜色混乱",
+        "debuff_icon": "res://icon.svg",
+        "debuff_tooltip": "每回合随机1种颜色史莱姆概率翻倍，另1种颜色不生成",
+        "debuff_res": "res://scripts/buff/color_chaos_buff.gd",
+        "debuff_type": "pre_enemy_turn_buff"
+    },
+    {
+        "debuff_id": "dice_decay",
+        "debuff_name": "骰子衰退",
+        "debuff_icon": "res://icon.svg",
+        "debuff_tooltip": "每回合所有点数基础分-1（最低1）",
+        "debuff_res": "res://scripts/buff/dice_decay_buff.gd",
+        "debuff_type": "pre_enemy_turn_buff"
+    },
+    {
+        "debuff_id": "drop_penalty",
+        "debuff_name": "掉落惩罚",
+        "debuff_icon": "res://icon.svg",
+        "debuff_tooltip": "每掉落1个骰子，当前分数-3%",
+        "debuff_res": "res://scripts/buff/drop_penalty_buff.gd",
+        "debuff_type": "post_attack_buff"
     }
 ]

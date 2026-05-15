@@ -8,10 +8,10 @@ func set_buff():
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
 
 func process_buff():
-	for i in range(Current.slime_die_sum):
-		var _rand_num = randi_range(1, 6)
+	var scored_info: Array = Current.scored_dice_info
+	for dice in scored_info:
 		EffectManager.big_flow_effect(buff_texture)
-		match _rand_num:
+		match dice[1]:
 			1:
 				Current.one_score += 1
 			2:

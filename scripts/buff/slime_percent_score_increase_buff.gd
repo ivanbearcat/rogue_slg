@@ -8,22 +8,18 @@ func set_buff():
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
 
 func process_buff():
-	for i in range(Current.slime_die_sum):
-		var _rand_num = randi_range(1, 6)
-		EffectManager.big_flow_effect(buff_texture)
-		match _rand_num:
-			1:
-				Current.duizi_percent += int(Current.duizi_percent * 0.02)
-			2:
-				Current.duizi_percent += int(Current.duizi_percent * 0.02)
-			3:
-				Current.shunzi_percent += int(Current.shunzi_percent * 0.02)
-			4:
-				Current.tongse_percent += int(Current.tongse_percent * 0.02)
-			5:
-				Current.tongdui_percent += int(Current.tongdui_percent * 0.02)
-			6:
-				Current.tongshun_percent += int(Current.tongshun_percent * 0.02)
+	var type_array: Array = Current.active_dice_types
+	var type_to_percent := {
+		"duizi": "duizi_percent",
+		"shunzi": "shunzi_percent",
+		"tongse": "tongse_percent",
+		"tongdui": "tongdui_percent",
+		"tongshun": "tongshun_percent",
+	}
+	for dice_type in type_array:
+		if type_to_percent.has(dice_type):
+			EffectManager.big_flow_effect(buff_texture)
+			Current.set(type_to_percent[dice_type], Current.get(type_to_percent[dice_type]) + 2)
 
 func clear_buff():
 	pass

@@ -6623,6 +6623,7 @@ text = "隐藏"
 environment = SubResource("Environment_bu4jf")
 
 [node name="drop_selection_ui" parent="." unique_id=841261704 instance=ExtResource("33_5q0nq")]
+visible = false
 offset_left = 70.5
 offset_top = 68.25
 offset_right = 70.5

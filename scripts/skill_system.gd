@@ -48,6 +48,20 @@ func skill_attack():
 	## 计算骰型得分
 	var dice_type_result = ScoringAlgorithm.count_total_score(attack_slime_array_info)
 	Current.dice_type_point = dice_type_result[0]
+	## 设置骰型数量（骰型大师用）
+	var type_array: Array = dice_type_result[1]
+	var dice_type_count := 0
+	for t in type_array:
+		if t != "none":
+			dice_type_count += 1
+	Current.dice_type_count = dice_type_count
+	## 设置本次攻击触发的骰型名称（击杀倍率用）
+	Current.active_dice_types = []
+	for t in type_array:
+		if t != "none" and t not in Current.active_dice_types:
+			Current.active_dice_types.append(t)
+	## 设置参与计分的骰子信息（击杀特化/颜色对应骰型用）
+	Current.scored_dice_info = dice_type_result[3]
 	## 史莱姆死亡
 	Current.slime_die_sum = 0
 	for slime in Current.all_enemy_array:
@@ -77,6 +91,8 @@ func skill_attack():
 		EventBus.event_emit("skill_button_reset")
 	## 处理掉落骰子
 	await _process_dropped_dice(attack_slime_array_info, dice_type_result)
+	## 标记本回合攻击过（连击风暴用）
+	Current.last_turn_attacked = true
 	## 清空单次总分
 	Current.once_total_score = 0
 	## 恢复技能UI弹起状态
@@ -85,6 +101,8 @@ func skill_attack():
 ## 处理掉落骰子：从攻击结果中提取未参与骰型的骰子，让玩家选择保留1个
 func _process_dropped_dice(attack_slime_array_info: Array, dice_type_result: Array):
 	var scored_dice_info: Array = dice_type_result[3]  ## 参与计分的骰子
+	## 保存掉落格子骰子引用（用于排除非新掉落的骰子）
+	var old_drop_slot = Current.drop_slot_dice
 	## 计算掉落骰子 = 所有输入骰子 - 参与计分的骰子
 	var dropped_dice: Array = []
 	var scored_copy = scored_dice_info.duplicate()
@@ -97,18 +115,53 @@ func _process_dropped_dice(attack_slime_array_info: Array, dice_type_result: Arr
 				break
 		if not found:
 			dropped_dice.append(dice.duplicate())
+	## 设置掉落骰子数量（掉落奖励/掉落惩罚用）
+	## 排除掉落格子骰子（它不是新掉落的，不应计入掉落奖励数量）
+	var drop_slot_in_dropped := 0
+	if old_drop_slot != null:
+		for dice in dropped_dice:
+			if dice[0] == old_drop_slot[0] and dice[1] == old_drop_slot[1]:
+				drop_slot_in_dropped += 1
+				break
+	Current.dropped_dice_count = dropped_dice.size() - drop_slot_in_dropped
+	## 手动触发掉落奖励buff（因为掉落骰子数量在此处才确定）
+	await _apply_drop_bonus()
 	## 如果掉落格子骰子参与了计分，则从格子中消耗
 	## （它已经在dropped_dice中不存在了，因为它是scored_dice的一部分）
 	## 如果掉落格子骰子没有参与计分，它已经在dropped_dice中
 	## 清空掉落格子（骰子已被消耗或已加入dropped_dice）
-	var old_drop_slot = Current.drop_slot_dice
 	Current._drop_slot_dice = null  ## 临时清空，不触发UI更新
+	## 检查禁用掉落格子debuff（通过检查no_drop_slot_buff是否在buff列表中）
+	var no_drop_slot_active := false
+	for buff in game_manager.get_node("/root/BuffSystem").pre_hero_turn_buff_stage:
+		if buff.buff_meta.get("debuff_id", "") == "no_drop_slot":
+			no_drop_slot_active = true
+			break
+	if no_drop_slot_active:
+		Current.drop_slot_dice = null
+		return
 	## 如果没有掉落骰子，格子变空
 	if dropped_dice.size() == 0:
 		Current.drop_slot_dice = null
 		return
 	## 弹出掉落选择界面
 	await _show_drop_selection(dropped_dice)
+
+## 手动触发掉落奖励buff（掉落骰子数量在 _process_dropped_dice 中才确定）
+func _apply_drop_bonus():
+	if Current.dropped_dice_count <= 0:
+		return
+	## 扫描 BuffSystem 中所有 post_attack_buff，找 drop_bonus
+	var buff_sys = BuffSystem
+	for buff_list in [buff_sys.post_attack_buff_once, buff_sys.post_attack_buff_stage, buff_sys.post_attack_buff_always]:
+		for buff in buff_list:
+			if buff.buff_meta.get("buff_id", "") == "drop_bonus":
+				await buff.process_buff()
+				## ONCE类型用完移除
+				if buff_list == buff_sys.post_attack_buff_once:
+					buff_list.erase(buff)
+					buff.clear_buff()
+				return
 
 ## 显示掉落骰子选择界面，玩家选择1个保留在掉落格子
 func _show_drop_selection(dropped_dice: Array):

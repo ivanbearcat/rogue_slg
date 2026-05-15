@@ -8,15 +8,11 @@ func set_buff():
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
 
 func process_buff():
-	Current.public_lock_array.append("slime_sum_score_increase_buff")
-	var add_num = int(Current.all_enemy_array.size() * Current.target_score * 0.0015)
+	Current.public_lock_array.append("kill_combo_buff")
+	var add_num = int(Current.once_total_score * Current.slime_die_sum * 0.05)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num)
 	Current.hero.add_child(float_number_instantiate)
 	EffectManager.big_flow_effect(buff_texture)
-	## 等待飘字结束
 	await Tools.time_sleep(1)
 	Current.total_score += add_num
-	Current.public_lock_array.erase("slime_sum_score_increase_buff")
-
-func clear_buff():
-	pass
+	Current.public_lock_array.erase("kill_combo_buff")

@@ -458,5 +458,15 @@ var killed_coin_slime := false
 var zero_coin_refresh_max_times := 0
 ## 刷新buff无花费的当前次数
 var zero_coin_refresh_times := 0
+## 上回合是否攻击过（连击风暴用）
+var last_turn_attacked := false
+## 本次攻击骰型数量（骰型大师用）
+var dice_type_count := 0
+## 本次掉落骰子数量（掉落奖励/掉落惩罚用）
+var dropped_dice_count := 0
+## 本次攻击参与计分的骰子信息（击杀特化/颜色对应骰型用）
+var scored_dice_info: Array = []
+## 本次攻击触发的骰型名称数组（击杀倍率用）
+var active_dice_types: Array = []
 ## 骰型倍率表
 var dice_multiplier_dict: Dictionary
