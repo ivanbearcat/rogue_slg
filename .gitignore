@@ -8,6 +8,7 @@
 # Godot 临时/备份文件
 *.tmp
 *~
+screenshots*
 
 # Office 临时文件
 ~$*
@@ -30,3 +31,24 @@ desktop.ini
 *.o
 *.os
 *.pyc
+
+# kilo
+.kilo/
+
+# openspec
+openspec/
+*.spec
+
+# oh-my-opencode
+.sisyphus/
+
+# 文档
+docs/
+*.md
+
+# 其他
+*.log
+*.txt
+.gitattributes
+.editorconfig
+*.xlsx

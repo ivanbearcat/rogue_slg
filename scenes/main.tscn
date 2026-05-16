@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://cvuyfprspmcs4" path="res://images/score_bar.png" id="27_j8jky"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
 [ext_resource type="PackedScene" uid="uid://biahlr85bpue3" path="res://scenes/drop_selection_ui.tscn" id="33_5q0nq"]
+[ext_resource type="Script" uid="uid://c75g4vrr8ub2v" path="res://scripts/ui/buff_debug_panel.gd" id="34_dgi5k"]
 [ext_resource type="Texture2D" uid="uid://cda7fkfl5c5ii" path="res://images/buff_icon/attack_over_five.png" id="35_txyw0"]
 [ext_resource type="Texture2D" uid="uid://bdv875sbrrsun" path="res://images/buff_icon/coin_attack_score_increase.png" id="38_bjg73"]
 [ext_resource type="Texture2D" uid="uid://57oyou3ef2xv" path="res://images/buff_icon/attack_coin_slime_score_increase.png" id="52_bu4jf"]
@@ -6628,6 +6629,9 @@ offset_left = 70.5
 offset_top = 68.25
 offset_right = 70.5
 offset_bottom = 68.25
+
+[node name="buff_debug_panel" type="CanvasLayer" parent="." unique_id=285126185]
+script = ExtResource("34_dgi5k")
 
 [connection signal="mouse_entered" from="TileMapLayer/Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="hide_all_skill" from="skill_system" to="." method="_on_skill_system_hide_all_skill"]

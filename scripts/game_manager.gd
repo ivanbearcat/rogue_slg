@@ -342,6 +342,28 @@ func grid_index_to_position(grid_index: Vector2) -> Vector2:
 func position_to_grid_index(_position: Vector2) -> Vector2:
 	return Vector2((_position.x - start_pos.x) / grid_size.x, (_position.y - start_pos.y) / grid_size.y)
 
+## 清空所有史莱姆（关卡切换时调用）
+func _clear_all_slimes() -> void:
+	## 清空所有史莱姆节点
+	var _slime_count = enemys.get_child_count()
+	for enemy in enemys.get_children():
+		enemy.queue_free()
+	## 清空预生成列表（防止引用已释放的节点）
+	_slime_create_array.clear()
+	## 重置史莱姆相关追踪状态
+	Current.slime_die_sum = 0
+	Current.last_slime_create_array = []
+	Current.killed_power_slime = false
+	Current.killed_coin_slime = false
+	## 重置鼠标指向的史莱姆（可能指向已释放的节点）
+	Current.slime = null
+	## 清除所有网格的 warning 标记
+	for grid in grids.get_children():
+		grid.warning.visible = false
+	## 等待 queue_free 在帧末完成
+	await get_tree().process_frame
+	print("[slime-reset] 清空了 %d 个史莱姆, enemys 子节点数: %d" % [_slime_count, enemys.get_child_count()])
+
 ## 预生成史莱姆
 func _pre_create_slime():
 	var available_grid_array: Array[Vector2]
@@ -396,8 +418,8 @@ func _apply_spawn_lock(slime_array: Array) -> void:
 		"yellow_lock": "slime_small_yellow",
 	}
 	var point_map := {
-		"one_lock": 0, "two_lock": 2, "three_lock": 4,
-		"four_lock": 6, "five_lock": 8, "six_lock": 10,
+		"one_lock": 2, "two_lock": 0, "three_lock": 10,
+		"four_lock": 6, "five_lock": 8, "six_lock": 4,
 	}
 	## 收集所有激活的锁定buff（颜色+点数）
 	var active_locks: Array[String] = []
@@ -461,7 +483,7 @@ func _apply_point_lock() -> void:
 	## 收集本回合实际出生的史莱姆（按 last_slime_create_array 的原始顺序）
 	var spawned_slimes: Array = []
 	for enemy in Current.last_slime_create_array:
-		if enemy in Current.all_enemy_array:
+		if is_instance_valid(enemy) and enemy in Current.all_enemy_array:
 			spawned_slimes.append(enemy)
 	if spawned_slimes.is_empty():
 		return
@@ -474,21 +496,47 @@ func _apply_point_lock() -> void:
 	_pending_point_locks.clear()
 
 func _create_slime():
-	## 生成史莱姆
+	## 生成史莱姆（同时生成模式）
+	turn_button.disabled = true
+	## 清空上一回合的史莱姆生成记录，确保点数锁定只修改当前回合的史莱姆
+	Current.last_slime_create_array = []
 	var grids_array = grids.get_children()
 	for grid in grids_array:
 		grid.warning.visible = false
+	print("[slime-reset] _create_slime: _slime_create_array.size=%d, enemys.get_child_count=%d" % [_slime_create_array.size(), enemys.get_child_count()])
+	## 阶段1：批量加入场景树
+	var spawned_enemies: Array = []
 	for enemy in _slime_create_array:
+		if not is_instance_valid(enemy):
+			print("[slime-reset] 跳过无效节点")
+			continue
 		if enemy.enemy_grid_index != Current.hero.hero_grid_index and \
 		enemy.enemy_grid_index not in Current.all_enemy_grid_index_array:
 			enemys.add_child(enemy)
-			while enemy not in Current.all_enemy_array:
-				await Tools.time_sleep(0.01)
-			await _roll_dice(enemy)
+			Current.last_slime_create_array.append(enemy)
+			spawned_enemies.append(enemy)
 		else:
+			print("[slime-reset] 跳过重叠位置节点: grid=%s hero=%s" % [str(enemy.enemy_grid_index), str(Current.hero.hero_grid_index)])
 			enemy.queue_free()
-	Current.last_slime_create_array = _slime_create_array.duplicate()
 	_slime_create_array.clear()
+	## 阶段2：等待所有节点注册到 Current.all_enemy_array
+	await get_tree().process_frame
+	## 阶段3：并行触发所有骰子动画
+	for enemy in spawned_enemies:
+		if not is_instance_valid(enemy):
+			continue
+		enemy.dice.play("roll")
+		enemy.animated_sprite_2d.play("roll")
+	## 阶段4：统一等待动画时长
+	await Tools.time_sleep(1)
+	## 阶段5：批量停止动画并设置随机帧
+	for enemy in spawned_enemies:
+		if not is_instance_valid(enemy):
+			continue
+		enemy.dice.stop()
+		enemy.dice.set_frame_and_progress(dice_point.pick_random(), 0)
+		enemy.animated_sprite_2d.play("idle")
+	turn_button.disabled = false
 	## 点数锁定：根据之前记录的待修改列表修改骰子帧
 	_apply_point_lock()
 
@@ -520,18 +568,24 @@ func _create_slime_on_margin_grid():
 
 ## 添加能量史莱姆
 func _create_power_slime():
-	if Current.power_slime_array.size() < Current.power_slime_num and Current.all_enemy_array.size() > 0:
+	var _normal_slimes = Current.normal_slime_array
+	if Current.power_slime_array.size() < Current.power_slime_num and _normal_slimes.size() > 0:
 		for i in range(Current.power_slime_num - Current.power_slime_array.size()):
-			var power_slime = Current.normal_slime_array.pick_random()
+			if _normal_slimes.is_empty():
+				break
+			var power_slime = _normal_slimes.pick_random()
 			if power_slime not in Current.power_slime_array:
 				power_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(0.0, 18.892, 18.892))
 				power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 
 ## 添加金币史莱姆
 func _create_coin_slime():
-	if Current.coin_slime_array.size() < Current.coin_slime_num and Current.all_enemy_array.size() > 0:
+	var _normal_slimes = Current.normal_slime_array
+	if Current.coin_slime_array.size() < Current.coin_slime_num and _normal_slimes.size() > 0:
 		for i in range(Current.coin_slime_num - Current.coin_slime_array.size()):
-			var coin_slime = Current.normal_slime_array.pick_random()
+			if _normal_slimes.is_empty():
+				break
+			var coin_slime = _normal_slimes.pick_random()
 			if coin_slime not in Current.coin_slime_array:
 				coin_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 18.892, 0.0))
 				coin_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
@@ -739,12 +793,16 @@ func _on_grid_cmd(cmd_name):
 
 ## 投骰子动画
 func _roll_dice(slime_instantiate, roll_dice=1, roll_color=1):
+	if not is_instance_valid(slime_instantiate):
+		return
 	turn_button.disabled = true
 	if roll_dice:
 		slime_instantiate.dice.play("roll")
 	if roll_color:
 		slime_instantiate.animated_sprite_2d.play("roll")
 	await Tools.time_sleep(1)
+	if not is_instance_valid(slime_instantiate):
+		return
 	if roll_dice:
 		slime_instantiate.dice.stop()
 		slime_instantiate.dice.set_frame_and_progress(dice_point.pick_random(), 0)
@@ -820,7 +878,11 @@ func hide_skill_attack():
 	skill_system.hide_skill_attack()
 
 ## 回合操作
+var _turn_processing := false
 func _turn_process():
+	if _turn_processing:
+		return
+	_turn_processing = true
 	## 敌人回合
 	_turn_clean()
 	## 后期回合（8-10回合）史莱姆生成翻倍
@@ -847,6 +909,7 @@ func _turn_process():
 	_create_coin_slime()
 	## 玩家回合前
 	_pre_hero_turn_begin()
+	_turn_processing = false
 
 ## 技能结算
 func skill_attack():
@@ -871,6 +934,9 @@ func skill_attack():
 	## 等待过关结算
 	while clear_stage_ui.visible == true:
 		await Tools.time_sleep(0.2)
+	## 等待关卡切换完成
+	while "stage_transition" in Current.public_lock_array:
+		await Tools.time_sleep(0.1)
 	## 敌人回合
 	await _turn_process()
 	## 执行玩家回合前buff
@@ -1398,6 +1464,8 @@ func _replace_coin_skill(index: int, new_skill_row: Dictionary):
 	pending_shop_skill = {}
 
 func _on_stage_clear_button_pressed() -> void:
+	## 加锁：防止 _turn_process 在关卡切换完成前执行
+	Current.public_lock_array.append("stage_transition")
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
 	## 更新回合、关卡、当前分数、目标分数
@@ -1443,6 +1511,10 @@ func _on_stage_clear_button_pressed() -> void:
 	## 等待升级选卡
 	while "level_up_ui" in Current.public_lock_array:
 		await Tools.time_sleep(0.1)
+	## 清空上一关残留的史莱姆和预生成告警
+	await _clear_all_slimes()
+	## 为新关卡第一回合预生成史莱姆（设置warning告警）
+	_pre_create_slime()
 	## 关卡切换效果
 	await EffectManager.stage_change_effect()
 	## 3、6、9关设置诅咒
@@ -1453,6 +1525,8 @@ func _on_stage_clear_button_pressed() -> void:
 	if Current.count_stage == 12:
 		_set_stage_debuff(1)
 		await EffectManager.debuff_change_effect()
+	## 解锁：关卡切换完成，允许 _turn_process 执行
+	Current.public_lock_array.erase("stage_transition")
 
 ## 重掷按钮按下
 func _on_reroll_button_pressed() -> void:
