@@ -112,6 +112,7 @@ const hero_property = {
 @onready var buff_lock_button_3: TextureButton = %buff_lock_button_3
 @onready var power_bottle_button: TextureButton = %power_bottle_button
 @onready var exp_bottle_button: TextureButton = %exp_bottle_button
+@onready var hp_bottle_button: TextureButton = %hp_bottle_button
 @onready var buff_refresh_button: TextureButton = %buff_refresh_button
 @onready var buff_refresh_rlabel: RichTextLabel = %buff_refresh_rlabel
 @onready var shop_next_level_button: Button = %shop_next_level_button
@@ -188,6 +189,8 @@ var buff_refresh_cost := 1:
 @onready var buff_json_data: Array = Tools.load_json_file('res://config/buff.json')
 ## 骰型倍率
 @onready var dice_multiplier_json_data: Array = Tools.load_json_file("res://config/dice_multiplier.json")
+## 诅咒史莱姆debuff池
+@onready var curse_debuff_json_data: Array = Tools.load_json_file('res://config/curse_debuff.json')
 ## 格子像素大小
 var grid_size = Vector2(16, 16)
 ## 起始格子位置
@@ -257,8 +260,8 @@ func _ready() -> void:
 	Current.tongdui_percent = Current.dice_multiplier_dict[2]["tongdui"]
 	Current.tongshun_percent = Current.dice_multiplier_dict[2]["tongshun"]
 	## 测试倍率
-	var result = ScoringAlgorithm.count_total_score([["red", 3], ["blue", 3], ["blue", 3], ["blue", 2], ["blue", 1], ["blue", 6]])
-	print(result)
+	#var result = ScoringAlgorithm.count_total_score([["red", 3], ["blue", 3], ["blue", 3], ["blue", 2], ["blue", 1], ["blue", 6]])
+	#print(result)
 	## 初始化金币
 	Current.total_coins = 15
 	## 随机择BOSS
@@ -495,6 +498,101 @@ func _apply_point_lock() -> void:
 			lock_idx += 1
 	_pending_point_locks.clear()
 
+## 生成威胁史莱姆（第3回合将1个普通史莱姆转化为威胁史莱姆）
+func _spawn_threat_slime():
+	var normal_slimes = Current.normal_slime_array
+	if normal_slimes.is_empty():
+		print("[threat-slime] 没有普通史莱姆可转化，跳过")
+		return
+	## 随机选择1种威胁类型
+	var threat_type = Current.threat_types.pick_random()
+	## 随机选择1个普通史莱姆
+	var target_slime = normal_slimes.pick_random()
+	if not is_instance_valid(target_slime):
+		print("[threat-slime] 目标史莱姆无效，跳过")
+		return
+	## 设置威胁类型
+	target_slime.threat_type = threat_type
+	## 出生回合不触发效果，下一回合开始才生效
+	target_slime.threat_skip_first_turn = true
+	## 设置轮廓色和高亮
+	target_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Current.threat_type_colors[threat_type])
+	target_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+	## 诅咒类型额外设置倒计时
+	if threat_type == "curse":
+		target_slime.curse_countdown = 3
+	## 创建威胁tooltip
+	target_slime._create_threat_tooltip()
+	print("[threat-slime] 生成了威胁史莱姆: %s" % threat_type)
+
+## 处理威胁史莱姆效果（每回合开始时调用）
+func _process_threat_slime_effects():
+	var threat_slimes = Current.threat_slime_array
+	if threat_slimes.is_empty():
+		return
+	for _slime in threat_slimes:
+		if not is_instance_valid(_slime):
+			continue
+		## 出生回合跳过效果，下一回合开始才生效
+		if _slime.threat_skip_first_turn:
+			_slime.threat_skip_first_turn = false
+			continue
+		match _slime.threat_type:
+			"corrosion":
+				await _process_corrosion_effect(_slime)
+			"curse":
+				await _process_curse_effect(_slime)
+			"plague":
+				await _process_plague_effect(_slime)
+			"parasite":
+				await _process_parasite_effect(_slime)
+			"swell":
+				pass
+
+## 腐蚀效果：随机侵蚀1个点数的基础分-1
+func _process_corrosion_effect(slime: Slime):
+	var score_names = ["one_score", "two_score", "three_score", "four_score", "five_score", "six_score"]
+	var score_labels = [one_score, two_score, three_score, four_score, five_score, six_score]
+	var random_idx = randi_range(0, 5)
+	var current_val = Current.get(score_names[random_idx])
+	if current_val > 0:
+		Current.set(score_names[random_idx], current_val - 1)
+		var float_number = EffectManager.float_number_effect(-1, "red")
+		score_labels[random_idx].add_child(float_number)
+		EffectManager.big_flow_effect(score_labels[random_idx])
+
+## 诅咒效果：倒计时递减，归零时触发随机debuff
+func _process_curse_effect(slime: Slime):
+	slime.curse_countdown -= 1
+	slime._update_threat_tooltip()
+	if slime.curse_countdown <= 0:
+		var curse_debuff_row = curse_debuff_json_data.pick_random()
+		var buff = load(curse_debuff_row["debuff_res"]).new(curse_debuff_row, self)
+		BuffSystem.callv("set_" + curse_debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+		debuff_effect_label.text = "诅咒触发！ [img=15 ]" + curse_debuff_row["debuff_icon"] + "[/img]"
+		await EffectManager.debuff_change_effect()
+		slime.threat_type = ""
+		slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", false)
+		slime.curse_countdown = 0
+
+## 瘟疫效果：扣当前总分3%
+func _process_plague_effect(slime: Slime):
+	var sub_num = int(Current.total_score * 0.03)
+	if sub_num > 0:
+		Current.total_score -= sub_num
+		var float_number = EffectManager.float_number_effect(-sub_num, "red")
+		Current.hero.add_child(float_number)
+		EffectManager.big_flow_effect(total_score)
+
+## 寄生效果：目标分数+2%
+func _process_parasite_effect(slime: Slime):
+	var add_num = int(Current.target_score * 0.02)
+	if add_num > 0:
+		Current.target_score += add_num
+		var float_number = EffectManager.float_number_effect(add_num, "purple")
+		target_score.add_child(float_number)
+		EffectManager.big_flow_effect(target_score)
+
 func _create_slime():
 	## 生成史莱姆（同时生成模式）
 	turn_button.disabled = true
@@ -723,6 +821,12 @@ func _set_level_up_card():
 func _check_and_level_up() -> void:
 	if Current.hero_exp >= Current.require_exp:
 		Current.level += 1
+		## 升级+1HP
+		Current.player_hp += 1
+		## 每5级max_hp+1且HP+1
+		if Current.level % 5 == 0:
+			Current.max_hp += 1
+			Current.player_hp += 1
 		var overflow_exp = Current.hero_exp - Current.require_exp
 		## 最多增加到10个史莱姆可以升级
 		if Current.require_exp < 10:
@@ -889,6 +993,10 @@ func _turn_process():
 	Current.slime_create_num = 3  ## 重置为基础值
 	if Current.count_round >= 8 and Current.count_round <= 10:
 		Current.slime_create_num = 6
+	## 膨胀史莱姆：存活时每回合多生成1个史莱姆
+	for _slime in Current.threat_slime_array:
+		if is_instance_valid(_slime) and _slime.threat_type == "swell":
+			Current.slime_create_num += 1
 	## 第8回合显示危险提示
 	if Current.count_round == 8:
 		stage_effect_label.text = "危险⚠️"
@@ -903,10 +1011,15 @@ func _turn_process():
 	## 保证骰子动画完成
 	while "reroll_slime_buff" in Current.public_lock_array:
 		await Tools.time_sleep(0.05)
+	## 第3回合生成威胁史莱姆（在能量/金币史莱姆之前，确保有普通史莱姆可转化）
+	if Current.count_round == 3:
+		_spawn_threat_slime()
 	## 生成能量史莱姆
 	_create_power_slime()
 	## 生成金币史莱姆
 	_create_coin_slime()
+	## 处理威胁史莱姆效果
+	await _process_threat_slime_effects()
 	## 玩家回合前
 	_pre_hero_turn_begin()
 	_turn_processing = false
@@ -930,13 +1043,19 @@ func skill_attack():
 	while get_tree().paused:
 		await Tools.time_sleep(0.1)
 	## 检查过关
-	await _check_stage_clear()
+	var stage_cleared = await _check_stage_clear()
 	## 等待过关结算
 	while clear_stage_ui.visible == true:
 		await Tools.time_sleep(0.2)
 	## 等待关卡切换完成
 	while "stage_transition" in Current.public_lock_array:
 		await Tools.time_sleep(0.1)
+	## 过关后不再扣血和执行敌人回合
+	if stage_cleared:
+		turn_button.disabled = false
+		return
+	## 攻击结算后，基于当前场上残留史莱姆扣血
+	_apply_hp_damage()
 	## 敌人回合
 	await _turn_process()
 	## 执行玩家回合前buff
@@ -983,10 +1102,16 @@ func _on_turn_button_pressed() -> void:
 	## 等待buff处理完成
 	await wait_for_buff_finish()
 	## 检查过关
-	await _check_stage_clear()
+	var stage_cleared = await _check_stage_clear()
 	## 等待过关结算
 	while clear_stage_ui.visible == true:
 		await Tools.time_sleep(0.2)
+	## 过关后不再扣血和执行敌人回合
+	if stage_cleared:
+		turn_button.disabled = false
+		return
+	## 跳过回合后，基于当前场上残留史莱姆扣血
+	_apply_hp_damage()
 	## 回合处理
 	await _turn_process()
 	## 执行玩家回合前buff
@@ -1016,6 +1141,48 @@ func _turn_clean():
 	## 进入敌人回合
 	Current.turn = "enemy_turn"
 
+## HP扣血逻辑：根据场上史莱姆数量阶梯扣血
+func _apply_hp_damage():
+	## turn_plus_one_buff第一回合不扣血
+	if Current.skip_hp_damage_this_turn:
+		Current.skip_hp_damage_this_turn = false
+		return
+	## 计算场上史莱姆数量（排除生命史莱姆）
+	var slime_count = 0
+	for _slime in Current.all_enemy_array:
+		if is_instance_valid(_slime) and not _slime.is_life_slime:
+			slime_count += 1
+	## 阶梯扣血
+	var damage := 0
+	if slime_count >= 7:
+		damage = 3
+	elif slime_count >= 4:
+		damage = 2
+	elif slime_count >= 1:
+		damage = 1
+	else:
+		damage = 0
+	if damage > 0:
+		Current.player_hp -= damage
+		## HP扣减视觉反馈
+		if has_node("round_process_bar/hp_bar"):
+			var hp_bar = get_node("round_process_bar/hp_bar")
+			if hp_bar.has_method("play_damage_effect"):
+				hp_bar.play_damage_effect()
+	## HP<=3且本关未生成生命史莱姆时触发生命史莱姆
+	if Current.player_hp <= 3 and not Current.life_slime_spawned_this_stage:
+		_create_life_slime()
+
+## 创建生命史莱姆：将1只普通史莱姆转化为生命史莱姆
+func _create_life_slime():
+	var _normal_slimes = Current.normal_slime_array
+	if _normal_slimes.size() > 0:
+		var life_slime = _normal_slimes.pick_random()
+		life_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(1.0, 0.4, 0.7))
+		life_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+		life_slime.is_life_slime = true
+		Current.life_slime_spawned_this_stage = true
+
 ## 触发掉落奖励buff（跳过回合时也需要触发）
 func _trigger_drop_bonus():
 	if Current.dropped_dice_count <= 0:
@@ -1032,8 +1199,8 @@ func _trigger_drop_bonus():
 				return
 
 func _pre_hero_turn_begin():
-	## 判断失败
-	if Current.count_round > 10:
+	## 判断失败：HP<=0时游戏结束
+	if Current.player_hp <= 0:
 		print("游戏失败")
 		get_tree().paused = true
 	## 兜底恢复回合按钮
@@ -1061,15 +1228,15 @@ func reset_astar_solid() -> void:
 		astar.set_point_solid(grid_index, true)
 
 ## 判断是否过关
-func _check_stage_clear():
-	if Current.total_score >= Current.target_score and Current.count_round <= 10:
+func _check_stage_clear() -> bool:
+	if Current.total_score >= Current.target_score:
 		## 回合固定金币
 		var stage_add_coin = 1
 		Current.count_add_coins += stage_add_coin
-		## 显示剩余回合奖励的金币
-		var round_add_coin = 10 - Current.count_round
-		stage_coin_label_2.text = str(round_add_coin)
-		Current.count_add_coins += round_add_coin
+		## 显示剩余HP奖励的金币
+		var hp_add_coin = Current.player_hp
+		stage_coin_label_2.text = str(hp_add_coin)
+		Current.count_add_coins += hp_add_coin
 		#var add_coin := 0
 		#for i in range(10 - Current.count_round):
 			#add_coin += 1
@@ -1078,11 +1245,13 @@ func _check_stage_clear():
 		## 过关时最高子数金币数组
 		var highest_dice_add_coin = Current.highest_dice_num - 1
 		Current.count_add_coins += highest_dice_add_coin
-		await _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin)
+		await _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin)
 		## 清理关卡buff
 		EventBus.event_emit("clear_stage_buff")
+		return true
+	return false
 
-func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coin):
+func _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin):
 	## 万一有升级让升级先出现
 	await Tools.time_sleep(0.1)
 	while get_tree().paused:
@@ -1104,7 +1273,7 @@ func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coi
 	await EffectManager.typewriter_effect(stage_clear_label_2, stage_clear_label_2.text, 0.5)
 	stage_coin_rlabel_2.show()
 	stage_coin_label_2.show()
-	await EffectManager.label_num_rolling_effect(stage_coin_label_2, round_add_coin)
+	await EffectManager.label_num_rolling_effect(stage_coin_label_2, hp_add_coin)
 	## 第三行
 	stage_clear_label_3.show()
 	await EffectManager.typewriter_effect(stage_clear_label_3, stage_clear_label_3.text, 0.5)
@@ -1116,7 +1285,7 @@ func _do_stage_clear_effect(stage_add_coin, round_add_coin, highest_dice_add_coi
 	stage_coin_label_4.show()
 	await EffectManager.label_num_rolling_effect(
 		stage_coin_label_4,
-		stage_add_coin + round_add_coin + highest_dice_add_coin
+		stage_add_coin + hp_add_coin + highest_dice_add_coin
 		)
 	stage_clear_button.show()
 
@@ -1472,6 +1641,8 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.count_round = 0
 	Current.total_score = 0
 	Current.drop_slot_dice = null
+	## 重置生命史莱姆生成标记
+	Current.life_slime_spawned_this_stage = false
 	if Current.count_stage < 12:
 		Current.count_stage += 1
 		## 重置所有金币技能本关使用状态为未使用
@@ -1644,6 +1815,10 @@ func _on_power_bottle_button_pressed() -> void:
 func _on_exp_bottle_button_pressed() -> void:
 	Current.total_coins -= 1
 	add_exp(1)
+
+func _on_hp_bottle_button_pressed() -> void:
+	Current.total_coins -= 3
+	Current.player_hp += 2
 
 func _on_buff_shop_button_1_pressed() -> void:
 	Current.total_coins -= shop_buff_1["buff_price"]

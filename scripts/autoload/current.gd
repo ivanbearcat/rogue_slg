@@ -159,6 +159,13 @@ var total_coins: int:
 		else:
 			game_manager.exp_bottle_button.disabled = false
 			game_manager.exp_bottle_button.modulate = Color(1, 1, 1, 1)
+		## 生命药水按钮：3金币且HP未满时启用
+		if v < 3 or _player_hp >= _max_hp:
+			game_manager.hp_bottle_button.disabled = true
+			game_manager.hp_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.hp_bottle_button.disabled = false
+			game_manager.hp_bottle_button.modulate = Color(1, 1, 1, 1)
 		if v < game_manager.shop_buff_1.get("buff_price", 0):
 			game_manager.buff_shop_button_1.disabled = true
 			game_manager.buff_shop_button_1.modulate = Color(0.5, 0.5, 0.5, 1)
@@ -215,9 +222,8 @@ var count_round := 0:
 			tween.tween_property(game_manager.ship, "position:y", position.y, 0.4)
 			await tween.finished
 			Current.public_lock_array.erase("turn_ship_animation")
-		if v < 11:
-			game_manager.turn_label.text = "回合: " + str(v)
-			game_manager.turn_coin_label.text = str(10 - v)
+		## 回合数>10时不触发船动画，但继续显示回合数
+		game_manager.turn_label.text = "回合: " + str(v)
 	get:
 		#return int(game_manager.turn_label.text)
 		return count_round
@@ -470,3 +476,61 @@ var scored_dice_info: Array = []
 var active_dice_types: Array = []
 ## 骰型倍率表
 var dice_multiplier_dict: Dictionary
+## 威胁史莱姆数组
+var threat_slime_array: Array:
+	get:
+		var _threat_slime_array = []
+		for _slime in all_enemy_array:
+			if is_instance_valid(_slime) and _slime.threat_type != "":
+				_threat_slime_array.append(_slime)
+		return _threat_slime_array
+## 威胁类型对应的描述
+var threat_type_descriptions: Dictionary = {
+	"corrosion": "腐蚀：每回合随机侵蚀1个点数的基础分-1",
+	"curse": "诅咒：3回合倒计时结束后触发随机debuff",
+	"plague": "瘟疫：每回合扣除当前总分3%",
+	"parasite": "寄生：每回合目标分数+2%",
+	"swell": "膨胀：存活时每回合多生成1个史莱姆"
+}
+## 玩家HP
+var _player_hp: int = 5
+var player_hp: int:
+	set(v):
+		_player_hp = mini(v, max_hp)
+		if _player_hp < 0:
+			_player_hp = 0
+		_update_hp_ui()
+	get:
+		return _player_hp
+## HP上限
+var _max_hp: int = 5
+var max_hp: int:
+	set(v):
+		_max_hp = v
+		if _player_hp > _max_hp:
+			_player_hp = _max_hp
+		_update_hp_ui()
+	get:
+		return _max_hp
+## 本关是否已生成生命史莱姆
+var life_slime_spawned_this_stage: bool = false
+## HP扣血跳过标记（turn_plus_one_buff第一回合不扣血用）
+var skip_hp_damage_this_turn: bool = false
+
+## 更新HP心形血条UI
+func _update_hp_ui():
+	if game_manager and game_manager.has_node("round_process_bar/hp_bar"):
+		var hp_bar = game_manager.get_node("round_process_bar/hp_bar")
+		if hp_bar.has_method("update_hearts"):
+			hp_bar.update_hearts(_player_hp, _max_hp)
+
+## 威胁类型数组
+var threat_types: Array = ["corrosion", "curse", "plague", "parasite", "swell"]
+## 威胁类型对应的轮廓色（与金币史莱姆黄色和能量史莱姆青色明显区分）
+var threat_type_colors: Dictionary = {
+	"corrosion": Color(0.8, 0, 0.8),   ## 紫色
+	"curse": Color(1, 0.3, 0),      ## 橙红色
+	"plague": Color(0, 0.8, 0.3),   ## 绿色
+	"parasite": Color(1, 0, 0.2),   ## 緢色
+	"swell": Color(1, 0.4, 0.7)    ## 粉色
+}
