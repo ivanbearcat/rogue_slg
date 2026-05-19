@@ -3,7 +3,7 @@
         "buff_id": "slime_plus_one",
         "buff_name": "多生成1史莱姆",
         "buff_icon": "res://images/buff_icon/slime_plus_one.png",
-        "buff_tooltip": "每回合多生成1个史莱姆",
+        "buff_tooltip": "生命上限+1，每回合多生成1个史莱姆",
         "buff_res": "res://scripts/buff/slime_plus_one_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 5
@@ -322,5 +322,32 @@
         "buff_res": "res://scripts/buff/point_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 3
+    },
+    {
+        "buff_id": "iron_wall",
+        "buff_name": "铁壁",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "防御+1",
+        "buff_res": "res://scripts/buff/iron_wall_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 7
+    },
+    {
+        "buff_id": "thorn_armor",
+        "buff_name": "荆棘护甲",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "防御+1，但每回合多生成1个史莱姆",
+        "buff_res": "res://scripts/buff/thorn_armor_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5
+    },
+    {
+        "buff_id": "life_barrier",
+        "buff_name": "生命壁垒",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "当前HP≤3时，防御+2",
+        "buff_res": "res://scripts/buff/life_barrier_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5
     }
 ]

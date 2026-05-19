@@ -6,5 +6,13 @@
         "debuff_tooltip": "每次攻击的得分-20%",
         "debuff_res": "res://scripts/buff/attack_score_down_buff.gd",
         "debuff_type": "post_attack_buff"
+    },
+    {
+        "debuff_id": "fragile",
+        "debuff_name": "脆弱",
+        "debuff_icon": "res://icon.svg",
+        "debuff_tooltip": "每回合防御-1（最低0）",
+        "debuff_res": "res://scripts/buff/fragile_buff.gd",
+        "debuff_type": "pre_enemy_turn_buff"
     }
 ]

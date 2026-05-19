@@ -184,11 +184,19 @@
         "debuff_type": "pre_enemy_turn_buff"
     },
     {
-        "debuff_id": "drop_penalty",
+"debuff_id": "drop_penalty",
         "debuff_name": "掉落惩罚",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "每掉落1个骰子，当前分数-3%",
         "debuff_res": "res://scripts/buff/drop_penalty_buff.gd",
         "debuff_type": "post_attack_buff"
+    },
+    {
+        "debuff_id": "armor_break",
+        "debuff_name": "破甲",
+        "debuff_icon": "res://icon.svg",
+        "debuff_tooltip": "本关防御-2",
+        "debuff_res": "res://scripts/buff/armor_break_buff.gd",
+        "debuff_type": "pre_enemy_turn_buff"
     }
 ]

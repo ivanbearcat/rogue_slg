@@ -1152,16 +1152,9 @@ func _apply_hp_damage():
 	for _slime in Current.all_enemy_array:
 		if is_instance_valid(_slime) and not _slime.is_life_slime:
 			slime_count += 1
-	## 阶梯扣血
-	var damage := 0
-	if slime_count >= 7:
-		damage = 3
-	elif slime_count >= 4:
-		damage = 2
-	elif slime_count >= 1:
-		damage = 1
-	else:
-		damage = 0
+	## 防御公式扣血: damage = max(0, ceil((slime_count - defense) / 3))
+	var effective: int = slime_count - Current.player_defense
+	var damage: int = ceili(effective / 3.0) if effective > 0 else 0
 	if damage > 0:
 		Current.player_hp -= damage
 		## HP扣减视觉反馈

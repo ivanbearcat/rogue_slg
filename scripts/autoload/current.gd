@@ -516,6 +516,8 @@ var max_hp: int:
 var life_slime_spawned_this_stage: bool = false
 ## HP扣血跳过标记（turn_plus_one_buff第一回合不扣血用）
 var skip_hp_damage_this_turn: bool = false
+## 玩家防御值（初始2，公式: damage = max(0, ceil((slime_count - defense) / 3)))
+var player_defense: int = 2
 
 ## 更新HP心形血条UI
 func _update_hp_ui():

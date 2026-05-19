@@ -6,9 +6,8 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
+	Current.player_defense += 1
 	Current.slime_create_num += 1
-	Current.max_hp += 1
-	Current.player_hp += 1
 
 func process_buff():
 	pass
