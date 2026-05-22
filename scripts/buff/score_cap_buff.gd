@@ -8,7 +8,7 @@ func set_buff():
 	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
 
 func process_buff():
-	var cap = int(Current.target_score * 0.30)
+	var cap = int(Current.target_score * 0.40)
 	if Current.once_total_score > cap:
 		var excess = Current.once_total_score - cap
 		Current.public_lock_array.append("score_cap_buff")

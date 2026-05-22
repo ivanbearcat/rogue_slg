@@ -12,14 +12,16 @@ var enemy_grid_index: Vector2:
 var enemy_hp: int = 1
 var target_position: Vector2
 var enemy_type: int = 1
-## 威胁类型: "corrosion", "curse", "plague", "parasite", "swell" 或空字符串
-var threat_type: String = ""
+## 是否为精英史莱姆
+var is_elite: bool = false
+## 是否为BOSS史莱姆
+var is_boss: bool = false
+## 骰型门槛类型: "duizi", "shunzi", "tongse", "tongdui", "tongshun"
+var gate_type: String = ""
+## 骰型门槛所需骰数
+var gate_count: int = 0
 ## 是否为生命史莱姆
 var is_life_slime: bool = false
-## 出生回合不触发效果，下一回合开始才生效
-var threat_skip_first_turn: bool = false
-## 诅咒倒计时（仅诅咒史莱姆使用）
-var curse_countdown: int = 0
 var dice_real_point: Dictionary = {
 	0: 2,
 	2: 1,
@@ -40,43 +42,44 @@ var dice_to_frame_dice: Dictionary = {
 	5: 8,
 	6: 4
 }
-## 威胁史莱姆tooltip标签
-var _threat_tooltip_label: Label = null
+## 精英/BOSS史莱姆tooltip标签
+var _elite_tooltip_label: Label = null
 
-func _create_threat_tooltip():
-	if threat_type == "" or _threat_tooltip_label != null:
+func _create_elite_tooltip():
+	if not is_elite and not is_boss:
 		return
-	_threat_tooltip_label = Label.new()
-	_threat_tooltip_label.name = "ThreatTooltip"
-	var desc = Current.threat_type_descriptions.get(threat_type, "")
-	## 诅咒类型显示倒计时
-	if threat_type == "curse" and curse_countdown > 0:
-		desc += " (倒计时: " + str(curse_countdown) + ")"
-	_threat_tooltip_label.text = desc
-	_threat_tooltip_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	## 使用威胁类型对应的颜色
-	var threat_color = Current.threat_type_colors.get(threat_type, Color.WHITE)
-	_threat_tooltip_label.add_theme_color_override("font_color", threat_color)
-	_threat_tooltip_label.add_theme_font_size_override("font_size", 14)
-	## 背景
+	if _elite_tooltip_label != null:
+		return
+	_elite_tooltip_label = Label.new()
+	_elite_tooltip_label.name = "EliteTooltip"
+	## Build tooltip text
+	var desc = ""
+	if is_elite:
+		desc = "精英史莱姆\n"
+	elif is_boss:
+		desc = "BOSS史莱姆\n"
+	## Gate type description
+	var gate_desc = Current.gate_type_descriptions.get(gate_type, "")
+	desc += gate_desc + " (需要" + str(gate_count) + "个)\n"
+	## Dice info
+	desc += "骰子: " + str(dice_point) + "点"
+	_elite_tooltip_label.text = desc
+	_elite_tooltip_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	## Color: red for elite, purple for boss
+	var outline_color = Color(18.892, 0, 0) if is_elite else Color(18.892, 0, 18.892)
+	_elite_tooltip_label.add_theme_color_override("font_color", outline_color)
+	_elite_tooltip_label.add_theme_font_size_override("font_size", 14)
+	## Background
 	var stylebox = StyleBoxFlat.new()
 	stylebox.bg_color = Color(0.1, 0.1, 0.1, 0.85)
 	stylebox.set_border_width_all(2)
-	stylebox.border_color = threat_color
+	stylebox.border_color = outline_color
 	stylebox.set_content_margin_all(4)
-	_threat_tooltip_label.add_theme_stylebox_override("normal", stylebox)
-	_threat_tooltip_label.position = Vector2(-60, -35)
-	_threat_tooltip_label.visible = false
-	_threat_tooltip_label.z_index = 100
-	add_child(_threat_tooltip_label)
-
-func _update_threat_tooltip():
-	if _threat_tooltip_label == null or threat_type == "":
-		return
-	var desc = Current.threat_type_descriptions.get(threat_type, "")
-	if threat_type == "curse" and curse_countdown > 0:
-		desc += " (倒计时: " + str(curse_countdown) + ")"
-	_threat_tooltip_label.text = desc
+	_elite_tooltip_label.add_theme_stylebox_override("normal", stylebox)
+	_elite_tooltip_label.position = Vector2(-80, -40)
+	_elite_tooltip_label.visible = false
+	_elite_tooltip_label.z_index = 100
+	add_child(_elite_tooltip_label)
 
 func _process(delta: float) -> void:
 	if target_position:
@@ -110,28 +113,31 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		if float_number:
 			float_number.get_node("Label").text = "+3HP!"
 			Current.hero.add_child(float_number)
-	## 威胁史莱姆击杀反馈
-	if threat_type != "":
+	## 精英/BOSS史莱姆击杀反馈
+	if is_elite or is_boss:
 		var float_number = EffectManager.float_number_effect(1, "green")
 		if float_number:
-			float_number.get_node("Label").text = "威胁消除!"
+			if is_boss:
+				float_number.get_node("Label").text = "BOSS击杀!"
+			else:
+				float_number.get_node("Label").text = "精英击杀!"
 			Current.hero.add_child(float_number)
-		print("[threat-slime] 威胁史莱姆被击杀: %s" % threat_type)
+		print("[elite-slime] %s被击杀: gate=%s count=%d" % ["BOSS" if is_boss else "精英", gate_type, gate_count])
 	self.queue_free()
 
 func _on_area_2d_mouse_entered() -> void:
 	Current.slime = self
-	## 显示威胁史莱姆tooltip
-	if threat_type != "":
-		_create_threat_tooltip()
-		if _threat_tooltip_label:
-			_threat_tooltip_label.visible = true
+	## 显示精英/BOSS史莱姆tooltip
+	if is_elite or is_boss:
+		_create_elite_tooltip()
+		if _elite_tooltip_label:
+			_elite_tooltip_label.visible = true
 
 func _on_area_2d_mouse_exited() -> void:
 	Current.slime = null
-	## 隐藏威胁史莱姆tooltip
-	if _threat_tooltip_label:
-		_threat_tooltip_label.visible = false
+	## 隐藏精英/BOSS史莱姆tooltip
+	if _elite_tooltip_label:
+		_elite_tooltip_label.visible = false
 
 func _on_dice_animation_finished() -> void:
 	print(dice.frame)

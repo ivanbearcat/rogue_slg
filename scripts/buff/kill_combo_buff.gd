@@ -9,7 +9,7 @@ func set_buff():
 
 func process_buff():
 	Current.public_lock_array.append("kill_combo_buff")
-	var add_num = int(Current.once_total_score * Current.slime_die_sum * 0.05)
+	var add_num = int(Current.once_total_score * Current.slime_die_sum * 0.04)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num)
 	Current.hero.add_child(float_number_instantiate)
 	EffectManager.big_flow_effect(buff_texture)

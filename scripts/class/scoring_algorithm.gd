@@ -355,3 +355,66 @@ static func _count_tongshun(attack_slime_array_info):
 				tmp_item = tmp_array
 			tmp_score = 0
 	return [score, tmp_item]
+
+## 检查精英/Boss史莱姆骰型门槛击杀系统
+## attack_slime_array_info: 攻击方骰子数组 [[color, point], ...]
+## target_dice: 目标骰子 [color, point]
+## gate_type: 门槛类型 "duizi"/"shunzi"/"tongse"/"tongdui"/"tongshun"
+## gate_count: 门槛所需最少骰子数
+## 返回：目标骰子是否参与了满足门槛条件的骰型组合
+static func check_gate(attack_slime_array_info, target_dice, gate_type: String, gate_count: int) -> bool:
+	var target_point: int = target_dice[1]
+	var target_color: String = target_dice[0]
+	match gate_type:
+		"duizi":
+			var count := 0
+			for dice in attack_slime_array_info:
+				if dice[1] == target_point:
+					count += 1
+			return count >= gate_count
+		"shunzi":
+			var point_set := {}
+			for dice in attack_slime_array_info:
+				point_set[dice[1]] = true
+			var best_length := 1
+			for p in point_set.keys():
+				if point_set.has(p - 1):
+					continue
+				var length := 1
+				while point_set.has(p + length):
+					length += 1
+				if p <= target_point and target_point < p + length:
+					best_length = max(best_length, length)
+			return best_length >= gate_count
+		"tongse":
+			var count := 0
+			for dice in attack_slime_array_info:
+				if dice[0] == target_color:
+					count += 1
+			return count >= gate_count
+		"tongdui":
+			var count := 0
+			for dice in attack_slime_array_info:
+				if dice[0] == target_color and dice[1] == target_point:
+					count += 1
+			return count >= gate_count
+		"tongshun":
+			var same_color_points := []
+			for dice in attack_slime_array_info:
+				if dice[0] == target_color:
+					same_color_points.append(dice[1])
+			var point_set := {}
+			for p in same_color_points:
+				point_set[p] = true
+			var best_length := 1
+			for p in point_set.keys():
+				if point_set.has(p - 1):
+					continue
+				var length := 1
+				while point_set.has(p + length):
+					length += 1
+				if p <= target_point and target_point < p + length:
+					best_length = max(best_length, length)
+			return best_length >= gate_count
+		_:
+			return false

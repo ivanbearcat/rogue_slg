@@ -9,7 +9,7 @@ func set_buff():
 
 func process_buff():
 	Current.public_lock_array.append("coin_attack_score_increase_buff")
-	var add_num = int(Current.total_coins * 0.01 * Current.once_total_score)
+	var add_num = int(Current.total_coins * 0.02 * Current.once_total_score)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num)
 	Current.hero.add_child(float_number_instantiate)
 	EffectManager.big_flow_effect(buff_texture)

@@ -14,8 +14,8 @@ func process_buff():
 	if _defense_applied:
 		Current.player_defense -= 2
 		_defense_applied = false
-	## HP≤3时临时+2防御
-	if Current.player_hp <= 3:
+	## HP≤2时临时+2防御
+	if Current.player_hp <= 2:
 		Current.player_defense += 2
 		_defense_applied = true
 

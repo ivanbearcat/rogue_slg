@@ -12,8 +12,9 @@ func set_buff():
 	_defense_before_fragile = Current.player_defense
 
 func process_buff():
-	## 每回合防御-1（最低0）
-	Current.player_defense = max(0, Current.player_defense - 1)
+	## 每2回合防御-1（最低0）
+	if Current.count_round % 2 == 0:
+		Current.player_defense = max(0, Current.player_defense - 1)
 
 func clear_buff():
 	## 关卡结束恢复到脆弱生效前的防御值

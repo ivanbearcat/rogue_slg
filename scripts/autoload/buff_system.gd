@@ -5,21 +5,27 @@ extends Node2D
 var pre_attack_buff_once: Array
 var pre_attack_buff_stage: Array
 var pre_attack_buff_always: Array
+var pre_attack_buff_elite: Array
 var post_attack_buff_once: Array
 var post_attack_buff_stage: Array
 var post_attack_buff_always: Array
+var post_attack_buff_elite: Array
 var pre_enemy_turn_buff_once: Array
 var pre_enemy_turn_buff_stage: Array
 var pre_enemy_turn_buff_always: Array
+var pre_enemy_turn_buff_elite: Array
 var pre_hero_turn_buff_once: Array
 var pre_hero_turn_buff_stage: Array
 var pre_hero_turn_buff_always: Array
+var pre_hero_turn_buff_elite: Array
 var post_hero_move_buff_once: Array
 var post_hero_move_buff_stage: Array
 var post_hero_move_buff_always: Array
+var post_hero_move_buff_elite: Array
 
 func _ready() -> void:
 	EventBus.subscribe("clear_stage_buff", clear_stage_buff)
+	EventBus.subscribe("clear_elite_buff", clear_elite_buff)
 	EventBus.subscribe("do_pre_attack_buff", do_pre_attack_buff)
 	EventBus.subscribe("do_post_attack_buff", do_post_attack_buff)
 	EventBus.subscribe("do_pre_enemy_turn_buff", do_pre_enemy_turn_buff)
@@ -29,11 +35,13 @@ func _ready() -> void:
 enum buff_type{
 	ONCE,
 	STAGE,
-	ALWAYS
+	ALWAYS,
+	ELITE
 }
 
 ## 清理关卡buff
 func clear_stage_buff():
+	clear_elite_buff()
 	for buff in pre_attack_buff_stage:
 		buff.clear_buff()
 	for buff in post_attack_buff_stage:
@@ -50,6 +58,24 @@ func clear_stage_buff():
 	pre_hero_turn_buff_stage.clear()
 	post_hero_move_buff_stage.clear()
 
+## 清理精英buff
+func clear_elite_buff():
+	for buff in pre_attack_buff_elite:
+		buff.clear_buff()
+	for buff in post_attack_buff_elite:
+		buff.clear_buff()
+	for buff in pre_enemy_turn_buff_elite:
+		buff.clear_buff()
+	for buff in pre_hero_turn_buff_elite:
+		buff.clear_buff()
+	for buff in post_hero_move_buff_elite:
+		buff.clear_buff()
+	pre_attack_buff_elite.clear()
+	post_attack_buff_elite.clear()
+	pre_enemy_turn_buff_elite.clear()
+	pre_hero_turn_buff_elite.clear()
+	post_hero_move_buff_elite.clear()
+
 ## 攻击前
 func set_pre_attack_buff(buff: Object, type: buff_type):
 	buff.set_buff()
@@ -60,6 +86,8 @@ func set_pre_attack_buff(buff: Object, type: buff_type):
 			pre_attack_buff_stage.append(buff)
 		buff_type.ALWAYS:
 			pre_attack_buff_always.append(buff)
+		buff_type.ELITE:
+			pre_attack_buff_elite.append(buff)
 
 func do_pre_attack_buff():
 	for buff in pre_attack_buff_once:
@@ -67,6 +95,8 @@ func do_pre_attack_buff():
 		buff.clear_buff()
 	pre_attack_buff_once = []
 	for buff in pre_attack_buff_stage:
+		await buff.process_buff()
+	for buff in pre_attack_buff_elite:
 		await buff.process_buff()
 	for buff in pre_attack_buff_always:
 		await buff.process_buff()
@@ -81,6 +111,8 @@ func set_post_attack_buff(buff: Object, type: buff_type):
 			post_attack_buff_stage.append(buff)
 		buff_type.ALWAYS:
 			post_attack_buff_always.append(buff)
+		buff_type.ELITE:
+			post_attack_buff_elite.append(buff)
 
 func do_post_attack_buff():
 	for buff in post_attack_buff_once:
@@ -88,6 +120,8 @@ func do_post_attack_buff():
 		buff.clear_buff()
 	post_attack_buff_once = []
 	for buff in post_attack_buff_stage:
+		await buff.process_buff()
+	for buff in post_attack_buff_elite:
 		await buff.process_buff()
 	for buff in post_attack_buff_always:
 		await buff.process_buff()
@@ -102,6 +136,8 @@ func set_pre_enemy_turn_buff(buff: Object, type: buff_type):
 			pre_enemy_turn_buff_stage.append(buff)
 		buff_type.ALWAYS:
 			pre_enemy_turn_buff_always.append(buff)
+		buff_type.ELITE:
+			pre_enemy_turn_buff_elite.append(buff)
 
 func do_pre_enemy_turn_buff():
 	for buff in pre_enemy_turn_buff_once:
@@ -109,6 +145,8 @@ func do_pre_enemy_turn_buff():
 		buff.clear_buff()
 	pre_enemy_turn_buff_once = []
 	for buff in pre_enemy_turn_buff_stage:
+		await buff.process_buff()
+	for buff in pre_enemy_turn_buff_elite:
 		await buff.process_buff()
 	for buff in pre_enemy_turn_buff_always:
 		await buff.process_buff()
@@ -123,6 +161,8 @@ func set_pre_hero_turn_buff(buff: Object, type: buff_type):
 			pre_hero_turn_buff_stage.append(buff)
 		buff_type.ALWAYS:
 			pre_hero_turn_buff_always.append(buff)
+		buff_type.ELITE:
+			pre_hero_turn_buff_elite.append(buff)
 
 func do_pre_hero_turn_buff():
 	for buff in pre_hero_turn_buff_once:
@@ -130,6 +170,8 @@ func do_pre_hero_turn_buff():
 		buff.clear_buff()
 	pre_hero_turn_buff_once = []
 	for buff in pre_hero_turn_buff_stage:
+		await buff.process_buff()
+	for buff in pre_hero_turn_buff_elite:
 		await buff.process_buff()
 	for buff in pre_hero_turn_buff_always:
 		await buff.process_buff()
@@ -144,6 +186,8 @@ func set_post_hero_move_buff(buff: Object, type: buff_type):
 			post_hero_move_buff_stage.append(buff)
 		buff_type.ALWAYS:
 			post_hero_move_buff_always.append(buff)
+		buff_type.ELITE:
+			post_hero_move_buff_elite.append(buff)
 
 func do_post_hero_move_buff():
 	for buff in post_hero_move_buff_once:
@@ -151,6 +195,8 @@ func do_post_hero_move_buff():
 		buff.clear_buff()
 	post_hero_move_buff_once = []
 	for buff in post_hero_move_buff_stage:
+		await buff.process_buff()
+	for buff in post_hero_move_buff_elite:
 		await buff.process_buff()
 	for buff in post_hero_move_buff_always:
 		await buff.process_buff()

@@ -189,8 +189,6 @@ var buff_refresh_cost := 1:
 @onready var buff_json_data: Array = Tools.load_json_file('res://config/buff.json')
 ## 骰型倍率
 @onready var dice_multiplier_json_data: Array = Tools.load_json_file("res://config/dice_multiplier.json")
-## 诅咒史莱姆debuff池
-@onready var curse_debuff_json_data: Array = Tools.load_json_file('res://config/curse_debuff.json')
 ## 格子像素大小
 var grid_size = Vector2(16, 16)
 ## 起始格子位置
@@ -498,100 +496,87 @@ func _apply_point_lock() -> void:
 			lock_idx += 1
 	_pending_point_locks.clear()
 
-## 生成威胁史莱姆（第3回合将1个普通史莱姆转化为威胁史莱姆）
-func _spawn_threat_slime():
-	var normal_slimes = Current.normal_slime_array
-	if normal_slimes.is_empty():
-		print("[threat-slime] 没有普通史莱姆可转化，跳过")
+## 生成精英史莱姆（在原精英关3/6/9开局生成）
+func _spawn_elite_slime():
+	## 在随机空格生成1个精英史莱姆
+	var empty_grids = []
+	for grid_index in all_grid_dict:
+		if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
+			empty_grids.append(grid_index)
+	if empty_grids.is_empty():
+		print("[elite-slime] 没有空格可生成精英史莱姆，跳过")
 		return
-	## 随机选择1种威胁类型
-	var threat_type = Current.threat_types.pick_random()
-	## 随机选择1个普通史莱姆
-	var target_slime = normal_slimes.pick_random()
-	if not is_instance_valid(target_slime):
-		print("[threat-slime] 目标史莱姆无效，跳过")
-		return
-	## 设置威胁类型
-	target_slime.threat_type = threat_type
-	## 出生回合不触发效果，下一回合开始才生效
-	target_slime.threat_skip_first_turn = true
-	## 设置轮廓色和高亮
-	target_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Current.threat_type_colors[threat_type])
-	target_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-	## 诅咒类型额外设置倒计时
-	if threat_type == "curse":
-		target_slime.curse_countdown = 3
-	## 创建威胁tooltip
-	target_slime._create_threat_tooltip()
-	print("[threat-slime] 生成了威胁史莱姆: %s" % threat_type)
+	var spawn_grid = empty_grids.pick_random()
+	var slime_sence = slime_scene_array.pick_random()
+	var slime_instantiate = SceneManager.create_scene(slime_sence)
+	slime_instantiate.position = grid_index_to_position(spawn_grid)
+	slime_instantiate.enemy_grid_index = spawn_grid
+	enemys.add_child(slime_instantiate)
+	## 设置精英属性
+	slime_instantiate.is_elite = true
+	var gate_type = Current.ELITE_GATE_TYPES.pick_random()
+	slime_instantiate.gate_type = gate_type
+	slime_instantiate.gate_count = Current.ELITE_GATE_COUNTS[gate_type]
+	## 设置红色轮廓
+	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 0))
+	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+	## 施加1个随机诅咒debuff
+	var curse_debuffs = []
+	for debuff_row in debuff_json_data:
+		if debuff_row.get("is_curse_debuff", false):
+			curse_debuffs.append(debuff_row)
+	if not curse_debuffs.is_empty():
+		var debuff_row = curse_debuffs.pick_random()
+		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
+		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+		debuff_effect_label.text = "精英出现！ [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+		await EffectManager.debuff_change_effect()
+	print("[elite-slime] 生成了精英史莱姆: gate=%s count=%d" % [gate_type, Current.ELITE_GATE_COUNTS[gate_type]])
 
-## 处理威胁史莱姆效果（每回合开始时调用）
-func _process_threat_slime_effects():
-	var threat_slimes = Current.threat_slime_array
-	if threat_slimes.is_empty():
+## 生成BOSS史莱姆（第12关开局生成）
+func _spawn_boss_slime():
+	var empty_grids = []
+	for grid_index in all_grid_dict:
+		if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
+			empty_grids.append(grid_index)
+	if empty_grids.is_empty():
+		print("[boss-slime] 没有空格可生成BOSS史莱姆，跳过")
 		return
-	for _slime in threat_slimes:
+	var spawn_grid = empty_grids.pick_random()
+	var slime_sence = slime_scene_array.pick_random()
+	var slime_instantiate = SceneManager.create_scene(slime_sence)
+	slime_instantiate.position = grid_index_to_position(spawn_grid)
+	slime_instantiate.enemy_grid_index = spawn_grid
+	enemys.add_child(slime_instantiate)
+	## 设置BOSS属性
+	slime_instantiate.is_boss = true
+	var gate_type = Current.BOSS_GATE_TYPES.pick_random()
+	slime_instantiate.gate_type = gate_type
+	slime_instantiate.gate_count = Current.BOSS_GATE_COUNT
+	## 设置深紫色轮廓
+	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 18.892))
+	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+	## 施加1个随机BOSS debuff
+	var _boss_debuff_row = boss_debuff_json_data.pick_random()
+	var buff = load(_boss_debuff_row["debuff_res"]).new(_boss_debuff_row, self)
+	BuffSystem.callv("set_" + _boss_debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+	debuff_effect_label.text = "BOSS出现！ [img=15 ]" + _boss_debuff_row["debuff_icon"] + "[/img]"
+	await EffectManager.debuff_change_effect()
+	print("[boss-slime] 生成了BOSS史莱姆: gate=%s count=%d" % [gate_type, Current.BOSS_GATE_COUNT])
+
+## 移动精英/BOSS史莱姆（每回合随机4方向移动1格）
+func _move_elite_boss_slimes():
+	var directions = [Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0), Vector2(0, -1)]
+	for _slime in Current.elite_slime_array + Current.boss_slime_array:
 		if not is_instance_valid(_slime):
 			continue
-		## 出生回合跳过效果，下一回合开始才生效
-		if _slime.threat_skip_first_turn:
-			_slime.threat_skip_first_turn = false
-			continue
-		match _slime.threat_type:
-			"corrosion":
-				await _process_corrosion_effect(_slime)
-			"curse":
-				await _process_curse_effect(_slime)
-			"plague":
-				await _process_plague_effect(_slime)
-			"parasite":
-				await _process_parasite_effect(_slime)
-			"swell":
-				pass
-
-## 腐蚀效果：随机侵蚀1个点数的基础分-1
-func _process_corrosion_effect(slime: Slime):
-	var score_names = ["one_score", "two_score", "three_score", "four_score", "five_score", "six_score"]
-	var score_labels = [one_score, two_score, three_score, four_score, five_score, six_score]
-	var random_idx = randi_range(0, 5)
-	var current_val = Current.get(score_names[random_idx])
-	if current_val > 0:
-		Current.set(score_names[random_idx], current_val - 1)
-		var float_number = EffectManager.float_number_effect(-1, "red")
-		score_labels[random_idx].add_child(float_number)
-		EffectManager.big_flow_effect(score_labels[random_idx])
-
-## 诅咒效果：倒计时递减，归零时触发随机debuff
-func _process_curse_effect(slime: Slime):
-	slime.curse_countdown -= 1
-	slime._update_threat_tooltip()
-	if slime.curse_countdown <= 0:
-		var curse_debuff_row = curse_debuff_json_data.pick_random()
-		var buff = load(curse_debuff_row["debuff_res"]).new(curse_debuff_row, self)
-		BuffSystem.callv("set_" + curse_debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
-		debuff_effect_label.text = "诅咒触发！ [img=15 ]" + curse_debuff_row["debuff_icon"] + "[/img]"
-		await EffectManager.debuff_change_effect()
-		slime.threat_type = ""
-		slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", false)
-		slime.curse_countdown = 0
-
-## 瘟疫效果：扣当前总分3%
-func _process_plague_effect(slime: Slime):
-	var sub_num = int(Current.total_score * 0.03)
-	if sub_num > 0:
-		Current.total_score -= sub_num
-		var float_number = EffectManager.float_number_effect(-sub_num, "red")
-		Current.hero.add_child(float_number)
-		EffectManager.big_flow_effect(total_score)
-
-## 寄生效果：目标分数+2%
-func _process_parasite_effect(slime: Slime):
-	var add_num = int(Current.target_score * 0.02)
-	if add_num > 0:
-		Current.target_score += add_num
-		var float_number = EffectManager.float_number_effect(add_num, "purple")
-		target_score.add_child(float_number)
-		EffectManager.big_flow_effect(target_score)
+		var direction = directions.pick_random()
+		var target_grid = _slime.enemy_grid_index + direction
+		## 检查目标格是否在7x7范围内且无其他史莱姆和英雄
+		if target_grid.x >= 0 and target_grid.x < 7 and target_grid.y >= 0 and target_grid.y < 7:
+			if target_grid not in Current.all_enemy_grid_index_array and target_grid != Current.hero.hero_grid_index:
+				_slime.enemy_grid_index = target_grid
+				_slime.target_position = grid_index_to_position(target_grid)
 
 func _create_slime():
 	## 生成史莱姆（同时生成模式）
@@ -993,10 +978,11 @@ func _turn_process():
 	Current.slime_create_num = 3  ## 重置为基础值
 	if Current.count_round >= 8 and Current.count_round <= 10:
 		Current.slime_create_num = 6
-	## 膨胀史莱姆：存活时每回合多生成1个史莱姆
-	for _slime in Current.threat_slime_array:
-		if is_instance_valid(_slime) and _slime.threat_type == "swell":
+	## 重新应用史莱姆数量加成buff（slime_plus_one、thorn_armor每回合+1史莱姆）
+	for buff in buff_container.get_children():
+		if "buff_meta" in buff and buff.buff_meta != null and buff.buff_meta.get("buff_id", "") in ["slime_plus_one", "thorn_armor"]:
 			Current.slime_create_num += 1
+
 	## 第8回合显示危险提示
 	if Current.count_round == 8:
 		stage_effect_label.text = "危险⚠️"
@@ -1011,15 +997,11 @@ func _turn_process():
 	## 保证骰子动画完成
 	while "reroll_slime_buff" in Current.public_lock_array:
 		await Tools.time_sleep(0.05)
-	## 第3回合生成威胁史莱姆（在能量/金币史莱姆之前，确保有普通史莱姆可转化）
-	if Current.count_round == 3:
-		_spawn_threat_slime()
+	## 移动精英/BOSS史莱姆
+	_move_elite_boss_slimes()
 	## 生成能量史莱姆
 	_create_power_slime()
 	## 生成金币史莱姆
-	_create_coin_slime()
-	## 处理威胁史莱姆效果
-	await _process_threat_slime_effects()
 	## 玩家回合前
 	_pre_hero_turn_begin()
 	_turn_processing = false
@@ -1050,8 +1032,10 @@ func skill_attack():
 	## 等待关卡切换完成
 	while "stage_transition" in Current.public_lock_array:
 		await Tools.time_sleep(0.1)
-	## 过关后不再扣血和执行敌人回合
+	## 过关后不再扣血，但需要执行敌人回合（生成新关卡史莱姆、设置玩家回合）
 	if stage_cleared:
+		await _turn_process()
+		EventBus.event_emit("do_pre_hero_turn_buff")
 		turn_button.disabled = false
 		return
 	## 攻击结算后，基于当前场上残留史莱姆扣血
@@ -1106,8 +1090,10 @@ func _on_turn_button_pressed() -> void:
 	## 等待过关结算
 	while clear_stage_ui.visible == true:
 		await Tools.time_sleep(0.2)
-	## 过关后不再扣血和执行敌人回合
+	## 过关后不再扣血，但需要执行敌人回合（生成新关卡史莱姆、设置玩家回合）
 	if stage_cleared:
+		await _turn_process()
+		EventBus.event_emit("do_pre_hero_turn_buff")
 		turn_button.disabled = false
 		return
 	## 跳过回合后，基于当前场上残留史莱姆扣血
@@ -1681,14 +1667,12 @@ func _on_stage_clear_button_pressed() -> void:
 	_pre_create_slime()
 	## 关卡切换效果
 	await EffectManager.stage_change_effect()
-	## 3、6、9关设置诅咒
+	## 3、6、9关生成精英史莱姆
 	if Current.count_stage in [3, 6, 9]:
-		_set_stage_debuff()
-		await EffectManager.debuff_change_effect()
-		## 12关设置BOSS诅咒
+		await _spawn_elite_slime()
+	## 12关生成BOSS史莱姆
 	if Current.count_stage == 12:
-		_set_stage_debuff(1)
-		await EffectManager.debuff_change_effect()
+		await _spawn_boss_slime()
 	## 解锁：关卡切换完成，允许 _turn_process 执行
 	Current.public_lock_array.erase("stage_transition")
 

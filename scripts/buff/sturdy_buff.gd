@@ -6,11 +6,12 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
-	Current.max_hp += 1
-	Current.player_hp += 1
 
 func process_buff():
-	pass
+	## 确保防御不低于1
+	if Current.player_defense < 1:
+		Current.player_defense = 1
+		EffectManager.big_flow_effect(buff_texture)
 
 func clear_buff():
 	pass

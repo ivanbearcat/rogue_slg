@@ -16,9 +16,9 @@
     {
         "stage_num": 3,
         "target_score": 450,
-        "stage_type": "精英",
+        "stage_type": "普通",
         "reward_coin": 5,
-        "stage_type_icon": "res://images/enemy_icon/elite.png"
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 4,
@@ -37,9 +37,9 @@
     {
         "stage_num": 6,
         "target_score": 1500,
-        "stage_type": "精英",
+        "stage_type": "普通",
         "reward_coin": 5,
-        "stage_type_icon": "res://images/enemy_icon/elite.png"
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 7,
@@ -58,9 +58,9 @@
     {
         "stage_num": 9,
         "target_score": 5000,
-        "stage_type": "精英",
+        "stage_type": "普通",
         "reward_coin": 5,
-        "stage_type_icon": "res://images/enemy_icon/elite.png"
+        "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 10,
