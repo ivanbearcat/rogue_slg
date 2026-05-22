@@ -227,6 +227,8 @@ var shop_coin_skill_row: Dictionary = {}
 var pending_shop_skill: Dictionary = {}
 ## 已在商店出现过的金币技能ID列表（防止重复出现）
 var appeared_coin_skill_ids: Array = []
+## 升级待增加的HP值（延迟到扣血之后应用，确保先扣血再加升级血）
+var _pending_level_up_hp_bonus: int = 0
 
 ## 骰型分数Label映射
 var _dice_score_labels: Dictionary
@@ -806,12 +808,12 @@ func _set_level_up_card():
 func _check_and_level_up() -> void:
 	if Current.hero_exp >= Current.require_exp:
 		Current.level += 1
-		## 升级+1HP
-		Current.player_hp += 1
+		## 升级+1HP（延迟到扣血之后应用，见 _apply_level_up_hp_bonus）
+		_pending_level_up_hp_bonus += 1
 		## 每5级max_hp+1且HP+1
 		if Current.level % 5 == 0:
 			Current.max_hp += 1
-			Current.player_hp += 1
+			_pending_level_up_hp_bonus += 1
 		var overflow_exp = Current.hero_exp - Current.require_exp
 		## 最多增加到10个史莱姆可以升级
 		if Current.require_exp < 10:
@@ -1040,6 +1042,8 @@ func skill_attack():
 		return
 	## 攻击结算后，基于当前场上残留史莱姆扣血
 	_apply_hp_damage()
+	## 扣血后再应用升级加血（确保先扣血再加升级血）
+	_apply_level_up_hp_bonus()
 	## 敌人回合
 	await _turn_process()
 	## 执行玩家回合前buff
@@ -1098,6 +1102,8 @@ func _on_turn_button_pressed() -> void:
 		return
 	## 跳过回合后，基于当前场上残留史莱姆扣血
 	_apply_hp_damage()
+	## 扣血后再应用升级加血（确保先扣血再加升级血）
+	_apply_level_up_hp_bonus()
 	## 回合处理
 	await _turn_process()
 	## 执行玩家回合前buff
@@ -1151,6 +1157,12 @@ func _apply_hp_damage():
 	## HP<=3且本关未生成生命史莱姆时触发生命史莱姆
 	if Current.player_hp <= 3 and not Current.life_slime_spawned_this_stage:
 		_create_life_slime()
+
+## 应用升级延迟增加的HP（在扣血之后调用，确保先扣血再加升级血）
+func _apply_level_up_hp_bonus():
+	if _pending_level_up_hp_bonus > 0:
+		Current.player_hp += _pending_level_up_hp_bonus
+		_pending_level_up_hp_bonus = 0
 
 ## 创建生命史莱姆：将1只普通史莱姆转化为生命史莱姆
 func _create_life_slime():
@@ -1663,6 +1675,8 @@ func _on_stage_clear_button_pressed() -> void:
 		await Tools.time_sleep(0.1)
 	## 清空上一关残留的史莱姆和预生成告警
 	await _clear_all_slimes()
+	## 重置史莱姆生成数量为基础值（防止上一关8-10回合的翻倍值残留）
+	Current.slime_create_num = 3
 	## 为新关卡第一回合预生成史莱姆（设置warning告警）
 	_pre_create_slime()
 	## 关卡切换效果

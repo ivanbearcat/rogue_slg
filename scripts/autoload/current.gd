@@ -424,9 +424,10 @@ var max_power := 2
 ## 当前能量
 var power: int:
 	set(v):
-		power = v
-		game_manager.power_label.text = str(v) + "/" + str(Current.max_power)
-		if v == max_power:
+		var _clamped = mini(v, max_power)
+		power = _clamped
+		game_manager.power_label.text = str(_clamped) + "/" + str(Current.max_power)
+		if _clamped == max_power:
 			game_manager.power_bottle_button.disabled = true
 			game_manager.power_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
