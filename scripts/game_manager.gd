@@ -568,16 +568,25 @@ func _spawn_boss_slime():
 ## 移动精英/BOSS史莱姆（每回合随机4方向移动1格）
 func _move_elite_boss_slimes():
 	var directions = [Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0), Vector2(0, -1)]
+	var target_grid_index_array: Array
 	for _slime in Current.elite_slime_array + Current.boss_slime_array:
 		if not is_instance_valid(_slime):
 			continue
-		var direction = directions.pick_random()
-		var target_grid = _slime.enemy_grid_index + direction
-		## 检查目标格是否在7x7范围内且无其他史莱姆和英雄
-		if target_grid.x >= 0 and target_grid.x < 7 and target_grid.y >= 0 and target_grid.y < 7:
-			if target_grid not in Current.all_enemy_grid_index_array and target_grid != Current.hero.hero_grid_index:
-				_slime.enemy_grid_index = target_grid
-				_slime.target_position = grid_index_to_position(target_grid)
+		var movable_grid_array: Array
+		## 找出所有可移动的相邻格子
+		for direction in directions:
+			var next_grid = _slime.enemy_grid_index + direction
+			if next_grid.x >= 0 and next_grid.x < 7 and next_grid.y >= 0 and next_grid.y < 7:
+				if next_grid not in Current.all_enemy_grid_index_array and next_grid != Current.hero.hero_grid_index and next_grid not in target_grid_index_array:
+					movable_grid_array.append(next_grid)
+		## 从可移动数组中随机选一个移动
+		if movable_grid_array.size() > 0:
+			var target_grid = movable_grid_array.pick_random()
+			_slime.target_position = grid_index_to_position(target_grid)
+			target_grid_index_array.append(target_grid)
+			## 等待史莱姆移动完成
+			while _slime.target_position != Vector2.ZERO:
+				await Tools.time_sleep(0.01)
 
 func _create_slime():
 	## 生成史莱姆（同时生成模式）
@@ -664,19 +673,19 @@ func _create_power_slime():
 
 ## 史莱姆移动
 func slime_move_ai():
-	var target_position_array: Array
+	var target_grid_index_array: Array
 	var slime_create_grid_index_array: Array
+	## 获取所有即将出生的史莱姆位置
+	for slime in _slime_create_array:
+		slime_create_grid_index_array.append(slime.enemy_grid_index)
 	for enemy in Current.all_enemy_array:
 		var movable_grid_array: Array
 		for offset in grid_offset:
 			var next_grid_index = enemy.enemy_grid_index + offset
-			## 获取所有即将出生的史莱姆位置
-			for slime in _slime_create_array:
-				slime_create_grid_index_array.append(slime.enemy_grid_index)
 			## 判断是否有英雄、史莱姆、出生点、超出边界
 			if Current.hero.hero_grid_index == next_grid_index or \
 			Current.all_enemy_grid_index_array.has(next_grid_index) or \
-			target_position_array.has(Tools.grid_index_to_position(next_grid_index)) or \
+			target_grid_index_array.has(next_grid_index) or \
 			slime_create_grid_index_array.has(next_grid_index) or \
 			next_grid_index.x < 0 or \
 			next_grid_index.x > _removable_map_vec.x - 1 or \
@@ -689,8 +698,9 @@ func slime_move_ai():
 			var target_grid_index = movable_grid_array.pick_random()
 			var target_position: Vector2 = grid_index_to_position(target_grid_index)
 			enemy.target_position = target_position
-			target_position_array.append(target_position)
-			while target_position not in target_position_array:
+			target_grid_index_array.append(target_grid_index)
+			## 等待史莱姆移动完成
+			while enemy.target_position != Vector2.ZERO:
 				await Tools.time_sleep(0.01)
 
 ## 史莱姆重掷
@@ -961,6 +971,8 @@ func _turn_process():
 	if _turn_processing:
 		return
 	_turn_processing = true
+	## 敌人回合期间禁用回合结束按钮
+	turn_button.disabled = true
 	## 敌人回合
 	_turn_clean()
 	## 后期回合（8-10回合）史莱姆生成翻倍
@@ -986,8 +998,8 @@ func _turn_process():
 	## 保证骰子动画完成
 	while "reroll_slime_buff" in Current.public_lock_array:
 		await Tools.time_sleep(0.05)
-	## 移动精英/BOSS史莱姆
-	_move_elite_boss_slimes()
+	## 移动精英/BOSS史莱姆（等待移动完成再继续，防止玩家在移动期间操作）
+	await _move_elite_boss_slimes()
 	## 生成能量史莱姆
 	_create_power_slime()
 	## 玩家回合前
@@ -1209,9 +1221,8 @@ func _check_stage_clear() -> bool:
 		## 回合固定金币
 		var stage_add_coin = 1
 		Current.count_add_coins += stage_add_coin
-		## 显示剩余HP奖励的金币
+		## 显示剩余HP奖励的金币（1点HP = 1金币）
 		var hp_add_coin = Current.player_hp
-		stage_coin_label_2.text = str(hp_add_coin)
 		Current.count_add_coins += hp_add_coin
 		#var add_coin := 0
 		#for i in range(10 - Current.count_round):
@@ -1448,14 +1459,18 @@ func _hide_all_clear_stage_ui():
 	stage_clear_label_1.hide()
 	stage_coin_rlabel_1.hide()
 	stage_coin_label_1.hide()
+	stage_coin_label_1.text = ""
 	stage_clear_label_2.hide()
 	stage_coin_rlabel_2.hide()
 	stage_coin_label_2.hide()
+	stage_coin_label_2.text = ""
 	stage_clear_label_3.hide()
 	stage_coin_rlabel_3.hide()
 	stage_coin_label_3.hide()
+	stage_coin_label_3.text = ""
 	stage_coin_rlabel_4.hide()
 	stage_coin_label_4.hide()
+	stage_coin_label_4.text = ""
 	stage_clear_button.hide()
 	clear_stage_ui.hide()
 
