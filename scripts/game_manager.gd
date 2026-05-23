@@ -1129,6 +1129,7 @@ func _apply_hp_damage():
 		if is_instance_valid(_slime) and not _slime.is_life_slime:
 			slime_count += 1
 	## 防御公式扣血: damage = max(0, ceil((slime_count - defense) / 3))
+	var hp_before = Current.player_hp
 	var effective: int = slime_count - Current.player_defense
 	var damage: int = ceili(effective / 3.0) if effective > 0 else 0
 	if damage > 0:
@@ -1138,8 +1139,8 @@ func _apply_hp_damage():
 			var hp_bar = get_node("round_process_bar/hp_bar")
 			if hp_bar.has_method("play_damage_effect"):
 				hp_bar.play_damage_effect()
-	## HP<=3且本关未生成生命史莱姆时触发生命史莱姆
-	if Current.player_hp <= 3 and not Current.life_slime_spawned_this_stage:
+	## HP从安全区(>3)穿过阈值(<=3)且本关未生成生命史莱姆时触发生命史莱姆
+	if hp_before > 3 and Current.player_hp <= 3 and not Current.life_slime_spawned_this_stage:
 		_create_life_slime()
 
 ## 应用升级延迟增加的HP（在扣血之后调用，确保先扣血再加升级血）

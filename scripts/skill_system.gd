@@ -65,30 +65,7 @@ func skill_attack():
 				gate_passed_slimes.append(slime)
 			else:
 				gate_failed_slimes.append(slime)
-	## 从攻击骰子信息中移除门槛未通过的精英/BOSS骰子（不参与计分）
-	if not gate_failed_slimes.is_empty():
-		var failed_colors = {}
-		for slime in gate_failed_slimes:
-			var slime_color_dict := {
-				"slime_small": "green",
-				"slime_small_red": "red",
-				"slime_small_yellow": "yellow",
-				"slime_small_blue": "blue"
-			}
-			var color = slime_color_dict[Tools.fetch_slime_scene(slime)]
-			var key = str(color) + "_" + str(slime.dice_point)
-			if not failed_colors.has(key):
-				failed_colors[key] = 0
-			failed_colors[key] += 1
-		var filtered_info = []
-		for dice_info in attack_slime_array_info:
-			var key = str(dice_info[0]) + "_" + str(dice_info[1])
-			if failed_colors.has(key) and failed_colors[key] > 0:
-				failed_colors[key] -= 1
-			else:
-				filtered_info.append(dice_info)
-		attack_slime_array_info = filtered_info
-	## 计算骰型得分
+	## 计算骰型得分（所有骰子都参与计分，包括门槛未通过的精英/BOSS骰子）
 	var dice_type_result = ScoringAlgorithm.count_total_score(attack_slime_array_info)
 	Current.dice_type_point = dice_type_result[0]
 	## 设置骰型数量（骰型大师用）
