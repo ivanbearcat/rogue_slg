@@ -301,6 +301,8 @@ func _ready() -> void:
 	_pre_create_slime()
 	## 回合处理
 	await _turn_process()
+	## 敌人回合结束，启用回合结束按钮
+	turn_button.disabled = false
 
 	## 临时测试debuff
 	#_set_stage_debuff(1)
@@ -629,7 +631,6 @@ func _create_slime():
 		enemy.dice.stop()
 		enemy.dice.set_frame_and_progress(dice_point.pick_random(), 0)
 		enemy.animated_sprite_2d.play("idle")
-	turn_button.disabled = false
 	## 点数锁定：根据之前记录的待修改列表修改骰子帧
 	_apply_point_lock()
 
