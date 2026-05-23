@@ -381,18 +381,6 @@ var power_slime_array: Array:
 		return _power_slime_array
 ## 能量史莱姆总数
 var power_slime_num := 1
-## 金币史莱姆数组
-var coin_slime_array: Array:
-	get:
-		var _coin_slime_array = []
-		for _slime in all_enemy_array:
-			if _slime.animated_sprite_2d.material.get_shader_parameter("is_high_light") == true and \
-			_slime.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(18.892, 18.892, 0.0):
-				_coin_slime_array.append(_slime)
-		return _coin_slime_array
-## 金币史莱姆总数
-var coin_slime_num := 1
-## 普通史莱姆（非能量和金币）
 var normal_slime_array: Array:
 	get:
 		var _normal_slime_array = []
@@ -459,8 +447,6 @@ var last_slime_create_array: Array
 var slime_die_sum: int
 ## 击杀过能量史莱姆
 var killed_power_slime := false
-## 击杀过金币史莱姆
-var killed_coin_slime := false
 ## 刷新buff无花费的最大次数
 var zero_coin_refresh_max_times := 0
 ## 刷新buff无花费的当前次数

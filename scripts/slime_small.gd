@@ -101,11 +101,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		while "skill_attack" in Current.public_lock_array:
 			await Tools.time_sleep(0.1)
 		Current.power = mini(Current.power + 1, Current.max_power)
-	## 增加金币
-	if self.animated_sprite_2d.material.get_shader_parameter("is_high_light") and \
-	self.animated_sprite_2d.material.get_shader_parameter("outline_color") == Color(18.892, 18.892, 0.0):
-		Current.killed_coin_slime = true
-		Current.total_coins += 1
 	## 生命史莱姆击杀回血
 	if is_life_slime:
 		Current.player_hp += 3

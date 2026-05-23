@@ -357,7 +357,6 @@ func _clear_all_slimes() -> void:
 	Current.slime_die_sum = 0
 	Current.last_slime_create_array = []
 	Current.killed_power_slime = false
-	Current.killed_coin_slime = false
 	## 重置鼠标指向的史莱姆（可能指向已释放的节点）
 	Current.slime = null
 	## 清除所有网格的 warning 标记
@@ -662,18 +661,6 @@ func _create_power_slime():
 			if power_slime not in Current.power_slime_array:
 				power_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(0.0, 18.892, 18.892))
 				power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-
-## 添加金币史莱姆
-func _create_coin_slime():
-	var _normal_slimes = Current.normal_slime_array
-	if Current.coin_slime_array.size() < Current.coin_slime_num and _normal_slimes.size() > 0:
-		for i in range(Current.coin_slime_num - Current.coin_slime_array.size()):
-			if _normal_slimes.is_empty():
-				break
-			var coin_slime = _normal_slimes.pick_random()
-			if coin_slime not in Current.coin_slime_array:
-				coin_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 18.892, 0.0))
-				coin_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 
 ## 史莱姆移动
 func slime_move_ai():
@@ -1003,7 +990,6 @@ func _turn_process():
 	_move_elite_boss_slimes()
 	## 生成能量史莱姆
 	_create_power_slime()
-	## 生成金币史莱姆
 	## 玩家回合前
 	_pre_hero_turn_begin()
 	_turn_processing = false
@@ -1126,8 +1112,6 @@ func _turn_clean():
 	EventBus.event_emit("reset_cursor")
 	## 重置击杀过能量史莱姆标记
 	Current.killed_power_slime = false
-	## 重置击杀过金币史莱姆标记
-	Current.killed_coin_slime = false
 	## 增加回合数
 	Current.count_round += 1
 	## 进入敌人回合

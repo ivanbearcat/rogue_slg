@@ -54,15 +54,6 @@
         "buff_price": 9
     },
     {
-        "buff_id": "coin_slime_plus_one",
-        "buff_name": "金币史莱姆+1",
-        "buff_icon": "res://images/buff_icon/coin_slime_plus_one.png",
-        "buff_tooltip": "金币史莱姆总量+1",
-        "buff_res": "res://scripts/buff/coin_slime_plus_one_buff.gd",
-        "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
-    },
-    {
         "buff_id": "turn_coin_increase",
         "buff_name": "回合结束金币增加",
         "buff_icon": "res://images/buff_icon/turn_coin_increase.png",
@@ -225,11 +216,11 @@
         "buff_price": 5
     },
     {
-        "buff_id": "coin_resonance",
-        "buff_name": "金币共鸣",
+        "buff_id": "slime_resonance",
+        "buff_name": "史莱姆共鸣",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "每有1个金币史莱姆存活，以这次得分为基础，额外增加3%倍率的分数",
-        "buff_res": "res://scripts/buff/coin_resonance_buff.gd",
+        "buff_tooltip": "每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数",
+        "buff_res": "res://scripts/buff/slime_resonance_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 5
     },
