@@ -97,7 +97,18 @@ func _create_buff_buttons(data: Array, container: GridContainer, is_debuff: bool
 		var button = TextureButton.new()
 		button.custom_minimum_size = Vector2(32, 32)
 		button.texture_normal = load(entry[icon_key])
-		button.tooltip_text = entry.get(name_key, "") + "\n" + entry.get(tooltip_key, "")
+		## 显示名称、描述、家族/标签/依赖信息
+		var tooltip_text = entry.get(name_key, "") + "\n" + entry.get(tooltip_key, "")
+		var family = entry.get("family", "")
+		if family != "":
+			tooltip_text += "\n家族: " + family
+		var tags = entry.get("tags", [])
+		if tags.size() > 0:
+			tooltip_text += "\n标签: " + str(tags)
+		var requires = entry.get("requires", [])
+		if requires.size() > 0:
+			tooltip_text += "\n依赖: " + str(requires)
+		button.tooltip_text = tooltip_text
 		button.ignore_texture_size = true
 		button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
 		button.pressed.connect(_on_buff_button_pressed.bind(entry))

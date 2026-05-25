@@ -9,78 +9,98 @@
     {
         "stage_num": 2,
         "target_score": 300,
-        "stage_type": "普通",
-        "reward_coin": 3,
-        "stage_type_icon": "res://images/enemy_icon/normal.png"
+        "stage_type": "精英",
+        "reward_coin": 5,
+        "stage_type_icon": "res://images/enemy_icon/elite.png"
     },
     {
         "stage_num": 3,
         "target_score": 450,
-        "stage_type": "普通",
-        "reward_coin": 5,
-        "stage_type_icon": "res://images/enemy_icon/normal.png"
+        "stage_type": "BOSS",
+        "reward_coin": 8,
+        "stage_type_icon": "res://images/enemy_icon/boss.png",
+        "boss_id": "gatekeeper",
+        "boss_gate_type": "duizi",
+        "boss_gate_count": 3,
+        "boss_debuff_ids": ["disable_one"],
+        "boss_extra_elites": 0
     },
     {
         "stage_num": 4,
-        "target_score": 675,
+        "target_score": 650,
         "stage_type": "普通",
         "reward_coin": 3,
         "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 5,
-        "target_score": 1000,
-        "stage_type": "普通",
-        "reward_coin": 3,
-        "stage_type_icon": "res://images/enemy_icon/normal.png"
+        "target_score": 900,
+        "stage_type": "精英",
+        "reward_coin": 5,
+        "stage_type_icon": "res://images/enemy_icon/elite.png"
     },
     {
         "stage_num": 6,
-        "target_score": 1500,
-        "stage_type": "普通",
-        "reward_coin": 5,
-        "stage_type_icon": "res://images/enemy_icon/normal.png"
+        "target_score": 1300,
+        "stage_type": "BOSS",
+        "reward_coin": 10,
+        "stage_type_icon": "res://images/enemy_icon/boss.png",
+        "boss_id": "chameleon",
+        "boss_gate_type": "tongse",
+        "boss_gate_count": 3,
+        "boss_debuff_ids": ["color_chaos"],
+        "boss_extra_elites": 0
     },
     {
         "stage_num": 7,
-        "target_score": 2250,
+        "target_score": 1900,
         "stage_type": "普通",
         "reward_coin": 3,
         "stage_type_icon": "res://images/enemy_icon/normal.png"
     },
     {
         "stage_num": 8,
-        "target_score": 3375,
-        "stage_type": "普通",
-        "reward_coin": 3,
-        "stage_type_icon": "res://images/enemy_icon/normal.png"
+        "target_score": 2800,
+        "stage_type": "精英",
+        "reward_coin": 5,
+        "stage_type_icon": "res://images/enemy_icon/elite.png"
     },
     {
         "stage_num": 9,
-        "target_score": 5000,
-        "stage_type": "普通",
-        "reward_coin": 5,
-        "stage_type_icon": "res://images/enemy_icon/normal.png"
+        "target_score": 4000,
+        "stage_type": "BOSS",
+        "reward_coin": 12,
+        "stage_type_icon": "res://images/enemy_icon/boss.png",
+        "boss_id": "tyrant",
+        "boss_gate_type": "tongdui",
+        "boss_gate_count": 2,
+        "boss_debuff_ids": ["score_cap"],
+        "boss_extra_elites": 1
     },
     {
         "stage_num": 10,
-        "target_score": 11250,
-        "stage_type": "普通",
-        "reward_coin": 3,
-        "stage_type_icon": "res://images/enemy_icon/normal.png"
+        "target_score": 5500,
+        "stage_type": "精英",
+        "reward_coin": 5,
+        "stage_type_icon": "res://images/enemy_icon/elite.png"
     },
     {
         "stage_num": 11,
-        "target_score": 16875,
-        "stage_type": "普通",
-        "reward_coin": 3,
-        "stage_type_icon": "res://images/enemy_icon/normal.png"
+        "target_score": 7500,
+        "stage_type": "精英",
+        "reward_coin": 5,
+        "stage_type_icon": "res://images/enemy_icon/elite.png"
     },
     {
         "stage_num": 12,
-        "target_score": 25000,
+        "target_score": 11000,
         "stage_type": "BOSS",
-        "reward_coin": 10,
-        "stage_type_icon": "res://images/enemy_icon/boss.png"
+        "reward_coin": 15,
+        "stage_type_icon": "res://images/enemy_icon/boss.png",
+        "boss_id": "chaos_king",
+        "boss_gate_type": "tongshun",
+        "boss_gate_count": 3,
+        "boss_debuff_ids": ["attack_score_down", "dice_decay"],
+        "boss_extra_elites": 2
     }
 ]

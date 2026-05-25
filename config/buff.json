@@ -6,7 +6,10 @@
         "buff_tooltip": "生命上限+1，每回合多生成1个史莱姆",
         "buff_res": "res://scripts/buff/slime_plus_one_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "swarm",
+        "tags": ["on_spawn", "slime_count", "linear", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "slime_sum_score_increase",
@@ -15,7 +18,10 @@
         "buff_tooltip": "回合结束时，每有1个史莱姆，增加目标分数0.25%的分数",
         "buff_res": "res://scripts/buff/slime_sum_score_increase_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "swarm",
+        "tags": ["on_turn_end", "slime_count", "linear", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "slime_attack_score_increase",
@@ -24,7 +30,10 @@
         "buff_tooltip": "攻击后，每有1个史莱姆，以这次得分为基础，额外增加2%倍率的分数",
         "buff_res": "res://scripts/buff/slime_attack_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9
+        "buff_price": 9,
+        "family": "swarm",
+        "tags": ["on_attack", "slime_count", "linear", "aggression", "rare"],
+        "requires": []
     },
     {
         "buff_id": "full_range_slime_double_score",
@@ -33,7 +42,10 @@
         "buff_tooltip": "技能的攻击范围内都有史莱姆，以这次得分为基础，额外增加40%倍率的分数",
         "buff_res": "res://scripts/buff/full_range_slime_double_score_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "combo",
+        "tags": ["on_attack", "slime_count", "threshold", "aggression", "rare"],
+        "requires": []
     },
     {
         "buff_id": "movement_plus_one",
@@ -42,7 +54,10 @@
         "buff_tooltip": "移动力+1",
         "buff_res": "res://scripts/buff/movement_plus_one_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "combo",
+        "tags": ["on_spawn", "movement", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "move_attack_score_increase",
@@ -51,7 +66,10 @@
         "buff_tooltip": "攻击后，每有1点移动力，以这次得分为基础，额外增加5%倍率的分数",
         "buff_res": "res://scripts/buff/move_attack_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9
+        "buff_price": 9,
+        "family": "combo",
+        "tags": ["on_attack", "movement", "linear", "aggression", "rare"],
+        "requires": []
     },
     {
         "buff_id": "turn_coin_increase",
@@ -60,7 +78,10 @@
         "buff_tooltip": "回合结束金币+1",
         "buff_res": "res://scripts/buff/turn_coin_increase_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "coin",
+        "tags": ["on_turn_end", "coin", "static", "economy", "common"],
+        "requires": []
     },
     {
         "buff_id": "coin_attack_score_increase",
@@ -69,7 +90,10 @@
         "buff_tooltip": "攻击后，每有1个金币，以这次得分为基础，额外增加2%倍率的分数",
         "buff_res": "res://scripts/buff/coin_attack_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "coin",
+        "tags": ["on_attack", "coin", "linear", "economy", "common"],
+        "requires": []
     },
     {
         "buff_id": "power_slime_plus_one",
@@ -78,7 +102,10 @@
         "buff_tooltip": "能量史莱姆总量+1",
         "buff_res": "res://scripts/buff/power_slime_plus_one_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "swarm",
+        "tags": ["on_spawn", "slime_count", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "attack_power_slime_score_increase",
@@ -87,7 +114,10 @@
         "buff_tooltip": "击杀能量史莱姆，以这次得分为基础，额外增加30%倍率的分数",
         "buff_res": "res://scripts/buff/attack_power_slime_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "swarm",
+        "tags": ["on_kill", "slime_count", "static", "aggression", "rare"],
+        "requires": []
     },
     {
         "buff_id": "max_power_puls_one",
@@ -96,7 +126,10 @@
         "buff_tooltip": "能量上限+1",
         "buff_res": "res://scripts/buff/max_power_puls_one_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "swarm",
+        "tags": ["on_spawn", "slime_count", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "power_attack_score_increase",
@@ -105,7 +138,10 @@
         "buff_tooltip": "攻击后，如果使用了能量，以这次得分为基础，额外增加25%倍率的分数",
         "buff_res": "res://scripts/buff/power_attack_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "swarm",
+        "tags": ["on_attack", "slime_count", "threshold", "aggression", "rare"],
+        "requires": []
     },
     {
         "buff_id": "slime_base_score_increase",
@@ -114,7 +150,10 @@
         "buff_tooltip": "每击杀1个史莱姆，被击杀骰子的点数分值+1",
         "buff_res": "res://scripts/buff/slime_base_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "swarm",
+        "tags": ["on_kill", "slime_count", "linear", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "slime_percent_score_increase",
@@ -123,7 +162,10 @@
         "buff_tooltip": "每击杀1个史莱姆，当前组合骰型的倍率+2%",
         "buff_res": "res://scripts/buff/slime_percent_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "swarm",
+        "tags": ["on_kill", "slime_count", "linear", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "turn_plus_one",
@@ -132,7 +174,10 @@
         "buff_tooltip": "第一回合不会增加回合数",
         "buff_res": "res://scripts/buff/turn_plus_one_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "desperation",
+        "tags": ["on_turn_end", "hp", "static", "protect", "rare"],
+        "requires": []
     },
     {
         "buff_id": "free_refresh_one_times",
@@ -141,7 +186,10 @@
         "buff_tooltip": "免费刷新商店一次",
         "buff_res": "res://scripts/buff/free_refresh_one_times_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3
+        "buff_price": 3,
+        "family": "coin",
+        "tags": ["on_buy", "coin", "static", "economy", "common"],
+        "requires": []
     },
     {
         "buff_id": "kill_combo",
@@ -150,7 +198,10 @@
         "buff_tooltip": "每击杀1个史莱姆，以这次得分为基础，额外增加4%倍率的分数",
         "buff_res": "res://scripts/buff/kill_combo_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "combo",
+        "tags": ["on_kill", "movement", "linear", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "dice_master",
@@ -159,7 +210,10 @@
         "buff_tooltip": "一次攻击触发2种及以上骰型，以这次得分为基础，额外增加40%倍率的分数",
         "buff_res": "res://scripts/buff/dice_master_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9
+        "buff_price": 9,
+        "family": "resonance",
+        "tags": ["on_attack", "color", "threshold", "aggression", "epic"],
+        "requires": []
     },
     {
         "buff_id": "drop_hunter",
@@ -168,7 +222,10 @@
         "buff_tooltip": "掉落格子有骰子时，以这次得分为基础，额外增加20%倍率的分数",
         "buff_res": "res://scripts/buff/drop_hunter_buff.gd",
         "buff_type": "pre_attack_buff",
-        "buff_price": 3
+        "buff_price": 3,
+        "family": "combo",
+        "tags": ["on_attack", "movement", "threshold", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "combo_storm",
@@ -177,7 +234,10 @@
         "buff_tooltip": "上回合攻击过，以这次得分为基础，额外增加20%倍率的分数",
         "buff_res": "res://scripts/buff/combo_storm_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "combo",
+        "tags": ["on_attack", "movement", "ramping", "aggression", "rare"],
+        "requires": []
     },
     {
         "buff_id": "color_resonance",
@@ -186,7 +246,10 @@
         "buff_tooltip": "攻击范围内所有史莱姆同色，以这次得分为基础，额外增加30%倍率的分数",
         "buff_res": "res://scripts/buff/color_resonance_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "resonance",
+        "tags": ["on_attack", "color", "threshold", "aggression", "rare"],
+        "requires": []
     },
     {
         "buff_id": "late_bloom",
@@ -195,7 +258,10 @@
         "buff_tooltip": "回合数≥7时，以这次得分为基础，额外增加25%倍率的分数",
         "buff_res": "res://scripts/buff/late_bloom_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "desperation",
+        "tags": ["on_attack", "hp", "threshold", "aggression", "rare"],
+        "requires": []
     },
     {
         "buff_id": "position_master",
@@ -204,7 +270,10 @@
         "buff_tooltip": "攻击范围内每覆盖1个史莱姆，以这次得分为基础，额外增加3%倍率的分数",
         "buff_res": "res://scripts/buff/position_master_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "combo",
+        "tags": ["on_attack", "movement", "linear", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "drop_bonus",
@@ -213,7 +282,10 @@
         "buff_tooltip": "每掉落1个骰子，随机1个点数基础分+1",
         "buff_res": "res://scripts/buff/drop_bonus_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "combo",
+        "tags": ["on_attack", "movement", "linear", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "slime_resonance",
@@ -222,7 +294,10 @@
         "buff_tooltip": "每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数",
         "buff_res": "res://scripts/buff/slime_resonance_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "swarm",
+        "tags": ["on_attack", "slime_count", "linear", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "green_lock",
@@ -231,7 +306,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个绿色",
         "buff_res": "res://scripts/buff/color_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "red_lock",
@@ -240,7 +318,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个红色",
         "buff_res": "res://scripts/buff/color_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "blue_lock",
@@ -249,7 +330,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个蓝色",
         "buff_res": "res://scripts/buff/color_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "yellow_lock",
@@ -258,7 +342,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个黄色",
         "buff_res": "res://scripts/buff/color_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "one_lock",
@@ -267,7 +354,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个一点骰子",
         "buff_res": "res://scripts/buff/point_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3
+        "buff_price": 3,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "two_lock",
@@ -276,7 +366,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个二点骰子",
         "buff_res": "res://scripts/buff/point_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3
+        "buff_price": 3,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "three_lock",
@@ -285,7 +378,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个三点骰子",
         "buff_res": "res://scripts/buff/point_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3
+        "buff_price": 3,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "four_lock",
@@ -294,7 +390,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个四点骰子",
         "buff_res": "res://scripts/buff/point_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3
+        "buff_price": 3,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "five_lock",
@@ -303,7 +402,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个五点骰子",
         "buff_res": "res://scripts/buff/point_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3
+        "buff_price": 3,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "six_lock",
@@ -312,7 +414,10 @@
         "buff_tooltip": "保证下次出生的史莱姆中至少有1个六点骰子",
         "buff_res": "res://scripts/buff/point_lock_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3
+        "buff_price": 3,
+        "family": "resonance",
+        "tags": ["on_spawn", "color", "static", "aggression", "common"],
+        "requires": []
     },
     {
         "buff_id": "iron_wall",
@@ -321,7 +426,10 @@
         "buff_tooltip": "防御+1",
         "buff_res": "res://scripts/buff/iron_wall_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "desperation",
+        "tags": ["on_spawn", "hp", "static", "protect", "common"],
+        "requires": []
     },
     {
         "buff_id": "thorn_armor",
@@ -330,7 +438,10 @@
         "buff_tooltip": "防御+1，但每回合多生成1个史莱姆",
         "buff_res": "res://scripts/buff/thorn_armor_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "swarm",
+        "tags": ["on_spawn", "slime_count", "static", "protect", "common"],
+        "requires": []
     },
     {
         "buff_id": "life_barrier",
@@ -339,7 +450,10 @@
         "buff_tooltip": "当前HP≤2时，防御+2",
         "buff_res": "res://scripts/buff/life_barrier_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "desperation",
+        "tags": ["on_spawn", "hp", "threshold", "protect", "rare"],
+        "requires": []
     },
     {
         "buff_id": "point_guard",
@@ -348,7 +462,10 @@
         "buff_tooltip": "随机免疫1种禁用点数debuff",
         "buff_res": "res://scripts/buff/point_guard_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "desperation",
+        "tags": ["on_spawn", "hp", "static", "protect", "common"],
+        "requires": []
     },
     {
         "buff_id": "type_guard",
@@ -357,7 +474,10 @@
         "buff_tooltip": "随机免疫1种禁用骰型debuff",
         "buff_res": "res://scripts/buff/type_guard_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "desperation",
+        "tags": ["on_spawn", "hp", "static", "protect", "common"],
+        "requires": []
     },
     {
         "buff_id": "score_shield",
@@ -366,7 +486,10 @@
         "buff_tooltip": "每回合分数损失减半",
         "buff_res": "res://scripts/buff/score_shield_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 7
+        "buff_price": 7,
+        "family": "desperation",
+        "tags": ["on_turn_end", "hp", "static", "protect", "rare"],
+        "requires": []
     },
     {
         "buff_id": "sturdy",
@@ -375,6 +498,237 @@
         "buff_tooltip": "防御不会低于1",
         "buff_res": "res://scripts/buff/sturdy_buff.gd",
         "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5
+        "buff_price": 5,
+        "family": "desperation",
+        "tags": ["on_spawn", "hp", "static", "protect", "common"],
+        "requires": []
+    },
+    {
+        "buff_id": "swarm_heart",
+        "buff_name": "潮涌之心",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每有3个存活史莱姆额外生成1个",
+        "buff_res": "res://scripts/buff/swarm_heart_buff.gd",
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 7,
+        "family": "swarm",
+        "tags": ["on_spawn", "slime_count", "threshold", "aggression", "rare"],
+        "requires": ["slime_plus_one"]
+    },
+    {
+        "buff_id": "slime_explosion",
+        "buff_name": "史莱姆爆破",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "攻击时每有5个存活史莱姆+20%",
+        "buff_res": "res://scripts/buff/slime_explosion_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "swarm",
+        "tags": ["on_attack", "slime_count", "threshold", "aggression", "rare"],
+        "requires": []
+    },
+    {
+        "buff_id": "tide_crusher",
+        "buff_name": "狂潮碾压",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "存活史莱姆≥8时+50%",
+        "buff_res": "res://scripts/buff/tide_crusher_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "swarm",
+        "tags": ["on_attack", "slime_count", "threshold", "aggression", "epic"],
+        "requires": ["slime_plus_one"]
+    },
+    {
+        "buff_id": "swarm_overlord",
+        "buff_name": "潮涌霸主",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "潮涌系Buff≥4时激活，所有潮涌系加成×1.5",
+        "buff_res": "res://scripts/buff/swarm_overlord_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "swarm",
+        "tags": ["multiplicative", "aggression", "legendary"],
+        "requires": []
+    },
+    {
+        "buff_id": "mint_press",
+        "buff_name": "铸币增压",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每次击杀+1金币",
+        "buff_res": "res://scripts/buff/mint_press_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "coin",
+        "tags": ["on_kill", "coin", "static", "economy", "rare"],
+        "requires": ["slime_plus_one"]
+    },
+    {
+        "buff_id": "golden_touch",
+        "buff_name": "黄金之手",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每5金币+15%攻击分数",
+        "buff_res": "res://scripts/buff/golden_touch_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "coin",
+        "tags": ["on_attack", "coin", "threshold", "economy", "rare"],
+        "requires": ["turn_coin_increase"]
+    },
+    {
+        "buff_id": "coin_storm",
+        "buff_name": "金币风暴",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "金币≥8时回合结束额外得目标分3%",
+        "buff_res": "res://scripts/buff/coin_storm_buff.gd",
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 7,
+        "family": "coin",
+        "tags": ["on_turn_end", "coin", "threshold", "economy", "rare"],
+        "requires": []
+    },
+    {
+        "buff_id": "tax_collector",
+        "buff_name": "税吏",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "购买Buff后下次攻击+25%",
+        "buff_res": "res://scripts/buff/tax_collector_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 5,
+        "family": "coin",
+        "tags": ["on_buy", "coin", "ramping", "economy", "common"],
+        "requires": []
+    },
+    {
+        "buff_id": "gold_empire",
+        "buff_name": "金元帝国",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "铸币系Buff≥4时激活，所有铸币系加成×1.5",
+        "buff_res": "res://scripts/buff/gold_empire_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "coin",
+        "tags": ["multiplicative", "economy", "legendary"],
+        "requires": []
+    },
+    {
+        "buff_id": "rainbow_surge",
+        "buff_name": "虹光涌流",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "击杀4色各1时+35%",
+        "buff_res": "res://scripts/buff/rainbow_surge_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "resonance",
+        "tags": ["on_kill", "color", "threshold", "aggression", "epic"],
+        "requires": []
+    },
+    {
+        "buff_id": "resonance_chain",
+        "buff_name": "共鸣链",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "同色触发后下回合+15%叠层",
+        "buff_res": "res://scripts/buff/resonance_chain_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "resonance",
+        "tags": ["on_attack", "color", "ramping", "aggression", "rare"],
+        "requires": ["color_resonance"]
+    },
+    {
+        "buff_id": "dice_harmony",
+        "buff_name": "骰型和谐",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "≥3种骰型+30%",
+        "buff_res": "res://scripts/buff/dice_harmony_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "resonance",
+        "tags": ["on_attack", "color", "threshold", "aggression", "epic"],
+        "requires": ["dice_master"]
+    },
+    {
+        "buff_id": "resonance_overlord",
+        "buff_name": "共鸣霸主",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "共鸣系Buff≥4时激活，所有共鸣系加成×1.5",
+        "buff_res": "res://scripts/buff/resonance_overlord_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "resonance",
+        "tags": ["multiplicative", "aggression", "legendary"],
+        "requires": []
+    },
+    {
+        "buff_id": "rush_strike",
+        "buff_name": "急速打击",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "移动≥3格+25%",
+        "buff_res": "res://scripts/buff/rush_strike_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "combo",
+        "tags": ["on_attack", "movement", "threshold", "aggression", "rare"],
+        "requires": ["movement_plus_one"]
+    },
+    {
+        "buff_id": "combo_frenzy",
+        "buff_name": "连击狂热",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "连击≥3回合+20%",
+        "buff_res": "res://scripts/buff/combo_frenzy_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "combo",
+        "tags": ["on_attack", "movement", "ramping", "aggression", "rare"],
+        "requires": ["combo_storm"]
+    },
+    {
+        "buff_id": "combo_overlord",
+        "buff_name": "连击霸主",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "连击系Buff≥4时激活，所有连击系加成×1.5",
+        "buff_res": "res://scripts/buff/combo_overlord_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "combo",
+        "tags": ["multiplicative", "aggression", "legendary"],
+        "requires": []
+    },
+    {
+        "buff_id": "crisis_power",
+        "buff_name": "危机之力",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "HP≤2时+50%",
+        "buff_res": "res://scripts/buff/crisis_power_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "desperation",
+        "tags": ["on_attack", "hp", "threshold", "aggression", "epic"],
+        "requires": ["life_barrier"]
+    },
+    {
+        "buff_id": "curse_burner",
+        "buff_name": "诅咒焚烧",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每debuff+12%",
+        "buff_res": "res://scripts/buff/curse_burner_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "desperation",
+        "tags": ["on_attack", "hp", "linear", "aggression", "rare"],
+        "requires": []
+    },
+    {
+        "buff_id": "desperation_overlord",
+        "buff_name": "绝境霸主",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "绝境系Buff≥4时激活，所有绝境系加成×1.5",
+        "buff_res": "res://scripts/buff/desperation_overlord_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "desperation",
+        "tags": ["multiplicative", "aggression", "legendary"],
+        "requires": []
     }
 ]

@@ -536,8 +536,8 @@ func _spawn_elite_slime():
 		await EffectManager.debuff_change_effect()
 	print("[elite-slime] 生成了精英史莱姆: gate=%s count=%d" % [gate_type, Current.ELITE_GATE_COUNTS[gate_type]])
 
-## 生成BOSS史莱姆（第12关开局生成）
-func _spawn_boss_slime():
+## 生成BOSS史莱姆（根据关卡配置生成）
+func _spawn_boss_slime(stage_config: Dictionary = {}):
 	var empty_grids = []
 	for grid_index in all_grid_dict:
 		if grid_index not in Current.all_enemy_grid_index_array and grid_index != Current.hero.hero_grid_index:
@@ -551,21 +551,41 @@ func _spawn_boss_slime():
 	slime_instantiate.position = grid_index_to_position(spawn_grid)
 	slime_instantiate.enemy_grid_index = spawn_grid
 	enemys.add_child(slime_instantiate)
-	## 设置BOSS属性
+	## 设置BOSS属性（从stage_config读取，缺失时使用fallback默认值）
 	slime_instantiate.is_boss = true
-	var gate_type = Current.BOSS_GATE_TYPES.pick_random()
+	var gate_type = stage_config.get("boss_gate_type", Current.BOSS_GATE_TYPES.pick_random())
 	slime_instantiate.gate_type = gate_type
-	slime_instantiate.gate_count = Current.BOSS_GATE_COUNT
+	slime_instantiate.gate_count = stage_config.get("boss_gate_count", Current.BOSS_GATE_COUNT)
 	## 设置深紫色轮廓
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 18.892))
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-	## 施加1个随机BOSS debuff
-	var _boss_debuff_row = boss_debuff_json_data.pick_random()
-	var buff = load(_boss_debuff_row["debuff_res"]).new(_boss_debuff_row, self)
-	BuffSystem.callv("set_" + _boss_debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
-	debuff_effect_label.text = "BOSS出现！ [img=15 ]" + _boss_debuff_row["debuff_icon"] + "[/img]"
+	## 根据boss_debuff_ids列表逐个查找并应用debuff（先查boss_debuff_json_data，未找到则查debuff_json_data）
+	var boss_debuff_ids: Array = stage_config.get("boss_debuff_ids", [])
+	var applied_debuff_icons: String = ""
+	for debuff_id in boss_debuff_ids:
+		var debuff_row: Dictionary = {}
+		for row in boss_debuff_json_data:
+			if row.get("debuff_id", "") == debuff_id:
+				debuff_row = row
+				break
+		if debuff_row.is_empty():
+			for row in debuff_json_data:
+				if row.get("debuff_id", "") == debuff_id:
+					debuff_row = row
+					break
+		if not debuff_row.is_empty():
+			var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
+			BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+			applied_debuff_icons += " [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+		else:
+			print("[boss-slime] 警告: 未找到debuff_id='%s'，跳过" % debuff_id)
+	debuff_effect_label.text = "BOSS出现！" + applied_debuff_icons
 	await EffectManager.debuff_change_effect()
-	print("[boss-slime] 生成了BOSS史莱姆: gate=%s count=%d" % [gate_type, Current.BOSS_GATE_COUNT])
+	## 根据boss_extra_elites值生成额外精英史莱姆
+	var extra_elites: int = stage_config.get("boss_extra_elites", 0)
+	for i in range(extra_elites):
+		await _spawn_elite_slime()
+	print("[boss-slime] 生成了BOSS史莱姆: gate=%s count=%d debuffs=%s extra_elites=%d" % [gate_type, slime_instantiate.gate_count, str(boss_debuff_ids), extra_elites])
 
 ## 移动精英/BOSS史莱姆（每回合随机4方向移动1格）
 func _move_elite_boss_slimes():
@@ -1662,11 +1682,15 @@ func _on_stage_clear_button_pressed() -> void:
 	## 等待商店关闭
 	while "shop_ui" in Current.public_lock_array:
 		await Tools.time_sleep(0.1)
+	## 从配置中查找当前关卡数据（共享查找结果，避免重复遍历）
+	var current_stage_info: Dictionary = {}
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
-			Current.target_score = row["target_score"]
-			difficulty_icon.texture = load(row["stage_type_icon"])
-			difficulty_icon.tooltip_text = row["stage_type"]
+			current_stage_info = row
+			break
+	Current.target_score = current_stage_info.get("target_score", 300)
+	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
+	difficulty_icon.tooltip_text = current_stage_info.get("stage_type", "普通")
 	## 清空一关金币奖励数和最高骰子奖励数
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 1
@@ -1682,12 +1706,12 @@ func _on_stage_clear_button_pressed() -> void:
 	_pre_create_slime()
 	## 关卡切换效果
 	await EffectManager.stage_change_effect()
-	## 3、6、9关生成精英史莱姆
-	if Current.count_stage in [3, 6, 9]:
+	## 根据关卡配置的stage_type判断生成精英或BOSS（缺失时默认为"普通"）
+	var stage_type: String = current_stage_info.get("stage_type", "普通")
+	if stage_type == "精英":
 		await _spawn_elite_slime()
-	## 12关生成BOSS史莱姆
-	if Current.count_stage == 12:
-		await _spawn_boss_slime()
+	elif stage_type == "BOSS":
+		await _spawn_boss_slime(current_stage_info)
 	## 解锁：关卡切换完成，允许 _turn_process 执行
 	Current.public_lock_array.erase("stage_transition")
 
