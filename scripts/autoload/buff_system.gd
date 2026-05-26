@@ -139,6 +139,7 @@ func _is_overlord_registered(family_name: String) -> bool:
 		"resonance": "resonance_overlord",
 		"combo": "combo_overlord",
 		"desperation": "desperation_overlord",
+		"vitality": "vitality_overlord",
 	}
 	var overlord_id = overlord_map.get(family_name, "")
 	if overlord_id == "":

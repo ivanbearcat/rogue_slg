@@ -526,6 +526,37 @@ var skip_hp_damage_this_turn: bool = false
 ## 玩家防御值（初始2，公式: damage = max(0, ceil((slime_count - defense) / 3)))
 var player_defense: int = 2
 
+## 得分累计回血：累计值（单关内累计得分）
+var score_heal_accumulated: int = 0
+## 得分累计回血：当前阈值
+var _score_heal_threshold: int = 20
+var score_heal_threshold: int:
+	set(v):
+		_score_heal_threshold = maxi(v, 1)
+		_update_score_heal_ui()
+	get:
+		return _score_heal_threshold
+## 得分累计回血：起步阈值（base=20，关卡系数×1.2^(stage-1)）
+var score_heal_base_threshold: int = 20
+## 得分累计回血：每次回血后阈值涨幅
+var score_heal_threshold_increase: int = 15
+## 铁胃减伤值（0=未激活，1=激活铁胃后每回合伤害-1）
+var iron_stomach_reduction: int = 0
+## 死线行者是否激活（HP≤2时扣血减半）
+var deadline_walker_active: bool = false
+
+## 计算并设置当前关卡的得分回血起步阈值
+func reset_score_heal_for_stage() -> void:
+	score_heal_accumulated = 0
+	var stage_multiplier = pow(1.2, count_stage - 1)
+	score_heal_threshold = int(score_heal_base_threshold * stage_multiplier)
+
+## 更新得分回血进度UI
+func _update_score_heal_ui():
+	if game_manager and game_manager.has_node("round_process_bar/score_heal_progress"):
+		var label = game_manager.get_node("round_process_bar/score_heal_progress")
+		label.text = "回血: " + str(score_heal_accumulated) + "/" + str(_score_heal_threshold)
+
 ## 更新HP心形血条UI
 func _update_hp_ui():
 	if game_manager and game_manager.has_node("round_process_bar/hp_bar"):

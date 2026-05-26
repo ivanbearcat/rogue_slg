@@ -228,7 +228,7 @@ var pending_shop_skill: Dictionary = {}
 ## 已在商店出现过的金币技能ID列表（防止重复出现）
 var appeared_coin_skill_ids: Array = []
 ## 升级待增加的HP值（延迟到扣血之后应用，确保先扣血再加升级血）
-var _pending_level_up_hp_bonus: int = 0
+
 
 ## 骰型分数Label映射
 var _dice_score_labels: Dictionary
@@ -270,6 +270,8 @@ func _ready() -> void:
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
+	## 初始化得分累计回血
+	Current.reset_score_heal_for_stage()
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -826,12 +828,9 @@ func _set_level_up_card():
 func _check_and_level_up() -> void:
 	if Current.hero_exp >= Current.require_exp:
 		Current.level += 1
-		## 升级+1HP（延迟到扣血之后应用，见 _apply_level_up_hp_bonus）
-		_pending_level_up_hp_bonus += 1
-		## 每5级max_hp+1且HP+1
+		## 每5级max_hp+1（仅上限成长，不回血）
 		if Current.level % 5 == 0:
 			Current.max_hp += 1
-			_pending_level_up_hp_bonus += 1
 		var overflow_exp = Current.hero_exp - Current.require_exp
 		## 最多增加到10个史莱姆可以升级
 		if Current.require_exp < 10:
@@ -1059,10 +1058,10 @@ func skill_attack():
 		EventBus.event_emit("do_pre_hero_turn_buff")
 		turn_button.disabled = false
 		return
+	## 攻击结算后，得分累计回血（在扣血之前）
+	_apply_score_heal()
 	## 攻击结算后，基于当前场上残留史莱姆扣血
 	_apply_hp_damage()
-	## 扣血后再应用升级加血（确保先扣血再加升级血）
-	_apply_level_up_hp_bonus()
 	## 敌人回合
 	await _turn_process()
 	## 执行玩家回合前buff
@@ -1119,10 +1118,9 @@ func _on_turn_button_pressed() -> void:
 		EventBus.event_emit("do_pre_hero_turn_buff")
 		turn_button.disabled = false
 		return
+	## 跳过回合不攻击，不触发得分回血（once_total_score为0）
 	## 跳过回合后，基于当前场上残留史莱姆扣血
 	_apply_hp_damage()
-	## 扣血后再应用升级加血（确保先扣血再加升级血）
-	_apply_level_up_hp_bonus()
 	## 回合处理
 	await _turn_process()
 	## 执行玩家回合前buff
@@ -1165,6 +1163,12 @@ func _apply_hp_damage():
 	var hp_before = Current.player_hp
 	var effective: int = slime_count - Current.player_defense
 	var damage: int = ceili(effective / 3.0) if effective > 0 else 0
+	## 铁胃减伤：最终伤害-1（最少0）
+	if damage > 0 and Current.iron_stomach_reduction > 0:
+		damage = maxi(0, damage - Current.iron_stomach_reduction)
+	## 死线行者：HP≤2时扣血减半（向下取整）
+	if damage > 0 and Current.deadline_walker_active and Current.player_hp <= 2:
+		damage = int(damage / 2.0)
 	if damage > 0:
 		Current.player_hp -= damage
 		## HP扣减视觉反馈
@@ -1176,11 +1180,72 @@ func _apply_hp_damage():
 	if hp_before > 3 and Current.player_hp <= 3 and not Current.life_slime_spawned_this_stage:
 		_create_life_slime()
 
-## 应用升级延迟增加的HP（在扣血之后调用，确保先扣血再加升级血）
-func _apply_level_up_hp_bonus():
-	if _pending_level_up_hp_bonus > 0:
-		Current.player_hp += _pending_level_up_hp_bonus
-		_pending_level_up_hp_bonus = 0
+## 得分累计回血结算（在扣血之前调用）
+func _apply_score_heal() -> void:
+	if Current.once_total_score <= 0:
+		return
+	## 累加本回合得分
+	Current.score_heal_accumulated += Current.once_total_score
+	## 计算有效阈值（基础阈值 - 嗜血本能降低 - 逆境翻盘降低）
+	var effective_threshold := Current.score_heal_threshold
+	## 嗜血本能：每个-5
+	var blood_thirst_count = BuffSystem.get_buffs_by_tag("blood_thirst").size()
+	if blood_thirst_count > 0:
+		effective_threshold = maxi(1, effective_threshold - blood_thirst_count * 5)
+	## 逆境翻盘：超过防御值的史莱姆每只-3
+	if BuffSystem._is_buff_registered("comeback_king"):
+		var slime_count = 0
+		for _slime in Current.all_enemy_array:
+			if is_instance_valid(_slime) and not _slime.is_life_slime:
+				slime_count += 1
+		var excess = maxi(0, slime_count - Current.player_defense)
+		if excess > 0:
+			effective_threshold = maxi(1, effective_threshold - excess * 3)
+	## 生机霸主增幅：vitality系≥4时回血量×1.5
+	var overlord_active = BuffSystem.get_family_count("vitality") >= 4 and BuffSystem._is_overlord_registered("vitality")
+	## 循环检查阈值回血
+	while Current.score_heal_accumulated >= effective_threshold:
+		Current.score_heal_accumulated -= effective_threshold
+		## 基础阈值上涨（不受修正影响）
+		Current.score_heal_threshold += Current.score_heal_threshold_increase
+		## 回1HP（霸主×1.5）
+		var heal_amount := 1
+		if overlord_active:
+			heal_amount = ceili(1 * 1.5)
+		if Current.player_hp < Current.max_hp:
+			Current.player_hp += heal_amount
+			## 回血视觉反馈
+			if has_node("round_process_bar/hp_bar"):
+				var hp_bar = get_node("round_process_bar/hp_bar")
+				if hp_bar.has_method("play_heal_effect"):
+					hp_bar.play_heal_effect()
+		## 重新计算有效阈值（阈值已上涨）
+		effective_threshold = Current.score_heal_threshold
+		if blood_thirst_count > 0:
+			effective_threshold = maxi(1, effective_threshold - blood_thirst_count * 5)
+		if BuffSystem._is_buff_registered("comeback_king"):
+			var slime_count2 = 0
+			for _slime in Current.all_enemy_array:
+				if is_instance_valid(_slime) and not _slime.is_life_slime:
+					slime_count2 += 1
+			var excess2 = maxi(0, slime_count2 - Current.player_defense)
+			if excess2 > 0:
+				effective_threshold = maxi(1, effective_threshold - excess2 * 3)
+	## 战意高昂：超出阈值部分每10分额外回1HP
+	if BuffSystem._is_buff_registered("battle_fury") and Current.score_heal_accumulated > 0:
+		var overflow = Current.score_heal_accumulated
+		var extra_heal: int = overflow / 10
+		if extra_heal > 0:
+			if overlord_active:
+				extra_heal = ceili(extra_heal * 1.5)
+			if Current.player_hp < Current.max_hp:
+				Current.player_hp = mini(Current.player_hp + extra_heal, Current.max_hp)
+				if has_node("round_process_bar/hp_bar"):
+					var hp_bar = get_node("round_process_bar/hp_bar")
+					if hp_bar.has_method("play_heal_effect"):
+						hp_bar.play_heal_effect()
+	## 更新UI
+	Current._update_score_heal_ui()
 
 ## 创建生命史莱姆：将1只普通史莱姆转化为生命史莱姆
 func _create_life_slime():
@@ -1254,6 +1319,22 @@ func _check_stage_clear() -> bool:
 		var highest_dice_add_coin = Current.highest_dice_num - 1
 		Current.count_add_coins += highest_dice_add_coin
 		await _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin)
+		## 以战养战：过关时每只残余史莱姆回1HP
+		if BuffSystem._is_buff_registered("sustain"):
+			var sustain_slime_count = 0
+			for _slime in Current.all_enemy_array:
+				if is_instance_valid(_slime) and not _slime.is_life_slime:
+					sustain_slime_count += 1
+			if sustain_slime_count > 0:
+				var overlord_active = BuffSystem.get_family_count("vitality") >= 4 and BuffSystem._is_overlord_registered("vitality")
+				var sustain_heal = sustain_slime_count
+				if overlord_active:
+					sustain_heal = ceili(sustain_heal * 1.5)
+				Current.player_hp = mini(Current.player_hp + sustain_heal, Current.max_hp)
+				if has_node("round_process_bar/hp_bar"):
+					var hp_bar = get_node("round_process_bar/hp_bar")
+					if hp_bar.has_method("play_heal_effect"):
+						hp_bar.play_heal_effect()
 		## 清理关卡buff
 		EventBus.event_emit("clear_stage_buff")
 		return true
@@ -1655,6 +1736,8 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.drop_slot_dice = null
 	## 重置生命史莱姆生成标记
 	Current.life_slime_spawned_this_stage = false
+	## 重置得分累计回血
+	Current.reset_score_heal_for_stage()
 	if Current.count_stage < 12:
 		Current.count_stage += 1
 		## 重置所有金币技能本关使用状态为未使用
@@ -1836,9 +1919,25 @@ func _on_hp_bottle_button_pressed() -> void:
 	Current.total_coins -= 3
 	Current.player_hp += 2
 
+## 战场补给：购买buff后回1HP（生机霸主增幅×1.5）
+func _apply_war_supply_heal() -> void:
+	if not BuffSystem._is_buff_registered("war_supply"):
+		return
+	var heal_amount := 1
+	var overlord_active = BuffSystem.get_family_count("vitality") >= 4 and BuffSystem._is_overlord_registered("vitality")
+	if overlord_active:
+		heal_amount = ceili(1 * 1.5)
+	if Current.player_hp < Current.max_hp:
+		Current.player_hp = mini(Current.player_hp + heal_amount, Current.max_hp)
+		if has_node("round_process_bar/hp_bar"):
+			var hp_bar = get_node("round_process_bar/hp_bar")
+			if hp_bar.has_method("play_heal_effect"):
+				hp_bar.play_heal_effect()
+
 func _on_buff_shop_button_1_pressed() -> void:
 	Current.total_coins -= shop_buff_1["buff_price"]
 	_set_buff(shop_buff_1)
+	_apply_war_supply_heal()
 	buff_shop_icon_1.modulate.a = 0
 	buff_lock_button_1.button_pressed = false
 	buff_json_data.erase(shop_buff_1)
@@ -1846,6 +1945,7 @@ func _on_buff_shop_button_1_pressed() -> void:
 func _on_buff_shop_button_2_pressed() -> void:
 	Current.total_coins -= shop_buff_2["buff_price"]
 	_set_buff(shop_buff_2)
+	_apply_war_supply_heal()
 	buff_shop_icon_2.modulate.a = 0
 	buff_lock_button_2.button_pressed = false
 	buff_json_data.erase(shop_buff_2)
@@ -1853,6 +1953,7 @@ func _on_buff_shop_button_2_pressed() -> void:
 func _on_buff_shop_button_3_pressed() -> void:
 	Current.total_coins -= shop_buff_3["buff_price"]
 	_set_buff(shop_buff_3)
+	_apply_war_supply_heal()
 	buff_shop_icon_3.modulate.a = 0
 	buff_lock_button_3.button_pressed = false
 	buff_json_data.erase(shop_buff_3)

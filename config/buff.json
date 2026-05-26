@@ -730,5 +730,101 @@
         "family": "desperation",
         "tags": ["multiplicative", "aggression", "legendary"],
         "requires": []
+    },
+    {
+        "buff_id": "iron_stomach",
+        "buff_name": "铁胃",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每回合扣血-1（最少0）",
+        "buff_res": "res://scripts/buff/iron_stomach_buff.gd",
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5,
+        "family": "vitality",
+        "tags": ["on_turn_end", "hp", "static", "protect", "common"],
+        "requires": []
+    },
+    {
+        "buff_id": "blood_thirst",
+        "buff_name": "嗜血本能",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "得分回血阈值-5",
+        "buff_res": "res://scripts/buff/blood_thirst_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "vitality",
+        "tags": ["on_attack", "hp", "threshold", "protect", "rare"],
+        "requires": []
+    },
+    {
+        "buff_id": "battle_fury",
+        "buff_name": "战意高昂",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "超阈值部分每10分额外回1HP（需嗜血本能）",
+        "buff_res": "res://scripts/buff/battle_fury_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "vitality",
+        "tags": ["on_attack", "hp", "ramping", "protect", "rare"],
+        "requires": ["blood_thirst"]
+    },
+    {
+        "buff_id": "comeback_king",
+        "buff_name": "逆境翻盘",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "超过防御值的史莱姆每只使回血阈值-3",
+        "buff_res": "res://scripts/buff/comeback_king_buff.gd",
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 7,
+        "family": "vitality",
+        "tags": ["on_turn_end", "slime_count", "threshold", "protect", "rare"],
+        "requires": []
+    },
+    {
+        "buff_id": "sustain",
+        "buff_name": "以战养战",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "过关时每只残余史莱姆回1HP",
+        "buff_res": "res://scripts/buff/sustain_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5,
+        "family": "vitality",
+        "tags": ["on_spawn", "hp", "threshold", "protect", "common"],
+        "requires": []
+    },
+    {
+        "buff_id": "deadline_walker",
+        "buff_name": "死线行者",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "HP≤2时扣血减半（需铁胃）",
+        "buff_res": "res://scripts/buff/deadline_walker_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 9,
+        "family": "vitality",
+        "tags": ["on_spawn", "hp", "threshold", "protect", "epic"],
+        "requires": ["iron_stomach"]
+    },
+    {
+        "buff_id": "war_supply",
+        "buff_name": "战场补给",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每次购买商店buff后回1HP",
+        "buff_res": "res://scripts/buff/war_supply_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5,
+        "family": "vitality",
+        "tags": ["on_buy", "hp", "linear", "protect", "common"],
+        "requires": []
+    },
+    {
+        "buff_id": "vitality_overlord",
+        "buff_name": "生机霸主",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "生机系Buff≥4时激活，所有生机系回血×1.5",
+        "buff_res": "res://scripts/buff/vitality_overlord_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "vitality",
+        "tags": ["multiplicative", "protect", "legendary"],
+        "requires": []
     }
 ]
