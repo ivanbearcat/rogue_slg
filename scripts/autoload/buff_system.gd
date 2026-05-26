@@ -23,9 +23,6 @@ var post_hero_move_buff_stage: Array
 var post_hero_move_buff_always: Array
 var post_hero_move_buff_elite: Array
 
-## 联动视觉层
-var synergy_overlay: Control
-
 func _ready() -> void:
 	EventBus.subscribe("clear_stage_buff", clear_stage_buff)
 	EventBus.subscribe("clear_elite_buff", clear_elite_buff)
@@ -34,16 +31,6 @@ func _ready() -> void:
 	EventBus.subscribe("do_pre_enemy_turn_buff", do_pre_enemy_turn_buff)
 	EventBus.subscribe("do_pre_hero_turn_buff", do_pre_hero_turn_buff)
 	EventBus.subscribe("do_post_hero_move_buff", do_post_hero_move_buff)
-	## 创建联动视觉层
-	call_deferred("_setup_synergy_overlay")
-
-func _setup_synergy_overlay() -> void:
-	if game_manager and game_manager.buff_container:
-		synergy_overlay = Control.new()
-		synergy_overlay.name = "synergy_overlay"
-		synergy_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
-		synergy_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		game_manager.buff_container.get_parent().add_child(synergy_overlay)
 
 enum buff_type{
 	ONCE,
@@ -159,73 +146,6 @@ func _is_overlord_registered(family_name: String) -> bool:
 	return _is_buff_registered(overlord_id)
 
 ## ============================================================
-## 联动视觉
-## ============================================================
-
-## 更新联动连线
-func _update_synergy_lines() -> void:
-	if not synergy_overlay:
-		return
-	## 清除旧连线
-	for child in synergy_overlay.get_children():
-		child.queue_free()
-	## 收集所有已激活 Buff
-	var active_buffs := []
-	for arr in _get_all_buff_arrays():
-		for buff in arr:
-			if not buff.is_dormant and buff.family != "":
-				active_buffs.append(buff)
-	## 绘制同族连线（白色半透明）
-	var drawn_families := {}
-	for i in range(active_buffs.size()):
-		for j in range(i + 1, active_buffs.size()):
-			var a = active_buffs[i]
-			var b = active_buffs[j]
-			if a.family == b.family and a.buff_texture and b.buff_texture:
-				var key = a.family + "_" + str(min(i, j)) + "_" + str(max(i, j))
-				if not drawn_families.has(key):
-					drawn_families[key] = true
-					_draw_synergy_line(a.buff_texture, b.buff_texture, Color(1, 1, 1, 0.5))
-	## 绘制依赖连线（金色半透明）
-	for buff in active_buffs:
-		if buff.requires.size() > 0:
-			for req_id in buff.requires:
-				var req_buff = _find_buff_by_id(req_id)
-				if req_buff and req_buff.buff_texture and buff.buff_texture:
-					_draw_synergy_line(req_buff.buff_texture, buff.buff_texture, Color(1, 0.84, 0, 0.5))
-
-## 在两个 TextureRect 之间绘制连线
-func _draw_synergy_line(from: TextureRect, to: TextureRect, color: Color) -> void:
-	if not from.is_inside_tree() or not to.is_inside_tree():
-		return
-	var line = Line2D.new()
-	line.width = 2.0
-	line.default_color = color
-	var from_center = from.global_position + from.size * 0.5
-	var to_center = to.global_position + to.size * 0.5
-	line.add_point(from_center)
-	line.add_point(to_center)
-	synergy_overlay.add_child(line)
-
-## 通过 buff_id 查找已注册的 Buff 实例
-func _find_buff_by_id(buff_id: String) -> Buff:
-	for arr in _get_all_buff_arrays():
-		for buff in arr:
-			if buff.buff_meta.get("buff_id", "") == buff_id and not buff.is_dormant:
-				return buff
-	return null
-
-## 族主光环效果：脉冲动画
-func _apply_overlord_glow(family_name: String) -> void:
-	for arr in _get_all_buff_arrays():
-		for buff in arr:
-			if buff.family == family_name and not buff.is_dormant and buff.buff_texture:
-				var tween = buff.buff_texture.create_tween()
-				tween.set_loops()
-				tween.tween_property(buff.buff_texture, "modulate", Color(1.3, 1.3, 1.0, 1.0), 0.3)
-				tween.tween_property(buff.buff_texture, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.3)
-
-## ============================================================
 ## 清理
 ## ============================================================
 
@@ -247,7 +167,6 @@ func clear_stage_buff():
 	pre_enemy_turn_buff_stage.clear()
 	pre_hero_turn_buff_stage.clear()
 	post_hero_move_buff_stage.clear()
-	_update_synergy_lines()
 
 ## 清理精英buff
 func clear_elite_buff():
@@ -266,7 +185,6 @@ func clear_elite_buff():
 	pre_enemy_turn_buff_elite.clear()
 	pre_hero_turn_buff_elite.clear()
 	post_hero_move_buff_elite.clear()
-	_update_synergy_lines()
 
 ## ============================================================
 ## 攻击前
@@ -289,7 +207,6 @@ func set_pre_attack_buff(buff: Object, type: buff_type):
 			pre_attack_buff_always.append(buff)
 		buff_type.ELITE:
 			pre_attack_buff_elite.append(buff)
-	_update_synergy_lines()
 
 func do_pre_attack_buff():
 	## 唤醒满足 requires 的沉睡 Buff
@@ -345,7 +262,6 @@ func set_post_attack_buff(buff: Object, type: buff_type):
 			post_attack_buff_always.append(buff)
 		buff_type.ELITE:
 			post_attack_buff_elite.append(buff)
-	_update_synergy_lines()
 
 func do_post_attack_buff():
 	_try_awaken_dormant_buffs()
@@ -397,7 +313,6 @@ func set_pre_enemy_turn_buff(buff: Object, type: buff_type):
 			pre_enemy_turn_buff_always.append(buff)
 		buff_type.ELITE:
 			pre_enemy_turn_buff_elite.append(buff)
-	_update_synergy_lines()
 
 func do_pre_enemy_turn_buff():
 	_try_awaken_dormant_buffs()
@@ -449,7 +364,6 @@ func set_pre_hero_turn_buff(buff: Object, type: buff_type):
 			pre_hero_turn_buff_always.append(buff)
 		buff_type.ELITE:
 			pre_hero_turn_buff_elite.append(buff)
-	_update_synergy_lines()
 
 func do_pre_hero_turn_buff():
 	_try_awaken_dormant_buffs()
@@ -501,7 +415,6 @@ func set_post_hero_move_buff(buff: Object, type: buff_type):
 			post_hero_move_buff_always.append(buff)
 		buff_type.ELITE:
 			post_hero_move_buff_elite.append(buff)
-	_update_synergy_lines()
 
 func do_post_hero_move_buff():
 	_try_awaken_dormant_buffs()
