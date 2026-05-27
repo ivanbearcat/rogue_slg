@@ -41,6 +41,7 @@ openspec/
 
 # oh-my-opencode
 .sisyphus/
+.omo/
 
 # 文档
 docs/
