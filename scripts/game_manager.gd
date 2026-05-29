@@ -96,6 +96,7 @@ const hero_property = {
 @onready var debuff_container: HFlowContainer = %debuff_container
 ## buff UI
 @onready var buff_container: HFlowContainer = %buff_container
+@onready var overlord_container: HFlowContainer = %overlord_container
 ## 商店UI
 @onready var shop_ui: CanvasLayer = %shop_ui
 @onready var buff_shop_icon_1: TextureRect = %buff_shop_icon_1
@@ -770,6 +771,17 @@ func _set_stage_debuff(boss=0):
 func _set_buff(buff_row):
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)
 	BuffSystem.callv("set_" + buff_row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
+	_check_overlord_auto_activate(buff_row)
+
+func _check_overlord_auto_activate(buff_row):
+	if not buff_row.has("family"):
+		return
+	var family = buff_row["family"]
+	if BuffSystem.get_family_count(family) >= 4:
+		for overlord_row in buff_json_data:
+			if overlord_row.get("family") == family and overlord_row.get("auto_activate") == true:
+				if BuffSystem.is_buff_registered(overlord_row["buff_id"]) == false:
+					_set_buff(overlord_row)
 
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
@@ -1303,7 +1315,7 @@ func _check_stage_clear() -> bool:
 				if is_instance_valid(_slime) and not _slime.is_life_slime:
 					sustain_slime_count += 1
 			if sustain_slime_count > 0:
-				var overlord_active = BuffSystem.get_family_count("vitality") >= 4 and BuffSystem._is_overlord_registered("vitality")
+				var overlord_active = BuffSystem.get_family_count("vitality") >= 4
 				var sustain_heal = sustain_slime_count
 				if overlord_active:
 					sustain_heal = ceili(sustain_heal * 1.5)
@@ -1558,20 +1570,21 @@ func _set_shop_buff():
 	buff_shop_icon_1.modulate.a = 1
 	buff_shop_icon_2.modulate.a = 1
 	buff_shop_icon_3.modulate.a = 1
+	var _shop_pool = buff_json_data.filter(func(row): return not row.get("auto_activate", false))
 	## 没有锁的抽取buff
 	if buff_lock_button_1.button_pressed == false:
-		shop_buff_1 = buff_json_data.pick_random()
-		buff_json_data.erase(shop_buff_1)
+		shop_buff_1 = _shop_pool.pick_random()
+		_shop_pool.erase(shop_buff_1)
 	if buff_lock_button_2.button_pressed == false:
-		shop_buff_2 = buff_json_data.pick_random()
-		buff_json_data.erase(shop_buff_2)
+		shop_buff_2 = _shop_pool.pick_random()
+		_shop_pool.erase(shop_buff_2)
 	if buff_lock_button_3.button_pressed == false:
-		shop_buff_3 = buff_json_data.pick_random()
+		shop_buff_3 = _shop_pool.pick_random()
 	## 没有锁buff的加回数组
 	if buff_lock_button_1.button_pressed == false:
-		buff_json_data.append(shop_buff_1)
+		_shop_pool.append(shop_buff_1)
 	if buff_lock_button_2.button_pressed == false:
-		buff_json_data.append(shop_buff_2)
+		_shop_pool.append(shop_buff_2)
 	buff_shop_icon_1.texture = load(shop_buff_1["buff_icon"])
 	buff_shop_icon_2.texture = load(shop_buff_2["buff_icon"])
 	buff_shop_icon_3.texture = load(shop_buff_3["buff_icon"])
@@ -1778,7 +1791,7 @@ func _on_potion_button_pressed() -> void:
 	if Current.potion_count <= 0 or Current.player_hp >= Current.max_hp:
 		return
 	var heal_amount := 1
-	var overlord_active = BuffSystem.get_family_count("vitality") >= 4 and BuffSystem._is_overlord_registered("vitality")
+	var overlord_active = BuffSystem.get_family_count("vitality") >= 4
 	if overlord_active:
 		heal_amount = ceili(1 * 1.5)
 	Current.potion_count -= 1

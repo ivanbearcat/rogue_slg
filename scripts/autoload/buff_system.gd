@@ -95,16 +95,15 @@ func _get_timing_arrays(timing: String) -> Array:
 	return []
 
 ## 族主 ×1.5 乘法逻辑：在管线末尾追加族主奖励
+## 条件简化为仅检查 family_count >= 4（领主自动激活，无需注册检查）
 func _apply_overlord_multiplier(timing: String, family_accumulation: Dictionary) -> void:
 	for family_name in family_accumulation:
 		var accumulated = family_accumulation[family_name]
 		if accumulated <= 0:
 			continue
-		## 检查该族是否满足族主条件：同族已激活 Buff≥4 且该族族主已注册
+		## 检查该族是否满足族主条件：同族已激活 Buff≥4
 		var family_count = get_family_count(family_name)
 		if family_count < 4:
-			continue
-		if not _is_overlord_registered(family_name):
 			continue
 		## 追加 ×0.5 的额外得分（等效 ×1.5）
 		var bonus = int(accumulated * 0.5)
@@ -113,21 +112,6 @@ func _apply_overlord_multiplier(timing: String, family_accumulation: Dictionary)
 			## 族主激活飘字效果
 			var float_number_instantiate = EffectManager.float_number_effect(bonus, "gold")
 			Current.hero.add_child(float_number_instantiate)
-
-## 检查指定家族的族主是否已注册
-func _is_overlord_registered(family_name: String) -> bool:
-	var overlord_map = {
-		"swarm": "swarm_overlord",
-		"coin": "gold_empire",
-		"resonance": "resonance_overlord",
-		"combo": "combo_overlord",
-		"desperation": "desperation_overlord",
-		"vitality": "vitality_overlord",
-	}
-	var overlord_id = overlord_map.get(family_name, "")
-	if overlord_id == "":
-		return false
-	return is_buff_registered(overlord_id)
 
 ## ============================================================
 ## 清理

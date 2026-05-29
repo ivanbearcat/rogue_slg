@@ -769,10 +769,10 @@
         "buff_id": "swarm_overlord",
         "buff_name": "潮涌霸主",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "潮涌系Buff≥4时激活，所有潮涌系加成×1.5",
+        "buff_tooltip": "潮涌系Buff≥4时自动激活，所有潮涌系加成×1.5",
         "buff_res": "res://scripts/buff/swarm_overlord_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9,
+        "auto_activate": true,
         "family": "swarm",
         "tags": [
             "multiplicative",
@@ -855,7 +855,7 @@
         "buff_tooltip": "铸币系Buff≥4时激活，所有铸币系加成×1.5",
         "buff_res": "res://scripts/buff/gold_empire_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9,
+        "auto_activate": true,
         "family": "coin",
         "tags": [
             "multiplicative",
@@ -921,7 +921,7 @@
         "buff_tooltip": "共鸣系Buff≥4时激活，所有共鸣系加成×1.5",
         "buff_res": "res://scripts/buff/resonance_overlord_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9,
+        "auto_activate": true,
         "family": "resonance",
         "tags": [
             "multiplicative",
@@ -970,7 +970,7 @@
         "buff_tooltip": "连击系Buff≥4时激活，所有连击系加成×1.5",
         "buff_res": "res://scripts/buff/combo_overlord_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9,
+        "auto_activate": true,
         "family": "combo",
         "tags": [
             "multiplicative",
@@ -1019,7 +1019,7 @@
         "buff_tooltip": "绝境系Buff≥4时激活，所有绝境系加成×1.5",
         "buff_res": "res://scripts/buff/desperation_overlord_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9,
+        "auto_activate": true,
         "family": "desperation",
         "tags": [
             "multiplicative",
@@ -1153,7 +1153,7 @@
         "buff_tooltip": "生机系Buff≥4时激活，所有生机系回血×1.5",
         "buff_res": "res://scripts/buff/vitality_overlord_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9,
+        "auto_activate": true,
         "family": "vitality",
         "tags": [
             "multiplicative",

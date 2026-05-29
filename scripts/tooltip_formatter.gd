@@ -31,6 +31,26 @@ const DECREASE_COLOR := "#cc0808"
 const ELITE_COLOR := "#cc0808"
 const BOSS_COLOR := "#AB47BC"
 
+## 领主中文名映射
+const OVERLORD_NAMES := {
+	"swarm": "潮涌霸主",
+	"coin": "金元帝国",
+	"resonance": "共鸣霸主",
+	"combo": "连击霸主",
+	"desperation": "绝境霸主",
+	"vitality": "生机霸主",
+}
+
+## 领主效果描述映射
+const OVERLORD_EFFECTS := {
+	"swarm": "所有蜂群系加成×1.5",
+	"coin": "所有铸币系加成×1.5",
+	"resonance": "所有共鸣系加成×1.5",
+	"combo": "所有连击系加成×1.5",
+	"desperation": "所有绝境系加成×1.5",
+	"vitality": "所有生机系回血×1.5",
+}
+
 ## 门槛类型中文名映射
 const GATE_TYPE_NAMES := {
 	"duizi": "对子",
@@ -66,6 +86,20 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 	if not extra_text.is_empty():
 		colorized_tooltip += extra_text
 	bbcode += "\n" + colorized_tooltip
+
+	# 领主进度提示：有family的非领主BUFF显示激活进度
+	if not family.is_empty() and FAMILY_COLORS.has(family) and not tags.has("legendary"):
+		var family_count = BuffSystem.get_family_count(family)
+		var overlord_name: String = OVERLORD_NAMES.get(family, "")
+		var overlord_effect: String = OVERLORD_EFFECTS.get(family, "")
+		if family_count >= 4:
+			bbcode += "\n💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect]
+		else:
+			bbcode += "\n💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect, family_count]
+
+	# 领主BUFF自身显示已激活状态
+	if tags.has("legendary") and tags.has("multiplicative"):
+		bbcode += "\n[color=#0fff5b][b]（已激活 ✓）[/b][/color]"
 
 	# 标签行
 	if tags.size() > 0:

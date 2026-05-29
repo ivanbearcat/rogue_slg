@@ -7,11 +7,12 @@ var _popup: PanelContainer
 var _rich_label: RichTextLabel
 
 func _ready() -> void:
+	layer = 100
 	_popup = load("res://scenes/tooltip_popup.tscn").instantiate()
 	add_child(_popup)
 	_rich_label = _popup.get_node("MarginContainer/RichTextLabel")
 
-## 在节点附近显示tooltip（node-follow模式）
+## 在鼠标位置显示tooltip（出现后固定不动）
 func show_tooltip(node: Control, bbcode_text: String, offset: Vector2 = Vector2(20, 10)) -> void:
 	if bbcode_text.is_empty():
 		hide_tooltip()
@@ -20,7 +21,11 @@ func show_tooltip(node: Control, bbcode_text: String, offset: Vector2 = Vector2(
 	_popup.visible = true
 	# 等待一帧让RichTextLabel计算内容大小
 	await _rich_label.finished
-	_position_near_node(node, offset)
+	# 检查节点是否仍然有效（await期间可能被释放）
+	if not is_instance_valid(node):
+		hide_tooltip()
+		return
+	_position_at_mouse(offset)
 
 ## 在指定全局位置显示tooltip（固定位置模式，用于精英/Boss史莱姆）
 func show_tooltip_at(position: Vector2, bbcode_text: String) -> void:
@@ -56,6 +61,9 @@ func unset_tooltip(node: Control) -> void:
 var _tooltip_data: Dictionary = {}  # node -> {text, offset}
 
 func _on_node_mouse_entered(node: Control) -> void:
+	if not is_instance_valid(node):
+		_tooltip_data.erase(node)
+		return
 	var data: Dictionary = _tooltip_data.get(node, {})
 	if data.is_empty():
 		return
@@ -68,19 +76,18 @@ func _on_node_mouse_exited() -> void:
 func hide_tooltip() -> void:
 	_popup.visible = false
 
-## 将tooltip定位在节点附近+offset，viewport边界自适应
-func _position_near_node(node: Control, offset: Vector2) -> void:
+## 将tooltip定位在鼠标位置+offset，viewport边界自适应
+func _position_at_mouse(offset: Vector2) -> void:
 	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
-	var node_rect: Rect2 = node.get_global_rect()
+	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var popup_size: Vector2 = _popup.get_combined_minimum_size()
-	# 尝试放在节点右侧+下方
-	var pos: Vector2 = node_rect.position + Vector2(node_rect.size.x + offset.x, offset.y)
-	# 右侧超出 → 放左侧
+	var pos: Vector2 = mouse_pos + offset
+	# 右侧超出 → 放鼠标左侧
 	if pos.x + popup_size.x > viewport_size.x:
-		pos.x = node_rect.position.x - popup_size.x - offset.x
-	# 下方超出 → 放上方
+		pos.x = mouse_pos.x - popup_size.x - offset.x
+	# 下方超出 → 放鼠标上方
 	if pos.y + popup_size.y > viewport_size.y:
-		pos.y = node_rect.position.y - popup_size.y - offset.y
+		pos.y = mouse_pos.y - popup_size.y - offset.y
 	# 左侧超出边界
 	if pos.x < 0:
 		pos.x = 0
