@@ -89,21 +89,15 @@ func _build_ui(buff_data: Array, debuff_data: Array) -> void:
 func _create_buff_buttons(data: Array, container: GridContainer, is_debuff: bool) -> void:
 	for entry in data:
 		var icon_key: String = "debuff_icon" if is_debuff else "buff_icon"
-		var tooltip_key: String = "debuff_tooltip" if is_debuff else "buff_tooltip"
-		var name_key: String = "debuff_name" if is_debuff else "buff_name"
 
 		var button = TextureButton.new()
 		button.custom_minimum_size = Vector2(32, 32)
 		button.texture_normal = load(entry[icon_key])
-		## 显示名称、描述、家族/标签/依赖信息
-		var tooltip_text = entry.get(name_key, "") + "\n" + entry.get(tooltip_key, "")
-		var family = entry.get("family", "")
-		if family != "":
-			tooltip_text += "\n家族: " + family
-		var tags = entry.get("tags", [])
-		if tags.size() > 0:
-			tooltip_text += "\n标签: " + str(tags)
-		button.tooltip_text = tooltip_text
+		## BBCode富文本tooltip
+		if is_debuff:
+			TooltipManager.set_tooltip(button, TooltipFormatter.format_debuff(entry))
+		else:
+			TooltipManager.set_tooltip(button, TooltipFormatter.format_buff(entry))
 		button.ignore_texture_size = true
 		button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
 		button.pressed.connect(_on_buff_button_pressed.bind(entry))

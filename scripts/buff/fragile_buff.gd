@@ -7,7 +7,7 @@ func set_buff():
 	debuff_texture = SceneManager.create_scene("debuff_texture")
 	debuff_texture.texture = texture
 	game_manager.debuff_container.add_child(debuff_texture)
-	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
+	debuff_texture.set_rich_tooltip(TooltipFormatter.format_debuff(buff_meta))
 	## 记录脆弱生效前的防御值
 	_defense_before_fragile = Current.player_defense
 

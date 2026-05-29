@@ -13,7 +13,7 @@ func set_buff():
 	## 随机选择1个骰型免疫
 	var types = _type_names.keys()
 	_immune_type = types[randi_range(0, types.size() - 1)]
-	buff_texture.tooltip_text = buff_meta["buff_tooltip"] + "（免疫" + _type_names[_immune_type] + "）"
+	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta, "（免疫" + _type_names[_immune_type] + "）"))
 
 func process_buff():
 	## 在disable buff将倍率设为0后，恢复免疫骰型的倍率

@@ -1575,9 +1575,9 @@ func _set_shop_buff():
 	buff_shop_icon_1.texture = load(shop_buff_1["buff_icon"])
 	buff_shop_icon_2.texture = load(shop_buff_2["buff_icon"])
 	buff_shop_icon_3.texture = load(shop_buff_3["buff_icon"])
-	buff_shop_icon_1.tooltip_text = shop_buff_1["buff_tooltip"]
-	buff_shop_icon_2.tooltip_text = shop_buff_2["buff_tooltip"]
-	buff_shop_icon_3.tooltip_text = shop_buff_3["buff_tooltip"]
+	TooltipManager.set_tooltip(buff_shop_icon_1, TooltipFormatter.format_buff(shop_buff_1))
+	TooltipManager.set_tooltip(buff_shop_icon_2, TooltipFormatter.format_buff(shop_buff_2))
+	TooltipManager.set_tooltip(buff_shop_icon_3, TooltipFormatter.format_buff(shop_buff_3))
 	buff_shop_rlabel_1.text = "[img=13 ]res://images/coin.png[/img] " + \
 		str(int(shop_buff_1["buff_price"]))
 	buff_shop_rlabel_2.text = "[img=13 ]res://images/coin.png[/img] " + \
@@ -1600,7 +1600,7 @@ func _set_shop_coin_skill():
 	appeared_coin_skill_ids.append(shop_coin_skill_row["coin_skill_id"])
 	## 设置商店技能图标
 	shop_coin_skill_icon.texture = load(shop_coin_skill_row["coin_skill_icon"])
-	shop_coin_skill_icon.tooltip_text = shop_coin_skill_row["coin_skill_tooltip"]
+	TooltipManager.set_tooltip(shop_coin_skill_icon, TooltipFormatter.format_coin_skill(shop_coin_skill_row))
 	## 设置商店技能价格标签
 	shop_coin_skill_rlabel.text = "[img=13 ]res://images/coin.png[/img] " + str(int(shop_coin_skill_row["coin_skill_shop_cost"]))
 	## 显示商店技能按钮
@@ -1630,11 +1630,11 @@ func _on_shop_coin_skill_button_pressed() -> void:
 func _show_replace_skill_ui():
 	## 设置3个已有技能的图标和tooltip
 	replace_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
-	replace_skill_1.tooltip_text = Current.coin_skill_array_dict[0]["coin_skill_name"] + ": " + Current.coin_skill_array_dict[0]["coin_skill_tooltip"]
+	TooltipManager.set_tooltip(replace_skill_1, TooltipFormatter.format_coin_skill(Current.coin_skill_array_dict[0]))
 	replace_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
-	replace_skill_2.tooltip_text = Current.coin_skill_array_dict[1]["coin_skill_name"] + ": " + Current.coin_skill_array_dict[1]["coin_skill_tooltip"]
+	TooltipManager.set_tooltip(replace_skill_2, TooltipFormatter.format_coin_skill(Current.coin_skill_array_dict[1]))
 	replace_skill_3_icon.texture = load(Current.coin_skill_array_dict[2]["coin_skill_icon"])
-	replace_skill_3.tooltip_text = Current.coin_skill_array_dict[2]["coin_skill_name"] + ": " + Current.coin_skill_array_dict[2]["coin_skill_tooltip"]
+	TooltipManager.set_tooltip(replace_skill_3, TooltipFormatter.format_coin_skill(Current.coin_skill_array_dict[2]))
 	## 显示替换UI
 	replace_skill_ui.show()
 
@@ -1684,19 +1684,19 @@ func _replace_coin_skill(index: int, new_skill_row: Dictionary):
 		0:
 			coin_skill_1_icon.texture = load(new_skill_row["coin_skill_icon"])
 			coin_skill_1_label.text = new_skill_row["coin_skill_name"]
-			coin_skill_1.tooltip_text = new_skill_row["coin_skill_tooltip"]
+			TooltipManager.set_tooltip(coin_skill_1, TooltipFormatter.format_coin_skill(new_skill_row))
 			coin_skill_1.disabled = false
 			coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
 		1:
 			coin_skill_2_icon.texture = load(new_skill_row["coin_skill_icon"])
 			coin_skill_2_label.text = new_skill_row["coin_skill_name"]
-			coin_skill_2.tooltip_text = new_skill_row["coin_skill_tooltip"]
+			TooltipManager.set_tooltip(coin_skill_2, TooltipFormatter.format_coin_skill(new_skill_row))
 			coin_skill_2.disabled = false
 			coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
 		2:
 			coin_skill_3_icon.texture = load(new_skill_row["coin_skill_icon"])
 			coin_skill_3_label.text = new_skill_row["coin_skill_name"]
-			coin_skill_3.tooltip_text = new_skill_row["coin_skill_tooltip"]
+			TooltipManager.set_tooltip(coin_skill_3, TooltipFormatter.format_coin_skill(new_skill_row))
 			coin_skill_3.disabled = false
 			coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
 	## 清空待处理技能
@@ -1748,7 +1748,7 @@ func _on_stage_clear_button_pressed() -> void:
 			break
 	Current.target_score = current_stage_info.get("target_score", 300)
 	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
-	difficulty_icon.tooltip_text = current_stage_info.get("stage_type", "普通")
+	TooltipManager.set_tooltip(difficulty_icon, "[b]" + current_stage_info.get("stage_type", "普通") + "[/b]")
 	## 清空一关金币奖励数和最高骰子奖励数
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 1
@@ -1858,19 +1858,19 @@ func _set_coin_skill(coin_skill_row):
 			Current.coin_skill_used.append(false)
 			coin_skill_1_icon.texture = load(coin_skill_row["coin_skill_icon"])
 			coin_skill_1_label.text = coin_skill_row["coin_skill_name"]
-			coin_skill_1.tooltip_text = coin_skill_row["coin_skill_tooltip"]
+			TooltipManager.set_tooltip(coin_skill_1, TooltipFormatter.format_coin_skill(coin_skill_row))
 		1:
 			Current.coin_skill_array_dict.append(coin_skill_row)
 			Current.coin_skill_used.append(false)
 			coin_skill_2_icon.texture = load(coin_skill_row["coin_skill_icon"])
 			coin_skill_2_label.text = coin_skill_row["coin_skill_name"]
-			coin_skill_2.tooltip_text = coin_skill_row["coin_skill_tooltip"]
+			TooltipManager.set_tooltip(coin_skill_2, TooltipFormatter.format_coin_skill(coin_skill_row))
 		2:
 			Current.coin_skill_array_dict.append(coin_skill_row)
 			Current.coin_skill_used.append(false)
 			coin_skill_3_icon.texture = load(coin_skill_row["coin_skill_icon"])
 			coin_skill_3_label.text = coin_skill_row["coin_skill_name"]
-			coin_skill_3.tooltip_text = coin_skill_row["coin_skill_tooltip"]
+			TooltipManager.set_tooltip(coin_skill_3, TooltipFormatter.format_coin_skill(coin_skill_row))
 	## 添加技能后刷新按钮状态
 	Current.refresh_coin_skill_buttons()
 

@@ -235,48 +235,54 @@ var _one_score: int = 0
 var one_score: int:
 	set(v):
 		_one_score = v
-		game_manager.one_score.text = str(v)
-		EffectManager.big_flow_effect(game_manager.one_score)
+		if game_manager.one_score:
+			game_manager.one_score.text = str(v)
+			EffectManager.big_flow_effect(game_manager.one_score)
 	get:
 		return _one_score
 var _two_score: int = 0
 var two_score: int:
 	set(v):
 		_two_score = v
-		game_manager.two_score.text = str(v)
-		EffectManager.big_flow_effect(game_manager.two_score)
+		if game_manager.two_score:
+			game_manager.two_score.text = str(v)
+			EffectManager.big_flow_effect(game_manager.two_score)
 	get:
 		return _two_score
 var _three_score: int = 0
 var three_score: int:
 	set(v):
 		_three_score = v
-		game_manager.three_score.text = str(v)
-		EffectManager.big_flow_effect(game_manager.three_score)
+		if game_manager.three_score:
+			game_manager.three_score.text = str(v)
+			EffectManager.big_flow_effect(game_manager.three_score)
 	get:
 		return _three_score
 var _four_score: int = 0
 var four_score: int:
 	set(v):
 		_four_score = v
-		game_manager.four_score.text = str(v)
-		EffectManager.big_flow_effect(game_manager.four_score)
+		if game_manager.four_score:
+			game_manager.four_score.text = str(v)
+			EffectManager.big_flow_effect(game_manager.four_score)
 	get:
 		return _four_score
 var _five_score: int = 0
 var five_score: int:
 	set(v):
 		_five_score = v
-		game_manager.five_score.text = str(v)
-		EffectManager.big_flow_effect(game_manager.five_score)
+		if game_manager.five_score:
+			game_manager.five_score.text = str(v)
+			EffectManager.big_flow_effect(game_manager.five_score)
 	get:
 		return _five_score
 var _six_score: int = 0
 var six_score: int:
 	set(v):
 		_six_score = v
-		game_manager.six_score.text = str(v)
-		EffectManager.big_flow_effect(game_manager.six_score)
+		if game_manager.six_score:
+			game_manager.six_score.text = str(v)
+			EffectManager.big_flow_effect(game_manager.six_score)
 	get:
 		return _six_score
 ## 掉落格子骰子 [color, point] 或 null

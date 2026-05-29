@@ -6,6 +6,7 @@ extends Control
 
 var _color_name_map := {"green": "绿", "red": "红", "blue": "蓝", "yellow": "黄"}
 var _color_value_map := {"green": Color(0.3, 0.8, 0.3), "red": Color(0.9, 0.3, 0.3), "blue": Color(0.3, 0.5, 0.9), "yellow": Color(0.9, 0.85, 0.2)}
+var _color_hex_map := {"green": "#4DCC4D", "red": "#E64D4D", "blue": "#4D80E6", "yellow": "#E6D933"}
 
 @onready var dice_container: HBoxContainer = $panel/vbox/dice_container
 
@@ -21,7 +22,7 @@ func setup(dropped_dice: Array):
 		var color: Color = _color_value_map.get(dice[0], Color.WHITE)
 		button.text = color_name + str(dice[1])
 		button.add_theme_color_override("font_color", color)
-		button.tooltip_text = dice[0] + " " + str(dice[1])
+		TooltipManager.set_tooltip(button, "[b][color=%s]%s[/color][/b] [b]%s点[/b]" % [_color_hex_map.get(dice[0], "#ffffff"), color_name, str(dice[1])])
 		button.pressed.connect(_on_dice_selected.bind(dice))
 		dice_container.add_child(button)
 	## 显示界面

@@ -31,6 +31,7 @@ EffectManager="*res://scripts/autoload/effect_manager.gd"
 VFX="*uid://ecyiymmaj3jv"
 EnvVFX="*uid://qomyut16hnoi"
 MCPRuntime="*uid://duhpmbat6u2mk"
+TooltipManager="*res://scripts/autoload/tooltip_manager.gd"
 
 [display]
 

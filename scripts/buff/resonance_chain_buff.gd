@@ -7,7 +7,7 @@ func set_buff():
 	buff_texture = SceneManager.create_scene("buff_texture")
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
-	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
+	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
 	# 检查同色共鸣是否触发（简化：场上同色史莱姆≥2即算）

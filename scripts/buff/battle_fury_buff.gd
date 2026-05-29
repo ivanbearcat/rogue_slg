@@ -5,7 +5,7 @@ func set_buff():
 	buff_texture = SceneManager.create_scene("buff_texture")
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
-	buff_texture.tooltip_text = buff_meta["buff_tooltip"]
+	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 	## 溢出分数保留到新阈值条，在外部流程 _apply_score_heal() 中通过 _is_buff_registered("battle_fury") 计算
 
 func process_buff():

@@ -12,7 +12,7 @@ func set_buff():
 	game_manager.buff_container.add_child(buff_texture)
 	## 随机选择1个点数免疫
 	_immune_point = randi_range(1, 6)
-	buff_texture.tooltip_text = buff_meta["buff_tooltip"] + "（免疫" + _point_names[_immune_point] + "）"
+	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta, "（免疫" + _point_names[_immune_point] + "）"))
 
 func process_buff():
 	## 在disable buff将分数设为0后，恢复免疫点数的分数

@@ -42,44 +42,7 @@ var dice_to_frame_dice: Dictionary = {
 	5: 8,
 	6: 4
 }
-## 精英/BOSS史莱姆tooltip标签
-var _elite_tooltip_label: Label = null
 
-func _create_elite_tooltip():
-	if not is_elite and not is_boss:
-		return
-	if _elite_tooltip_label != null:
-		return
-	_elite_tooltip_label = Label.new()
-	_elite_tooltip_label.name = "EliteTooltip"
-	## Build tooltip text
-	var desc = ""
-	if is_elite:
-		desc = "精英史莱姆\n"
-	elif is_boss:
-		desc = "BOSS史莱姆\n"
-	## Gate type description
-	var gate_desc = Current.gate_type_descriptions.get(gate_type, "")
-	desc += gate_desc + " (需要" + str(gate_count) + "个)\n"
-	## Dice info
-	desc += "骰子: " + str(dice_point) + "点"
-	_elite_tooltip_label.text = desc
-	_elite_tooltip_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	## Color: red for elite, purple for boss
-	var outline_color = Color(18.892, 0, 0) if is_elite else Color(18.892, 0, 18.892)
-	_elite_tooltip_label.add_theme_color_override("font_color", outline_color)
-	_elite_tooltip_label.add_theme_font_size_override("font_size", 14)
-	## Background
-	var stylebox = StyleBoxFlat.new()
-	stylebox.bg_color = Color(0.1, 0.1, 0.1, 0.85)
-	stylebox.set_border_width_all(2)
-	stylebox.border_color = outline_color
-	stylebox.set_content_margin_all(4)
-	_elite_tooltip_label.add_theme_stylebox_override("normal", stylebox)
-	_elite_tooltip_label.position = Vector2(-80, -40)
-	_elite_tooltip_label.visible = false
-	_elite_tooltip_label.z_index = 100
-	add_child(_elite_tooltip_label)
 
 func _process(delta: float) -> void:
 	if target_position:
@@ -124,15 +87,13 @@ func _on_area_2d_mouse_entered() -> void:
 	Current.slime = self
 	## 显示精英/BOSS史莱姆tooltip
 	if is_elite or is_boss:
-		_create_elite_tooltip()
-		if _elite_tooltip_label:
-			_elite_tooltip_label.visible = true
+		TooltipManager.show_tooltip_at(self.global_position + Vector2(-80, -40), TooltipFormatter.format_elite_slime(is_boss, gate_type, gate_count, dice_point))
 
 func _on_area_2d_mouse_exited() -> void:
 	Current.slime = null
 	## 隐藏精英/BOSS史莱姆tooltip
-	if _elite_tooltip_label:
-		_elite_tooltip_label.visible = false
+	if is_elite or is_boss:
+		TooltipManager.hide_tooltip()
 
 func _on_dice_animation_finished() -> void:
 	print(dice.frame)

@@ -7,7 +7,7 @@ func set_buff():
 	debuff_texture = SceneManager.create_scene("debuff_texture")
 	debuff_texture.texture = texture
 	game_manager.debuff_container.add_child(debuff_texture)
-	debuff_texture.tooltip_text = buff_meta["debuff_tooltip"]
+	debuff_texture.set_rich_tooltip(TooltipFormatter.format_debuff(buff_meta))
 
 func process_buff():
 	Current.public_lock_array.append("reroll_slime_buff")
