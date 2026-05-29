@@ -10,19 +10,13 @@ func set_buff():
 func process_buff():
 	var sub_num = int(Current.total_score * Current.all_enemy_array.size() * 0.005)
 	## 分数护盾：扣分减半
-	if _has_score_shield():
+	if BuffSystem.get_buffs_by_tag("score_shield").size() > 0:
 		sub_num = int(sub_num / 2.0)
 	if sub_num > 0:
 		var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
 		Current.hero.add_child(float_number_instantiate)
 		await Tools.time_sleep(1)
 		Current.total_score -= sub_num
-
-func _has_score_shield() -> bool:
-	for buff in game_manager.buff_container.get_children():
-		if buff.tooltip_text != null and buff.tooltip_text.contains("分数损失减半"):
-			return true
-	return false
 
 func clear_buff():
 	debuff_texture.queue_free()

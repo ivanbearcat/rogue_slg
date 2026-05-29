@@ -116,17 +116,18 @@ var total_coins: int:
 		total_coins = v
 		game_manager.total_coins_label.text = str(v)
 		## 处理按钮和图标的禁用状态
-		game_manager.reroll_button.disabled = true
+		game_manager.potion_button.disabled = true
 		game_manager.coin_skill_1.disabled = true
 		game_manager.coin_skill_2.disabled = true
 		game_manager.coin_skill_3.disabled = true
-		game_manager.reroll_button_label.modulate = Color(1.0, 1.0, 1.0, 0.302)
+		game_manager.potion_button_label.modulate = Color(1.0, 1.0, 1.0, 0.302)
 		game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 0.3)
 		game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 0.3)
 		game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 0.3)
-		if v > 0:
-			game_manager.reroll_button.disabled = false
-			game_manager.reroll_button_label.modulate = Color(1, 1, 1, 1)
+		## 血瓶按钮：有血瓶且未满血时启用
+		if _potion_count > 0 and _player_hp < _max_hp:
+			game_manager.potion_button.disabled = false
+			game_manager.potion_button_label.modulate = Color(1, 1, 1, 1)
 		## 技能按钮：根据本关是否已使用来判断
 		## 技能1：存在且本关未使用时启用
 		if coin_skill_array_dict.size() > 0 and coin_skill_used.size() > 0 and coin_skill_used[0] == false:
@@ -159,8 +160,8 @@ var total_coins: int:
 		else:
 			game_manager.exp_bottle_button.disabled = false
 			game_manager.exp_bottle_button.modulate = Color(1, 1, 1, 1)
-		## 生命药水按钮：3金币且HP未满时启用
-		if v < 3 or _player_hp >= _max_hp:
+		## 生命药水按钮：3金币且血瓶未满时启用
+		if v < 3 or _potion_count >= _potion_max:
 			game_manager.hp_bottle_button.disabled = true
 			game_manager.hp_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
@@ -507,6 +508,7 @@ var player_hp: int:
 		if _player_hp < 0:
 			_player_hp = 0
 		_update_hp_ui()
+		_update_potion_button_state()
 	get:
 		return _player_hp
 ## HP上限
@@ -517,6 +519,7 @@ var max_hp: int:
 		if _player_hp > _max_hp:
 			_player_hp = _max_hp
 		_update_hp_ui()
+		_update_potion_button_state()
 	get:
 		return _max_hp
 ## 本关是否已生成生命史莱姆
@@ -527,7 +530,13 @@ var skip_hp_damage_this_turn: bool = false
 var player_defense: int = 2
 
 ## 得分累计回血：累计值（单关内累计得分）
-var score_heal_accumulated: int = 0
+var _score_heal_accumulated: int = 0
+var score_heal_accumulated: int:
+	set(v):
+		_score_heal_accumulated = maxi(v, 0)
+		_update_score_heal_ui()
+	get:
+		return _score_heal_accumulated
 ## 得分累计回血：当前阈值
 var _score_heal_threshold: int = 20
 var score_heal_threshold: int:
@@ -536,26 +545,62 @@ var score_heal_threshold: int:
 		_update_score_heal_ui()
 	get:
 		return _score_heal_threshold
-## 得分累计回血：起步阈值（base=20，关卡系数×1.2^(stage-1)）
-var score_heal_base_threshold: int = 20
+## 得分累计回血：起步阈值（base=35，全局累计不再有关卡系数）
+var score_heal_base_threshold: int = 35
 ## 得分累计回血：每次回血后阈值涨幅
 var score_heal_threshold_increase: int = 15
+## 血瓶：当前数量
+var _potion_count: int = 1
+var potion_count: int:
+	set(v):
+		_potion_count = clampi(v, 0, potion_max)
+		_update_potion_ui()
+	get:
+		return _potion_count
+## 血瓶：存储上限
+var _potion_max: int = 3
+var potion_max: int:
+	set(v):
+		_potion_max = maxi(v, 1)
+		if _potion_count > _potion_max:
+			_potion_count = _potion_max
+		_update_potion_ui()
+	get:
+		return _potion_max
 ## 铁胃减伤值（0=未激活，1=激活铁胃后每回合伤害-1）
 var iron_stomach_reduction: int = 0
 ## 死线行者是否激活（HP≤2时扣血减半）
 var deadline_walker_active: bool = false
 
-## 计算并设置当前关卡的得分回血起步阈值
-func reset_score_heal_for_stage() -> void:
-	score_heal_accumulated = 0
-	var stage_multiplier = pow(1.2, count_stage - 1)
-	score_heal_threshold = int(score_heal_base_threshold * stage_multiplier)
+
 
 ## 更新得分回血进度UI
 func _update_score_heal_ui():
 	if game_manager and game_manager.has_node("round_process_bar/score_heal_progress"):
 		var label = game_manager.get_node("round_process_bar/score_heal_progress")
-		label.text = "回血: " + str(score_heal_accumulated) + "/" + str(_score_heal_threshold)
+		label.text = "回血: " + str(score_heal_accumulated) + "/" + str(_score_heal_threshold) + "  血瓶: " + str(_potion_count) + "/" + str(_potion_max)
+
+## 更新血瓶数量/上限UI及按钮启用状态
+func _update_potion_ui():
+	if game_manager and game_manager.has_node("round_process_bar/potion_progress"):
+		var label = game_manager.get_node("round_process_bar/potion_progress")
+		label.text = "血瓶: " + str(_potion_count) + "/" + str(_potion_max)
+	# 同时更新 score_heal_progress 中的血瓶数量，确保血瓶数量与实际同步刷新
+	if game_manager and game_manager.has_node("round_process_bar/score_heal_progress"):
+		var heal_label = game_manager.get_node("round_process_bar/score_heal_progress")
+		heal_label.text = "回血: " + str(score_heal_accumulated) + "/" + str(_score_heal_threshold) + "  血瓶: " + str(_potion_count) + "/" + str(_potion_max)
+	_update_potion_button_state()
+
+## 更新血瓶按钮的启用/禁用状态
+func _update_potion_button_state():
+	if not game_manager:
+		return
+	if _potion_count > 0 and _player_hp < _max_hp:
+		game_manager.potion_button.disabled = false
+		game_manager.potion_button_label.modulate = Color(1, 1, 1, 1)
+	else:
+		game_manager.potion_button.disabled = true
+		game_manager.potion_button_label.modulate = Color(1.0, 1.0, 1.0, 0.302)
 
 ## 更新HP心形血条UI
 func _update_hp_ui():

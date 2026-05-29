@@ -5084,7 +5084,7 @@ grow_vertical = 2
 pivot_offset = Vector2(58, 16)
 theme_override_constants/separation = 0
 
-[node name="reroll_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=2070553992]
+[node name="potion_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=2070553992]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -5099,7 +5099,7 @@ texture_hover = SubResource("AtlasTexture_tel4y")
 texture_disabled = SubResource("AtlasTexture_5poiv")
 stretch_mode = 5
 
-[node name="reroll_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/reroll_button" unique_id=1224627685]
+[node name="potion_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/potion_button" unique_id=1224627685]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -5109,7 +5109,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/reroll_button/reroll_button_label" unique_id=963021487]
+[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/potion_button/potion_button_label" unique_id=963021487]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -5122,9 +5122,9 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.4, 0.4)
 pivot_offset = Vector2(32, 11.5)
-text = "重掷"
+text = "血瓶"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/reroll_button/reroll_button_label" unique_id=1712658895]
+[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/potion_button/potion_button_label" unique_id=1712658895]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5277,10 +5277,10 @@ script = ExtResource("26_j8jky")
 
 [node name="score_heal_progress" type="Label" parent="round_process_bar" unique_id=469851807]
 layout_mode = 0
-offset_left = 62.0
+offset_left = -1.25
 offset_top = 2.0
-offset_right = 130.0
-offset_bottom = 12.0
+offset_right = 66.75
+offset_bottom = 16.0
 theme_override_colors/font_color = Color(0.3, 0.8, 0.4, 1)
 theme_override_font_sizes/font_size = 10
 text = "回血: 0/20"
@@ -6706,9 +6706,7 @@ script = ExtResource("34_dgi5k")
 [connection signal="button_down" from="hero_skill2/HBoxContainer/coin_skill_3" to="." method="_on_coin_skill_3_button_down"]
 [connection signal="button_up" from="hero_skill2/HBoxContainer/coin_skill_3" to="." method="_on_coin_skill_3_button_up"]
 [connection signal="pressed" from="hero_skill2/HBoxContainer/coin_skill_3" to="." method="_on_coin_skill_3_pressed"]
-[connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/reroll_button" to="." method="_on_reroll_button_button_down"]
-[connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/reroll_button" to="." method="_on_reroll_button_button_up"]
-[connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/reroll_button" to="." method="_on_reroll_button_pressed"]
+[connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/potion_button" to="." method="_on_potion_button_pressed"]
 [connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_down"]
 [connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_up"]
 [connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_pressed"]

@@ -16,4 +16,5 @@ func process_buff():
 		Current.hero.add_child(float_number_instantiate)
 		await Tools.time_sleep(1)
 		Current.total_score -= excess
+		Current.once_total_score -= excess
 		Current.public_lock_array.erase("score_cap_buff")

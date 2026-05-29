@@ -11,16 +11,15 @@ func _ready() -> void:
 	# 加载配置数据
 	var buff_data: Array = Tools.load_json_file("res://config/buff.json")
 	var debuff_data: Array = Tools.load_json_file("res://config/debuff.json")
-	var boss_debuff_data: Array = Tools.load_json_file("res://config/boss_debuff.json")
 
 	# 构建UI
-	_build_ui(buff_data, debuff_data, boss_debuff_data)
+	_build_ui(buff_data, debuff_data)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_F1 and event.pressed and not event.echo:
 		visible = not visible
 
-func _build_ui(buff_data: Array, debuff_data: Array, boss_debuff_data: Array) -> void:
+func _build_ui(buff_data: Array, debuff_data: Array) -> void:
 	# 根Control - 填满整个视口
 	var root_control = Control.new()
 	root_control.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -86,7 +85,6 @@ func _build_ui(buff_data: Array, debuff_data: Array, boss_debuff_data: Array) ->
 	vbox.add_child(debuff_grid)
 
 	_create_buff_buttons(debuff_data, debuff_grid, true)
-	_create_buff_buttons(boss_debuff_data, debuff_grid, true)
 
 func _create_buff_buttons(data: Array, container: GridContainer, is_debuff: bool) -> void:
 	for entry in data:
@@ -105,9 +103,6 @@ func _create_buff_buttons(data: Array, container: GridContainer, is_debuff: bool
 		var tags = entry.get("tags", [])
 		if tags.size() > 0:
 			tooltip_text += "\n标签: " + str(tags)
-		var requires = entry.get("requires", [])
-		if requires.size() > 0:
-			tooltip_text += "\n依赖: " + str(requires)
 		button.tooltip_text = tooltip_text
 		button.ignore_texture_size = true
 		button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED

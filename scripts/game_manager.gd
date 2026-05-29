@@ -147,9 +147,9 @@ var buff_refresh_cost := 1:
 @onready var level_label: Label = %level_label
 @onready var ship: TextureRect = %ship
 @onready var turn_button_label: Control = %turn_button_label
-@onready var reroll_button_label: Control = %reroll_button_label
+@onready var potion_button_label: Control = %potion_button_label
 @onready var turn_coin_label: Label = %turn_coin_label
-@onready var reroll_button: TextureButton = %reroll_button
+@onready var potion_button: TextureButton = %potion_button
 @onready var coin_skill_1: TextureButton = %coin_skill_1
 @onready var coin_skill_2: TextureButton = %coin_skill_2
 @onready var coin_skill_3: TextureButton = %coin_skill_3
@@ -183,8 +183,6 @@ var buff_refresh_cost := 1:
 @onready var coin_skill_json_data: Array = Tools.load_json_file('res://config/coin_skill.json')
 ## debuff数据
 @onready var debuff_json_data: Array = Tools.load_json_file('res://config/debuff.json')
-## boss debuff数据
-@onready var boss_debuff_json_data: Array = Tools.load_json_file('res://config/boss_debuff.json')
 ## buff数据
 @onready var buff_json_data: Array = Tools.load_json_file('res://config/buff.json')
 ## 骰型倍率
@@ -217,8 +215,6 @@ var color := {
 }
 ## 随机选择出的3张升级时卡牌
 var level_up_three_card_array :Array
-## BOSS诅咒信息
-var boss_debuff_row: Dictionary
 ## 金币技能选项2
 var coin_skill_row_2: Dictionary
 ## 商店当前展示的金币技能数据行
@@ -264,14 +260,12 @@ func _ready() -> void:
 	#print(result)
 	## 初始化金币
 	Current.total_coins = 15
-	## 随机择BOSS
-	boss_debuff_row = boss_debuff_json_data.pick_random()
 	## 设置目标分数
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
 			Current.target_score = row["target_score"]
 	## 初始化得分累计回血
-	Current.reset_score_heal_for_stage()
+	Current.score_heal_threshold = Current.score_heal_base_threshold
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -321,7 +315,7 @@ func _ready() -> void:
 			#BuffSystem.callv("set_" + row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
 
 	## 临时测试BOSS debuff
-	#for row in boss_debuff_json_data:
+	#for row in debuff_json_data:
 		#if row["debuff_id"] == "attack_score_down":
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
@@ -528,7 +522,7 @@ func _spawn_elite_slime():
 	## 施加1个随机诅咒debuff
 	var curse_debuffs = []
 	for debuff_row in debuff_json_data:
-		if debuff_row.get("is_curse_debuff", false):
+		if debuff_row.get("severity", "normal") == "curse":
 			curse_debuffs.append(debuff_row)
 	if not curse_debuffs.is_empty():
 		var debuff_row = curse_debuffs.pick_random()
@@ -561,33 +555,27 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 	## 设置深紫色轮廓
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 18.892))
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-	## 根据boss_debuff_ids列表逐个查找并应用debuff（先查boss_debuff_json_data，未找到则查debuff_json_data）
-	var boss_debuff_ids: Array = stage_config.get("boss_debuff_ids", [])
+	## 随机选择1-2个诅咒debuff
+	var curse_debuffs = []
+	for debuff_row in debuff_json_data:
+		if debuff_row.get("severity", "normal") == "curse":
+			curse_debuffs.append(debuff_row)
+	var debuff_count = randi_range(1, 2)
 	var applied_debuff_icons: String = ""
-	for debuff_id in boss_debuff_ids:
-		var debuff_row: Dictionary = {}
-		for row in boss_debuff_json_data:
-			if row.get("debuff_id", "") == debuff_id:
-				debuff_row = row
-				break
-		if debuff_row.is_empty():
-			for row in debuff_json_data:
-				if row.get("debuff_id", "") == debuff_id:
-					debuff_row = row
-					break
-		if not debuff_row.is_empty():
-			var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
-			BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
-			applied_debuff_icons += " [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
-		else:
-			print("[boss-slime] 警告: 未找到debuff_id='%s'，跳过" % debuff_id)
+	for i in range(debuff_count):
+		if curse_debuffs.is_empty():
+			break
+		var debuff_row = curse_debuffs.pick_random()
+		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
+		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+		applied_debuff_icons += " [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 	debuff_effect_label.text = "BOSS出现！" + applied_debuff_icons
 	await EffectManager.debuff_change_effect()
 	## 根据boss_extra_elites值生成额外精英史莱姆
 	var extra_elites: int = stage_config.get("boss_extra_elites", 0)
 	for i in range(extra_elites):
 		await _spawn_elite_slime()
-	print("[boss-slime] 生成了BOSS史莱姆: gate=%s count=%d debuffs=%s extra_elites=%d" % [gate_type, slime_instantiate.gate_count, str(boss_debuff_ids), extra_elites])
+	print("[boss-slime] 生成了BOSS史莱姆: gate=%s count=%d debuff_count=%d extra_elites=%d" % [gate_type, slime_instantiate.gate_count, debuff_count, extra_elites])
 
 ## 移动精英/BOSS史莱姆（每回合随机4方向移动1格）
 func _move_elite_boss_slimes():
@@ -762,15 +750,22 @@ func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 	slime_reroll_finished.emit()
 
 func _set_stage_debuff(boss=0):
+	var curse_debuffs = []
+	for debuff_row in debuff_json_data:
+		if debuff_row.get("severity", "normal") == "curse":
+			curse_debuffs.append(debuff_row)
+	if curse_debuffs.is_empty():
+		return
 	if boss == 0:
 		var debuff_row = debuff_json_data.pick_random()
 		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 		debuff_effect_label.text = "获得诅咒  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 	else:
-		var buff = load(boss_debuff_row["debuff_res"]).new(boss_debuff_row, self)
-		BuffSystem.callv("set_" + boss_debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
-		debuff_effect_label.text = "获得诅咒  [img=15 ]" + boss_debuff_row["debuff_icon"] + "[/img]"
+		var debuff_row = curse_debuffs.pick_random()
+		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
+		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+		debuff_effect_label.text = "获得诅咒  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 
 func _set_buff(buff_row):
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)
@@ -1052,14 +1047,16 @@ func skill_attack():
 	## 等待关卡切换完成
 	while "stage_transition" in Current.public_lock_array:
 		await Tools.time_sleep(0.1)
+	## 攻击结算后，得分累计回血（在扣血之前，过关也需结算）
+	_apply_score_heal()
+	## 清空单次总分（移至此处，确保 _apply_score_heal 能正确读取 once_total_score）
+	Current.once_total_score = 0
 	## 过关后不再扣血，但需要执行敌人回合（生成新关卡史莱姆、设置玩家回合）
 	if stage_cleared:
 		await _turn_process()
 		EventBus.event_emit("do_pre_hero_turn_buff")
 		turn_button.disabled = false
 		return
-	## 攻击结算后，得分累计回血（在扣血之前）
-	_apply_score_heal()
 	## 攻击结算后，基于当前场上残留史莱姆扣血
 	_apply_hp_damage()
 	## 敌人回合
@@ -1193,7 +1190,7 @@ func _apply_score_heal() -> void:
 	if blood_thirst_count > 0:
 		effective_threshold = maxi(1, effective_threshold - blood_thirst_count * 5)
 	## 逆境翻盘：超过防御值的史莱姆每只-3
-	if BuffSystem._is_buff_registered("comeback_king"):
+	if BuffSystem.is_buff_registered("comeback_king"):
 		var slime_count = 0
 		for _slime in Current.all_enemy_array:
 			if is_instance_valid(_slime) and not _slime.is_life_slime:
@@ -1201,29 +1198,22 @@ func _apply_score_heal() -> void:
 		var excess = maxi(0, slime_count - Current.player_defense)
 		if excess > 0:
 			effective_threshold = maxi(1, effective_threshold - excess * 3)
-	## 生机霸主增幅：vitality系≥4时回血量×1.5
-	var overlord_active = BuffSystem.get_family_count("vitality") >= 4 and BuffSystem._is_overlord_registered("vitality")
-	## 循环检查阈值回血
-	while Current.score_heal_accumulated >= effective_threshold:
-		Current.score_heal_accumulated -= effective_threshold
+	## 循环检查阈值获得血瓶
+	while Current.score_heal_accumulated >= effective_threshold and Current.potion_count < Current.potion_max:
+		## 有战意高昂时溢出保留，无时清零
+		if BuffSystem.is_buff_registered("battle_fury"):
+			Current.score_heal_accumulated -= effective_threshold
+		else:
+			Current.score_heal_accumulated = 0
+		## 获得血瓶
+		Current.potion_count += 1
 		## 基础阈值上涨（不受修正影响）
 		Current.score_heal_threshold += Current.score_heal_threshold_increase
-		## 回1HP（霸主×1.5）
-		var heal_amount := 1
-		if overlord_active:
-			heal_amount = ceili(1 * 1.5)
-		if Current.player_hp < Current.max_hp:
-			Current.player_hp += heal_amount
-			## 回血视觉反馈
-			if has_node("round_process_bar/hp_bar"):
-				var hp_bar = get_node("round_process_bar/hp_bar")
-				if hp_bar.has_method("play_heal_effect"):
-					hp_bar.play_heal_effect()
 		## 重新计算有效阈值（阈值已上涨）
 		effective_threshold = Current.score_heal_threshold
 		if blood_thirst_count > 0:
 			effective_threshold = maxi(1, effective_threshold - blood_thirst_count * 5)
-		if BuffSystem._is_buff_registered("comeback_king"):
+		if BuffSystem.is_buff_registered("comeback_king"):
 			var slime_count2 = 0
 			for _slime in Current.all_enemy_array:
 				if is_instance_valid(_slime) and not _slime.is_life_slime:
@@ -1231,21 +1221,8 @@ func _apply_score_heal() -> void:
 			var excess2 = maxi(0, slime_count2 - Current.player_defense)
 			if excess2 > 0:
 				effective_threshold = maxi(1, effective_threshold - excess2 * 3)
-	## 战意高昂：超出阈值部分每10分额外回1HP
-	if BuffSystem._is_buff_registered("battle_fury") and Current.score_heal_accumulated > 0:
-		var overflow = Current.score_heal_accumulated
-		var extra_heal: int = overflow / 10
-		if extra_heal > 0:
-			if overlord_active:
-				extra_heal = ceili(extra_heal * 1.5)
-			if Current.player_hp < Current.max_hp:
-				Current.player_hp = mini(Current.player_hp + extra_heal, Current.max_hp)
-				if has_node("round_process_bar/hp_bar"):
-					var hp_bar = get_node("round_process_bar/hp_bar")
-					if hp_bar.has_method("play_heal_effect"):
-						hp_bar.play_heal_effect()
-	## 更新UI
-	Current._update_score_heal_ui()
+	## 血瓶已满时储备触发：accumulated保留在阈值以上，不消耗
+	## （用掉血瓶后下次_apply_score_heal自然触发）
 
 ## 创建生命史莱姆：将1只普通史莱姆转化为生命史莱姆
 func _create_life_slime():
@@ -1320,7 +1297,7 @@ func _check_stage_clear() -> bool:
 		Current.count_add_coins += highest_dice_add_coin
 		await _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin)
 		## 以战养战：过关时每只残余史莱姆回1HP
-		if BuffSystem._is_buff_registered("sustain"):
+		if BuffSystem.is_buff_registered("sustain"):
 			var sustain_slime_count = 0
 			for _slime in Current.all_enemy_array:
 				if is_instance_valid(_slime) and not _slime.is_life_slime:
@@ -1736,8 +1713,6 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.drop_slot_dice = null
 	## 重置生命史莱姆生成标记
 	Current.life_slime_spawned_this_stage = false
-	## 重置得分累计回血
-	Current.reset_score_heal_for_stage()
 	if Current.count_stage < 12:
 		Current.count_stage += 1
 		## 重置所有金币技能本关使用状态为未使用
@@ -1798,15 +1773,21 @@ func _on_stage_clear_button_pressed() -> void:
 	## 解锁：关卡切换完成，允许 _turn_process 执行
 	Current.public_lock_array.erase("stage_transition")
 
-## 重掷按钮按下
-func _on_reroll_button_pressed() -> void:
-	if reroll_button.button_pressed == false:
-		reroll_button.button_pressed = true
-	else:
-		EventBus.event_emit("hide_skill_range")
-		EventBus.event_emit("reset_all_hero_skills")
-		CursorManager.change_cursor("reroll")
-		EventBus.event_emit("reroll")
+## 血瓶按钮按下：使用1个血瓶恢复1HP（霸主+2HP）
+func _on_potion_button_pressed() -> void:
+	if Current.potion_count <= 0 or Current.player_hp >= Current.max_hp:
+		return
+	var heal_amount := 1
+	var overlord_active = BuffSystem.get_family_count("vitality") >= 4 and BuffSystem._is_overlord_registered("vitality")
+	if overlord_active:
+		heal_amount = ceili(1 * 1.5)
+	Current.potion_count -= 1
+	Current.player_hp += heal_amount
+	## 回血视觉反馈
+	if has_node("round_process_bar/hp_bar"):
+		var hp_bar = get_node("round_process_bar/hp_bar")
+		if hp_bar.has_method("play_heal_effect"):
+			hp_bar.play_heal_effect()
 
 func _on_coin_skill_1_pressed() -> void:
 	if coin_skill_1.button_pressed == false:
@@ -1917,22 +1898,14 @@ func _on_exp_bottle_button_pressed() -> void:
 
 func _on_hp_bottle_button_pressed() -> void:
 	Current.total_coins -= 3
-	Current.player_hp += 2
+	Current.potion_count += 1
 
-## 战场补给：购买buff后回1HP（生机霸主增幅×1.5）
+## 战场补给：购买buff后获得1血瓶（不超过上限）
 func _apply_war_supply_heal() -> void:
-	if not BuffSystem._is_buff_registered("war_supply"):
+	if not BuffSystem.is_buff_registered("war_supply"):
 		return
-	var heal_amount := 1
-	var overlord_active = BuffSystem.get_family_count("vitality") >= 4 and BuffSystem._is_overlord_registered("vitality")
-	if overlord_active:
-		heal_amount = ceili(1 * 1.5)
-	if Current.player_hp < Current.max_hp:
-		Current.player_hp = mini(Current.player_hp + heal_amount, Current.max_hp)
-		if has_node("round_process_bar/hp_bar"):
-			var hp_bar = get_node("round_process_bar/hp_bar")
-			if hp_bar.has_method("play_heal_effect"):
-				hp_bar.play_heal_effect()
+	if Current.potion_count < Current.potion_max:
+		Current.potion_count += 1
 
 func _on_buff_shop_button_1_pressed() -> void:
 	Current.total_coins -= shop_buff_1["buff_price"]

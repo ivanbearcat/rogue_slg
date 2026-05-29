@@ -119,8 +119,7 @@ func skill_attack():
 	await _process_dropped_dice(attack_slime_array_info, dice_type_result)
 	## 标记本回合攻击过（连击风暴用）
 	Current.last_turn_attacked = true
-	## 清空单次总分
-	Current.once_total_score = 0
+	## 注意：once_total_score 不在此处清零，由 game_manager.skill_attack() 在 _apply_score_heal() 之后清零
 	## 恢复技能UI弹起状态
 	hide_all_skill.emit()
 
