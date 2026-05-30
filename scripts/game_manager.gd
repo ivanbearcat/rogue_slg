@@ -96,7 +96,6 @@ const hero_property = {
 @onready var debuff_container: HFlowContainer = %debuff_container
 ## buff UI
 @onready var buff_container: HFlowContainer = %buff_container
-@onready var overlord_container: HFlowContainer = %overlord_container
 ## 商店UI
 @onready var shop_ui: CanvasLayer = %shop_ui
 @onready var buff_shop_icon_1: TextureRect = %buff_shop_icon_1
@@ -771,17 +770,11 @@ func _set_stage_debuff(boss=0):
 func _set_buff(buff_row):
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)
 	BuffSystem.callv("set_" + buff_row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
-	_check_overlord_auto_activate(buff_row)
-
-func _check_overlord_auto_activate(buff_row):
-	if not buff_row.has("family"):
-		return
-	var family = buff_row["family"]
-	if BuffSystem.get_family_count(family) >= 4:
-		for overlord_row in buff_json_data:
-			if overlord_row.get("family") == family and overlord_row.get("auto_activate") == true:
-				if BuffSystem.is_buff_registered(overlord_row["buff_id"]) == false:
-					_set_buff(overlord_row)
+	# 在buff.set_buff()创建buff_texture后，统一设置元数据
+	if buff.buff_texture:
+		buff.buff_texture.set_meta("buff_meta", buff.buff_meta)
+	if buff.debuff_texture:
+		buff.debuff_texture.set_meta("buff_meta", buff.buff_meta)
 
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
@@ -1008,7 +1001,7 @@ func _turn_process():
 		Current.slime_create_num = 6
 	## 重新应用史莱姆数量加成buff（slime_plus_one、thorn_armor每回合+1史莱姆）
 	for buff in buff_container.get_children():
-		if "buff_meta" in buff and buff.buff_meta != null and buff.buff_meta.get("buff_id", "") in ["slime_plus_one", "thorn_armor"]:
+		if buff.has_meta("buff_meta") and buff.get_meta("buff_meta").get("buff_id", "") in ["slime_plus_one", "thorn_armor"]:
 			Current.slime_create_num += 1
 
 	## 第8回合显示危险提示

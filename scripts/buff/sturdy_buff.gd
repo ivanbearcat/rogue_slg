@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -11,7 +11,7 @@ func process_buff():
 	## 确保防御不低于1
 	if Current.player_defense < 1:
 		Current.player_defense = 1
-		EffectManager.big_flow_effect(buff_texture)
+		EffectManager.buff_pop_effect(buff_texture)
 
 func clear_buff():
 	pass

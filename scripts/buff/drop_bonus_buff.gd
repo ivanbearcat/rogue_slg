@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -13,7 +13,7 @@ func process_buff():
 		return  ## 没有掉落骰子时不触发
 	for i in range(dropped_count):
 		var _rand_num = randi_range(1, 6)
-		EffectManager.big_flow_effect(buff_texture)
+		EffectManager.buff_pop_effect(buff_texture)
 		match _rand_num:
 			1: Current.one_score += 1
 			2: Current.two_score += 1

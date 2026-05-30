@@ -1347,18 +1347,6 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_overlord"]
-bg_color = Color(0, 0, 0, 0.6)
-border_color = Color(1, 0.843137, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qkpxi"]
 load_path = "res://.godot/imported/sea_process_bar.png-7e45f3cae0704af80db2f6a76ae32239.ctex"
 
@@ -5337,6 +5325,17 @@ offset_top = -11.75
 offset_right = 132.75
 offset_bottom = 9.25
 
+[node name="buff_row" type="Panel" parent="buff_ui" unique_id=975388334]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+localize_numeral_system = false
+theme_override_styles/panel = SubResource("StyleBoxFlat_vxglm")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="buff_ui" unique_id=304187781]
 layout_mode = 1
 anchors_preset = 15
@@ -5345,33 +5344,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="buff_row" type="Panel" parent="buff_ui/VBoxContainer" unique_id=975388334]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_vxglm")
-
-[node name="buff_container" type="HFlowContainer" parent="buff_ui/VBoxContainer/buff_row" unique_id=2095519309]
+[node name="buff_container" type="HFlowContainer" parent="buff_ui/VBoxContainer" unique_id=2095519309]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/h_separation = 0
-theme_override_constants/v_separation = 0
-
-[node name="overlord_row" type="Panel" parent="buff_ui/VBoxContainer" unique_id=468764281]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_overlord")
-
-[node name="overlord_container" type="HFlowContainer" parent="buff_ui/VBoxContainer/overlord_row" unique_id=68660956]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 

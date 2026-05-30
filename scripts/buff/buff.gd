@@ -3,8 +3,8 @@ class_name Buff
 
 var game_manager: Node2D
 var buff_meta: Dictionary
-var buff_texture: TextureRect
-var debuff_texture: TextureRect
+var buff_texture: PanelContainer  # 改为PanelContainer（rich_tooltip.gd）
+var debuff_texture: PanelContainer  # 同上
 var data: Dictionary
 
 ## 家族：swarm/coin/resonance/combo/desperation

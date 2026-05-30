@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -18,7 +18,7 @@ func process_buff():
 	}
 	for dice_type in type_array:
 		if type_to_percent.has(dice_type):
-			EffectManager.big_flow_effect(buff_texture)
+			EffectManager.buff_pop_effect(buff_texture)
 			Current.set(type_to_percent[dice_type], Current.get(type_to_percent[dice_type]) + 2)
 
 func clear_buff():

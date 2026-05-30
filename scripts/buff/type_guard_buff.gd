@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 var _immune_type: String = ""
 var _saved_percent: int = 0
@@ -21,7 +21,7 @@ func process_buff():
 	var current_val: int = Current.get(percent_var)
 	if current_val == 0 and _saved_percent > 0:
 		Current.set(percent_var, _saved_percent)
-		EffectManager.big_flow_effect(buff_texture)
+		EffectManager.buff_pop_effect(buff_texture)
 	_saved_percent = Current.get(percent_var)
 
 func clear_buff():

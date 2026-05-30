@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -14,7 +14,7 @@ func process_buff():
 		Current.public_lock_array.append("mint_press_buff")
 		var float_number_instantiate = EffectManager.float_number_effect(coin_gain, "green")
 		Current.hero.add_child(float_number_instantiate)
-		EffectManager.big_flow_effect(buff_texture)
+		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)
 		Current.public_lock_array.erase("mint_press_buff")
 

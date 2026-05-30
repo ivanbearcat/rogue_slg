@@ -12,26 +12,28 @@ var _content: String
 var _object: Object
 
 ## 把图片对象快速放大恢复的效果
-func big_flow_effect(object, auto_pivot_offset=1, scale_size=1.5, duration=0.07):
+## 注意：不再修改pivot_offset，避免在HFlowContainer等容器中
+## 因布局重算导致节点位置偏移（浮空BUG的根因）
+func big_flow_effect(object, _auto_pivot_offset=1, scale_size=1.5, duration=0.07):
 	var tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	## 放大
-	if auto_pivot_offset == 1:
-		object.pivot_offset.x = object.size.x/2
-		object.pivot_offset.y = object.size.x/1.5
-	#tween.tween_property(object, "pivot_offset:x", object.size.x/2, 0)
-	#tween.tween_property(object, "pivot_offset:y", object.size.y/1.5, 0)
 	tween.tween_property(object, "scale:x", scale_size, duration)
 	tween.parallel().tween_property(object, "scale:y", scale_size, duration)
 	## 缩小
 	tween.tween_property(object, "scale:x", 1, duration/1.5)
 	tween.parallel().tween_property(object, "scale:y", 1, duration/1.5)
 	await tween.finished
-	#var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	#tween2.tween_property(object, "pivot_offset:x", 0, 0)
-	#tween2.tween_property(object, "pivot_offset:y", 0, 0)
-	if auto_pivot_offset == 1:
-		object.pivot_offset.x = 0
-		object.pivot_offset.y = 0
+
+## BUFF图标专用效果：纯modulate颜色闪烁
+## 完全不修改position/scale/pivot，零布局影响
+func buff_pop_effect(object) -> void:
+	var orig_modulate = object.modulate
+	var tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	# 快速亮白闪烁
+	tween.tween_property(object, "modulate", Color(3, 3, 3, 1), 0.05)
+	tween.tween_property(object, "modulate", Color(0.7, 0.7, 0.7, 1), 0.05)
+	tween.tween_property(object, "modulate", Color(2.5, 2.5, 2.5, 1), 0.05)
+	tween.tween_property(object, "modulate", orig_modulate, 0.1)
+	await tween.finished
 
 ## 飘字效果
 func float_number_effect(float_num, num_color="green", gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50)) -> Node2D:

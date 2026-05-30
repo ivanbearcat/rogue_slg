@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 var _combo_turns := 0
 
@@ -19,7 +19,7 @@ func process_buff():
 		var add_num = int(Current.once_total_score * 0.20)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
-		EffectManager.big_flow_effect(buff_texture)
+		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)
 		Current.total_score += add_num
 		Current.public_lock_array.erase("combo_frenzy_buff")

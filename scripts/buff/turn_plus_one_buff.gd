@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 var _is_used := false
 
@@ -11,7 +11,7 @@ func set_buff():
 
 func process_buff():
 	if Current.count_round == 1 and _is_used == false:
-		EffectManager.big_flow_effect(buff_texture)
+		EffectManager.buff_pop_effect(buff_texture)
 		## 第一回合不扣血（替代原来的不增加回合数）
 		Current.skip_hp_damage_this_turn = true
 		_is_used = true

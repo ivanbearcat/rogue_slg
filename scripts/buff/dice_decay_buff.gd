@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["debuff_icon"])
@@ -15,7 +15,7 @@ func process_buff():
 		if Current.four_score > 1: Current.four_score -= 1
 		if Current.five_score > 1: Current.five_score -= 1
 		if Current.six_score > 1: Current.six_score -= 1
-		EffectManager.big_flow_effect(debuff_texture)
+		EffectManager.buff_pop_effect(debuff_texture)
 
 func clear_buff():
 	debuff_texture.queue_free()

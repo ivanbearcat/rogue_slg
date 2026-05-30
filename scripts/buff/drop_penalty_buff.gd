@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["debuff_icon"])
@@ -14,7 +14,7 @@ func process_buff():
 		var sub_num = int(Current.total_score * dropped_count * 0.03)
 		var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
 		Current.hero.add_child(float_number_instantiate)
-		EffectManager.big_flow_effect(debuff_texture)
+		EffectManager.buff_pop_effect(debuff_texture)
 		await Tools.time_sleep(1)
 		Current.total_score -= sub_num
 		Current.public_lock_array.erase("drop_penalty_buff")

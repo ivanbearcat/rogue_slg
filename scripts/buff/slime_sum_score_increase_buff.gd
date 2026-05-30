@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -12,7 +12,7 @@ func process_buff():
 	var add_num = int(Current.all_enemy_array.size() * Current.target_score * 0.0025)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num)
 	Current.hero.add_child(float_number_instantiate)
-	EffectManager.big_flow_effect(buff_texture)
+	EffectManager.buff_pop_effect(buff_texture)
 	## 等待飘字结束
 	await Tools.time_sleep(1)
 	Current.total_score += add_num

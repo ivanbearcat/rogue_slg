@@ -1,13 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwgx1f2tbp8yp"]
+[gd_scene load_steps=4 format=3 uid="uid://cwgx1f2tbp8yp"]
 
 [ext_resource type="Texture2D" uid="uid://b4sbd73i2l2ng" path="res://images/buff_icon/red_slime_probability_increase.png" id="2_iuw46"]
 [ext_resource type="Script" path="res://scripts/rich_tooltip.gd" id="3_rich"]
 
-[node name="TextureRect" type="TextureRect"]
-custom_minimum_size = Vector2(0, 11)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_default"]
+bg_color = Color(0, 0, 0, 0)
+border_width_all = 0
+
+[node name="PanelContainer" type="PanelContainer"]
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_default")
+script = ExtResource("3_rich")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(0, 11)
+layout_mode = 2
 texture = ExtResource("2_iuw46")
 expand_mode = 2
 stretch_mode = 5
-script = ExtResource("3_rich")

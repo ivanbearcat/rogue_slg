@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 var _immune_point: int = 0
 var _saved_score: int = 0
@@ -21,7 +21,7 @@ func process_buff():
 	var current_val: int = Current.get(score_var)
 	if current_val == 0 and _saved_score > 0:
 		Current.set(score_var, _saved_score)
-		EffectManager.big_flow_effect(buff_texture)
+		EffectManager.buff_pop_effect(buff_texture)
 	_saved_score = Current.get(score_var)
 
 func clear_buff():

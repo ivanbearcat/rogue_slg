@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -8,7 +8,7 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	EffectManager.big_flow_effect(buff_texture)
+	EffectManager.buff_pop_effect(buff_texture)
 	Current.total_coins += 1
 
 func clear_buff():
