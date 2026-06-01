@@ -1064,6 +1064,11 @@ func skill_attack():
 		await Tools.time_sleep(0.1)
 	## 攻击结算后，得分累计回血（在扣血之前，过关也需结算）
 	_apply_score_heal()
+	## 更新连续得分回合数（连击风暴/连击狂热用）
+	if Current.once_total_score > 0:
+		Current.consecutive_score_turns += 1
+	else:
+		Current.consecutive_score_turns = 0
 	## 清空单次总分（移至此处，确保 _apply_score_heal 能正确读取 once_total_score）
 	Current.once_total_score = 0
 	## 过关后不再扣血，但需要执行敌人回合（生成新关卡史莱姆、设置玩家回合）
@@ -1094,6 +1099,7 @@ func _on_turn_button_pressed() -> void:
 		await Tools.time_sleep(0.01)
 	## 跳过回合：断连击（连击风暴用）
 	Current.last_turn_attacked = false
+	Current.consecutive_score_turns = 0
 	## 跳过回合：生成随机骰子放入掉落格子，不再+1能量
 	var color_options := ["red", "green", "blue", "yellow"]
 	var random_color: String = color_options[randi_range(0, 3)]

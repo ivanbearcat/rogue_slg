@@ -460,6 +460,8 @@ var zero_coin_refresh_max_times := 0
 var zero_coin_refresh_times := 0
 ## 上回合是否攻击过（连击风暴用）
 var last_turn_attacked := false
+## 连续回合得分>0的回合数（连击风暴/连击狂热用）
+var consecutive_score_turns := 0
 ## 本次攻击骰型数量（骰型大师用）
 var dice_type_count := 0
 ## 本次掉落骰子数量（掉落奖励/掉落惩罚用）

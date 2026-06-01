@@ -1,7 +1,5 @@
 ﻿extends Buff
 
-var _combo_turns := 0
-
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
 	buff_texture = SceneManager.create_scene("buff_texture")
@@ -10,11 +8,7 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	if Current.last_turn_attacked:
-		_combo_turns += 1
-	else:
-		_combo_turns = 0
-	if _combo_turns >= 3:
+	if Current.consecutive_score_turns >= 3:
 		Current.public_lock_array.append("combo_frenzy_buff")
 		var add_num = int(Current.once_total_score * 0.20)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
@@ -25,4 +19,4 @@ func process_buff():
 		Current.public_lock_array.erase("combo_frenzy_buff")
 
 func clear_buff():
-	_combo_turns = 0
+	pass
