@@ -64,9 +64,27 @@ var has_move_slime: bool:
 				return true
 		return false
 ## 是否移动过
-var is_moved: bool
+var _is_moved: bool = false
+var is_moved: bool:
+	set(v):
+		_is_moved = v
+		_update_undo_move_button_state()
+	get:
+		return _is_moved
 ## 是否攻击过
-var is_attacked: bool
+var _is_attacked: bool = false
+var is_attacked: bool:
+	set(v):
+		_is_attacked = v
+		_update_undo_move_button_state()
+	get:
+		return _is_attacked
+## 移动前的英雄位置（用于撤回移动）
+var pre_move_position: Vector2 = Vector2.ZERO
+## 移动前的英雄格子索引（用于撤回移动）
+var pre_move_grid_index: Vector2 = Vector2.ZERO
+## 移动前的总分（用于buff回滚）
+var pre_move_total_score: int = 0
 ## 选中的技能编号
 var skill_num: String
 ## 技能选择范围
@@ -609,6 +627,23 @@ func _update_potion_button_state():
 	else:
 		game_manager.potion_button.disabled = true
 		game_manager.potion_button_label.modulate = Color(1.0, 1.0, 1.0, 0.302)
+
+## 更新撤回移动按钮的启用/禁用状态
+func _update_undo_move_button_state():
+	if not game_manager:
+		return
+	if not game_manager.has_node("coin_skill_trun_button/HBoxContainer/undo_move_button"):
+		return
+	var undo_button = game_manager.get_node("coin_skill_trun_button/HBoxContainer/undo_move_button")
+	var undo_label = game_manager.get_node("coin_skill_trun_button/HBoxContainer/undo_move_button/undo_move_button_label") if undo_button else null
+	if _is_moved == true and _is_attacked == false and turn == "hero_turn":
+		undo_button.disabled = false
+		if undo_label:
+			undo_label.modulate = Color(1, 1, 1, 1)
+	else:
+		undo_button.disabled = true
+		if undo_label:
+			undo_label.modulate = Color(1.0, 1.0, 1.0, 0.302)
 
 ## 更新HP心形血条UI
 func _update_hp_ui():

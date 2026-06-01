@@ -1316,6 +1316,22 @@ region = Rect2(160, 0, 32, 16)
 atlas = ExtResource("20_gqmmt")
 region = Rect2(208, 32, 32, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6ruc"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(144, 32, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_155or"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(176, 33, 32, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtx2l"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(160, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63lxy"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(208, 33, 32, 14)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkpxi"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(96, 16, 48, 16)
@@ -5087,7 +5103,7 @@ theme_override_constants/separation = 0
 [node name="potion_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=2070553992]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 2
 toggle_mode = true
 action_mode = 0
 keep_pressed_outside = true
@@ -5141,6 +5157,43 @@ bbcode_enabled = true
 text = "[img=12]res://images/coin.png[/img] -1"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="undo_move_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=81501653]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+disabled = true
+texture_normal = SubResource("AtlasTexture_b6ruc")
+texture_pressed = SubResource("AtlasTexture_155or")
+texture_hover = SubResource("AtlasTexture_vtx2l")
+texture_disabled = SubResource("AtlasTexture_63lxy")
+stretch_mode = 5
+
+[node name="undo_move_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/undo_move_button" unique_id=1258114120]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.302)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/undo_move_button/undo_move_button_label" unique_id=985472789]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -14.5
+offset_top = -4.25
+offset_right = 9.5
+offset_bottom = 2.75
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.4, 0.4)
+pivot_offset = Vector2(32, 11.5)
+text = "撤回移动"
 
 [node name="turn_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=892386103]
 unique_name_in_owner = true
@@ -6706,6 +6759,9 @@ script = ExtResource("34_dgi5k")
 [connection signal="button_up" from="hero_skill2/HBoxContainer/coin_skill_3" to="." method="_on_coin_skill_3_button_up"]
 [connection signal="pressed" from="hero_skill2/HBoxContainer/coin_skill_3" to="." method="_on_coin_skill_3_pressed"]
 [connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/potion_button" to="." method="_on_potion_button_pressed"]
+[connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/undo_move_button" to="." method="_on_undo_move_button_button_down"]
+[connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/undo_move_button" to="." method="_on_undo_move_button_button_up"]
+[connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/undo_move_button" to="." method="_on_undo_move_button_pressed"]
 [connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_down"]
 [connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_up"]
 [connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_pressed"]
