@@ -12,11 +12,15 @@ func process_buff():
 	if dropped_count > 0:
 		Current.public_lock_array.append("drop_penalty_buff")
 		var sub_num = int(Current.total_score * dropped_count * 0.03)
-		var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(debuff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score -= sub_num
+		## 分数护盾：扣分减半
+		if BuffSystem.get_buffs_by_tag("score_shield").size() > 0:
+			sub_num = int(sub_num / 2.0)
+		if sub_num > 0:
+			var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
+			Current.hero.add_child(float_number_instantiate)
+			EffectManager.buff_pop_effect(debuff_texture)
+			await Tools.time_sleep(1)
+			Current.total_score -= sub_num
 		Current.public_lock_array.erase("drop_penalty_buff")
 
 func clear_buff():

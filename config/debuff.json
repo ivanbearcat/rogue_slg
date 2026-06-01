@@ -111,7 +111,7 @@
         "debuff_id": "current_score_down",
         "debuff_name": "当前分数下降",
         "debuff_icon": "res://images/enemy_icon/current_score_down.png",
-        "debuff_tooltip": "回合结束时当前分数-3%",
+        "debuff_tooltip": "回合结束时当前分数-2%",
         "debuff_res": "res://scripts/buff/current_score_down_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
@@ -228,7 +228,7 @@
         "debuff_id": "current_score_down",
         "debuff_name": "当前分数下降",
         "debuff_icon": "res://images/enemy_icon/current_score_down.png",
-        "debuff_tooltip": "每回合当前总分-3%",
+        "debuff_tooltip": "每回合当前总分-2%",
         "debuff_res": "res://scripts/buff/current_score_down_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "curse"

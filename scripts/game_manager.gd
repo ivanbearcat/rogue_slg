@@ -770,6 +770,9 @@ func _set_stage_debuff(boss=0):
 func _set_buff(buff_row):
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)
 	BuffSystem.callv("set_" + buff_row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
+	# BUG4修复：每次购买任意buff时，重置tax_collector的_just_bought标记
+	# 使"购买后下一次攻击+25%"效果在每次购买后都能触发
+	_reset_tax_collector_on_buy()
 	# 在buff.set_buff()创建buff_texture后，统一设置元数据
 	if buff.buff_texture:
 		buff.buff_texture.set_meta("buff_meta", buff.buff_meta)
@@ -779,6 +782,13 @@ func _set_buff(buff_row):
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
 	exp_label.text = str(num_now) + '/' + str(num_max)
+
+## BUG4修复：购买buff时重置tax_collector的_just_bought标记
+func _reset_tax_collector_on_buy() -> void:
+	for arr in BuffSystem._get_all_buff_arrays():
+		for buff in arr:
+			if buff.buff_meta.get("buff_id", "") == "tax_collector":
+				buff._just_bought = true
 
 ## 增加经验
 func add_exp(new_exp: int) -> void:
