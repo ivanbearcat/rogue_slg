@@ -2,7 +2,7 @@ extends HeroState
 
 signal show_move_range
 signal hide_move_range
-signal hero_move
+signal hero_move(event: InputEvent)
 
 func enter():
 	print(owner.hero_name + "进入move")
@@ -15,7 +15,7 @@ func input(event: InputEvent) -> void:
 		if event is InputEventMouseButton and \
 		event.button_index == MOUSE_BUTTON_LEFT and \
 		event.is_pressed() == true:
-			emit_signal("hero_move")
+			emit_signal("hero_move", event)
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
 		event.is_pressed() == true or event.is_action_pressed("esc"):
 			if Current.is_moved == false:

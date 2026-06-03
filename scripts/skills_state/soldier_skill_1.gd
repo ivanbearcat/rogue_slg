@@ -5,7 +5,7 @@ signal hide_skill_range
 signal skill_attack
 signal show_move_range
 signal hide_move_range
-signal hero_move
+signal hero_move(event: InputEvent)
 
 func enter():
 	print(owner.hero_name + "进入soldier_skill_1")

@@ -903,8 +903,11 @@ func _set_hero_skill_scripts(hero: Hero):
 	hero.skill_3.set_script(script_3)
 
 ## 可变参数信号
-func _on_hero_cmd(cmd_name):
-	call(cmd_name)
+func _on_hero_cmd(cmd_name: String, event: InputEvent = null):
+	if event != null:
+		call(cmd_name, event)
+	else:
+		call(cmd_name)
 
 func _on_grid_cmd(cmd_name):
 	call(cmd_name)
@@ -965,11 +968,19 @@ func hide_move_range():
 		all_grid_dict[grid_index].range.visible = false
 
 ## 英雄移动路径
-func hero_move():
+func hero_move(event: InputEvent = null):
 	if Current.id_path.size() > 0:
 		return
 	var hero = Current.clicked_hero
-	var target_grid_index = Current.grid_index
+	## 用鼠标点击位置计算目标格子索引，而非依赖 Current.grid_index
+	var target_grid_index: Vector2
+	if event != null:
+		## event.global_position 是视口坐标，需转换为世界坐标后再 to_local
+		var world_pos = get_viewport().canvas_transform.affine_inverse() * event.global_position
+		var local_pos = to_local(world_pos)
+		target_grid_index = position_to_grid_index(local_pos).floor()
+	else:
+		target_grid_index = Current.grid_index
 	## 判断目标位置不在移动围内或有其他棋子，则不能移动
 	if not Current.movable_grid_index_array.has(target_grid_index) \
 	or Current.all_hero_grid_index_array.has(target_grid_index) \

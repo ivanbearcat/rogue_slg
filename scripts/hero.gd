@@ -1,7 +1,7 @@
 extends Node2D
 class_name Hero
 
-signal hero_cmd
+signal hero_cmd(cmd_name: String, event: InputEvent)
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 @onready var hero_state_machine: HeroStateMachine = $hero_state_machine
@@ -44,23 +44,23 @@ func _on_area_2d_mouse_exited() -> void:
 	animated_sprite_2d.material.set_shader_parameter("is_high_light", false)
 
 func _on_move_show_move_range() -> void:
-	emit_signal("hero_cmd", "show_move_range")
+	emit_signal("hero_cmd", "show_move_range", null)
 
 func _on_move_hide_move_range() -> void:
 	Current.movable_grid_index_array = []
-	emit_signal("hero_cmd", "hide_move_range")
+	emit_signal("hero_cmd", "hide_move_range", null)
 
-func _on_move_hero_move() -> void:
-	emit_signal("hero_cmd", "hero_move")
+func _on_move_hero_move(event: InputEvent) -> void:
+	emit_signal("hero_cmd", "hero_move", event)
 
 func _on_show_skill_range() -> void:
-	emit_signal("hero_cmd", "show_skill_range")
+	emit_signal("hero_cmd", "show_skill_range", null)
 
 func _on_hide_skill_range() -> void:
-	emit_signal("hero_cmd", "hide_skill_range")
+	emit_signal("hero_cmd", "hide_skill_range", null)
 
 func _on_skill_attack():
-	emit_signal("hero_cmd", "skill_attack")
+	emit_signal("hero_cmd", "skill_attack", null)
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	Current.attack_animation_finished = 1

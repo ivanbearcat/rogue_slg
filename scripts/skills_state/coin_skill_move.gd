@@ -2,7 +2,7 @@ extends HeroState
 
 signal show_move_range
 signal hide_move_range
-signal hero_move
+signal hero_move(event: InputEvent)
 
 func enter():
 	print(owner.hero_name + "进入coin_skill_move")
@@ -12,7 +12,7 @@ func enter():
 func input(event: InputEvent) -> void:
 	## 点击释放技能的格子触发技能信号
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed() == true:
-		emit_signal("hero_move")
+		emit_signal("hero_move", event)
 		## 恢复鼠标重置状态
 		CursorManager.reset_cursor()
 	## 右键点击恢复
