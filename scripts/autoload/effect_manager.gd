@@ -5,7 +5,8 @@ extends Node
 var color := {
 	"green": "00ff00",
 	"red": "ff0000",
-	"purple": "ff00ff"
+	"purple": "ff00ff",
+	"gold": "ffd700"
 }
 
 var _content: String
