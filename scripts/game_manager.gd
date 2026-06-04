@@ -1224,10 +1224,10 @@ func _apply_hp_damage():
 	if Current.skip_hp_damage_this_turn:
 		Current.skip_hp_damage_this_turn = false
 		return
-	## 计算场上史莱姆数量（排除生命史莱姆）
+	## 计算场上史莱姆数量
 	var slime_count = 0
 	for _slime in Current.all_enemy_array:
-		if is_instance_valid(_slime) and not _slime.is_life_slime:
+		if is_instance_valid(_slime):
 			slime_count += 1
 	## 防御公式扣血: damage = max(0, ceil((slime_count - defense) / 3))
 	var hp_before = Current.player_hp
@@ -1246,9 +1246,7 @@ func _apply_hp_damage():
 			var hp_bar = get_node("round_process_bar/hp_bar")
 			if hp_bar.has_method("play_damage_effect"):
 				hp_bar.play_damage_effect()
-	## HP从安全区(>3)穿过阈值(<=3)且本关未生成生命史莱姆时触发生命史莱姆
-	if hp_before > 3 and Current.player_hp <= 3 and not Current.life_slime_spawned_this_stage:
-		_create_life_slime()
+
 
 ## 得分累计回血结算（在扣血之前调用）
 func _apply_score_heal() -> void:
@@ -1266,7 +1264,7 @@ func _apply_score_heal() -> void:
 	if BuffSystem.is_buff_registered("comeback_king"):
 		var slime_count = 0
 		for _slime in Current.all_enemy_array:
-			if is_instance_valid(_slime) and not _slime.is_life_slime:
+			if is_instance_valid(_slime):
 				slime_count += 1
 		var excess = maxi(0, slime_count - Current.player_defense)
 		if excess > 0:
@@ -1289,23 +1287,13 @@ func _apply_score_heal() -> void:
 		if BuffSystem.is_buff_registered("comeback_king"):
 			var slime_count2 = 0
 			for _slime in Current.all_enemy_array:
-				if is_instance_valid(_slime) and not _slime.is_life_slime:
+				if is_instance_valid(_slime):
 					slime_count2 += 1
 			var excess2 = maxi(0, slime_count2 - Current.player_defense)
 			if excess2 > 0:
 				effective_threshold = maxi(1, effective_threshold - excess2 * 3)
 	## 血瓶已满时储备触发：accumulated保留在阈值以上，不消耗
 	## （用掉血瓶后下次_apply_score_heal自然触发）
-
-## 创建生命史莱姆：将1只普通史莱姆转化为生命史莱姆
-func _create_life_slime():
-	var _normal_slimes = Current.normal_slime_array
-	if _normal_slimes.size() > 0:
-		var life_slime = _normal_slimes.pick_random()
-		life_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(1.0, 0.4, 0.7))
-		life_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-		life_slime.is_life_slime = true
-		Current.life_slime_spawned_this_stage = true
 
 ## 触发掉落奖励buff（跳过回合时也需要触发）
 func _trigger_drop_bonus():
@@ -1379,7 +1367,7 @@ func _check_stage_clear() -> bool:
 		if BuffSystem.is_buff_registered("sustain"):
 			var sustain_slime_count = 0
 			for _slime in Current.all_enemy_array:
-				if is_instance_valid(_slime) and not _slime.is_life_slime:
+				if is_instance_valid(_slime):
 					sustain_slime_count += 1
 			if sustain_slime_count > 0:
 				var overlord_active = BuffSystem.get_family_count("vitality") >= 4
@@ -1791,8 +1779,6 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.count_round = 0
 	Current.total_score = 0
 	Current.drop_slot_dice = null
-	## 重置生命史莱姆生成标记
-	Current.life_slime_spawned_this_stage = false
 	if Current.count_stage < 12:
 		Current.count_stage += 1
 		## 重置所有金币技能本关使用状态为未使用

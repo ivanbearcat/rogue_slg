@@ -20,8 +20,6 @@ var is_boss: bool = false
 var gate_type: String = ""
 ## 骰型门槛所需骰数
 var gate_count: int = 0
-## 是否为生命史莱姆
-var is_life_slime: bool = false
 var dice_real_point: Dictionary = {
 	0: 2,
 	2: 1,
@@ -64,13 +62,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		while "skill_attack" in Current.public_lock_array:
 			await Tools.time_sleep(0.1)
 		Current.power = mini(Current.power + 1, Current.max_power)
-	## 生命史莱姆击杀回血
-	if is_life_slime:
-		Current.player_hp += 3
-		var float_number = EffectManager.float_number_effect(3, "green")
-		if float_number:
-			float_number.get_node("Label").text = "+3HP!"
-			Current.hero.add_child(float_number)
 	## 精英/BOSS史莱姆击杀反馈
 	if is_elite or is_boss:
 		var float_number = EffectManager.float_number_effect(1, "green")
