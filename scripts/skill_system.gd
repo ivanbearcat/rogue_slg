@@ -545,7 +545,7 @@ func _show_dice_panel(dice_type_point):
 		#frame_dict[type].border_color = Color.html(game_manager.color["red"])
 	for index in range(dice_type_point[1].size()):
 		var dice_type = dice_type_point[1][index]
-		## "none"类型不再显示框线和倍率
+		## "none"类型没有对应的骰型行UI，跳过
 		if dice_type == "none":
 			continue
 		frame_dict[dice_type].border_color = Color.html(game_manager.color["red"])
@@ -579,6 +579,8 @@ func _reset_dice_panel():
 	for key in dice_type_dict.keys():
 		if Current.get(dice_type_dict[key]) != Current.dice_multiplier_dict[2][key]:
 			Current.set(dice_type_dict[key], Current.dice_multiplier_dict[2][key])
+	## 重置掉落行显示（反映当前 drop_slot_dice 状态）
+	Current._update_drop_slot_ui()
 
 ## 计算选中的最高最终骰型
 ## return ['none', round(none_score_dice[0]), none_score_dice[1]]

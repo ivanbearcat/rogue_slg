@@ -49,6 +49,8 @@ const hero_property = {
 @onready var tongse_percent_frame: PanelContainer = %tongse_percent_frame
 @onready var tongdui_percent_frame: PanelContainer = %tongdui_percent_frame
 @onready var tongshun_percent_frame: PanelContainer = %tongshun_percent_frame
+@onready var drop_slot_panel_frame: PanelContainer = %drop_slot_panel_frame
+@onready var drop_slot_panel_point: Label = %drop_slot_panel_point
 ## 分值条UI父级和分值
 @onready var score_bar: HBoxContainer = %score_bar
 @onready var score_bar_label: Label = %score_bar_label

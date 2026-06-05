@@ -21,6 +21,7 @@
 [ext_resource type="StyleBox" uid="uid://nf1thu8lxm1v" path="res://resources/hover_button.tres" id="15_0ld40"]
 [ext_resource type="Texture2D" uid="uid://bd0mpn20yxg3u" path="res://images/shelves_announcements.png" id="15_jkv2x"]
 [ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="16_jbj1t"]
+[ext_resource type="Texture2D" uid="uid://cq5fh03c87561" path="res://images/icon_dice_white.png" id="16_kmb1v"]
 [ext_resource type="Theme" uid="uid://c7fy6qc45ak5d" path="res://resources/tooltip.tres" id="17_qkpxi"]
 [ext_resource type="Texture2D" uid="uid://g5x32nluxcdp" path="res://images/enemy_icon/normal.png" id="18_5q0nq"]
 [ext_resource type="LabelSettings" uid="uid://dwens7d1jb5s2" path="res://resources/clear_stage_font.tres" id="18_gqmmt"]
@@ -1033,23 +1034,6 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("6_1gmj2")
 region = Rect2(142, 2, 24, 25)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yld4"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2wq0j"]
-atlas = ExtResource("8_akto2")
-region = Rect2(4, 44, 24, 11)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhkwd"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 10
@@ -1130,6 +1114,9 @@ corner_radius_bottom_left = 5
 [sub_resource type="AtlasTexture" id="AtlasTexture_hkjfj"]
 atlas = ExtResource("8_akto2")
 region = Rect2(4, 55, 24, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjhjs"]
+atlas = ExtResource("16_kmb1v")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gqmmt"]
 atlas = ExtResource("15_jkv2x")
@@ -4085,41 +4072,6 @@ theme_override_constants/margin_bottom = 3
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="none_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=1227559675]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_2yld4")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame" unique_id=605547129]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer" unique_id=1303045739]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource("AtlasTexture_2wq0j")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer" unique_id=941364411]
-layout_mode = 2
-size_flags_stretch_ratio = 2.0
-text = "  无  "
-label_settings = ExtResource("3_h858a")
-
-[node name="none_percent" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/none_percent_frame/HBoxContainer" unique_id=1078316006]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(20, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-text = "100%"
-label_settings = ExtResource("12_yq6so")
-horizontal_alignment = 1
-autowrap_mode = 2
-
 [node name="duizi_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=1637844936]
 unique_name_in_owner = true
 layout_mode = 2
@@ -4296,6 +4248,40 @@ label_settings = ExtResource("12_yq6so")
 horizontal_alignment = 1
 autowrap_mode = 2
 
+[node name="drop_slot_panel_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=1597466328]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/drop_slot_panel_frame" unique_id=775819204]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/drop_slot_panel_frame/HBoxContainer" unique_id=50965772]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+texture = SubResource("AtlasTexture_fjhjs")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/drop_slot_panel_frame/HBoxContainer" unique_id=1016973378]
+layout_mode = 2
+size_flags_stretch_ratio = 2.0
+text = "掉落"
+label_settings = ExtResource("3_h858a")
+
+[node name="drop_slot_panel_point" type="Label" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/drop_slot_panel_frame/HBoxContainer" unique_id=1574389862]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+text = "-"
+label_settings = ExtResource("12_yq6so")
+horizontal_alignment = 1
+autowrap_mode = 2
+
 [node name="stage_score" type="Control" parent="." unique_id=1200675023]
 layout_mode = 3
 anchors_preset = 0
@@ -4385,26 +4371,6 @@ layout_mode = 2
 size_flags_horizontal = 10
 text = "0"
 label_settings = ExtResource("12_yq6so")
-
-[node name="drop_slot_container" type="HBoxContainer" parent="stage_score" unique_id=2000833380]
-layout_mode = 0
-offset_top = -18.5
-offset_right = 78.0
-offset_bottom = 13.5
-scale = Vector2(0.5, 0.5)
-
-[node name="drop_slot_label" type="Label" parent="stage_score/drop_slot_container" unique_id=1188961468]
-layout_mode = 2
-text = "掉落:"
-vertical_alignment = 1
-
-[node name="drop_slot_point_label" type="Label" parent="stage_score/drop_slot_container" unique_id=909273910]
-layout_mode = 2
-vertical_alignment = 1
-
-[node name="drop_slot_color_label" type="Label" parent="stage_score/drop_slot_container" unique_id=1554781171]
-layout_mode = 2
-vertical_alignment = 1
 
 [node name="hero_skill" type="Control" parent="." unique_id=700926704]
 layout_mode = 3
