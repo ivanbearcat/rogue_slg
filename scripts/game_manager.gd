@@ -170,6 +170,11 @@ var buff_refresh_cost := 1:
 @onready var left_button: TextureButton = %left_button
 @onready var right_button: TextureButton = %right_button
 @onready var down_button: TextureButton = %down_button
+@onready var dice_adjust_ui: CanvasLayer = %dice_adjust_ui
+@onready var coin_skill_system: Node2D = $coin_skill_system
+@onready var dice_add_button: Button = %dice_add_button
+@onready var dice_sub_button: Button = %dice_sub_button
+@onready var cancel_dice_adjust_button: Button = %cancel_dice_adjust_button
 @onready var difficulty_icon: TextureRect = %difficulty_icon
 ## 关卡切换效果
 @onready var stage_effect_ui: Control = $stage_effect_ui
@@ -217,8 +222,6 @@ var color := {
 }
 ## 随机选择出的3张升级时卡牌
 var level_up_three_card_array :Array
-## 金币技能选项2
-var coin_skill_row_2: Dictionary
 ## 商店当前展示的金币技能数据行
 var shop_coin_skill_row: Dictionary = {}
 ## 待处理的商店技能（购买后等待添加或替换）
@@ -403,99 +406,7 @@ func _pre_create_slime():
 			for grid in grids_array:
 				if grid.grid_index == grid_index:
 					grid.warning.visible = true
-		## 出生锁定：保证出生列表中有对应颜色/点数的史莱姆
-		_apply_spawn_lock(_slime_create_array)
 
-## 出生锁定：统一处理颜色和点数锁定，每个锁定分配不同史莱姆
-## 颜色锁定在出生列表阶段替换场景，点数锁定记录待修改的帧索引
-var _pending_point_locks: Array = []  ## [frame1, frame2, ...] 按顺序记录待修改的骰子帧
-
-func _apply_spawn_lock(slime_array: Array) -> void:
-	if slime_array.is_empty():
-		return
-	var color_map := {
-		"green_lock": "slime_small",
-		"red_lock": "slime_small_red",
-		"blue_lock": "slime_small_blue",
-		"yellow_lock": "slime_small_yellow",
-	}
-	var point_map := {
-		"one_lock": 2, "two_lock": 0, "three_lock": 10,
-		"four_lock": 6, "five_lock": 8, "six_lock": 4,
-	}
-	## 收集所有激活的锁定buff（颜色+点数）
-	var active_locks: Array[String] = []
-	var buff_sys = BuffSystem
-	for buff_list in [buff_sys.pre_enemy_turn_buff_once, buff_sys.pre_enemy_turn_buff_stage, buff_sys.pre_enemy_turn_buff_always]:
-		for buff in buff_list:
-			var lock_id: String = buff.buff_meta.get("buff_id", "")
-			if (lock_id in color_map or lock_id in point_map) and lock_id not in active_locks:
-				active_locks.append(lock_id)
-	## 锁定总量不能超过出生数量
-	if active_locks.size() > slime_array.size():
-		active_locks = active_locks.slice(0, slime_array.size())
-	## 清空待修改点数列表
-	_pending_point_locks.clear()
-	## 记录已被锁定使用的索引
-	var used_indices: Array[int] = []
-	## 对每个锁定，分配一个史莱姆
-	for lock_id in active_locks:
-		if lock_id in color_map:
-			## 颜色锁定：检查是否已有对应颜色的未使用史莱姆
-			var target_scene: String = color_map[lock_id]
-			var found := false
-			for i in range(slime_array.size()):
-				if i not in used_indices and slime_array[i].scene_file_path.get_file().get_basename() == target_scene:
-					used_indices.append(i)
-					found = true
-					break
-			if not found:
-				## 从未使用的索引中随机选一个替换为目标颜色场景
-				var available_indices: Array[int] = []
-				for i in range(slime_array.size()):
-					if i not in used_indices:
-						available_indices.append(i)
-				if available_indices.is_empty():
-					continue
-				var replace_index = available_indices[randi() % available_indices.size()]
-				var old_slime = slime_array[replace_index]
-				var new_slime = SceneManager.create_scene(target_scene)
-				new_slime.position = old_slime.position
-				new_slime.enemy_grid_index = old_slime.enemy_grid_index
-				old_slime.queue_free()
-				slime_array[replace_index] = new_slime
-				used_indices.append(replace_index)
-		elif lock_id in point_map:
-			## 点数锁定：先分配一个未使用的索引，记录待修改的帧
-			var target_frame: int = point_map[lock_id]
-			var available_indices: Array[int] = []
-			for i in range(slime_array.size()):
-				if i not in used_indices:
-					available_indices.append(i)
-			if available_indices.is_empty():
-				continue
-			var assign_index = available_indices[randi() % available_indices.size()]
-			used_indices.append(assign_index)
-			_pending_point_locks.append(target_frame)
-
-## 点数锁定：在骰子掷完后根据 _pending_point_locks 修改帧
-func _apply_point_lock() -> void:
-	if _pending_point_locks.is_empty():
-		return
-	## 收集本回合实际出生的史莱姆（按 last_slime_create_array 的原始顺序）
-	var spawned_slimes: Array = []
-	for enemy in Current.last_slime_create_array:
-		if is_instance_valid(enemy) and enemy in Current.all_enemy_array:
-			spawned_slimes.append(enemy)
-	if spawned_slimes.is_empty():
-		return
-	## 按 _pending_point_locks 的顺序逐个修改骰子帧
-	var lock_idx := 0
-	for target_frame in _pending_point_locks:
-		if lock_idx < spawned_slimes.size():
-			spawned_slimes[lock_idx].dice.set_frame_and_progress(target_frame, 0)
-			lock_idx += 1
-	_pending_point_locks.clear()
 
 ## 生成精英史莱姆（在原精英关3/6/9开局生成）
 func _spawn_elite_slime():
@@ -557,27 +468,50 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 	## 设置深紫色轮廓
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 18.892))
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-	## 随机选择1-2个诅咒debuff
+	## 施加BOSS诅咒：先固定后随机，从stage_config读取配置
+	var fixed_curses: Array = stage_config.get("boss_fixed_curses", [])
+	var curse_count: int = stage_config.get("boss_curse_count", 1)
+	## 收集curse池
 	var curse_debuffs = []
 	for debuff_row in debuff_json_data:
 		if debuff_row.get("severity", "normal") == "curse":
 			curse_debuffs.append(debuff_row)
-	var debuff_count = randi_range(1, 2)
+	var applied_debuff_ids: Array = []
 	var applied_debuff_icons: String = ""
-	for i in range(debuff_count):
-		if curse_debuffs.is_empty():
+	## 1. 先施加固定诅咒
+	for fixed_id in fixed_curses:
+		var fixed_row = null
+		for debuff_row in curse_debuffs:
+			if debuff_row["debuff_id"] == fixed_id:
+				fixed_row = debuff_row
+				break
+		if fixed_row != null:
+			var buff = load(fixed_row["debuff_res"]).new(fixed_row, self)
+			BuffSystem.callv("set_" + fixed_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+			applied_debuff_ids.append(fixed_id)
+			applied_debuff_icons += " [img=15 ]" + fixed_row["debuff_icon"] + "[/img]"
+	## 2. 再从curse池中（排除已施加的固定诅咒）随机抽取boss_curse_count个不重复诅咒
+	var available_curses = []
+	for debuff_row in curse_debuffs:
+		if debuff_row["debuff_id"] not in applied_debuff_ids:
+			available_curses.append(debuff_row)
+	for i in range(curse_count):
+		if available_curses.is_empty():
 			break
-		var debuff_row = curse_debuffs.pick_random()
+		var idx = randi() % available_curses.size()
+		var debuff_row = available_curses[idx]
 		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+		applied_debuff_ids.append(debuff_row["debuff_id"])
 		applied_debuff_icons += " [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+		available_curses.remove_at(idx)
 	debuff_effect_label.text = "BOSS出现！" + applied_debuff_icons
 	await EffectManager.debuff_change_effect()
 	## 根据boss_extra_elites值生成额外精英史莱姆
 	var extra_elites: int = stage_config.get("boss_extra_elites", 0)
 	for i in range(extra_elites):
 		await _spawn_elite_slime()
-	print("[boss-slime] 生成了BOSS史莱姆: gate=%s count=%d debuff_count=%d extra_elites=%d" % [gate_type, slime_instantiate.gate_count, debuff_count, extra_elites])
+	print("[boss-slime] 生成了BOSS史莱姆: gate=%s count=%d curse_count=%d extra_elites=%d" % [gate_type, slime_instantiate.gate_count, applied_debuff_ids.size(), extra_elites])
 
 ## 移动精英/BOSS史莱姆（每回合随机4方向移动1格）
 func _move_elite_boss_slimes():
@@ -643,8 +577,7 @@ func _create_slime():
 		enemy.dice.stop()
 		enemy.dice.set_frame_and_progress(dice_point.pick_random(), 0)
 		enemy.animated_sprite_2d.play("idle")
-	## 点数锁定：根据之前记录的待修改列表修改骰子帧
-	_apply_point_lock()
+
 
 ## 边缘生成史莱姆
 func _create_slime_on_margin_grid():
@@ -1905,6 +1838,34 @@ func _on_down_button_pressed() -> void:
 	direction_ui.hide()
 	get_tree().paused = false
 	CursorManager.change_cursor("mouse_down")
+
+func _on_cancel_dice_adjust_button_pressed() -> void:
+	EventBus.event_emit("reset_cursor")
+	coin_skill_system._dice_adjust_target = null
+	dice_adjust_ui.hide()
+	get_tree().paused = false
+
+func _on_dice_add_button_pressed() -> void:
+	## ▲+1：点数+1（6→1循环），技能消耗，面板关闭
+	dice_adjust_ui.hide()
+	get_tree().paused = false
+	var _target_slime = coin_skill_system._dice_adjust_target
+	if _target_slime and is_instance_valid(_target_slime):
+		var _old_dice_point = _target_slime.dice_point
+		var _new_dice_point = 1 if _old_dice_point == 6 else _old_dice_point + 1
+		_target_slime.dice.set_frame_and_progress(_target_slime.dice_to_frame_dice[_new_dice_point], 0)
+		EventBus.event_emit("dice_adjust_apply", ["dice_adjust", _target_slime])
+
+func _on_dice_sub_button_pressed() -> void:
+	## ▼-1：点数-1（1→6循环），技能消耗，面板关闭
+	dice_adjust_ui.hide()
+	get_tree().paused = false
+	var _target_slime = coin_skill_system._dice_adjust_target
+	if _target_slime and is_instance_valid(_target_slime):
+		var _old_dice_point = _target_slime.dice_point
+		var _new_dice_point = 6 if _old_dice_point == 1 else _old_dice_point - 1
+		_target_slime.dice.set_frame_and_progress(_target_slime.dice_to_frame_dice[_new_dice_point], 0)
+		EventBus.event_emit("dice_adjust_apply", ["dice_adjust", _target_slime])
 
 func _on_hide_level_up_ui_button_pressed() -> void:
 	if hide_level_up_ui_button.text == "隐藏":

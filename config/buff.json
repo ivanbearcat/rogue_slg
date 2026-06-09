@@ -425,176 +425,6 @@
         ]
     },
     {
-        "buff_id": "green_lock",
-        "buff_name": "绿色锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个绿色",
-        "buff_res": "res://scripts/buff/color_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "red_lock",
-        "buff_name": "红色锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个红色",
-        "buff_res": "res://scripts/buff/color_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "blue_lock",
-        "buff_name": "蓝色锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个蓝色",
-        "buff_res": "res://scripts/buff/color_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "yellow_lock",
-        "buff_name": "黄色锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个黄色",
-        "buff_res": "res://scripts/buff/color_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "one_lock",
-        "buff_name": "一点锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个一点骰子",
-        "buff_res": "res://scripts/buff/point_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "two_lock",
-        "buff_name": "二点锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个二点骰子",
-        "buff_res": "res://scripts/buff/point_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "three_lock",
-        "buff_name": "三点锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个三点骰子",
-        "buff_res": "res://scripts/buff/point_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "four_lock",
-        "buff_name": "四点锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个四点骰子",
-        "buff_res": "res://scripts/buff/point_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "five_lock",
-        "buff_name": "五点锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个五点骰子",
-        "buff_res": "res://scripts/buff/point_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "six_lock",
-        "buff_name": "六点锁定",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "保证下次出生的史莱姆中至少有1个六点骰子",
-        "buff_res": "res://scripts/buff/point_lock_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 3,
-        "family": "resonance",
-        "tags": [
-            "on_spawn",
-            "color",
-            "static",
-            "aggression",
-            "common"
-        ]
-    },
-    {
         "buff_id": "iron_wall",
         "buff_name": "铁壁",
         "buff_icon": "res://icon.svg",
@@ -898,6 +728,74 @@
         ]
     },
     {
+        "buff_id": "color_predictor",
+        "buff_name": "色彩预言",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每回合随机祝福1种颜色，该色史莱姆攻击+20%",
+        "buff_res": "res://scripts/buff/color_predictor_buff.gd",
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5,
+        "family": "resonance",
+        "tags": [
+            "on_turn_end",
+            "color",
+            "threshold",
+            "aggression",
+            "rare"
+        ]
+    },
+    {
+        "buff_id": "chromatic_sacrifice",
+        "buff_name": "色彩献祭",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "购买时随机献祭1色，该色+40%但基础分变0",
+        "buff_res": "res://scripts/buff/chromatic_sacrifice_buff.gd",
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 7,
+        "family": "resonance",
+        "tags": [
+            "on_buy",
+            "color",
+            "threshold",
+            "aggression",
+            "rare"
+        ]
+    },
+    {
+        "buff_id": "resonance_echo",
+        "buff_name": "共鸣回声",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "≥3色回合结束+3金币，≤1色-2金币",
+        "buff_res": "res://scripts/buff/resonance_echo_buff.gd",
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 5,
+        "family": "resonance",
+        "tags": [
+            "on_turn_end",
+            "color",
+            "threshold",
+            "economy",
+            "rare"
+        ]
+    },
+    {
+        "buff_id": "chromatic_frenzy",
+        "buff_name": "色彩狂热",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "≥3色攻击+15%，但每回合1个随机史莱姆变色",
+        "buff_res": "res://scripts/buff/chromatic_frenzy_buff.gd",
+        "buff_type": "pre_enemy_turn_buff",
+        "buff_price": 7,
+        "family": "resonance",
+        "tags": [
+            "on_turn_end",
+            "color",
+            "threshold",
+            "aggression",
+            "rare"
+        ]
+    },
+    {
         "buff_id": "dice_harmony",
         "buff_name": "骰型和谐",
         "buff_icon": "res://icon.svg",
@@ -1159,6 +1057,23 @@
             "multiplicative",
             "protect",
             "legendary"
+        ]
+    },
+    {
+        "buff_id": "kill_multiplier",
+        "buff_name": "击杀倍率",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每击杀1个史莱姆，当前组合骰型的倍率+2%",
+        "buff_res": "res://scripts/buff/kill_multiplier_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "combo",
+        "tags": [
+            "on_kill",
+            "slime_count",
+            "linear",
+            "aggression",
+            "rare"
         ]
     }
 ]

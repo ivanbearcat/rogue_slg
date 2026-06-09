@@ -40,18 +40,10 @@
         "coin_skill_shop_cost": 6
     },
     {
-        "coin_skill_id": "dice_add_1",
-        "coin_skill_name": "骰子点数+1",
-        "coin_skill_icon": "res://images/coin_skill_icon/dice+1.png",
-        "coin_skill_tooltip": "骰子点数+1",
-        "coin_skill_cost": 2,
-        "coin_skill_shop_cost": 4
-    },
-    {
-        "coin_skill_id": "dice_sub_1",
-        "coin_skill_name": "骰子点数-1",
-        "coin_skill_icon": "res://images/coin_skill_icon/dice-1.png",
-        "coin_skill_tooltip": "骰子点数-1",
+        "coin_skill_id": "dice_adjust",
+        "coin_skill_name": "骰子点数调整",
+        "coin_skill_icon": "res://images/coin_skill_icon/dice_adjust.svg",
+        "coin_skill_tooltip": "选择+1或-1调整骰子点数",
         "coin_skill_cost": 2,
         "coin_skill_shop_cost": 4
     },
