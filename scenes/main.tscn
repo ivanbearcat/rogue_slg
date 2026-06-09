@@ -3739,14 +3739,14 @@ theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 21
 theme_override_styles/hover = ExtResource("15_0ld40")
 shortcut = SubResource("Shortcut_vxglm")
-	text = "取消"
+text = "取消"
 
-[node name="dice_adjust_ui" type="CanvasLayer" parent="coin_skill_system"]
+[node name="dice_adjust_ui" type="CanvasLayer" parent="coin_skill_system" unique_id=11752410]
 unique_name_in_owner = true
 process_mode = 2
 visible = false
 
-[node name="Panel" type="Panel" parent="coin_skill_system/dice_adjust_ui"]
+[node name="Panel" type="Panel" parent="coin_skill_system/dice_adjust_ui" unique_id=1051627043]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3754,7 +3754,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_og1vs")
 
-[node name="Label" type="Label" parent="coin_skill_system/dice_adjust_ui"]
+[node name="Label" type="Label" parent="coin_skill_system/dice_adjust_ui" unique_id=748468558]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3769,7 +3769,7 @@ text = "调整点数"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="coin_skill_system/dice_adjust_ui"]
+[node name="HBoxContainer" type="HBoxContainer" parent="coin_skill_system/dice_adjust_ui" unique_id=1246293607]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -3784,19 +3784,19 @@ grow_vertical = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="dice_add_button" type="Button" parent="coin_skill_system/dice_adjust_ui/HBoxContainer"]
+[node name="dice_add_button" type="Button" parent="coin_skill_system/dice_adjust_ui/HBoxContainer" unique_id=1677386136]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "▲+1"
 
-[node name="dice_sub_button" type="Button" parent="coin_skill_system/dice_adjust_ui/HBoxContainer"]
+[node name="dice_sub_button" type="Button" parent="coin_skill_system/dice_adjust_ui/HBoxContainer" unique_id=1736537962]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "▼-1"
 
-[node name="cancel_dice_adjust_button" type="Button" parent="coin_skill_system/dice_adjust_ui"]
+[node name="cancel_dice_adjust_button" type="Button" parent="coin_skill_system/dice_adjust_ui" unique_id=91618418]
 unique_name_in_owner = true
 offset_left = 554.0
 offset_top = 468.0
@@ -6782,6 +6782,9 @@ script = ExtResource("34_dgi5k")
 [connection signal="pressed" from="coin_skill_system/direction_ui/GridContainer/right_button" to="." method="_on_right_button_pressed"]
 [connection signal="pressed" from="coin_skill_system/direction_ui/GridContainer/down_button" to="." method="_on_down_button_pressed"]
 [connection signal="pressed" from="coin_skill_system/direction_ui/cancel_direction_button" to="." method="_on_cancel_direction_button_pressed"]
+[connection signal="pressed" from="coin_skill_system/dice_adjust_ui/HBoxContainer/dice_add_button" to="." method="_on_dice_add_button_pressed"]
+[connection signal="pressed" from="coin_skill_system/dice_adjust_ui/HBoxContainer/dice_sub_button" to="." method="_on_dice_sub_button_pressed"]
+[connection signal="pressed" from="coin_skill_system/dice_adjust_ui/cancel_dice_adjust_button" to="." method="_on_cancel_dice_adjust_button_pressed"]
 [connection signal="button_down" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_button_down"]
 [connection signal="button_up" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_button_up"]
 [connection signal="pressed" from="hero_skill2/HBoxContainer/coin_skill_1" to="." method="_on_coin_skill_1_pressed"]
@@ -6816,6 +6819,3 @@ script = ExtResource("34_dgi5k")
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card2_button" to="." method="_on_card_2_button_pressed"]
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card3_button" to="." method="_on_card_3_button_pressed"]
 [connection signal="pressed" from="level_up_ui/hide_level_up_ui_button" to="." method="_on_hide_level_up_ui_button_pressed"]
-[connection signal="pressed" from="coin_skill_system/dice_adjust_ui/HBoxContainer/dice_add_button" to="." method="_on_dice_add_button_pressed"]
-[connection signal="pressed" from="coin_skill_system/dice_adjust_ui/HBoxContainer/dice_sub_button" to="." method="_on_dice_sub_button_pressed"]
-[connection signal="pressed" from="coin_skill_system/dice_adjust_ui/cancel_dice_adjust_button" to="." method="_on_cancel_dice_adjust_button_pressed"]
