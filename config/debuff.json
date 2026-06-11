@@ -156,7 +156,7 @@
         "debuff_tooltip": "每回合当前总分-2%",
         "debuff_res": "res://scripts/debuff/current_score_down_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
-        "severity": "boss"
+        "severity": "normal"
     },
     {
         "debuff_id": "dice_decay_curse",
@@ -165,7 +165,7 @@
         "debuff_tooltip": "每回合所有点数基础分-1（最低1）",
         "debuff_res": "res://scripts/debuff/dice_decay_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
-        "severity": "boss"
+        "severity": "normal"
     },
     {
         "debuff_id": "attack_score_down",
@@ -183,6 +183,6 @@
         "debuff_tooltip": "每回合防御-1（最低0）",
         "debuff_res": "res://scripts/debuff/fragile_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
-        "severity": "boss"
+        "severity": "normal"
     }
 ]

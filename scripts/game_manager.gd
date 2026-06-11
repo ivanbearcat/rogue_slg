@@ -432,10 +432,10 @@ func _spawn_elite_slime():
 	## 设置红色轮廓
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 0))
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-	## 施加1个随机BOSS debuff
+	## 施加1个随机普通debuff
 	var curse_debuffs = []
 	for debuff_row in debuff_json_data:
-		if debuff_row.get("severity", "normal") == "boss":
+		if debuff_row.get("severity", "normal") == "normal":
 			curse_debuffs.append(debuff_row)
 	if not curse_debuffs.is_empty():
 		var debuff_row = curse_debuffs.pick_random()
@@ -471,10 +471,10 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 	## 施加BOSS效果：先固定后随机，从stage_config读取配置
 	var fixed_curses: Array = stage_config.get("boss_fixed_curses", [])
 	var curse_count: int = stage_config.get("boss_curse_count", 1)
-	## 收集curse池
+	## 收集普通debuff池
 	var curse_debuffs = []
 	for debuff_row in debuff_json_data:
-		if debuff_row.get("severity", "normal") == "boss":
+		if debuff_row.get("severity", "normal") == "normal":
 			curse_debuffs.append(debuff_row)
 	var applied_debuff_ids: Array = []
 	var applied_debuff_icons: String = ""
@@ -687,20 +687,14 @@ func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 func _set_stage_debuff(boss=0):
 	var curse_debuffs = []
 	for debuff_row in debuff_json_data:
-		if debuff_row.get("severity", "normal") == "boss":
+		if debuff_row.get("severity", "normal") == "normal":
 			curse_debuffs.append(debuff_row)
 	if curse_debuffs.is_empty():
 		return
-	if boss == 0:
-		var debuff_row = debuff_json_data.pick_random()
-		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
-		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
-		debuff_effect_label.text = "获得BOSS效果  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
-	else:
-		var debuff_row = curse_debuffs.pick_random()
-		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
-		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
-		debuff_effect_label.text = "获得BOSS效果  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+	var debuff_row = curse_debuffs.pick_random()
+	var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
+	BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+	debuff_effect_label.text = "获得BOSS效果  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 
 func _set_buff(buff_row):
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)
