@@ -2,9 +2,9 @@
     {
         "debuff_id": "disable_points",
         "debuff_name": "禁用1种点数",
-        "debuff_icon": "res://images/enemy_icon/disable_points.png",
+        "debuff_icon": "res://images/debuff_icon/disable_points.png",
         "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）",
-        "debuff_res": "res://scripts/buff/disable_points_buff.gd",
+        "debuff_res": "res://scripts/debuff/disable_points_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
@@ -14,9 +14,9 @@
     {
         "debuff_id": "disable_dice_type",
         "debuff_name": "禁用1种骰型",
-        "debuff_icon": "res://images/enemy_icon/disable_dice_type.png",
+        "debuff_icon": "res://images/debuff_icon/disable_dice_type.png",
         "debuff_tooltip": "随机1种骰型的倍率变为0%",
-        "debuff_res": "res://scripts/buff/disable_dice_type_buff.gd",
+        "debuff_res": "res://scripts/debuff/disable_dice_type_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
@@ -26,72 +26,72 @@
     {
         "debuff_id": "target_score_up",
         "debuff_name": "目标分数上升",
-        "debuff_icon": "res://images/enemy_icon/target_score_up.png",
+        "debuff_icon": "res://images/debuff_icon/target_score_up.png",
         "debuff_tooltip": "回合结束时目标分数每回合+1%",
-        "debuff_res": "res://scripts/buff/target_score_up_buff.gd",
+        "debuff_res": "res://scripts/debuff/target_score_up_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
     },
     {
         "debuff_id": "current_score_down",
         "debuff_name": "当前分数下降",
-        "debuff_icon": "res://images/enemy_icon/current_score_down.png",
+        "debuff_icon": "res://images/debuff_icon/current_score_down.png",
         "debuff_tooltip": "回合结束时当前分数-2%",
-        "debuff_res": "res://scripts/buff/current_score_down_buff.gd",
+        "debuff_res": "res://scripts/debuff/current_score_down_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
     },
     {
         "debuff_id": "move_down",
         "debuff_name": "移动力下降",
-        "debuff_icon": "res://images/enemy_icon/move_down.png",
+        "debuff_icon": "res://images/debuff_icon/move_down.png",
         "debuff_tooltip": "移动力-1",
-        "debuff_res": "res://scripts/buff/move_down_buff.gd",
+        "debuff_res": "res://scripts/debuff/move_down_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal"
     },
     {
         "debuff_id": "no_power_slime",
         "debuff_name": "无能量史莱姆",
-        "debuff_icon": "res://images/enemy_icon/no_power_slime.png",
+        "debuff_icon": "res://images/debuff_icon/no_power_slime.png",
         "debuff_tooltip": "不生成能量史莱姆",
-        "debuff_res": "res://scripts/buff/no_power_slime_buff.gd",
+        "debuff_res": "res://scripts/debuff/no_power_slime_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal"
     },
     {
         "debuff_id": "power_current_score_down",
         "debuff_name": "使用能量扣分",
-        "debuff_icon": "res://images/enemy_icon/power_current_score_down.png",
+        "debuff_icon": "res://images/debuff_icon/power_current_score_down.png",
         "debuff_tooltip": "使用能量时当前分数-10%",
-        "debuff_res": "res://scripts/buff/power_current_score_down_buff.gd",
+        "debuff_res": "res://scripts/debuff/power_current_score_down_buff.gd",
         "debuff_type": "post_attack_buff",
         "severity": "normal"
     },
     {
         "debuff_id": "reroll_slime",
         "debuff_name": "重掷史莱姆",
-        "debuff_icon": "res://images/enemy_icon/reroll_slime.png",
+        "debuff_icon": "res://images/debuff_icon/reroll_slime.png",
         "debuff_tooltip": "每回合都会重掷所有史莱姆",
-        "debuff_res": "res://scripts/buff/reroll_slime_buff.gd",
+        "debuff_res": "res://scripts/debuff/reroll_slime_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
     },
     {
         "debuff_id": "slime_current_score_down",
         "debuff_name": "史莱姆下降分数",
-        "debuff_icon": "res://images/enemy_icon/slime_current_score_down.png",
+        "debuff_icon": "res://images/debuff_icon/slime_current_score_down.png",
         "debuff_tooltip": "每有1个史莱姆当前分数-0.5%",
-        "debuff_res": "res://scripts/buff/slime_current_score_down_buff.gd",
+        "debuff_res": "res://scripts/debuff/slime_current_score_down_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
     },
     {
         "debuff_id": "slime_move",
         "debuff_name": "史莱姆移动",
-        "debuff_icon": "res://images/enemy_icon/slime_move.png",
+        "debuff_icon": "res://images/debuff_icon/slime_move.png",
         "debuff_tooltip": "每个回合史莱姆都会移动一格",
-        "debuff_res": "res://scripts/buff/slime_move_buff.gd",
+        "debuff_res": "res://scripts/debuff/slime_move_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal"
     },
@@ -100,7 +100,7 @@
         "debuff_name": "禁用掉落格子",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "掉落格子无法使用，掉落骰子直接消失",
-        "debuff_res": "res://scripts/buff/no_drop_slot_buff.gd",
+        "debuff_res": "res://scripts/debuff/no_drop_slot_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal"
     },
@@ -109,7 +109,7 @@
         "debuff_name": "得分上限",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "单次攻击得分不超过目标分数的30%",
-        "debuff_res": "res://scripts/buff/score_cap_buff.gd",
+        "debuff_res": "res://scripts/debuff/score_cap_buff.gd",
         "debuff_type": "post_attack_buff",
         "severity": "normal"
     },
@@ -118,7 +118,7 @@
         "debuff_name": "颜色混乱",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "每回合随机1种颜色史莱姆概率翻倍，另1种颜色不生成",
-        "debuff_res": "res://scripts/buff/color_chaos_buff.gd",
+        "debuff_res": "res://scripts/debuff/color_chaos_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
     },
@@ -127,7 +127,7 @@
         "debuff_name": "骰子衰退",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "每回合所有点数基础分-1（最低1）",
-        "debuff_res": "res://scripts/buff/dice_decay_buff.gd",
+        "debuff_res": "res://scripts/debuff/dice_decay_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
     },
@@ -136,7 +136,7 @@
         "debuff_name": "掉落惩罚",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "每掉落1个骰子，当前分数-3%",
-        "debuff_res": "res://scripts/buff/drop_penalty_buff.gd",
+        "debuff_res": "res://scripts/debuff/drop_penalty_buff.gd",
         "debuff_type": "post_attack_buff",
         "severity": "normal"
     },
@@ -145,44 +145,44 @@
         "debuff_name": "破甲",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "本关防御-2",
-        "debuff_res": "res://scripts/buff/armor_break_buff.gd",
+        "debuff_res": "res://scripts/debuff/armor_break_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
     },
     {
         "debuff_id": "current_score_down",
         "debuff_name": "当前分数下降",
-        "debuff_icon": "res://images/enemy_icon/current_score_down.png",
+        "debuff_icon": "res://images/debuff_icon/current_score_down.png",
         "debuff_tooltip": "每回合当前总分-2%",
-        "debuff_res": "res://scripts/buff/current_score_down_buff.gd",
+        "debuff_res": "res://scripts/debuff/current_score_down_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
-        "severity": "curse"
+        "severity": "boss"
     },
     {
         "debuff_id": "dice_decay_curse",
         "debuff_name": "骰子衰减",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "每回合所有点数基础分-1（最低1）",
-        "debuff_res": "res://scripts/buff/dice_decay_buff.gd",
+        "debuff_res": "res://scripts/debuff/dice_decay_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
-        "severity": "curse"
+        "severity": "boss"
     },
     {
         "debuff_id": "attack_score_down",
         "debuff_name": "攻击得分下降",
-        "debuff_icon": "res://images/enemy_icon/attack_score_down.png",
+        "debuff_icon": "res://images/debuff_icon/attack_score_down.png",
         "debuff_tooltip": "每次攻击的得分-20%",
-        "debuff_res": "res://scripts/buff/attack_score_down_buff.gd",
+        "debuff_res": "res://scripts/debuff/attack_score_down_buff.gd",
         "debuff_type": "post_attack_buff",
-        "severity": "curse"
+        "severity": "normal"
     },
     {
         "debuff_id": "fragile",
         "debuff_name": "脆弱",
         "debuff_icon": "res://icon.svg",
         "debuff_tooltip": "每回合防御-1（最低0）",
-        "debuff_res": "res://scripts/buff/fragile_buff.gd",
+        "debuff_res": "res://scripts/debuff/fragile_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
-        "severity": "curse"
+        "severity": "boss"
     }
 ]

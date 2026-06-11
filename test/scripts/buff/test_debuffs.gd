@@ -102,7 +102,7 @@ func test_fragile_buff() -> void:
 	c.player_defense = 5
 
 	var meta = {"buff_id": "fragile", "family": "", "tags": [], "buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "fragile tooltip"}
-	var buff = create_and_set_buff("res://scripts/buff/fragile_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/debuff/fragile_buff.gd", meta)
 
 	# set_buff时记录了防御值_before_fragile（内部变量，通过clear_buff行为验证）
 	# process_buff后防御-1
@@ -132,7 +132,7 @@ func test_fragile_buff() -> void:
 	# 边界：初始防御为0时set再clear
 	c.player_defense = 0
 	var meta2 = {"buff_id": "fragile2", "family": "", "tags": [], "buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "fragile tooltip"}
-	var buff2 = create_and_set_buff("res://scripts/buff/fragile_buff.gd", meta2)
+	var buff2 = create_and_set_buff("res://scripts/debuff/fragile_buff.gd", meta2)
 	# defense=0, _before_fragile=0
 	buff2.process_buff()
 	assert_eq(c.player_defense, 0, "fragile: defense stays 0 when starting at 0")
@@ -145,7 +145,7 @@ func test_attack_score_down_buff() -> void:
 	var c = Current
 
 	var meta = {"buff_id": "attack_score_down", "family": "", "tags": [], "buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "attack score down tooltip"}
-	var buff = create_and_set_buff("res://scripts/buff/attack_score_down_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/debuff/attack_score_down_buff.gd", meta)
 
 	# total_score=100时减少20（int(100*0.20)=20）
 	c.total_score = 100
@@ -184,7 +184,7 @@ func test_disable_points_buff() -> void:
 		"buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "disable points",
 		"data": {"disabled_points": [1, 6]}
 	}
-	var buff = create_and_set_buff("res://scripts/buff/disable_points_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/debuff/disable_points_buff.gd", meta)
 
 	# set_buff后禁用的点数分数应被设为0
 	assert_eq(c.one_score, 0, "disable_points: one_score should be 0 after set_buff")
@@ -216,7 +216,7 @@ func test_disable_dice_type_buff() -> void:
 		"buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "disable dice type",
 		"data": {"disabled_types": ["duizi", "shunzi"]}
 	}
-	var buff = create_and_set_buff("res://scripts/buff/disable_dice_type_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/debuff/disable_dice_type_buff.gd", meta)
 
 	# set_buff后禁用的骰型百分比应被设为0
 	assert_eq(c.duizi_percent, 0, "disable_dice_type: duizi_percent should be 0 after set_buff")

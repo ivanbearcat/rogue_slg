@@ -2,12 +2,12 @@ extends Buff
 
 ## 点数到图标的映射
 const POINT_ICON_MAP := {
-	1: "res://images/enemy_icon/disable_one.png",
-	2: "res://images/enemy_icon/disable_two.png",
-	3: "res://images/enemy_icon/disable_three.png",
-	4: "res://images/enemy_icon/disable_four.png",
-	5: "res://images/enemy_icon/disable_five.png",
-	6: "res://images/enemy_icon/disable_six.png",
+	1: "res://images/debuff_icon/disable_one.png",
+	2: "res://images/debuff_icon/disable_two.png",
+	3: "res://images/debuff_icon/disable_three.png",
+	4: "res://images/debuff_icon/disable_four.png",
+	5: "res://images/debuff_icon/disable_five.png",
+	6: "res://images/debuff_icon/disable_six.png",
 }
 
 func _init(meta: Dictionary = {}, game_manager_node: Node2D = null) -> void:

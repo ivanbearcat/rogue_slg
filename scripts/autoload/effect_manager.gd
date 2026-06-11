@@ -100,7 +100,7 @@ func stage_change_effect():
 	var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween2.tween_property(game_manager.stage_effect_ui, "scale:y", 0, 0.1)
 
-## 获得诅咒效果
+## 获得BOSS效果
 func debuff_change_effect():
 	var tween = create_tween().set_ease(Tween.EASE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	game_manager.debuff_effect_ui.scale.y = 0

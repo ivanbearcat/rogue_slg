@@ -179,7 +179,7 @@ var buff_refresh_cost := 1:
 ## 关卡切换效果
 @onready var stage_effect_ui: Control = $stage_effect_ui
 @onready var stage_effect_label: RichTextLabel = %stage_effect_label
-## 诅咒切换效果
+## BOSS效果切换效果
 @onready var debuff_effect_ui: Control = $debuff_effect_ui
 @onready var debuff_effect_label: RichTextLabel = %debuff_effect_label
 ## 升级时的卡牌数据
@@ -432,10 +432,10 @@ func _spawn_elite_slime():
 	## 设置红色轮廓
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 0))
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-	## 施加1个随机诅咒debuff
+	## 施加1个随机BOSS debuff
 	var curse_debuffs = []
 	for debuff_row in debuff_json_data:
-		if debuff_row.get("severity", "normal") == "curse":
+		if debuff_row.get("severity", "normal") == "boss":
 			curse_debuffs.append(debuff_row)
 	if not curse_debuffs.is_empty():
 		var debuff_row = curse_debuffs.pick_random()
@@ -468,17 +468,17 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 	## 设置深紫色轮廓
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 18.892))
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-	## 施加BOSS诅咒：先固定后随机，从stage_config读取配置
+	## 施加BOSS效果：先固定后随机，从stage_config读取配置
 	var fixed_curses: Array = stage_config.get("boss_fixed_curses", [])
 	var curse_count: int = stage_config.get("boss_curse_count", 1)
 	## 收集curse池
 	var curse_debuffs = []
 	for debuff_row in debuff_json_data:
-		if debuff_row.get("severity", "normal") == "curse":
+		if debuff_row.get("severity", "normal") == "boss":
 			curse_debuffs.append(debuff_row)
 	var applied_debuff_ids: Array = []
 	var applied_debuff_icons: String = ""
-	## 1. 先施加固定诅咒
+	## 1. 先施加固定BOSS效果
 	for fixed_id in fixed_curses:
 		var fixed_row = null
 		for debuff_row in curse_debuffs:
@@ -490,7 +490,7 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 			BuffSystem.callv("set_" + fixed_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
 			applied_debuff_ids.append(fixed_id)
 			applied_debuff_icons += " [img=15 ]" + fixed_row["debuff_icon"] + "[/img]"
-	## 2. 再从curse池中（排除已施加的固定诅咒）随机抽取boss_curse_count个不重复诅咒
+	## 2. 再从BOSS效果池中（排除已施加的固定效果）随机抽取boss_curse_count个不重复BOSS效果
 	var available_curses = []
 	for debuff_row in curse_debuffs:
 		if debuff_row["debuff_id"] not in applied_debuff_ids:
@@ -687,7 +687,7 @@ func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
 func _set_stage_debuff(boss=0):
 	var curse_debuffs = []
 	for debuff_row in debuff_json_data:
-		if debuff_row.get("severity", "normal") == "curse":
+		if debuff_row.get("severity", "normal") == "boss":
 			curse_debuffs.append(debuff_row)
 	if curse_debuffs.is_empty():
 		return
@@ -695,12 +695,12 @@ func _set_stage_debuff(boss=0):
 		var debuff_row = debuff_json_data.pick_random()
 		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
-		debuff_effect_label.text = "获得诅咒  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+		debuff_effect_label.text = "获得BOSS效果  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 	else:
 		var debuff_row = curse_debuffs.pick_random()
 		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
-		debuff_effect_label.text = "获得诅咒  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+		debuff_effect_label.text = "获得BOSS效果  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 
 func _set_buff(buff_row):
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)

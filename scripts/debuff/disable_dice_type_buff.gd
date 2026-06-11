@@ -2,11 +2,11 @@ extends Buff
 
 ## 骰型到图标的映射
 const TYPE_ICON_MAP := {
-	"duizi": "res://images/enemy_icon/disable_duizi.png",
-	"shunzi": "res://images/enemy_icon/disable_shunzi.png",
-	"tongse": "res://images/enemy_icon/disable_tongse.png",
-	"tongdui": "res://images/enemy_icon/disable_tongdui.png",
-	"tongshun": "res://images/enemy_icon/disable_tongshun.png",
+	"duizi": "res://images/debuff_icon/disable_duizi.png",
+	"shunzi": "res://images/debuff_icon/disable_shunzi.png",
+	"tongse": "res://images/debuff_icon/disable_tongse.png",
+	"tongdui": "res://images/debuff_icon/disable_tongdui.png",
+	"tongshun": "res://images/debuff_icon/disable_tongshun.png",
 }
 
 func _init(meta: Dictionary = {}, game_manager_node: Node2D = null) -> void:
