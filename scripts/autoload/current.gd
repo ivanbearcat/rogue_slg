@@ -594,8 +594,6 @@ var potion_max: int:
 		return _potion_max
 ## 铁胃减伤值（0=未激活，1=激活铁胃后每回合伤害-1）
 var iron_stomach_reduction: int = 0
-## 死线行者是否激活（HP≤2时扣血减半）
-var deadline_walker_active: bool = false
 
 
 

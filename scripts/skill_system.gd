@@ -157,10 +157,15 @@ func _process_dropped_dice(attack_slime_array_info: Array, dice_type_result: Arr
 	## 清空掉落格子（骰子已被消耗或已加入dropped_dice）
 	Current._drop_slot_dice = null  ## 临时清空，不触发UI更新
 	## 检查禁用掉落格子debuff（通过检查no_drop_slot_buff是否在buff列表中）
+	var buff_sys = game_manager.get_node("/root/BuffSystem")
+	var timing_arrays = buff_sys._get_timing_arrays("pre_hero_turn")
 	var no_drop_slot_active := false
-	for buff in game_manager.get_node("/root/BuffSystem").pre_hero_turn_buff_stage:
-		if buff.buff_meta.get("debuff_id", "") == "no_drop_slot":
-			no_drop_slot_active = true
+	for buff_list in timing_arrays:
+		for buff in buff_list:
+			if buff.buff_meta.get("debuff_id", "") == "no_drop_slot":
+				no_drop_slot_active = true
+				break
+		if no_drop_slot_active:
 			break
 	if no_drop_slot_active:
 		Current.drop_slot_dice = null
@@ -178,12 +183,14 @@ func _apply_drop_bonus():
 		return
 	## 扫描 BuffSystem 中所有 post_attack_buff，找 drop_bonus
 	var buff_sys = BuffSystem
-	for buff_list in [buff_sys.post_attack_buff_once, buff_sys.post_attack_buff_stage, buff_sys.post_attack_buff_always]:
+	var timing_arrays = buff_sys._get_timing_arrays("post_attack")
+	for i in range(timing_arrays.size()):
+		var buff_list = timing_arrays[i]
 		for buff in buff_list:
 			if buff.buff_meta.get("buff_id", "") == "drop_bonus":
 				await buff.process_buff()
 				## ONCE类型用完移除
-				if buff_list == buff_sys.post_attack_buff_once:
+				if i == 0:  ## index 0 = ONCE
 					buff_list.erase(buff)
 					buff.clear_buff()
 				return

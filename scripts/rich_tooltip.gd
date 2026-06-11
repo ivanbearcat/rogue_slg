@@ -28,10 +28,15 @@ func _ready() -> void:
 	mouse_exited.connect(_on_mouse_exited)
 
 func _on_mouse_entered() -> void:
-	# 优先使用动态tooltip（buff场景）
+	# 优先使用动态tooltip
 	if has_meta("buff_meta"):
 		var meta = get_meta("buff_meta")
-		var dynamic_text = TooltipFormatter.format_buff(meta)
+		# 判断是 buff 还是 debuff：debuff 数据有 debuff_icon 键
+		var dynamic_text: String
+		if meta.has("debuff_icon") or meta.has("debuff_name"):
+			dynamic_text = TooltipFormatter.format_debuff(meta)
+		else:
+			dynamic_text = TooltipFormatter.format_buff(meta)
 		TooltipManager.show_tooltip(self, dynamic_text)
 	elif not _rich_tooltip_text.is_empty():
 		# fallback：使用缓存的_rich_tooltip_text（非buff场景）

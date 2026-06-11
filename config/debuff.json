@@ -1,102 +1,27 @@
 [
     {
-        "debuff_id": "disable_one",
-        "debuff_name": "禁用一点",
-        "debuff_icon": "res://images/enemy_icon/disable_one.png",
-        "debuff_tooltip": "1点的基础分数变为0",
-        "debuff_res": "res://scripts/buff/disable_one_buff.gd",
+        "debuff_id": "disable_points",
+        "debuff_name": "禁用1种点数",
+        "debuff_icon": "res://images/enemy_icon/disable_points.png",
+        "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）",
+        "debuff_res": "res://scripts/buff/disable_points_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
+        "severity": "normal",
+        "data": {
+            "candidate_points": [1, 2, 3, 4, 5, 6]
+        }
     },
     {
-        "debuff_id": "disable_two",
-        "debuff_name": "禁用二点",
-        "debuff_icon": "res://images/enemy_icon/disable_two.png",
-        "debuff_tooltip": "2点的基础分数变为0",
-        "debuff_res": "res://scripts/buff/disable_two_buff.gd",
+        "debuff_id": "disable_dice_type",
+        "debuff_name": "禁用1种骰型",
+        "debuff_icon": "res://images/enemy_icon/disable_dice_type.png",
+        "debuff_tooltip": "随机1种骰型的倍率变为0%",
+        "debuff_res": "res://scripts/buff/disable_dice_type_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_three",
-        "debuff_name": "禁用三点",
-        "debuff_icon": "res://images/enemy_icon/disable_three.png",
-        "debuff_tooltip": "3点的基础分数变为0",
-        "debuff_res": "res://scripts/buff/disable_three_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_four",
-        "debuff_name": "禁用四点",
-        "debuff_icon": "res://images/enemy_icon/disable_four.png",
-        "debuff_tooltip": "4点的基础分数变为0",
-        "debuff_res": "res://scripts/buff/disable_four_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_five",
-        "debuff_name": "禁用五点",
-        "debuff_icon": "res://images/enemy_icon/disable_five.png",
-        "debuff_tooltip": "5点的基础分数变为0",
-        "debuff_res": "res://scripts/buff/disable_five_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_six",
-        "debuff_name": "禁用六点",
-        "debuff_icon": "res://images/enemy_icon/disable_six.png",
-        "debuff_tooltip": "6点的基础分数变为0",
-        "debuff_res": "res://scripts/buff/disable_six_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_duizi",
-        "debuff_name": "禁用对子骰型",
-        "debuff_icon": "res://images/enemy_icon/disable_duizi.png",
-        "debuff_tooltip": "对子骰型的倍率变为0%",
-        "debuff_res": "res://scripts/buff/disable_duizi_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_shunzi",
-        "debuff_name": "禁用顺子骰型",
-        "debuff_icon": "res://images/enemy_icon/disable_shunzi.png",
-        "debuff_tooltip": "顺子骰型的倍率变为0%",
-        "debuff_res": "res://scripts/buff/disable_shunzi_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_tongse",
-        "debuff_name": "禁用同色骰型",
-        "debuff_icon": "res://images/enemy_icon/disable_tongse.png",
-        "debuff_tooltip": "同色骰型的倍率变为0%",
-        "debuff_res": "res://scripts/buff/disable_tongse_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_tongdui",
-        "debuff_name": "禁用同对骰型",
-        "debuff_icon": "res://images/enemy_icon/disable_tongdui.png",
-        "debuff_tooltip": "同对骰型的倍率变为0%",
-        "debuff_res": "res://scripts/buff/disable_tongdui_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "disable_tongshun",
-        "debuff_name": "禁用同顺骰型",
-        "debuff_icon": "res://images/enemy_icon/disable_tongshun.png",
-        "debuff_tooltip": "同顺骰型的倍率变为0%",
-        "debuff_res": "res://scripts/buff/disable_tongshun_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
+        "severity": "normal",
+        "data": {
+            "candidate_types": ["duizi", "shunzi", "tongse", "tongdui", "tongshun"]
+        }
     },
     {
         "debuff_id": "target_score_up",

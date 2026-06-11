@@ -1171,9 +1171,6 @@ func _apply_hp_damage():
 	## 铁胃减伤：最终伤害-1（最少0）
 	if damage > 0 and Current.iron_stomach_reduction > 0:
 		damage = maxi(0, damage - Current.iron_stomach_reduction)
-	## 死线行者：HP≤2时扣血减半（向下取整）
-	if damage > 0 and Current.deadline_walker_active and Current.player_hp <= 2:
-		damage = int(damage / 2.0)
 	if damage > 0:
 		Current.player_hp -= damage
 		## HP扣减视觉反馈
@@ -1189,12 +1186,12 @@ func _apply_score_heal() -> void:
 		return
 	## 累加本回合得分
 	Current.score_heal_accumulated += Current.once_total_score
-	## 计算有效阈值（基础阈值 - 嗜血本能降低 - 逆境翻盘降低）
+	## 计算有效阈值（基础阈值 - 嗜血战意降低 - 逆境翻盘降低）
 	var effective_threshold := Current.score_heal_threshold
-	## 嗜血本能：每个-5
-	var blood_thirst_count = BuffSystem.get_buffs_by_tag("blood_thirst").size()
-	if blood_thirst_count > 0:
-		effective_threshold = maxi(1, effective_threshold - blood_thirst_count * 5)
+	## 嗜血战意：每个-5
+	var blood_fury_count = BuffSystem.get_buffs_by_tag("blood_fury").size()
+	if blood_fury_count > 0:
+		effective_threshold = maxi(1, effective_threshold - blood_fury_count * 5)
 	## 逆境翻盘：超过防御值的史莱姆每只-3
 	if BuffSystem.is_buff_registered("comeback_king"):
 		var slime_count = 0
@@ -1206,8 +1203,8 @@ func _apply_score_heal() -> void:
 			effective_threshold = maxi(1, effective_threshold - excess * 3)
 	## 循环检查阈值获得血瓶
 	while Current.score_heal_accumulated >= effective_threshold and Current.potion_count < Current.potion_max:
-		## 有战意高昂时溢出保留，无时清零
-		if BuffSystem.is_buff_registered("battle_fury"):
+		## 有嗜血战意时溢出保留，无时清零
+		if BuffSystem.is_buff_registered("blood_fury"):
 			Current.score_heal_accumulated -= effective_threshold
 		else:
 			Current.score_heal_accumulated = 0
@@ -1217,8 +1214,8 @@ func _apply_score_heal() -> void:
 		Current.score_heal_threshold += Current.score_heal_threshold_increase
 		## 重新计算有效阈值（阈值已上涨）
 		effective_threshold = Current.score_heal_threshold
-		if blood_thirst_count > 0:
-			effective_threshold = maxi(1, effective_threshold - blood_thirst_count * 5)
+		if blood_fury_count > 0:
+			effective_threshold = maxi(1, effective_threshold - blood_fury_count * 5)
 		if BuffSystem.is_buff_registered("comeback_king"):
 			var slime_count2 = 0
 			for _slime in Current.all_enemy_array:
@@ -1235,12 +1232,14 @@ func _trigger_drop_bonus():
 	if Current.dropped_dice_count <= 0:
 		return
 	var buff_sys = BuffSystem
-	for buff_list in [buff_sys.post_attack_buff_once, buff_sys.post_attack_buff_stage, buff_sys.post_attack_buff_always]:
+	var timing_arrays = buff_sys._get_timing_arrays("post_attack")
+	for i in range(timing_arrays.size()):
+		var buff_list = timing_arrays[i]
 		for buff in buff_list:
 			if buff.buff_meta.get("buff_id", "") == "drop_bonus":
 				await buff.process_buff()
 				## ONCE类型用完移除
-				if buff_list == buff_sys.post_attack_buff_once:
+				if i == 0:  ## index 0 = ONCE
 					buff_list.erase(buff)
 					buff.clear_buff()
 				return

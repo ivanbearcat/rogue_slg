@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bjfg3h8jj4w4k"]
+
+[ext_resource type="Script" uid="uid://cpvjttypokqu3" path="res://test/scripts/buff/buff_test_runner.gd" id="1_bhoup"]
+[ext_resource type="Script" uid="uid://gjghbijkl4r0" path="res://test/scripts/buff/mock_game_manager.gd" id="2_2dgmx"]
+
+[node name="BuffTestScene" type="Node2D" unique_id=1966797789]
+script = ExtResource("1_bhoup")
+
+[node name="game_manager" type="Node2D" parent="." unique_id=1001785780]
+script = ExtResource("2_2dgmx")

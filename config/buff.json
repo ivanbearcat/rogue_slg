@@ -34,23 +34,6 @@
         ]
     },
     {
-        "buff_id": "slime_attack_score_increase",
-        "buff_name": "史莱姆数量攻击加分",
-        "buff_icon": "res://images/buff_icon/slime_attack_score_increase.png",
-        "buff_tooltip": "攻击后，每有1个史莱姆，以这次得分为基础，额外增加2%倍率的分数",
-        "buff_res": "res://scripts/buff/slime_attack_score_increase_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 9,
-        "family": "swarm",
-        "tags": [
-            "on_attack",
-            "slime_count",
-            "linear",
-            "aggression",
-            "rare"
-        ]
-    },
-    {
         "buff_id": "full_range_slime_double_score",
         "buff_name": "技能打满分数翻倍",
         "buff_icon": "res://images/buff_icon/full_range_slime_double_score.png",
@@ -272,23 +255,6 @@
         ]
     },
     {
-        "buff_id": "kill_combo",
-        "buff_name": "击杀连击",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "每击杀1个史莱姆，以这次得分为基础，额外增加4%倍率的分数",
-        "buff_res": "res://scripts/buff/kill_combo_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 7,
-        "family": "combo",
-        "tags": [
-            "on_kill",
-            "movement",
-            "linear",
-            "aggression",
-            "common"
-        ]
-    },
-    {
         "buff_id": "dice_master",
         "buff_name": "骰型大师",
         "buff_icon": "res://icon.svg",
@@ -320,23 +286,6 @@
             "threshold",
             "aggression",
             "common"
-        ]
-    },
-    {
-        "buff_id": "combo_storm",
-        "buff_name": "连击风暴",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "上回合得分>0，以这次得分为基础，额外增加10%倍率的分数",
-        "buff_res": "res://scripts/buff/combo_storm_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 7,
-        "family": "combo",
-        "tags": [
-            "on_attack",
-            "movement",
-            "ramping",
-            "aggression",
-            "rare"
         ]
     },
     {
@@ -782,7 +731,7 @@
         "buff_id": "chromatic_frenzy",
         "buff_name": "色彩狂热",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "≥3色攻击+15%，但每回合1个随机史莱姆变色",
+        "buff_tooltip": "≥3色+20%，≤1色-10%",
         "buff_res": "res://scripts/buff/chromatic_frenzy_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 7,
@@ -845,17 +794,17 @@
         ]
     },
     {
-        "buff_id": "combo_frenzy",
-        "buff_name": "连击狂热",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "连续≥3回合得分>0+20%",
-        "buff_res": "res://scripts/buff/combo_frenzy_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 7,
+        "buff_id": "combo_surge",
+        "buff_name": "连击涌潮",
+        "buff_icon": "res://images/buff_icon/combo_surge.png",
+        "buff_tooltip": "连续得分回合每+1叠层+7%，上限30%",
+        "buff_res": "res://scripts/buff/combo_surge_buff.gd",
+        "buff_type": "post_hero_move_buff",
+        "buff_price": 8,
         "family": "combo",
         "tags": [
-            "on_attack",
-            "movement",
+            "on_turn_end",
+            "combo",
             "ramping",
             "aggression",
             "rare"
@@ -943,40 +892,6 @@
         ]
     },
     {
-        "buff_id": "blood_thirst",
-        "buff_name": "嗜血本能",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "得分回血阈值-5",
-        "buff_res": "res://scripts/buff/blood_thirst_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 7,
-        "family": "vitality",
-        "tags": [
-            "on_attack",
-            "hp",
-            "threshold",
-            "protect",
-            "rare"
-        ]
-    },
-    {
-        "buff_id": "battle_fury",
-        "buff_name": "战意高昂",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "超阈值部分每10分额外回1HP（需嗜血本能）",
-        "buff_res": "res://scripts/buff/battle_fury_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 9,
-        "family": "vitality",
-        "tags": [
-            "on_attack",
-            "hp",
-            "ramping",
-            "protect",
-            "rare"
-        ]
-    },
-    {
         "buff_id": "comeback_king",
         "buff_name": "逆境翻盘",
         "buff_icon": "res://icon.svg",
@@ -1011,23 +926,6 @@
         ]
     },
     {
-        "buff_id": "deadline_walker",
-        "buff_name": "死线行者",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "HP≤2时扣血减半（需铁胃）",
-        "buff_res": "res://scripts/buff/deadline_walker_buff.gd",
-        "buff_type": "pre_hero_turn_buff",
-        "buff_price": 9,
-        "family": "vitality",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "threshold",
-            "protect",
-            "epic"
-        ]
-    },
-    {
         "buff_id": "war_supply",
         "buff_name": "战场补给",
         "buff_icon": "res://icon.svg",
@@ -1045,6 +943,23 @@
         ]
     },
     {
+        "buff_id": "blood_fury",
+        "buff_name": "嗜血战意",
+        "buff_icon": "res://images/buff_icon/blood_fury.png",
+        "buff_tooltip": "得分回血阈值-5，超阈值溢出保留",
+        "buff_res": "res://scripts/buff/blood_fury_buff.gd",
+        "buff_type": "post_hero_move_buff",
+        "buff_price": 10,
+        "family": "vitality",
+        "tags": [
+            "on_turn_end",
+            "hp",
+            "ramping",
+            "aggression",
+            "rare"
+        ]
+    },
+    {
         "buff_id": "vitality_overlord",
         "buff_name": "生机霸主",
         "buff_icon": "res://icon.svg",
@@ -1057,23 +972,6 @@
             "multiplicative",
             "protect",
             "legendary"
-        ]
-    },
-    {
-        "buff_id": "kill_multiplier",
-        "buff_name": "击杀倍率",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "每击杀1个史莱姆，当前组合骰型的倍率+2%",
-        "buff_res": "res://scripts/buff/kill_multiplier_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 7,
-        "family": "combo",
-        "tags": [
-            "on_kill",
-            "slime_count",
-            "linear",
-            "aggression",
-            "rare"
         ]
     }
 ]

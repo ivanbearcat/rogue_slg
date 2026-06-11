@@ -8,7 +8,6 @@
 [ext_resource type="FontFile" uid="uid://bp53tlinpuypa" path="res://fonts/SourceHanSansCN-Normal.otf" id="4_76ilt"]
 [ext_resource type="Script" uid="uid://bw7e86ldckpca" path="res://scripts/coin_skill_system.gd" id="4_y6deb"]
 [ext_resource type="Texture2D" uid="uid://ced52aughmndv" path="res://images/ui_icon/direction_icon.png" id="5_og1vs"]
-[ext_resource type="Script" uid="uid://musvb8se0j1m" path="res://scripts/buff/disable_one_buff.gd" id="5_yq6so"]
 [ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="6_1gmj2"]
 [ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="6_bkbmf"]
 [ext_resource type="Texture2D" uid="uid://c17wcqa1otoo2" path="res://images/dice_one.tres" id="6_vreof"]
@@ -3632,7 +3631,6 @@ script = ExtResource("3_rragv")
 script = ExtResource("4_2wyq8")
 
 [node name="Node2D" type="Node2D" parent="buff_system" unique_id=1972479050]
-script = ExtResource("5_yq6so")
 
 [node name="coin_skill_system" type="Node2D" parent="." unique_id=202953007]
 script = ExtResource("4_y6deb")
@@ -5554,7 +5552,7 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("30_fv21b")
 theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
-text = "获得诅咒  [img=15 ]res://images/enemy_icon/disable_five.png[/img]"
+text = "获得诅咒"
 vertical_alignment = 1
 
 [node name="Control" type="Control" parent="." unique_id=515712514]
