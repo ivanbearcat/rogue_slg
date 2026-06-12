@@ -4,6 +4,7 @@ class_name Slime
 @onready var warning: Sprite2D = $Area2D/warning
 @onready var dice: AnimatedSprite2D = $Area2D/dice
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
+@onready var selected_marker: Sprite2D = $Area2D/selected_marker
 @onready var game_manager: Node2D = $"/root/game_manager"
 
 var enemy_grid_index: Vector2:
@@ -41,6 +42,11 @@ var dice_to_frame_dice: Dictionary = {
 	6: 4
 }
 
+func show_selected_marker() -> void:
+	animated_sprite_2d.material.set_shader_parameter("is_selected", true)
+
+func hide_selected_marker() -> void:
+	animated_sprite_2d.material.set_shader_parameter("is_selected", false)
 
 func _process(delta: float) -> void:
 	if target_position:

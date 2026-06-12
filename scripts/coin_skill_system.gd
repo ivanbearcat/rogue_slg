@@ -1,6 +1,7 @@
 extends Node2D
 @onready var game_manager: Node2D = $".."
 var _dice_adjust_target: Slime = null
+var _swap_first_target: Slime = null
 
 func _ready() -> void:
 	EventBus.subscribe("reset_all_button", reset_all_button)
@@ -23,6 +24,10 @@ func _ready() -> void:
 	EventBus.subscribe("mouse_down_clicked", mouse_down_clicked)
 	EventBus.subscribe("double_score", double_score)
 	EventBus.subscribe("double_score_clicked", double_score_clicked)
+	EventBus.subscribe("swap", swap)
+	EventBus.subscribe("swap_clicked", swap_clicked)
+	EventBus.subscribe("swap_cancel", _on_swap_cancel)
+	EventBus.subscribe("reset_cursor", _on_reset_cursor)
 
 func _on_timer_timeout():
 	## 按钮1
@@ -255,3 +260,93 @@ func double_score_clicked():
 	if Current.grid_index == Current.hero.hero_grid_index:
 		BuffSystem.set_post_attack_buff(DoubleScoreBuff.new(), BuffSystem.buff_type.ONCE)
 		_clicked_public_action("double_score")
+
+func swap():
+	## SELECT_1 阶段：显示所有有史莱姆格子的 target 蓝框
+	var all_slime_array = Current.all_enemy_grid_index_array
+	for grid in Current.all_grids_array:
+		if grid.grid_index in all_slime_array:
+			grid.target.show()
+	## 如果鼠标当前格子有史莱姆则显示 attack 红框
+	if Current.grid_index in all_slime_array:
+		for grid in Current.all_grids_array:
+			if Current.grid_index == grid.grid_index:
+				grid.attack.show()
+
+func swap_clicked():
+	## 动画期间禁止操作
+	if Current.action_lock:
+		return
+	## 两阶段选择逻辑
+	if not Current.slime:
+		## 点击空格子，无反应
+		return
+	if _swap_first_target == null:
+		## 第一阶段：选中第1个史莱姆
+		_swap_first_target = Current.slime
+		## 隐藏第1个目标的蓝框和红框
+		for grid in Current.all_grids_array:
+			if grid.grid_index == _swap_first_target.enemy_grid_index:
+				grid.target.hide()
+				grid.attack.hide()
+				grid.select.show()
+	else:
+		## 第二阶段：选中第2个史莱姆
+		var second_target = Current.slime
+		## 再次点击同一史莱姆，取消选择，回到第一阶段
+		if second_target == _swap_first_target:
+			for grid in Current.all_grids_array:
+				if grid.grid_index == _swap_first_target.enemy_grid_index:
+					grid.select.hide()
+					grid.target.show()
+			_swap_first_target = null
+			return
+		## 隐藏所有蓝框、红框和选中框
+		for grid in Current.all_grids_array:
+			grid.target.hide()
+			grid.attack.hide()
+			grid.select.hide()
+		## 执行交换
+		_execute_swap(_swap_first_target, second_target)
+		_swap_first_target = null
+
+func _execute_swap(slime_a: Slime, slime_b: Slime):
+	## 记录两个史莱姆位置
+	var pos_a = slime_a.position
+	var pos_b = slime_b.position
+	## 动画期间禁止操作
+	Current.action_lock = true
+	## 使用 Tween 并行动画移动到对方位置（1秒）
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(slime_a, "position", pos_b, 1.0)
+	tween.tween_property(slime_b, "position", pos_a, 1.0)
+	tween.set_parallel(false)
+	tween.tween_callback(func():
+		## 动画结束后更新A*碰撞网格
+		game_manager.reset_astar_solid()
+		## 解除操作锁定
+		Current.action_lock = false
+		## 消耗技能
+		_clicked_public_action("swap")
+	)
+
+func _on_reset_cursor():
+	## reset_cursor 时清理 swap 状态（由其他流程触发 reset_cursor 时使用）
+	_swap_first_target = null
+	for grid in Current.all_grids_array:
+		grid.select.hide()
+
+func _on_swap_cancel():
+	## swap技能专用取消处理（右键/ESC时由cursor_manager触发）
+	if _swap_first_target != null:
+		## 已选了第1个目标，取消时回到第1阶段重新选择
+		for grid in Current.all_grids_array:
+			grid.select.hide()
+		_swap_first_target = null
+		## 不调用 reset_cursor()，直接重新进入 swap 第1阶段
+		## mouse_status 仍为 swap，只需重新显示蓝框
+		swap()
+	else:
+		## 未选目标，完全取消技能
+		CursorManager.reset_cursor()

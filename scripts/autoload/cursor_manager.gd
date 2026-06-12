@@ -11,6 +11,7 @@ func _reset_grid() -> void:
 	for grid in all_grids:
 		grid.target.hide()
 		grid.attack.hide()
+		grid.select.hide()
 
 func _input(event: InputEvent) -> void:
 	## 鼠标不是默认时
@@ -25,8 +26,12 @@ func _input(event: InputEvent) -> void:
 		event.button_index == MOUSE_BUTTON_RIGHT and \
 		event.is_pressed() == true or \
 		event.is_action_pressed("esc"):
-			## 恢复鼠标
-			reset_cursor()
+			if Current.mouse_status == "swap":
+				## swap技能取消由专用事件处理，避免时序问题
+				EventBus.event_emit("swap_cancel")
+			else:
+				## 其他技能正常恢复鼠标
+				reset_cursor()
 
 func reset_cursor() -> void:
 	Input.set_custom_mouse_cursor(
@@ -50,6 +55,7 @@ func change_cursor(cursor_name):
 		"add_power": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
 		"dice_adjust": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
 		"double_score": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
+		"swap": ["res://images/mouse_icon/mouse_target.png", Vector2(18, 18)],
 		"mouse_up": ["res://images/mouse_icon/mouse_up.png", Vector2(18, 18)],
 		"mouse_left": ["res://images/mouse_icon/mouse_left.png", Vector2(18, 18)],
 		"mouse_right": ["res://images/mouse_icon/mouse_right.png", Vector2(18, 18)],

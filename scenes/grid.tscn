@@ -23,7 +23,7 @@ region = Rect2(352, 64, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fnun3"]
 atlas = ExtResource("2_70vec")
-region = Rect2(352, 80, 16, 16)
+region = Rect2(336, 64, 16, 16)
 
 [node name="grid" type="Node2D" unique_id=561312025]
 script = ExtResource("1_p7jgk")
@@ -59,6 +59,12 @@ texture = SubResource("AtlasTexture_n1vvw")
 
 [node name="cursor" type="Sprite2D" parent="Area2D" unique_id=150335868]
 visible = false
+position = Vector2(8, 8)
+texture = SubResource("AtlasTexture_fnun3")
+
+[node name="select" type="Sprite2D" parent="Area2D" unique_id=192290863]
+visible = false
+modulate = Color(0, 1, 0, 1)
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_fnun3")
 

@@ -8,7 +8,7 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	var turns = Current.consecutive_score_rounds
+	var turns = Current.consecutive_score_turns
 	if turns > 0:
 		var bonus_percent = mini(turns * 0.07, 0.30)
 		Current.public_lock_array.append("combo_surge_buff")

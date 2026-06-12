@@ -16,9 +16,9 @@ func process_buff():
 			unique_colors[slime_color_dict[scene_name]] = true
 	var color_count = unique_colors.size()
 	if color_count >= 3:
-		Current.coin += 3
+		Current.total_coins += 3
 	elif color_count <= 1:
-		Current.coin = max(0, Current.coin - 2)
+		Current.total_coins = max(0, Current.total_coins - 2)
 
 func clear_buff():
 	pass

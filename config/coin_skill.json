@@ -62,5 +62,13 @@
         "coin_skill_tooltip": "额外移动一次",
         "coin_skill_cost": 1,
         "coin_skill_shop_cost": 2
+    },
+    {
+        "coin_skill_id": "swap",
+        "coin_skill_name": "位置交换",
+        "coin_skill_icon": "res://icon.svg",
+        "coin_skill_tooltip": "交换2个史莱姆的位置",
+        "coin_skill_cost": 2,
+        "coin_skill_shop_cost": 4
     }
 ]
