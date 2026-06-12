@@ -1182,21 +1182,8 @@ func _apply_score_heal() -> void:
 		return
 	## 累加本回合得分
 	Current.score_heal_accumulated += Current.once_total_score
-	## 计算有效阈值（基础阈值 - 嗜血战意降低 - 逆境翻盘降低）
+	## 有效阈值（不再受嗜血战意或逆境翻盘降低）
 	var effective_threshold := Current.score_heal_threshold
-	## 嗜血战意：每个-5
-	var blood_fury_count = BuffSystem.get_buffs_by_tag("blood_fury").size()
-	if blood_fury_count > 0:
-		effective_threshold = maxi(1, effective_threshold - blood_fury_count * 5)
-	## 逆境翻盘：超过防御值的史莱姆每只-3
-	if BuffSystem.is_buff_registered("comeback_king"):
-		var slime_count = 0
-		for _slime in Current.all_enemy_array:
-			if is_instance_valid(_slime):
-				slime_count += 1
-		var excess = maxi(0, slime_count - Current.player_defense)
-		if excess > 0:
-			effective_threshold = maxi(1, effective_threshold - excess * 3)
 	## 循环检查阈值获得血瓶
 	while Current.score_heal_accumulated >= effective_threshold and Current.potion_count < Current.potion_max:
 		## 有嗜血战意时溢出保留，无时清零
@@ -1210,18 +1197,10 @@ func _apply_score_heal() -> void:
 		Current.score_heal_threshold += Current.score_heal_threshold_increase
 		## 重新计算有效阈值（阈值已上涨）
 		effective_threshold = Current.score_heal_threshold
-		if blood_fury_count > 0:
-			effective_threshold = maxi(1, effective_threshold - blood_fury_count * 5)
-		if BuffSystem.is_buff_registered("comeback_king"):
-			var slime_count2 = 0
-			for _slime in Current.all_enemy_array:
-				if is_instance_valid(_slime):
-					slime_count2 += 1
-			var excess2 = maxi(0, slime_count2 - Current.player_defense)
-			if excess2 > 0:
-				effective_threshold = maxi(1, effective_threshold - excess2 * 3)
-	## 血瓶已满时储备触发：accumulated保留在阈值以上，不消耗
-	## （用掉血瓶后下次_apply_score_heal自然触发）
+	## 嗜血战意溢出封顶：血瓶已满时accumulated不超过effective_threshold
+	if BuffSystem.is_buff_registered("blood_fury") and Current.potion_count >= Current.potion_max:
+		if Current.score_heal_accumulated > effective_threshold:
+			Current.score_heal_accumulated = effective_threshold
 
 ## 触发掉落奖励buff（跳过回合时也需要触发）
 func _trigger_drop_bonus():
@@ -1298,22 +1277,27 @@ func _check_stage_clear() -> bool:
 		var highest_dice_add_coin = Current.highest_dice_num - 1
 		Current.count_add_coins += highest_dice_add_coin
 		await _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin)
-		## 以战养战：过关时每只残余史莱姆回1HP
+		## 以战养战：过关时floor(残余史莱姆/3)HP（阶梯式）
 		if BuffSystem.is_buff_registered("sustain"):
 			var sustain_slime_count = 0
 			for _slime in Current.all_enemy_array:
 				if is_instance_valid(_slime):
 					sustain_slime_count += 1
 			if sustain_slime_count > 0:
-				var sustain_heal = sustain_slime_count
-				Current.player_hp = mini(Current.player_hp + sustain_heal, Current.max_hp)
-				## 生机霸主HP上限成长：若激活则每次回血max_hp+2
-				if BuffSystem.get_family_count("vitality") >= 4:
-					Current.max_hp += 2
-				if has_node("round_process_bar/hp_bar"):
-					var hp_bar = get_node("round_process_bar/hp_bar")
-					if hp_bar.has_method("play_heal_effect"):
-						hp_bar.play_heal_effect()
+				var sustain_heal = floori(sustain_slime_count / 3.0)
+				if sustain_heal > 0:
+					Current.player_hp = mini(Current.player_hp + sustain_heal, Current.max_hp)
+					if has_node("round_process_bar/hp_bar"):
+						var hp_bar = get_node("round_process_bar/hp_bar")
+						if hp_bar.has_method("play_heal_effect"):
+							hp_bar.play_heal_effect()
+		## 生机霸主：vitality系≥4时激活，过关时hp+1；若满血则max_hp+1
+		if BuffSystem.get_family_count("vitality") >= 4:
+			if Current.player_hp < Current.max_hp:
+				Current.player_hp += 1
+			else:
+				Current.max_hp += 1
+				Current.player_hp = Current.max_hp
 		## 清理关卡buff
 		EventBus.event_emit("clear_stage_buff")
 		return true
@@ -1779,11 +1763,11 @@ func _on_potion_button_pressed() -> void:
 	if Current.potion_count <= 0 or Current.player_hp >= Current.max_hp:
 		return
 	var heal_amount := 1
+	## 逆境翻盘：HP=1时血瓶恢复量+1
+	if BuffSystem.is_buff_registered("comeback_king") and Current.player_hp == 1:
+		heal_amount = 2
 	Current.potion_count -= 1
 	Current.player_hp += heal_amount
-	## 生机霸主HP上限成长：若激活则回血时max_hp+2
-	if BuffSystem.get_family_count("vitality") >= 4:
-		Current.max_hp += 2
 	## 回血视觉反馈
 	if has_node("round_process_bar/hp_bar"):
 		var hp_bar = get_node("round_process_bar/hp_bar")

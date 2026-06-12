@@ -5,7 +5,7 @@ func set_buff():
 	pass
 
 func process_buff():
-	# 生机霸主 - 不参与得分维度，process_buff为空
+	# 生机霸主 - 过关回血+满血成长在外部流程 _check_stage_clear() 中通过 BuffSystem.get_family_count("vitality") >= 4 计算
 	pass
 
 func clear_buff():

@@ -48,7 +48,7 @@ const OVERLORD_EFFECTS := {
 	"resonance": "共鸣倍率每关叠层+5%（上限50%）",
 	"combo": "移动力+1，每消耗1点移动力连击倍率+3%（上限50%）",
 	"desperation": "获得1次全局免死，每有1个debuff绝境系得分额外+8%",
-	"vitality": "每次回血时最大生命值+2",
+	"vitality": "过关时hp+1；若满血则max_hp+1",
 }
 
 ## 门槛类型中文名映射

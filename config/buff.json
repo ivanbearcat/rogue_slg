@@ -829,7 +829,7 @@
         "buff_id": "comeback_king",
         "buff_name": "逆境翻盘",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "超过防御值的史莱姆每只使回血阈值-3",
+        "buff_tooltip": "HP=1时血瓶恢复量+1（即+2HP）",
         "buff_res": "res://scripts/buff/comeback_king_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 7,
@@ -846,7 +846,7 @@
         "buff_id": "sustain",
         "buff_name": "以战养战",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "过关时每只残余史莱姆回1HP",
+        "buff_tooltip": "过关时每3只残余史莱姆回1HP",
         "buff_res": "res://scripts/buff/sustain_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
@@ -880,10 +880,10 @@
         "buff_id": "blood_fury",
         "buff_name": "嗜血战意",
         "buff_icon": "res://images/buff_icon/blood_fury.png",
-        "buff_tooltip": "得分回血阈值-5，超阈值溢出保留",
+        "buff_tooltip": "超阈值溢出保留（封顶=当前阈值）",
         "buff_res": "res://scripts/buff/blood_fury_buff.gd",
         "buff_type": "post_hero_move_buff",
-        "buff_price": 10,
+        "buff_price": 7,
         "family": "vitality",
         "tags": [
             "on_turn_end",
@@ -894,10 +894,26 @@
         ]
     },
     {
+        "buff_id": "mass_kill_heal",
+        "buff_name": "屠戮盛宴",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "单次攻击击杀超过3只史莱姆回1HP",
+        "buff_res": "res://scripts/buff/mass_kill_heal_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 5,
+        "family": "vitality",
+        "tags": [
+            "on_attack",
+            "hp",
+            "aggression",
+            "common"
+        ]
+    },
+    {
         "buff_id": "vitality_overlord",
         "buff_name": "生机霸主",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "生机系Buff≥4时激活，每次回血时最大生命值+2",
+        "buff_tooltip": "生机系Buff≥4时激活，过关时hp+1；若满血则max_hp+1",
         "buff_res": "res://scripts/buff/vitality_overlord_buff.gd",
         "buff_type": "post_attack_buff",
         "auto_activate": true,
