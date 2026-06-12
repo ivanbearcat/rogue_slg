@@ -177,42 +177,7 @@ func test_life_barrier_buff() -> void:
 	buff.clear_buff()    # no rollback needed
 	assert_eq(c.player_defense, 2, "clear_buff while high HP: defense unchanged")
 
-## 4. sturdy_buff - 防御被降到0以下时clamped到1, 防御已经是1时不变
-func test_sturdy_buff() -> void:
-	_current_test = "test_sturdy_buff"
-	var c = Current
-
-	var meta = {"buff_id": "sturdy", "family": "desperation", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/sturdy_buff.gd", meta)
-
-	# set_buff不直接改防御
-	assert_eq(c.player_defense, 2, "player_defense should not change after set_buff")
-
-	# 防御正常(2)时process_buff不变
-	buff.process_buff()
-	assert_eq(c.player_defense, 2, "defense=2: process_buff should not change it")
-
-	# 防御被降到0以下时，process_buff clamp到1
-	c.player_defense = 0
-	buff.process_buff()
-	assert_eq(c.player_defense, 1, "defense=0: process_buff should clamp to 1")
-
-	# 防御为负数时
-	c.player_defense = -3
-	buff.process_buff()
-	assert_eq(c.player_defense, 1, "defense=-3: process_buff should clamp to 1")
-
-	# 防御已经是1时不变
-	c.player_defense = 1
-	buff.process_buff()
-	assert_eq(c.player_defense, 1, "defense=1: process_buff should keep at 1")
-
-	# clear_buff无操作
-	c.player_defense = 1
-	buff.clear_buff()
-	assert_eq(c.player_defense, 1, "clear_buff: defense should not change")
-
-## 5. point_guard_buff - 随机选择一个点数免疫，保存分数值，process时恢复
+## 4. point_guard_buff - 随机选择一个点数免疫，保存分数值，process时恢复
 func test_point_guard_buff() -> void:
 	_current_test = "test_point_guard_buff"
 	var c = Current

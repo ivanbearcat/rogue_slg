@@ -1,4 +1,4 @@
-﻿extends Buff
+extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -8,15 +8,16 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	if Current.dice_type_count >= 3:
-		Current.public_lock_array.append("dice_harmony_buff")
-		var add_num = int(Current.once_total_score * 0.60)
+	var kill_count = Current.slime_die_sum
+	if kill_count > 0:
+		Current.public_lock_array.append("slime_kill_empower_buff")
+		var add_num = int(Current.once_total_score * kill_count * 0.01)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)
 		Current.total_score += add_num
-		Current.public_lock_array.erase("dice_harmony_buff")
+		Current.public_lock_array.erase("slime_kill_empower_buff")
 
 func clear_buff():
 	pass

@@ -303,68 +303,26 @@ func test_slime_resonance_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 4 * 0.03), "4 slimes: score should be int(1000 * 4 * 0.03)")
 
-## 9. slime_base_score_increase_buff - scored_dice_info中每个dice对应的score+1
-func test_slime_base_score_increase_buff() -> void:
-	_current_test = "test_slime_base_score_increase_buff"
+## 9. slime_kill_empower_buff - 分数 = once_total_score × kill_count × 0.01
+func test_slime_kill_empower_buff() -> void:
+	_current_test = "test_slime_kill_empower_buff"
 	var c = Current
+	c.total_score = 0
+	c.once_total_score = 1000
 
-	var meta = {"buff_id": "slime_base_score_increase", "family": "swarm", "tags": ["attack"]}
-	var buff = create_and_set_buff("res://scripts/buff/slime_base_score_increase_buff.gd", meta)
+	var meta = {"buff_id": "slime_kill_empower", "family": "swarm", "tags": ["on_kill", "slime_count", "linear", "aggression", "rare"]}
+	var buff = create_and_set_buff("res://scripts/buff/slime_kill_empower_buff.gd", meta)
 
-	# 空scored_dice_info - 不影响任何分数
+	# 0击杀时分数不变
+	c.slime_die_sum = 0
 	buff.process_buff()
-	assert_eq(c.one_score, 0, "Empty scored_dice_info: one_score should remain 0")
-	assert_eq(c.six_score, 0, "Empty scored_dice_info: six_score should remain 0")
+	assert_eq(c.total_score, 0, "0 kills: total_score should not change")
 
-	# scored_dice_info中有[slime, 1], [slime, 3], [slime, 6]
-	c.scored_dice_info = [["slime", 1], ["slime", 3], ["slime", 6]]
+	# 3击杀：int(1000 * 3 * 0.01) = 30
+	c.total_score = 0
+	c.slime_die_sum = 3
 	buff.process_buff()
-	assert_eq(c.one_score, 1, "After process: one_score should be 1")
-	assert_eq(c.three_score, 1, "After process: three_score should be 1")
-	assert_eq(c.six_score, 1, "After process: six_score should be 1")
-	assert_eq(c.two_score, 0, "After process: two_score should remain 0")
-
-	# 重复的dice type: 两个[slime, 2]
-	c.one_score = 0; c.three_score = 0; c.six_score = 0
-	c.scored_dice_info = [["slime", 2], ["slime", 2]]
-	buff.process_buff()
-	assert_eq(c.two_score, 2, "Two dice with type 2: two_score should be 2")
-
-## 10. slime_percent_score_increase_buff - active_dice_types中每个type对应的percent+2
-func test_slime_percent_score_increase_buff() -> void:
-	_current_test = "test_slime_percent_score_increase_buff"
-	var c = Current
-
-	var meta = {"buff_id": "slime_percent_score_increase", "family": "swarm", "tags": ["attack"]}
-	var buff = create_and_set_buff("res://scripts/buff/slime_percent_score_increase_buff.gd", meta)
-
-	# 空active_dice_types - 不影响任何percent
-	buff.process_buff()
-	assert_eq(c.duizi_percent, 0, "Empty active_dice_types: duizi_percent should remain 0")
-	assert_eq(c.shunzi_percent, 0, "Empty active_dice_types: shunzi_percent should remain 0")
-
-	# active_dice_types包含"duizi"和"shunzi"
-	c.active_dice_types = ["duizi", "shunzi"]
-	buff.process_buff()
-	assert_eq(c.duizi_percent, 2, "After process: duizi_percent should be 2")
-	assert_eq(c.shunzi_percent, 2, "After process: shunzi_percent should be 2")
-	assert_eq(c.tongse_percent, 0, "After process: tongse_percent should remain 0")
-
-	# 所有5种type
-	c.duizi_percent = 0; c.shunzi_percent = 0
-	c.active_dice_types = ["duizi", "shunzi", "tongse", "tongdui", "tongshun"]
-	buff.process_buff()
-	assert_eq(c.duizi_percent, 2, "All types: duizi_percent should be 2")
-	assert_eq(c.shunzi_percent, 2, "All types: shunzi_percent should be 2")
-	assert_eq(c.tongse_percent, 2, "All types: tongse_percent should be 2")
-	assert_eq(c.tongdui_percent, 2, "All types: tongdui_percent should be 2")
-	assert_eq(c.tongshun_percent, 2, "All types: tongshun_percent should be 2")
-
-	# 重复type: 两个"duizi"
-	c.duizi_percent = 0
-	c.active_dice_types = ["duizi", "duizi"]
-	buff.process_buff()
-	assert_eq(c.duizi_percent, 4, "Two duizi types: duizi_percent should be 4")
+	assert_eq(c.total_score, int(1000 * 3 * 0.01), "3 kills: score should be int(once_total_score * 3 * 0.01)")
 
 ## 11. attack_power_slime_score_increase_buff - killed_power_slime为true时触发
 func test_attack_power_slime_score_increase_buff() -> void:

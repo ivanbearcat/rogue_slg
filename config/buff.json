@@ -187,11 +187,11 @@
         ]
     },
     {
-        "buff_id": "slime_base_score_increase",
-        "buff_name": "击杀史莱姆全点数分值+1",
-        "buff_icon": "res://images/buff_icon/slime_base_score_increase.png",
-        "buff_tooltip": "每击杀1个史莱姆，被击杀骰子的点数分值+1",
-        "buff_res": "res://scripts/buff/slime_base_score_increase_buff.gd",
+        "buff_id": "slime_kill_empower",
+        "buff_name": "击杀史莱姆倍率+1%",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每击杀1个史莱姆，以这次得分为基础，额外增加1%倍率的分数",
+        "buff_res": "res://scripts/buff/slime_kill_empower_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
         "family": "swarm",
@@ -200,24 +200,7 @@
             "slime_count",
             "linear",
             "aggression",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "slime_percent_score_increase",
-        "buff_name": "击杀史莱姆全骰型倍率+2%",
-        "buff_icon": "res://images/buff_icon/slime_percent_score_increase.png",
-        "buff_tooltip": "每击杀1个史莱姆，当前组合骰型的倍率+2%",
-        "buff_res": "res://scripts/buff/slime_percent_score_increase_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 7,
-        "family": "swarm",
-        "tags": [
-            "on_kill",
-            "slime_count",
-            "linear",
-            "aggression",
-            "common"
+            "rare"
         ]
     },
     {
@@ -255,20 +238,20 @@
         ]
     },
     {
-        "buff_id": "dice_master",
-        "buff_name": "骰型大师",
+        "buff_id": "dice_mastery",
+        "buff_name": "骰型精通",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "一次攻击触发2种及以上骰型，以这次得分为基础，额外增加40%倍率的分数",
-        "buff_res": "res://scripts/buff/dice_master_buff.gd",
+        "buff_tooltip": "一次攻击触发≥2种骰型+30%，≥3种+60%",
+        "buff_res": "res://scripts/buff/dice_mastery_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 9,
+        "buff_price": 7,
         "family": "resonance",
         "tags": [
             "on_attack",
             "color",
             "threshold",
             "aggression",
-            "epic"
+            "rare"
         ]
     },
     {
@@ -476,23 +459,7 @@
             "score_shield"
         ]
     },
-    {
-        "buff_id": "sturdy",
-        "buff_name": "坚韧体质",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "防御不会低于1",
-        "buff_res": "res://scripts/buff/sturdy_buff.gd",
-        "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5,
-        "family": "desperation",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "static",
-            "protect",
-            "common"
-        ]
-    },
+
     {
         "buff_id": "swarm_heart",
         "buff_name": "潮涌之心",
@@ -744,23 +711,7 @@
             "rare"
         ]
     },
-    {
-        "buff_id": "dice_harmony",
-        "buff_name": "骰型和谐",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "≥3种骰型+60%",
-        "buff_res": "res://scripts/buff/dice_harmony_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 9,
-        "family": "resonance",
-        "tags": [
-            "on_attack",
-            "color",
-            "threshold",
-            "aggression",
-            "epic"
-        ]
-    },
+
     {
         "buff_id": "resonance_overlord",
         "buff_name": "共鸣霸主",

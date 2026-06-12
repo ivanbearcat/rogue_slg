@@ -207,14 +207,14 @@ func test_resonance_chain_buff() -> void:
 	assert_eq(buff._chain_count, 0, "No color>=2: chain should remain 0")
 	assert_eq(Current.total_score, 0, "No color>=2: score should not change")
 
-## 4. dice_master_buff - dice_type_count≥2→int(once×0.40); =1不触发
-func test_dice_master_buff() -> void:
-	_current_test = "test_dice_master_buff"
+## 4. dice_mastery_buff - 阶梯式：≥2种+30%，≥3种+60%，=1不触发
+func test_dice_mastery_buff() -> void:
+	_current_test = "test_dice_mastery_buff"
 	Current.once_total_score = 250
 	Current.total_score = 0
 
 	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": []}
-	var buff = create_and_set_buff("res://scripts/buff/dice_master_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/buff/dice_mastery_buff.gd", meta)
 
 	# dice_type_count=1→不触发
 	Current.dice_type_count = 1
@@ -222,44 +222,23 @@ func test_dice_master_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, 0, "dice_type_count=1: should not trigger")
 
-	# dice_type_count=2→触发
+	# dice_type_count=2→+30%
 	Current.dice_type_count = 2
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(250 * 0.40), "dice_type_count=2: should add int(once*0.40)")
+	assert_eq(Current.total_score, int(250 * 0.30), "dice_type_count=2: should add int(once*0.30)")
 
-	# dice_type_count=3→也触发
+	# dice_type_count=3→+60%
 	Current.dice_type_count = 3
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(250 * 0.40), "dice_type_count=3: should add int(once*0.40)")
+	assert_eq(Current.total_score, int(250 * 0.60), "dice_type_count=3: should add int(once*0.60)")
 
-## 5. dice_harmony_buff - dice_type_count≥3→int(once×0.60); =2不触发
-func test_dice_harmony_buff() -> void:
-	_current_test = "test_dice_harmony_buff"
-	Current.once_total_score = 300
-	Current.total_score = 0
-
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": []}
-	var buff = create_and_set_buff("res://scripts/buff/dice_harmony_buff.gd", meta)
-
-	# dice_type_count=2→不触发
-	Current.dice_type_count = 2
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "dice_type_count=2: should not trigger")
-
-	# dice_type_count=3→触发
-	Current.dice_type_count = 3
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, int(300 * 0.60), "dice_type_count=3: should add int(once*0.60)")
-
-	# dice_type_count=5→也触发
+	# dice_type_count=5→+60%
 	Current.dice_type_count = 5
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(300 * 0.60), "dice_type_count=5: should add int(once*0.60)")
+	assert_eq(Current.total_score, int(250 * 0.60), "dice_type_count=5: should add int(once*0.60)")
 
 ## 6. resonance_overlord_buff - 被动buff（process_buff无操作）
 func test_resonance_overlord_buff() -> void:
