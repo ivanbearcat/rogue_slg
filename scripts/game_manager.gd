@@ -998,15 +998,7 @@ func skill_attack():
 		await Tools.time_sleep(0.1)
 	while get_tree().paused:
 		await Tools.time_sleep(0.1)
-	## 检查过关
-	var stage_cleared = await _check_stage_clear()
-	## 等待过关结算
-	while clear_stage_ui.visible == true:
-		await Tools.time_sleep(0.2)
-	## 等待关卡切换完成
-	while "stage_transition" in Current.public_lock_array:
-		await Tools.time_sleep(0.1)
-	## 攻击结算后，得分累计回血（在扣血之前，过关也需结算）
+	## 攻击结算后，得分累计回血（在检查过关之前，确保血瓶即时获得）
 	_apply_score_heal()
 	## 更新连续得分回合数（连击风暴/连击狂热用）
 	if Current.once_total_score > 0:
@@ -1015,6 +1007,14 @@ func skill_attack():
 		Current.consecutive_score_turns = 0
 	## 清空单次总分（移至此处，确保 _apply_score_heal 能正确读取 once_total_score）
 	Current.once_total_score = 0
+	## 检查过关
+	var stage_cleared = await _check_stage_clear()
+	## 等待过关结算
+	while clear_stage_ui.visible == true:
+		await Tools.time_sleep(0.2)
+	## 等待关卡切换完成
+	while "stage_transition" in Current.public_lock_array:
+		await Tools.time_sleep(0.1)
 	## 过关后不再扣血，但需要执行敌人回合（生成新关卡史莱姆、设置玩家回合）
 	if stage_cleared:
 		await _turn_process()
@@ -1782,6 +1782,8 @@ func _on_potion_button_pressed() -> void:
 		var hp_bar = get_node("round_process_bar/hp_bar")
 		if hp_bar.has_method("play_heal_effect"):
 			hp_bar.play_heal_effect()
+	## 使用血瓶后立即检查储备触发（血瓶满时accumulated保留在阈值以上，用掉后应立即获得新血瓶）
+	_apply_score_heal()
 
 func _on_coin_skill_1_pressed() -> void:
 	if coin_skill_1.button_pressed == false:
