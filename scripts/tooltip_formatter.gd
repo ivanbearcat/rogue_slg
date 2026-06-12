@@ -1,4 +1,4 @@
-class_name TooltipFormatter
+﻿class_name TooltipFormatter
 extends RefCounted
 
 ## BBCode富文本Tooltip格式化工具类
@@ -43,12 +43,12 @@ const OVERLORD_NAMES := {
 
 ## 领主效果描述映射
 const OVERLORD_EFFECTS := {
-	"swarm": "所有蜂群系加成×1.5",
-	"coin": "所有铸币系加成×1.5",
-	"resonance": "所有共鸣系加成×1.5",
-	"combo": "所有连击系加成×1.5",
-	"desperation": "所有绝境系加成×1.5",
-	"vitality": "所有生机系回血×1.5",
+	"swarm": "每有1个存活史莱姆，蜂群系得分额外+5%",
+	"coin": "每回合+2金币，且获得金币量20%的分数",
+	"resonance": "共鸣倍率每关叠层+5%（上限50%）",
+	"combo": "移动力+1，每消耗1点移动力连击倍率+3%（上限50%）",
+	"desperation": "获得1次全局免死，每有1个debuff绝境系得分额外+8%",
+	"vitality": "每次回血时最大生命值+2",
 }
 
 ## 门槛类型中文名映射

@@ -106,29 +106,6 @@ func test_iron_wall_buff() -> void:
 	buff.clear_buff()
 	assert_eq(c.player_defense, 0, "player_defense should be 0 after clear_buff")
 
-## 2. thorn_armor_buff - set时player_defense+1, clear时-1
-func test_thorn_armor_buff() -> void:
-	_current_test = "test_thorn_armor_buff"
-	var c = Current
-	c.player_defense = 2
-
-	var meta = {"buff_id": "thorn_armor", "family": "desperation", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/thorn_armor_buff.gd", meta)
-
-	# set_buff后defense+1
-	assert_eq(c.player_defense, 3, "player_defense should increase by 1 after set_buff")
-
-	# clear_buff后defense-1
-	buff.clear_buff()
-	assert_eq(c.player_defense, 2, "player_defense should decrease by 1 after clear_buff")
-
-	# 边界：defense=0时set再clear
-	c.player_defense = 0
-	buff.set_buff()
-	assert_eq(c.player_defense, 1, "player_defense should be 1 after set_buff from 0")
-	buff.clear_buff()
-	assert_eq(c.player_defense, 0, "player_defense should be 0 after clear_buff")
-
 ## 3. life_barrier_buff - HP≤2时+2防御, HP>2时不加, clear时减2防御（如果在低HP状态下加的）
 func test_life_barrier_buff() -> void:
 	_current_test = "test_life_barrier_buff"
@@ -392,25 +369,28 @@ func test_curse_burner_buff() -> void:
 	# clear_buff无操作
 	buff.clear_buff()
 
-## 11. desperation_overlord_buff - 被动buff，process_buff是被动标记
+## 11. desperation_overlord_buff - 绝境求生：免死授予+debuff增幅
 func test_desperation_overlord_buff() -> void:
 	_current_test = "test_desperation_overlord_buff"
 	var c = Current
-
-	var meta = {"buff_id": "desperation_overlord", "family": "desperation", "tags": ["passive"]}
+	c.total_score = 0
+	c.has_death_immunity = false
+	c.death_immunity_used = false
+	BuffSystem._last_family_accumulation = {"desperation": 17}
+	var meta = {"buff_id": "desperation_overlord", "family": "desperation", "tags": ["legendary", "multiplicative"]}
 	var buff = create_and_set_buff("res://scripts/buff/desperation_overlord_buff.gd", meta)
-
-	# set_buff不改变分数
-	assert_eq(c.total_score, 0, "total_score should not change after set_buff")
-
-	# process_buff是被动标记（逻辑在buff_system._apply_overlord_multiplier中处理）
-	var score_before = c.total_score
+	# set_buff授予免死（无论是否有4个desperation buffs）
+	assert_true(c.has_death_immunity, "desperation_overlord: should grant death immunity on set_buff")
+	assert_false(c.death_immunity_used, "desperation_overlord: death_immunity_used should be false")
+	# process_buff需要≥4，不触发
 	buff.process_buff()
-	assert_eq(c.total_score, score_before, "process_buff should not change total_score (passive)")
-
+	assert_eq(c.total_score, 0, "desperation_overlord with <4 desperation buffs: score should not change")
 	# clear_buff无操作
 	buff.clear_buff()
-	assert_eq(c.total_score, score_before, "clear_buff should not change total_score")
+	# 清理
+	BuffSystem._last_family_accumulation = {}
+	c.has_death_immunity = false
+	c.death_immunity_used = false
 
 ## 12. turn_plus_one_buff - 第一回合skip_hp_damage_this_turn = true
 func test_turn_plus_one_buff() -> void:
@@ -446,4 +426,5 @@ func test_turn_plus_one_buff() -> void:
 	assert_eq(c.skip_hp_damage_this_turn, true, "new stage round=1: skip_hp_damage_this_turn should be true")
 
 	# clear_buff无操作
-	buff3.clear_buff(
+	buff3.clear_buff()
+

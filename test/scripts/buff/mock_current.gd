@@ -93,6 +93,8 @@ var score_heal_threshold: int:
 var score_heal_threshold_increase: int = 15
 var score_heal_base_threshold: int = 35
 var iron_stomach_reduction: int = 0
+var has_death_immunity: bool = false
+var death_immunity_used: bool = false
 # 血瓶
 var _potion_count: int = 1
 var potion_count: int:
@@ -165,6 +167,8 @@ func reset_to_defaults() -> void:
 	score_heal_accumulated = 0; score_heal_threshold = 35
 	_potion_count = 1; _potion_max = 3
 	iron_stomach_reduction = 0
+	has_death_immunity = false
+	death_immunity_used = false
 	public_lock_array = []
 	if hero:
 		hero.hero_movement = 0

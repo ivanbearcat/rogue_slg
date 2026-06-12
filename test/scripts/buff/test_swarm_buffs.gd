@@ -265,22 +265,26 @@ func test_tide_crusher_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 0.50), "9 slimes: should trigger, score = int(once_total_score * 0.50)")
 
-## 7. swarm_overlord_buff - 被动buff，process_buff为空
+## 7. swarm_overlord_buff - 数量压制：每有1个存活史莱姆，蜂群系得分额外+5%
 func test_swarm_overlord_buff() -> void:
 	_current_test = "test_swarm_overlord_buff"
-
-	var meta = {"buff_id": "swarm_overlord", "family": "swarm", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/swarm_overlord_buff.gd", meta)
-
-	# 验证process_buff是被动标记（无操作）
 	var c = Current
-	var score_before = c.total_score
+	c.total_score = 0
+	# 设置family_accumulation供领主查询
+	BuffSystem._last_family_accumulation = {"swarm": 25}
+	# 添加10个史莱姆
+	for i in range(10):
+		add_slime(Vector2(i, 0))
+	var meta = {"buff_id": "swarm_overlord", "family": "swarm", "tags": ["legendary", "multiplicative"]}
+	var buff = create_and_set_buff("res://scripts/buff/swarm_overlord_buff.gd", meta)
+	# 需要蜂群系≥4才能激活，单独1个overlord不满足，process_buff应该跳过
 	buff.process_buff()
-	assert_eq(c.total_score, score_before, "swarm_overlord: process_buff should not change total_score")
-
-	# clear_buff也是空操作
+	assert_eq(c.total_score, 0, "swarm_overlord with <4 swarm buffs: should not trigger")
+	# clear_buff无操作
 	buff.clear_buff()
-	assert_eq(c.total_score, score_before, "swarm_overlord: clear_buff should not change total_score")
+	# 清理
+	Current.all_enemy_array.clear()
+	BuffSystem._last_family_accumulation = {}
 
 ## 8. slime_resonance_buff - 分数 = once_total_score × slime_count × 0.03
 func test_slime_resonance_buff() -> void:

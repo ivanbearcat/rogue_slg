@@ -922,6 +922,8 @@ func hero_move(event: InputEvent = null):
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	print(Current.id_path)
 	EventBus.event_emit("do_post_hero_move_buff")
+	## 连击霸主叠层：玩家实际移动时增加combo_ramp
+	BuffSystem.increment_combo_ramp()
 
 ## 显示技能可点击范围
 func show_skill_range():
@@ -953,9 +955,9 @@ func _turn_process():
 	Current.slime_create_num = 3  ## 重置为基础值
 	if Current.count_round >= 8 and Current.count_round <= 10:
 		Current.slime_create_num = 6
-	## 重新应用史莱姆数量加成buff（slime_plus_one、thorn_armor每回合+1史莱姆）
+	## 重新应用史莱姆数量加成buff（slime_plus_one每回合+1史莱姆）
 	for buff in buff_container.get_children():
-		if buff.has_meta("buff_meta") and buff.get_meta("buff_meta").get("buff_id", "") in ["slime_plus_one", "thorn_armor"]:
+		if buff.has_meta("buff_meta") and buff.get_meta("buff_meta").get("buff_id", "") in ["slime_plus_one"]:
 			Current.slime_create_num += 1
 
 	## 第8回合显示危险提示
@@ -1239,6 +1241,11 @@ func _trigger_drop_bonus():
 				return
 
 func _pre_hero_turn_begin():
+	## 绝境霸主免死检查：若拥有免死且未消耗，则HP=1不死亡
+	if Current.player_hp <= 0 and Current.has_death_immunity and not Current.death_immunity_used:
+		Current.death_immunity_used = true
+		Current.player_hp = 1
+		print("绝境霸主免死触发！HP恢复至1")
 	## 判断失败：HP<=0时游戏结束
 	if Current.player_hp <= 0:
 		print("游戏失败")
@@ -1298,11 +1305,11 @@ func _check_stage_clear() -> bool:
 				if is_instance_valid(_slime):
 					sustain_slime_count += 1
 			if sustain_slime_count > 0:
-				var overlord_active = BuffSystem.get_family_count("vitality") >= 4
 				var sustain_heal = sustain_slime_count
-				if overlord_active:
-					sustain_heal = ceili(sustain_heal * 1.5)
 				Current.player_hp = mini(Current.player_hp + sustain_heal, Current.max_hp)
+				## 生机霸主HP上限成长：若激活则每次回血max_hp+2
+				if BuffSystem.get_family_count("vitality") >= 4:
+					Current.max_hp += 2
 				if has_node("round_process_bar/hp_bar"):
 					var hp_bar = get_node("round_process_bar/hp_bar")
 					if hp_bar.has_method("play_heal_effect"):
@@ -1772,11 +1779,11 @@ func _on_potion_button_pressed() -> void:
 	if Current.potion_count <= 0 or Current.player_hp >= Current.max_hp:
 		return
 	var heal_amount := 1
-	var overlord_active = BuffSystem.get_family_count("vitality") >= 4
-	if overlord_active:
-		heal_amount = ceili(1 * 1.5)
 	Current.potion_count -= 1
 	Current.player_hp += heal_amount
+	## 生机霸主HP上限成长：若激活则回血时max_hp+2
+	if BuffSystem.get_family_count("vitality") >= 4:
+		Current.max_hp += 2
 	## 回血视觉反馈
 	if has_node("round_process_bar/hp_bar"):
 		var hp_bar = get_node("round_process_bar/hp_bar")

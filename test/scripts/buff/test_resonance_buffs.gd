@@ -240,21 +240,25 @@ func test_dice_mastery_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, int(250 * 0.60), "dice_type_count=5: should add int(once*0.60)")
 
-## 6. resonance_overlord_buff - 被动buff（process_buff无操作）
+## 6. resonance_overlord_buff - 共鸣叠加：共鸣系得分 × 共鸣叠层倍率
 func test_resonance_overlord_buff() -> void:
 	_current_test = "test_resonance_overlord_buff"
-
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": []}
+	var c = Current
+	c.total_score = 0
+	# 设置resonance_ramp和family_accumulation供领主查询
+	BuffSystem.resonance_ramp = 0.30
+	BuffSystem._last_family_accumulation = {"resonance": 22}
+	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": ["legendary", "multiplicative"]}
 	var buff = create_and_set_buff("res://scripts/buff/resonance_overlord_buff.gd", meta)
-
-	# process_buff是空操作（族主逻辑在buff_system._apply_overlord_multiplier()中）
-	var score_before = Current.total_score
+	# 需要共鸣系≥4才能激活
 	buff.process_buff()
-	assert_eq(Current.total_score, score_before, "resonance_overlord: process_buff should not change total_score")
-
+	# <4时不触发（只有1个overlord自身）
+	assert_eq(c.total_score, 0, "resonance_overlord with <4 resonance buffs: score should not change")
 	# clear_buff也是空操作
 	buff.clear_buff()
-	assert_eq(Current.total_score, score_before, "resonance_overlord: clear_buff should not change total_score")
+	# 清理
+	BuffSystem.resonance_ramp = 0.0
+	BuffSystem._last_family_accumulation = {}
 
 ## 7. color_predictor_buff - 每回合随机祝福1色，该色史莱姆攻击+20%
 func test_color_predictor_buff() -> void:

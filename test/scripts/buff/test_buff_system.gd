@@ -192,67 +192,97 @@ func test_once_buff_cleared_after_execution() -> void:
 	# ALWAYS buff不应被清除
 	assert_eq(bs.pipelines["pre_attack"]["ALWAYS"].size(), 1, "always array should still have 1 buff after once cleared")
 
-## 5. test_family_overlord_multiplier - ≥4同族buff时族主×1.5
-func test_family_overlord_multiplier() -> void:
-	_current_test = "test_family_overlord_multiplier"
+## 5. test_overlord_ramp_reset - clear_stage_buff resets ramp variables
+func test_overlord_ramp_reset() -> void:
+	_current_test = "test_overlord_ramp_reset"
 
-	var c = Current
-	c.total_score = 100  # 初始分数
+	var bs_script = load("res://scripts/autoload/buff_system.gd")
+	var bs = bs_script.new()
+	bs.resonance_ramp = 0.30
+	bs.combo_ramp = 0.25
+	bs._last_family_accumulation = {"swarm": 50}
+	bs.clear_stage_buff()
+
+	assert_eq(bs.resonance_ramp, 0.0, "resonance_ramp should reset to 0.0 after clear_stage_buff")
+	assert_eq(bs.combo_ramp, 0.0, "combo_ramp should reset to 0.0 after clear_stage_buff")
+	assert_eq(bs._last_family_accumulation.size(), 0, "_last_family_accumulation should be empty after clear_stage_buff")
+
+## 6. test_increment_combo_ramp - combo ramp increments and caps
+func test_increment_combo_ramp() -> void:
+	_current_test = "test_increment_combo_ramp"
 
 	var bs_script = load("res://scripts/autoload/buff_system.gd")
 	var bs = bs_script.new()
 
-	# 注册4个同族(vitality)buff + 族主buff
-	var vitality_buffs: Array = []
+	# Without 4 combo buffs, increment does nothing
+	bs.increment_combo_ramp()
+	assert_eq(bs.combo_ramp, 0.0, "combo_ramp should stay 0.0 without 4 combo buffs")
+
+	# Register 4 combo buffs
 	for i in range(4):
-		var buff = _create_mock_buff("vitality_%d" % i, "vitality", ["attack"])
+		var buff = _create_mock_buff("combo_%d" % i, "combo", ["attack"])
 		_mock_set_buff_texture(buff)
-		bs.pipelines["pre_attack"]["ALWAYS"].append(buff)
-		vitality_buffs.append(buff)
+		bs.pipelines["post_attack"]["ALWAYS"].append(buff)
 
-	# 注册族主buff
-	var overlord_buff = _create_mock_buff("vitality_overlord", "vitality", ["passive"])
-	_mock_set_buff_texture(overlord_buff)
-	bs.pipelines["pre_attack"]["ALWAYS"].append(overlord_buff)
+	# Now increment should work
+	bs.increment_combo_ramp()
+	assert_eq(bs.combo_ramp, 0.03, "combo_ramp should be 0.03 after 1 increment")
 
-	# 模拟family_accumulation: 假设vitality族累积了60分
-	var family_accumulation = {"vitality": 60}
+	# Multiple increments
+	for i in range(15):
+		bs.increment_combo_ramp()
 
-	# 调用_apply_overlord_multiplier
-	bs._apply_overlord_multiplier("pre_attack", family_accumulation)
+	# 16 total increments = 0.48, should not exceed 0.50
+	assert_lte(bs.combo_ramp, 0.50, "combo_ramp should not exceed 0.50")
 
-	# 验证追加50%奖励: bonus = roundi(60 * 0.5) = 30
-	# total_score = 100 + 30 = 130
-	assert_eq(c.total_score, 130, "overlord multiplier: total_score should be 130 (100 + 30 bonus)")
-
-## 6. test_family_overlord_no_trigger - <4同族buff不触发族主
-func test_family_overlord_no_trigger() -> void:
-	_current_test = "test_family_overlord_no_trigger"
-
-	var c = Current
-	c.total_score = 100  # 初始分数
+## 7. test_resonance_ramp_increment - resonance ramp from family contribution
+func test_resonance_ramp_increment() -> void:
+	_current_test = "test_resonance_ramp_increment"
 
 	var bs_script = load("res://scripts/autoload/buff_system.gd")
 	var bs = bs_script.new()
 
-	# 注册3个同族(vitality)buff + 族主buff（<4不触发）
-	for i in range(3):
-		var buff = _create_mock_buff("vitality_%d" % i, "vitality", ["attack"])
+	var c = Current
+	c.total_score = 100
+
+	# Register 4 resonance buffs
+	for i in range(4):
+		var buff = _create_mock_buff("resonance_%d" % i, "resonance", ["attack"])
 		_mock_set_buff_texture(buff)
-		bs.pipelines["pre_attack"]["ALWAYS"].append(buff)
+		bs.pipelines["post_attack"]["ALWAYS"].append(buff)
 
-	var overlord_buff = _create_mock_buff("vitality_overlord", "vitality", ["passive"])
-	_mock_set_buff_texture(overlord_buff)
-	bs.pipelines["pre_attack"]["ALWAYS"].append(overlord_buff)
+	# Track family contribution with a resonance buff
+	var res_buff = _create_mock_buff("res_test", "resonance", ["attack"])
+	var score_before = c.total_score
+	c.total_score = 120  # delta = 20
+	var family_accumulation = {}
+	bs._track_family_contribution(res_buff, score_before, family_accumulation)
+	assert_eq(bs.resonance_ramp, 0.05, "resonance_ramp should be 0.05 after 1 resonance contribution")
 
-	# 模拟family_accumulation
-	var family_accumulation = {"vitality": 60}
+	# Second contribution
+	score_before = c.total_score
+	c.total_score = 140
+	bs._track_family_contribution(res_buff, score_before, family_accumulation)
+	assert_eq(bs.resonance_ramp, 0.10, "resonance_ramp should be 0.10 after 2 contributions")
 
-	# 调用_apply_overlord_multiplier（不满足4个同族条件）
-	bs._apply_overlord_multiplier("pre_attack", family_accumulation)
+	# Cap at 0.50
+	bs.resonance_ramp = 0.48
+	score_before = c.total_score
+	c.total_score = 160
+	bs._track_family_contribution(res_buff, score_before, family_accumulation)
+	assert_eq(bs.resonance_ramp, 0.50, "resonance_ramp should cap at 0.50")
 
-	# 验证不追加奖励: total_score不变
-	assert_eq(c.total_score, 100, "overlord no trigger: total_score should remain 100 (<4 family buffs)")
+## 8. test_get_family_accumulation - query last family accumulation
+func test_get_family_accumulation() -> void:
+	_current_test = "test_get_family_accumulation"
+
+	var bs_script = load("res://scripts/autoload/buff_system.gd")
+	var bs = bs_script.new()
+	bs._last_family_accumulation = {"swarm": 50, "coin": 30}
+
+	assert_eq(bs.get_family_accumulation("swarm"), 50, "swarm accumulation should be 50")
+	assert_eq(bs.get_family_accumulation("coin"), 30, "coin accumulation should be 30")
+	assert_eq(bs.get_family_accumulation("resonance"), 0, "resonance accumulation should be 0 when not present")
 
 ## 7. test_clear_stage_buff - 只清除STAGE和ELITE类型
 func test_clear_stage_buff() -> void:

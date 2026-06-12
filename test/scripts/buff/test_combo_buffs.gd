@@ -319,18 +319,23 @@ func test_drop_bonus_buff() -> void:
 		Current.four_score + Current.five_score + Current.six_score
 	assert_eq(sum_after, sum_before + 1, "dropped_dice_count=1: total dice score should increase by 1")
 
-## 8. combo_overlord_buff - 被动buff（process_buff无操作）
+## 8. combo_overlord_buff - 连击惯性：移动力+1，连击系得分×连击叠层倍率
 func test_combo_overlord_buff() -> void:
 	_current_test = "test_combo_overlord_buff"
-
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "combo", "tags": []}
+	var c = Current
+	c.total_score = 0
+	var max_power_before = c.max_power
+	# 设置combo_ramp和family_accumulation供领主查询
+	BuffSystem.combo_ramp = 0.30
+	BuffSystem._last_family_accumulation = {"combo": 11}
+	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "combo", "tags": ["legendary", "multiplicative"]}
 	var buff = create_and_set_buff("res://scripts/buff/combo_overlord_buff.gd", meta)
-
-	# process_buff是空操作（族主逻辑在buff_system._apply_overlord_multiplier()中）
-	var score_before = Current.total_score
+	# set_buff时移动力+1（需要≥4 combo buffs才会触发，当前只有1个overlord自身不满足）
+	# process_buff也需要≥4，不触发
 	buff.process_buff()
-	assert_eq(Current.total_score, score_before, "combo_overlord: process_buff should not change total_score")
-
-	# clear_buff也是空操作
+	assert_eq(c.total_score, 0, "combo_overlord with <4 combo buffs: score should not change")
+	# clear_buff恢复移动力
 	buff.clear_buff()
-	assert_eq(Current.total_score, score_before, "combo_overlord: clear_buff should not change total_score")
+	# 清理
+	BuffSystem.combo_ramp = 0.0
+	BuffSystem._last_family_accumulation = {}

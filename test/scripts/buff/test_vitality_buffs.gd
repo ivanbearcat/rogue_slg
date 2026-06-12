@@ -175,19 +175,17 @@ func test_war_supply_buff() -> void:
 	buff.clear_buff()
 	assert_eq(c.total_score, score_before, "war_supply: clear_buff should not change total_score")
 
-## 6. vitality_overlord_buff - 被动buff，process_buff为空（逻辑在buff_system._apply_overlord_multiplier中）
+## 6. vitality_overlord_buff - 生机繁衍：process_buff为空（HP上限成长在game_manager中）
 func test_vitality_overlord_buff() -> void:
 	_current_test = "test_vitality_overlord_buff"
 	var c = Current
-
-	var meta = {"buff_id": "vitality_overlord", "family": "vitality", "tags": ["passive"]}
+	c.total_score = 0
+	var meta = {"buff_id": "vitality_overlord", "family": "vitality", "tags": ["legendary", "multiplicative"]}
 	var buff = create_and_set_buff("res://scripts/buff/vitality_overlord_buff.gd", meta)
-
-	# 验证process_buff是被动
+	# process_buff为空（生机领主不参与得分维度）
 	var score_before = c.total_score
 	buff.process_buff()
 	assert_eq(c.total_score, score_before, "vitality_overlord: process_buff should not change total_score")
-
 	# clear_buff也是空操作
 	buff.clear_buff()
-	assert_eq(c.total_score, score_before, "vitality_overlord: clear_buff should not change total_score"
+	assert_eq(c.total_score, score_before, "vitality_overlord: clear_buff should not change total_score")

@@ -2,6 +2,10 @@ extends Node2D
 
 @onready var game_manager: Node2D = $"/root/game_manager"
 
+var resonance_ramp: float = 0.0
+var combo_ramp: float = 0.0
+var _last_family_accumulation: Dictionary = {}
+
 enum buff_type {
 	ONCE,
 	STAGE,
@@ -63,8 +67,8 @@ func do_buff(timing: String) -> void:
 		var before := Current.total_score
 		await buff.process_buff()
 		_track_family_contribution(buff, before, family_accumulation)
-	## 族主 ×1.5 乘法
-	_apply_overlord_multiplier(timing, family_accumulation)
+	## 保存家族累积供查询
+	_last_family_accumulation = family_accumulation.duplicate()
 
 func _lifecycle_key(lifecycle: int) -> String:
 	match lifecycle:
@@ -142,6 +146,15 @@ func get_buffs_by_tag(tag: String) -> Array:
 					result.append(buff)
 	return result
 
+func increment_combo_ramp() -> void:
+	if get_family_count("combo") >= 4:
+		combo_ramp = min(combo_ramp + 0.03, 0.50)
+
+func get_family_accumulation(family: String) -> int:
+	if _last_family_accumulation.has(family):
+		return _last_family_accumulation[family]
+	return 0
+
 ## ============================================================
 ## 清理
 ## ============================================================
@@ -152,30 +165,15 @@ func clear_stage_buff():
 		for buff in pipelines[timing]["STAGE"]:
 			buff.clear_buff()
 		pipelines[timing]["STAGE"].clear()
+	resonance_ramp = 0.0
+	combo_ramp = 0.0
+	_last_family_accumulation = {}
 
 func clear_elite_buff():
 	for timing in TIMINGS:
 		for buff in pipelines[timing]["ELITE"]:
 			buff.clear_buff()
 		pipelines[timing]["ELITE"].clear()
-
-## ============================================================
-## 族主 ×1.5 乘法
-## ============================================================
-
-func _apply_overlord_multiplier(timing: String, family_accumulation: Dictionary) -> void:
-	for family_name in family_accumulation:
-		var accumulated = family_accumulation[family_name]
-		if accumulated <= 0:
-			continue
-		var family_count = get_family_count(family_name)
-		if family_count < 4:
-			continue
-		var bonus = int(accumulated * 0.5)
-		if bonus > 0:
-			Current.total_score += bonus
-			var float_number_instantiate = EffectManager.float_number_effect(bonus, "gold")
-			Current.hero.add_child(float_number_instantiate)
 
 ## ============================================================
 ## 内部辅助
@@ -189,6 +187,9 @@ func _track_family_contribution(buff: Buff, score_before: int, family_accumulati
 		if not family_accumulation.has(buff.family):
 			family_accumulation[buff.family] = 0
 		family_accumulation[buff.family] += delta
+		## 共鸣叠层：若resonance领主激活且有正向贡献，resonance_ramp += 0.05(上限0.50)
+		if buff.family == "resonance" and get_family_count("resonance") >= 4:
+			resonance_ramp = min(resonance_ramp + 0.05, 0.50)
 
 ## 获取指定时序的所有buff数组（用于game_manager直接访问数组）
 func _get_timing_arrays(timing: String) -> Array:

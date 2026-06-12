@@ -279,27 +279,25 @@ func test_tax_collector_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 0.25), "Re-set _just_bought=true: should trigger again")
 
-## 7. gold_empire_buff - 被动buff，process_buff为空（族主逻辑在buff_system）
+## 7. gold_empire_buff - 金元洪流：获得金币量20%的分数，然后金币+2
 func test_gold_empire_buff() -> void:
 	_current_test = "test_gold_empire_buff"
-
-	var meta = {"buff_id": "gold_empire", "family": "coin", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/gold_empire_buff.gd", meta)
-
-	# 验证process_buff是被动标记（无操作）
 	var c = Current
-	var score_before = c.total_score
+	c.total_score = 0
+	c.total_coins = 15
+	# 设置family_accumulation供领主查询
+	BuffSystem._last_family_accumulation = {"coin": 30}
+	var meta = {"buff_id": "gold_empire", "family": "coin", "tags": ["legendary", "multiplicative"]}
+	var buff = create_and_set_buff("res://scripts/buff/gold_empire_buff.gd", meta)
+	# 需要铸币系≥4才能激活，单独1个overlord不满足
 	buff.process_buff()
-	assert_eq(c.total_score, score_before, "gold_empire: process_buff should not change total_score")
-
-	# 验证coins不变
-	var coins_before = c.total_coins
-	buff.process_buff()
-	assert_eq(c.total_coins, coins_before, "gold_empire: process_buff should not change total_coins")
-
-	# clear_buff也是空操作
+	# <4时不触发
+	assert_eq(c.total_score, 0, "gold_empire with <4 coin buffs: score should not change")
+	assert_eq(c.total_coins, 15, "gold_empire with <4 coin buffs: coins should not change")
+	# clear_buff无操作
 	buff.clear_buff()
-	assert_eq(c.total_score, score_before, "gold_empire: clear_buff should not change total_score")
+	# 清理
+	BuffSystem._last_family_accumulation = {}
 
 ## 8. free_refresh_one_times_buff - set时zero_coin_refresh_times+1/zero_coin_refresh_max_times+1
 func test_free_refresh_one_times_buff() -> void:
