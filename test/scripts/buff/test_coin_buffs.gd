@@ -306,7 +306,7 @@ func test_free_refresh_one_times_buff() -> void:
 	c.zero_coin_refresh_times = 0
 	c.zero_coin_refresh_max_times = 0
 
-	var meta = {"buff_id": "free_refresh_one_times", "family": "coin", "tags": ["passive"]}
+	var meta = {"buff_id": "free_refresh_one_times", "family": "", "tags": ["passive"]}
 	var buff = create_and_set_buff("res://scripts/buff/free_refresh_one_times_buff.gd", meta)
 
 	# set_buff后zero_coin_refresh_times和zero_coin_refresh_max_times各+1
@@ -314,7 +314,7 @@ func test_free_refresh_one_times_buff() -> void:
 	assert_eq(c.zero_coin_refresh_max_times, 1, "After set_buff: zero_coin_refresh_max_times should be 1")
 
 	# 再设置一个buff，累加
-	var meta2 = {"buff_id": "free_refresh_one_times_2", "family": "coin", "tags": ["passive"], "buff_icon": "", "buff_tooltip": "test"}
+	var meta2 = {"buff_id": "free_refresh_one_times_2", "family": "", "tags": ["passive"], "buff_icon": "", "buff_tooltip": "test"}
 	var buff2 = create_and_set_buff("res://scripts/buff/free_refresh_one_times_buff.gd", meta2)
 	assert_eq(c.zero_coin_refresh_times, 2, "After 2nd set_buff: zero_coin_refresh_times should be 2")
 	assert_eq(c.zero_coin_refresh_max_times, 2, "After 2nd set_buff: zero_coin_refresh_max_times should be 2")

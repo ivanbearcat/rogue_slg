@@ -41,7 +41,7 @@
         "buff_res": "res://scripts/buff/full_range_slime_double_score_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
-        "family": "combo",
+        "family": "hunt",
         "tags": [
             "on_attack",
             "slime_count",
@@ -58,7 +58,7 @@
         "buff_res": "res://scripts/buff/movement_plus_one_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
-        "family": "combo",
+        "family": "swift",
         "tags": [
             "on_spawn",
             "movement",
@@ -75,7 +75,7 @@
         "buff_res": "res://scripts/buff/move_attack_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 9,
-        "family": "combo",
+        "family": "swift",
         "tags": [
             "on_attack",
             "movement",
@@ -126,7 +126,7 @@
         "buff_res": "res://scripts/buff/power_slime_plus_one_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
-        "family": "swarm",
+        "family": "",
         "tags": [
             "on_spawn",
             "slime_count",
@@ -143,7 +143,7 @@
         "buff_res": "res://scripts/buff/attack_power_slime_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
-        "family": "swarm",
+        "family": "hunt",
         "tags": [
             "on_kill",
             "slime_count",
@@ -160,7 +160,7 @@
         "buff_res": "res://scripts/buff/max_power_puls_one_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
-        "family": "swarm",
+        "family": "",
         "tags": [
             "on_spawn",
             "slime_count",
@@ -177,7 +177,7 @@
         "buff_res": "res://scripts/buff/power_attack_score_increase_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
-        "family": "swarm",
+        "family": "hunt",
         "tags": [
             "on_attack",
             "slime_count",
@@ -194,29 +194,12 @@
         "buff_res": "res://scripts/buff/slime_kill_empower_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
-        "family": "swarm",
+        "family": "evolution",
         "tags": [
             "on_kill",
             "slime_count",
             "linear",
             "aggression",
-            "rare"
-        ]
-    },
-    {
-        "buff_id": "turn_plus_one",
-        "buff_name": "第一回合结束不增加回合数",
-        "buff_icon": "res://images/buff_icon/turn_plus_one.png",
-        "buff_tooltip": "第一回合不会增加回合数",
-        "buff_res": "res://scripts/buff/turn_plus_one_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5,
-        "family": "desperation",
-        "tags": [
-            "on_turn_end",
-            "hp",
-            "static",
-            "protect",
             "rare"
         ]
     },
@@ -228,7 +211,7 @@
         "buff_res": "res://scripts/buff/free_refresh_one_times_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 3,
-        "family": "coin",
+        "family": "",
         "tags": [
             "on_buy",
             "coin",
@@ -262,7 +245,7 @@
         "buff_res": "res://scripts/buff/drop_hunter_buff.gd",
         "buff_type": "pre_attack_buff",
         "buff_price": 3,
-        "family": "combo",
+        "family": "hunt",
         "tags": [
             "on_attack",
             "movement",
@@ -313,7 +296,7 @@
         "buff_res": "res://scripts/buff/position_master_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 5,
-        "family": "combo",
+        "family": "slaughter",
         "tags": [
             "on_attack",
             "movement",
@@ -330,7 +313,7 @@
         "buff_res": "res://scripts/buff/drop_bonus_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 5,
-        "family": "combo",
+        "family": "evolution",
         "tags": [
             "on_attack",
             "movement",
@@ -364,7 +347,7 @@
         "buff_res": "res://scripts/buff/iron_wall_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
-        "family": "desperation",
+        "family": "vitality",
         "tags": [
             "on_spawn",
             "hp",
@@ -391,40 +374,6 @@
         ]
     },
     {
-        "buff_id": "point_guard",
-        "buff_name": "点数守护",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "随机免疫1种禁用点数debuff",
-        "buff_res": "res://scripts/buff/point_guard_buff.gd",
-        "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5,
-        "family": "desperation",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "static",
-            "protect",
-            "common"
-        ]
-    },
-    {
-        "buff_id": "type_guard",
-        "buff_name": "骰型守护",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "随机免疫1种禁用骰型debuff",
-        "buff_res": "res://scripts/buff/type_guard_buff.gd",
-        "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5,
-        "family": "desperation",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "static",
-            "protect",
-            "common"
-        ]
-    },
-    {
         "buff_id": "score_shield",
         "buff_name": "分数护盾",
         "buff_icon": "res://icon.svg",
@@ -432,7 +381,7 @@
         "buff_res": "res://scripts/buff/score_shield_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 7,
-        "family": "desperation",
+        "family": "",
         "tags": [
             "on_turn_end",
             "hp",
@@ -468,7 +417,7 @@
         "buff_res": "res://scripts/buff/slime_explosion_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
-        "family": "swarm",
+        "family": "slaughter",
         "tags": [
             "on_attack",
             "slime_count",
@@ -568,7 +517,7 @@
         "buff_res": "res://scripts/buff/tax_collector_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 5,
-        "family": "coin",
+        "family": "",
         "tags": [
             "on_buy",
             "coin",
@@ -626,40 +575,7 @@
             "rare"
         ]
     },
-    {
-        "buff_id": "color_predictor",
-        "buff_name": "色彩预言",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "每回合随机祝福1种颜色，该色史莱姆攻击+20%",
-        "buff_res": "res://scripts/buff/color_predictor_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 5,
-        "family": "resonance",
-        "tags": [
-            "on_turn_end",
-            "color",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
-    },
-    {
-        "buff_id": "chromatic_sacrifice",
-        "buff_name": "色彩献祭",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "购买时随机献祭1色，该色+40%但基础分变0",
-        "buff_res": "res://scripts/buff/chromatic_sacrifice_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 7,
-        "family": "resonance",
-        "tags": [
-            "on_buy",
-            "color",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
-    },
+
     {
         "buff_id": "resonance_echo",
         "buff_name": "共鸣回声",
@@ -718,7 +634,7 @@
         "buff_res": "res://scripts/buff/rush_strike_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
-        "family": "combo",
+        "family": "swift",
         "tags": [
             "on_attack",
             "movement",
@@ -735,7 +651,7 @@
         "buff_res": "res://scripts/buff/combo_surge_buff.gd",
         "buff_type": "post_hero_move_buff",
         "buff_price": 8,
-        "family": "combo",
+        "family": "slaughter",
         "tags": [
             "on_turn_end",
             "combo",
@@ -745,14 +661,14 @@
         ]
     },
     {
-        "buff_id": "combo_overlord",
-        "buff_name": "连击霸主",
+        "buff_id": "slaughter_overlord",
+        "buff_name": "杀戮霸主",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "连击系Buff≥4时激活，移动力+1，每消耗1点移动力连击倍率+3%（上限50%）",
-        "buff_res": "res://scripts/buff/combo_overlord_buff.gd",
+        "buff_tooltip": "杀戮系Buff≥4时激活，移动力+1，每消耗1点移动力杀戮倍率+3%（上限50%）",
+        "buff_res": "res://scripts/buff/slaughter_overlord_buff.gd",
         "buff_type": "post_attack_buff",
         "auto_activate": true,
-        "family": "combo",
+        "family": "slaughter",
         "tags": [
             "multiplicative",
             "aggression",
@@ -833,7 +749,7 @@
         "buff_res": "res://scripts/buff/comeback_king_buff.gd",
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 7,
-        "family": "vitality",
+        "family": "desperation",
         "tags": [
             "on_turn_end",
             "slime_count",
@@ -901,7 +817,7 @@
         "buff_res": "res://scripts/buff/mass_kill_heal_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 5,
-        "family": "vitality",
+        "family": "vitality,slaughter",
         "tags": [
             "on_attack",
             "hp",
@@ -921,6 +837,68 @@
         "tags": [
             "multiplicative",
             "protect",
+            "legendary"
+        ]
+    },
+    {
+        "buff_id": "hunt_overlord",
+        "buff_name": "猎杀霸主",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "猎杀系Buff≥4时激活，猎杀系得分额外+15%",
+        "buff_res": "res://scripts/buff/hunt_overlord_buff.gd",
+        "buff_type": "post_attack_buff",
+        "auto_activate": true,
+        "family": "hunt",
+        "tags": [
+            "multiplicative",
+            "aggression",
+            "legendary"
+        ]
+    },
+    {
+        "buff_id": "swift_overlord",
+        "buff_name": "疾风霸主",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "疾风系Buff≥4时激活，移动力+1，疾风系得分额外+5%",
+        "buff_res": "res://scripts/buff/swift_overlord_buff.gd",
+        "buff_type": "post_attack_buff",
+        "auto_activate": true,
+        "family": "swift",
+        "tags": [
+            "multiplicative",
+            "aggression",
+            "legendary"
+        ]
+    },
+    {
+        "buff_id": "kill_base_score_up",
+        "buff_name": "击杀基础分提升",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每击杀1个史莱姆，随机1个点数基础分+1",
+        "buff_res": "res://scripts/buff/kill_base_score_up_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 5,
+        "family": "evolution",
+        "tags": [
+            "on_kill",
+            "slime_count",
+            "linear",
+            "aggression",
+            "common"
+        ]
+    },
+    {
+        "buff_id": "evolution_overlord",
+        "buff_name": "进化霸主",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "进化系Buff≥4时激活，所有基础分额外+1",
+        "buff_res": "res://scripts/buff/evolution_overlord_buff.gd",
+        "buff_type": "post_attack_buff",
+        "auto_activate": true,
+        "family": "evolution",
+        "tags": [
+            "multiplicative",
+            "aggression",
             "legendary"
         ]
     }

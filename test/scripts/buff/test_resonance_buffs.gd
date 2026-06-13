@@ -260,54 +260,7 @@ func test_resonance_overlord_buff() -> void:
 	BuffSystem.resonance_ramp = 0.0
 	BuffSystem._last_family_accumulation = {}
 
-## 7. color_predictor_buff - 每回合随机祝福1色，该色史莱姆攻击+20%
-func test_color_predictor_buff() -> void:
-	_current_test = "test_color_predictor_buff"
-	Current.once_total_score = 100
-	Current.total_score = 0
-
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": []}
-	var buff = create_and_set_buff("res://scripts/buff/color_predictor_buff.gd", meta)
-
-	# 有祝福色在攻击范围内→+20%
-	_clear_slimes()
-	add_slime_in_range(Vector2(0, 0), "slime_small")
-	Current.total_score = 0
-	await buff.process_buff()
-	# 由于随机选色，如果祝福色恰好是绿色(场上唯一色)，则触发+20
-	# 我们验证data中有blessed_color且图标self_modulate被修改
-	assert_true(buff.data.has("blessed_color"), "color_predictor: should set blessed_color in data")
-
-	# 攻击范围内无史莱姆→不触发
-	_clear_slimes()
-	Current.total_score = 0
-	await buff.process_buff()
-	# 场上无史莱姆，不应加分
-	assert_eq(Current.total_score, 0, "color_predictor: no slime in range should not add score")
-
-## 8. chromatic_sacrifice_buff - 购买时随机选献祭色+40%/该色0基础分
-func test_chromatic_sacrifice_buff() -> void:
-	_current_test = "test_chromatic_sacrifice_buff"
-	Current.once_total_score = 100
-	Current.total_score = 0
-
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": []}
-	var buff = create_and_set_buff("res://scripts/buff/chromatic_sacrifice_buff.gd", meta)
-
-	# set_buff时应该已设置sacrifice_color
-	assert_true(buff.data.has("sacrifice_color"), "chromatic_sacrifice: should set sacrifice_color in data on set_buff")
-
-	# 有献祭色在攻击范围内→+40%
-	_clear_slimes()
-	add_slime_in_range(Vector2(0, 0), "slime_small")
-	Current.total_score = 0
-	await buff.process_buff()
-	# 如果献祭色恰好是绿色，则触发+40%
-	var sacrifice_scene = buff.data.get("sacrifice_color", "")
-	if sacrifice_scene == "slime_small":
-		assert_eq(Current.total_score, int(100 * 0.40), "chromatic_sacrifice: sacrifice color in range should add int(once*0.40)")
-
-## 9. resonance_echo_buff - ≥3色+3金币/≤1色-2金币（金币下限0）
+## 7. resonance_echo_buff - ≥3色+3金币/≤1色-2金币（金币下限0）
 func test_resonance_echo_buff() -> void:
 	_current_test = "test_resonance_echo_buff"
 

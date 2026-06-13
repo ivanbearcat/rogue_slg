@@ -101,7 +101,6 @@ func _save_current_state() -> void:
 		"killed_power_slime": Current.killed_power_slime,
 		"last_turn_attacked": Current.last_turn_attacked,
 		"consecutive_score_turns": Current.consecutive_score_turns,
-		"skip_hp_damage_this_turn": Current.skip_hp_damage_this_turn,
 		"zero_coin_refresh_times": Current.zero_coin_refresh_times,
 		"zero_coin_refresh_max_times": Current.zero_coin_refresh_max_times,
 		"iron_stomach_reduction": Current.iron_stomach_reduction,
@@ -128,7 +127,6 @@ func _restore_current_state() -> void:
 	Current.killed_power_slime = _saved_current_state["killed_power_slime"]
 	Current.last_turn_attacked = _saved_current_state["last_turn_attacked"]
 	Current.consecutive_score_turns = _saved_current_state["consecutive_score_turns"]
-	Current.skip_hp_damage_this_turn = _saved_current_state["skip_hp_damage_this_turn"]
 	Current.zero_coin_refresh_times = _saved_current_state["zero_coin_refresh_times"]
 	Current.zero_coin_refresh_max_times = _saved_current_state["zero_coin_refresh_max_times"]
 	Current.iron_stomach_reduction = _saved_current_state["iron_stomach_reduction"]
@@ -157,7 +155,6 @@ func reset_current_to_defaults() -> void:
 	Current.killed_power_slime = false
 	Current.last_turn_attacked = false
 	Current.consecutive_score_turns = 0
-	Current.skip_hp_damage_this_turn = false
 	Current.zero_coin_refresh_times = 0
 	Current.zero_coin_refresh_max_times = 0
 	Current.iron_stomach_reduction = 0

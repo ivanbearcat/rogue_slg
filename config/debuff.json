@@ -113,20 +113,12 @@
         "debuff_type": "post_attack_buff",
         "severity": "normal"
     },
-    {
-        "debuff_id": "color_chaos",
-        "debuff_name": "颜色混乱",
-        "debuff_icon": "res://icon.svg",
-        "debuff_tooltip": "每回合随机1种颜色史莱姆概率翻倍，另1种颜色不生成",
-        "debuff_res": "res://scripts/debuff/color_chaos_buff.gd",
-        "debuff_type": "pre_enemy_turn_buff",
-        "severity": "normal"
-    },
+
     {
         "debuff_id": "dice_decay",
         "debuff_name": "骰子衰退",
         "debuff_icon": "res://icon.svg",
-        "debuff_tooltip": "每回合所有点数基础分-1（最低1）",
+        "debuff_tooltip": "每有3个史莱姆所有点数基础分-1（最低0）",
         "debuff_res": "res://scripts/debuff/dice_decay_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"
@@ -155,15 +147,6 @@
         "debuff_icon": "res://images/debuff_icon/current_score_down.png",
         "debuff_tooltip": "每回合当前总分-2%",
         "debuff_res": "res://scripts/debuff/current_score_down_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
-        "debuff_id": "dice_decay_curse",
-        "debuff_name": "骰子衰减",
-        "debuff_icon": "res://icon.svg",
-        "debuff_tooltip": "每回合所有点数基础分-1（最低1）",
-        "debuff_res": "res://scripts/debuff/dice_decay_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal"
     },

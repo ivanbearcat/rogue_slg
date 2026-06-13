@@ -147,7 +147,6 @@ func reset_current_to_defaults() -> void:
 	Current.killed_power_slime = false
 	Current.last_turn_attacked = false
 	Current.consecutive_score_turns = 0
-	Current.skip_hp_damage_this_turn = false
 	Current.zero_coin_refresh_times = 0
 	Current.zero_coin_refresh_max_times = 0
 	Current.iron_stomach_reduction = 0

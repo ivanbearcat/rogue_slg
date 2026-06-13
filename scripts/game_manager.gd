@@ -922,8 +922,8 @@ func hero_move(event: InputEvent = null):
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	print(Current.id_path)
 	EventBus.event_emit("do_post_hero_move_buff")
-	## 连击霸主叠层：玩家实际移动时增加combo_ramp
-	BuffSystem.increment_combo_ramp()
+	## 杀戮霸主叠层：玩家实际移动时增加slaughter_ramp
+	BuffSystem.increment_slaughter_ramp()
 
 ## 显示技能可点击范围
 func show_skill_range():
@@ -1151,10 +1151,6 @@ func _turn_clean():
 
 ## HP扣血逻辑：根据场上史莱姆数量阶梯扣血
 func _apply_hp_damage():
-	## turn_plus_one_buff第一回合不扣血
-	if Current.skip_hp_damage_this_turn:
-		Current.skip_hp_damage_this_turn = false
-		return
 	## 计算场上史莱姆数量
 	var slime_count = 0
 	for _slime in Current.all_enemy_array:

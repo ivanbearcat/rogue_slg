@@ -9,9 +9,12 @@ const FAMILY_COLORS := {
 	"swarm": "#8BC34A",
 	"coin": "#FFD700",
 	"resonance": "#42A5F5",
-	"combo": "#FF7043",
+	"slaughter": "#FF7043",
 	"desperation": "#AB47BC",
 	"vitality": "#66BB6A",
+	"hunt": "#E57373",
+	"swift": "#4FC3F7",
+	"evolution": "#FFB74D",
 }
 
 ## 家族中文名映射
@@ -19,9 +22,12 @@ const FAMILY_NAMES := {
 	"swarm": "蜂群",
 	"coin": "铸币",
 	"resonance": "共鸣",
-	"combo": "连击",
+	"slaughter": "杀戮",
 	"desperation": "绝境",
 	"vitality": "生机",
+	"hunt": "猎杀",
+	"swift": "疾风",
+	"evolution": "进化",
 }
 
 ## 颜色常量
@@ -36,9 +42,12 @@ const OVERLORD_NAMES := {
 	"swarm": "潮涌霸主",
 	"coin": "金元帝国",
 	"resonance": "共鸣霸主",
-	"combo": "连击霸主",
+	"slaughter": "杀戮霸主",
 	"desperation": "绝境霸主",
 	"vitality": "生机霸主",
+	"hunt": "猎杀霸主",
+	"swift": "疾风霸主",
+	"evolution": "进化霸主",
 }
 
 ## 领主效果描述映射
@@ -46,9 +55,12 @@ const OVERLORD_EFFECTS := {
 	"swarm": "每有1个存活史莱姆，蜂群系得分额外+5%",
 	"coin": "每回合+2金币，且获得金币量20%的分数",
 	"resonance": "共鸣倍率每关叠层+5%（上限50%）",
-	"combo": "移动力+1，每消耗1点移动力连击倍率+3%（上限50%）",
+	"slaughter": "移动力+1，每消耗1点移动力杀戮倍率+3%（上限50%）",
 	"desperation": "获得1次全局免死，每有1个debuff绝境系得分额外+8%",
 	"vitality": "过关时hp+1；若满血则max_hp+1",
+	"hunt": "猎杀系得分额外+15%",
+	"swift": "移动力+1，疾风系得分额外+5%",
+	"evolution": "所有基础分额外+1",
 }
 
 ## 门槛类型中文名映射
@@ -75,11 +87,20 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 		bbcode += "[img=24]%s[/img] " % icon
 	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
 
-	# 家族行
-	if not family.is_empty() and FAMILY_COLORS.has(family):
-		var family_color: String = FAMILY_COLORS[family]
-		var family_cn: String = FAMILY_NAMES.get(family, family)
-		bbcode += "\n[color=%s]%s系[/color]" % [family_color, family_cn]
+	# 家族行（支持逗号分隔的双族系）
+	if not family.is_empty():
+		var families = family.split(",")
+		var family_line := ""
+		for f in families:
+			f = f.strip_edges()
+			if FAMILY_COLORS.has(f):
+				var family_color: String = FAMILY_COLORS[f]
+				var family_cn: String = FAMILY_NAMES.get(f, f)
+				if not family_line.is_empty():
+					family_line += " "
+				family_line += "[color=%s]%s系[/color]" % [family_color, family_cn]
+		if not family_line.is_empty():
+			bbcode += "\n" + family_line
 
 	# 描述文本行（数值自动着色，倾向buff=绿色）
 	var colorized_tooltip: String = _colorize_numbers(tooltip, "buff")
@@ -87,15 +108,19 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 		colorized_tooltip += extra_text
 	bbcode += "\n" + colorized_tooltip
 
-	# 领主进度提示：有family的非领主BUFF显示激活进度
-	if not family.is_empty() and FAMILY_COLORS.has(family) and not tags.has("legendary"):
-		var family_count = BuffSystem.get_family_count(family)
-		var overlord_name: String = OVERLORD_NAMES.get(family, "")
-		var overlord_effect: String = OVERLORD_EFFECTS.get(family, "")
-		if family_count >= 4:
-			bbcode += "\n💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect]
-		else:
-			bbcode += "\n💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect, family_count]
+	# 领主进度提示：有family的非领主BUFF显示激活进度（支持双族系）
+	if not family.is_empty() and not tags.has("legendary"):
+		var families = family.split(",")
+		for f in families:
+			f = f.strip_edges()
+			if FAMILY_COLORS.has(f):
+				var family_count = BuffSystem.get_family_count(f)
+				var overlord_name: String = OVERLORD_NAMES.get(f, "")
+				var overlord_effect: String = OVERLORD_EFFECTS.get(f, "")
+				if family_count >= 4:
+					bbcode += "\n💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color]" % [FAMILY_NAMES.get(f, f), overlord_name, overlord_effect]
+				else:
+					bbcode += "\n💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color]" % [FAMILY_NAMES.get(f, f), overlord_name, overlord_effect, family_count]
 
 	# 领主BUFF自身显示已激活状态
 	if tags.has("legendary") and tags.has("multiplicative"):

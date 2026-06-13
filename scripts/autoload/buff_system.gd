@@ -3,7 +3,7 @@ extends Node2D
 @onready var game_manager: Node2D = $"/root/game_manager"
 
 var resonance_ramp: float = 0.0
-var combo_ramp: float = 0.0
+var slaughter_ramp: float = 0.0
 var _last_family_accumulation: Dictionary = {}
 
 enum buff_type {
@@ -133,8 +133,12 @@ func get_family_count(family_name: String) -> int:
 	for timing in TIMINGS:
 		for key in LIFECYCLE_KEYS:
 			for buff in pipelines[timing][key]:
-				if buff.family == family_name:
-					count += 1
+				## 支持逗号分隔的双族系匹配
+				var buff_families = buff.family.split(",")
+				for f in buff_families:
+					if f.strip_edges() == family_name:
+						count += 1
+						break
 	return count
 
 func get_buffs_by_tag(tag: String) -> Array:
@@ -146,9 +150,9 @@ func get_buffs_by_tag(tag: String) -> Array:
 					result.append(buff)
 	return result
 
-func increment_combo_ramp() -> void:
-	if get_family_count("combo") >= 4:
-		combo_ramp = min(combo_ramp + 0.03, 0.50)
+func increment_slaughter_ramp() -> void:
+	if get_family_count("slaughter") >= 4:
+		slaughter_ramp = min(slaughter_ramp + 0.03, 0.50)
 
 func get_family_accumulation(family: String) -> int:
 	if _last_family_accumulation.has(family):
@@ -166,7 +170,7 @@ func clear_stage_buff():
 			buff.clear_buff()
 		pipelines[timing]["STAGE"].clear()
 	resonance_ramp = 0.0
-	combo_ramp = 0.0
+	slaughter_ramp = 0.0
 	_last_family_accumulation = {}
 
 func clear_elite_buff():
@@ -184,11 +188,17 @@ func _track_family_contribution(buff: Buff, score_before: int, family_accumulati
 		return
 	var delta := Current.total_score - score_before
 	if delta > 0:
-		if not family_accumulation.has(buff.family):
-			family_accumulation[buff.family] = 0
-		family_accumulation[buff.family] += delta
+		## 支持逗号分隔的双族系：分别累加到各家族
+		var families = buff.family.split(",")
+		for f in families:
+			f = f.strip_edges()
+			if f == "":
+				continue
+			if not family_accumulation.has(f):
+				family_accumulation[f] = 0
+			family_accumulation[f] += delta
 		## 共鸣叠层：若resonance领主激活且有正向贡献，resonance_ramp += 0.05(上限0.50)
-		if buff.family == "resonance" and get_family_count("resonance") >= 4:
+		if buff.family.find("resonance") >= 0 and get_family_count("resonance") >= 4:
 			resonance_ramp = min(resonance_ramp + 0.05, 0.50)
 
 ## 获取指定时序的所有buff数组（用于game_manager直接访问数组）

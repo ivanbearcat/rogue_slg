@@ -314,7 +314,7 @@ func test_slime_kill_empower_buff() -> void:
 	c.total_score = 0
 	c.once_total_score = 1000
 
-	var meta = {"buff_id": "slime_kill_empower", "family": "swarm", "tags": ["on_kill", "slime_count", "linear", "aggression", "rare"]}
+	var meta = {"buff_id": "slime_kill_empower", "family": "evolution", "tags": ["on_kill", "slime_count", "linear", "aggression", "rare"]}
 	var buff = create_and_set_buff("res://scripts/buff/slime_kill_empower_buff.gd", meta)
 
 	# 0击杀时分数不变

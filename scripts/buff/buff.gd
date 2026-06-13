@@ -7,7 +7,7 @@ var buff_texture: PanelContainer  # 改为PanelContainer（rich_tooltip.gd）
 var debuff_texture: PanelContainer  # 同上
 var data: Dictionary
 
-## 家族：swarm/coin/resonance/combo/desperation
+## 家族：swarm/coin/resonance/slaughter/desperation/vitality/hunt/swift/evolution
 var family: String
 ## 标签数组
 var tags: Array

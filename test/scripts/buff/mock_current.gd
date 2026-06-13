@@ -73,7 +73,6 @@ var slime_die_sum: int = 0
 var killed_power_slime: bool = false
 var last_turn_attacked: bool = false
 var consecutive_score_turns: int = 0
-var skip_hp_damage_this_turn: bool = false
 # buff/商店
 var zero_coin_refresh_times: int = 0
 var zero_coin_refresh_max_times: int = 0
@@ -162,7 +161,7 @@ func reset_to_defaults() -> void:
 	scored_dice_info = []; active_dice_types = []
 	highest_dice_num = 1; drop_slot_dice = null
 	slime_die_sum = 0; killed_power_slime = false
-	last_turn_attacked = false; consecutive_score_turns = 0; skip_hp_damage_this_turn = false
+	last_turn_attacked = false; consecutive_score_turns = 0
 	zero_coin_refresh_times = 0; zero_coin_refresh_max_times = 0
 	score_heal_accumulated = 0; score_heal_threshold = 35
 	_potion_count = 1; _potion_max = 3

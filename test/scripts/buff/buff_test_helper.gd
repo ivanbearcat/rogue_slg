@@ -56,7 +56,6 @@ class MockCurrent extends RefCounted:
 	var killed_power_slime: bool = false
 	var last_turn_attacked: bool = false
 	var consecutive_score_turns: int = 0
-	var skip_hp_damage_this_turn: bool = false
 	# buff/商店
 	var zero_coin_refresh_times: int = 0
 	var zero_coin_refresh_max_times: int = 0
@@ -364,7 +363,6 @@ static func reset_mock_current(mock_current: MockCurrent) -> void:
 	mock_current.killed_power_slime = false
 	mock_current.last_turn_attacked = false
 	mock_current.consecutive_score_turns = 0
-	mock_current.skip_hp_damage_this_turn = false
 	mock_current.zero_coin_refresh_times = 0
 	mock_current.zero_coin_refresh_max_times = 0
 	mock_current.score_heal_accumulated = 0
