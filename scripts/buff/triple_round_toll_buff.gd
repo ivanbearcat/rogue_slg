@@ -8,8 +8,9 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	EffectManager.buff_pop_effect(buff_texture)
-	Current.total_coins += 1
+	if Current.count_round % 3 == 0:
+		EffectManager.buff_pop_effect(buff_texture)
+		Current.total_coins += 2
 
 func clear_buff():
 	pass

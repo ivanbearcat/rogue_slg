@@ -128,6 +128,15 @@ var count_stage := 1:
 		return count_stage
 ## 关卡奖励金币数
 var count_add_coins := 0
+## buff购买价格折扣（税吏等一次性折扣）
+var _buff_price_discount: int = 0
+var buff_price_discount: int:
+	set(v):
+		_buff_price_discount = v
+		## 折扣变化时刷新buff按钮状态（复用total_coins setter逻辑）
+		total_coins = total_coins
+	get:
+		return _buff_price_discount
 ## 金币总数
 var total_coins: int:
 	set(v):
@@ -185,19 +194,22 @@ var total_coins: int:
 		else:
 			game_manager.hp_bottle_button.disabled = false
 			game_manager.hp_bottle_button.modulate = Color(1, 1, 1, 1)
-		if v < game_manager.shop_buff_1.get("buff_price", 0):
+		var _discounted_price_1 = maxi(0, game_manager.shop_buff_1.get("buff_price", 0) - _buff_price_discount)
+		if v < _discounted_price_1:
 			game_manager.buff_shop_button_1.disabled = true
 			game_manager.buff_shop_button_1.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
 			game_manager.buff_shop_button_1.disabled = false
 			game_manager.buff_shop_button_1.modulate = Color(1, 1, 1, 1)
-		if v < game_manager.shop_buff_2.get("buff_price", 0):
+		var _discounted_price_2 = maxi(0, game_manager.shop_buff_2.get("buff_price", 0) - _buff_price_discount)
+		if v < _discounted_price_2:
 			game_manager.buff_shop_button_2.disabled = true
 			game_manager.buff_shop_button_2.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
 			game_manager.buff_shop_button_2.disabled = false
 			game_manager.buff_shop_button_2.modulate = Color(1, 1, 1, 1)
-		if v < game_manager.shop_buff_3.get("buff_price", 0):
+		var _discounted_price_3 = maxi(0, game_manager.shop_buff_3.get("buff_price", 0) - _buff_price_discount)
+		if v < _discounted_price_3:
 			game_manager.buff_shop_button_3.disabled = true
 			game_manager.buff_shop_button_3.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:

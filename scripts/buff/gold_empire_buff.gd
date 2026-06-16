@@ -5,15 +5,14 @@ func set_buff():
 	pass
 
 func process_buff():
-	# 金元帝国 - 金元洪流：获得当前金币量20%的分数，然后金币+2
+	# 金元帝国 - coin系≥4时激活，每有5个金币击杀获得10%的得分加成
 	if BuffSystem.get_family_count("coin") < 4:
 		return
-	var bonus = roundi(Current.total_coins * 0.20)
+	var bonus = roundi(Current.once_total_score * (Current.total_coins / 5) * 0.10)
 	if bonus > 0:
 		Current.total_score += bonus
 		var float_number_instantiate = EffectManager.float_number_effect(bonus, "gold")
 		Current.hero.add_child(float_number_instantiate)
-	Current.total_coins += 2
 
 func clear_buff():
 	pass

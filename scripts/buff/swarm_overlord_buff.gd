@@ -5,17 +5,16 @@ func set_buff():
 	pass
 
 func process_buff():
-	# 潮涌霸主 - 数量压制：每有1个存活史莱姆，蜂群系得分额外+5%
+	# 潮涌霸主 - 数量压制：每有1个史莱姆存活，潮涌系得分3%/只
 	if BuffSystem.get_family_count("swarm") < 4:
-		return
-	var accumulated = BuffSystem.get_family_accumulation("swarm")
-	if accumulated <= 0:
 		return
 	var slime_count = 0
 	for _slime in Current.all_enemy_array:
 		if is_instance_valid(_slime):
 			slime_count += 1
-	var bonus = roundi(accumulated * slime_count * 0.05)
+	if slime_count <= 0:
+		return
+	var bonus = roundi(Current.once_total_score * slime_count * 0.03)
 	if bonus > 0:
 		Current.total_score += bonus
 		var float_number_instantiate = EffectManager.float_number_effect(bonus, "gold")

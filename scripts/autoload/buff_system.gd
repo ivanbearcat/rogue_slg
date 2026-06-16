@@ -3,7 +3,6 @@ extends Node2D
 @onready var game_manager: Node2D = $"/root/game_manager"
 
 var resonance_ramp: float = 0.0
-var slaughter_ramp: float = 0.0
 var _last_family_accumulation: Dictionary = {}
 
 enum buff_type {
@@ -150,10 +149,6 @@ func get_buffs_by_tag(tag: String) -> Array:
 					result.append(buff)
 	return result
 
-func increment_slaughter_ramp() -> void:
-	if get_family_count("slaughter") >= 4:
-		slaughter_ramp = min(slaughter_ramp + 0.03, 0.50)
-
 func get_family_accumulation(family: String) -> int:
 	if _last_family_accumulation.has(family):
 		return _last_family_accumulation[family]
@@ -170,7 +165,6 @@ func clear_stage_buff():
 			buff.clear_buff()
 		pipelines[timing]["STAGE"].clear()
 	resonance_ramp = 0.0
-	slaughter_ramp = 0.0
 	_last_family_accumulation = {}
 
 func clear_elite_buff():

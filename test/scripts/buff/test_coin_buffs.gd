@@ -83,140 +83,131 @@ func assert_gte(actual, than, message: String = "") -> void:
 ## 测试方法
 ## ============================================================
 
-## 1. turn_coin_increase_buff - process_buff时金币+1，调用多次金币累加
-func test_turn_coin_increase_buff() -> void:
-	_current_test = "test_turn_coin_increase_buff"
+## 1. triple_round_toll_buff - count_round % 3 == 0时金币+2，否则不变
+func test_triple_round_toll_buff() -> void:
+	_current_test = "test_triple_round_toll_buff"
 	var c = Current
 	c.total_coins = 0
 
-	var meta = {"buff_id": "turn_coin_increase", "family": "coin", "tags": ["turn"]}
-	var buff = create_and_set_buff("res://scripts/buff/turn_coin_increase_buff.gd", meta)
+	var meta = {"buff_id": "triple_round_toll", "family": "coin", "tags": ["turn"]}
+	var buff = create_and_set_buff("res://scripts/buff/triple_round_toll_buff.gd", meta)
 
-	# process_buff一次，金币+1
+	# count_round % 3 == 0 时（round 0），金币+2
+	c.count_round = 0
 	buff.process_buff()
-	assert_eq(c.total_coins, 1, "After 1 process_buff: total_coins should be 1")
+	assert_eq(c.total_coins, 2, "Round 0 (0%%3==0): total_coins should be 2")
 
-	# 多次调用金币累加
+	# count_round % 3 != 0 时，金币不变
+	c.count_round = 1
 	buff.process_buff()
-	assert_eq(c.total_coins, 2, "After 2 process_buff: total_coins should be 2")
+	assert_eq(c.total_coins, 2, "Round 1 (1%%3!=0): total_coins should remain 2")
 
+	c.count_round = 2
 	buff.process_buff()
-	assert_eq(c.total_coins, 3, "After 3 process_buff: total_coins should be 3")
+	assert_eq(c.total_coins, 2, "Round 2 (2%%3!=0): total_coins should remain 2")
+
+	# count_round % 3 == 0 时（round 3），金币再+2
+	c.count_round = 3
+	buff.process_buff()
+	assert_eq(c.total_coins, 4, "Round 3 (3%%3==0): total_coins should be 4")
+
+	# count_round % 3 == 0 时（round 6），金币再+2
+	c.count_round = 6
+	buff.process_buff()
+	assert_eq(c.total_coins, 6, "Round 6 (6%%3==0): total_coins should be 6")
 
 	# 从非零初始金币开始
 	c.total_coins = 5
+	c.count_round = 9
 	buff.process_buff()
-	assert_eq(c.total_coins, 6, "From 5 coins: after process_buff should be 6")
+	assert_eq(c.total_coins, 7, "From 5 coins, round 9 (9%%3==0): total_coins should be 7")
 
 	# clear_buff无操作
 	buff.clear_buff()
-	assert_eq(c.total_coins, 6, "After clear_buff: total_coins should remain 6")
+	assert_eq(c.total_coins, 7, "After clear_buff: total_coins should remain 7")
 
-## 2. coin_attack_score_increase_buff - 分数 = once_total_score × coins × 0.02，0金币时分数不变
-func test_coin_attack_score_increase_buff() -> void:
-	_current_test = "test_coin_attack_score_increase_buff"
+## 2. coin_mirror_score_buff - total_score += total_coins（固定金币值加成分数）
+func test_coin_mirror_score_buff() -> void:
+	_current_test = "test_coin_mirror_score_buff"
 	var c = Current
 	c.total_score = 0
-	c.once_total_score = 500
 
-	var meta = {"buff_id": "coin_attack_score_increase", "family": "coin", "tags": ["attack"]}
-	var buff = create_and_set_buff("res://scripts/buff/coin_attack_score_increase_buff.gd", meta)
+	var meta = {"buff_id": "coin_mirror_score", "family": "coin", "tags": ["attack"]}
+	var buff = create_and_set_buff("res://scripts/buff/coin_mirror_score_buff.gd", meta)
 
-	# 0金币：0 * 0.02 * 500 = 0，分数不变
+	# 0金币：total_score += 0，分数不变
 	c.total_coins = 0
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "0 coins: total_score should not change")
 
-	# 5金币：int(5 * 0.02 * 500) = int(50.0) = 50
+	# 5金币：total_score += 5
 	c.total_score = 0
 	c.total_coins = 5
 	buff.process_buff()
-	assert_eq(c.total_score, int(5 * 0.02 * 500), "5 coins: score should be int(coins * 0.02 * once_total_score)")
+	assert_eq(c.total_score, 5, "5 coins: total_score should be 5")
 
-	# 10金币：int(10 * 0.02 * 500) = int(100.0) = 100
+	# 10金币：total_score += 10
 	c.total_score = 0
 	c.total_coins = 10
 	buff.process_buff()
-	assert_eq(c.total_score, int(10 * 0.02 * 500), "10 coins: score should be int(10 * 0.02 * 500)")
+	assert_eq(c.total_score, 10, "10 coins: total_score should be 10")
 
-	# 1金币：int(1 * 0.02 * 500) = int(10.0) = 10
+	# 1金币：total_score += 1
 	c.total_score = 0
 	c.total_coins = 1
 	buff.process_buff()
-	assert_eq(c.total_score, int(1 * 0.02 * 500), "1 coin: score should be int(1 * 0.02 * 500)")
+	assert_eq(c.total_score, 1, "1 coin: total_score should be 1")
 
-## 3. golden_touch_buff - 分数 = once_total_score × (coins/5) × 0.15
+	# 从非零分数开始，累加
+	c.total_score = 100
+	c.total_coins = 3
+	buff.process_buff()
+	assert_eq(c.total_score, 103, "From 100 score with 3 coins: total_score should be 103")
+
+## 3. golden_touch_buff - process_buff不做任何事（效果在外部流程中执行）
 func test_golden_touch_buff() -> void:
 	_current_test = "test_golden_touch_buff"
 	var c = Current
 	c.total_score = 0
+	c.total_coins = 10
 	c.once_total_score = 1000
 
 	var meta = {"buff_id": "golden_touch", "family": "coin", "tags": ["attack"]}
 	var buff = create_and_set_buff("res://scripts/buff/golden_touch_buff.gd", meta)
 
-	# 0金币：0/5=0, 不触发
-	c.total_coins = 0
+	# process_buff是pass，不应改变任何状态
+	var score_before = c.total_score
+	var coins_before = c.total_coins
 	buff.process_buff()
-	assert_eq(c.total_score, 0, "0 coins: bonus_count=0, should not trigger")
+	assert_eq(c.total_score, score_before, "golden_touch process_buff: total_score should not change")
+	assert_eq(c.total_coins, coins_before, "golden_touch process_buff: total_coins should not change")
 
-	# 4金币：4/5=0（整数除法），不触发
-	c.total_coins = 4
-	buff.process_buff()
-	assert_eq(c.total_score, 0, "4 coins: 4/5=0, should not trigger")
+	# clear_buff也是pass
+	buff.clear_buff()
+	assert_eq(c.total_score, score_before, "golden_touch clear_buff: total_score should not change")
+	assert_eq(c.total_coins, coins_before, "golden_touch clear_buff: total_coins should not change")
 
-	# 5金币：5/5=1, 分数 = int(1000 * 1 * 0.15) = 150
-	c.total_score = 0
-	c.total_coins = 5
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 1 * 0.15), "5 coins: bonus_count=1, score should be int(1000 * 1 * 0.15)")
-
-	# 10金币：10/5=2, 分数 = int(1000 * 2 * 0.15) = 300
-	c.total_score = 0
-	c.total_coins = 10
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 2 * 0.15), "10 coins: bonus_count=2, score should be int(1000 * 2 * 0.15)")
-
-	# 9金币：9/5=1, 分数 = int(1000 * 1 * 0.15) = 150
-	c.total_score = 0
-	c.total_coins = 9
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 1 * 0.15), "9 coins: bonus_count=1, score should be int(1000 * 1 * 0.15)")
-
-## 4. coin_storm_buff - 金币≥8时触发，分数 = target_score × 0.03
+## 4. coin_storm_buff - 30%概率金币+2，process_buff不崩溃
 func test_coin_storm_buff() -> void:
 	_current_test = "test_coin_storm_buff"
 	var c = Current
-	c.total_score = 0
-	c.target_score = 1000
+	c.total_coins = 5
 
 	var meta = {"buff_id": "coin_storm", "family": "coin", "tags": ["attack"]}
 	var buff = create_and_set_buff("res://scripts/buff/coin_storm_buff.gd", meta)
 
-	# 7金币时不触发
-	c.total_coins = 7
+	# coin_storm_buff使用randf() < 0.3概率触发，无法确定性测试
+	# 验证process_buff调用不会崩溃
+	# 注意：process_buff含await，在测试中调用不会阻塞
 	buff.process_buff()
-	assert_eq(c.total_score, 0, "7 coins: should not trigger (< 8)")
+	# 只验证process_buff不崩溃，金币值可能+2或不变
+	assert_true(c.total_coins >= 5, "coin_storm process_buff: total_coins should be >= 5 (may or may not add 2)")
+	assert_true(c.total_coins <= 7, "coin_storm process_buff: total_coins should be <= 7 (at most +2)")
 
-	# 8金币时触发，分数 = int(1000 * 0.03) = 30
-	c.total_score = 0
-	c.total_coins = 8
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.03), "8 coins: should trigger, score = int(target_score * 0.03)")
+	# clear_buff无操作
+	buff.clear_buff()
 
-	# 10金币时也触发
-	c.total_score = 0
-	c.total_coins = 10
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.03), "10 coins: should trigger, score = int(target_score * 0.03)")
-
-	# 0金币不触发
-	c.total_score = 0
-	c.total_coins = 0
-	buff.process_buff()
-	assert_eq(c.total_score, 0, "0 coins: should not trigger")
-
-## 5. mint_press_buff - 金币 += slime_die_sum，slime_die_sum为0时不加
+## 5. mint_press_buff - slime_die_sum >= 4时金币+2，<4时不变
 func test_mint_press_buff() -> void:
 	_current_test = "test_mint_press_buff"
 	var c = Current
@@ -225,79 +216,117 @@ func test_mint_press_buff() -> void:
 	var meta = {"buff_id": "mint_press", "family": "coin", "tags": ["attack"]}
 	var buff = create_and_set_buff("res://scripts/buff/mint_press_buff.gd", meta)
 
-	# slime_die_sum为0时不加金币
+	# slime_die_sum < 4时不加金币
 	c.slime_die_sum = 0
 	buff.process_buff()
 	assert_eq(c.total_coins, 3, "slime_die_sum=0: total_coins should not change")
 
-	# slime_die_sum为5时金币+5
-	c.slime_die_sum = 5
+	c.slime_die_sum = 3
 	buff.process_buff()
-	assert_eq(c.total_coins, 8, "slime_die_sum=5: total_coins should increase by 5")
+	assert_eq(c.total_coins, 3, "slime_die_sum=3: total_coins should not change")
 
-	# slime_die_sum为1时金币+1
-	c.slime_die_sum = 1
+	# slime_die_sum == 4时金币+2
+	c.slime_die_sum = 4
 	buff.process_buff()
-	assert_eq(c.total_coins, 9, "slime_die_sum=1: total_coins should increase by 1")
+	assert_eq(c.total_coins, 5, "slime_die_sum=4: total_coins should increase by 2")
+
+	# slime_die_sum > 4时金币+2
+	c.total_coins = 3
+	c.slime_die_sum = 7
+	buff.process_buff()
+	assert_eq(c.total_coins, 5, "slime_die_sum=7: total_coins should increase by 2")
 
 	# 从0金币开始
 	c.total_coins = 0
-	c.slime_die_sum = 3
+	c.slime_die_sum = 4
 	buff.process_buff()
-	assert_eq(c.total_coins, 3, "From 0 coins with slime_die_sum=3: total_coins should be 3")
+	assert_eq(c.total_coins, 2, "From 0 coins with slime_die_sum=4: total_coins should be 2")
 
-## 6. tax_collector_buff - 仅在购买后触发(_just_bought为true时)
+## 6. tax_collector_buff - set_buff增加buff_price_discount+1，process_buff无操作，clear_buff减少buff_price_discount-1
 func test_tax_collector_buff() -> void:
 	_current_test = "test_tax_collector_buff"
 	var c = Current
-	c.total_score = 0
-	c.once_total_score = 1000
+	c.buff_price_discount = 0
 
 	var meta = {"buff_id": "tax_collector", "family": "coin", "tags": ["attack"]}
 	var buff = create_and_set_buff("res://scripts/buff/tax_collector_buff.gd", meta)
 
-	# 未购买时(_just_bought=false)不触发
-	buff._just_bought = false
+	# set_buff后buff_price_discount应该+1
+	assert_eq(c.buff_price_discount, 1, "After set_buff: buff_price_discount should be 1")
+
+	# process_buff是pass，不应改变discount
+	var discount_before = c.buff_price_discount
 	buff.process_buff()
-	assert_eq(c.total_score, 0, "_just_bought=false: should not trigger")
+	assert_eq(c.buff_price_discount, discount_before, "After process_buff: buff_price_discount should not change")
 
-	# 购买后(_just_bought=true)触发，分数 = int(1000 * 0.25) = 250
-	buff._just_bought = true
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.25), "_just_bought=true: score should be int(once_total_score * 0.25)")
+	# clear_buff后buff_price_discount应该-1
+	buff.clear_buff()
+	assert_eq(c.buff_price_discount, 0, "After clear_buff: buff_price_discount should be 0")
 
-	# 触发后_just_bought重置为false
-	assert_false(buff._just_bought, "After trigger: _just_bought should be reset to false")
+	# 多次set_buff累加
+	c.buff_price_discount = 0
+	var meta2 = {"buff_id": "tax_collector_2", "family": "coin", "tags": ["attack"]}
+	var buff2 = create_and_set_buff("res://scripts/buff/tax_collector_buff.gd", meta2)
+	assert_eq(c.buff_price_discount, 1, "After 2nd set_buff: buff_price_discount should be 1")
 
-	# 再次process_buff不触发
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.25), "After reset: should not trigger again")
+	# clear_buff不会低于0（maxi保护）
+	c.buff_price_discount = 0
+	buff2.clear_buff()
+	assert_eq(c.buff_price_discount, 0, "clear_buff with discount=0: should stay 0 (maxi protection)")
 
-	# 再次设置_just_bought=true可以再次触发
-	c.total_score = 0
-	buff._just_bought = true
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.25), "Re-set _just_bought=true: should trigger again")
-
-## 7. gold_empire_buff - 金元洪流：获得金币量20%的分数，然后金币+2
+## 7. gold_empire_buff - coin系≥4时 bonus=roundi(once_total_score*(total_coins/5)*0.10)，<4无效果
 func test_gold_empire_buff() -> void:
 	_current_test = "test_gold_empire_buff"
 	var c = Current
 	c.total_score = 0
-	c.total_coins = 15
-	# 设置family_accumulation供领主查询
-	BuffSystem._last_family_accumulation = {"coin": 30}
+	c.total_coins = 10
+	c.once_total_score = 500
+
+	# 设置BuffSystem._family_counts使coin家族计数<4（不触发）
+	BuffSystem._family_counts = {"coin": 3}
 	var meta = {"buff_id": "gold_empire", "family": "coin", "tags": ["legendary", "multiplicative"]}
 	var buff = create_and_set_buff("res://scripts/buff/gold_empire_buff.gd", meta)
-	# 需要铸币系≥4才能激活，单独1个overlord不满足
+
+	# coin系<4时不触发
 	buff.process_buff()
-	# <4时不触发
-	assert_eq(c.total_score, 0, "gold_empire with <4 coin buffs: score should not change")
-	assert_eq(c.total_coins, 15, "gold_empire with <4 coin buffs: coins should not change")
+	assert_eq(c.total_score, 0, "coin family < 4: total_score should not change")
+
+	# 设置coin家族计数>=4（触发）
+	BuffSystem._family_counts = {"coin": 4}
+
+	# total_coins=10, once_total_score=500: bonus = roundi(500 * (10/5) * 0.10) = roundi(500 * 2 * 0.10) = roundi(100) = 100
+	c.total_score = 0
+	c.total_coins = 10
+	c.once_total_score = 500
+	buff.process_buff()
+	assert_eq(c.total_score, 100, "coin family >=4, 10 coins: bonus should be roundi(500*(10/5)*0.10)=100")
+
+	# total_coins < 5时，整数除法 4/5=0，bonus=0
+	c.total_score = 0
+	c.total_coins = 4
+	c.once_total_score = 500
+	buff.process_buff()
+	assert_eq(c.total_score, 0, "coin family >=4, 4 coins: 4/5=0 (int div), bonus should be 0")
+
+	# total_coins=5: bonus = roundi(500 * (5/5) * 0.10) = roundi(500 * 1 * 0.10) = roundi(50) = 50
+	c.total_score = 0
+	c.total_coins = 5
+	c.once_total_score = 500
+	buff.process_buff()
+	assert_eq(c.total_score, 50, "coin family >=4, 5 coins: bonus should be roundi(500*(5/5)*0.10)=50")
+
+	# total_coins=15, once_total_score=1000: bonus = roundi(1000 * (15/5) * 0.10) = roundi(1000 * 3 * 0.10) = roundi(300) = 300
+	c.total_score = 0
+	c.total_coins = 15
+	c.once_total_score = 1000
+	buff.process_buff()
+	assert_eq(c.total_score, 300, "coin family >=4, 15 coins: bonus should be roundi(1000*(15/5)*0.10)=300")
+
 	# clear_buff无操作
 	buff.clear_buff()
+
 	# 清理
-	BuffSystem._last_family_accumulation = {}
+	BuffSystem._family_counts = {}
 
 ## 8. free_refresh_one_times_buff - set时zero_coin_refresh_times+1/zero_coin_refresh_max_times+1
 func test_free_refresh_one_times_buff() -> void:

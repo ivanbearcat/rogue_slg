@@ -9,7 +9,6 @@ const FAMILY_COLORS := {
 	"swarm": "#8BC34A",
 	"coin": "#FFD700",
 	"resonance": "#42A5F5",
-	"slaughter": "#FF7043",
 	"desperation": "#AB47BC",
 	"vitality": "#66BB6A",
 	"hunt": "#E57373",
@@ -19,10 +18,9 @@ const FAMILY_COLORS := {
 
 ## 家族中文名映射
 const FAMILY_NAMES := {
-	"swarm": "蜂群",
+	"swarm": "潮涌",
 	"coin": "铸币",
 	"resonance": "共鸣",
-	"slaughter": "杀戮",
 	"desperation": "绝境",
 	"vitality": "生机",
 	"hunt": "猎杀",
@@ -42,7 +40,6 @@ const OVERLORD_NAMES := {
 	"swarm": "潮涌霸主",
 	"coin": "金元帝国",
 	"resonance": "共鸣霸主",
-	"slaughter": "杀戮霸主",
 	"desperation": "绝境霸主",
 	"vitality": "生机霸主",
 	"hunt": "猎杀霸主",
@@ -52,10 +49,9 @@ const OVERLORD_NAMES := {
 
 ## 领主效果描述映射
 const OVERLORD_EFFECTS := {
-	"swarm": "每有1个存活史莱姆，蜂群系得分额外+5%",
+	"swarm": "每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数",
 	"coin": "每回合+2金币，且获得金币量20%的分数",
 	"resonance": "共鸣倍率每关叠层+5%（上限50%）",
-	"slaughter": "移动力+1，每消耗1点移动力杀戮倍率+3%（上限50%）",
 	"desperation": "获得1次全局免死，每有1个debuff绝境系得分额外+8%",
 	"vitality": "过关时hp+1；若满血则max_hp+1",
 	"hunt": "猎杀系得分额外+15%",

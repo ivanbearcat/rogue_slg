@@ -8,14 +8,13 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	if Current.total_coins >= 8:
+	if randf() < 0.3:
+		Current.total_coins += 2
 		Current.public_lock_array.append("coin_storm_buff")
-		var add_num = int(Current.target_score * 0.03)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
+		var float_number_instantiate = EffectManager.float_number_effect(2, "green")
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)
-		Current.total_score += add_num
 		Current.public_lock_array.erase("coin_storm_buff")
 
 func clear_buff():

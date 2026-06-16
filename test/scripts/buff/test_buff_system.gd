@@ -199,42 +199,11 @@ func test_overlord_ramp_reset() -> void:
 	var bs_script = load("res://scripts/autoload/buff_system.gd")
 	var bs = bs_script.new()
 	bs.resonance_ramp = 0.30
-	bs.slaughter_ramp = 0.25
 	bs._last_family_accumulation = {"swarm": 50}
 	bs.clear_stage_buff()
 
 	assert_eq(bs.resonance_ramp, 0.0, "resonance_ramp should reset to 0.0 after clear_stage_buff")
-	assert_eq(bs.slaughter_ramp, 0.0, "slaughter_ramp should reset to 0.0 after clear_stage_buff")
 	assert_eq(bs._last_family_accumulation.size(), 0, "_last_family_accumulation should be empty after clear_stage_buff")
-
-## 6. test_increment_slaughter_ramp - slaughter ramp increments and caps
-func test_increment_slaughter_ramp() -> void:
-	_current_test = "test_increment_slaughter_ramp"
-
-	var bs_script = load("res://scripts/autoload/buff_system.gd")
-	var bs = bs_script.new()
-
-	# Without 4 slaughter buffs, increment does nothing
-	bs.increment_slaughter_ramp()
-	assert_eq(bs.slaughter_ramp, 0.0, "slaughter_ramp should stay 0.0 without 4 slaughter buffs")
-
-
-	# Register 4 slaughter buffs
-	for i in range(4):
-		var buff = _create_mock_buff("slaughter_%d" % i, "slaughter", ["attack"])
-		_mock_set_buff_texture(buff)
-		bs.pipelines["post_attack"]["ALWAYS"].append(buff)
-
-	# Now increment should work
-	bs.increment_slaughter_ramp()
-	assert_eq(bs.slaughter_ramp, 0.03, "slaughter_ramp should be 0.03 after 1 increment")
-
-	# Multiple increments
-	for i in range(15):
-		bs.increment_slaughter_ramp()
-
-	# 16 total increments = 0.48, should not exceed 0.50
-	assert_lte(bs.slaughter_ramp, 0.50, "slaughter_ramp should not exceed 0.50")
 
 ## 7. test_resonance_ramp_increment - resonance ramp from family contribution
 func test_resonance_ramp_increment() -> void:
@@ -426,4 +395,4 @@ func test_shop_excludes_auto_activate() -> void:
 	for row in gm.buff_json_data:
 		if row.get("auto_activate", false):
 			auto_activate_count += 1
-	assert_eq(auto_activate_count, 10, "buff_json_data should have 10 auto_activate entries")
+	assert_eq(auto_activate_count, 8, "buff_json_data should have 8 auto_activate entries")

@@ -8,11 +8,10 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	if Current.slime_die_sum > 0:
-		var coin_gain = Current.slime_die_sum
-		Current.total_coins += coin_gain
+	if Current.slime_die_sum >= 4:
+		Current.total_coins += 2
 		Current.public_lock_array.append("mint_press_buff")
-		var float_number_instantiate = EffectManager.float_number_effect(coin_gain, "green")
+		var float_number_instantiate = EffectManager.float_number_effect(2, "green")
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)

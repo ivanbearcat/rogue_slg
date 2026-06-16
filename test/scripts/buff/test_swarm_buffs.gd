@@ -1,5 +1,5 @@
 ﻿extends Node
-## 虫群(Swarm)家族Buff测试
+## 潮涌(Swarm)家族Buff测试
 ## 直接使用真实autoload（Current/SceneManager/EffectManager/BuffSystem/game_manager）
 
 var _test_failed: bool = false
@@ -83,15 +83,15 @@ func assert_gte(actual, than, message: String = "") -> void:
 ## 测试方法
 ## ============================================================
 
-## 1. slime_plus_one_buff - set时HP+1/max_hp+1, clear时HP-1/max_hp-1
-func test_slime_plus_one_buff() -> void:
-	_current_test = "test_slime_plus_one_buff"
+## 1. slime_tide_buff - set时HP+1/max_hp+1, clear时HP-1/max_hp-1
+func test_slime_tide_buff() -> void:
+	_current_test = "test_slime_tide_buff"
 	var c = Current
 	c.player_hp = 3
 	c.max_hp = 3
 
-	var meta = {"buff_id": "slime_plus_one", "family": "swarm", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/slime_plus_one_buff.gd", meta)
+	var meta = {"buff_id": "slime_tide", "family": "swarm", "tags": ["passive"]}
+	var buff = create_and_set_buff("res://scripts/buff/slime_tide_buff.gd", meta)
 
 	# set_buff后HP和max_hp各+1
 	assert_eq(c.max_hp, 4, "max_hp should increase by 1 after set_buff")
@@ -112,15 +112,15 @@ func test_slime_plus_one_buff() -> void:
 	assert_eq(c.max_hp, 0, "max_hp should be 0 after clear_buff")
 	assert_eq(c.player_hp, 0, "player_hp should be 0 after clear_buff from 1")
 
-## 2. slime_sum_score_increase_buff - 分数 = enemy_count × target_score × 0.0025
-func test_slime_sum_score_increase_buff() -> void:
-	_current_test = "test_slime_sum_score_increase_buff"
+## 2. swarm_tithe_buff - 分数 = enemy_count × target_score × 0.0025
+func test_swarm_tithe_buff() -> void:
+	_current_test = "test_swarm_tithe_buff"
 	var c = Current
 	c.total_score = 0
 	c.target_score = 1000
 
-	var meta = {"buff_id": "slime_sum_score_increase", "family": "swarm", "tags": ["attack"]}
-	var buff = create_and_set_buff("res://scripts/buff/slime_sum_score_increase_buff.gd", meta)
+	var meta = {"buff_id": "swarm_tithe", "family": "swarm", "tags": ["attack"]}
+	var buff = create_and_set_buff("res://scripts/buff/swarm_tithe_buff.gd", meta)
 
 	# 0个敌人时分数不变
 	buff.process_buff()
@@ -265,47 +265,42 @@ func test_tide_crusher_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 0.50), "9 slimes: should trigger, score = int(once_total_score * 0.50)")
 
-## 7. swarm_overlord_buff - 数量压制：每有1个存活史莱姆，蜂群系得分额外+5%
+## 7. swarm_overlord_buff - 数量压制：每有1个史莱姆存活，潮涌系得分3%/只
 func test_swarm_overlord_buff() -> void:
 	_current_test = "test_swarm_overlord_buff"
 	var c = Current
 	c.total_score = 0
-	# 设置family_accumulation供领主查询
-	BuffSystem._last_family_accumulation = {"swarm": 25}
+	c.once_total_score = 1000
 	# 添加10个史莱姆
 	for i in range(10):
 		add_slime(Vector2(i, 0))
 	var meta = {"buff_id": "swarm_overlord", "family": "swarm", "tags": ["legendary", "multiplicative"]}
 	var buff = create_and_set_buff("res://scripts/buff/swarm_overlord_buff.gd", meta)
-	# 需要蜂群系≥4才能激活，单独1个overlord不满足，process_buff应该跳过
+	# 需要潮涌系≥4才能激活，单独1个overlord不满足，process_buff应该跳过
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "swarm_overlord with <4 swarm buffs: should not trigger")
 	# clear_buff无操作
 	buff.clear_buff()
 	# 清理
 	Current.all_enemy_array.clear()
-	BuffSystem._last_family_accumulation = {}
 
-## 8. slime_resonance_buff - 分数 = once_total_score × slime_count × 0.03
-func test_slime_resonance_buff() -> void:
-	_current_test = "test_slime_resonance_buff"
+## 8. slime_rebirth_buff - 史莱姆转生：每击杀1个史莱姆，30%概率生成1个新史莱姆
+func test_slime_rebirth_buff() -> void:
+	_current_test = "test_slime_rebirth_buff"
 	var c = Current
 	c.total_score = 0
-	c.once_total_score = 1000
 
-	var meta = {"buff_id": "slime_resonance", "family": "swarm", "tags": ["attack"]}
-	var buff = create_and_set_buff("res://scripts/buff/slime_resonance_buff.gd", meta)
+	var meta = {"buff_id": "slime_rebirth", "family": "swarm", "tags": ["on_kill", "slime_count", "linear", "aggression", "common"]}
+	var buff = create_and_set_buff("res://scripts/buff/slime_rebirth_buff.gd", meta)
 
-	# 0个史莱姆时分数不变
+	# 0击杀时不应执行任何操作（不生成史莱姆，不显示浮动数字）
+	c.slime_die_sum = 0
 	buff.process_buff()
-	assert_eq(c.total_score, 0, "0 slimes: total_score should not change")
+	assert_eq(c.total_score, 0, "0 kills: total_score should not change")
 
-	# 4个史莱姆：int(1000 * 4 * 0.03) = int(120) = 120
-	c.total_score = 0
-	for i in range(4):
-		add_slime(Vector2(i, 0))
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 4 * 0.03), "4 slimes: score should be int(1000 * 4 * 0.03)")
+	# 3击杀时：由于30%概率判定，无法精确断言生成数量，
+	# 但可以验证public_lock_array在处理期间正确加锁和解锁
+	# （此测试依赖运行时game_manager，在集成测试中验证完整流程）
 
 ## 9. slime_kill_empower_buff - 分数 = once_total_score × kill_count × 0.01
 func test_slime_kill_empower_buff() -> void:

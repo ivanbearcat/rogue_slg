@@ -1,4 +1,4 @@
-﻿extends Buff
+extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -6,11 +6,11 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
-	Current.buff_price_discount += 1
 
 func process_buff():
-	# 税吏效果为被动折扣，在购买buff时通过buff_price_discount生效
-	pass
+	if not Current.is_moved:
+		EffectManager.buff_pop_effect(buff_texture)
+		Current.total_coins += 2
 
 func clear_buff():
-	Current.buff_price_discount = maxi(0, Current.buff_price_discount - 1)
+	pass

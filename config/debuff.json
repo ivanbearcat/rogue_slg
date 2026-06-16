@@ -108,7 +108,7 @@
         "debuff_id": "score_cap",
         "debuff_name": "得分上限",
         "debuff_icon": "res://icon.svg",
-        "debuff_tooltip": "单次攻击得分不超过目标分数的30%",
+        "debuff_tooltip": "单次攻击得分不超过目标分数的40%",
         "debuff_res": "res://scripts/debuff/score_cap_buff.gd",
         "debuff_type": "post_attack_buff",
         "severity": "normal"
@@ -154,7 +154,7 @@
         "debuff_id": "attack_score_down",
         "debuff_name": "攻击得分下降",
         "debuff_icon": "res://images/debuff_icon/attack_score_down.png",
-        "debuff_tooltip": "每次攻击的得分-20%",
+        "debuff_tooltip": "每次攻击的得分-15%",
         "debuff_res": "res://scripts/debuff/attack_score_down_buff.gd",
         "debuff_type": "post_attack_buff",
         "severity": "normal"

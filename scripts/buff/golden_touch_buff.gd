@@ -8,16 +8,8 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	var coin_bonus_count = Current.total_coins / 5
-	if coin_bonus_count > 0:
-		Current.public_lock_array.append("golden_touch_buff")
-		var add_num = int(Current.once_total_score * coin_bonus_count * 0.15)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("golden_touch_buff")
+	# 黄金之手效果在外部流程 _on_stage_clear_button_pressed 中执行
+	pass
 
 func clear_buff():
 	pass

@@ -1,5 +1,5 @@
 ﻿extends Node
-## 杀戮(Slaughter)/疾风(Swift)/猎杀(Hunt)/进化(Evolution) Buff测试
+## 疾风(Swift)/猎杀(Hunt)/进化(Evolution) Buff测试
 ## 直接使用真实autoload（Current/SceneManager/EffectManager/BuffSystem/game_manager）
 
 var _test_failed: bool = false
@@ -146,45 +146,6 @@ func test_move_attack_score_increase_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, int(1 * 0.05 * 200), "movement=1: score should be int(1*0.05*once)")
 
-## 3. combo_surge_buff - consecutive_score_rounds每回合+7%, 上限30%
-func test_combo_surge_buff() -> void:
-	_current_test = "test_combo_surge_buff"
-	Current.once_total_score = 1000
-	Current.total_score = 0
-
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "slaughter", "tags": []}
-	var buff = create_and_set_buff("res://scripts/buff/combo_surge_buff.gd", meta)
-
-	# consecutive_score_rounds=0 → 不触发
-	Current.consecutive_score_rounds = 0
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "consecutive_score_rounds=0: no bonus")
-
-	# consecutive_score_rounds=1 → 7%, int(1000*0.07)=70
-	Current.consecutive_score_rounds = 1
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, int(1000 * 0.07), "consecutive_score_rounds=1: +7% bonus")
-
-	# consecutive_score_rounds=3 → 21%, int(1000*0.21)=210
-	Current.consecutive_score_rounds = 3
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, int(1000 * 0.21), "consecutive_score_rounds=3: +21% bonus")
-
-	# consecutive_score_rounds=5 → cap at 30%, int(1000*0.30)=300
-	Current.consecutive_score_rounds = 5
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, int(1000 * 0.30), "consecutive_score_rounds=5: +30% bonus (cap)")
-
-	# consecutive_score_rounds=10 → still cap at 30%
-	Current.consecutive_score_rounds = 10
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, int(1000 * 0.30), "consecutive_score_rounds=10: still +30% bonus (cap)")
-
 ## 4. rush_strike_buff - movement≥3触发; =2不触发
 func test_rush_strike_buff() -> void:
 	_current_test = "test_rush_strike_buff"
@@ -253,7 +214,7 @@ func test_position_master_buff() -> void:
 	Current.once_total_score = 1000
 	Current.total_score = 0
 
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "slaughter", "tags": []}
+	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "hunt", "tags": []}
 	var buff = create_and_set_buff("res://scripts/buff/position_master_buff.gd", meta)
 
 	# 0个史莱姆在攻击范围内→不触发
@@ -319,23 +280,4 @@ func test_drop_bonus_buff() -> void:
 		Current.four_score + Current.five_score + Current.six_score
 	assert_eq(sum_after, sum_before + 1, "dropped_dice_count=1: total dice score should increase by 1")
 
-## 8. slaughter_overlord_buff - 杀戮惯性：移动力+1，杀戮系得分×杀戮叠层倍率
-func test_slaughter_overlord_buff() -> void:
-	_current_test = "test_slaughter_overlord_buff"
-	var c = Current
-	c.total_score = 0
-	var max_power_before = c.max_power
-	# 设置slaughter_ramp和family_accumulation供领主查询
-	BuffSystem.slaughter_ramp = 0.30
-	BuffSystem._last_family_accumulation = {"slaughter": 11}
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "slaughter", "tags": ["legendary", "multiplicative"]}
-	var buff = create_and_set_buff("res://scripts/buff/slaughter_overlord_buff.gd", meta)
-	# set_buff时移动力+1（需要≥4 slaughter buffs才会触发，当前只有1个overlord自身不满足）
-	# process_buff也需要≥4，不触发
-	buff.process_buff()
-	assert_eq(c.total_score, 0, "slaughter_overlord with <4 slaughter buffs: score should not change")
-	# clear_buff恢复移动力
-	buff.clear_buff()
-	# 清理
-	BuffSystem.slaughter_ramp = 0.0
-	BuffSystem._last_family_accumulation = {}
+

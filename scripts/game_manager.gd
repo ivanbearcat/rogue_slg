@@ -208,6 +208,49 @@ var astar: AStarGrid2D
 var _removable_map_vec =  Vector2(7, 7)
 ## 史莱姆创建数组
 var _slime_create_array: Array
+## 在随机可用空位生成史莱姆（供buff调用的公开方法）
+func spawn_slime_at_random_grid(count: int) -> void:
+	## 查找可用空位：未被英雄、已有史莱姆或预生成史莱姆占用的格子
+	var available_grid_array: Array[Vector2]
+	var slime_create_grid_index_array: Array[Vector2]
+	for grid_index in all_grid_dict.keys():
+		if grid_index not in Current.all_enemy_grid_index_array and \
+		grid_index != Current.hero.hero_grid_index and \
+		grid_index not in _margin_grid:
+			available_grid_array.append(grid_index)
+	if available_grid_array.is_empty():
+		return
+	## clamp到可用空位数量
+	var actual_count = mini(count, available_grid_array.size())
+	var spawned_enemies: Array = []
+	while slime_create_grid_index_array.size() < actual_count:
+		var grid_index = available_grid_array.pick_random()
+		if ! grid_index in slime_create_grid_index_array:
+			slime_create_grid_index_array.append(grid_index)
+	for grid_index in slime_create_grid_index_array:
+		var slime_sence = slime_scene_array.pick_random()
+		var enemy_instantiate = SceneManager.create_scene(slime_sence)
+		enemy_instantiate.position = grid_index_to_position(grid_index)
+		enemy_instantiate.enemy_grid_index = grid_index
+		enemys.add_child(enemy_instantiate)
+		spawned_enemies.append(enemy_instantiate)
+	## await process_frame确保注册到Current.all_enemy_array
+	await get_tree().process_frame
+	## 触发骰子动画
+	for enemy in spawned_enemies:
+		if not is_instance_valid(enemy):
+			continue
+		enemy.dice.play("roll")
+		enemy.animated_sprite_2d.play("roll")
+	## 等待动画
+	await Tools.time_sleep(1)
+	## 停止动画并设置随机帧
+	for enemy in spawned_enemies:
+		if not is_instance_valid(enemy):
+			continue
+		enemy.dice.stop()
+		enemy.dice.set_frame_and_progress(dice_point.pick_random(), 0)
+		enemy.animated_sprite_2d.play("idle")
 ## 带有骰子点数的动画图片索引
 var dice_point: Array = [0, 2, 4, 6, 8, 10]
 ## 史莱姆场景数组
@@ -922,8 +965,6 @@ func hero_move(event: InputEvent = null):
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	print(Current.id_path)
 	EventBus.event_emit("do_post_hero_move_buff")
-	## 杀戮霸主叠层：玩家实际移动时增加slaughter_ramp
-	BuffSystem.increment_slaughter_ramp()
 
 ## 显示技能可点击范围
 func show_skill_range():
@@ -955,9 +996,9 @@ func _turn_process():
 	Current.slime_create_num = 3  ## 重置为基础值
 	if Current.count_round >= 8 and Current.count_round <= 10:
 		Current.slime_create_num = 6
-	## 重新应用史莱姆数量加成buff（slime_plus_one每回合+1史莱姆）
+	## 重新应用史莱姆数量加成buff（slime_tide每回合+1史莱姆）
 	for buff in buff_container.get_children():
-		if buff.has_meta("buff_meta") and buff.get_meta("buff_meta").get("buff_id", "") in ["slime_plus_one"]:
+		if buff.has_meta("buff_meta") and buff.get_meta("buff_meta").get("buff_id", "") in ["slime_tide"]:
 			Current.slime_create_num += 1
 
 	## 第8回合显示危险提示
@@ -1562,11 +1603,11 @@ func _set_shop_buff():
 	TooltipManager.set_tooltip(buff_shop_icon_2, TooltipFormatter.format_buff(shop_buff_2))
 	TooltipManager.set_tooltip(buff_shop_icon_3, TooltipFormatter.format_buff(shop_buff_3))
 	buff_shop_rlabel_1.text = "[img=13 ]res://images/coin.png[/img] " + \
-		str(int(shop_buff_1["buff_price"]))
+		str(maxi(0, int(shop_buff_1["buff_price"]) - Current.buff_price_discount))
 	buff_shop_rlabel_2.text = "[img=13 ]res://images/coin.png[/img] " + \
-		str(int(shop_buff_2["buff_price"]))
+		str(maxi(0, int(shop_buff_2["buff_price"]) - Current.buff_price_discount))
 	buff_shop_rlabel_3.text = "[img=13 ]res://images/coin.png[/img] " + \
-		str(int(shop_buff_3["buff_price"]))
+		str(maxi(0, int(shop_buff_3["buff_price"]) - Current.buff_price_discount))
 
 ## 设置商店金币技能（每关随机1个技能展示在商店）
 func _set_shop_coin_skill():
@@ -1690,6 +1731,9 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.public_lock_array.append("stage_transition")
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
+	## 黄金之手：关卡结束时每有5个金币+1金币
+	if BuffSystem.is_buff_registered("golden_touch"):
+		Current.total_coins += int(Current.total_coins / 5)
 	## 更新回合、关卡、当前分数、目标分数
 	Current.count_round = 0
 	Current.total_score = 0
@@ -1919,7 +1963,9 @@ func _apply_war_supply_heal() -> void:
 		Current.potion_count += 1
 
 func _on_buff_shop_button_1_pressed() -> void:
-	Current.total_coins -= shop_buff_1["buff_price"]
+	var _actual_price = maxi(0, shop_buff_1["buff_price"] - Current.buff_price_discount)
+	Current.total_coins -= _actual_price
+	Current.buff_price_discount = 0
 	_set_buff(shop_buff_1)
 	_apply_war_supply_heal()
 	buff_shop_icon_1.modulate.a = 0
@@ -1927,7 +1973,9 @@ func _on_buff_shop_button_1_pressed() -> void:
 	buff_json_data.erase(shop_buff_1)
 
 func _on_buff_shop_button_2_pressed() -> void:
-	Current.total_coins -= shop_buff_2["buff_price"]
+	var _actual_price = maxi(0, shop_buff_2["buff_price"] - Current.buff_price_discount)
+	Current.total_coins -= _actual_price
+	Current.buff_price_discount = 0
 	_set_buff(shop_buff_2)
 	_apply_war_supply_heal()
 	buff_shop_icon_2.modulate.a = 0
@@ -1935,7 +1983,9 @@ func _on_buff_shop_button_2_pressed() -> void:
 	buff_json_data.erase(shop_buff_2)
 
 func _on_buff_shop_button_3_pressed() -> void:
-	Current.total_coins -= shop_buff_3["buff_price"]
+	var _actual_price = maxi(0, shop_buff_3["buff_price"] - Current.buff_price_discount)
+	Current.total_coins -= _actual_price
+	Current.buff_price_discount = 0
 	_set_buff(shop_buff_3)
 	_apply_war_supply_heal()
 	buff_shop_icon_3.modulate.a = 0
