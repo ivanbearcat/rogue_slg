@@ -101,6 +101,11 @@ func skill_attack():
 	await Tools.time_sleep(0.5)
 	Current.total_score += Current.dice_type_point
 	Current.once_total_score = Current.dice_type_point
+	## 破釜沉舟得分加成（pre_hero_turn时已扣血设标记，此处计算加成）
+	if Current.scorched_earth_bonus > 0:
+		var se_add_num = int(Current.once_total_score * Current.scorched_earth_bonus)
+		if se_add_num > 0:
+			Current.total_score += se_add_num
 	## 等待攻击动画完成和公共锁释放
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)

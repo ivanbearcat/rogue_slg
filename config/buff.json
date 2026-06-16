@@ -886,5 +886,39 @@
             "aggression",
             "legendary"
         ]
+    },
+    {
+        "buff_id": "scorched_earth",
+        "buff_name": "破釜沉舟",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "回合开始时，若HP>2则HP-1，本回合攻击得分+35%；否则不扣血无增益",
+        "buff_res": "res://scripts/buff/scorched_earth_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 7,
+        "family": "desperation",
+        "tags": [
+            "on_spawn",
+            "hp",
+            "ramping",
+            "aggression",
+            "rare"
+        ]
+    },
+    {
+        "buff_id": "last_stand",
+        "buff_name": "背水一战",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "当前分数低于目标分数50%时，攻击得分+40%；若攻击未得分则HP-1",
+        "buff_res": "res://scripts/buff/last_stand_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 9,
+        "family": "desperation",
+        "tags": [
+            "on_attack",
+            "hp",
+            "threshold",
+            "aggression",
+            "epic"
+        ]
     }
 ]

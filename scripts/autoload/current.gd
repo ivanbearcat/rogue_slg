@@ -604,6 +604,8 @@ var potion_max: int:
 		return _potion_max
 ## 铁胃减伤值（0=未激活，1=激活铁胃后每回合伤害-1）
 var iron_stomach_reduction: int = 0
+## 破釜沉舟本回合得分加成比例（0=未激活，0.35=HP>2时激活+35%）
+var scorched_earth_bonus: float = 0.0
 ## 全局免死：是否拥有免死（绝境霸主授予）
 var has_death_immunity: bool = false
 ## 全局免死：是否已消耗（整个run仅1次）
