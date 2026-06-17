@@ -68,11 +68,11 @@
         ]
     },
     {
-        "buff_id": "move_attack_score_increase",
-        "buff_name": "移动力击杀额外加分",
+        "buff_id": "swift_amplify",
+        "buff_name": "疾风增幅",
         "buff_icon": "res://images/buff_icon/move_attack_score_increase.png",
         "buff_tooltip": "攻击后，每有1点移动力，以这次得分为基础，额外增加5%倍率的分数",
-        "buff_res": "res://scripts/buff/move_attack_score_increase_buff.gd",
+        "buff_res": "res://scripts/buff/swift_amplify_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 9,
         "family": "swift",
@@ -302,6 +302,23 @@
             "linear",
             "aggression",
             "common"
+        ]
+    },
+    {
+        "buff_id": "hunt_pursuit",
+        "buff_name": "猎杀追击",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "击杀≥3只史莱姆时，以这次得分为基础，额外增加25%倍率的分数",
+        "buff_res": "res://scripts/buff/hunt_pursuit_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 7,
+        "family": "hunt",
+        "tags": [
+            "on_attack",
+            "slime_count",
+            "threshold",
+            "aggression",
+            "rare"
         ]
     },
     {
@@ -659,6 +676,74 @@
         ]
     },
     {
+        "buff_id": "swift_streak",
+        "buff_name": "疾风连击",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "连续得分回合≥2时，移动力+1",
+        "buff_res": "res://scripts/buff/swift_streak_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 7,
+        "family": "swift",
+        "tags": [
+            "on_spawn",
+            "movement",
+            "threshold",
+            "aggression",
+            "rare"
+        ]
+    },
+    {
+        "buff_id": "phantom_dash",
+        "buff_name": "残影疾步",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "场上史莱姆≥5时，移动力+1",
+        "buff_res": "res://scripts/buff/phantom_dash_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5,
+        "family": "swift",
+        "tags": [
+            "on_spawn",
+            "movement",
+            "threshold",
+            "aggression",
+            "common"
+        ]
+    },
+    {
+        "buff_id": "vigor_sprint",
+        "buff_name": "旺盛疾跑",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "HP≥80%时，移动力+1",
+        "buff_res": "res://scripts/buff/vigor_sprint_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5,
+        "family": "swift",
+        "tags": [
+            "on_spawn",
+            "hp",
+            "threshold",
+            "aggression",
+            "common"
+        ]
+    },
+    {
+        "buff_id": "hero_rush",
+        "buff_name": "英雄冲锋",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "精英或BOSS在场时，移动力+1",
+        "buff_res": "res://scripts/buff/hero_rush_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 5,
+        "family": "swift",
+        "tags": [
+            "on_spawn",
+            "slime_count",
+            "threshold",
+            "aggression",
+            "common"
+        ]
+    },
+    {
         "buff_id": "crisis_power",
         "buff_name": "危机之力",
         "buff_icon": "res://icon.svg",
@@ -842,7 +927,7 @@
         "buff_id": "swift_overlord",
         "buff_name": "疾风霸主",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "疾风系Buff≥4时激活，移动力+1，疾风系得分额外+5%",
+        "buff_tooltip": "疾风系Buff≥4时激活，移动力+1，攻击时本回合每移动过1格+5%得分",
         "buff_res": "res://scripts/buff/swift_overlord_buff.gd",
         "buff_type": "post_attack_buff",
         "auto_activate": true,

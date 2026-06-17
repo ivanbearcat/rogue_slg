@@ -1,4 +1,4 @@
-﻿extends Buff
+extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -8,14 +8,14 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	Current.public_lock_array.append("move_attack_score_increase_buff")
+	Current.public_lock_array.append("swift_amplify_buff")
 	var add_num = int(Current.hero.hero_movement * 0.05 * Current.once_total_score)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num)
 	Current.hero.add_child(float_number_instantiate)
 	EffectManager.buff_pop_effect(buff_texture)
 	await Tools.time_sleep(1)
 	Current.total_score += add_num
-	Current.public_lock_array.erase("move_attack_score_increase_buff")
+	Current.public_lock_array.erase("swift_amplify_buff")
 
 func clear_buff():
 	pass

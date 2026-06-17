@@ -113,14 +113,14 @@ func test_movement_plus_one_buff() -> void:
 	buff2.clear_buff()
 	assert_eq(Current.hero.hero_movement, initial_movement, "After 2nd clear_buff: hero_movement should return to initial")
 
-## 2. move_attack_score_increase_buff - int(movement×0.05×once); movement=0不加
-func test_move_attack_score_increase_buff() -> void:
-	_current_test = "test_move_attack_score_increase_buff"
+## 2. swift_amplify_buff - int(movement×0.05×once); movement=0不加
+func test_swift_amplify_buff() -> void:
+	_current_test = "test_swift_amplify_buff"
 	Current.once_total_score = 200
 	Current.total_score = 0
 
 	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "swift", "tags": []}
-	var buff = create_and_set_buff("res://scripts/buff/move_attack_score_increase_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/buff/swift_amplify_buff.gd", meta)
 
 	# movement=0→int(0*0.05*200)=0
 	Current.hero.hero_movement = 0

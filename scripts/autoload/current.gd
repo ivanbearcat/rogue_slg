@@ -85,6 +85,8 @@ var pre_move_position: Vector2 = Vector2.ZERO
 var pre_move_grid_index: Vector2 = Vector2.ZERO
 ## 移动前的总分（用于buff回滚）
 var pre_move_total_score: int = 0
+## 本回合已移动格数
+var grids_moved_this_turn: int = 0
 ## 选中的技能编号
 var skill_num: String
 ## 技能选择范围

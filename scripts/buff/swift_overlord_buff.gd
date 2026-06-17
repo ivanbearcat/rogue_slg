@@ -9,13 +9,13 @@ func set_buff():
 		_move_bonus_added = true
 
 func process_buff():
-	# 疾风霸主 - 疾风增幅：疾风系得分额外+5%
+	# 疾风霸主 - 每移动1格+5%得分
 	if BuffSystem.get_family_count("swift") < 4:
 		return
-	var accumulated = BuffSystem.get_family_accumulation("swift")
-	if accumulated <= 0:
+	var moved = Current.grids_moved_this_turn
+	if moved <= 0:
 		return
-	var bonus = roundi(accumulated * 0.05)
+	var bonus = int(Current.once_total_score * moved * 0.05)
 	if bonus > 0:
 		Current.total_score += bonus
 		var float_number_instantiate = EffectManager.float_number_effect(bonus, "gold")

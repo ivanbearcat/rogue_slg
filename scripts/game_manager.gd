@@ -963,6 +963,7 @@ func hero_move(event: InputEvent = null):
 	Current.pre_move_grid_index = hero.hero_grid_index
 	Current.pre_move_total_score = Current.total_score
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
+	Current.grids_moved_this_turn = Current.id_path.size() - 1
 	print(Current.id_path)
 	EventBus.event_emit("do_post_hero_move_buff")
 
@@ -1171,6 +1172,8 @@ func _on_undo_move_button_pressed() -> void:
 	hero.hero_state_machine.transition_to("idle")
 	## 重置已移动标记（会触发setter自动禁用撤回按钮）
 	Current.is_moved = false
+	## 重置本回合移动格数
+	Current.grids_moved_this_turn = 0
 	## 重置A*路径点
 	reset_astar_solid()
 	## 清空保存的移动前数据
@@ -1279,6 +1282,8 @@ func _pre_hero_turn_begin():
 	Current.is_moved = false
 	## 重掷已攻击标记
 	Current.is_attacked = false
+	## 重置本回合移动格数
+	Current.grids_moved_this_turn = 0
 	## 撤回按钮重置为disabled（新回合开始时）
 	if has_node("coin_skill_trun_button/HBoxContainer/undo_move_button"):
 		var undo_button = get_node("coin_skill_trun_button/HBoxContainer/undo_move_button")
