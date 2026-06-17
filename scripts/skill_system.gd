@@ -145,6 +145,16 @@ func _process_dropped_dice(attack_slime_array_info: Array, dice_type_result: Arr
 				break
 		if not found:
 			dropped_dice.append(dice.duplicate())
+	## 设置掉落格子骰子消耗标记（drop_hunter用）
+	## 如果掉落格子骰子参与了计分（在scored_dice中），则标记为true
+	if old_drop_slot != null:
+		var _found_in_scored := false
+		var scored_check = scored_dice_info.duplicate()
+		for dice in scored_check:
+			if dice[0] == old_drop_slot[0] and dice[1] == old_drop_slot[1]:
+				_found_in_scored = true
+				break
+		Current.drop_slot_consumed_this_turn = _found_in_scored
 	## 设置掉落骰子数量（掉落奖励/掉落惩罚用）
 	## 排除掉落格子骰子（它不是新掉落的，不应计入掉落奖励数量）
 	var drop_slot_in_dropped := 0

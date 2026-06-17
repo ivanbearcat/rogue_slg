@@ -51,6 +51,7 @@ class MockCurrent extends RefCounted:
 	var active_dice_types: Array = []
 	var highest_dice_num: int = 1
 	var drop_slot_dice = null
+	var drop_slot_consumed_this_turn: bool = false
 	# 战斗标记
 	var slime_die_sum: int = 0
 	var killed_power_slime: bool = false
@@ -372,6 +373,7 @@ static func reset_mock_current(mock_current: MockCurrent) -> void:
 	mock_current.iron_stomach_reduction = 0
 	mock_current.public_lock_array = []
 	mock_current.drop_slot_dice = null
+	mock_current.drop_slot_consumed_this_turn = false
 	mock_current.dropped_dice_count = 0
 	mock_current.scored_dice_info = []
 	mock_current.active_dice_types = []

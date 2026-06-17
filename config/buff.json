@@ -214,7 +214,6 @@
         "family": "",
         "tags": [
             "on_buy",
-            "coin",
             "static",
             "economy",
             "common"
@@ -241,14 +240,14 @@
         "buff_id": "drop_hunter",
         "buff_name": "掉落猎手",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "掉落格子有骰子时，以这次得分为基础，额外增加20%倍率的分数",
+        "buff_tooltip": "消耗了掉落格子的骰子，以这次得分为基础，额外增加20%倍率的分数",
         "buff_res": "res://scripts/buff/drop_hunter_buff.gd",
-        "buff_type": "pre_attack_buff",
+        "buff_type": "post_attack_buff",
         "buff_price": 3,
         "family": "hunt",
         "tags": [
             "on_attack",
-            "movement",
+            "drop_slot",
             "threshold",
             "aggression",
             "common"
@@ -413,15 +412,15 @@
         "buff_id": "slime_explosion",
         "buff_name": "史莱姆爆破",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "攻击时每有5个存活史莱姆+20%",
+        "buff_tooltip": "攻击后，每有3只存活史莱姆，以这次得分为基础，额外增加10%倍率的分数",
         "buff_res": "res://scripts/buff/slime_explosion_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
-        "family": "hunt",
+        "family": "swarm",
         "tags": [
             "on_attack",
             "slime_count",
-            "threshold",
+            "linear",
             "aggression",
             "rare"
         ]
@@ -537,7 +536,6 @@
         "family": "",
         "tags": [
             "on_buy",
-            "coin",
             "ramping",
             "economy",
             "common"

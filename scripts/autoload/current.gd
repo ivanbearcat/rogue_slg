@@ -315,6 +315,13 @@ var six_score: int:
 			EffectManager.big_flow_effect(game_manager.six_score)
 	get:
 		return _six_score
+## 掉落格子骰子是否在本回合攻击中被消耗（参与骰型计分）
+var _drop_slot_consumed_this_turn: bool = false
+var drop_slot_consumed_this_turn: bool:
+	set(v):
+		_drop_slot_consumed_this_turn = v
+	get:
+		return _drop_slot_consumed_this_turn
 ## 掉落格子骰子 [color, point] 或 null
 var _drop_slot_dice = null
 var drop_slot_dice:

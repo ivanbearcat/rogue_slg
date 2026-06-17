@@ -179,7 +179,7 @@ func test_rush_strike_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, 0, "movement=0: should not trigger")
 
-## 5. drop_hunter_buff - drop_slot_dice!=null触发; null不触发
+## 5. drop_hunter_buff - drop_slot_consumed_this_turn为true触发; false不触发
 func test_drop_hunter_buff() -> void:
 	_current_test = "test_drop_hunter_buff"
 	Current.once_total_score = 500
@@ -188,25 +188,26 @@ func test_drop_hunter_buff() -> void:
 	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "hunt", "tags": []}
 	var buff = create_and_set_buff("res://scripts/buff/drop_hunter_buff.gd", meta)
 
-	# drop_slot_dice=null→不触发
+	# drop_slot_consumed_this_turn=false→不触发
+	Current.drop_slot_consumed_this_turn = false
 	Current.drop_slot_dice = null
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "drop_slot_dice=null: should not trigger")
+	assert_eq(Current.total_score, 0, "drop_slot_consumed_this_turn=false: should not trigger")
 
-	# drop_slot_dice有值→触发, int(500*0.20)=100
+	# drop_slot_consumed_this_turn=true→触发, int(500*0.20)=100
+	Current.drop_slot_consumed_this_turn = true
 	Current.drop_slot_dice = ["green", 3]
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(500 * 0.20), "drop_slot_dice has value: should add int(once*0.20)")
+	assert_eq(Current.total_score, int(500 * 0.20), "drop_slot_consumed_this_turn=true: should add int(once*0.20)")
 
-	# drop_slot_dice为空字符串→不触发(空字符串!=null但源码检查!=null)
-	# 注意：GDScript中空字符串""!=null，所以会触发
-	Current.drop_slot_dice = ""
+	# drop_slot_consumed_this_turn=false即使drop_slot_dice有值也不触发
+	Current.drop_slot_consumed_this_turn = false
+	Current.drop_slot_dice = ["red", 5]
 	Current.total_score = 0
 	await buff.process_buff()
-	# ""!=null为true，所以会触发
-	assert_eq(Current.total_score, int(500 * 0.20), "drop_slot_dice='': empty string != null, should trigger")
+	assert_eq(Current.total_score, 0, "drop_slot_consumed_this_turn=false with dice: should not trigger")
 
 ## 6. position_master_buff - int(once×slime_in_range×0.03); 0个不加
 func test_position_master_buff() -> void:

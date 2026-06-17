@@ -8,7 +8,7 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	if Current.drop_slot_dice != null:
+	if Current.drop_slot_consumed_this_turn:
 		Current.public_lock_array.append("drop_hunter_buff")
 		var add_num = int(Current.once_total_score * 0.20)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)

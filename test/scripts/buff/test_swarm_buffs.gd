@@ -193,7 +193,7 @@ func test_swarm_heart_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 2 * 0.15), "6 slimes: bonus_count=2, score should be int(1000 * 2 * 0.15)")
 
-## 5. slime_explosion_buff - 只计算attack_range内的史莱姆, 每5个bonus=1
+## 5. slime_explosion_buff - 只计算attack_range内的史莱姆, 每3个bonus=1, 每bonus +10%
 func test_slime_explosion_buff() -> void:
 	_current_test = "test_slime_explosion_buff"
 	var c = Current
@@ -203,39 +203,46 @@ func test_slime_explosion_buff() -> void:
 	var meta = {"buff_id": "slime_explosion", "family": "swarm", "tags": ["attack"]}
 	var buff = create_and_set_buff("res://scripts/buff/slime_explosion_buff.gd", meta)
 
-	# 4个范围内史莱姆：4/5=0, 不触发
-	for i in range(4):
+	# 2个范围内史莱姆：2/3=0, 不触发
+	for i in range(2):
 		add_slime_in_range(Vector2(i, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, 0, "4 in-range slimes: 4/5=0, should not trigger")
+	assert_eq(c.total_score, 0, "2 in-range slimes: 2/3=0, should not trigger")
 
-	# 5个范围内史莱姆：5/5=1, 分数 = int(1000 * 1 * 0.20) = 200
+	# 3个范围内史莱姆：3/3=1, 分数 = int(1000 * 1 * 0.10) = 100
 	c.total_score = 0
-	add_slime_in_range(Vector2(4, 0))
+	add_slime_in_range(Vector2(2, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 1 * 0.20), "5 in-range slimes: bonus=1, score should be int(1000 * 0.20)")
+	assert_eq(c.total_score, int(1000 * 1 * 0.10), "3 in-range slimes: bonus=1, score should be int(1000 * 0.10)")
 
-	# 10个范围内史莱姆：10/5=2, 分数 = int(1000 * 2 * 0.20) = 400
+	# 6个范围内史莱姆：6/3=2, 分数 = int(1000 * 2 * 0.10) = 200
 	c.total_score = 0
 	Current.all_enemy_array.clear()
 	Current.skill_attack_range.clear()
-	for i in range(10):
+	for i in range(6):
 		add_slime_in_range(Vector2(i, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 2 * 0.20), "10 in-range slimes: bonus=2, score should be int(1000 * 2 * 0.20)")
+	assert_eq(c.total_score, int(1000 * 2 * 0.10), "6 in-range slimes: bonus=2, score should be int(1000 * 2 * 0.10)")
 
-	# 范围外史莱姆不计算：5个总史莱姆但只有3个在范围内
+	# 9个范围内史莱姆：9/3=3, 分数 = int(1000 * 3 * 0.10) = 300
+	c.total_score = 0
+	Current.all_enemy_array.clear()
+	Current.skill_attack_range.clear()
+	for i in range(9):
+		add_slime_in_range(Vector2(i, 0))
+	buff.process_buff()
+	assert_eq(c.total_score, int(1000 * 3 * 0.10), "9 in-range slimes: bonus=3, score should be int(1000 * 3 * 0.10)")
+
+	# 范围外史莱姆不计算：3个总史莱姆但只有2个在范围内
 	c.total_score = 0
 	Current.all_enemy_array.clear()
 	Current.skill_attack_range.clear()
 	add_slime_in_range(Vector2(0, 0))
 	add_slime_in_range(Vector2(1, 0))
-	add_slime_in_range(Vector2(2, 0))
-	# 2个不在范围内的
+	# 1个不在范围内的
 	add_slime(Vector2(10, 0))
-	add_slime(Vector2(11, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, 0, "3 in-range (5 total): 3/5=0, should not trigger")
+	assert_eq(c.total_score, 0, "2 in-range (3 total): 2/3=0, should not trigger")
 
 ## 6. tide_crusher_buff - ≥8个史莱姆时触发，分数 = once_total_score × 0.50
 func test_tide_crusher_buff() -> void:

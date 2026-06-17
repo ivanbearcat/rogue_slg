@@ -1185,6 +1185,8 @@ func _turn_clean():
 	EventBus.event_emit("reset_cursor")
 	## 重置击杀过能量史莱姆标记
 	Current.killed_power_slime = false
+	## 重置掉落格子骰子消耗标记（每回合开始时重置）
+	Current.drop_slot_consumed_this_turn = false
 	## 增加回合数
 	Current.count_round += 1
 	## 进入敌人回合

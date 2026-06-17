@@ -9,10 +9,10 @@ func set_buff():
 
 func process_buff():
 	var slime_count = Current.all_enemy_array.size()
-	var bonus_count = slime_count / 5
+	var bonus_count = slime_count / 3
 	if bonus_count > 0:
 		Current.public_lock_array.append("slime_explosion_buff")
-		var add_num = int(Current.once_total_score * bonus_count * 0.20)
+		var add_num = int(Current.once_total_score * bonus_count * 0.10)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)

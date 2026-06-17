@@ -68,6 +68,7 @@ var scored_dice_info: Array = []
 var active_dice_types: Array = []
 var highest_dice_num: int = 1
 var drop_slot_dice = null
+var drop_slot_consumed_this_turn: bool = false
 # 战斗标记
 var slime_die_sum: int = 0
 var killed_power_slime: bool = false
@@ -160,6 +161,7 @@ func reset_to_defaults() -> void:
 	dice_type_count = 0; dropped_dice_count = 0
 	scored_dice_info = []; active_dice_types = []
 	highest_dice_num = 1; drop_slot_dice = null
+	drop_slot_consumed_this_turn = false
 	slime_die_sum = 0; killed_power_slime = false
 	last_turn_attacked = false; consecutive_score_turns = 0
 	zero_coin_refresh_times = 0; zero_coin_refresh_max_times = 0
