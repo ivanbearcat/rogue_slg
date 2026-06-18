@@ -882,7 +882,7 @@
         "buff_res": "res://scripts/buff/mass_kill_heal_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 3,
-        "family": "vitality,hunt",
+        "family": "vitality",
         "tags": [
             "on_attack",
             "hp",

@@ -83,20 +83,12 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 		bbcode += "[img=24]%s[/img] " % icon
 	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
 
-	# 家族行（支持逗号分隔的双族系）
+	# 家族行
 	if not family.is_empty():
-		var families = family.split(",")
-		var family_line := ""
-		for f in families:
-			f = f.strip_edges()
-			if FAMILY_COLORS.has(f):
-				var family_color: String = FAMILY_COLORS[f]
-				var family_cn: String = FAMILY_NAMES.get(f, f)
-				if not family_line.is_empty():
-					family_line += " "
-				family_line += "[color=%s]%s系[/color]" % [family_color, family_cn]
-		if not family_line.is_empty():
-			bbcode += "\n" + family_line
+		if FAMILY_COLORS.has(family):
+			var family_color: String = FAMILY_COLORS[family]
+			var family_cn: String = FAMILY_NAMES.get(family, family)
+			bbcode += "\n[color=%s]%s系[/color]" % [family_color, family_cn]
 
 	# 描述文本行（数值自动着色，倾向buff=绿色）
 	var colorized_tooltip: String = _colorize_numbers(tooltip, "buff")
@@ -104,19 +96,16 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 		colorized_tooltip += extra_text
 	bbcode += "\n" + colorized_tooltip
 
-	# 领主进度提示：有family的非领主BUFF显示激活进度（支持双族系）
+	# 领主进度提示：有family的非领主BUFF显示激活进度
 	if not family.is_empty() and not tags.has("legendary"):
-		var families = family.split(",")
-		for f in families:
-			f = f.strip_edges()
-			if FAMILY_COLORS.has(f):
-				var family_count = BuffSystem.get_family_count(f)
-				var overlord_name: String = OVERLORD_NAMES.get(f, "")
-				var overlord_effect: String = OVERLORD_EFFECTS.get(f, "")
-				if family_count >= 4:
-					bbcode += "\n💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color]" % [FAMILY_NAMES.get(f, f), overlord_name, overlord_effect]
-				else:
-					bbcode += "\n💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color]" % [FAMILY_NAMES.get(f, f), overlord_name, overlord_effect, family_count]
+		if FAMILY_COLORS.has(family):
+			var family_count = BuffSystem.get_family_count(family)
+			var overlord_name: String = OVERLORD_NAMES.get(family, "")
+			var overlord_effect: String = OVERLORD_EFFECTS.get(family, "")
+			if family_count >= 4:
+				bbcode += "\n💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect]
+			else:
+				bbcode += "\n💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect, family_count]
 
 	# 领主BUFF自身显示已激活状态
 	if tags.has("legendary") and tags.has("multiplicative"):
