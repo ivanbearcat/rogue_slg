@@ -174,7 +174,7 @@ func test_score_shield_buff() -> void:
 	buff.clear_buff()
 	assert_eq(c.total_score, score_before, "clear_buff should not change total_score")
 
-## 8. late_bloom_buff - round≥7时触发，分数 = once_total_score × 0.25
+## 8. late_bloom_buff - round≥7时触发，分数 = once_total_score × 0.30
 func test_late_bloom_buff() -> void:
 	_current_test = "test_late_bloom_buff"
 	var c = Current
@@ -189,16 +189,16 @@ func test_late_bloom_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "round=6: should not trigger")
 
-	# round=7时触发，分数 = int(1000 * 0.25) = 250
+	# round=7时触发，分数 = int(1000 * 0.30) = 300
 	c.count_round = 7
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.25), "round=7: score should be int(once_total_score * 0.25)")
+	assert_eq(c.total_score, int(1000 * 0.30), "round=7: score should be int(once_total_score * 0.30)")
 
 	# round=10时也触发
 	c.total_score = 0
 	c.count_round = 10
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.25), "round=10: score should be int(once_total_score * 0.25)")
+	assert_eq(c.total_score, int(1000 * 0.30), "round=10: score should be int(once_total_score * 0.30)")
 
 	# round=1时不触发
 	c.total_score = 0
@@ -209,7 +209,7 @@ func test_late_bloom_buff() -> void:
 	# clear_buff无操作
 	buff.clear_buff()
 
-## 9. crisis_power_buff - HP≤2时触发，分数 = once_total_score × 0.50
+## 9. crisis_power_buff - HP≤2时触发，分数 = once_total_score × 0.70
 func test_crisis_power_buff() -> void:
 	_current_test = "test_crisis_power_buff"
 	var c = Current
@@ -224,16 +224,16 @@ func test_crisis_power_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "HP=3: should not trigger")
 
-	# HP=2时触发，分数 = int(1000 * 0.50) = 500
+	# HP=2时触发，分数 = int(1000 * 0.70) = 700
 	c.player_hp = 2
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.50), "HP=2: score should be int(once_total_score * 0.50)")
+	assert_eq(c.total_score, int(1000 * 0.70), "HP=2: score should be int(once_total_score * 0.70)")
 
 	# HP=1时也触发
 	c.total_score = 0
 	c.player_hp = 1
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.50), "HP=1: score should be int(once_total_score * 0.50)")
+	assert_eq(c.total_score, int(1000 * 0.70), "HP=1: score should be int(once_total_score * 0.70)")
 
 	# HP=5时不触发
 	c.total_score = 0
@@ -244,7 +244,7 @@ func test_crisis_power_buff() -> void:
 	# clear_buff无操作
 	buff.clear_buff()
 
-## 10. curse_burner_buff - 分数 = once_total_score × debuff_count × 0.12
+## 10. curse_burner_buff - 分数 = once_total_score × debuff_count × 0.08
 func test_curse_burner_buff() -> void:
 	_current_test = "test_curse_burner_buff"
 	var c = Current
@@ -259,23 +259,23 @@ func test_curse_burner_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "0 debuffs: total_score should not change")
 
-	# 1个debuff（含"disable"）：分数 = int(1000 * 1 * 0.12) = 120
+	# 1个debuff（含"disable"）：分数 = int(1000 * 1 * 0.08) = 80
 	c.total_score = 0
 	c.public_lock_array = ["disable_points"]
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 1 * 0.12), "1 disable debuff: score should be int(once_total_score * 1 * 0.12)")
+	assert_eq(c.total_score, int(1000 * 1 * 0.08), "1 disable debuff: score should be int(once_total_score * 1 * 0.08)")
 
-	# 3个debuff（混合disable/down/penalty）：分数 = int(1000 * 3 * 0.12) = 360
+	# 3个debuff（混合disable/down/penalty）：分数 = int(1000 * 3 * 0.08) = 240
 	c.total_score = 0
 	c.public_lock_array = ["disable_points", "down_two", "penalty_three"]
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 3 * 0.12), "3 debuffs: score should be int(once_total_score * 3 * 0.12)")
+	assert_eq(c.total_score, int(1000 * 3 * 0.08), "3 debuffs: score should be int(once_total_score * 3 * 0.08)")
 
 	# public_lock_array中有非debuff条目不计入
 	c.total_score = 0
 	c.public_lock_array = ["disable_points", "some_buff", "down_two"]
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 2 * 0.12), "2 debuffs + 1 non-debuff: score should be int(once_total_score * 2 * 0.12)")
+	assert_eq(c.total_score, int(1000 * 2 * 0.08), "2 debuffs + 1 non-debuff: score should be int(once_total_score * 2 * 0.08)")
 
 	# 只有非debuff条目时不触发
 	c.total_score = 0

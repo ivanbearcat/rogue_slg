@@ -10,7 +10,7 @@ func set_buff():
 func process_buff():
 	if Current.count_round % 3 == 0:
 		EffectManager.buff_pop_effect(buff_texture)
-		Current.total_coins += 2
+		Current.total_coins += 3
 
 func clear_buff():
 	pass

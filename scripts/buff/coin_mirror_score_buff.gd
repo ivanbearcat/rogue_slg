@@ -8,7 +8,7 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	Current.total_score += Current.total_coins
+	Current.total_score += Current.total_coins * 3
 
 func clear_buff():
 	pass

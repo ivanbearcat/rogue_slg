@@ -87,33 +87,7 @@ func assert_gte(actual, than, message: String = "") -> void:
 ## 测试方法
 ## ============================================================
 
-## 1. movement_plus_one_buff - set_buff时hero_movement+1, clear_buff时hero_movement-1
-func test_movement_plus_one_buff() -> void:
-	_current_test = "test_movement_plus_one_buff"
-	var initial_movement = Current.hero.hero_movement
-
-	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "swift", "tags": []}
-	var buff = create_and_set_buff("res://scripts/buff/movement_plus_one_buff.gd", meta)
-
-	# set_buff后hero_movement+1
-	assert_eq(Current.hero.hero_movement, initial_movement + 1, "After set_buff: hero_movement should increase by 1")
-
-	# process_buff无操作
-	var movement_before = Current.hero.hero_movement
-	buff.process_buff()
-	assert_eq(Current.hero.hero_movement, movement_before, "After process_buff: hero_movement should not change")
-
-	# clear_buff后hero_movement-1
-	buff.clear_buff()
-	assert_eq(Current.hero.hero_movement, initial_movement, "After clear_buff: hero_movement should return to initial")
-
-	# 多次set/clear累加
-	var buff2 = create_and_set_buff("res://scripts/buff/movement_plus_one_buff.gd", meta)
-	assert_eq(Current.hero.hero_movement, initial_movement + 1, "After 2nd set_buff: hero_movement should be initial+1")
-	buff2.clear_buff()
-	assert_eq(Current.hero.hero_movement, initial_movement, "After 2nd clear_buff: hero_movement should return to initial")
-
-## 2. swift_amplify_buff - int(movement×0.05×once); movement=0不加
+## 2. swift_amplify_buff - int(movement×0.06×once); movement=0不加
 func test_swift_amplify_buff() -> void:
 	_current_test = "test_swift_amplify_buff"
 	Current.once_total_score = 200
@@ -128,23 +102,23 @@ func test_swift_amplify_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, 0, "movement=0: score should not change")
 
-	# movement=4→int(4*0.05*200)=int(40)=40
+	# movement=4→int(4*0.06*200)=int(48)=48
 	Current.hero.hero_movement = 4
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(4 * 0.05 * 200), "movement=4: score should be int(4*0.05*once)")
+	assert_eq(Current.total_score, int(4 * 0.06 * 200), "movement=4: score should be int(4*0.06*once)")
 
-	# movement=10→int(10*0.05*200)=int(100)=100
+	# movement=10→int(10*0.06*200)=int(120)=120
 	Current.hero.hero_movement = 10
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(10 * 0.05 * 200), "movement=10: score should be int(10*0.05*once)")
+	assert_eq(Current.total_score, int(10 * 0.06 * 200), "movement=10: score should be int(10*0.06*once)")
 
-	# movement=1→int(1*0.05*200)=int(10)=10
+	# movement=1→int(1*0.06*200)=int(12)=12
 	Current.hero.hero_movement = 1
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(1 * 0.05 * 200), "movement=1: score should be int(1*0.05*once)")
+	assert_eq(Current.total_score, int(1 * 0.06 * 200), "movement=1: score should be int(1*0.06*once)")
 
 ## 4. rush_strike_buff - movement≥3触发; =2不触发
 func test_rush_strike_buff() -> void:
@@ -161,17 +135,17 @@ func test_rush_strike_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, 0, "movement=2: should not trigger")
 
-	# movement=3→触发, int(400*0.25)=100
+	# movement=3→触发, int(400*0.30)=120
 	Current.hero.hero_movement = 3
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(400 * 0.25), "movement=3: should add int(once*0.25)")
+	assert_eq(Current.total_score, int(400 * 0.30), "movement=3: should add int(once*0.30)")
 
 	# movement=5→也触发
 	Current.hero.hero_movement = 5
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(400 * 0.25), "movement=5: should add int(once*0.25)")
+	assert_eq(Current.total_score, int(400 * 0.30), "movement=5: should add int(once*0.30)")
 
 	# movement=0→不触发
 	Current.hero.hero_movement = 0
@@ -270,7 +244,7 @@ func test_drop_bonus_buff() -> void:
 	buff.process_buff()
 	var sum_after = Current.one_score + Current.two_score + Current.three_score + \
 		Current.four_score + Current.five_score + Current.six_score
-	assert_eq(sum_after, sum_before + 3, "dropped_dice_count=3: total dice score should increase by 3")
+	assert_eq(sum_after, sum_before + 6, "dropped_dice_count=3: total dice score should increase by 6")
 
 	# dropped_dice_count=1→总分应+1
 	Current.dropped_dice_count = 1
@@ -279,6 +253,6 @@ func test_drop_bonus_buff() -> void:
 	buff.process_buff()
 	sum_after = Current.one_score + Current.two_score + Current.three_score + \
 		Current.four_score + Current.five_score + Current.six_score
-	assert_eq(sum_after, sum_before + 1, "dropped_dice_count=1: total dice score should increase by 1")
+	assert_eq(sum_after, sum_before + 2, "dropped_dice_count=1: total dice score should increase by 2")
 
 

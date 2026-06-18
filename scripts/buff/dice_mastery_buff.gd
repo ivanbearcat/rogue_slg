@@ -11,7 +11,7 @@ func process_buff():
 	var type_count = Current.dice_type_count
 	if type_count >= 3:
 		Current.public_lock_array.append("dice_mastery_buff")
-		var add_num = int(Current.once_total_score * 0.60)
+		var add_num = int(Current.once_total_score * 0.40)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
@@ -20,7 +20,7 @@ func process_buff():
 		Current.public_lock_array.erase("dice_mastery_buff")
 	elif type_count >= 2:
 		Current.public_lock_array.append("dice_mastery_buff")
-		var add_num = int(Current.once_total_score * 0.30)
+		var add_num = int(Current.once_total_score * 0.20)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)

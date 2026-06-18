@@ -27,7 +27,7 @@ func process_buff():
 			break
 	if _chain_count > 0:
 		Current.public_lock_array.append("resonance_chain_buff")
-		var add_num = int(Current.once_total_score * _chain_count * 0.15)
+		var add_num = int(Current.once_total_score * _chain_count * 0.10)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)

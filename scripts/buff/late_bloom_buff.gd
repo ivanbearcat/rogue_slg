@@ -10,7 +10,7 @@ func set_buff():
 func process_buff():
 	if Current.count_round >= 7:
 		Current.public_lock_array.append("late_bloom_buff")
-		var add_num = int(Current.once_total_score * 0.25)
+		var add_num = int(Current.once_total_score * 0.30)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)

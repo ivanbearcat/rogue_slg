@@ -8,7 +8,7 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	if Current.slime_die_sum >= 4:
+	if Current.slime_die_sum >= 3:
 		Current.total_coins += 2
 		Current.public_lock_array.append("mint_press_buff")
 		var float_number_instantiate = EffectManager.float_number_effect(2, "green")

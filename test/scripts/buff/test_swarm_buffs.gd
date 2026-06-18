@@ -163,7 +163,7 @@ func test_full_range_slime_double_score_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 0.4), "die_count == range_size: score should be int(once_total_score * 0.4)")
 
-## 4. swarm_heart_buff - bonus_count = slime_count / 3, 分数 = once_total_score × bonus_count × 0.15
+## 4. swarm_heart_buff - bonus_count = slime_count / 3, 分数 = once_total_score × bonus_count × 0.10
 func test_swarm_heart_buff() -> void:
 	_current_test = "test_swarm_heart_buff"
 	var c = Current
@@ -179,19 +179,19 @@ func test_swarm_heart_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "2 slimes: bonus_count=0, should not trigger")
 
-	# 3个史莱姆：3/3=1, 分数 = int(1000 * 1 * 0.15) = 150
+	# 3个史莱姆：3/3=1, 分数 = int(1000 * 1 * 0.10) = 100
 	c.total_score = 0
 	add_slime(Vector2(2, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 1 * 0.15), "3 slimes: bonus_count=1, score should be int(1000 * 0.15)")
+	assert_eq(c.total_score, int(1000 * 1 * 0.10), "3 slimes: bonus_count=1, score should be int(1000 * 0.10)")
 
-	# 6个史莱姆：6/3=2, 分数 = int(1000 * 2 * 0.15) = 300
+	# 6个史莱姆：6/3=2, 分数 = int(1000 * 2 * 0.10) = 200
 	c.total_score = 0
 	Current.all_enemy_array.clear()
 	for i in range(6):
 		add_slime(Vector2(i, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 2 * 0.15), "6 slimes: bonus_count=2, score should be int(1000 * 2 * 0.15)")
+	assert_eq(c.total_score, int(1000 * 2 * 0.10), "6 slimes: bonus_count=2, score should be int(1000 * 2 * 0.10)")
 
 ## 5. slime_explosion_buff - 只计算attack_range内的史莱姆, 每3个bonus=1, 每bonus +10%
 func test_slime_explosion_buff() -> void:
@@ -244,7 +244,7 @@ func test_slime_explosion_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "2 in-range (3 total): 2/3=0, should not trigger")
 
-## 6. tide_crusher_buff - ≥8个史莱姆时触发，分数 = once_total_score × 0.50
+## 6. tide_crusher_buff - ≥8个史莱姆时触发，分数 = once_total_score × 0.60
 func test_tide_crusher_buff() -> void:
 	_current_test = "test_tide_crusher_buff"
 	var c = Current
@@ -260,17 +260,17 @@ func test_tide_crusher_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "7 slimes: should not trigger (< 8)")
 
-	# 8个史莱姆触发，分数 = int(1000 * 0.50) = 500
+	# 8个史莱姆触发，分数 = int(1000 * 0.60) = 600
 	c.total_score = 0
 	add_slime(Vector2(7, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.50), "8 slimes: should trigger, score = int(once_total_score * 0.50)")
+	assert_eq(c.total_score, int(1000 * 0.60), "8 slimes: should trigger, score = int(once_total_score * 0.60)")
 
 	# 9个史莱姆也触发
 	c.total_score = 0
 	add_slime(Vector2(8, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.50), "9 slimes: should trigger, score = int(once_total_score * 0.50)")
+	assert_eq(c.total_score, int(1000 * 0.60), "9 slimes: should trigger, score = int(once_total_score * 0.60)")
 
 ## 7. swarm_overlord_buff - 数量压制：每有1个史莱姆存活，潮涌系得分3%/只
 func test_swarm_overlord_buff() -> void:
@@ -309,7 +309,7 @@ func test_slime_rebirth_buff() -> void:
 	# 但可以验证public_lock_array在处理期间正确加锁和解锁
 	# （此测试依赖运行时game_manager，在集成测试中验证完整流程）
 
-## 9. slime_kill_empower_buff - 分数 = once_total_score × kill_count × 0.01
+## 9. slime_kill_empower_buff - 分数 = once_total_score × kill_count × 0.03
 func test_slime_kill_empower_buff() -> void:
 	_current_test = "test_slime_kill_empower_buff"
 	var c = Current
@@ -324,11 +324,11 @@ func test_slime_kill_empower_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "0 kills: total_score should not change")
 
-	# 3击杀：int(1000 * 3 * 0.01) = 30
+	# 3击杀：int(1000 * 3 * 0.03) = 90
 	c.total_score = 0
 	c.slime_die_sum = 3
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 3 * 0.01), "3 kills: score should be int(once_total_score * 3 * 0.01)")
+	assert_eq(c.total_score, int(1000 * 3 * 0.03), "3 kills: score should be int(once_total_score * 3 * 0.03)")
 
 ## 11. attack_power_slime_score_increase_buff - killed_power_slime为true时触发
 func test_attack_power_slime_score_increase_buff() -> void:
@@ -345,10 +345,10 @@ func test_attack_power_slime_score_increase_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "killed_power_slime=false: should not trigger")
 
-	# killed_power_slime为true时触发，分数 = int(1000 * 0.30) = 300
+	# killed_power_slime为true时触发，分数 = int(1000 * 0.40) = 400
 	c.killed_power_slime = true
 	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 0.30), "killed_power_slime=true: score should be int(once_total_score * 0.30)")
+	assert_eq(c.total_score, int(1000 * 0.40), "killed_power_slime=true: score should be int(once_total_score * 0.40)")
 
 ## 12. power_slime_plus_one_buff - set时power_slime_num+1, clear时-1
 func test_power_slime_plus_one_buff() -> void:

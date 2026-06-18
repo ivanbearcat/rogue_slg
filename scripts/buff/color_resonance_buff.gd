@@ -21,7 +21,7 @@ func process_buff():
 				break
 		if all_same:
 			Current.public_lock_array.append("color_resonance_buff")
-			var add_num = int(Current.once_total_score * 0.30)
+			var add_num = int(Current.once_total_score * 0.35)
 			var float_number_instantiate = EffectManager.float_number_effect(add_num)
 			Current.hero.add_child(float_number_instantiate)
 			EffectManager.buff_pop_effect(buff_texture)

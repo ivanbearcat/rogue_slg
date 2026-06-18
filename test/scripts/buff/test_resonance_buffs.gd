@@ -87,7 +87,7 @@ func assert_gte(actual, than, message: String = "") -> void:
 ## 测试方法
 ## ============================================================
 
-## 1. color_resonance_buff - 攻击范围内所有史莱姆同色→int(once×0.30); 混合色不触发; 单个触发
+## 1. color_resonance_buff - 攻击范围内所有史莱姆同色→int(once×0.35); 混合色不触发; 单个触发
 func test_color_resonance_buff() -> void:
 	_current_test = "test_color_resonance_buff"
 	Current.once_total_score = 100
@@ -103,7 +103,7 @@ func test_color_resonance_buff() -> void:
 	add_slime_in_range(Vector2(2, 0), "slime_small")
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(100 * 0.30), "All green in range: should add int(once*0.30)")
+	assert_eq(Current.total_score, int(100 * 0.35), "All green in range: should add int(once*0.35)")
 
 	# 混合色→不触发
 	_clear_slimes()
@@ -118,7 +118,7 @@ func test_color_resonance_buff() -> void:
 	add_slime_in_range(Vector2(0, 0), "slime_small_yellow")  # yellow
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(100 * 0.30), "Single yellow in range: should trigger")
+	assert_eq(Current.total_score, int(100 * 0.35), "Single yellow in range: should trigger")
 
 	# 攻击范围内无史莱姆→不触发
 	_clear_slimes()
@@ -127,7 +127,7 @@ func test_color_resonance_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, 0, "No slime in range: should not trigger")
 
-## 2. rainbow_surge_buff - 4种颜色→int(once×0.35); 3种不触发
+## 2. rainbow_surge_buff - 渐进式：每色+10%，4色=+40%; 3色=+30%; 2色=+20%; 1色=+10%
 func test_rainbow_surge_buff() -> void:
 	_current_test = "test_rainbow_surge_buff"
 	Current.once_total_score = 200
@@ -136,41 +136,45 @@ func test_rainbow_surge_buff() -> void:
 	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": []}
 	var buff = create_and_set_buff("res://scripts/buff/rainbow_surge_buff.gd", meta)
 
-	# 4种颜色→触发
+	# 4种颜色→+40%
 	_clear_slimes()
 	add_slime(Vector2(0, 0), "slime_small")         # green
 	add_slime(Vector2(1, 0), "slime_small_red")     # red
 	add_slime(Vector2(2, 0), "slime_small_yellow")  # yellow
 	add_slime(Vector2(3, 0), "slime_small_blue")    # blue
+	Current.skill_attack_range = [Vector2(0,0), Vector2(1,0), Vector2(2,0), Vector2(3,0)]
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(200 * 0.35), "4 colors: should add int(once*0.35)")
+	assert_eq(Current.total_score, int(200 * 4 * 0.10), "4 colors: should add int(once*4*0.10)")
 
-	# 3种颜色→不触发
+	# 3种颜色→+30%
 	_clear_slimes()
 	add_slime(Vector2(0, 0), "slime_small")
 	add_slime(Vector2(1, 0), "slime_small_red")
 	add_slime(Vector2(2, 0), "slime_small_yellow")
+	Current.skill_attack_range = [Vector2(0,0), Vector2(1,0), Vector2(2,0)]
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "3 colors: should not trigger")
+	assert_eq(Current.total_score, int(200 * 3 * 0.10), "3 colors: should add int(once*3*0.10)")
 
-	# 2种颜色→不触发
+	# 2种颜色→+20%
 	_clear_slimes()
 	add_slime(Vector2(0, 0), "slime_small")
 	add_slime(Vector2(1, 0), "slime_small_red")
+	Current.skill_attack_range = [Vector2(0,0), Vector2(1,0)]
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "2 colors: should not trigger")
+	assert_eq(Current.total_score, int(200 * 2 * 0.10), "2 colors: should add int(once*2*0.10)")
 
-	# 1种颜色→不触发
+	# 1种颜色→+10%
 	_clear_slimes()
 	add_slime(Vector2(0, 0), "slime_small")
+	Current.skill_attack_range = [Vector2(0,0)]
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "1 color: should not trigger")
+	assert_eq(Current.total_score, int(200 * 1 * 0.10), "1 color: should add int(once*1*0.10)")
 
-## 3. resonance_chain_buff - 连续同色≥2叠层+1; int(once×0.15×chain_count)
+## 3. resonance_chain_buff - 连续同色≥2叠层+1; int(once×0.10×chain_count)
 func test_resonance_chain_buff() -> void:
 	_current_test = "test_resonance_chain_buff"
 	Current.once_total_score = 100
@@ -186,13 +190,13 @@ func test_resonance_chain_buff() -> void:
 	Current.total_score = 0
 	await buff.process_buff()
 	assert_eq(buff._chain_count, 1, "After 1st process with 2 green: chain should be 1")
-	assert_eq(Current.total_score, int(100 * 1 * 0.15), "After 1st chain: score should be int(once*0.15*1)")
+	assert_eq(Current.total_score, int(100 * 1 * 0.10), "After 1st chain: score should be int(once*0.10*1)")
 
 	# 再次process，chain累加到2
 	Current.total_score = 0
 	await buff.process_buff()
 	assert_eq(buff._chain_count, 2, "After 2nd process: chain should be 2")
-	assert_eq(Current.total_score, int(100 * 2 * 0.15), "After 2nd chain: score should be int(once*0.15*2)")
+	assert_eq(Current.total_score, int(100 * 2 * 0.10), "After 2nd chain: score should be int(once*0.10*2)")
 
 	# clear_buff重置chain
 	buff.clear_buff()
@@ -207,7 +211,7 @@ func test_resonance_chain_buff() -> void:
 	assert_eq(buff._chain_count, 0, "No color>=2: chain should remain 0")
 	assert_eq(Current.total_score, 0, "No color>=2: score should not change")
 
-## 4. dice_mastery_buff - 阶梯式：≥2种+30%，≥3种+60%，=1不触发
+## 4. dice_mastery_buff - 阶梯式：≥2种+20%，≥3种+40%，=1不触发
 func test_dice_mastery_buff() -> void:
 	_current_test = "test_dice_mastery_buff"
 	Current.once_total_score = 250
@@ -222,23 +226,23 @@ func test_dice_mastery_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, 0, "dice_type_count=1: should not trigger")
 
-	# dice_type_count=2→+30%
+	# dice_type_count=2→+20%
 	Current.dice_type_count = 2
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(250 * 0.30), "dice_type_count=2: should add int(once*0.30)")
+	assert_eq(Current.total_score, int(250 * 0.20), "dice_type_count=2: should add int(once*0.20)")
 
-	# dice_type_count=3→+60%
+	# dice_type_count=3→+40%
 	Current.dice_type_count = 3
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(250 * 0.60), "dice_type_count=3: should add int(once*0.60)")
+	assert_eq(Current.total_score, int(250 * 0.40), "dice_type_count=3: should add int(once*0.40)")
 
-	# dice_type_count=5→+60%
+	# dice_type_count=5→+40%
 	Current.dice_type_count = 5
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(250 * 0.60), "dice_type_count=5: should add int(once*0.60)")
+	assert_eq(Current.total_score, int(250 * 0.40), "dice_type_count=5: should add int(once*0.40)")
 
 ## 6. resonance_overlord_buff - 共鸣叠加：共鸣系得分 × 共鸣叠层倍率
 func test_resonance_overlord_buff() -> void:
@@ -260,7 +264,7 @@ func test_resonance_overlord_buff() -> void:
 	BuffSystem.resonance_ramp = 0.0
 	BuffSystem._last_family_accumulation = {}
 
-## 7. resonance_echo_buff - ≥3色+3金币/≤1色-2金币（金币下限0）
+## 7. resonance_echo_buff - ≥3色+3金币/≤1色-1金币（金币下限0）
 func test_resonance_echo_buff() -> void:
 	_current_test = "test_resonance_echo_buff"
 
@@ -276,12 +280,12 @@ func test_resonance_echo_buff() -> void:
 	buff.process_buff()
 	assert_eq(Current.coin, 13, "resonance_echo: 3 colors should add 3 coins")
 
-	# ≤1色→-2金币
+	# ≤1色→-1金币
 	_clear_slimes()
 	add_slime(Vector2(0, 0), "slime_small")
 	Current.coin = 10
 	buff.process_buff()
-	assert_eq(Current.coin, 8, "resonance_echo: 1 color should subtract 2 coins")
+	assert_eq(Current.coin, 9, "resonance_echo: 1 color should subtract 1 coin")
 
 	# 金币下限0
 	_clear_slimes()

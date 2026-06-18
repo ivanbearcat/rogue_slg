@@ -17,9 +17,9 @@ func process_buff():
 	var color_count = unique_colors.size()
 	var bonus_percent := 0.0
 	if color_count >= 3:
-		bonus_percent = 0.20
+		bonus_percent = 0.30
 	elif color_count <= 1:
-		bonus_percent = -0.10
+		bonus_percent = -0.05
 	if bonus_percent != 0.0:
 		Current.public_lock_array.append("chromatic_frenzy_buff")
 		var add_num = int(Current.once_total_score * bonus_percent)

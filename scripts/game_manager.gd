@@ -1740,7 +1740,7 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.total_coins += Current.count_add_coins
 	## 黄金之手：关卡结束时每有5个金币+1金币
 	if BuffSystem.is_buff_registered("golden_touch"):
-		Current.total_coins += int(Current.total_coins / 5)
+		Current.total_coins += int(Current.total_coins / 3)
 	## 更新回合、关卡、当前分数、目标分数
 	Current.count_round = 0
 	Current.total_score = 0
@@ -1811,7 +1811,7 @@ func _on_potion_button_pressed() -> void:
 		return
 	var heal_amount := 1
 	## 逆境翻盘：HP=1时血瓶恢复量+1
-	if BuffSystem.is_buff_registered("comeback_king") and Current.player_hp == 1:
+	if BuffSystem.is_buff_registered("comeback_king") and Current.player_hp <= 2:
 		heal_amount = 2
 	Current.potion_count -= 1
 	Current.player_hp += heal_amount

@@ -11,7 +11,7 @@ func process_buff():
 	## 落后检测：当前分数低于目标分数50%时+40%得分加成
 	if Current.total_score < Current.target_score * 0.5:
 		Current.public_lock_array.append("last_stand_buff")
-		var add_num = int(Current.once_total_score * 0.40)
+		var add_num = int(Current.once_total_score * 0.55)
 		if add_num > 0:
 			var float_number_instantiate = EffectManager.float_number_effect(add_num)
 			Current.hero.add_child(float_number_instantiate)

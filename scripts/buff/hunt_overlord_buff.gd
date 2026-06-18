@@ -11,7 +11,7 @@ func process_buff():
 	var accumulated = BuffSystem.get_family_accumulation("hunt")
 	if accumulated <= 0:
 		return
-	var bonus = roundi(accumulated * 0.15)
+	var bonus = roundi(accumulated * 0.50)
 	if bonus > 0:
 		Current.total_score += bonus
 		var float_number_instantiate = EffectManager.float_number_effect(bonus, "gold")

@@ -5,12 +5,27 @@ func set_buff():
 	pass
 
 func process_buff():
-	# 进化霸主 - 进化增幅：所有基础分额外+1
+	# 进化霸主 - 进化系≥4时：每回合随机基础分+1 + 随机倍率+1%
 	if BuffSystem.get_family_count("evolution") < 4:
 		return
-	# 进化系目前仅有drop_bonus，进化霸主提供全局基础分+1
-	# 基础分+1由Current中的dice_point_score驱动，此处标记激活状态
-	pass
+	# 随机基础分+1
+	var _rand_num = randi_range(1, 6)
+	match _rand_num:
+		1: Current.one_score += 1
+		2: Current.two_score += 1
+		3: Current.three_score += 1
+		4: Current.four_score += 1
+		5: Current.five_score += 1
+		6: Current.six_score += 1
+	# 随机倍率+1%
+	var _dice_types = ["duizi", "shunzi", "tongse", "tongdui", "tongshun"]
+	var _rand_type = _dice_types[randi_range(0, 4)]
+	match _rand_type:
+		"duizi": Current.duizi_percent += 1; game_manager._update_multiplier_dict("duizi_percent", "add", 1)
+		"shunzi": Current.shunzi_percent += 1; game_manager._update_multiplier_dict("shunzi_percent", "add", 1)
+		"tongse": Current.tongse_percent += 1; game_manager._update_multiplier_dict("tongse_percent", "add", 1)
+		"tongdui": Current.tongdui_percent += 1; game_manager._update_multiplier_dict("tongdui_percent", "add", 1)
+		"tongshun": Current.tongshun_percent += 1; game_manager._update_multiplier_dict("tongshun_percent", "add", 1)
 
 func clear_buff():
 	pass

@@ -18,7 +18,7 @@ func process_buff():
 	if color_count >= 3:
 		Current.total_coins += 3
 	elif color_count <= 1:
-		Current.total_coins = max(0, Current.total_coins - 2)
+		Current.total_coins = max(0, Current.total_coins - 1)
 
 func clear_buff():
 	pass

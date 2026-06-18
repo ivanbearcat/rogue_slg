@@ -14,7 +14,7 @@ func process_buff():
 			debuff_count += 1
 	if debuff_count > 0:
 		Current.public_lock_array.append("curse_burner_buff")
-		var add_num = int(Current.once_total_score * debuff_count * 0.12)
+		var add_num = int(Current.once_total_score * debuff_count * 0.08)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
