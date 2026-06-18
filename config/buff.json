@@ -425,23 +425,6 @@
         ]
     },
     {
-        "buff_id": "slime_explosion",
-        "buff_name": "史莱姆爆破",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "攻击后，每有3只存活史莱姆，以这次得分为基础，额外增加10%倍率的分数",
-        "buff_res": "res://scripts/buff/slime_explosion_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 7,
-        "family": "swarm",
-        "tags": [
-            "on_attack",
-            "slime_count",
-            "linear",
-            "aggression",
-            "rare"
-        ]
-    },
-    {
         "buff_id": "tide_crusher",
         "buff_name": "狂潮碾压",
         "buff_icon": "res://icon.svg",
@@ -909,7 +892,7 @@
         "buff_id": "hunt_overlord",
         "buff_name": "猎杀霸主",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "猎杀系Buff≥4时激活，猎杀系得分额外+15%",
+        "buff_tooltip": "猎杀系Buff≥4时激活，猎杀系得分额外+50%",
         "buff_res": "res://scripts/buff/hunt_overlord_buff.gd",
         "buff_type": "post_attack_buff",
         "auto_activate": true,
@@ -924,7 +907,7 @@
         "buff_id": "swift_overlord",
         "buff_name": "疾风霸主",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "疾风系Buff≥4时激活，移动力+1，攻击时本回合每移动过1格+5%得分",
+        "buff_tooltip": "疾风系Buff≥4时激活，能量上限+1，攻击时本回合每移动过1格+5%得分",
         "buff_res": "res://scripts/buff/swift_overlord_buff.gd",
         "buff_type": "post_attack_buff",
         "auto_activate": true,
@@ -956,7 +939,7 @@
         "buff_id": "evolution_overlord",
         "buff_name": "进化霸主",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "进化系Buff≥4时激活，所有基础分额外+1",
+        "buff_tooltip": "进化系Buff≥4时激活，每回合随机1个点数基础分+1，随机1个骰型倍率+1%",
         "buff_res": "res://scripts/buff/evolution_overlord_buff.gd",
         "buff_type": "post_attack_buff",
         "auto_activate": true,
