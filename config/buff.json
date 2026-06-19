@@ -3,7 +3,7 @@
         "buff_id": "slime_tide",
         "buff_name": "史莱姆潮",
         "buff_icon": "res://images/buff_icon/slime_tide.png",
-        "buff_tooltip": "生命上限+1，每回合多生成1个史莱姆",
+        "buff_tooltip": "生命上限+1并恢复1HP，每回合多生成1个史莱姆",
         "buff_res": "res://scripts/buff/slime_tide_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 7,
@@ -48,23 +48,6 @@
             "threshold",
             "aggression",
             "rare"
-        ]
-    },
-    {
-        "buff_id": "movement_plus_one",
-        "buff_name": "移动力增加",
-        "buff_icon": "res://images/buff_icon/movement_plus_one.png",
-        "buff_tooltip": "移动力+1",
-        "buff_res": "res://scripts/buff/movement_plus_one_buff.gd",
-        "buff_type": "pre_hero_turn_buff",
-        "buff_price": 5,
-        "family": "swift",
-        "tags": [
-            "on_spawn",
-            "movement",
-            "static",
-            "aggression",
-            "common"
         ]
     },
     {
@@ -325,7 +308,7 @@
         "buff_id": "drop_bonus",
         "buff_name": "掉落奖励",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "每掉落1个骰子，随机1个点数基础分+1",
+        "buff_tooltip": "每掉落1个骰子，随机1个点数基础分+2",
         "buff_res": "res://scripts/buff/drop_bonus_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 4,
