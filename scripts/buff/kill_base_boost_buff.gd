@@ -8,9 +8,19 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	if Current.player_hp > Current.max_hp * 0.5:
-		Current.slime_tide_pending += 1
+	var kill_count: int = Current.slime_die_sum
+	if kill_count <= 0:
+		return
+	for i in range(kill_count):
+		var _rand_num = randi_range(1, 6)
 		EffectManager.buff_pop_effect(buff_texture)
+		match _rand_num:
+			1: Current.one_score += 1
+			2: Current.two_score += 1
+			3: Current.three_score += 1
+			4: Current.four_score += 1
+			5: Current.five_score += 1
+			6: Current.six_score += 1
 
 func clear_buff():
 	pass

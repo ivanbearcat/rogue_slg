@@ -3,7 +3,7 @@
         "buff_id": "slime_tide",
         "buff_name": "史莱姆潮",
         "buff_icon": "res://images/buff_icon/slime_tide.png",
-        "buff_tooltip": "生命上限+1并恢复1HP，每回合多生成1个史莱姆",
+        "buff_tooltip": "生命>50%时，下回合多生成1个史莱姆",
         "buff_res": "res://scripts/buff/slime_tide_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 7,
@@ -170,11 +170,62 @@
         ]
     },
     {
-        "buff_id": "slime_kill_empower",
-        "buff_name": "击杀史莱姆倍率+1%",
+        "buff_id": "drop_type_boost",
+        "buff_name": "掉落进化",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每掉落1个骰子，随机1个骰型倍率+6%",
+        "buff_res": "res://scripts/buff/drop_type_boost_buff.gd",
+        "buff_type": "post_attack_buff",
+        "buff_price": 4,
+        "family": "evolution",
+        "tags": [
+            "on_attack",
+            "drop_slot",
+            "linear",
+            "aggression",
+            "common"
+        ]
+    },
+    {
+        "buff_id": "random_base_boost",
+        "buff_name": "随机强化",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每回合开始30%概率随机1个点数基础分+2",
+        "buff_res": "res://scripts/buff/random_base_boost_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 3,
+        "family": "evolution",
+        "tags": [
+            "on_spawn",
+            "random",
+            "linear",
+            "aggression",
+            "common"
+        ]
+    },
+    {
+        "buff_id": "random_type_boost",
+        "buff_name": "随机蜕变",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "每回合开始30%概率随机1个骰型倍率+4%",
+        "buff_res": "res://scripts/buff/random_type_boost_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 3,
+        "family": "evolution",
+        "tags": [
+            "on_spawn",
+            "random",
+            "linear",
+            "aggression",
+            "common"
+        ]
+    },
+    {
+        "buff_id": "kill_score_empower",
+        "buff_name": "击杀增幅",
         "buff_icon": "res://icon.svg",
         "buff_tooltip": "每击杀1个史莱姆，以这次得分为基础，额外增加3%倍率的分数",
-        "buff_res": "res://scripts/buff/slime_kill_empower_buff.gd",
+        "buff_res": "res://scripts/buff/kill_score_empower_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 3,
         "family": "evolution",
@@ -305,11 +356,11 @@
         ]
     },
     {
-        "buff_id": "drop_bonus",
-        "buff_name": "掉落奖励",
+        "buff_id": "drop_base_boost",
+        "buff_name": "掉落强化",
         "buff_icon": "res://icon.svg",
         "buff_tooltip": "每掉落1个骰子，随机1个点数基础分+2",
-        "buff_res": "res://scripts/buff/drop_bonus_buff.gd",
+        "buff_res": "res://scripts/buff/drop_base_boost_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "evolution",
@@ -391,12 +442,12 @@
         ]
     },
     {
-        "buff_id": "swarm_heart",
-        "buff_name": "潮涌之心",
+        "buff_id": "slime_split",
+        "buff_name": "史莱姆分裂",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "每有3个存活史莱姆，以这次得分为基础，额外增加10%倍率的分数",
-        "buff_res": "res://scripts/buff/swarm_heart_buff.gd",
-        "buff_type": "post_attack_buff",
+        "buff_tooltip": "每关史莱姆出生后，每个都有15%的概率分裂出一个新的史莱姆",
+        "buff_res": "res://scripts/buff/slime_split_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
         "buff_price": 7,
         "family": "swarm",
         "tags": [
@@ -405,6 +456,23 @@
             "threshold",
             "aggression",
             "rare"
+        ]
+    },
+    {
+        "buff_id": "swarm_call",
+        "buff_name": "潮涌呼唤",
+        "buff_icon": "res://icon.svg",
+        "buff_tooltip": "史莱姆数量<3时，下回合多生成1个史莱姆",
+        "buff_res": "res://scripts/buff/swarm_call_buff.gd",
+        "buff_type": "pre_hero_turn_buff",
+        "buff_price": 4,
+        "family": "swarm",
+        "tags": [
+            "on_spawn",
+            "slime_count",
+            "threshold",
+            "aggression",
+            "common"
         ]
     },
     {
@@ -706,23 +774,7 @@
             "common"
         ]
     },
-    {
-        "buff_id": "crisis_power",
-        "buff_name": "危机之力",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "HP≤2时+70%",
-        "buff_res": "res://scripts/buff/crisis_power_buff.gd",
-        "buff_type": "post_attack_buff",
-        "buff_price": 9,
-        "family": "desperation",
-        "tags": [
-            "on_attack",
-            "hp",
-            "threshold",
-            "aggression",
-            "epic"
-        ]
-    },
+
     {
         "buff_id": "curse_burner",
         "buff_name": "诅咒焚烧",
@@ -902,11 +954,11 @@
         ]
     },
     {
-        "buff_id": "kill_base_score_up",
-        "buff_name": "击杀基础分提升",
+        "buff_id": "kill_base_boost",
+        "buff_name": "击杀强化",
         "buff_icon": "res://icon.svg",
         "buff_tooltip": "每击杀1个史莱姆，随机1个点数基础分+1",
-        "buff_res": "res://scripts/buff/kill_base_score_up_buff.gd",
+        "buff_res": "res://scripts/buff/kill_base_boost_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "evolution",

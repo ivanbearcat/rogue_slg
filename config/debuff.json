@@ -142,15 +142,6 @@
         "severity": "normal"
     },
     {
-        "debuff_id": "current_score_down",
-        "debuff_name": "当前分数下降",
-        "debuff_icon": "res://images/debuff_icon/current_score_down.png",
-        "debuff_tooltip": "每回合当前总分-2%",
-        "debuff_res": "res://scripts/debuff/current_score_down_buff.gd",
-        "debuff_type": "pre_hero_turn_buff",
-        "severity": "normal"
-    },
-    {
         "debuff_id": "attack_score_down",
         "debuff_name": "攻击得分下降",
         "debuff_icon": "res://images/debuff_icon/attack_score_down.png",

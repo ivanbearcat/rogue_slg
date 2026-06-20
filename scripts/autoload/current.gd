@@ -619,6 +619,10 @@ var scorched_earth_bonus: float = 0.0
 var has_death_immunity: bool = false
 ## 全局免死：是否已消耗（整个run仅1次）
 var death_immunity_used: bool = false
+## 史莱姆潮待生成数量（slime_tide buff标记）
+var slime_tide_pending: int = 0
+## 潮涌呼唤待生成数量（swarm_call buff标记）
+var swarm_call_pending: int = 0
 
 
 

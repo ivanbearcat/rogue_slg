@@ -997,10 +997,13 @@ func _turn_process():
 	Current.slime_create_num = 3  ## 重置为基础值
 	if Current.count_round >= 8 and Current.count_round <= 10:
 		Current.slime_create_num = 6
-	## 重新应用史莱姆数量加成buff（slime_tide每回合+1史莱姆）
-	for buff in buff_container.get_children():
-		if buff.has_meta("buff_meta") and buff.get_meta("buff_meta").get("buff_id", "") in ["slime_tide"]:
-			Current.slime_create_num += 1
+	## 读取并消耗slime_tide_pending和swarm_call_pending标记
+	if Current.slime_tide_pending > 0:
+		Current.slime_create_num += Current.slime_tide_pending
+		Current.slime_tide_pending = 0
+	if Current.swarm_call_pending > 0:
+		Current.slime_create_num += Current.swarm_call_pending
+		Current.swarm_call_pending = 0
 
 	## 第8回合显示危险提示
 	if Current.count_round == 8:
@@ -1792,6 +1795,8 @@ func _on_stage_clear_button_pressed() -> void:
 	await _clear_all_slimes()
 	## 重置史莱姆生成数量为基础值（防止上一关8-10回合的翻倍值残留）
 	Current.slime_create_num = 3
+	Current.slime_tide_pending = 0
+	Current.swarm_call_pending = 0
 	## 为新关卡第一回合预生成史莱姆（设置warning告警）
 	_pre_create_slime()
 	## 关卡切换效果

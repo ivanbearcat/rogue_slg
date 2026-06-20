@@ -8,8 +8,8 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	if Current.player_hp > Current.max_hp * 0.5:
-		Current.slime_tide_pending += 1
+	if Current.all_enemy_array.size() < 3:
+		Current.swarm_call_pending += 1
 		EffectManager.buff_pop_effect(buff_texture)
 
 func clear_buff():
