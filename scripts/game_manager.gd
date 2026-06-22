@@ -353,7 +353,7 @@ func _ready() -> void:
 	#await EffectManager.debuff_change_effect()
 
 	#for row in debuff_json_data:
-		#if row["debuff_id"] == "power_current_score_down":
+		#if row["debuff_id"] == "power_backlash":
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 	## 临时测试buff
@@ -364,7 +364,7 @@ func _ready() -> void:
 
 	## 临时测试BOSS debuff
 	#for row in debuff_json_data:
-		#if row["debuff_id"] == "attack_score_down":
+		#if row["debuff_id"] == "attack_weaken":
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 
@@ -1017,7 +1017,7 @@ func _turn_process():
 	## 史莱姆预生成和告警信息
 	_pre_create_slime()
 	## 保证骰子动画完成
-	while "reroll_slime_buff" in Current.public_lock_array:
+	while "slime_chaos_buff" in Current.public_lock_array:
 		await Tools.time_sleep(0.05)
 	## 移动精英/BOSS史莱姆（等待移动完成再继续，防止玩家在移动期间操作）
 	await _move_elite_boss_slimes()

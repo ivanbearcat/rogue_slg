@@ -8,13 +8,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 7,
         "family": "swarm",
-        "tags": [
-            "on_spawn",
-            "slime_count",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "swarm_tithe",
@@ -25,30 +19,18 @@
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "swarm",
-        "tags": [
-            "on_turn_end",
-            "slime_count",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
-        "buff_id": "full_range_slime_double_score",
-        "buff_name": "技能打满分数翻倍",
-        "buff_icon": "res://images/buff_icon/full_range_slime_double_score.png",
+        "buff_id": "full_range_assault",
+        "buff_name": "满域强袭",
+        "buff_icon": "res://images/buff_icon/full_range_assault.png",
         "buff_tooltip": "技能的攻击范围内都有史莱姆，以这次得分为基础，额外增加40%倍率的分数",
-        "buff_res": "res://scripts/buff/full_range_slime_double_score_buff.gd",
+        "buff_res": "res://scripts/buff/full_range_assault_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 5,
         "family": "hunt",
-        "tags": [
-            "on_attack",
-            "slime_count",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "swift_amplify",
@@ -59,13 +41,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 9,
         "family": "swift",
-        "tags": [
-            "on_attack",
-            "movement",
-            "linear",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "triple_round_toll",
@@ -76,13 +52,7 @@
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 3,
         "family": "coin",
-        "tags": [
-            "on_turn_end",
-            "coin",
-            "static",
-            "economy",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "coin_mirror_score",
@@ -93,81 +63,51 @@
         "buff_type": "post_attack_buff",
         "buff_price": 3,
         "family": "coin",
-        "tags": [
-            "on_attack",
-            "coin",
-            "linear",
-            "economy",
-            "common"
-        ]
+        "tags": []
     },
     {
-        "buff_id": "power_slime_plus_one",
-        "buff_name": "能量史莱姆+1",
-        "buff_icon": "res://images/buff_icon/power_slime_plus_one.png",
+        "buff_id": "extra_power_slime",
+        "buff_name": "额外能量",
+        "buff_icon": "res://images/buff_icon/extra_power_slime.png",
         "buff_tooltip": "能量史莱姆总量+1",
-        "buff_res": "res://scripts/buff/power_slime_plus_one_buff.gd",
+        "buff_res": "res://scripts/buff/extra_power_slime_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 4,
         "family": "",
-        "tags": [
-            "on_spawn",
-            "slime_count",
-            "static",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
-        "buff_id": "attack_power_slime_score_increase",
-        "buff_name": "击杀能量史莱姆",
-        "buff_icon": "res://images/buff_icon/attack_power_slime_score_increase.png",
+        "buff_id": "power_slime_bounty",
+        "buff_name": "能量猎赏",
+        "buff_icon": "res://images/buff_icon/power_slime_bounty.png",
         "buff_tooltip": "击杀能量史莱姆，以这次得分为基础，额外增加40%倍率的分数",
-        "buff_res": "res://scripts/buff/attack_power_slime_score_increase_buff.gd",
+        "buff_res": "res://scripts/buff/power_slime_bounty_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "hunt",
-        "tags": [
-            "on_kill",
-            "slime_count",
-            "static",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
-        "buff_id": "max_power_puls_one",
-        "buff_name": "能量上限+1",
-        "buff_icon": "res://images/buff_icon/max_power_puls_one.png",
+        "buff_id": "power_cap_up",
+        "buff_name": "能量扩容",
+        "buff_icon": "res://images/buff_icon/power_cap_up.png",
         "buff_tooltip": "能量上限+1",
-        "buff_res": "res://scripts/buff/max_power_puls_one_buff.gd",
+        "buff_res": "res://scripts/buff/power_cap_up_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 3,
         "family": "",
-        "tags": [
-            "on_spawn",
-            "slime_count",
-            "static",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
-        "buff_id": "power_attack_score_increase",
-        "buff_name": "使用能量击杀加分",
-        "buff_icon": "res://images/buff_icon/power_attack_score_increase.png",
+        "buff_id": "power_surge",
+        "buff_name": "能量涌动",
+        "buff_icon": "res://images/buff_icon/power_surge.png",
         "buff_tooltip": "攻击后，如果使用了能量，以这次得分为基础，额外增加30%倍率的分数",
-        "buff_res": "res://scripts/buff/power_attack_score_increase_buff.gd",
+        "buff_res": "res://scripts/buff/power_surge_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 7,
         "family": "hunt",
-        "tags": [
-            "on_attack",
-            "slime_count",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "drop_type_boost",
@@ -178,13 +118,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "evolution",
-        "tags": [
-            "on_attack",
-            "drop_slot",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "random_base_boost",
@@ -195,13 +129,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 3,
         "family": "evolution",
-        "tags": [
-            "on_spawn",
-            "random",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "random_type_boost",
@@ -212,13 +140,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 3,
         "family": "evolution",
-        "tags": [
-            "on_spawn",
-            "random",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "kill_score_empower",
@@ -229,29 +151,18 @@
         "buff_type": "post_attack_buff",
         "buff_price": 3,
         "family": "evolution",
-        "tags": [
-            "on_kill",
-            "slime_count",
-            "linear",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
-        "buff_id": "free_refresh_one_times",
-        "buff_name": "免费刷新商店一次",
-        "buff_icon": "res://images/buff_icon/free_refresh_one_times.png",
+        "buff_id": "free_refresh",
+        "buff_name": "免费刷新",
+        "buff_icon": "res://images/buff_icon/free_refresh.png",
         "buff_tooltip": "免费刷新商店一次",
-        "buff_res": "res://scripts/buff/free_refresh_one_times_buff.gd",
+        "buff_res": "res://scripts/buff/free_refresh_buff.gd",
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 2,
         "family": "",
-        "tags": [
-            "on_buy",
-            "static",
-            "economy",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "dice_mastery",
@@ -262,13 +173,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 7,
         "family": "resonance",
-        "tags": [
-            "on_attack",
-            "color",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "drop_hunter",
@@ -279,13 +184,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 3,
         "family": "hunt",
-        "tags": [
-            "on_attack",
-            "drop_slot",
-            "threshold",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "color_resonance",
@@ -296,13 +195,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 5,
         "family": "resonance",
-        "tags": [
-            "on_attack",
-            "color",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "late_bloom",
@@ -313,13 +206,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 5,
         "family": "desperation",
-        "tags": [
-            "on_attack",
-            "hp",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "position_master",
@@ -330,13 +217,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 5,
         "family": "hunt",
-        "tags": [
-            "on_attack",
-            "movement",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "hunt_pursuit",
@@ -347,13 +228,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "hunt",
-        "tags": [
-            "on_attack",
-            "slime_count",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "drop_base_boost",
@@ -364,13 +239,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "evolution",
-        "tags": [
-            "on_attack",
-            "movement",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "slime_rebirth",
@@ -381,13 +250,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 5,
         "family": "swarm",
-        "tags": [
-            "on_kill",
-            "slime_count",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "iron_wall",
@@ -398,13 +261,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
         "family": "vitality",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "static",
-            "protect",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "life_barrier",
@@ -415,32 +272,9 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 4,
         "family": "desperation",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "threshold",
-            "protect",
-            "rare"
-        ]
+        "tags": []
     },
-    {
-        "buff_id": "score_shield",
-        "buff_name": "分数护盾",
-        "buff_icon": "res://icon.svg",
-        "buff_tooltip": "每回合分数损失减半",
-        "buff_res": "res://scripts/buff/score_shield_buff.gd",
-        "buff_type": "pre_enemy_turn_buff",
-        "buff_price": 7,
-        "family": "",
-        "tags": [
-            "on_turn_end",
-            "hp",
-            "static",
-            "protect",
-            "rare",
-            "score_shield"
-        ]
-    },
+
     {
         "buff_id": "slime_split",
         "buff_name": "史莱姆分裂",
@@ -450,13 +284,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 7,
         "family": "swarm",
-        "tags": [
-            "on_spawn",
-            "slime_count",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "swarm_call",
@@ -467,13 +295,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 4,
         "family": "swarm",
-        "tags": [
-            "on_spawn",
-            "slime_count",
-            "threshold",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "tide_crusher",
@@ -484,13 +306,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 9,
         "family": "swarm",
-        "tags": [
-            "on_attack",
-            "slime_count",
-            "threshold",
-            "aggression",
-            "epic"
-        ]
+        "tags": []
     },
     {
         "buff_id": "swarm_overlord",
@@ -501,11 +317,7 @@
         "buff_type": "post_attack_buff",
         "auto_activate": true,
         "family": "swarm",
-        "tags": [
-            "multiplicative",
-            "aggression",
-            "legendary"
-        ]
+        "tags": []
     },
     {
         "buff_id": "mint_press",
@@ -516,13 +328,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 3,
         "family": "coin",
-        "tags": [
-            "on_kill",
-            "coin",
-            "static",
-            "economy",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "golden_touch",
@@ -533,13 +339,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 5,
         "family": "coin",
-        "tags": [
-            "on_attack",
-            "coin",
-            "threshold",
-            "economy",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "coin_storm",
@@ -550,13 +350,7 @@
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 4,
         "family": "coin",
-        "tags": [
-            "on_turn_end",
-            "coin",
-            "threshold",
-            "economy",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "stand_guard",
@@ -567,13 +361,7 @@
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 5,
         "family": "coin",
-        "tags": [
-            "on_turn_end",
-            "movement",
-            "threshold",
-            "economy",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "tax_collector",
@@ -584,12 +372,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 2,
         "family": "",
-        "tags": [
-            "on_buy",
-            "ramping",
-            "economy",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "gold_empire",
@@ -600,11 +383,7 @@
         "buff_type": "post_attack_buff",
         "auto_activate": true,
         "family": "coin",
-        "tags": [
-            "multiplicative",
-            "economy",
-            "legendary"
-        ]
+        "tags": []
     },
     {
         "buff_id": "rainbow_surge",
@@ -615,13 +394,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 7,
         "family": "resonance",
-        "tags": [
-            "on_kill",
-            "color",
-            "threshold",
-            "aggression",
-            "epic"
-        ]
+        "tags": []
     },
     {
         "buff_id": "resonance_chain",
@@ -632,13 +405,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 9,
         "family": "resonance",
-        "tags": [
-            "on_attack",
-            "color",
-            "ramping",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "resonance_echo",
@@ -649,13 +416,7 @@
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 5,
         "family": "resonance",
-        "tags": [
-            "on_turn_end",
-            "color",
-            "threshold",
-            "economy",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "chromatic_frenzy",
@@ -666,13 +427,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 7,
         "family": "resonance",
-        "tags": [
-            "on_turn_end",
-            "color",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "resonance_overlord",
@@ -683,11 +438,7 @@
         "buff_type": "post_attack_buff",
         "auto_activate": true,
         "family": "resonance",
-        "tags": [
-            "multiplicative",
-            "aggression",
-            "legendary"
-        ]
+        "tags": []
     },
     {
         "buff_id": "rush_strike",
@@ -698,13 +449,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 5,
         "family": "swift",
-        "tags": [
-            "on_attack",
-            "movement",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "swift_streak",
@@ -715,13 +460,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
         "family": "swift",
-        "tags": [
-            "on_spawn",
-            "movement",
-            "threshold",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "phantom_dash",
@@ -732,13 +471,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 4,
         "family": "swift",
-        "tags": [
-            "on_spawn",
-            "movement",
-            "threshold",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "vigor_sprint",
@@ -749,13 +482,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 4,
         "family": "swift",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "threshold",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "hero_rush",
@@ -766,13 +493,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 3,
         "family": "swift",
-        "tags": [
-            "on_spawn",
-            "slime_count",
-            "threshold",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
 
     {
@@ -784,13 +505,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 7,
         "family": "desperation",
-        "tags": [
-            "on_attack",
-            "hp",
-            "linear",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "desperation_overlord",
@@ -801,11 +516,7 @@
         "buff_type": "post_attack_buff",
         "auto_activate": true,
         "family": "desperation",
-        "tags": [
-            "multiplicative",
-            "aggression",
-            "legendary"
-        ]
+        "tags": []
     },
     {
         "buff_id": "iron_stomach",
@@ -816,13 +527,7 @@
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 5,
         "family": "vitality",
-        "tags": [
-            "on_turn_end",
-            "hp",
-            "static",
-            "protect",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "comeback_king",
@@ -833,13 +538,7 @@
         "buff_type": "pre_enemy_turn_buff",
         "buff_price": 7,
         "family": "desperation",
-        "tags": [
-            "on_turn_end",
-            "slime_count",
-            "threshold",
-            "protect",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "sustain",
@@ -850,13 +549,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
         "family": "vitality",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "threshold",
-            "protect",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "war_supply",
@@ -867,13 +560,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 5,
         "family": "vitality",
-        "tags": [
-            "on_buy",
-            "hp",
-            "linear",
-            "protect",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "blood_fury",
@@ -884,13 +571,7 @@
         "buff_type": "post_hero_move_buff",
         "buff_price": 7,
         "family": "vitality",
-        "tags": [
-            "on_turn_end",
-            "hp",
-            "ramping",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "mass_kill_heal",
@@ -901,12 +582,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 3,
         "family": "vitality",
-        "tags": [
-            "on_attack",
-            "hp",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "vitality_overlord",
@@ -917,11 +593,7 @@
         "buff_type": "post_attack_buff",
         "auto_activate": true,
         "family": "vitality",
-        "tags": [
-            "multiplicative",
-            "protect",
-            "legendary"
-        ]
+        "tags": []
     },
     {
         "buff_id": "hunt_overlord",
@@ -932,11 +604,7 @@
         "buff_type": "post_attack_buff",
         "auto_activate": true,
         "family": "hunt",
-        "tags": [
-            "multiplicative",
-            "aggression",
-            "legendary"
-        ]
+        "tags": []
     },
     {
         "buff_id": "swift_overlord",
@@ -947,11 +615,7 @@
         "buff_type": "post_attack_buff",
         "auto_activate": true,
         "family": "swift",
-        "tags": [
-            "multiplicative",
-            "aggression",
-            "legendary"
-        ]
+        "tags": []
     },
     {
         "buff_id": "kill_base_boost",
@@ -962,13 +626,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "evolution",
-        "tags": [
-            "on_kill",
-            "slime_count",
-            "linear",
-            "aggression",
-            "common"
-        ]
+        "tags": []
     },
     {
         "buff_id": "evolution_overlord",
@@ -979,11 +637,7 @@
         "buff_type": "post_attack_buff",
         "auto_activate": true,
         "family": "evolution",
-        "tags": [
-            "multiplicative",
-            "aggression",
-            "legendary"
-        ]
+        "tags": []
     },
     {
         "buff_id": "scorched_earth",
@@ -994,13 +648,7 @@
         "buff_type": "pre_hero_turn_buff",
         "buff_price": 7,
         "family": "desperation",
-        "tags": [
-            "on_spawn",
-            "hp",
-            "ramping",
-            "aggression",
-            "rare"
-        ]
+        "tags": []
     },
     {
         "buff_id": "last_stand",
@@ -1011,12 +659,6 @@
         "buff_type": "post_attack_buff",
         "buff_price": 9,
         "family": "desperation",
-        "tags": [
-            "on_attack",
-            "hp",
-            "threshold",
-            "aggression",
-            "epic"
-        ]
+        "tags": []
     }
 ]

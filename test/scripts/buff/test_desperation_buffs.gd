@@ -154,26 +154,6 @@ func test_life_barrier_buff() -> void:
 	buff.clear_buff()    # no rollback needed
 	assert_eq(c.player_defense, 2, "clear_buff while high HP: defense unchanged")
 
-## 7. score_shield_buff - 被动buff，process_buff无主动逻辑
-func test_score_shield_buff() -> void:
-	_current_test = "test_score_shield_buff"
-	var c = Current
-
-	var meta = {"buff_id": "score_shield", "family": "desperation", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/score_shield_buff.gd", meta)
-
-	# set_buff不改变分数
-	assert_eq(c.total_score, 0, "total_score should not change after set_buff")
-
-	# process_buff无主动逻辑（逻辑在debuff中检查_has_score_shield）
-	var score_before = c.total_score
-	buff.process_buff()
-	assert_eq(c.total_score, score_before, "process_buff should not change total_score")
-
-	# clear_buff无操作
-	buff.clear_buff()
-	assert_eq(c.total_score, score_before, "clear_buff should not change total_score")
-
 ## 8. late_bloom_buff - round≥7时触发，分数 = once_total_score × 0.30
 func test_late_bloom_buff() -> void:
 	_current_test = "test_late_bloom_buff"
@@ -261,19 +241,19 @@ func test_curse_burner_buff() -> void:
 
 	# 1个debuff（含"disable"）：分数 = int(1000 * 1 * 0.08) = 80
 	c.total_score = 0
-	c.public_lock_array = ["disable_points"]
+	c.public_lock_array = ["point_seal"]
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 1 * 0.08), "1 disable debuff: score should be int(once_total_score * 1 * 0.08)")
 
 	# 3个debuff（混合disable/down/penalty）：分数 = int(1000 * 3 * 0.08) = 240
 	c.total_score = 0
-	c.public_lock_array = ["disable_points", "down_two", "penalty_three"]
+	c.public_lock_array = ["point_seal", "down_two", "penalty_three"]
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 3 * 0.08), "3 debuffs: score should be int(once_total_score * 3 * 0.08)")
 
 	# public_lock_array中有非debuff条目不计入
 	c.total_score = 0
-	c.public_lock_array = ["disable_points", "some_buff", "down_two"]
+	c.public_lock_array = ["point_seal", "some_buff", "down_two"]
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 2 * 0.08), "2 debuffs + 1 non-debuff: score should be int(once_total_score * 2 * 0.08)")
 

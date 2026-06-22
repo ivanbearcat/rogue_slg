@@ -328,23 +328,23 @@ func test_gold_empire_buff() -> void:
 	# 清理
 	BuffSystem._family_counts = {}
 
-## 8. free_refresh_one_times_buff - set时zero_coin_refresh_times+1/zero_coin_refresh_max_times+1
-func test_free_refresh_one_times_buff() -> void:
-	_current_test = "test_free_refresh_one_times_buff"
+## 8. free_refresh_buff - set时zero_coin_refresh_times+1/zero_coin_refresh_max_times+1
+func test_free_refresh_buff() -> void:
+	_current_test = "test_free_refresh_buff"
 	var c = Current
 	c.zero_coin_refresh_times = 0
 	c.zero_coin_refresh_max_times = 0
 
-	var meta = {"buff_id": "free_refresh_one_times", "family": "", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/free_refresh_one_times_buff.gd", meta)
+	var meta = {"buff_id": "free_refresh", "family": "", "tags": ["passive"]}
+	var buff = create_and_set_buff("res://scripts/buff/free_refresh_buff.gd", meta)
 
 	# set_buff后zero_coin_refresh_times和zero_coin_refresh_max_times各+1
 	assert_eq(c.zero_coin_refresh_times, 1, "After set_buff: zero_coin_refresh_times should be 1")
 	assert_eq(c.zero_coin_refresh_max_times, 1, "After set_buff: zero_coin_refresh_max_times should be 1")
 
 	# 再设置一个buff，累加
-	var meta2 = {"buff_id": "free_refresh_one_times_2", "family": "", "tags": ["passive"], "buff_icon": "", "buff_tooltip": "test"}
-	var buff2 = create_and_set_buff("res://scripts/buff/free_refresh_one_times_buff.gd", meta2)
+	var meta2 = {"buff_id": "free_refresh_2", "family": "", "tags": ["passive"], "buff_icon": "", "buff_tooltip": "test"}
+	var buff2 = create_and_set_buff("res://scripts/buff/free_refresh_buff.gd", meta2)
 	assert_eq(c.zero_coin_refresh_times, 2, "After 2nd set_buff: zero_coin_refresh_times should be 2")
 	assert_eq(c.zero_coin_refresh_max_times, 2, "After 2nd set_buff: zero_coin_refresh_max_times should be 2")
 

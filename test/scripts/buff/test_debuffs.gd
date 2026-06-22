@@ -139,40 +139,40 @@ func test_fragile_buff() -> void:
 	buff2.clear_buff()
 	assert_eq(c.player_defense, 0, "fragile: defense restores to 0 after clear_buff (original was 0)")
 
-## 2. attack_score_down_buff - process时分数减少20%, total_score=100减20, total_score=0不减
-func test_attack_score_down_buff() -> void:
-	_current_test = "test_attack_score_down_buff"
+## 2. attack_weaken_buff - process时分数减少20%, total_score=100减20, total_score=0不减
+func test_attack_weaken_buff() -> void:
+	_current_test = "test_attack_weaken_buff"
 	var c = Current
 
-	var meta = {"buff_id": "attack_score_down", "family": "", "tags": [], "buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "attack score down tooltip"}
-	var buff = create_and_set_buff("res://scripts/debuff/attack_score_down_buff.gd", meta)
+	var meta = {"buff_id": "attack_weaken", "family": "", "tags": [], "buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "attack score down tooltip"}
+	var buff = create_and_set_buff("res://scripts/debuff/attack_weaken_buff.gd", meta)
 
 	# total_score=100时减少20（int(100*0.20)=20）
 	c.total_score = 100
 	buff.process_buff()
-	assert_eq(c.total_score, 80, "attack_score_down: total_score should be 80 after process (100-20)")
+	assert_eq(c.total_score, 80, "attack_weaken: total_score should be 80 after process (100-20)")
 
 	# total_score=0时不减少
 	c.total_score = 0
 	buff.process_buff()
-	assert_eq(c.total_score, 0, "attack_score_down: total_score should stay 0 when already 0")
+	assert_eq(c.total_score, 0, "attack_weaken: total_score should stay 0 when already 0")
 
 	# total_score=50时减少10（int(50*0.20)=10）
 	c.total_score = 50
 	buff.process_buff()
-	assert_eq(c.total_score, 40, "attack_score_down: total_score should be 40 after process (50-10)")
+	assert_eq(c.total_score, 40, "attack_weaken: total_score should be 40 after process (50-10)")
 
 	# total_score=3时减少0（int(3*0.20)=int(0.6)=0）
 	c.total_score = 3
 	buff.process_buff()
-	assert_eq(c.total_score, 3, "attack_score_down: total_score should stay 3 when int(3*0.20)=0")
+	assert_eq(c.total_score, 3, "attack_weaken: total_score should stay 3 when int(3*0.20)=0")
 
 	# clear_buff释放debuff_texture
 	buff.clear_buff()
 
-## 3. disable_points_buff - 禁用指定点数得分，clear时恢复
-func test_disable_points_buff() -> void:
-	_current_test = "test_disable_points_buff"
+## 3. point_seal_buff - 禁用指定点数得分，clear时恢复
+func test_point_seal_buff() -> void:
+	_current_test = "test_point_seal_buff"
 	var c = Current
 	c.one_score = 10
 	c.three_score = 20
@@ -180,31 +180,31 @@ func test_disable_points_buff() -> void:
 
 	# 禁用1点和6点
 	var meta = {
-		"buff_id": "disable_points", "family": "", "tags": [],
+		"buff_id": "point_seal", "family": "", "tags": [],
 		"buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "disable points",
 		"data": {"disabled_points": [1, 6]}
 	}
-	var buff = create_and_set_buff("res://scripts/debuff/disable_points_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/debuff/point_seal_buff.gd", meta)
 
 	# set_buff后禁用的点数分数应被设为0
-	assert_eq(c.one_score, 0, "disable_points: one_score should be 0 after set_buff")
-	assert_eq(c.six_score, 0, "disable_points: six_score should be 0 after set_buff")
+	assert_eq(c.one_score, 0, "point_seal: one_score should be 0 after set_buff")
+	assert_eq(c.six_score, 0, "point_seal: six_score should be 0 after set_buff")
 	# 未禁用的点数不受影响
-	assert_eq(c.three_score, 20, "disable_points: three_score should remain 20")
+	assert_eq(c.three_score, 20, "point_seal: three_score should remain 20")
 
 	# process_buff持续禁用：如果分数被恢复，再次设为0并累积
 	c.one_score = 5
 	buff.process_buff()
-	assert_eq(c.one_score, 0, "disable_points: one_score should be 0 after process (re-disabled)")
+	assert_eq(c.one_score, 0, "point_seal: one_score should be 0 after process (re-disabled)")
 
 	# clear_buff后恢复保存的分数
 	buff.clear_buff()
-	assert_eq(c.one_score, 10, "disable_points: one_score should restore to 10 after clear_buff")
-	assert_eq(c.six_score, 30, "disable_points: six_score should restore to 30 after clear_buff")
+	assert_eq(c.one_score, 10, "point_seal: one_score should restore to 10 after clear_buff")
+	assert_eq(c.six_score, 30, "point_seal: six_score should restore to 30 after clear_buff")
 
-## 4. disable_dice_type_buff - 禁用指定骰型百分比，clear时恢复
-func test_disable_dice_type_buff() -> void:
-	_current_test = "test_disable_dice_type_buff"
+## 4. type_seal_buff - 禁用指定骰型百分比，clear时恢复
+func test_type_seal_buff() -> void:
+	_current_test = "test_type_seal_buff"
 	var c = Current
 	c.duizi_percent = 30
 	c.shunzi_percent = 20
@@ -212,24 +212,24 @@ func test_disable_dice_type_buff() -> void:
 
 	# 禁用duizi和shunzi
 	var meta = {
-		"buff_id": "disable_dice_type", "family": "", "tags": [],
+		"buff_id": "type_seal", "family": "", "tags": [],
 		"buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "disable dice type",
 		"data": {"disabled_types": ["duizi", "shunzi"]}
 	}
-	var buff = create_and_set_buff("res://scripts/debuff/disable_dice_type_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/debuff/type_seal_buff.gd", meta)
 
 	# set_buff后禁用的骰型百分比应被设为0
-	assert_eq(c.duizi_percent, 0, "disable_dice_type: duizi_percent should be 0 after set_buff")
-	assert_eq(c.shunzi_percent, 0, "disable_dice_type: shunzi_percent should be 0 after set_buff")
+	assert_eq(c.duizi_percent, 0, "type_seal: duizi_percent should be 0 after set_buff")
+	assert_eq(c.shunzi_percent, 0, "type_seal: shunzi_percent should be 0 after set_buff")
 	# 未禁用的骰型不受影响
-	assert_eq(c.tongse_percent, 15, "disable_dice_type: tongse_percent should remain 15")
+	assert_eq(c.tongse_percent, 15, "type_seal: tongse_percent should remain 15")
 
 	# process_buff持续禁用：如果百分比被恢复，再次设为0
 	c.duizi_percent = 10
 	buff.process_buff()
-	assert_eq(c.duizi_percent, 0, "disable_dice_type: duizi_percent should be 0 after process (re-disabled)")
+	assert_eq(c.duizi_percent, 0, "type_seal: duizi_percent should be 0 after process (re-disabled)")
 
 	# clear_buff后恢复保存的百分比
 	buff.clear_buff()
-	assert_eq(c.duizi_percent, 30, "disable_dice_type: duizi_percent should restore to 30 after clear_buff")
-	assert_eq(c.shunzi_percent, 20, "disable_dice_type: shunzi_percent should restore to 20 after clear_buff")
+	assert_eq(c.duizi_percent, 30, "type_seal: duizi_percent should restore to 30 after clear_buff")
+	assert_eq(c.shunzi_percent, 20, "type_seal: shunzi_percent should restore to 20 after clear_buff")

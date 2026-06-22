@@ -142,15 +142,15 @@ func test_swarm_tithe_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(100 * 200 * 0.0025), "100 enemies with target_score=200: score should be int(100 * 200 * 0.0025)")
 
-## 3. full_range_slime_double_score_buff - die_count == range_size时触发
-func test_full_range_slime_double_score_buff() -> void:
-	_current_test = "test_full_range_slime_double_score_buff"
+## 3. full_range_assault_buff - die_count == range_size时触发
+func test_full_range_assault_buff() -> void:
+	_current_test = "test_full_range_assault_buff"
 	var c = Current
 	c.total_score = 0
 	c.once_total_score = 1000
 
-	var meta = {"buff_id": "full_range_slime_double_score", "family": "swarm", "tags": ["attack"]}
-	var buff = create_and_set_buff("res://scripts/buff/full_range_slime_double_score_buff.gd", meta)
+	var meta = {"buff_id": "full_range_assault", "family": "swarm", "tags": ["attack"]}
+	var buff = create_and_set_buff("res://scripts/buff/full_range_assault_buff.gd", meta)
 
 	# die_count < range_size时不触发
 	c.slime_die_sum = 2
@@ -330,15 +330,15 @@ func test_slime_kill_empower_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 3 * 0.03), "3 kills: score should be int(once_total_score * 3 * 0.03)")
 
-## 11. attack_power_slime_score_increase_buff - killed_power_slime为true时触发
-func test_attack_power_slime_score_increase_buff() -> void:
-	_current_test = "test_attack_power_slime_score_increase_buff"
+## 11. power_slime_bounty_buff - killed_power_slime为true时触发
+func test_power_slime_bounty_buff() -> void:
+	_current_test = "test_power_slime_bounty_buff"
 	var c = Current
 	c.total_score = 0
 	c.once_total_score = 1000
 
-	var meta = {"buff_id": "attack_power_slime_score_increase", "family": "swarm", "tags": ["attack"]}
-	var buff = create_and_set_buff("res://scripts/buff/attack_power_slime_score_increase_buff.gd", meta)
+	var meta = {"buff_id": "power_slime_bounty", "family": "swarm", "tags": ["attack"]}
+	var buff = create_and_set_buff("res://scripts/buff/power_slime_bounty_buff.gd", meta)
 
 	# killed_power_slime为false时不触发
 	c.killed_power_slime = false
@@ -350,14 +350,14 @@ func test_attack_power_slime_score_increase_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 0.40), "killed_power_slime=true: score should be int(once_total_score * 0.40)")
 
-## 12. power_slime_plus_one_buff - set时power_slime_num+1, clear时-1
-func test_power_slime_plus_one_buff() -> void:
-	_current_test = "test_power_slime_plus_one_buff"
+## 12. extra_power_slime_buff - set时power_slime_num+1, clear时-1
+func test_extra_power_slime_buff() -> void:
+	_current_test = "test_extra_power_slime_buff"
 	var c = Current
 	c.power_slime_num = 2
 
-	var meta = {"buff_id": "power_slime_plus_one", "family": "swarm", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/power_slime_plus_one_buff.gd", meta)
+	var meta = {"buff_id": "extra_power_slime", "family": "swarm", "tags": ["passive"]}
+	var buff = create_and_set_buff("res://scripts/buff/extra_power_slime_buff.gd", meta)
 
 	# set_buff后power_slime_num+1
 	assert_eq(c.power_slime_num, 3, "power_slime_num should increase by 1 after set_buff")
@@ -366,14 +366,14 @@ func test_power_slime_plus_one_buff() -> void:
 	buff.clear_buff()
 	assert_eq(c.power_slime_num, 2, "power_slime_num should decrease by 1 after clear_buff")
 
-## 13. max_power_puls_one_buff - set时max_power+1, clear时-1
-func test_max_power_puls_one_buff() -> void:
-	_current_test = "test_max_power_puls_one_buff"
+## 13. power_cap_up_buff - set时max_power+1, clear时-1
+func test_power_cap_up_buff() -> void:
+	_current_test = "test_power_cap_up_buff"
 	var c = Current
 	c.max_power = 3
 
-	var meta = {"buff_id": "max_power_puls_one", "family": "swarm", "tags": ["passive"]}
-	var buff = create_and_set_buff("res://scripts/buff/max_power_puls_one_buff.gd", meta)
+	var meta = {"buff_id": "power_cap_up", "family": "swarm", "tags": ["passive"]}
+	var buff = create_and_set_buff("res://scripts/buff/power_cap_up_buff.gd", meta)
 
 	# set_buff后max_power+1
 	assert_eq(c.max_power, 4, "max_power should increase by 1 after set_buff")

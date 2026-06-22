@@ -9,14 +9,14 @@ func set_buff():
 
 func process_buff():
 	if Current.power_skill:
-		Current.public_lock_array.append("power_attack_score_increase_buff")
+		Current.public_lock_array.append("power_surge_buff")
 		var add_num = int(Current.once_total_score * 0.30)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)
 		Current.total_score += add_num
-		Current.public_lock_array.erase("power_attack_score_increase_buff")
+		Current.public_lock_array.erase("power_surge_buff")
 
 func clear_buff():
 	pass

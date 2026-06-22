@@ -10,7 +10,7 @@ func set_buff():
 	debuff_texture.set_rich_tooltip(TooltipFormatter.format_debuff(buff_meta))
 
 func process_buff():
-	Current.public_lock_array.append("reroll_slime_buff")
+	Current.public_lock_array.append("slime_chaos_buff")
 	game_manager.slime_reroll_finished.connect(count_slime_reroll_finished)
 	var count := 0
 	for slime in Current.all_enemy_array:
@@ -19,7 +19,7 @@ func process_buff():
 	while count_slime_reroll != count:
 		await Tools.time_sleep(0.05)
 	count_slime_reroll = 0
-	Current.public_lock_array.erase("reroll_slime_buff")
+	Current.public_lock_array.erase("slime_chaos_buff")
 
 func count_slime_reroll_finished():
 	count_slime_reroll += 1

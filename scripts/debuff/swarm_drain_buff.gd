@@ -8,13 +8,13 @@ func set_buff():
 	debuff_texture.set_rich_tooltip(TooltipFormatter.format_debuff(buff_meta))
 
 func process_buff():
-	var cap = int(Current.target_score * 0.40)
-	if Current.once_total_score > cap:
-		var excess = Current.once_total_score - cap
-		Current.public_lock_array.append("score_cap_buff")
-		var float_number_instantiate = EffectManager.float_number_effect(-excess, "red")
+	var sub_num = int(Current.total_score * Current.all_enemy_array.size() * 0.005)
+
+	if sub_num > 0:
+		var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
 		Current.hero.add_child(float_number_instantiate)
 		await Tools.time_sleep(1)
-		Current.total_score -= excess
-		Current.once_total_score -= excess
-		Current.public_lock_array.erase("score_cap_buff")
+		Current.total_score -= sub_num
+
+func clear_buff():
+	debuff_texture.queue_free()

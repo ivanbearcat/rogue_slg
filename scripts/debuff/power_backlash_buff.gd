@@ -1,4 +1,4 @@
-extends Buff
+﻿extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["debuff_icon"])
@@ -8,15 +8,16 @@ func set_buff():
 	debuff_texture.set_rich_tooltip(TooltipFormatter.format_debuff(buff_meta))
 
 func process_buff():
-	var sub_num = int(Current.total_score * Current.all_enemy_array.size() * 0.005)
-	## 分数护盾：扣分减半
-	if BuffSystem.get_buffs_by_tag("score_shield").size() > 0:
-		sub_num = int(sub_num / 2.0)
-	if sub_num > 0:
+	if Current.power_skill:
+		Current.public_lock_array.append("power_backlash_buff")
+		var sub_num = int(Current.total_score * 0.1)
+
 		var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
 		Current.hero.add_child(float_number_instantiate)
+		EffectManager.buff_pop_effect(debuff_texture)
 		await Tools.time_sleep(1)
 		Current.total_score -= sub_num
+		Current.public_lock_array.erase("power_backlash_buff")
 
 func clear_buff():
 	debuff_texture.queue_free()

@@ -171,18 +171,18 @@ func _process_dropped_dice(attack_slime_array_info: Array, dice_type_result: Arr
 	## 如果掉落格子骰子没有参与计分，它已经在dropped_dice中
 	## 清空掉落格子（骰子已被消耗或已加入dropped_dice）
 	Current._drop_slot_dice = null  ## 临时清空，不触发UI更新
-	## 检查禁用掉落格子debuff（通过检查no_drop_slot_buff是否在buff列表中）
+	## 检查禁用掉落格子debuff（通过检查drop_ban_buff是否在buff列表中）
 	var buff_sys = game_manager.get_node("/root/BuffSystem")
 	var timing_arrays = buff_sys._get_timing_arrays("pre_hero_turn")
-	var no_drop_slot_active := false
+	var drop_ban_active := false
 	for buff_list in timing_arrays:
 		for buff in buff_list:
-			if buff.buff_meta.get("debuff_id", "") == "no_drop_slot":
-				no_drop_slot_active = true
+			if buff.buff_meta.get("debuff_id", "") == "drop_ban":
+				drop_ban_active = true
 				break
-		if no_drop_slot_active:
+		if drop_ban_active:
 			break
-	if no_drop_slot_active:
+	if drop_ban_active:
 		Current.drop_slot_dice = null
 		return
 	## 如果没有掉落骰子，格子变空
