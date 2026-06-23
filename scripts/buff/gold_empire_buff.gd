@@ -11,7 +11,7 @@ func process_buff():
 	var bonus = roundi(Current.once_total_score * (Current.total_coins / 5) * 0.10)
 	if bonus > 0:
 		Current.total_score += bonus
-		var float_number_instantiate = EffectManager.float_number_effect(bonus, "gold")
+		var float_number_instantiate = EffectManager.float_number_effect(bonus)
 		Current.hero.add_child(float_number_instantiate)
 
 func clear_buff():

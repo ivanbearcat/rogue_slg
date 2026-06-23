@@ -17,12 +17,25 @@ region = Rect2(336, 80, 16, 16)
 atlas = ExtResource("2_70vec")
 region = Rect2(336, 64, 16, 16)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2s7k2"]
+load_path = "res://.godot/imported/punyworld-overworld-tileset.png-465ddc1c8f9dd12c7e85549fc4cdc661.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_n1vvw"]
-atlas = ExtResource("2_70vec")
+atlas = SubResource("CompressedTexture2D_2s7k2")
 region = Rect2(352, 64, 16, 16)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gnlqp"]
+load_path = "res://.godot/imported/punyworld-overworld-tileset.png-465ddc1c8f9dd12c7e85549fc4cdc661.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jaoqn"]
+atlas = SubResource("CompressedTexture2D_gnlqp")
+region = Rect2(352, 80, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_726jt"]
+load_path = "res://.godot/imported/punyworld-overworld-tileset.png-465ddc1c8f9dd12c7e85549fc4cdc661.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_fnun3"]
-atlas = ExtResource("2_70vec")
+atlas = SubResource("CompressedTexture2D_726jt")
 region = Rect2(336, 64, 16, 16)
 
 [node name="grid" type="Node2D" unique_id=561312025]
@@ -60,7 +73,7 @@ texture = SubResource("AtlasTexture_n1vvw")
 [node name="cursor" type="Sprite2D" parent="Area2D" unique_id=150335868]
 visible = false
 position = Vector2(8, 8)
-texture = SubResource("AtlasTexture_fnun3")
+texture = SubResource("AtlasTexture_jaoqn")
 
 [node name="select" type="Sprite2D" parent="Area2D" unique_id=192290863]
 visible = false

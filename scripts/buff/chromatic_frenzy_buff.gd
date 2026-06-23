@@ -23,7 +23,8 @@ func process_buff():
 	if bonus_percent != 0.0:
 		Current.public_lock_array.append("chromatic_frenzy_buff")
 		var add_num = int(Current.once_total_score * bonus_percent)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
+		var float_color = "green" if add_num > 0 else "red"
+		var float_number_instantiate = EffectManager.float_number_effect(add_num, float_color)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)

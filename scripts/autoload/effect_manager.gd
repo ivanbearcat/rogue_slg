@@ -6,7 +6,8 @@ var color := {
 	"green": "00ff00",
 	"red": "ff0000",
 	"purple": "ff00ff",
-	"gold": "ffd700"
+	"yellow": "ffd700",
+	"dark_yellow": "b8860b"
 }
 
 var _content: String

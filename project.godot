@@ -32,6 +32,7 @@ VFX="*uid://ecyiymmaj3jv"
 EnvVFX="*uid://qomyut16hnoi"
 MCPRuntime="*uid://duhpmbat6u2mk"
 TooltipManager="*res://scripts/autoload/tooltip_manager.gd"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
@@ -40,7 +41,7 @@ mouse_cursor/custom_image="res://images/mouse_icon/pointer_scifi_a.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/godot_mcp/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/vfx_library/plugin.cfg")
+enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/vfx_library/plugin.cfg")
 
 [input]
 

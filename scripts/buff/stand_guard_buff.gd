@@ -9,8 +9,13 @@ func set_buff():
 
 func process_buff():
 	if not Current.is_moved:
+		Current.public_lock_array.append("stand_guard_buff")
 		EffectManager.buff_pop_effect(buff_texture)
 		Current.total_coins += 2
+		var float_number_instantiate = EffectManager.float_number_effect(2, "yellow")
+		Current.hero.add_child(float_number_instantiate)
+		await Tools.time_sleep(1)
+		Current.public_lock_array.erase("stand_guard_buff")
 
 func clear_buff():
 	pass

@@ -16,9 +16,19 @@ func process_buff():
 			unique_colors[slime_color_dict[scene_name]] = true
 	var color_count = unique_colors.size()
 	if color_count >= 3:
+		Current.public_lock_array.append("resonance_echo_buff")
 		Current.total_coins += 3
+		var float_number_instantiate = EffectManager.float_number_effect(3, "yellow")
+		Current.hero.add_child(float_number_instantiate)
+		await Tools.time_sleep(1)
+		Current.public_lock_array.erase("resonance_echo_buff")
 	elif color_count <= 1:
+		Current.public_lock_array.append("resonance_echo_buff")
 		Current.total_coins = max(0, Current.total_coins - 1)
+		var float_number_instantiate = EffectManager.float_number_effect(-1, "dark_yellow")
+		Current.hero.add_child(float_number_instantiate)
+		await Tools.time_sleep(1)
+		Current.public_lock_array.erase("resonance_echo_buff")
 
 func clear_buff():
 	pass

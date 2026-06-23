@@ -368,6 +368,7 @@ func _ready() -> void:
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 
+
 ## 随机分配基础分值
 ## 将总共60点基础分随机分配到1-6点数的骰子上，最低5最高15
 func _randomize_base_scores():
@@ -556,10 +557,11 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 		await _spawn_elite_slime()
 	print("[boss-slime] 生成了BOSS史莱姆: gate=%s count=%d curse_count=%d extra_elites=%d" % [gate_type, slime_instantiate.gate_count, applied_debuff_ids.size(), extra_elites])
 
-## 移动精英/BOSS史莱姆（每回合随机4方向移动1格）
+## 移动精英/BOSS史莱姆（同时移动模式）
 func _move_elite_boss_slimes():
 	var directions = [Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0), Vector2(0, -1)]
 	var target_grid_index_array: Array
+	## 阶段1：批量计算目标位置并设置（不等待移动完成）
 	for _slime in Current.elite_slime_array + Current.boss_slime_array:
 		if not is_instance_valid(_slime):
 			continue
@@ -575,9 +577,9 @@ func _move_elite_boss_slimes():
 			var target_grid = movable_grid_array.pick_random()
 			_slime.target_position = grid_index_to_position(target_grid)
 			target_grid_index_array.append(target_grid)
-			## 等待史莱姆移动完成
-			while _slime.target_position != Vector2.ZERO:
-				await Tools.time_sleep(0.01)
+	## 阶段2：统一等待所有史莱姆移动完成
+	while Current.has_move_slime:
+		await Tools.time_sleep(0.01)
 
 func _create_slime():
 	## 生成史莱姆（同时生成模式）
@@ -660,13 +662,14 @@ func _create_power_slime():
 				power_slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(0.0, 18.892, 18.892))
 				power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
 
-## 史莱姆移动
+## 史莱姆移动（同时移动模式）
 func slime_move_ai():
 	var target_grid_index_array: Array
 	var slime_create_grid_index_array: Array
 	## 获取所有即将出生的史莱姆位置
 	for slime in _slime_create_array:
 		slime_create_grid_index_array.append(slime.enemy_grid_index)
+	## 阶段1：批量计算目标位置并设置（不等待移动完成）
 	for enemy in Current.all_enemy_array:
 		var movable_grid_array: Array
 		for offset in grid_offset:
@@ -688,9 +691,9 @@ func slime_move_ai():
 			var target_position: Vector2 = grid_index_to_position(target_grid_index)
 			enemy.target_position = target_position
 			target_grid_index_array.append(target_grid_index)
-			## 等待史莱姆移动完成
-			while enemy.target_position != Vector2.ZERO:
-				await Tools.time_sleep(0.01)
+	## 阶段2：统一等待所有史莱姆移动完成
+	while Current.has_move_slime:
+		await Tools.time_sleep(0.01)
 
 ## 史莱姆重掷
 func slime_reroll(slime: Node2D, only_roll_dice=0, only_roll_color=0):
@@ -772,6 +775,95 @@ func add_exp(new_exp: int) -> void:
 	await wait_for_buff_finish()
 	await _check_and_level_up()
 
+## 根据卡牌效果生成动态描述（BBCode格式）
+func _generate_card_description(effects: Array) -> String:
+	var score_names = {"one_score": "一点", "two_score": "二点", "three_score": "三点", "four_score": "四点", "five_score": "五点", "six_score": "六点"}
+	var percent_names = {"duizi_percent": "对子倍率", "shunzi_percent": "顺子倍率", "tongse_percent": "同色倍率", "tongdui_percent": "同对倍率", "tongshun_percent": "同顺倍率"}
+	var parts := []
+	for effect in effects:
+		var target = effect["target"]
+		var operate = effect["operate"]
+		var value = effect["value"]
+		var target_name = ""
+		match target:
+			"all_score":
+				target_name = "所有点数"
+			"all_percent":
+				target_name = "所有倍率"
+			"random_score":
+				target_name = "随机一个点数"
+			"min_score":
+				target_name = "最低点数"
+			"max_score":
+				target_name = "最高点数"
+			_:
+				if target in score_names:
+					target_name = score_names[target]
+				elif target in percent_names:
+					target_name = percent_names[target]
+				else:
+					target_name = target
+		var desc = ""
+		match operate:
+			"add":
+				desc = target_name + "[color=green]+" + str(int(value)) + "[/color]"
+			"sub":
+				desc = target_name + "[color=red]-" + str(int(value)) + "[/color]"
+			"mul":
+				if value >= 1.0:
+					var pct = roundi((value - 1.0) * 100)
+					desc = target_name + "[color=green]+" + str(pct) + "%[/color]"
+				else:
+					var pct = roundi((1.0 - value) * 100)
+					desc = target_name + "[color=red]-" + str(pct) + "%[/color]"
+			"set":
+				if int(value) == 0:
+					desc = target_name + "[color=red]归零[/color]"
+				else:
+					desc = target_name + "[color=green]=" + str(int(value)) + "[/color]"
+			"swap":
+				var from_name = ""
+				if str(value) in score_names:
+					from_name = score_names[str(value)]
+				elif str(value) in percent_names:
+					from_name = percent_names[str(value)]
+				else:
+					from_name = str(value)
+				desc = target_name + "和" + from_name + "[color=green]互换[/color]"
+			"copy_from":
+				var from_name = ""
+				if str(value) in score_names:
+					from_name = score_names[str(value)]
+				elif str(value) in percent_names:
+					from_name = percent_names[str(value)]
+				else:
+					from_name = str(value)
+				desc = target_name + "[color=green]=" + from_name + "的值[/color]"
+			"set_to_max":
+				desc = target_name + "[color=green]=最高点数[/color]"
+			"set_to_avg":
+				desc = target_name + "[color=green]=平均值[/color]"
+		parts.append(desc)
+	return "，".join(parts)
+
+## 对卡牌效果进行随机波动（±20%，最少1点）
+func _fluctuate_card_effects(effects: Array) -> Array:
+	var fluctuated := []
+	for effect in effects:
+		var new_effect = effect.duplicate()
+		var operate = effect["operate"]
+		var value = effect["value"]
+		if operate == "add" or operate == "sub":
+			var fluctuated_val = roundi(value * randf_range(0.8, 1.2))
+			new_effect["value"] = maxi(fluctuated_val, 1)
+		elif operate == "mul":
+			var delta = value - 1.0
+			var fluctuated_delta = delta * randf_range(0.8, 1.2)
+			new_effect["value"] = snappedf(1.0 + fluctuated_delta, 0.01)
+		# set, swap, copy_from, set_to_max, set_to_avg: no fluctuation
+		fluctuated.append(new_effect)
+	return fluctuated
+
 func _set_level_up_card():
 	## 生成3个随机卡牌
 	var total_weight := 0
@@ -792,6 +884,12 @@ func _set_level_up_card():
 					if row not in level_up_three_card_array:
 						level_up_three_card_array.append(row)
 						break
+	## 对每张卡牌效果进行随机波动
+	for i in range(level_up_three_card_array.size()):
+		var row = level_up_three_card_array[i].duplicate()
+		row["card_effects"] = _fluctuate_card_effects(row["card_effects"])
+		row["card_description"] = _generate_card_description(row["card_effects"])
+		level_up_three_card_array[i] = row
 	## 根据随机结果将数据填入卡牌
 	var card_1_texture = load(level_up_three_card_array[0]['card_textrue'])
 	card_1.texture = card_1_texture
@@ -1741,9 +1839,14 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.public_lock_array.append("stage_transition")
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
-	## 黄金之手：关卡结束时每有5个金币+1金币
+	## 黄金之手：关卡结束时每有3个金币+1金币
 	if BuffSystem.is_buff_registered("golden_touch"):
-		Current.total_coins += int(Current.total_coins / 3)
+		var golden_touch_add = int(Current.total_coins / 3)
+		if golden_touch_add > 0:
+			Current.total_coins += golden_touch_add
+			var float_number_instantiate = EffectManager.float_number_effect(golden_touch_add, "yellow")
+			Current.hero.add_child(float_number_instantiate)
+			await Tools.time_sleep(1)
 	## 更新回合、关卡、当前分数、目标分数
 	Current.count_round = 0
 	Current.total_score = 0

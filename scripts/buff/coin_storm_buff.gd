@@ -1,4 +1,4 @@
-﻿extends Buff
+extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -11,7 +11,7 @@ func process_buff():
 	if randf() < 0.5:
 		Current.total_coins += 2
 		Current.public_lock_array.append("coin_storm_buff")
-		var float_number_instantiate = EffectManager.float_number_effect(2, "green")
+		var float_number_instantiate = EffectManager.float_number_effect(2, "yellow")
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)
