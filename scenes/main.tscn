@@ -28,7 +28,6 @@
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
 [ext_resource type="Script" uid="uid://cvems1v2e2cv3" path="res://scripts/hp_bar.gd" id="26_j8jky"]
-[ext_resource type="Texture2D" uid="uid://cvuyfprspmcs4" path="res://images/score_bar.png" id="27_j8jky"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
 [ext_resource type="PackedScene" uid="uid://biahlr85bpue3" path="res://scenes/drop_selection_ui.tscn" id="33_5q0nq"]
 [ext_resource type="Script" uid="uid://c75g4vrr8ub2v" path="res://scripts/ui/buff_debug_panel.gd" id="34_dgi5k"]
@@ -1359,38 +1358,6 @@ region = Rect2(160, 50, 80, 19)
 [sub_resource type="AtlasTexture" id="AtlasTexture_augu2"]
 atlas = SubResource("CompressedTexture2D_qkpxi")
 region = Rect2(160, 71, 80, 19)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j4bwh"]
-atlas = ExtResource("27_j8jky")
-region = Rect2(0, 7, 8, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ksmap"]
-atlas = ExtResource("27_j8jky")
-region = Rect2(8, 7, 8, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ygd8o"]
-atlas = ExtResource("27_j8jky")
-region = Rect2(16, 7, 8, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2s0kr"]
-atlas = ExtResource("27_j8jky")
-region = Rect2(24, 7, 8, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xaipn"]
-atlas = ExtResource("27_j8jky")
-region = Rect2(32, 7, 8, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ndrjj"]
-atlas = ExtResource("27_j8jky")
-region = Rect2(40, 7, 8, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ih3m7"]
-atlas = ExtResource("27_j8jky")
-region = Rect2(48, 7, 8, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_11yus"]
-atlas = ExtResource("27_j8jky")
-region = Rect2(56, 7, 8, 20)
 
 [sub_resource type="Image" id="Image_j8jky"]
 data = {
@@ -3455,6 +3422,7 @@ cache/0/14/2/glyphs/3/texture_idx = -1
 line_spacing = 0.0
 font = SubResource("FontFile_xrs0c")
 font_size = 14
+font_color = Color(1, 0.13333334, 0, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
@@ -5563,84 +5531,6 @@ offset_top = -6.0
 offset_right = 8.25
 offset_bottom = 6.75
 
-[node name="score_bar" type="HBoxContainer" parent="Control" unique_id=38264307]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -0.125
-offset_top = -4.25
-offset_right = 0.125
-offset_bottom = 4.25
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 0
-
-[node name="TextureRect" type="TextureRect" parent="Control/score_bar" unique_id=756275593]
-self_modulate = Color(1, 1, 1, 0.39215687)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_j4bwh")
-stretch_mode = 5
-
-[node name="TextureRect2" type="TextureRect" parent="Control/score_bar" unique_id=907554233]
-self_modulate = Color(1, 1, 1, 0.39215687)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ksmap")
-stretch_mode = 5
-
-[node name="TextureRect3" type="TextureRect" parent="Control/score_bar" unique_id=322826993]
-self_modulate = Color(1, 1, 1, 0.39215687)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ygd8o")
-stretch_mode = 5
-
-[node name="TextureRect4" type="TextureRect" parent="Control/score_bar" unique_id=464918062]
-self_modulate = Color(1, 1, 1, 0.39215687)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_2s0kr")
-stretch_mode = 5
-
-[node name="TextureRect5" type="TextureRect" parent="Control/score_bar" unique_id=1802432172]
-self_modulate = Color(1, 1, 1, 0.39215687)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_xaipn")
-stretch_mode = 5
-
-[node name="TextureRect6" type="TextureRect" parent="Control/score_bar" unique_id=1226609284]
-self_modulate = Color(1, 1, 1, 0.39215687)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ndrjj")
-stretch_mode = 5
-
-[node name="TextureRect7" type="TextureRect" parent="Control/score_bar" unique_id=2125106648]
-self_modulate = Color(1, 1, 1, 0.39215687)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_ih3m7")
-stretch_mode = 5
-
-[node name="TextureRect8" type="TextureRect" parent="Control/score_bar" unique_id=1191549231]
-self_modulate = Color(1, 1, 1, 0.39215687)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-texture = SubResource("AtlasTexture_11yus")
-stretch_mode = 5
-
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=2081454128]
 layout_mode = 1
 anchors_preset = 15
@@ -5656,7 +5546,6 @@ scale = Vector2(0.7, 0.7)
 
 [node name="score_bar_label" type="Label" parent="Control/MarginContainer" unique_id=1258542655]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 text = "100+"
 label_settings = SubResource("LabelSettings_xljpf")

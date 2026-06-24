@@ -51,9 +51,10 @@ const hero_property = {
 @onready var tongshun_percent_frame: PanelContainer = %tongshun_percent_frame
 @onready var drop_slot_panel_frame: PanelContainer = %drop_slot_panel_frame
 @onready var drop_slot_panel_point: Label = %drop_slot_panel_point
-## 分值条UI父级和分值
-@onready var score_bar: HBoxContainer = %score_bar
+## 分值
 @onready var score_bar_label: Label = %score_bar_label
+## 燃烧ShaderMaterial（1000+分区段使用）
+@onready var score_burn_material: ShaderMaterial = preload("res://shaders/fire_outline.tres")
 #@onready var dice_list: HBoxContainer = %dice_list
 ## 经验条
 @onready var exp_bar: TextureProgressBar = %exp_bar

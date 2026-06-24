@@ -530,24 +530,12 @@ func _fetch_attack_slime_array_info(slime_array):
 		attack_slime_array_info.append(Current.drop_slot_dice.duplicate())
 	return attack_slime_array_info
 
-## 骰型板展示待攻击史莱姆的分值条和骰型
+## 骰型板展示待攻击史莱姆的分值和骰型
 func _show_dice_panel(dice_type_point):
-	## 分值条
-	var score_bar_child_array = game_manager.score_bar.get_children()
-	var iter_times = 0
-	var score_bar_label_text = ""
 	var score = dice_type_point[0]
-	var thresholds = [10, 50, 100, 200, 400, 800, 1200, 2400]
-	if score > 0 and score < thresholds[0]:
-		iter_times = 0
-	else:
-		for i in range(thresholds.size()):
-			if score >= thresholds[i]:
-				iter_times = i + 1
-	score_bar_label_text = str(score)
-	for num in range(iter_times):
-		score_bar_child_array[num].set_self_modulate(Color(1, 1, 1, 1))
-	game_manager.score_bar_label.text = score_bar_label_text
+	_apply_score_visual(score)
+	_play_score_bounce(score)
+	game_manager.score_bar_label.text = str(score)
 	game_manager.score_bar_label.show()
 
 	var frame_dict = {
@@ -577,11 +565,14 @@ func _show_dice_panel(dice_type_point):
 
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
-	var score_bar_child_array = game_manager.score_bar.get_children()
-	for child in score_bar_child_array:
-		child.set_self_modulate(Color(1, 1, 1, 0.3))
-	game_manager.score_bar_label.text = ""
-	game_manager.score_bar_label.hide()
+	var label = game_manager.score_bar_label
+	var ls = label.label_settings
+	ls.font_size = 14
+	ls.font_color = Color.WHITE
+	label.material = null
+	label.scale = Vector2.ONE
+	label.text = ""
+	label.hide()
 	var frame_dict = {
 		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
 		2: game_manager.two_score_frame.get("theme_override_styles/panel"),
@@ -605,6 +596,67 @@ func _reset_dice_panel():
 			Current.set(dice_type_dict[key], Current.dice_multiplier_dict[2][key])
 	## 重置掉落行显示（反映当前 drop_slot_dice 状态）
 	Current._update_drop_slot_ui()
+
+## 分值区段索引：0=0-99, 1=100-299, 2=300-999, 3=1000+
+func _get_score_zone(score: int) -> int:
+	if score >= 100:
+		return 3
+	elif score >= 30:
+		return 2
+	elif score >= 10:
+		return 1
+	return 0
+
+## 根据分值区段设置 score_bar_label 的视觉属性
+func _apply_score_visual(score: int) -> void:
+	var zone = _get_score_zone(score)
+	var label = game_manager.score_bar_label
+	var ls = label.label_settings
+	match zone:
+		0:
+			ls.font_size = 16
+		1:
+			ls.font_size = 17
+			ls.font_color = Color.html("#FFD700")
+		2:
+			ls.font_size = 18
+			ls.font_color = Color.html("#FF6B35")
+		3:
+			ls.font_size = 19
+			ls.font_color = Color.html("#FF2200")
+
+## 弹跳动画Tween引用
+var _score_bounce_tween: Tween = null
+
+## 根据分值区段播放弹跳缩放动画
+func _play_score_bounce(score: int) -> void:
+	if _score_bounce_tween:
+		_score_bounce_tween.kill()
+	var zone = _get_score_zone(score)
+	var label = game_manager.score_bar_label
+	var scale_target: float
+	var scale_duration: float
+	var bounce_duration: float
+	match zone:
+		0:
+			scale_target = 1.1
+			scale_duration = 0.08
+			bounce_duration = 0.12
+		1:
+			scale_target = 1.2
+			scale_duration = 0.1
+			bounce_duration = 0.15
+		2:
+			scale_target = 1.35
+			scale_duration = 0.1
+			bounce_duration = 0.15
+		3:
+			scale_target = 1.5
+			scale_duration = 0.12
+			bounce_duration = 0.18
+	_score_bounce_tween = create_tween()
+	_score_bounce_tween.tween_property(label, "scale", Vector2(scale_target, scale_target), scale_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_score_bounce_tween.tween_property(label, "scale", Vector2.ONE, bounce_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 ## 计算选中的最高最终骰型
 ## return ['none', round(none_score_dice[0]), none_score_dice[1]]
