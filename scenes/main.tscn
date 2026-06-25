@@ -5526,20 +5526,19 @@ vertical_alignment = 1
 [node name="Control" type="Control" parent="." unique_id=515712514]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -55.75
-offset_top = -6.0
-offset_right = 8.25
-offset_bottom = 6.75
+offset_left = -62.25
+offset_top = -5.5
+offset_right = -62.25
+offset_bottom = -5.5
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=2081454128]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -11.75
-offset_top = -2.25
-offset_right = -11.75
-offset_bottom = -1.0
+offset_top = 4.0
+offset_right = 32.0
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7, 0.7)

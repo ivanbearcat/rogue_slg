@@ -599,11 +599,11 @@ func _reset_dice_panel():
 
 ## 分值区段索引：0=0-99, 1=100-299, 2=300-999, 3=1000+
 func _get_score_zone(score: int) -> int:
-	if score >= 100:
+	if score >= 1000:
 		return 3
-	elif score >= 30:
+	elif score >= 300:
 		return 2
-	elif score >= 10:
+	elif score >= 100:
 		return 1
 	return 0
 
@@ -615,18 +615,44 @@ func _apply_score_visual(score: int) -> void:
 	match zone:
 		0:
 			ls.font_size = 16
+			_stop_score_shake(label)
 		1:
 			ls.font_size = 17
 			ls.font_color = Color.html("#FFD700")
+			_stop_score_shake(label)
 		2:
 			ls.font_size = 18
 			ls.font_color = Color.html("#FF6B35")
+			_stop_score_shake(label)
 		3:
 			ls.font_size = 19
 			ls.font_color = Color.html("#FF2200")
+			_start_score_shake(label)
+
+## 停止摇摆晃动并重置旋转
+func _stop_score_shake(label: Label) -> void:
+	if _score_shake_tween:
+		_score_shake_tween.kill()
+		_score_shake_tween = null
+	label.rotation_degrees = 0.0
+
+## 启动zone3摇摆晃动动画（左右晃动，循环播放）
+func _start_score_shake(label: Label) -> void:
+	_stop_score_shake(label)
+	_score_shake_tween = create_tween().set_loops()
+	# 向右晃 +8度
+	_score_shake_tween.tween_property(label, "rotation_degrees", 8.0, 0.08).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	# 向左晃 -8度
+	_score_shake_tween.tween_property(label, "rotation_degrees", -8.0, 0.16).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# 回中
+	_score_shake_tween.tween_property(label, "rotation_degrees", 0.0, 0.08).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	# 短暂停顿，让节奏更自然
+	_score_shake_tween.tween_interval(0.3)
 
 ## 弹跳动画Tween引用
 var _score_bounce_tween: Tween = null
+## 摇摆晃动Tween引用
+var _score_shake_tween: Tween = null
 
 ## 根据分值区段播放弹跳缩放动画
 func _play_score_bounce(score: int) -> void:
