@@ -1473,6 +1473,7 @@ func _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin):
 		stage_coin_label_4,
 		stage_add_coin + hp_add_coin + highest_dice_add_coin
 		)
+	stage_clear_button.disabled = false
 	stage_clear_button.show()
 
 ## 修改数值
