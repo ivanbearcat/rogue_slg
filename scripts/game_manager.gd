@@ -291,9 +291,7 @@ func _ready() -> void:
 	#coin_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
 	#coin_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
 	#coin_skill_3_icon.texture = load(Current.coin_skill_array_dict[2]["coin_skill_icon"])
-	#coin_skill_1_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[0]["coin_skill_cost"]))
-	#coin_skill_2_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[1]["coin_skill_cost"]))
-	#coin_skill_3_label.text = "[img=12]res://images/coin.png[/img] -" + str(int(Current.coin_skill_array_dict[2]["coin_skill_cost"]))
+
 	## 设置基础点数分值（随机分配）
 	_randomize_base_scores()
 	## 设置倍率
@@ -746,9 +744,6 @@ func _set_stage_debuff(boss=0):
 func _set_buff(buff_row):
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)
 	BuffSystem.callv("set_" + buff_row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
-	# BUG4修复：每次购买任意buff时，重置tax_collector的_just_bought标记
-	# 使"购买后下一次攻击+25%"效果在每次购买后都能触发
-	_reset_tax_collector_on_buy()
 	# 在buff.set_buff()创建buff_texture后，统一设置元数据
 	if buff.buff_texture:
 		buff.buff_texture.set_meta("buff_meta", buff.buff_meta)
@@ -758,13 +753,6 @@ func _set_buff(buff_row):
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
 	exp_label.text = str(num_now) + '/' + str(num_max)
-
-## BUG4修复：购买buff时重置tax_collector的_just_bought标记
-func _reset_tax_collector_on_buy() -> void:
-	for arr in BuffSystem._get_all_buff_arrays():
-		for buff in arr:
-			if buff.buff_meta.get("buff_id", "") == "tax_collector":
-				buff._just_bought = true
 
 ## 增加经验
 func add_exp(new_exp: int) -> void:
@@ -1836,6 +1824,8 @@ func _replace_coin_skill(index: int, new_skill_row: Dictionary):
 	pending_shop_skill = {}
 
 func _on_stage_clear_button_pressed() -> void:
+	stage_clear_button.hide()
+	stage_clear_button.disabled = true
 	## 加锁：防止 _turn_process 在关卡切换完成前执行
 	Current.public_lock_array.append("stage_transition")
 	## 增加金币

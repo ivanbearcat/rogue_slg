@@ -9,7 +9,7 @@ func set_buff():
 
 func process_buff():
 	Current.public_lock_array.append("swarm_tithe_buff")
-	var add_num = int(Current.all_enemy_array.size() * Current.target_score * 0.0025)
+	var add_num = int(Current.all_enemy_array.size() * Current.target_score * 0.01)
 	var float_number_instantiate = EffectManager.float_number_effect(add_num)
 	Current.hero.add_child(float_number_instantiate)
 	EffectManager.buff_pop_effect(buff_texture)

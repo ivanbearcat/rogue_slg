@@ -4,7 +4,6 @@
         "coin_skill_name": "重掷所有",
         "coin_skill_icon": "res://images/coin_skill_icon/reroll_all.png",
         "coin_skill_tooltip": "重掷全场所有史莱姆",
-        "coin_skill_cost": 3,
         "coin_skill_shop_cost": 6
     },
     {
@@ -12,7 +11,6 @@
         "coin_skill_name": "重掷骰子",
         "coin_skill_icon": "res://images/coin_skill_icon/reroll_dice.png",
         "coin_skill_tooltip": "重掷所选史莱姆的点数",
-        "coin_skill_cost": 2,
         "coin_skill_shop_cost": 4
     },
     {
@@ -20,7 +18,6 @@
         "coin_skill_name": "重掷颜色",
         "coin_skill_icon": "res://images/coin_skill_icon/reroll_slime.png",
         "coin_skill_tooltip": "重掷所选史莱姆的颜色",
-        "coin_skill_cost": 2,
         "coin_skill_shop_cost": 4
     },
     {
@@ -28,7 +25,6 @@
         "coin_skill_name": "能量+1",
         "coin_skill_icon": "res://images/coin_skill_icon/add_power.png",
         "coin_skill_tooltip": "能量+1",
-        "coin_skill_cost": 1,
         "coin_skill_shop_cost": 2
     },
     {
@@ -36,7 +32,6 @@
         "coin_skill_name": "吹风",
         "coin_skill_icon": "res://images/coin_skill_icon/cloud.png",
         "coin_skill_tooltip": "所有史莱姆被吹向一个所选的方向一格",
-        "coin_skill_cost": 3,
         "coin_skill_shop_cost": 6
     },
     {
@@ -44,7 +39,6 @@
         "coin_skill_name": "骰子点数调整",
         "coin_skill_icon": "res://images/coin_skill_icon/dice_adjust.svg",
         "coin_skill_tooltip": "选择+1或-1调整骰子点数",
-        "coin_skill_cost": 2,
         "coin_skill_shop_cost": 4
     },
     {
@@ -52,7 +46,6 @@
         "coin_skill_name": "得分翻倍",
         "coin_skill_icon": "res://images/coin_skill_icon/double_score.png",
         "coin_skill_tooltip": "下一次得分翻倍",
-        "coin_skill_cost": 5,
         "coin_skill_shop_cost": 10
     },
     {
@@ -60,7 +53,6 @@
         "coin_skill_name": "移动",
         "coin_skill_icon": "res://images/coin_skill_icon/move.png",
         "coin_skill_tooltip": "额外移动一次",
-        "coin_skill_cost": 1,
         "coin_skill_shop_cost": 2
     },
     {
@@ -68,7 +60,6 @@
         "coin_skill_name": "位置交换",
         "coin_skill_icon": "res://icon.svg",
         "coin_skill_tooltip": "交换2个史莱姆的位置",
-        "coin_skill_cost": 2,
         "coin_skill_shop_cost": 4
     }
 ]

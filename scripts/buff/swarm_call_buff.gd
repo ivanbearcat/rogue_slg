@@ -6,6 +6,9 @@ func set_buff():
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
+	## 购买时立即设置pending，使下回合生成就生效
+	if Current.all_enemy_array.size() < 3:
+		Current.swarm_call_pending += 1
 
 func process_buff():
 	if Current.all_enemy_array.size() < 3:

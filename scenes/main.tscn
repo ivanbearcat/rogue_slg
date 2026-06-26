@@ -5545,6 +5545,7 @@ scale = Vector2(0.7, 0.7)
 
 [node name="score_bar_label" type="Label" parent="Control/MarginContainer" unique_id=1258542655]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "100+"
 label_settings = SubResource("LabelSettings_xljpf")

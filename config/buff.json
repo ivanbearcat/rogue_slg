@@ -14,7 +14,7 @@
         "buff_id": "swarm_tithe",
         "buff_name": "潮涌贡奉",
         "buff_icon": "res://images/buff_icon/swarm_tithe.png",
-        "buff_tooltip": "回合结束时，每有1个史莱姆，增加目标分数0.25%的分数",
+        "buff_tooltip": "回合结束时，每有1个史莱姆，增加目标分数1%的分数",
         "buff_res": "res://scripts/buff/swarm_tithe_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 4,
