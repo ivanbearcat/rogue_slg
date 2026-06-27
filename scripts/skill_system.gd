@@ -198,19 +198,9 @@ func _process_dropped_dice(attack_slime_array_info: Array, dice_type_result: Arr
 func _apply_drop_bonus():
 	if Current.dropped_dice_count <= 0:
 		return
-	## 扫描 BuffSystem 中所有 post_attack_buff，找 drop_bonus
-	var buff_sys = BuffSystem
-	var timing_arrays = buff_sys._get_timing_arrays("post_attack")
-	for i in range(timing_arrays.size()):
-		var buff_list = timing_arrays[i]
-		for buff in buff_list:
-			if buff.buff_meta.get("buff_id", "") == "drop_bonus":
-				await buff.process_buff()
-				## ONCE类型用完移除
-				if i == 0:  ## index 0 = ONCE
-					buff_list.erase(buff)
-					buff.clear_buff()
-				return
+	var trigger_buffs = BuffSystem.get_buffs_by_tag("drop_bonus_trigger")
+	for buff in trigger_buffs:
+		await buff.process_buff()
 
 ## 显示掉落骰子选择界面，玩家选择1个保留在掉落格子
 func _show_drop_selection(dropped_dice: Array):

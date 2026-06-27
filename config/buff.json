@@ -58,7 +58,7 @@
         "buff_id": "coin_mirror_score",
         "buff_name": "金币镜像",
         "buff_icon": "res://images/buff_icon/coin_attack_score_increase.png",
-        "buff_tooltip": "每回合获得金币数量×3的分数",
+        "buff_tooltip": "每回合获得等于金币数量的分数",
         "buff_res": "res://scripts/buff/coin_mirror_score_buff.gd",
         "buff_type": "post_attack_buff",
         "buff_price": 3,
@@ -118,7 +118,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "evolution",
-        "tags": []
+        "tags": ["drop_bonus_trigger"]
     },
     {
         "buff_id": "random_base_boost",
@@ -239,7 +239,7 @@
         "buff_type": "post_attack_buff",
         "buff_price": 4,
         "family": "evolution",
-        "tags": []
+        "tags": ["drop_bonus_trigger"]
     },
     {
         "buff_id": "slime_rebirth",

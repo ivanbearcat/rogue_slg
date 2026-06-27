@@ -45,24 +45,35 @@ func do_buff(timing: String) -> void:
 	var pipeline = pipelines[timing]
 	var family_accumulation := {}
 	## ONCE: process + clear + remove
+	var once_to_remove := []
 	for buff in pipeline["ONCE"]:
+		if "drop_bonus_trigger" in buff.tags:
+			continue
 		var before := Current.total_score
 		await buff.process_buff()
 		_track_family_contribution(buff, before, family_accumulation)
 		buff.clear_buff()
-	pipeline["ONCE"].clear()
+		once_to_remove.append(buff)
+	for buff in once_to_remove:
+		pipeline["ONCE"].erase(buff)
 	## STAGE: process only
 	for buff in pipeline["STAGE"]:
+		if "drop_bonus_trigger" in buff.tags:
+			continue
 		var before := Current.total_score
 		await buff.process_buff()
 		_track_family_contribution(buff, before, family_accumulation)
 	## ELITE: process only
 	for buff in pipeline["ELITE"]:
+		if "drop_bonus_trigger" in buff.tags:
+			continue
 		var before := Current.total_score
 		await buff.process_buff()
 		_track_family_contribution(buff, before, family_accumulation)
 	## ALWAYS: process only
 	for buff in pipeline["ALWAYS"]:
+		if "drop_bonus_trigger" in buff.tags:
+			continue
 		var before := Current.total_score
 		await buff.process_buff()
 		_track_family_contribution(buff, before, family_accumulation)

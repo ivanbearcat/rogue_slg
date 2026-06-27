@@ -8,7 +8,14 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	Current.total_score += Current.total_coins * 3
+	var add_num = Current.total_coins
+	if add_num <= 0:
+		return
+	Current.total_score += add_num
+	var float_number_instantiate = EffectManager.float_number_effect(add_num)
+	Current.hero.add_child(float_number_instantiate)
+	EffectManager.buff_pop_effect(buff_texture)
+	await Tools.time_sleep(1)
 
 func clear_buff():
 	pass

@@ -455,7 +455,16 @@ var require_exp := 3
 ## 持续动作锁
 var action_lock := false
 ## 最大能量
-var max_power := 2
+var max_power := 2:
+	set(v):
+		max_power = v
+		game_manager.power_label.text = str(power) + "/" + str(v)
+		if power == v:
+			game_manager.power_bottle_button.disabled = true
+			game_manager.power_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.power_bottle_button.disabled = false
+			game_manager.power_bottle_button.modulate = Color(1, 1, 1, 1)
 ## 当前能量
 var power: int:
 	set(v):

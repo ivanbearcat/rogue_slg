@@ -126,7 +126,7 @@ func test_triple_round_toll_buff() -> void:
 	buff.clear_buff()
 	assert_eq(c.total_coins, 8, "After clear_buff: total_coins should remain 8")
 
-## 2. coin_mirror_score_buff - total_score += total_coins * 3（金币×3加成分数）
+## 2. coin_mirror_score_buff - total_score += total_coins（金币数量加成分数）
 func test_coin_mirror_score_buff() -> void:
 	_current_test = "test_coin_mirror_score_buff"
 	var c = Current
@@ -135,22 +135,22 @@ func test_coin_mirror_score_buff() -> void:
 	var meta = {"buff_id": "coin_mirror_score", "family": "coin", "tags": ["attack"]}
 	var buff = create_and_set_buff("res://scripts/buff/coin_mirror_score_buff.gd", meta)
 
-	# 0金币：total_score += 0*3，分数不变
+	# 0金币：total_score += 0，分数不变
 	c.total_coins = 0
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "0 coins: total_score should not change")
 
-	# 5金币：total_score += 5*3 = 15
+	# 5金币：total_score += 5
 	c.total_score = 0
 	c.total_coins = 5
 	buff.process_buff()
-	assert_eq(c.total_score, 15, "5 coins: total_score should be 15")
+	assert_eq(c.total_score, 5, "5 coins: total_score should be 5")
 
-	# 10金币：total_score += 10*3 = 30
+	# 10金币：total_score += 10
 	c.total_score = 0
 	c.total_coins = 10
 	buff.process_buff()
-	assert_eq(c.total_score, 30, "10 coins: total_score should be 30")
+	assert_eq(c.total_score, 10, "10 coins: total_score should be 10")
 
 	# 1金币：total_score += 1*3 = 3
 	c.total_score = 0
