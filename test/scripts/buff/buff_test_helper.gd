@@ -54,6 +54,7 @@ class MockCurrent extends RefCounted:
 	var drop_slot_consumed_this_turn: bool = false
 	# 战斗标记
 	var slime_die_sum: int = 0
+	var pattern_kill_sum: int = 0
 	var killed_power_slime: bool = false
 	var last_turn_attacked: bool = false
 	var consecutive_score_turns: int = 0
@@ -361,6 +362,7 @@ static func reset_mock_current(mock_current: MockCurrent) -> void:
 	mock_current.skill_attack_range = []
 	mock_current.dice_type_count = 0
 	mock_current.slime_die_sum = 0
+	mock_current.pattern_kill_sum = 0
 	mock_current.killed_power_slime = false
 	mock_current.last_turn_attacked = false
 	mock_current.consecutive_score_turns = 0

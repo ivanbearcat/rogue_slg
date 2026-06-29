@@ -98,6 +98,7 @@ func _save_current_state() -> void:
 		"max_power": Current.max_power,
 		"hero_movement": Current.hero.hero_movement if Current.hero else 0,
 		"slime_die_sum": Current.slime_die_sum,
+		"pattern_kill_sum": Current.pattern_kill_sum,
 		"killed_power_slime": Current.killed_power_slime,
 		"last_turn_attacked": Current.last_turn_attacked,
 		"consecutive_score_turns": Current.consecutive_score_turns,
@@ -124,6 +125,7 @@ func _restore_current_state() -> void:
 	if Current.hero:
 		Current.hero.hero_movement = _saved_current_state["hero_movement"]
 	Current.slime_die_sum = _saved_current_state["slime_die_sum"]
+	Current.pattern_kill_sum = _saved_current_state["pattern_kill_sum"]
 	Current.killed_power_slime = _saved_current_state["killed_power_slime"]
 	Current.last_turn_attacked = _saved_current_state["last_turn_attacked"]
 	Current.consecutive_score_turns = _saved_current_state["consecutive_score_turns"]
@@ -152,6 +154,7 @@ func reset_current_to_defaults() -> void:
 	Current.skill_attack_range = []
 	Current.dice_type_count = 0
 	Current.slime_die_sum = 0
+	Current.pattern_kill_sum = 0
 	Current.killed_power_slime = false
 	Current.last_turn_attacked = false
 	Current.consecutive_score_turns = 0

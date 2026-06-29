@@ -43,6 +43,13 @@ func skill_attack():
 	Current.action_lock = true
 	## 攻击前buff
 	EventBus.event_emit("do_pre_attack_buff")
+	## 史莱姆场景名到颜色的映射（精英门槛检查和消耗匹配共用）
+	var slime_color_dict := {
+		"slime_small": "green",
+		"slime_small_red": "red",
+		"slime_small_yellow": "yellow",
+		"slime_small_blue": "blue"
+	}
 	## 收集攻击骰子信息（含掉落格子骰子）
 	var attack_slime_array = _fetch_attack_slime_array()
 	var attack_slime_array_info = _fetch_attack_slime_array_info(attack_slime_array)
@@ -53,12 +60,6 @@ func skill_attack():
 	for slime in attack_slime_array:
 		if slime.is_elite or slime.is_boss:
 			elite_boss_slimes_in_range.append(slime)
-			var slime_color_dict := {
-				"slime_small": "green",
-				"slime_small_red": "red",
-				"slime_small_yellow": "yellow",
-				"slime_small_blue": "blue"
-			}
 			var target_color = slime_color_dict[Tools.fetch_slime_scene(slime)]
 			var target_dice = [target_color, slime.dice_point]
 			if ScoringAlgorithm.check_gate(attack_slime_array_info, target_dice, slime.gate_type, slime.gate_count):
@@ -84,12 +85,25 @@ func skill_attack():
 	Current.scored_dice_info = dice_type_result[3]
 	## 史莱姆死亡
 	Current.slime_die_sum = 0
+	Current.pattern_kill_sum = 0
+	var scored_dice_copy = Current.scored_dice_info.duplicate()
 	for slime in Current.all_enemy_array:
 		if slime.enemy_grid_index in Current.skill_attack_range:
 			## 门槛未通过的精英/BOSS史莱姆不死亡
 			if slime in gate_failed_slimes:
 				continue
 			Current.slime_die_sum += 1
+			## 消耗匹配：检查被击杀史莱姆的骰子是否参与了骰型计分
+			var slime_color = slime_color_dict[Tools.fetch_slime_scene(slime)]
+			var slime_point = slime.dice_point
+			var _matched := false
+			for i in range(scored_dice_copy.size()):
+				if scored_dice_copy[i][0] == slime_color and scored_dice_copy[i][1] == slime_point:
+					scored_dice_copy.remove_at(i)
+					_matched = true
+					break
+			if _matched:
+				Current.pattern_kill_sum += 1
 			slime.animated_sprite_2d.play("die")
 	## 门槛通过的精英/BOSS史莱姆击杀后清除ELITE debuff
 	if not gate_passed_slimes.is_empty():

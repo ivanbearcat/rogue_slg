@@ -13,11 +13,11 @@ func process_buff():
 		var _rand_type = _dice_types[randi_range(0, 4)]
 		EffectManager.buff_pop_effect(buff_texture)
 		match _rand_type:
-			"duizi": Current.duizi_percent += 4; game_manager._update_multiplier_dict("duizi_percent", "add", 4)
-			"shunzi": Current.shunzi_percent += 4; game_manager._update_multiplier_dict("shunzi_percent", "add", 4)
-			"tongse": Current.tongse_percent += 4; game_manager._update_multiplier_dict("tongse_percent", "add", 4)
-			"tongdui": Current.tongdui_percent += 4; game_manager._update_multiplier_dict("tongdui_percent", "add", 4)
-			"tongshun": Current.tongshun_percent += 4; game_manager._update_multiplier_dict("tongshun_percent", "add", 4)
+			"duizi": Current.duizi_percent += 6; game_manager._update_multiplier_dict("duizi_percent", "add", 6)
+			"shunzi": Current.shunzi_percent += 6; game_manager._update_multiplier_dict("shunzi_percent", "add", 6)
+			"tongse": Current.tongse_percent += 6; game_manager._update_multiplier_dict("tongse_percent", "add", 6)
+			"tongdui": Current.tongdui_percent += 6; game_manager._update_multiplier_dict("tongdui_percent", "add", 6)
+			"tongshun": Current.tongshun_percent += 6; game_manager._update_multiplier_dict("tongshun_percent", "add", 6)
 
 func clear_buff():
 	pass

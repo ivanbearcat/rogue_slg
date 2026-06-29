@@ -501,6 +501,8 @@ var buff_lock_array: Array:
 var last_slime_create_array: Array
 ## 史莱姆死亡数组
 var slime_die_sum: int
+## 凑成骰型的史莱姆击杀数
+var pattern_kill_sum: int
 ## 击杀过能量史莱姆
 var killed_power_slime := false
 ## 刷新buff无花费的最大次数

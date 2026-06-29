@@ -8,7 +8,7 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	var kill_count: int = Current.slime_die_sum
+	var kill_count: int = Current.pattern_kill_sum
 	if kill_count <= 0:
 		return
 	for i in range(kill_count):

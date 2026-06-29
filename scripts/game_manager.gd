@@ -401,6 +401,7 @@ func _clear_all_slimes() -> void:
 	_slime_create_array.clear()
 	## 重置史莱姆相关追踪状态
 	Current.slime_die_sum = 0
+	Current.pattern_kill_sum = 0
 	Current.last_slime_create_array = []
 	Current.killed_power_slime = false
 	## 重置鼠标指向的史莱姆（可能指向已释放的节点）
@@ -2091,10 +2092,10 @@ func _on_buff_shop_button_3_pressed() -> void:
 	buff_json_data.erase(shop_buff_3)
 
 func _on_shop_next_level_button_pressed() -> void:
+	## 先恢复免费刷新次数（必须在重置cost之前，否则setter触发时times仍为0导致UI显示错误）
+	Current.zero_coin_refresh_times = Current.zero_coin_refresh_max_times
 	## 重置刷新buff的金币费用
 	buff_refresh_cost = 1
-	## 重置免费刷新次数
-	Current.zero_coin_refresh_times = Current.zero_coin_refresh_max_times
 	get_tree().paused = false
 	shop_ui.hide()
 	Current.public_lock_array.erase("shop_ui")
