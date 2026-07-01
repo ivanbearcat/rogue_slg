@@ -3,6 +3,17 @@ extends Node
 ## game_manager节点
 @onready var game_manager: Node2D = get_node("/root/game_manager")
 
+## 缓存编译后的正则（D5：避免每次调用重新编译）
+var _slime_regex: RegEx
+
+## 史莱姆场景名→颜色映射
+const SLIME_COLOR_DICT := {
+	"slime_small": "green",
+	"slime_small_red": "red",
+	"slime_small_yellow": "yellow",
+	"slime_small_blue": "blue",
+}
+
 func time_sleep(time):
 	await get_tree().create_timer(time).timeout
 
@@ -14,16 +25,21 @@ func position_to_grid_index(_position: Vector2) -> Vector2:
 	return Vector2i((_position.x - game_manager.start_pos.x) / game_manager.grid_size.x, \
 	(_position.y - game_manager.start_pos.y) / game_manager.grid_size.y)
 
-## 获取史莱姆场景名
+## 获取史莱姆场景名（首次调用编译并缓存正则，后续复用）
 func fetch_slime_scene(slime_scene):
-	var regex = RegEx.new()
-	regex.compile(".*(?<name>slime.*)\\.tscn")
-	var result = regex.search(slime_scene.scene_file_path)
-	var slime_color = result.get_string("name")
-	if slime_color:
-		return slime_color
+	if _slime_regex == null:
+		_slime_regex = RegEx.new()
+		_slime_regex.compile(".*(?<name>slime.*)\\.tscn")
+	var result = _slime_regex.search(slime_scene.scene_file_path)
+	if result:
+		return result.get_string("name")
 	else:
 		return null
+
+## 获取攻击范围内被击杀史莱姆的颜色数组（D1：统一颜色判定范围）
+## 在 skill_system.gd 攻击结算时填充，post_attack buff 读取
+func get_colors_in_attack_range() -> Array:
+	return Current.killed_slime_colors
 
 ## 加载json配置文件
 func load_json_file(file_path: String) -> Array:

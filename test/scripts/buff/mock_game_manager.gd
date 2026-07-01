@@ -27,11 +27,11 @@ func _ready():
 	heros = MockContainer.new()
 	enemys = MockContainer.new()
 
-class MockContainer extends Node2D:
+class MockContainer extends RefCounted:
 	var children: Array = []
 	func add_child(node): children.append(node)
 	func get_children() -> Array: return children
 	func remove_child(node): children.erase(node)
 
-class MockLabel extends Node2D:
+class MockLabel extends RefCounted:
 	var text: String = "0"

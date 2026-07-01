@@ -8,10 +8,7 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	var slime_count := 0
-	for slime in Current.all_enemy_array:
-		if slime.enemy_grid_index in Current.skill_attack_range:
-			slime_count += 1
+	var slime_count = Current.slime_die_sum
 	if slime_count > 0:
 		Current.public_lock_array.append("position_master_buff")
 		var add_num = int(Current.once_total_score * slime_count * 0.03)

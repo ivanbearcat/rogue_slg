@@ -1,4 +1,4 @@
-﻿extends Buff
+extends Buff
 
 func set_buff():
 	var texture = load(buff_meta["buff_icon"])
@@ -13,15 +13,15 @@ func process_buff():
 	for c in colors:
 		unique_colors[c] = true
 	var color_count = unique_colors.size()
-	if color_count > 0:
-		Current.public_lock_array.append("rainbow_surge_buff")
-		var add_num = int(Current.once_total_score * color_count * 0.10)
+	if color_count >= 4:
+		Current.public_lock_array.append("four_color_resonance_buff")
+		var add_num = int(Current.once_total_score * 1.0)
 		var float_number_instantiate = EffectManager.float_number_effect(add_num)
 		Current.hero.add_child(float_number_instantiate)
 		EffectManager.buff_pop_effect(buff_texture)
 		await Tools.time_sleep(1)
 		Current.total_score += add_num
-		Current.public_lock_array.erase("rainbow_surge_buff")
+		Current.public_lock_array.erase("four_color_resonance_buff")
 
 func clear_buff():
 	pass

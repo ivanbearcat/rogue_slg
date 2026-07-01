@@ -154,6 +154,7 @@ func reset_current_to_defaults() -> void:
 	Current.skill_attack_range = []
 	Current.dice_type_count = 0
 	Current.slime_die_sum = 0
+	Current.killed_slime_colors = []
 	Current.pattern_kill_sum = 0
 	Current.killed_power_slime = false
 	Current.last_turn_attacked = false

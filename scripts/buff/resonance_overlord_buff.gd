@@ -5,19 +5,18 @@ func set_buff():
 	pass
 
 func process_buff():
-	# 共鸣霸主 - 共鸣叠加：共鸣系得分 × 共鸣叠层倍率
+	## 共鸣霸主 - 永久ramp延迟应用：需要共鸣系≥4才激活
 	if BuffSystem.get_family_count("resonance") < 4:
 		return
-	var accumulated = BuffSystem.get_family_accumulation("resonance")
-	if accumulated <= 0:
+	if BuffSystem.resonance_ramp <= 0.0:
 		return
-	if BuffSystem.resonance_ramp <= 0:
-		return
-	var bonus = roundi(accumulated * BuffSystem.resonance_ramp)
+	var bonus = roundi(Current.once_total_score * BuffSystem.resonance_ramp)
 	if bonus > 0:
+		Current.public_lock_array.append("resonance_overlord_buff")
 		Current.total_score += bonus
 		var float_number_instantiate = EffectManager.float_number_effect(bonus)
 		Current.hero.add_child(float_number_instantiate)
+		Current.public_lock_array.erase("resonance_overlord_buff")
 
 func clear_buff():
 	pass

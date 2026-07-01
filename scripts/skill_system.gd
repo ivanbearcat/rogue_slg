@@ -85,6 +85,7 @@ func skill_attack():
 	Current.scored_dice_info = dice_type_result[3]
 	## 史莱姆死亡
 	Current.slime_die_sum = 0
+	Current.killed_slime_colors = []
 	Current.pattern_kill_sum = 0
 	var scored_dice_copy = Current.scored_dice_info.duplicate()
 	for slime in Current.all_enemy_array:
@@ -95,6 +96,7 @@ func skill_attack():
 			Current.slime_die_sum += 1
 			## 消耗匹配：检查被击杀史莱姆的骰子是否参与了骰型计分
 			var slime_color = slime_color_dict[Tools.fetch_slime_scene(slime)]
+			Current.killed_slime_colors.append(slime_color)
 			var slime_point = slime.dice_point
 			var _matched := false
 			for i in range(scored_dice_copy.size()):

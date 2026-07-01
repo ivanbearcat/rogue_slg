@@ -743,6 +743,9 @@ func _set_stage_debuff(boss=0):
 	debuff_effect_label.text = "获得BOSS效果  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 
 func _set_buff(buff_row):
+	if not ResourceLoader.exists(buff_row["buff_res"]):
+		print("[WARNING] buff 脚本不存在，跳过: buff_id=%s buff_res=%s" % [buff_row.get("buff_id", "?"), buff_row["buff_res"]])
+		return
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)
 	BuffSystem.callv("set_" + buff_row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
 	# 在buff.set_buff()创建buff_texture后，统一设置元数据

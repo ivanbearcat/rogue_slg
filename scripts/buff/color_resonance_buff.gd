@@ -8,12 +8,8 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	var slime_color_dict := {"slime_small": "green", "slime_small_red": "red", "slime_small_yellow": "yellow", "slime_small_blue": "blue"}
-	var colors := []
-	for slime in Current.all_enemy_array:
-		if slime.enemy_grid_index in Current.skill_attack_range:
-			colors.append(slime_color_dict[Tools.fetch_slime_scene(slime)])
-	if colors.size() > 0:
+	var colors: Array = Tools.get_colors_in_attack_range()
+	if colors.size() >= 2:
 		var all_same := true
 		for c in colors:
 			if c != colors[0]:

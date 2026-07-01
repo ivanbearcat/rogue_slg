@@ -51,7 +51,7 @@ const OVERLORD_NAMES := {
 const OVERLORD_EFFECTS := {
 	"swarm": "每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数",
 	"coin": "每回合+2金币，且获得金币量20%的分数",
-	"resonance": "共鸣倍率每关叠层+5%（上限50%）",
+	"resonance": "共鸣系≥4时激活，正向贡献时永久+1%叠层，下次攻击额外获得once×叠层倍率的得分",
 	"desperation": "获得1次全局免死，每有1个debuff绝境系得分额外+8%",
 	"vitality": "过关时hp+1；若满血则max_hp+1",
 	"hunt": "猎杀系得分额外+15%",
@@ -96,7 +96,7 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 		colorized_tooltip += extra_text
 	bbcode += "\n" + colorized_tooltip
 
-	# 领主进度提示：有family的非领主BUFF显示激活进度
+		# 领主进度提示：有family的非领主BUFF显示激活进度
 	if not family.is_empty() and not tags.has("legendary"):
 		if FAMILY_COLORS.has(family):
 			var family_count = BuffSystem.get_family_count(family)

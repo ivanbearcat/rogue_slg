@@ -501,6 +501,8 @@ var buff_lock_array: Array:
 var last_slime_create_array: Array
 ## 史莱姆死亡数组
 var slime_die_sum: int
+## 被击杀史莱姆的颜色数组（攻击结算时填充，post_attack buff 读取）
+var killed_slime_colors: Array
 ## 凑成骰型的史莱姆击杀数
 var pattern_kill_sum: int
 ## 击杀过能量史莱姆

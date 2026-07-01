@@ -171,7 +171,7 @@ func clear_stage_buff():
 		for buff in pipelines[timing]["STAGE"]:
 			buff.clear_buff()
 		pipelines[timing]["STAGE"].clear()
-	resonance_ramp = 0.0
+	## resonance_ramp 永久跨关卡保留，不重置
 	_last_family_accumulation = {}
 
 func clear_elite_buff():
@@ -192,9 +192,9 @@ func _track_family_contribution(buff: Buff, score_before: int, family_accumulati
 		if not family_accumulation.has(buff.family):
 			family_accumulation[buff.family] = 0
 		family_accumulation[buff.family] += delta
-		## 共鸣叠层：若resonance领主激活且有正向贡献，resonance_ramp += 0.05(上限0.50)
+		## 共鸣叠层：正向贡献且共鸣系≥4时，resonance_ramp += 0.01（永久，无上限）
 		if buff.family == "resonance" and get_family_count("resonance") >= 4:
-			resonance_ramp = min(resonance_ramp + 0.05, 0.50)
+			resonance_ramp += 0.01
 
 ## 获取指定时序的所有buff数组（用于game_manager直接访问数组）
 func _get_timing_arrays(timing: String) -> Array:
