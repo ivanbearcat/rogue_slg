@@ -751,8 +751,10 @@ func _set_buff(buff_row):
 	# 在buff.set_buff()创建buff_texture后，统一设置元数据
 	if buff.buff_texture:
 		buff.buff_texture.set_meta("buff_meta", buff.buff_meta)
+		buff.buff_texture.set_meta("buff_instance", buff)
 	if buff.debuff_texture:
 		buff.debuff_texture.set_meta("buff_meta", buff.buff_meta)
+		buff.debuff_texture.set_meta("buff_instance", buff)
 
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:

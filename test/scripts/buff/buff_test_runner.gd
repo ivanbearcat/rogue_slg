@@ -21,6 +21,8 @@ var _is_running: bool = false
 var _saved_current_state: Dictionary = {}
 
 func _ready() -> void:
+	## 等待一帧让autoload完成初始化，避免 add_child 时序冲突
+	await get_tree().process_frame
 	## 确保game_manager节点存在于/root下（Current等autoload依赖它）
 	_ensure_game_manager()
 	## 修复 Current autoload 中对 game_manager 的引用

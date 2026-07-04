@@ -9,12 +9,16 @@ var total_score: MockLabel
 var total_coins_label: MockLabel
 var turn_label: MockLabel
 var stage_label: MockLabel
+var clear_stage_label: MockLabel
+var stage_effect_label: MockLabel
+var potion_button: MockLabel
 var heros: MockContainer
 var enemys: MockContainer
 var slime_scene_array: Array = []
 var buff_refresh_cost: int = 2
 var grid_size: Vector2 = Vector2(64, 64)
 var start_pos: Vector2 = Vector2(100, 100)
+var stage_info_json_data: Array = []
 
 func _ready():
 	buff_container = MockContainer.new()
@@ -24,14 +28,16 @@ func _ready():
 	total_coins_label = MockLabel.new()
 	turn_label = MockLabel.new()
 	stage_label = MockLabel.new()
+	clear_stage_label = MockLabel.new()
+	stage_effect_label = MockLabel.new()
+	potion_button = MockLabel.new()
 	heros = MockContainer.new()
 	enemys = MockContainer.new()
 
-class MockContainer extends RefCounted:
-	var children: Array = []
-	func add_child(node): children.append(node)
-	func get_children() -> Array: return children
-	func remove_child(node): children.erase(node)
+## MockContainer 继承 Node，使用原生 add_child/get_children/remove_child
+## 避免 Godot 4.7 中 RefCounted 子类覆盖 Node 原生方法的解析错误
+class MockContainer extends Node:
+	pass
 
 class MockLabel extends RefCounted:
 	var text: String = "0"

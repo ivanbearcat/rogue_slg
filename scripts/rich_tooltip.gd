@@ -36,7 +36,12 @@ func _on_mouse_entered() -> void:
 		if meta.has("debuff_icon") or meta.has("debuff_name"):
 			dynamic_text = TooltipFormatter.format_debuff(meta)
 		else:
-			dynamic_text = TooltipFormatter.format_buff(meta)
+			var extra := ""
+			if has_meta("buff_instance"):
+				var inst = get_meta("buff_instance")
+				if is_instance_valid(inst):
+					extra = inst._get_tooltip_extra()
+			dynamic_text = TooltipFormatter.format_buff(meta, extra)
 		TooltipManager.show_tooltip(self, dynamic_text)
 	elif not _rich_tooltip_text.is_empty():
 		# fallback：使用缓存的_rich_tooltip_text（非buff场景）

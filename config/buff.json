@@ -187,13 +187,13 @@
         "tags": []
     },
     {
-        "buff_id": "color_resonance",
-        "buff_name": "同色共鸣",
+        "buff_id": "color_brand",
+        "buff_name": "同色烙印",
         "buff_icon": "res://icon.svg",
-        "buff_tooltip": "攻击范围内≥2个史莱姆同色，以这次得分为基础，额外增加35%倍率的分数",
-        "buff_res": "res://scripts/buff/color_resonance_buff.gd",
+        "buff_tooltip": "上回合击杀的主色被烙印，本回合击杀同色史莱姆时，以这次得分为基础，额外增加25%倍率的分数",
+        "buff_res": "res://scripts/buff/color_brand_buff.gd",
         "buff_type": "post_attack_buff",
-        "buff_price": 5,
+        "buff_price": 4,
         "family": "resonance",
         "tags": []
     },

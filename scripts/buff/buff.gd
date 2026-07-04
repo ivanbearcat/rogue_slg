@@ -26,3 +26,7 @@ func process_buff():
 
 func clear_buff():
 	pass
+
+## 子类覆写以提供 hover 时动态追加的 BBCode 文本，默认空
+func _get_tooltip_extra() -> String:
+	return ""

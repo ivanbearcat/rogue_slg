@@ -95,44 +95,58 @@ func assert_approx(actual, expected, tolerance: float = 0.001, message: String =
 ## 测试方法
 ## ============================================================
 
-## 1. color_resonance_buff - 被击杀≥2个同色→int(once×0.35); 混合色不触发; 单个不触发
-func test_color_resonance_buff() -> void:
-	_current_test = "test_color_resonance_buff"
-	Current.once_total_score = 100
+## 1. color_brand_buff - 跨回合颜色承诺：烙印匹配+25%，平票不更新，clear重置
+func test_color_brand_buff() -> void:
+	_current_test = "test_color_brand_buff"
+	Current.once_total_score = 1000
 	Current.total_score = 0
 
 	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": []}
-	var buff = create_and_set_buff("res://scripts/buff/color_resonance_buff.gd", meta)
+	var buff = create_and_set_buff("res://scripts/buff/color_brand_buff.gd", meta)
 
-	# 同色(green)3个被击杀→触发（≥2同色）
+	# 首攻无烙印不加分，branded_color 被更新为 green
+	buff.branded_color = ""
 	Current.killed_slime_colors = ["green", "green", "green"]
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(100 * 0.35), "3 green killed: should add int(once*0.35)")
+	assert_eq(Current.total_score, 0, "First attack no brand: should not add score")
+	assert_eq(buff.branded_color, "green", "First attack: branded_color should be updated to green")
 
-	# 混合色→不触发
+	# 烙印色匹配时加25%
+	buff.branded_color = "green"
+	Current.killed_slime_colors = ["green", "green", "green"]
+	Current.total_score = 0
+	await buff.process_buff()
+	assert_eq(Current.total_score, int(1000 * 0.25), "Branded match: should add int(once*0.25)")
+
+	# 烙印色不匹配时不加分，branded_color 更新为 red
+	buff.branded_color = "green"
+	Current.killed_slime_colors = ["red", "red"]
+	Current.total_score = 0
+	await buff.process_buff()
+	assert_eq(Current.total_score, 0, "Branded mismatch: should not add score")
+	assert_eq(buff.branded_color, "red", "Branded mismatch: branded_color should be updated to red")
+
+	# 击杀主色平票时不更新烙印（但烙印色在击杀列表中仍加分）
+	buff.branded_color = "green"
 	Current.killed_slime_colors = ["green", "red"]
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "Mixed colors killed: should not trigger")
+	assert_eq(Current.total_score, int(1000 * 0.25), "Tie: branded color in kills should still add 25%")
+	assert_eq(buff.branded_color, "green", "Tie: branded_color should stay green (no update)")
 
-	# 单个同色→不触发（单个不构成"共鸣"）
-	Current.killed_slime_colors = ["yellow"]
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "Single yellow killed: should NOT trigger (needs >=2)")
-
-	# 2个同色→触发
-	Current.killed_slime_colors = ["blue", "blue"]
-	Current.total_score = 0
-	await buff.process_buff()
-	assert_eq(Current.total_score, int(100 * 0.35), "2 blue killed: should trigger")
-
-	# 无击杀→不触发
+	# 无击杀时不更新烙印，不加分
+	buff.branded_color = "green"
 	Current.killed_slime_colors = []
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "No kills: should not trigger")
+	assert_eq(Current.total_score, 0, "No kills: should not add score")
+	assert_eq(buff.branded_color, "green", "No kills: branded_color should stay green")
+
+	# clear_buff 重置烙印
+	buff.branded_color = "green"
+	buff.clear_buff()
+	assert_eq(buff.branded_color, "", "clear_buff: branded_color should be reset to empty")
 
 ## 2. rainbow_surge_buff - 渐进式：每色+10%，4色=+40%; 3色=+30%; 2色=+20%; 1色=+10%
 func test_rainbow_surge_buff() -> void:
@@ -277,7 +291,7 @@ func test_resonance_overlord_buff() -> void:
 
 	## 创建用于测试的 resonance buff
 	var resonance_meta = {"buff_icon": "", "buff_tooltip": "test", "family": "resonance", "tags": []}
-	var resonance_buff = create_and_set_buff("res://scripts/buff/color_resonance_buff.gd", resonance_meta)
+	var resonance_buff = create_and_set_buff("res://scripts/buff/dice_mastery_buff.gd", resonance_meta)
 
 	## --- <4 门槛时：ramp 不累加，overlord 不加分 ---
 	# 清空 pipelines 确保无 resonance buff 注册
@@ -298,7 +312,7 @@ func test_resonance_overlord_buff() -> void:
 	## --- ≥4 门槛时：ramp 累加 +0.01，overlord 应用 ramp ---
 	# 注册 4 个 resonance buff 到 post_attack ALWAYS 管线
 	for i in range(4):
-		var dummy = create_and_set_buff("res://scripts/buff/color_resonance_buff.gd", resonance_meta)
+		var dummy = create_and_set_buff("res://scripts/buff/dice_mastery_buff.gd", resonance_meta)
 		BuffSystem.set_post_attack_buff(dummy, BuffSystem.buff_type.ALWAYS)
 	assert_eq(BuffSystem.get_family_count("resonance"), 4, "Should have 4 resonance buffs registered")
 
@@ -337,7 +351,7 @@ func test_resonance_overlord_buff() -> void:
 		for key in BuffSystem.LIFECYCLE_KEYS:
 			BuffSystem.pipelines[timing][key].clear()
 	for i in range(4):
-		var dummy = create_and_set_buff("res://scripts/buff/color_resonance_buff.gd", resonance_meta)
+		var dummy = create_and_set_buff("res://scripts/buff/dice_mastery_buff.gd", resonance_meta)
 		BuffSystem.set_post_attack_buff(dummy, BuffSystem.buff_type.ALWAYS)
 
 	BuffSystem.resonance_ramp = 0.05
