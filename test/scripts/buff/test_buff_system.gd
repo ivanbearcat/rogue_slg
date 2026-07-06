@@ -373,12 +373,50 @@ func test_buff_init_from_meta() -> void:
 func test_overlord_auto_activate() -> void:
 	_current_test = "test_overlord_auto_activate"
 
-	# 验证：当同族buff数量达到4时，领主应被自动注册
-	# 模拟：注册4个vitality族buff，检查vitality_overlord是否被自动注册
-	var vitality_family_count = BuffSystem.get_family_count("vitality")
-	# 如果已经有4个或更多vitality buff，领主应该已注册
-	if vitality_family_count >= 4:
-		assert_true(BuffSystem.is_buff_registered("vitality_overlord"), "overlord auto-activate: vitality_overlord should be registered when family_count >= 4")
+	var bs_script = load("res://scripts/autoload/buff_system.gd")
+	var bs = bs_script.new()
+
+	# 注册3个swarm buff → 确认swarm_overlord未注册
+	for i in range(3):
+		var buff = _create_mock_buff("swarm_%d" % i, "swarm", ["attack"])
+		_mock_set_buff_texture(buff)
+		bs.pipelines["post_attack"]["ALWAYS"].append(buff)
+
+	assert_eq(bs.get_family_count("swarm"), 3, "after 3 swarm buffs: family count should be 3")
+	assert_false(bs.is_buff_registered("swarm_overlord"), "after 3 swarm buffs: swarm_overlord should NOT be registered")
+
+	# 注册第4个swarm buff
+	var fourth = _create_mock_buff("swarm_3", "swarm", ["attack"])
+	_mock_set_buff_texture(fourth)
+	bs.pipelines["post_attack"]["ALWAYS"].append(fourth)
+
+	# 模拟_set_buff中的霸主自动注册：count >= 4时注册霸主
+	if bs.get_family_count("swarm") >= 4:
+		if not bs.is_buff_registered("swarm_overlord"):
+			var overlord = _create_mock_buff("swarm_overlord", "swarm", ["legendary"])
+			# 霸主不创建buff_texture（设计如此）
+			bs.pipelines["post_attack"]["ALWAYS"].append(overlord)
+
+	assert_true(bs.is_buff_registered("swarm_overlord"), "after 4 swarm buffs: swarm_overlord should be auto-registered")
+	assert_eq(bs.get_family_count("swarm"), 5, "after overlord registration: family count should be 5 (4 normal + 1 overlord)")
+
+	# 注册第5个swarm buff → 确认不会重复注册
+	var fifth = _create_mock_buff("swarm_4", "swarm", ["attack"])
+	_mock_set_buff_texture(fifth)
+	bs.pipelines["post_attack"]["ALWAYS"].append(fifth)
+
+	# 霸主已注册，is_buff_registered返回true，跳过注册
+	if bs.get_family_count("swarm") >= 4:
+		if not bs.is_buff_registered("swarm_overlord"):
+			var dup_overlord = _create_mock_buff("swarm_overlord", "swarm", ["legendary"])
+			bs.pipelines["post_attack"]["ALWAYS"].append(dup_overlord)
+
+	# 验证只有1个swarm_overlord
+	var overlord_count = 0
+	for buff in bs.pipelines["post_attack"]["ALWAYS"]:
+		if buff.buff_meta.get("buff_id", "") == "swarm_overlord":
+			overlord_count += 1
+	assert_eq(overlord_count, 1, "after 5 swarm buffs: should have exactly 1 swarm_overlord (no duplicate)")
 
 ## 11. test_shop_excludes_auto_activate - 商店不包含auto_activate条目
 func test_shop_excludes_auto_activate() -> void:

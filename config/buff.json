@@ -292,7 +292,7 @@
         "buff_icon": "res://icon.svg",
         "buff_tooltip": "史莱姆数量<3时，下回合多生成1个史莱姆",
         "buff_res": "res://scripts/buff/swarm_call_buff.gd",
-        "buff_type": "pre_hero_turn_buff",
+        "buff_type": "pre_enemy_turn_buff",
         "buff_price": 4,
         "family": "swarm",
         "tags": []

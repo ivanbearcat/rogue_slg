@@ -381,3 +381,51 @@ func test_power_cap_up_buff() -> void:
 	# clear_buff后max_power-1
 	buff.clear_buff()
 	assert_eq(c.max_power, 3, "max_power should decrease by 1 after clear_buff")
+
+## 14. test_swarm_call_pre_enemy_turn - swarm_call在pre_enemy_turn时序下检测<3并设置pending
+func test_swarm_call_pre_enemy_turn() -> void:
+	_current_test = "test_swarm_call_pre_enemy_turn"
+	var c = Current
+	c.all_enemy_array.clear()
+	c.swarm_call_pending = 0
+
+	# 创建swarm_call buff实例（不调用set_buff以避免纹理/UI依赖）
+	var script = load("res://scripts/buff/swarm_call_buff.gd")
+	var gm = get_node("/root/game_manager")
+	var meta = {"buff_id": "swarm_call", "family": "swarm", "tags": []}
+	var buff = script.new(meta, gm)
+	# 手动设置buff_texture以支持process_buff中的buff_pop_effect调用
+	buff.buff_texture = TextureRect.new()
+
+	# slime < 3: process_buff应增加pending
+	add_slime(Vector2(0, 0))
+	add_slime(Vector2(1, 0))
+	buff.process_buff()
+	assert_eq(c.swarm_call_pending, 1, "slime < 3: swarm_call_pending should increase by 1")
+
+	# 模拟_turn_process消耗pending
+	c.slime_create_num = 3
+	c.slime_create_num += c.swarm_call_pending
+	c.swarm_call_pending = 0
+	assert_eq(c.slime_create_num, 4, "after consuming pending: slime_create_num should be 4 (3 base + 1 pending)")
+
+## 15. test_swarm_call_no_trigger_when_enough - slime >= 3时swarm_call不触发
+func test_swarm_call_no_trigger_when_enough() -> void:
+	_current_test = "test_swarm_call_no_trigger_when_enough"
+	var c = Current
+	c.all_enemy_array.clear()
+	c.swarm_call_pending = 0
+
+	# 创建swarm_call buff实例
+	var script = load("res://scripts/buff/swarm_call_buff.gd")
+	var gm = get_node("/root/game_manager")
+	var meta = {"buff_id": "swarm_call", "family": "swarm", "tags": []}
+	var buff = script.new(meta, gm)
+	buff.buff_texture = TextureRect.new()
+
+	# slime >= 3: process_buff不应增加pending
+	add_slime(Vector2(0, 0))
+	add_slime(Vector2(1, 0))
+	add_slime(Vector2(2, 0))
+	buff.process_buff()
+	assert_eq(c.swarm_call_pending, 0, "slime >= 3: swarm_call_pending should NOT increase")

@@ -20,6 +20,10 @@ func process_buff():
 		Current.total_score += bonus
 		var float_number_instantiate = EffectManager.float_number_effect(bonus)
 		Current.hero.add_child(float_number_instantiate)
+		var family_buffs = BuffSystem.get_family_buffs("swift")
+		for fb in family_buffs:
+			if fb.buff_texture:
+				EffectManager.buff_pop_effect(fb.buff_texture)
 
 func clear_buff():
 	# 移动力恢复-1

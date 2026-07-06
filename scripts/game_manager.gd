@@ -755,6 +755,15 @@ func _set_buff(buff_row):
 	if buff.debuff_texture:
 		buff.debuff_texture.set_meta("buff_meta", buff.buff_meta)
 		buff.debuff_texture.set_meta("buff_instance", buff)
+	## 同族霸主自动注册：购买buff后检查同族数量≥4，自动注册对应霸主buff
+	var buff_family = buff.family
+	if buff_family != "" and BuffSystem.get_family_count(buff_family) >= 4:
+		for overlord_row in buff_json_data:
+			if overlord_row.get("family", "") == buff_family and overlord_row.get("auto_activate", false):
+				var overlord_id = overlord_row.get("buff_id", "")
+				if not BuffSystem.is_buff_registered(overlord_id):
+					var overlord = load(overlord_row["buff_res"]).new(overlord_row, self)
+					BuffSystem.set_post_attack_buff(overlord, BuffSystem.buff_type.ALWAYS)
 
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:
@@ -1429,6 +1438,11 @@ func _check_stage_clear() -> bool:
 			else:
 				Current.max_hp += 1
 				Current.player_hp = Current.max_hp
+			# 同族图标联动闪烁
+			var family_buffs = BuffSystem.get_family_buffs("vitality")
+			for fb in family_buffs:
+				if fb.buff_texture:
+					EffectManager.buff_pop_effect(fb.buff_texture)
 		## 清理关卡buff
 		EventBus.event_emit("clear_stage_buff")
 		return true

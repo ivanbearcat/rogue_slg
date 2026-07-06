@@ -17,6 +17,10 @@ func process_buff():
 		var float_number_instantiate = EffectManager.float_number_effect(bonus)
 		Current.hero.add_child(float_number_instantiate)
 		Current.public_lock_array.erase("resonance_overlord_buff")
+		var family_buffs = BuffSystem.get_family_buffs("resonance")
+		for fb in family_buffs:
+			if fb.buff_texture:
+				EffectManager.buff_pop_effect(fb.buff_texture)
 
 func clear_buff():
 	pass

@@ -147,6 +147,15 @@ func get_family_count(family_name: String) -> int:
 					count += 1
 	return count
 
+func get_family_buffs(family_name: String) -> Array:
+	var result := []
+	for timing in TIMINGS:
+		for key in LIFECYCLE_KEYS:
+			for buff in pipelines[timing][key]:
+				if buff.family == family_name:
+					result.append(buff)
+	return result
+
 func get_buffs_by_tag(tag: String) -> Array:
 	var result := []
 	for timing in TIMINGS:

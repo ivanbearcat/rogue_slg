@@ -26,6 +26,11 @@ func process_buff():
 		"tongse": Current.tongse_percent += 1; game_manager._update_multiplier_dict("tongse_percent", "add", 1)
 		"tongdui": Current.tongdui_percent += 1; game_manager._update_multiplier_dict("tongdui_percent", "add", 1)
 		"tongshun": Current.tongshun_percent += 1; game_manager._update_multiplier_dict("tongshun_percent", "add", 1)
+	# 同族图标联动闪烁
+	var family_buffs = BuffSystem.get_family_buffs("evolution")
+	for fb in family_buffs:
+		if fb.buff_texture:
+			EffectManager.buff_pop_effect(fb.buff_texture)
 
 func clear_buff():
 	pass
