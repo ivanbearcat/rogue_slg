@@ -76,6 +76,11 @@ func _on_node_mouse_exited() -> void:
 func hide_tooltip() -> void:
 	_popup.visible = false
 
+## 轻量更新tooltip文本（不重新定位，用于hover期间动态刷新）
+func update_text(bbcode_text: String) -> void:
+	if _popup.visible:
+		_rich_label.text = bbcode_text
+
 ## 将tooltip定位在鼠标位置+offset，viewport边界自适应
 func _position_at_mouse(offset: Vector2) -> void:
 	var viewport_size: Vector2 = get_viewport().get_visible_rect().size

@@ -50,13 +50,13 @@ const OVERLORD_NAMES := {
 ## 领主效果描述映射
 const OVERLORD_EFFECTS := {
 	"swarm": "每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数",
-	"coin": "每回合+2金币，且获得金币量20%的分数",
+	"coin": "铸币系≥4时激活，每有5个金币，击杀获得1%的得分加成",
 	"resonance": "共鸣系≥4时激活，正向贡献时永久+1%叠层，下次攻击额外获得once×叠层倍率的得分",
 	"desperation": "获得1次全局免死，每有1个debuff绝境系得分额外+8%",
 	"vitality": "过关时hp+1；若满血则max_hp+1",
-	"hunt": "猎杀系得分额外+15%",
-	"swift": "移动力+1，疾风系得分额外+5%",
-	"evolution": "所有基础分额外+1",
+	"hunt": "猎杀系≥4时激活，猎杀系累积得分额外+50%",
+	"swift": "疾风系≥4时激活，能量上限+1，攻击时本回合每移动过1格+5%得分",
+	"evolution": "进化系≥4时激活，每回合随机1个点数基础分+1，随机1个骰型倍率+1%",
 }
 
 ## 门槛类型中文名映射
@@ -106,6 +106,12 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 				bbcode += "\n💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect]
 			else:
 				bbcode += "\n💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect, family_count]
+
+	# 共鸣霸主共振叠层：共鸣系且霸主已激活时显示当前共振（ramp=0也显示）
+	if family == "resonance" and BuffSystem.get_family_count("resonance") >= 4:
+		var ramp_n := int(BuffSystem.resonance_ramp / 0.01)
+		var ramp_m := int(BuffSystem.resonance_ramp * 100)
+		bbcode += "\n💡 [color=#42A5F5]共鸣霸主·当前共振：%d层（+%d%%）[/color]" % [ramp_n, ramp_m]
 
 	# 领主BUFF自身显示已激活状态
 	if tags.has("legendary") and tags.has("multiplicative"):

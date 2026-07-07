@@ -7,7 +7,7 @@ func set_buff():
 	buff_texture = SceneManager.create_scene("buff_texture")
 	buff_texture.texture = texture
 	game_manager.buff_container.add_child(buff_texture)
-	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
+	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta, _get_tooltip_extra()))
 
 func process_buff():
 	## 1. 先应用本次叠层效益（上次累积的 chain_multiplier）
@@ -33,3 +33,9 @@ func process_buff():
 
 func clear_buff():
 	chain_multiplier = 0.0
+
+## 覆写以提供 hover 时动态追加的"当前叠层"行（BBCode着色）
+func _get_tooltip_extra() -> String:
+	var n := int(chain_multiplier / 0.10)
+	var m := int(chain_multiplier * 100)
+	return "\n[color=#42A5F5]当前叠层：%d层（+%d%%）[/color]" % [n, m]

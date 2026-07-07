@@ -7,6 +7,7 @@ extends PanelContainer
 
 var _rich_tooltip_text: String = ""
 var _pulse_tween: Tween = null
+var _is_hovered: bool = false
 
 ## texture属性代理：转发到内部TextureRect，保持buff_texture.texture = xxx的兼容性
 var texture: Texture2D:
@@ -27,7 +28,25 @@ func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 
+## hover期间每帧刷新tooltip文本（让叠层等动态数据实时更新）
+func _process(_delta: float) -> void:
+	if not _is_hovered:
+		return
+	if not has_meta("buff_meta"):
+		return
+	var meta = get_meta("buff_meta")
+	if meta.has("debuff_icon") or meta.has("debuff_name"):
+		TooltipManager.update_text(TooltipFormatter.format_debuff(meta))
+	else:
+		var extra := ""
+		if has_meta("buff_instance"):
+			var inst = get_meta("buff_instance")
+			if is_instance_valid(inst):
+				extra = inst._get_tooltip_extra()
+		TooltipManager.update_text(TooltipFormatter.format_buff(meta, extra))
+
 func _on_mouse_entered() -> void:
+	_is_hovered = true
 	# 优先使用动态tooltip
 	if has_meta("buff_meta"):
 		var meta = get_meta("buff_meta")
@@ -48,6 +67,7 @@ func _on_mouse_entered() -> void:
 		TooltipManager.show_tooltip(self, _rich_tooltip_text)
 
 func _on_mouse_exited() -> void:
+	_is_hovered = false
 	TooltipManager.hide_tooltip()
 
 ## 启动脉冲边框动画

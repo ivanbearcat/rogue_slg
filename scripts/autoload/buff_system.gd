@@ -138,6 +138,15 @@ func is_buff_registered(buff_id: String) -> bool:
 					return true
 	return false
 
+## 按 buff_id 查找首个匹配的 buff 实例，未找到返回 null
+func get_buff_instance(buff_id: String) -> Buff:
+	for timing in TIMINGS:
+		for key in LIFECYCLE_KEYS:
+			for buff in pipelines[timing][key]:
+				if buff.buff_meta.get("buff_id", "") == buff_id:
+					return buff
+	return null
+
 func get_family_count(family_name: String) -> int:
 	var count := 0
 	for timing in TIMINGS:
@@ -202,7 +211,8 @@ func _track_family_contribution(buff: Buff, score_before: int, family_accumulati
 			family_accumulation[buff.family] = 0
 		family_accumulation[buff.family] += delta
 		## 共鸣叠层：正向贡献且共鸣系≥4时，resonance_ramp += 0.01（永久，无上限）
-		if buff.family == "resonance" and get_family_count("resonance") >= 4:
+		## 领主buff(auto_activate)不叠加ramp，避免自身触发导致雪崩式增长
+		if buff.family == "resonance" and get_family_count("resonance") >= 4 and not buff.buff_meta.get("auto_activate", false):
 			resonance_ramp += 0.01
 
 ## 获取指定时序的所有buff数组（用于game_manager直接访问数组）

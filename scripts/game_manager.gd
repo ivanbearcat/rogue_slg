@@ -1842,14 +1842,11 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.public_lock_array.append("stage_transition")
 	## 增加金币
 	Current.total_coins += Current.count_add_coins
-	## 黄金之手：关卡结束时每有3个金币+1金币
+	## 黄金之手：委托调用 buff 实例的 process_stage_clear()
 	if BuffSystem.is_buff_registered("golden_touch"):
-		var golden_touch_add = int(Current.total_coins / 3)
-		if golden_touch_add > 0:
-			Current.total_coins += golden_touch_add
-			var float_number_instantiate = EffectManager.float_number_effect(golden_touch_add, "yellow")
-			Current.hero.add_child(float_number_instantiate)
-			await Tools.time_sleep(1)
+		var inst = BuffSystem.get_buff_instance("golden_touch")
+		if inst:
+			await inst.process_stage_clear()
 	## 更新回合、关卡、当前分数、目标分数
 	Current.count_round = 0
 	Current.total_score = 0
