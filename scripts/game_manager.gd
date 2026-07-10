@@ -747,7 +747,13 @@ func _set_buff(buff_row):
 		print("[WARNING] buff 脚本不存在，跳过: buff_id=%s buff_res=%s" % [buff_row.get("buff_id", "?"), buff_row["buff_res"]])
 		return
 	var buff = load(buff_row["buff_res"]).new(buff_row, self)
-	BuffSystem.callv("set_" + buff_row["buff_type"], [buff, BuffSystem.buff_type.ALWAYS])
+	## buff_type 支持字符串或数组（一个buff注册到多个时序pipeline）
+	var buff_types = buff_row["buff_type"]
+	if typeof(buff_types) == TYPE_ARRAY:
+		for bt in buff_types:
+			BuffSystem.callv("set_" + bt, [buff, BuffSystem.buff_type.ALWAYS])
+	else:
+		BuffSystem.callv("set_" + buff_types, [buff, BuffSystem.buff_type.ALWAYS])
 	# 在buff.set_buff()创建buff_texture后，统一设置元数据
 	if buff.buff_texture:
 		buff.buff_texture.set_meta("buff_meta", buff.buff_meta)
@@ -763,7 +769,7 @@ func _set_buff(buff_row):
 				var overlord_id = overlord_row.get("buff_id", "")
 				if not BuffSystem.is_buff_registered(overlord_id):
 					var overlord = load(overlord_row["buff_res"]).new(overlord_row, self)
-					BuffSystem.set_post_attack_buff(overlord, BuffSystem.buff_type.ALWAYS)
+					BuffSystem.callv("set_" + overlord_row["buff_type"], [overlord, BuffSystem.buff_type.ALWAYS])
 
 ##设置验条刻度
 func _set_exp_bar_scale(num_now: int, num_max: int) -> void:

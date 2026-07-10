@@ -31,8 +31,9 @@ func event_emit(event_name: String, param: Array = []) -> void:
 	if debug_mode:
 		print("[EventBus] Pushing event: %s with param: %s" % [event_name, param])
 	param = [event_name] + param
-	# 发送事件
-	assert(self.has_signal(event_name), "没有注册的信号：%s" % event_name)
+	# 信号未被注册（无订阅者）时静默跳过，避免 assert 崩溃
+	if not has_signal(event_name):
+		return
 	callv("emit_signal", param)
 
 ## 订阅事件

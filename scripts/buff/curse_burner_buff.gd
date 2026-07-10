@@ -9,8 +9,8 @@ func set_buff():
 
 func process_buff():
 	var debuff_count := 0
-	for lock_name in Current.public_lock_array:
-		if "disable" in lock_name or "down" in lock_name or "penalty" in lock_name:
+	for debuff in game_manager.debuff_container.get_children():
+		if is_instance_valid(debuff):
 			debuff_count += 1
 	if debuff_count > 0:
 		Current.public_lock_array.append("curse_burner_buff")

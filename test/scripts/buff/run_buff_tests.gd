@@ -12,7 +12,7 @@ func _init():
 	await_frame()
 
 func await_frame():
-	await get_tree().process_frame
+	await process_frame
 	## 需要先加载主场景才能有所有autoload
 	## 直接运行测试
 	run_all_tests()

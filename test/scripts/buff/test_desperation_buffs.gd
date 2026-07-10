@@ -231,61 +231,85 @@ func test_curse_burner_buff() -> void:
 	c.total_score = 0
 	c.once_total_score = 1000
 
+	## 确保 Current.hero 可用（process_buff 中会 add_child 浮动数字）
+	var _mock_hero = null
+	if not c.hero:
+		_mock_hero = Node2D.new()
+		_mock_hero.name = "MockHero"
+		c.hero = _mock_hero
+
 	var meta = {"buff_id": "curse_burner", "family": "desperation", "tags": ["attack"]}
 	var buff = create_and_set_buff("res://scripts/buff/curse_burner_buff.gd", meta)
 
+	var gm = get_node("/root/game_manager")
+
 	# 0个debuff时分数不变
-	c.public_lock_array = []
-	buff.process_buff()
+	_clear_debuff_container(gm)
+	await buff.process_buff()
 	assert_eq(c.total_score, 0, "0 debuffs: total_score should not change")
 
-	# 1个debuff（含"disable"）：分数 = int(1000 * 1 * 0.08) = 80
+	# 1个debuff：分数 = int(1000 * 1 * 0.08) = 80
 	c.total_score = 0
-	c.public_lock_array = ["point_seal"]
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 1 * 0.08), "1 disable debuff: score should be int(once_total_score * 1 * 0.08)")
+	_clear_debuff_container(gm)
+	_add_mock_debuff(gm)
+	await buff.process_buff()
+	assert_eq(c.total_score, int(1000 * 1 * 0.08), "1 debuff: score should be int(once_total_score * 1 * 0.08)")
 
-	# 3个debuff（混合disable/down/penalty）：分数 = int(1000 * 3 * 0.08) = 240
+	# 3个debuff：分数 = int(1000 * 3 * 0.08) = 240
 	c.total_score = 0
-	c.public_lock_array = ["point_seal", "down_two", "penalty_three"]
-	buff.process_buff()
+	_clear_debuff_container(gm)
+	_add_mock_debuff(gm)
+	_add_mock_debuff(gm)
+	_add_mock_debuff(gm)
+	await buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 3 * 0.08), "3 debuffs: score should be int(once_total_score * 3 * 0.08)")
 
-	# public_lock_array中有非debuff条目不计入
+	# public_lock_array为空但debuff_container有debuff时仍触发
 	c.total_score = 0
-	c.public_lock_array = ["point_seal", "some_buff", "down_two"]
-	buff.process_buff()
-	assert_eq(c.total_score, int(1000 * 2 * 0.08), "2 debuffs + 1 non-debuff: score should be int(once_total_score * 2 * 0.08)")
+	c.public_lock_array = []
+	_clear_debuff_container(gm)
+	_add_mock_debuff(gm)
+	_add_mock_debuff(gm)
+	await buff.process_buff()
+	assert_eq(c.total_score, int(1000 * 2 * 0.08), "public_lock_array empty + 2 debuffs: score should be int(once_total_score * 2 * 0.08)")
 
-	# 只有非debuff条目时不触发
-	c.total_score = 0
-	c.public_lock_array = ["some_buff", "another_buff"]
-	buff.process_buff()
-	assert_eq(c.total_score, 0, "0 debuffs (only non-debuff entries): total_score should not change")
-
-	# clear_buff无操作
+	# 清理
+	_clear_debuff_container(gm)
 	buff.clear_buff()
+	if _mock_hero:
+		c.hero = null
+		_mock_hero.queue_free()
 
-## 11. desperation_overlord_buff - 绝境求生：免死授予+debuff增幅
+## 11. desperation_overlord_buff - 绝境霸主：仅授予全局免死
 func test_desperation_overlord_buff() -> void:
 	_current_test = "test_desperation_overlord_buff"
 	var c = Current
 	c.total_score = 0
 	c.has_death_immunity = false
 	c.death_immunity_used = false
-	BuffSystem._last_family_accumulation = {"desperation": 17}
 	var meta = {"buff_id": "desperation_overlord", "family": "desperation", "tags": ["legendary", "multiplicative"]}
 	var buff = create_and_set_buff("res://scripts/buff/desperation_overlord_buff.gd", meta)
-	# set_buff授予免死（无论是否有4个desperation buffs）
+	# set_buff授予免死
 	assert_true(c.has_death_immunity, "desperation_overlord: should grant death immunity on set_buff")
 	assert_false(c.death_immunity_used, "desperation_overlord: death_immunity_used should be false")
-	# process_buff需要≥4，不触发
+	# process_buff不再有计分逻辑（仅pass），即使有累积值和debuff也不加分
+	BuffSystem._current_family_accumulation = {"desperation": 100}
 	buff.process_buff()
-	assert_eq(c.total_score, 0, "desperation_overlord with <4 desperation buffs: score should not change")
+	assert_eq(c.total_score, 0, "desperation_overlord: process_buff should not add score (logic removed)")
 	# clear_buff无操作
 	buff.clear_buff()
 	# 清理
-	BuffSystem._last_family_accumulation = {}
+	BuffSystem._current_family_accumulation = {}
 	c.has_death_immunity = false
 	c.death_immunity_used = false
+
+## 辅助：清空debuff_container
+func _clear_debuff_container(gm: Node) -> void:
+	for child in gm.debuff_container.get_children():
+		child.queue_free()
+
+## 辅助：添加mock debuff节点到debuff_container
+func _add_mock_debuff(gm: Node) -> void:
+	var debuff_node = Node.new()
+	gm.debuff_container.add_child(debuff_node)
 

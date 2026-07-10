@@ -194,6 +194,9 @@ func _run_all_tests() -> void:
 		if script == null:
 			print("  ERROR: Could not load: %s" % script_path)
 			continue
+		if not script.can_instantiate():
+			print("  ERROR: Cannot instantiate (parse error?): %s" % script_path)
+			continue
 
 		var instance = script.new()
 		add_child(instance)

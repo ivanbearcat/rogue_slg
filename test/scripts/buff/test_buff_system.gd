@@ -198,11 +198,17 @@ func test_overlord_ramp_reset() -> void:
 
 	var bs_script = load("res://scripts/autoload/buff_system.gd")
 	var bs = bs_script.new()
+	## 手动初始化 pipelines（_ready 不会在 new() 时调用）
+	for timing in bs.TIMINGS:
+		bs.pipelines[timing] = {}
+		for key in bs.LIFECYCLE_KEYS:
+			bs.pipelines[timing][key] = []
 	bs.resonance_ramp = 0.30
 	bs._last_family_accumulation = {"swarm": 50}
 	bs.clear_stage_buff()
 
-	assert_eq(bs.resonance_ramp, 0.0, "resonance_ramp should reset to 0.0 after clear_stage_buff")
+	## resonance_ramp 永久跨关卡保留，不重置
+	assert_eq(bs.resonance_ramp, 0.30, "resonance_ramp should NOT reset after clear_stage_buff (persists across stages)")
 	assert_eq(bs._last_family_accumulation.size(), 0, "_last_family_accumulation should be empty after clear_stage_buff")
 
 ## 7. test_resonance_ramp_increment - resonance ramp from family contribution
@@ -225,30 +231,29 @@ func test_resonance_ramp_increment() -> void:
 	var res_buff = _create_mock_buff("res_test", "resonance", ["attack"])
 	var score_before = c.total_score
 	c.total_score = 120  # delta = 20
-	var family_accumulation = {}
-	bs._track_family_contribution(res_buff, score_before, family_accumulation)
+	bs._track_family_contribution(res_buff, score_before)
 	assert_eq(bs.resonance_ramp, 0.05, "resonance_ramp should be 0.05 after 1 resonance contribution")
 
 	# Second contribution
 	score_before = c.total_score
 	c.total_score = 140
-	bs._track_family_contribution(res_buff, score_before, family_accumulation)
+	bs._track_family_contribution(res_buff, score_before)
 	assert_eq(bs.resonance_ramp, 0.10, "resonance_ramp should be 0.10 after 2 contributions")
 
 	# Cap at 0.50
 	bs.resonance_ramp = 0.48
 	score_before = c.total_score
 	c.total_score = 160
-	bs._track_family_contribution(res_buff, score_before, family_accumulation)
+	bs._track_family_contribution(res_buff, score_before)
 	assert_eq(bs.resonance_ramp, 0.50, "resonance_ramp should cap at 0.50")
 
-## 8. test_get_family_accumulation - query last family accumulation
+## 8. test_get_family_accumulation - query current family accumulation
 func test_get_family_accumulation() -> void:
 	_current_test = "test_get_family_accumulation"
 
 	var bs_script = load("res://scripts/autoload/buff_system.gd")
 	var bs = bs_script.new()
-	bs._last_family_accumulation = {"swarm": 50, "coin": 30}
+	bs._current_family_accumulation = {"swarm": 50, "coin": 30}
 
 	assert_eq(bs.get_family_accumulation("swarm"), 50, "swarm accumulation should be 50")
 	assert_eq(bs.get_family_accumulation("coin"), 30, "coin accumulation should be 30")

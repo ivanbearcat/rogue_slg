@@ -4,6 +4,12 @@ extends Node2D
 
 var resonance_ramp: float = 0.0
 var _last_family_accumulation: Dictionary = {}
+var _current_family_accumulation: Dictionary = {}
+## 当前正在执行的时序（pre_attack/post_attack/pre_enemy_turn/pre_hero_turn/post_hero_move）
+## do_buff 开始时设置，结束时清空。供 buff.process_buff() 内部区分调用时序
+var _current_timing: String = ""
+## 记录已初始化的buff实例，避免同一实例注册到多个pipeline时重复调用set_buff()
+var _initialized_buff_ids: Dictionary = {}
 
 enum buff_type {
 	ONCE,
@@ -39,11 +45,16 @@ func _ready() -> void:
 func set_buff(timing: String, buff: Object, lifecycle: int) -> void:
 	var key = _lifecycle_key(lifecycle)
 	pipelines[timing][key].append(buff)
-	buff.set_buff()
+	## 同一buff实例注册到多个pipeline时，set_buff()只调用一次
+	var uid = buff.get_instance_id()
+	if not _initialized_buff_ids.has(uid):
+		_initialized_buff_ids[uid] = true
+		buff.set_buff()
 
 func do_buff(timing: String) -> void:
 	var pipeline = pipelines[timing]
-	var family_accumulation := {}
+	_current_timing = timing
+	_current_family_accumulation.clear()
 	## ONCE: process + clear + remove
 	var once_to_remove := []
 	for buff in pipeline["ONCE"]:
@@ -51,7 +62,7 @@ func do_buff(timing: String) -> void:
 			continue
 		var before := Current.total_score
 		await buff.process_buff()
-		_track_family_contribution(buff, before, family_accumulation)
+		_track_family_contribution(buff, before)
 		buff.clear_buff()
 		once_to_remove.append(buff)
 	for buff in once_to_remove:
@@ -62,23 +73,24 @@ func do_buff(timing: String) -> void:
 			continue
 		var before := Current.total_score
 		await buff.process_buff()
-		_track_family_contribution(buff, before, family_accumulation)
+		_track_family_contribution(buff, before)
 	## ELITE: process only
 	for buff in pipeline["ELITE"]:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
 		var before := Current.total_score
 		await buff.process_buff()
-		_track_family_contribution(buff, before, family_accumulation)
+		_track_family_contribution(buff, before)
 	## ALWAYS: process only
 	for buff in pipeline["ALWAYS"]:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
 		var before := Current.total_score
 		await buff.process_buff()
-		_track_family_contribution(buff, before, family_accumulation)
+		_track_family_contribution(buff, before)
 	## 保存家族累积供查询
-	_last_family_accumulation = family_accumulation.duplicate()
+	_last_family_accumulation = _current_family_accumulation.duplicate()
+	_current_timing = ""
 
 func _lifecycle_key(lifecycle: int) -> String:
 	match lifecycle:
@@ -175,8 +187,8 @@ func get_buffs_by_tag(tag: String) -> Array:
 	return result
 
 func get_family_accumulation(family: String) -> int:
-	if _last_family_accumulation.has(family):
-		return _last_family_accumulation[family]
+	if _current_family_accumulation.has(family):
+		return _current_family_accumulation[family]
 	return 0
 
 ## ============================================================
@@ -202,14 +214,14 @@ func clear_elite_buff():
 ## 内部辅助
 ## ============================================================
 
-func _track_family_contribution(buff: Buff, score_before: int, family_accumulation: Dictionary) -> void:
+func _track_family_contribution(buff: Buff, score_before: int) -> void:
 	if buff.family == "":
 		return
 	var delta := Current.total_score - score_before
 	if delta > 0:
-		if not family_accumulation.has(buff.family):
-			family_accumulation[buff.family] = 0
-		family_accumulation[buff.family] += delta
+		if not _current_family_accumulation.has(buff.family):
+			_current_family_accumulation[buff.family] = 0
+		_current_family_accumulation[buff.family] += delta
 		## 共鸣叠层：正向贡献且共鸣系≥4时，resonance_ramp += 0.01（永久，无上限）
 		## 领主buff(auto_activate)不叠加ramp，避免自身触发导致雪崩式增长
 		if buff.family == "resonance" and get_family_count("resonance") >= 4 and not buff.buff_meta.get("auto_activate", false):

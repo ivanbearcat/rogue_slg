@@ -565,11 +565,14 @@ var BOSS_GATE_COUNT: int = 3
 var _player_hp: int = 5
 var player_hp: int:
 	set(v):
+		var _old_hp := _player_hp
 		_player_hp = mini(v, max_hp)
 		if _player_hp < 0:
 			_player_hp = 0
 		_update_hp_ui()
 		_update_potion_button_state()
+		if _player_hp != _old_hp:
+			EventBus.event_emit("hp_changed", [_player_hp])
 	get:
 		return _player_hp
 ## HP上限

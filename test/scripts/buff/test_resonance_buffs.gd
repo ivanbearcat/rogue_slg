@@ -300,7 +300,7 @@ func test_resonance_overlord_buff() -> void:
 			BuffSystem.pipelines[timing][key].clear()
 	BuffSystem.resonance_ramp = 0.0
 	c.total_score = 100
-	BuffSystem._track_family_contribution(resonance_buff, 50, {})
+	BuffSystem._track_family_contribution(resonance_buff, 50)
 	assert_eq(BuffSystem.resonance_ramp, 0.0, "<4 buffs: positive delta should NOT increase ramp")
 
 	BuffSystem.resonance_ramp = 0.05
@@ -319,25 +319,25 @@ func test_resonance_overlord_buff() -> void:
 	# 正向贡献 → ramp += 0.01
 	BuffSystem.resonance_ramp = 0.0
 	c.total_score = 100
-	BuffSystem._track_family_contribution(resonance_buff, 50, {})
+	BuffSystem._track_family_contribution(resonance_buff, 50)
 	assert_approx(BuffSystem.resonance_ramp, 0.01, 0.001, "≥4 buffs: positive delta should increase ramp by 0.01")
 
 	# 无贡献 → ramp 不变
 	var ramp_before = BuffSystem.resonance_ramp
 	c.total_score = 100
-	BuffSystem._track_family_contribution(resonance_buff, 100, {})
+	BuffSystem._track_family_contribution(resonance_buff, 100)
 	assert_eq(BuffSystem.resonance_ramp, ramp_before, "Zero delta: ramp should not change")
 
 	# 负贡献 → ramp 不变
 	c.total_score = 40
-	BuffSystem._track_family_contribution(resonance_buff, 50, {})
+	BuffSystem._track_family_contribution(resonance_buff, 50)
 	assert_eq(BuffSystem.resonance_ramp, ramp_before, "Negative delta: ramp should not change")
 
 	## --- ramp 无上限 ---
 	BuffSystem.resonance_ramp = 0.0
 	c.total_score = 100
 	for i in range(100):
-		BuffSystem._track_family_contribution(resonance_buff, 50, {})
+		BuffSystem._track_family_contribution(resonance_buff, 50)
 	assert_approx(BuffSystem.resonance_ramp, 1.0, 0.001, "100 positive contributions: ramp should be ~1.0 (no cap)")
 
 	## --- ramp 跨 clear_stage_buff 保留 ---
