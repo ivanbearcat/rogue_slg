@@ -30,7 +30,6 @@ BuffSystem="*res://scripts/autoload/buff_system.gd"
 EffectManager="*res://scripts/autoload/effect_manager.gd"
 VFX="*uid://ecyiymmaj3jv"
 EnvVFX="*uid://qomyut16hnoi"
-MCPRuntime="*uid://duhpmbat6u2mk"
 TooltipManager="*res://scripts/autoload/tooltip_manager.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 

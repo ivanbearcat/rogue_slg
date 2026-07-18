@@ -113,9 +113,6 @@ const hero_property = {
 @onready var buff_lock_button_1: TextureButton = %buff_lock_button_1
 @onready var buff_lock_button_2: TextureButton = %buff_lock_button_2
 @onready var buff_lock_button_3: TextureButton = %buff_lock_button_3
-@onready var power_bottle_button: TextureButton = %power_bottle_button
-@onready var exp_bottle_button: TextureButton = %exp_bottle_button
-@onready var hp_bottle_button: TextureButton = %hp_bottle_button
 @onready var buff_refresh_button: TextureButton = %buff_refresh_button
 @onready var buff_refresh_rlabel: RichTextLabel = %buff_refresh_rlabel
 @onready var shop_next_level_button: Button = %shop_next_level_button
@@ -137,6 +134,8 @@ const hero_property = {
 var shop_buff_1: Dictionary
 var shop_buff_2: Dictionary
 var shop_buff_3: Dictionary
+## 商店buff已购买标记（3个槽位）
+var shop_buff_bought := [false, false, false]
 var buff_refresh_cost := 1:
 	set(v):
 		buff_refresh_cost = v
@@ -268,6 +267,8 @@ var color := {
 var level_up_three_card_array :Array
 ## 商店当前展示的金币技能数据行
 var shop_coin_skill_row: Dictionary = {}
+## 商店金币技能是否已购买（防止重复购买，用于按钮状态刷新）
+var shop_coin_skill_bought := false
 ## 待处理的商店技能（购买后等待添加或替换）
 var pending_shop_skill: Dictionary = {}
 ## 已在商店出现过的金币技能ID列表（防止重复出现）
@@ -1697,14 +1698,39 @@ func _set_shop_buff():
 	buff_shop_icon_2.modulate.a = 1
 	buff_shop_icon_3.modulate.a = 1
 	var _shop_pool = buff_json_data.filter(func(row): return not row.get("auto_activate", false))
-	## 没有锁的抽取buff
-	if buff_lock_button_1.button_pressed == false:
+	## 锁定buff从池中排除，避免重复出现（已购槽位除外，已购buff已被从buff_json_data移除）
+	if buff_lock_button_1.button_pressed == true and shop_buff_bought[0] == false:
+		_shop_pool.erase(shop_buff_1)
+	if buff_lock_button_2.button_pressed == true and shop_buff_bought[1] == false:
+		_shop_pool.erase(shop_buff_2)
+	if buff_lock_button_3.button_pressed == true and shop_buff_bought[2] == false:
+		_shop_pool.erase(shop_buff_3)
+	## 抽取buff：已购槽位无视锁定直接换新，未锁定正常抽取，锁定保留
+	if shop_buff_bought[0] == true:
+		shop_buff_bought[0] = false
+		buff_shop_button_1.disabled = false
+		buff_lock_button_1.disabled = false
 		shop_buff_1 = _shop_pool.pick_random()
 		_shop_pool.erase(shop_buff_1)
-	if buff_lock_button_2.button_pressed == false:
+	elif buff_lock_button_1.button_pressed == false:
+		shop_buff_1 = _shop_pool.pick_random()
+		_shop_pool.erase(shop_buff_1)
+	if shop_buff_bought[1] == true:
+		shop_buff_bought[1] = false
+		buff_shop_button_2.disabled = false
+		buff_lock_button_2.disabled = false
 		shop_buff_2 = _shop_pool.pick_random()
 		_shop_pool.erase(shop_buff_2)
-	if buff_lock_button_3.button_pressed == false:
+	elif buff_lock_button_2.button_pressed == false:
+		shop_buff_2 = _shop_pool.pick_random()
+		_shop_pool.erase(shop_buff_2)
+	if shop_buff_bought[2] == true:
+		shop_buff_bought[2] = false
+		buff_shop_button_3.disabled = false
+		buff_lock_button_3.disabled = false
+		shop_buff_3 = _shop_pool.pick_random()
+		_shop_pool.erase(shop_buff_3)
+	elif buff_lock_button_3.button_pressed == false:
 		shop_buff_3 = _shop_pool.pick_random()
 	## 没有锁buff的加回数组
 	if buff_lock_button_1.button_pressed == false:
@@ -1723,6 +1749,8 @@ func _set_shop_buff():
 		str(maxi(0, int(shop_buff_2["buff_price"]) - Current.buff_price_discount))
 	buff_shop_rlabel_3.text = "[img=13 ]res://images/coin.png[/img] " + \
 		str(maxi(0, int(shop_buff_3["buff_price"]) - Current.buff_price_discount))
+	## 刷新按钮状态
+	Current.total_coins = Current.total_coins
 
 ## 设置商店金币技能（每关随机1个技能展示在商店）
 func _set_shop_coin_skill():
@@ -1742,8 +1770,15 @@ func _set_shop_coin_skill():
 	TooltipManager.set_tooltip(shop_coin_skill_icon, TooltipFormatter.format_coin_skill(shop_coin_skill_row))
 	## 设置商店技能价格标签
 	shop_coin_skill_rlabel.text = "[img=13 ]res://images/coin.png[/img] " + str(int(shop_coin_skill_row["coin_skill_shop_cost"]))
-	## 显示商店技能按钮
-	shop_coin_skill_button.disabled = false
+	## 重置购买标记
+	shop_coin_skill_bought = false
+	## 根据金币是否足够设置按钮状态
+	if Current.total_coins < int(shop_coin_skill_row["coin_skill_shop_cost"]):
+		shop_coin_skill_button.disabled = true
+		shop_coin_skill_button.modulate = Color(0.5, 0.5, 0.5, 1)
+	else:
+		shop_coin_skill_button.disabled = false
+		shop_coin_skill_button.modulate = Color(1, 1, 1, 1)
 	shop_coin_skill_icon.modulate.a = 1
 
 ## 商店金币技能购买按钮按下
@@ -1753,6 +1788,8 @@ func _on_shop_coin_skill_button_pressed() -> void:
 		return
 	## 扣除金币
 	Current.total_coins -= int(shop_coin_skill_row["coin_skill_shop_cost"])
+	## 标记已购买
+	shop_coin_skill_bought = true
 	## 禁用商店技能购买按钮，防止重复购买
 	shop_coin_skill_button.disabled = true
 	shop_coin_skill_icon.modulate.a = 0.3
@@ -1925,7 +1962,7 @@ func _on_potion_button_pressed() -> void:
 		return
 	var heal_amount := 1
 	## 逆境翻盘：HP=1时血瓶恢复量+1
-	if BuffSystem.is_buff_registered("comeback_king") and Current.player_hp <= 2:
+	if BuffSystem.is_buff_registered("comeback_king") and Current.player_hp == 1:
 		heal_amount = 2
 	Current.potion_count -= 1
 	Current.player_hp += heal_amount
@@ -2055,6 +2092,7 @@ func _on_buff_refresh_button_pressed() -> void:
 		Current.zero_coin_refresh_times -= 1
 		buff_refresh_cost = buff_refresh_cost
 		_set_shop_buff()
+		Current.total_coins = Current.total_coins
 	else:
 		## 扣除刷新费用
 		Current.total_coins -= buff_refresh_cost
@@ -2063,18 +2101,6 @@ func _on_buff_refresh_button_pressed() -> void:
 		## 复制触发修改按钮状态
 		Current.total_coins = Current.total_coins
 		_set_shop_buff()
-
-func _on_power_bottle_button_pressed() -> void:
-	Current.total_coins -= 2
-	Current.power = Current.max_power
-
-func _on_exp_bottle_button_pressed() -> void:
-	Current.total_coins -= 1
-	add_exp(1)
-
-func _on_hp_bottle_button_pressed() -> void:
-	Current.total_coins -= 3
-	Current.potion_count += 1
 
 ## 战场补给：购买buff后获得1血瓶（不超过上限）
 func _apply_war_supply_heal() -> void:
@@ -2085,32 +2111,47 @@ func _apply_war_supply_heal() -> void:
 
 func _on_buff_shop_button_1_pressed() -> void:
 	var _actual_price = maxi(0, shop_buff_1["buff_price"] - Current.buff_price_discount)
+	if Current.total_coins < _actual_price:
+		return
+	shop_buff_bought[0] = true
 	Current.total_coins -= _actual_price
 	Current.buff_price_discount = 0
 	_set_buff(shop_buff_1)
 	_apply_war_supply_heal()
 	buff_shop_icon_1.modulate.a = 0
 	buff_lock_button_1.button_pressed = false
+	buff_shop_button_1.disabled = true
+	buff_lock_button_1.disabled = true
 	buff_json_data.erase(shop_buff_1)
 
 func _on_buff_shop_button_2_pressed() -> void:
 	var _actual_price = maxi(0, shop_buff_2["buff_price"] - Current.buff_price_discount)
+	if Current.total_coins < _actual_price:
+		return
+	shop_buff_bought[1] = true
 	Current.total_coins -= _actual_price
 	Current.buff_price_discount = 0
 	_set_buff(shop_buff_2)
 	_apply_war_supply_heal()
 	buff_shop_icon_2.modulate.a = 0
 	buff_lock_button_2.button_pressed = false
+	buff_shop_button_2.disabled = true
+	buff_lock_button_2.disabled = true
 	buff_json_data.erase(shop_buff_2)
 
 func _on_buff_shop_button_3_pressed() -> void:
 	var _actual_price = maxi(0, shop_buff_3["buff_price"] - Current.buff_price_discount)
+	if Current.total_coins < _actual_price:
+		return
+	shop_buff_bought[2] = true
 	Current.total_coins -= _actual_price
 	Current.buff_price_discount = 0
 	_set_buff(shop_buff_3)
 	_apply_war_supply_heal()
 	buff_shop_icon_3.modulate.a = 0
 	buff_lock_button_3.button_pressed = false
+	buff_shop_button_3.disabled = true
+	buff_lock_button_3.disabled = true
 	buff_json_data.erase(shop_buff_3)
 
 func _on_shop_next_level_button_pressed() -> void:
