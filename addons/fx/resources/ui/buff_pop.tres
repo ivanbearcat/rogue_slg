@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="FxProfile" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/fx_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://addons/fx/fx_effect.gd" id="2_effect"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_pop_effect.gd" id="3_pop"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_flash_effect.gd" id="4_flash"]
+
+[sub_resource type="Resource" id="PopSpec"]
+script = ExtResource("3_pop")
+scale_size = 1.5
+duration = 0.1
+
+[sub_resource type="Resource" id="FlashSpec"]
+script = ExtResource("4_flash")
+color = Color(1, 1, 0.5, 1)
+duration = 0.1
+
+[resource]
+script = ExtResource("1_profile")
+effects = Array[ExtResource("2_effect")]([SubResource("PopSpec"), SubResource("FlashSpec")])
+preview_target_path = NodePath("PreviewNode")

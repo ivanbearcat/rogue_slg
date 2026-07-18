@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="FxFlashEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_flash_effect.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+color = Color(1, 1, 1, 1)
+duration = 0.1

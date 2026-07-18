@@ -177,46 +177,35 @@ var total_coins: int:
 		else:
 			game_manager.buff_refresh_button.disabled = false
 			game_manager.buff_refresh_button.modulate = Color(1, 1, 1, 1)
-		if v < 2 or power == max_power:
-			game_manager.power_bottle_button.disabled = true
-			game_manager.power_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
-		else:
-			game_manager.power_bottle_button.disabled = false
-			game_manager.power_bottle_button.modulate = Color(1, 1, 1, 1)
-		if v < 1:
-			game_manager.exp_bottle_button.disabled = true
-			game_manager.exp_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
-		else:
-			game_manager.exp_bottle_button.disabled = false
-			game_manager.exp_bottle_button.modulate = Color(1, 1, 1, 1)
-		## 生命药水按钮：3金币且血瓶未满时启用
-		if v < 3 or _potion_count >= _potion_max:
-			game_manager.hp_bottle_button.disabled = true
-			game_manager.hp_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
-		else:
-			game_manager.hp_bottle_button.disabled = false
-			game_manager.hp_bottle_button.modulate = Color(1, 1, 1, 1)
 		var _discounted_price_1 = maxi(0, game_manager.shop_buff_1.get("buff_price", 0) - _buff_price_discount)
-		if v < _discounted_price_1:
+		if game_manager.shop_buff_bought[0] or v < _discounted_price_1:
 			game_manager.buff_shop_button_1.disabled = true
 			game_manager.buff_shop_button_1.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
 			game_manager.buff_shop_button_1.disabled = false
 			game_manager.buff_shop_button_1.modulate = Color(1, 1, 1, 1)
 		var _discounted_price_2 = maxi(0, game_manager.shop_buff_2.get("buff_price", 0) - _buff_price_discount)
-		if v < _discounted_price_2:
+		if game_manager.shop_buff_bought[1] or v < _discounted_price_2:
 			game_manager.buff_shop_button_2.disabled = true
 			game_manager.buff_shop_button_2.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
 			game_manager.buff_shop_button_2.disabled = false
 			game_manager.buff_shop_button_2.modulate = Color(1, 1, 1, 1)
 		var _discounted_price_3 = maxi(0, game_manager.shop_buff_3.get("buff_price", 0) - _buff_price_discount)
-		if v < _discounted_price_3:
+		if game_manager.shop_buff_bought[2] or v < _discounted_price_3:
 			game_manager.buff_shop_button_3.disabled = true
 			game_manager.buff_shop_button_3.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:
 			game_manager.buff_shop_button_3.disabled = false
 			game_manager.buff_shop_button_3.modulate = Color(1, 1, 1, 1)
+		## 商店金币技能购买按钮：已购买或金币不足时禁用
+		var _coin_skill_cost = int(game_manager.shop_coin_skill_row.get("coin_skill_shop_cost", 0))
+		if game_manager.shop_coin_skill_bought or v < _coin_skill_cost:
+			game_manager.shop_coin_skill_button.disabled = true
+			game_manager.shop_coin_skill_button.modulate = Color(0.5, 0.5, 0.5, 1)
+		else:
+			game_manager.shop_coin_skill_button.disabled = false
+			game_manager.shop_coin_skill_button.modulate = Color(1, 1, 1, 1)
 
 ## 刷新金币技能按钮的启用/禁用状态（根据coin_skill_used数组）
 func refresh_coin_skill_buttons():
@@ -459,24 +448,12 @@ var max_power := 2:
 	set(v):
 		max_power = v
 		game_manager.power_label.text = str(power) + "/" + str(v)
-		if power == v:
-			game_manager.power_bottle_button.disabled = true
-			game_manager.power_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
-		else:
-			game_manager.power_bottle_button.disabled = false
-			game_manager.power_bottle_button.modulate = Color(1, 1, 1, 1)
 ## 当前能量
 var power: int:
 	set(v):
 		var _clamped = mini(v, max_power)
 		power = _clamped
 		game_manager.power_label.text = str(_clamped) + "/" + str(Current.max_power)
-		if _clamped == max_power:
-			game_manager.power_bottle_button.disabled = true
-			game_manager.power_bottle_button.modulate = Color(0.5, 0.5, 0.5, 1)
-		else:
-			game_manager.power_bottle_button.disabled = false
-			game_manager.power_bottle_button.modulate = Color(1, 1, 1, 1)
 ## 能量技能
 var power_skill := 0
 ## 存在红框

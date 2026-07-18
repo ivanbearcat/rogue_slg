@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="FxProfile" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/fx_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://addons/fx/fx_effect.gd" id="2_effect"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_shake_effect.gd" id="3_shake"]
+[ext_resource type="Script" path="res://addons/fx/specs/shader/fx_hurt_effect.gd" id="4_hurt"]
+[ext_resource type="Script" path="res://addons/fx/shaders/flash_white.gdshader" id="5_shader"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_float_text_effect.gd" id="6_float"]
+
+[sub_resource type="Resource" id="ShakeSpec"]
+script = ExtResource("3_shake")
+intensity = 8.0
+duration = 0.2
+axes = Vector2(1, 1)
+
+[sub_resource type="Resource" id="HurtSpec"]
+script = ExtResource("4_hurt")
+color = Color(1, 0, 0, 1)
+duration = 0.15
+
+[sub_resource type="Resource" id="FloatSpec"]
+script = ExtResource("6_float")
+text = "{damage}"
+size = 24
+color = Color(1, 1, 1, 1)
+rise = 50.0
+duration = 0.8
+
+[resource]
+script = ExtResource("1_profile")
+effects = Array[ExtResource("2_effect")]([SubResource("ShakeSpec"), SubResource("HurtSpec"), SubResource("FloatSpec")])
+preview_target_path = NodePath("PreviewNode")

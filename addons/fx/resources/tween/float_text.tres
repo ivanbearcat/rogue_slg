@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FxFloatTextEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_float_text_effect.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+text = "{value}"
+size = 24
+color = Color(1, 1, 1, 1)
+rise = 50.0
+duration = 0.8

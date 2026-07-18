@@ -165,7 +165,7 @@ func test_potion_use() -> void:
 	assert_eq(c.potion_count, 1, "使用后血瓶-1")
 	assert_eq(c.player_hp, 4, "使用后HP+1")
 
-## 7. 逆境翻盘HP≤2时血瓶+2HP
+## 7. 逆境翻盘HP=1时血瓶+2HP
 func test_potion_use_comeback_king() -> void:
 	_current_test = "test_potion_use_comeback_king"
 	var c = Current
@@ -173,11 +173,11 @@ func test_potion_use_comeback_king() -> void:
 	c.player_hp = 1
 	c.max_hp = 5
 
-	# 模拟逆境翻盘：HP≤2时血瓶恢复量+1
+	# 模拟逆境翻盘：HP=1时血瓶恢复量+1
 	var comeback_king = true
 	if c.potion_count > 0 and c.player_hp < c.max_hp:
 		var heal_amount = 1
-		if comeback_king and c.player_hp <= 2:
+		if comeback_king and c.player_hp == 1:
 			heal_amount = 2
 		c.potion_count -= 1
 		c.player_hp += heal_amount

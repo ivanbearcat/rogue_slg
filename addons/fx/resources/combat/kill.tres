@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="FxProfile" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/fx_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://addons/fx/fx_effect.gd" id="2_effect"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_screen_shake_effect.gd" id="3_sscreen"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_freeze_frame_effect.gd" id="4_freeze"]
+[ext_resource type="Script" path="res://addons/fx/specs/particle/fx_blood_splash_effect.gd" id="5_blood"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_float_text_effect.gd" id="6_float"]
+
+[sub_resource type="Resource" id="ScreenShakeSpec"]
+script = ExtResource("3_sscreen")
+intensity = 20.0
+duration = 0.4
+
+[sub_resource type="Resource" id="FreezeSpec"]
+script = ExtResource("4_freeze")
+duration = 0.15
+time_scale = 0.02
+
+[sub_resource type="Resource" id="BloodSpec"]
+script = ExtResource("5_blood")
+color = Color(0.8, 0.1, 0.1, 1)
+amount = 40
+velocity_min = 120.0
+velocity_max = 250.0
+lifetime = 1.5
+
+[sub_resource type="Resource" id="FloatSpec"]
+script = ExtResource("6_float")
+text = "KILL!"
+size = 40
+color = Color(1, 0, 0, 1)
+rise = 80.0
+duration = 1.2
+
+[resource]
+script = ExtResource("1_profile")
+effects = Array[ExtResource("2_effect")]([SubResource("ScreenShakeSpec"), SubResource("FreezeSpec"), SubResource("BloodSpec"), SubResource("FloatSpec")])
+preview_target_path = NodePath("PreviewNode")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FxPoisonEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/specs/shader/fx_poison_effect.gd" id="1_script"]
+[ext_resource type="Shader" path="res://addons/fx/shaders/poison.gdshader" id="2_shader"]
+
+[resource]
+script = ExtResource("1_script")
+shader = ExtResource("2_shader")
+duration = 3.0
+poison_color = Color(0.3, 1, 0.3, 1)
+pulse_speed = 3.0

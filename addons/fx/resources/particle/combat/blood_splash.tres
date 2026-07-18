@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FxBloodSplashEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/specs/particle/fx_blood_splash_effect.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://addons/fx/effects/blood_splash.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+scene = ExtResource("2_scene")
+color = Color(0.8, 0.1, 0.1, 1)
+amount = 20
+velocity_min = 80.0
+velocity_max = 150.0
+lifetime = 1.0

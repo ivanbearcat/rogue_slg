@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FxProfile" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/fx_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://addons/fx/fx_effect.gd" id="2_effect"]
+[ext_resource type="Script" path="res://addons/fx/specs/particle/fx_torch_fire_effect.gd" id="3_torch"]
+
+[sub_resource type="Resource" id="TorchSpec"]
+script = ExtResource("3_torch")
+
+[resource]
+script = ExtResource("1_profile")
+effects = Array[ExtResource("2_effect")]([SubResource("TorchSpec")])
+preview_target_path = NodePath("PreviewNode")

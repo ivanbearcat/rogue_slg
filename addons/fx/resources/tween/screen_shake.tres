@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="FxScreenShakeEffect" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_screen_shake_effect.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+intensity = 10.0
+duration = 0.2

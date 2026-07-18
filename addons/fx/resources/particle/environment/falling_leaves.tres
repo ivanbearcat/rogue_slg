@@ -1,0 +1,8 @@
+﻿[gd_resource type="Resource" script_class="FxFallingLeavesEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/specs/particle/fx_falling_leaves_effect.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://addons/fx/effects/falling_leaves.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+scene = ExtResource("2_scene")

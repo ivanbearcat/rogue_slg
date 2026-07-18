@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FxHealEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/specs/shader/fx_heal_effect.gd" id="1_script"]
+[ext_resource type="Shader" path="res://addons/fx/shaders/color_change.gdshader" id="2_shader"]
+
+[resource]
+script = ExtResource("1_script")
+shader = ExtResource("2_shader")
+color = Color(0, 1, 0, 1)
+duration = 0.5
+mix_amount = 0.7

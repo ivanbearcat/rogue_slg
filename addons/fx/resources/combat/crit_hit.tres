@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="FxProfile" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/fx_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://addons/fx/fx_effect.gd" id="2_effect"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_shake_effect.gd" id="3_shake"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_freeze_frame_effect.gd" id="4_freeze"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_float_text_effect.gd" id="5_float"]
+[ext_resource type="Script" path="res://addons/fx/specs/tween/fx_flash_effect.gd" id="6_flash"]
+[ext_resource type="Script" path="res://addons/fx/specs/particle/fx_blood_splash_effect.gd" id="7_blood"]
+
+[sub_resource type="Resource" id="ShakeSpec"]
+script = ExtResource("3_shake")
+intensity = 15.0
+duration = 0.3
+axes = Vector2(1, 1)
+
+[sub_resource type="Resource" id="FreezeSpec"]
+script = ExtResource("4_freeze")
+duration = 0.08
+time_scale = 0.05
+
+[sub_resource type="Resource" id="BloodSpec"]
+script = ExtResource("7_blood")
+color = Color(0.8, 0.1, 0.1, 1)
+amount = 25
+velocity_min = 100.0
+velocity_max = 200.0
+lifetime = 1.0
+
+[sub_resource type="Resource" id="FloatSpec"]
+script = ExtResource("5_float")
+text = "{damage}!"
+size = 32
+color = Color(1, 0.8, 0, 1)
+rise = 60.0
+duration = 1.0
+
+[sub_resource type="Resource" id="FlashSpec"]
+script = ExtResource("6_flash")
+color = Color(1, 1, 1, 1)
+duration = 0.08
+
+[resource]
+script = ExtResource("1_profile")
+effects = Array[ExtResource("2_effect")]([SubResource("ShakeSpec"), SubResource("FreezeSpec"), SubResource("BloodSpec"), SubResource("FloatSpec"), SubResource("FlashSpec")])
+preview_target_path = NodePath("PreviewNode")

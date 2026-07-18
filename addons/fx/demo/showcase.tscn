@@ -1,0 +1,322 @@
+[gd_scene format=3 uid="uid://b3el3ue0765aa"]
+
+[ext_resource type="Script" uid="uid://c2ki3iuyl26m3" path="res://addons/fx/demo/showcase.gd" id="1_show"]
+[ext_resource type="Texture2D" uid="uid://hvcsy7txlb5l" path="res://icon.svg" id="2_icon"]
+[ext_resource type="Shader" uid="uid://bmhce2s5q260k" path="res://addons/fx/shaders/outline_glow.gdshader" id="2_n0se2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_64nqd"]
+shader = ExtResource("2_n0se2")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/glow_intensity = 1.0
+
+[node name="Showcase" type="Node2D" unique_id=901386326]
+script = ExtResource("1_show")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=407913453]
+
+[node name="UI" type="Control" parent="CanvasLayer" unique_id=80917654]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="CanvasLayer/UI" unique_id=35185377]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/UI/Margin" unique_id=1414106227]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/UI/Margin/VBox" unique_id=284265418]
+layout_mode = 2
+text = "Fx Library Showcase"
+
+[node name="TweenSection" type="HBoxContainer" parent="CanvasLayer/UI/Margin/VBox" unique_id=955726205]
+layout_mode = 2
+
+[node name="TweenLabel" type="Label" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=745499828]
+layout_mode = 2
+text = "Tween:"
+
+[node name="ShakeBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=715825400]
+layout_mode = 2
+text = "Shake"
+
+[node name="FloatTextBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=318176061]
+layout_mode = 2
+text = "FloatText"
+
+[node name="ScreenShakeBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=1977616357]
+layout_mode = 2
+text = "ScreenShake"
+
+[node name="FlashBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=1447706806]
+layout_mode = 2
+text = "Flash"
+
+[node name="FreezeFrameBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=303866847]
+layout_mode = 2
+text = "FreezeFrame"
+
+[node name="PopBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=666952280]
+layout_mode = 2
+text = "Pop"
+
+[node name="FadeInBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=458955896]
+layout_mode = 2
+text = "FadeIn"
+
+[node name="FadeOutBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=1577175902]
+layout_mode = 2
+text = "FadeOut"
+
+[node name="TypewriterBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=1781274175]
+layout_mode = 2
+text = "Typewriter"
+
+[node name="NumberRollBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/TweenSection" unique_id=2090865587]
+layout_mode = 2
+text = "NumberRoll"
+
+[node name="ShaderSection" type="HBoxContainer" parent="CanvasLayer/UI/Margin/VBox" unique_id=577691380]
+layout_mode = 2
+
+[node name="ShaderLabel" type="Label" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=604045413]
+layout_mode = 2
+text = "Shader:"
+
+[node name="BurnBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=270938487]
+layout_mode = 2
+text = "Burn"
+
+[node name="OutlineBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=621108448]
+layout_mode = 2
+text = "Outline"
+
+[node name="BlinkBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=1794347429]
+layout_mode = 2
+text = "Blink"
+
+[node name="DissolveBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=416918060]
+layout_mode = 2
+text = "Dissolve"
+
+[node name="HurtBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=1047925397]
+layout_mode = 2
+text = "Hurt"
+
+[node name="HealBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=601804897]
+layout_mode = 2
+text = "Heal"
+
+[node name="PoisonBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=1316830098]
+layout_mode = 2
+text = "Poison"
+
+[node name="FrozenBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=1572386482]
+layout_mode = 2
+text = "Frozen"
+
+[node name="PetrifyBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ShaderSection" unique_id=461480367]
+layout_mode = 2
+text = "Petrify"
+
+[node name="ParticleSection" type="HBoxContainer" parent="CanvasLayer/UI/Margin/VBox" unique_id=2113357005]
+layout_mode = 2
+
+[node name="ParticleLabel" type="Label" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=594651061]
+layout_mode = 2
+text = "Particle:"
+
+[node name="BloodSplashBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=1386784542]
+layout_mode = 2
+text = "BloodSplash"
+
+[node name="EnergyBurstBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=854962676]
+layout_mode = 2
+text = "EnergyBurst"
+
+[node name="HealParticlesBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=496670664]
+layout_mode = 2
+text = "HealParticles"
+
+[node name="ShieldBreakBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=922828590]
+layout_mode = 2
+text = "ShieldBreak"
+
+[node name="ComboRingBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=1038068318]
+layout_mode = 2
+text = "ComboRing"
+
+[node name="CombatParticleBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=715678489]
+layout_mode = 2
+text = "CombatParticle"
+
+[node name="JumpDustBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=1337925004]
+layout_mode = 2
+text = "JumpDust"
+
+[node name="DashTrailBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=1875006774]
+layout_mode = 2
+text = "DashTrail"
+
+[node name="WallSlideSparkBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/ParticleSection" unique_id=1311758192]
+layout_mode = 2
+text = "WallSlideSpark"
+
+[node name="EnvSection" type="HBoxContainer" parent="CanvasLayer/UI/Margin/VBox" unique_id=377527215]
+layout_mode = 2
+
+[node name="EnvLabel" type="Label" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1618113011]
+layout_mode = 2
+text = "Env:"
+
+[node name="TorchBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1966682710]
+layout_mode = 2
+text = "Torch"
+
+[node name="FirefliesBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1480895313]
+layout_mode = 2
+text = "Fireflies"
+
+[node name="SteamBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=542685718]
+layout_mode = 2
+text = "Steam"
+
+[node name="SparksBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=377644146]
+layout_mode = 2
+text = "Sparks"
+
+[node name="RainBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=256730434]
+layout_mode = 2
+text = "Rain"
+
+[node name="SnowBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1880708284]
+layout_mode = 2
+text = "Snow"
+
+[node name="MagicAuraBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1366182763]
+layout_mode = 2
+text = "MagicAura"
+
+[node name="PoisonCloudBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=2026723386]
+layout_mode = 2
+text = "PoisonCloud"
+
+[node name="FallingLeavesBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1730203502]
+layout_mode = 2
+text = "Leaves"
+
+[node name="PortalBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=39730198]
+layout_mode = 2
+text = "Portal"
+
+[node name="LightningBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=659112689]
+layout_mode = 2
+text = "Lightning"
+
+[node name="IceFrostBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1612869134]
+layout_mode = 2
+text = "IceFrost"
+
+[node name="SummonBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1778071460]
+layout_mode = 2
+text = "Summon"
+
+[node name="CampfireBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=801108619]
+layout_mode = 2
+text = "Campfire"
+
+[node name="CandleBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1032536880]
+layout_mode = 2
+text = "Candle"
+
+[node name="WaterfallBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=869312204]
+layout_mode = 2
+text = "Waterfall"
+
+[node name="DustCloudBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=751934450]
+layout_mode = 2
+text = "DustCloud"
+
+[node name="WaterSplashBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=2082024872]
+layout_mode = 2
+text = "WaterSplash"
+
+[node name="WoodDebrisBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1669850306]
+layout_mode = 2
+text = "WoodDebris"
+
+[node name="FireballBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=1954059360]
+layout_mode = 2
+text = "Fireball"
+
+[node name="AshBtn" type="Button" parent="CanvasLayer/UI/Margin/VBox/EnvSection" unique_id=2065828405]
+layout_mode = 2
+text = "Ash"
+
+[node name="PreviewNode" type="Sprite2D" parent="." unique_id=1450836659]
+material = SubResource("ShaderMaterial_64nqd")
+position = Vector2(560, 360)
+texture = ExtResource("2_icon")
+
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/ShakeBtn" to="." method="_on_shake_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/FloatTextBtn" to="." method="_on_float_text_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/ScreenShakeBtn" to="." method="_on_screen_shake_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/FlashBtn" to="." method="_on_flash_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/FreezeFrameBtn" to="." method="_on_freeze_frame_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/PopBtn" to="." method="_on_pop_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/FadeInBtn" to="." method="_on_fade_in_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/FadeOutBtn" to="." method="_on_fade_out_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/TypewriterBtn" to="." method="_on_typewriter_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/TweenSection/NumberRollBtn" to="." method="_on_number_roll_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/BurnBtn" to="." method="_on_burn_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/OutlineBtn" to="." method="_on_outline_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/BlinkBtn" to="." method="_on_blink_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/DissolveBtn" to="." method="_on_dissolve_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/HurtBtn" to="." method="_on_hurt_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/HealBtn" to="." method="_on_heal_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/PoisonBtn" to="." method="_on_poison_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/FrozenBtn" to="." method="_on_frozen_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ShaderSection/PetrifyBtn" to="." method="_on_petrify_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/BloodSplashBtn" to="." method="_on_blood_splash_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/EnergyBurstBtn" to="." method="_on_energy_burst_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/HealParticlesBtn" to="." method="_on_heal_particles_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/ShieldBreakBtn" to="." method="_on_shield_break_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/ComboRingBtn" to="." method="_on_combo_ring_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/CombatParticleBtn" to="." method="_on_combat_particle_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/JumpDustBtn" to="." method="_on_jump_dust_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/DashTrailBtn" to="." method="_on_dash_trail_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/ParticleSection/WallSlideSparkBtn" to="." method="_on_wall_slide_spark_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/TorchBtn" to="." method="_on_torch_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/FirefliesBtn" to="." method="_on_fireflies_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/SteamBtn" to="." method="_on_steam_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/SparksBtn" to="." method="_on_sparks_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/RainBtn" to="." method="_on_rain_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/SnowBtn" to="." method="_on_snow_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/MagicAuraBtn" to="." method="_on_magic_aura_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/PoisonCloudBtn" to="." method="_on_poison_cloud_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/FallingLeavesBtn" to="." method="_on_falling_leaves_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/PortalBtn" to="." method="_on_portal_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/LightningBtn" to="." method="_on_lightning_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/IceFrostBtn" to="." method="_on_ice_frost_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/SummonBtn" to="." method="_on_summon_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/CampfireBtn" to="." method="_on_campfire_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/CandleBtn" to="." method="_on_candle_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/WaterfallBtn" to="." method="_on_waterfall_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/DustCloudBtn" to="." method="_on_dust_cloud_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/WaterSplashBtn" to="." method="_on_water_splash_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/WoodDebrisBtn" to="." method="_on_wood_debris_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/FireballBtn" to="." method="_on_fireball_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Margin/VBox/EnvSection/AshBtn" to="." method="_on_ash_pressed"]

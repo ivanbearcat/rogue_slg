@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="FxWallSlideSparkEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/fx/specs/particle/fx_wall_slide_spark_effect.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://addons/fx/effects/wall_slide_spark.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+scene = ExtResource("2_scene")

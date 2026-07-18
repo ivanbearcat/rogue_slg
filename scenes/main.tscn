@@ -6251,31 +6251,6 @@ texture = SubResource("AtlasTexture_t5ykj")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="power_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect" unique_id=1257988926]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 73.0
-offset_top = -32.0
-offset_right = 128.0
-offset_bottom = 12.0
-texture_normal = SubResource("AtlasTexture_ro3en")
-texture_pressed = SubResource("AtlasTexture_e755i")
-texture_hover = SubResource("AtlasTexture_od4ux")
-stretch_mode = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect/power_bottle_button" unique_id=1479738240]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 7.0
-offset_right = 48.0
-offset_bottom = 35.0
-mouse_filter = 1
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "[img=13 ]res://images/coin.png[/img] 2"
-horizontal_alignment = 1
-
 [node name="TextureRect2" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui" unique_id=1995110334]
 layout_mode = 0
 offset_left = 249.54022
@@ -6299,31 +6274,6 @@ theme = ExtResource("17_qkpxi")
 texture = SubResource("AtlasTexture_mlv25")
 expand_mode = 2
 stretch_mode = 5
-
-[node name="exp_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect3" unique_id=1721064062]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 73.0
-offset_top = -32.0
-offset_right = 128.0
-offset_bottom = 12.0
-texture_normal = SubResource("AtlasTexture_ro3en")
-texture_pressed = SubResource("AtlasTexture_e755i")
-texture_hover = SubResource("AtlasTexture_od4ux")
-stretch_mode = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect3/exp_bottle_button" unique_id=1115762609]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 7.0
-offset_right = 48.0
-offset_bottom = 35.0
-mouse_filter = 1
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "[img=13 ]res://images/coin.png[/img] 1"
-horizontal_alignment = 1
 
 [node name="TextureRect4" type="TextureRect" parent="shop_ui/Panel/shop_texture_ui" unique_id=596432226]
 layout_mode = 0
@@ -6417,31 +6367,6 @@ offset_bottom = 336.0
 tooltip_text = "生命药水：+2HP"
 expand_mode = 2
 stretch_mode = 5
-
-[node name="hp_bottle_button" type="TextureButton" parent="shop_ui/Panel/shop_texture_ui/TextureRect_hp" unique_id=1018370210]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 73.0
-offset_top = -32.0
-offset_right = 128.0
-offset_bottom = 12.0
-texture_normal = SubResource("AtlasTexture_ro3en")
-texture_pressed = SubResource("AtlasTexture_e755i")
-texture_hover = SubResource("AtlasTexture_od4ux")
-stretch_mode = 5
-
-[node name="RichTextLabel" type="RichTextLabel" parent="shop_ui/Panel/shop_texture_ui/TextureRect_hp/hp_bottle_button" unique_id=1640548089]
-layout_mode = 0
-offset_left = 9.0
-offset_top = 7.0
-offset_right = 48.0
-offset_bottom = 35.0
-mouse_filter = 1
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "[img=13 ]res://images/coin.png[/img] 3"
-horizontal_alignment = 1
 
 [node name="shop_next_level_button" type="Button" parent="shop_ui/Panel" unique_id=547307172]
 unique_name_in_owner = true
@@ -6697,10 +6622,7 @@ script = ExtResource("34_dgi5k")
 [connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2/buff_shop_button_2" to="." method="_on_buff_shop_button_2_pressed"]
 [connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3/buff_shop_button_3" to="." method="_on_buff_shop_button_3_pressed"]
 [connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer3/shop_coin_skill_icon/shop_coin_skill_button" to="." method="_on_shop_coin_skill_button_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/TextureRect/power_bottle_button" to="." method="_on_power_bottle_button_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/TextureRect3/exp_bottle_button" to="." method="_on_exp_bottle_button_pressed"]
 [connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/buff_refresh_button" to="." method="_on_buff_refresh_button_pressed"]
-[connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/TextureRect_hp/hp_bottle_button" to="." method="_on_hp_bottle_button_pressed"]
 [connection signal="pressed" from="shop_ui/Panel/shop_next_level_button" to="." method="_on_shop_next_level_button_pressed"]
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card1_button" to="." method="_on_card_1_button_pressed"]
 [connection signal="pressed" from="level_up_ui/MarginContainer/VBoxContainer/HBoxContainer2/card2_button" to="." method="_on_card_2_button_pressed"]
