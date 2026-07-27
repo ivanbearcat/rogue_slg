@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rogue SLG - UI 优化方案</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'ZCOOL KuaiLe', 'Microsoft YaHei', sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+        
+        /* 问题分析区域 */
+        .section {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #0f3460;
+        }
+        
+        .section h2 {
+            color: #e94560;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .problem-card {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e94560;
+        }
+        
+        .problem-card h4 {
+            color: #ffd700;
+            margin-bottom: 8px;
+        }
+        
+        .problem-card p {
+            color: #aaa;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        /* 优化方案标签页 */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background: #0f3460;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            background: #1a4a7a;
+        }
+        
+        .tab.active {
+            background: #e94560;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* 游戏原型区域 */
+        .game-prototype {
+            background: #0f3460;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .prototype-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .prototype-title {
+            color: #ffd700;
+            font-size: 1.3em;
+        }
+        
+        .toggle-btn {
+            padding: 8px 16px;
+            background: #e94560;
+            border: none;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        
+        /* 游戏主界面 */
+        .game-screen {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            aspect-ratio: 16/9;
+            background: #2d5016;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .game-screen.active {
+            display: block;
+        }
+        
+        /* 像素风纹理 */
+        .pixel-bg {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(0,0,0,0.03) 31px, rgba(0,0,0,0.03) 32px),
+                repeating-linear-gradient(90deg, transparent, transparent 31px, rgba(0,0,0,0.03) 31px, rgba(0,0,0,0.03) 32px);
+            pointer-events: none;
+        }
+        
+        /* ===== 优化后的UI组件 ===== */
+        
+        /* 1. 顶部状态栏 - 合并所有顶部信息 */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 100;
+        }
+        
+        .buff-icons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .buff-icon {
+            width: 32px;
+            height: 32px;
+            background: #4a148c;
+            border-radius: 4px;
+            border: 2px solid #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            position: relative;
+        }
+        
+        .buff-icon .stack {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: #e94560;
+            color: #fff;
+            font-size: 0.6em;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+        
+        .round-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #fff;
+        }
+        
+        .round-badge {
+            background: #e94560;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        
+        /* 2. 左侧分数面板 - 优化布局 */
+        .left-panel {
+            position: absolute;
+            left: 10px;
+            top: 60px;
+            width: 180px;
+            background: rgba(139, 90, 43, 0.95);
+            border-radius: 8px;
+            border: 3px solid #5d3a1a;
+            padding: 10px;
+            z-index: 50;
+        }
+        
+        .panel-header {
+            background: #5d3a1a;
+            color: #ffd700;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+        
+        .score-table {
+            width: 100%;
+            font-size: 0.8em;
+            border-collapse: collapse;
+        }
+        
+        .score-table th {
+            background: rgba(0,0,0,0.3);
+            padding: 4px;
+            color: #ffd700;
+            font-size: 0.85em;
+        }
+        
+        .score-table td {
+            padding: 4px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .score-table tr:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .dice-dot {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 3px;
+            position: relative;
+        }
+        
+        .multiplier {
+            color: #90ee90;
+            font-weight: bold;
+        }
+        
+        /* 3. 右侧关卡信息 - 简化设计 */
+        .right-panel {
+            position: absolute;
+            right: 10px;
+            top: 60px;
+            width: 160px;
+            background: rgba(139, 90, 43, 0.95);
+            border-radius: 8px;
+            border: 3px solid #5d3a1a;
+            padding: 12px;
+            z-index: 50;
+        }
+        
+        .stage-title {
+            text-align: center;
+            color: #ffd700;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .target-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        
+        .target-info .label {
+            color: #ccc;
+        }
+        
+        .target-info .value {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        /* 4. 底部英雄栏 - 重新设计 */
+        .hero-bar {
+            position: absolute;
+            bottom: 70px;
+            left: 10px;
+            display: flex;
+            gap: 8px;
+            z-index: 50;
+        }
+        
+        .hero-card {
+            width: 70px;
+            height: 90px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 8px;
+            border: 2px solid #666;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .hero-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-3px);
+        }
+        
+        .hero-card.active {
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+        
+        .hero-avatar {
+            width: 40px;
+            height: 40px;
+            background: #4a148c;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+        
+        .hero-key {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background: #e94560;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75em;
+        }
+        
+        .hero-status {
+            font-size: 0.7em;
+            color: #aaa;
+        }
+        
+        /* 5. 底部操作栏 - 整合设计 */
+        .bottom-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 100;
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .class-badge {
+            width: 45px;
+            height: 45px;
+            background: #4a148c;
+            border-radius: 8px;
+            border: 2px solid #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        
+        .stats-row {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8em;
+        }
+        
+        .stat-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+        }
+        
+        .stat-icon.gold { background: #ffd700; color: #000; }
+        .stat-icon.power { background: #00bcd4; color: #fff; }
+        
+        .exp-bar-container {
+            width: 200px;
+            height: 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #ffd700;
+            position: relative;
+        }
+        
+        .exp-bar-fill {
+            height: 100%;
+            width: 25%;
+            background: #ffd700;
+            border-radius: 8px;
+            transition: width 0.3s;
+        }
+        
+        .exp-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75em;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 2px solid;
+            font-family: inherit;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .action-btn.potion {
+            background: #c62828;
+            border-color: #ff5252;
+            color: #fff;
+        }
+        
+        .action-btn.undo {
+            background: #1565c0;
+            border-color: #42a5f5;
+            color: #fff;
+        }
+        
+        .action-btn.turn {
+            background: #2e7d32;
+            border-color: #66bb6a;
+            color: #fff;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.2);
+        }
+        
+        /* 6. 中央游戏区域 */
+        .game-area {
+            position: absolute;
+            top: 50px;
+            left: 200px;
+            right: 180px;
+            bottom: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            padding: 10px;
+        }
+        
+        .grid-cell {
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+            border: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            position: relative;
+        }
+        
+        .grid-cell.hero-pos {
+            border-color: #ffd700;
+            background: rgba(255,215,0,0.2);
+        }
+        
+        .grid-cell .entity {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6em;
+        }
+        
+        .entity.slime-red { background: #c62828; }
+        .entity.slime-blue { background: #1565c0; }
+        .entity.slime-yellow { background: #f9a825; }
+        .entity.coin { background: #ffd700; color: #000; }
+        .entity.hero { background: #4a148c; border: 2px solid #ffd700; }
+        
+        /* 7. 浮动信息提示 */
+        .floating-info {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            gap: 20px;
+            font-size: 0.85em;
+            z-index: 60;
+        }
+        
+        .floating-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 8. 实时分数显示 */
+        .score-float {
+            position: absolute;
+            right: 10px;
+            bottom: 140px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: right;
+            z-index: 50;
+        }
+        
+        .score-float .current {
+            font-size: 1.3em;
+            color: #ffd700;
+        }
+        
+        .score-float .preview {
+            font-size: 0.85em;
+            color: #90ee90;
+        }
+        
+        /* 对比模式 */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .comparison-box {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .comparison-box h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .comparison-box.before {
+            border: 2px solid #e94560;
+        }
+        
+        .comparison-box.after {
+            border: 2px solid #66bb6a;
+        }
+        
+        .mini-screen {
+            aspect-ratio: 16/9;
+            background: #2d5016;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 优化建议列表 */
+        .suggestion-list {
+            list-style: none;
+        }
+        
+        .suggestion-list li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #1a1a2e;
+            border-radius: 6px;
+            border-left: 4px solid #66bb6a;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .suggestion-list li .num {
+            background: #66bb6a;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.85em;
+        }
+        
+        .suggestion-list li .content h4 {
+            color: #ffd700;
+            margin-bottom: 4px;
+        }
+        
+        .suggestion-list li .content p {
+            color: #aaa;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        /* 代码示例区域 */
+        .code-block {
+            background: #0a0a0a;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.5;
+            color: #a8d8ea;
+            border: 1px solid #1a4a7a;
+        }
+        
+        .code-block .comment { color: #6a9955; }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .string { color: #ce9178; }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .section {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Rogue SLG - UI 优化方案</h1>
+        <p class="subtitle">基于现有游戏界面的分析与改进建议</p>
+        
+        <!-- 问题分析 -->
+        <div class="section">
+            <h2>🔍 当前UI问题分析</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h4>信息分散</h4>
+                    <p>分数面板、关卡信息、Buff/Debuff等分布在屏幕各处，玩家需要频繁转移视线获取信息。</p>
+                </div>
+                <div class="problem-card">
+                    <h4>层级过深</h4>
+                    <p>分数面板嵌套层级过多（VBoxContainer > HBoxContainer > NinePatchRect > MarginContainer...），维护困难。</p>
+                </div>
+                <div class="problem-card">
+                    <h4>视觉混乱</h4>
+                    <p>底部栏包含等级、金币、能量、经验条、血瓶、撤回、回合结束等，元素过多且排列拥挤。</p>
+                </div>
+                <div class="problem-card">
+                    <h4>缺少视觉焦点</h4>
+                    <p>所有UI元素视觉权重相似，无法快速识别当前最重要的信息（如回合数、目标分数）。</p>
+                </div>
+                <div class="problem-card">
+                    <h4>交互反馈不足</h4>
+                    <p>按钮和可交互元素缺少悬停、点击等状态反馈，降低操作确认感。</p>
+                </div>
+                <div class="problem-card">
+                    <h4>字体不统一</h4>
+                    <p>使用了多种字体（SourceHanSans、MinimalPixel、fusion-pixel），字号层级不清晰。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 优化方案标签页 -->
+        <div class="section">
+            <h2>✨ 优化方案与原型</h2>
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('layout')">布局优化</button>
+                <button class="tab" onclick="showTab('visual')">视觉优化</button>
+                <button class="tab" onclick="showTab('interaction')">交互优化</button>
+                <button class="tab" onclick="showTab('code')">代码重构</button>
+            </div>
+            
+            <!-- 布局优化 -->
+            <div id="layout" class="tab-content active">
+                <div class="comparison">
+                    <div class="comparison-box before">
+                        <h3>优化前</h3>
+                        <div class="mini-screen" id="before-screen">
+                            <!-- 简化的旧版布局示意 -->
+                            <div style="position:absolute;top:5px;left:5px;width:120px;height:200px;background:rgba(139,90,43,0.9);border:2px solid #5d3a1a;border-radius:4px;padding:5px;font-size:0.6em;">
+                                <div style="background:#5d3a1a;color:#ffd700;text-align:center;padding:2px;">分数面板</div>
+                                <div style="margin-top:5px;">1点: 14</div>
+                                <div>对子: 200%</div>
+                                <div style="font-size:0.8em;color:#aaa;">...多层嵌套</div>
+                            </div>
+                            <div style="position:absolute;top:5px;right:5px;width:100px;height:120px;background:rgba(139,90,43,0.9);border:2px solid #5d3a1a;border-radius:4px;padding:5px;font-size:0.6em;">
+                                <div style="text-align:center;">关卡一</div>
+                                <div>目标: 150</div>
+                            </div>
+                            <div style="position:absolute;bottom:5px;left:5px;right:5px;height:50px;background:rgba(0,0,0,0.8);display:flex;align-items:center;padding:5px;gap:5px;font-size:0.5em;">
+                                <div>Lv.1</div>
+                                <div>金币:15</div>
+                                <div>能量:0/2</div>
+                                <div style="flex:1;height:10px;background:#333;"><div style="width:25%;height:100%;background:#ffd700;"></div></div>
+                                <div style="margin-left:auto;">血瓶 | 撤回 | 回合</div>
+                            </div>
+                            <div style="position:absolute;bottom:60px;left:5px;display:flex;gap:5px;">
+                                <div style="width:40px;height:50px;background:rgba(0,0,0,0.7);border:1px solid #666;"></div>
+                                <div style="width:40px;height:50px;background:rgba(0,0,0,0.7);border:1px solid #666;"></div>
+                                <div style="width:40px;height:50px;background:rgba(0,0,0,0.7);border:1px solid #666;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comparison-box after">
+                        <h3>优化后</h3>
+                        <div class="mini-screen" id="after-screen">
+                            <div class="pixel-bg"></div>
+                            <!-- 顶部栏 -->
+                            <div class="top-bar" style="position:relative;height:40px;margin:5px;border-radius:6px;">
+                                <div class="buff-icons">
+                                    <div class="buff-icon">⚔️<span class="stack">2</span></div>
+                                    <div class="buff-icon">🛡️</div>
+                                    <div class="buff-icon">💰</div>
+                                </div>
+                                <div class="round-info">
+                                    <span class="round-badge">回合 3</span>
+                                    <span>🎲 × 9</span>
+                                </div>
+                            </div>
+                            <!-- 左侧分数 -->
+                            <div class="left-panel" style="position:relative;width:140px;margin:5px;">
+                                <div class="panel-header">骰子分数</div>
+                                <table class="score-table">
+                                    <tr><th>点数</th><th>倍率</th></tr>
+                                    <tr><td><span class="dice-dot"></span></td><td class="multiplier">×14</td></tr>
+                                    <tr><td><span class="dice-dot" style="background:#ff5252;"></span></td><td class="multiplier">×9</td></tr>
+                                </table>
+                            </div>
+                            <!-- 右侧关卡 -->
+                            <div class="right-panel" style="position:absolute;right:5px;top:50px;width:120px;">
+                                <div class="stage-title">关卡一</div>
+                                <div class="target-info"><span class="label">目标</span><span class="value">150</span></div>
+                                <div class="target-info"><span class="label">当前</span><span class="value">95</span></div>
+                            </div>
+                            <!-- 底部栏 -->
+                            <div class="bottom-bar" style="position:absolute;bottom:0;left:0;right:0;height:50px;">
+                                <div class="player-info">
+                                    <div class="class-badge">⚔️</div>
+                                    <div class="stats-row">
+                                        <div class="stat-item"><span class="stat-icon gold">G</span> 15</div>
+                                        <div class="stat-item"><span class="stat-icon power">P</span> 0/2</div>
+                                    </div>
+                                    <div class="exp-bar-container" style="width:120px;height:15px;">
+                                        <div class="exp-bar-fill"></div>
+                                        <div class="exp-text">0/4</div>
+                                    </div>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="action-btn potion" style="padding:5px 10px;font-size:0.7em;">🩸 血瓶</button>
+                                    <button class="action-btn undo" style="padding:5px 10px;font-size:0.7em;">↩️ 撤回</button>
+                                    <button class="action-btn turn" style="padding:5px 10px;font-size:0.7em;">✓ 回合</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <ul class="suggestion-list" style="margin-top:20px;">
+                    <li>
+                        <span class="num">1</span>
+                        <div class="content">
+                            <h4>统一顶部信息栏</h4>
+                            <p>将Buff/Debuff图标、回合数、骰子数量等合并到顶部状态栏，使用半透明背景+模糊效果，减少对游戏画面的遮挡。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">2</span>
+                        <div class="content">
+                            <h4>简化分数面板</h4>
+                            <p>将6个点数分数和5个组合倍率整合为紧凑的表格布局，减少嵌套层级，使用hover效果增强交互感。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">3</span>
+                        <div class="content">
+                            <h4>整合底部操作栏</h4>
+                            <p>将英雄信息、资源、经验条、操作按钮按功能分组，使用图标+文字的组合，提高识别效率。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 视觉优化 -->
+            <div id="visual" class="tab-content">
+                <ul class="suggestion-list">
+                    <li>
+                        <span class="num">1</span>
+                        <div class="content">
+                            <h4>统一色彩体系</h4>
+                            <p>建立主色（#ffd700 金色）、强调色（#e94560 红色）、信息色（#00bcd4 蓝色）的层级，避免使用过多颜色造成视觉混乱。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">2</span>
+                        <div class="content">
+                            <h4>字体层级规范</h4>
+                            <p>标题使用 1.2-1.5em + 金色，重要数值使用 1.1em + 粗体，说明文字使用 0.85em + 灰色，统一使用像素风字体。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">3</span>
+                        <div class="content">
+                            <h4>增加动效反馈</h4>
+                            <p>按钮悬停时上移+发光，点击时缩放，分数变化时弹出浮动数字，回合切换时屏幕边缘闪烁提示。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">4</span>
+                        <div class="content">
+                            <h4>卡片化设计</h4>
+                            <p>英雄选择、技能图标使用统一卡片样式，包含悬停放大效果，选中状态使用金色边框+外发光。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 交互优化 -->
+            <div id="interaction" class="tab-content">
+                <ul class="suggestion-list">
+                    <li>
+                        <span class="num">1</span>
+                        <div class="content">
+                            <h4>快捷键提示</h4>
+                            <p>在血瓶(Q)、撤回(W)、回合结束(E)按钮上显示快捷键，支持键盘操作，提升操作效率。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">2</span>
+                        <div class="content">
+                            <h4>预览反馈</h4>
+                            <p>鼠标悬停在敌人或道具上时，显示预计获得的分数，在操作前即可看到结果预览。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">3</span>
+                        <div class="content">
+                            <h4>拖拽操作</h4>
+                            <p>支持拖拽英雄到目标位置，替代方向键选择，更符合直觉。拖拽时显示路径和预计结果。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">4</span>
+                        <div class="content">
+                            <h4>智能提示</h4>
+                            <p>当可以组成高倍率组合时，高亮相关骰子；当血量危险时，血瓶按钮脉冲闪烁提醒。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 代码重构 -->
+            <div id="code" class="tab-content">
+                <p style="margin-bottom:15px;color:#aaa;">简化节点层级，使用更扁平的结构：</p>
+                <div class="code-block">
+<span class="comment"># 优化前 - 层级过深</span>
+score_panal
+└── NinePatchRect
+    └── MarginContainer
+        └── VBoxContainer
+            ├── NinePatchRect (标题)
+            │   └── HBoxContainer
+            │       ├── Label + Label2
+            └── HBoxContainer
+                ├── NinePatchRect2 (左侧面板)
+                │   └── MarginContainer
+                │       └── VBoxContainer
+                │           ├── one_score_frame (PanelContainer)
+                │           │   └── HBoxContainer
+                │           │       ├── TextureRect2 + one_score
+                │           ├── two_score_frame...
+                │           └── six_score_frame...
+                └── NinePatchRect3 (右侧面板)
+                    └── MarginContainer2
+                        └── VBoxContainer2
+                            ├── duizi_percent_frame...
+                            └── tongshun_percent_frame...
+
+<span class="comment"># 优化后 - 扁平化结构</span>
+<span class="keyword">class_name</span> <span class="string">ScorePanel</span> <span class="keyword">extends</span> Control
+├── Background (NinePatchRect)
+├── TitleLabel (Label)
+├── ScoreTable (ItemList 或自定义 Grid)
+│   ├── 6行点数数据
+│   └── 5行组合倍率
+└── DropSlotInfo (HBoxContainer)
+    ├── Icon + Label
+
+<span class="comment"># 或使用自定义绘制减少节点数</span>
+<span class="keyword">func</span> <span class="string">_draw</span>():
+    <span class="comment"># 直接绘制表格，无需大量子节点</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(6):
+        draw_rect(score_rects[i], bg_color)
+        draw_string(font, pos, score_texts[i])
+                </div>
+                
+                <ul class="suggestion-list">
+                    <li>
+                        <span class="num">1</span>
+                        <div class="content">
+                            <h4>使用自定义控件</h4>
+                            <p>将复杂的嵌套结构封装为自定义控件（如 ScorePanel、HeroCard），减少场景文件中的节点数量，提高可维护性。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">2</span>
+                        <div class="content">
+                            <h4>_draw() 优化</h4>
+                            <p>对于静态或简单的UI元素（如分数表格），使用 _draw() 直接绘制，而不是创建大量 TextureRect + Label 节点。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="num">3</span>
+                        <div class="content">
+                            <h4>Theme 统一</h4>
+                            <p>在 project.godot 中定义全局 Theme，统一按钮、标签、面板的样式，减少重复设置。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 完整原型演示 -->
+        <div class="section">
+            <h2>🎯 完整界面原型</h2>
+            <div class="prototype-header">
+                <span class="prototype-title">点击切换查看优化后的游戏界面</span>
+                <button class="toggle-btn" onclick="togglePrototype()">显示/隐藏</button>
+            </div>
+            
+            <div class="game-screen" id="gamePrototype">
+                <div class="pixel-bg"></div>
+                
+                <!-- 顶部状态栏 -->
+                <div class="top-bar">
+                    <div class="buff-icons">
+                        <div class="buff-icon" title="攻击力+5">⚔️<span class="stack">2</span></div>
+                        <div class="buff-icon" title="防御力+3">🛡️</div>
+                        <div class="buff-icon" title="金币加成">💰</div>
+                        <div class="buff-icon" title="速度提升">⚡</div>
+                        <div class="buff-icon" title="幸运">🍀</div>
+                    </div>
+                    <div class="round-info">
+                        <span>🎲 骰子: <strong>9</strong></span>
+                        <span class="round-badge">回合 3 / 10</span>
+                        <span>❤️ 血瓶: <strong>2/3</strong></span>
+                    </div>
+                </div>
+                
+                <!-- 浮动信息 -->
+                <div class="floating-info">
+                    <span>🎯 目标: 150</span>
+                    <span>⭐ 当前: 95</span>
+                    <span>💰 奖励: ×9</span>
+                </div>
+                
+                <!-- 左侧分数面板 -->
+                <div class="left-panel">
+                    <div class="panel-header">📊 骰子分数表</div>
+                    <table class="score-table">
+                        <tr>
+                            <th>点数</th>
+                            <th>分值</th>
+                            <th>倍率</th>
+                        </tr>
+                        <tr>
+                            <td><span class="dice-dot">⚀</span></td>
+                            <td>14</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><span class="dice-dot" style="background:#ff5252;">⚁</span></td>
+                            <td>9</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><span class="dice-dot" style="background:#ffeb3b;">⚂</span></td>
+                            <td>3</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><span class="dice-dot">⚃</span></td>
+                            <td>14</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><span class="dice-dot">⚄</span></td>
+                            <td>11</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><span class="dice-dot">⚅</span></td>
+                            <td>12</td>
+                            <td>-</td>
+                        </tr>
+                    </table>
+                    <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,0.3);">
+                        <table class="score-table">
+                            <tr><th>组合</th><th>倍率</th></tr>
+                            <tr><td>⚁⚁ 对子</td><td class="multiplier">×2.0</td></tr>
+                            <tr><td>⚁⚂⚃ 顺子</td><td class="multiplier">×1.5</td></tr>
+                            <tr><td style="color:#ffeb3b;">🟡 同色</td><td class="multiplier">×1.8</td></tr>
+                            <tr><td style="color:#4caf50;">🟢 同对</td><td class="multiplier">×3.0</td></tr>
+                            <tr><td style="color:#f44336;">🔴 同顺</td><td class="multiplier">×4.0</td></tr>
+                        </table>
+                    </div>
+                    <div style="margin-top:8px;padding:5px;background:rgba(0,0,0,0.2);border-radius:4px;font-size:0.75em;text-align:center;">
+                        <span>🎲 掉落: 绿1</span>
+                    </div>
+                </div>
+                
+                <!-- 右侧关卡面板 -->
+                <div class="right-panel">
+                    <div class="stage-title">🗡️ 关卡一</div>
+                    <div style="text-align:center;margin-bottom:10px;">
+                        <span style="font-size:2em;">👾</span>
+                    </div>
+                    <div class="target-info">
+                        <span class="label">🎯 目标分数</span>
+                        <span class="value">150</span>
+                    </div>
+                    <div class="target-info">
+                        <span class="label">⭐ 当前分数</span>
+                        <span class="value" style="color:#90ee90;">95</span>
+                    </div>
+                    <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,0.3);">
+                        <div style="font-size:0.75em;color:#aaa;text-align:center;margin-bottom:5px;">关卡进度</div>
+                        <div style="width:100%;height:8px;background:rgba(0,0,0,0.3);border-radius:4px;overflow:hidden;">
+                            <div style="width:63%;height:100%;background:#ffd700;border-radius:4px;"></div>
+                        </div>
+                        <div style="text-align:center;font-size:0.75em;color:#ffd700;margin-top:3px;">63%</div>
+                    </div>
+                </div>
+                
+                <!-- 实时分数 -->
+                <div class="score-float">
+                    <div class="current">⚔️ 基础: 45</div>
+                    <div class="preview">📈 预计: +27 (×1.8)</div>
+                </div>
+                
+                <!-- 中央游戏区域 -->
+                <div class="game-area">
+                    <div class="grid-container">
+                        <!-- 第1行 -->
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"><div class="entity slime-blue">🔵</div></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"><div class="entity slime-blue">🔵</div></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"><div class="entity slime-blue">🔵</div></div>
+                        <div class="grid-cell"></div>
+                        <!-- 第2行 -->
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell hero-pos"><div class="entity hero">🧙</div></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <!-- 第3行 -->
+                        <div class="grid-cell"><div class="entity slime-red">🔴</div></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"><div class="entity slime-red">🔴</div></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"><div class="entity slime-red">🔴</div></div>
+                        <!-- 第4行 -->
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"><div class="entity coin">🟡</div></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"><div class="entity coin">🟡</div></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <!-- 第5行 -->
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"><div class="entity slime-red">🔴</div></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                        <div class="grid-cell"></div>
+                    </div>
+                </div>
+                
+                <!-- 英雄选择栏 -->
+                <div class="hero-bar">
+                    <div class="hero-card active">
+                        <span class="hero-key">1</span>
+                        <div class="hero-avatar" style="background:#4a148c;">🧙</div>
+                        <div class="hero-status">Lv.1</div>
+                    </div>
+                    <div class="hero-card">
+                        <span class="hero-key">2</span>
+                        <div class="hero-avatar" style="background:#1565c0;">🏹</div>
+                        <div class="hero-status">Lv.2</div>
+                    </div>
+                    <div class="hero-card" style="opacity:0.5;">
+                        <span class="hero-key">3</span>
+                        <div class="hero-avatar" style="background:#555;">⚔️</div>
+                        <div class="hero-status" style="color:#e94560;">需要能量</div>
+                    </div>
+                </div>
+                
+                <!-- 底部操作栏 -->
+                <div class="bottom-bar">
+                    <div class="player-info">
+                        <div class="class-badge">🧙</div>
+                        <div class="stats-row">
+                            <div class="stat-item">
+                                <span class="stat-icon gold">💰</span>
+                                <span>15</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon power">⚡</span>
+                                <span>0 / 2</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size:0.75em;color:#aaa;margin-bottom:2px;">经验值 Lv.1</div>
+                            <div class="exp-bar-container">
+                                <div class="exp-bar-fill"></div>
+                                <div class="exp-text">0 / 4</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn potion" title="快捷键: Q">
+                            <span>🩸</span>
+                            <span>血瓶</span>
+                            <span style="font-size:0.75em;opacity:0.7;">[Q]</span>
+                        </button>
+                        <button class="action-btn undo" title="快捷键: W">
+                            <span>↩️</span>
+                            <span>撤回</span>
+                            <span style="font-size:0.75em;opacity:0.7;">[W]</span>
+                        </button>
+                        <button class="action-btn turn" title="快捷键: E">
+                            <span>✓</span>
+                            <span>回合结束</span>
+                            <span style="font-size:0.75em;opacity:0.7;">[E]</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 总结 -->
+        <div class="section">
+            <h2>📋 优化总结</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:15px;">
+                <div style="background:#1a1a2e;padding:15px;border-radius:8px;text-align:center;">
+                    <div style="font-size:2em;margin-bottom:10px;">📐</div>
+                    <h4 style="color:#ffd700;margin-bottom:5px;">布局优化</h4>
+                    <p style="font-size:0.85em;color:#aaa;">信息分组明确，减少视线移动距离</p>
+                </div>
+                <div style="background:#1a1a2e;padding:15px;border-radius:8px;text-align:center;">
+                    <div style="font-size:2em;margin-bottom:10px;">🎨</div>
+                    <h4 style="color:#ffd700;margin-bottom:5px;">视觉优化</h4>
+                    <p style="font-size:0.85em;color:#aaa;">统一色彩与字体层级，增强可读性</p>
+                </div>
+                <div style="background:#1a1a2e;padding:15px;border-radius:8px;text-align:center;">
+                    <div style="font-size:2em;margin-bottom:10px;">🖱️</div>
+                    <h4 style="color:#ffd700;margin-bottom:5px;">交互优化</h4>
+                    <p style="font-size:0.85em;color:#aaa;">快捷键支持，预览反馈，智能提示</p>
+                </div>
+                <div style="background:#1a1a2e;padding:15px;border-radius:8px;text-align:center;">
+                    <div style="font-size:2em;margin-bottom:10px;">⚡</div>
+                    <h4 style="color:#ffd700;margin-bottom:5px;">性能优化</h4>
+                    <p style="font-size:0.85em;color:#aaa;">扁平化节点结构，减少嵌套层级</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            // 隐藏所有内容
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            // 移除所有活动标签
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // 显示选中内容
+            document.getElementById(tabName).classList.add('active');
+            // 激活标签
+            event.target.classList.add('active');
+        }
+        
+        function togglePrototype() {
+            const prototype = document.getElementById('gamePrototype');
+            prototype.classList.toggle('active');
+        }
+        
+        // 默认显示原型
+        document.getElementById('gamePrototype').classList.add('active');
+    </script>
+</body>
+</html>
