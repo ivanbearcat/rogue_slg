@@ -1,26 +1,134 @@
 [
     {
-        "debuff_id": "point_seal",
+        "debuff_id": "point_seal_1",
         "debuff_name": "点数封印",
         "debuff_icon": "res://images/debuff_icon/point_seal.png",
-        "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）",
+        "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）\n[color=#cc0808]⚠ 封印：1点[/color]",
         "debuff_res": "res://scripts/debuff/point_seal_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "candidate_points": [1, 2, 3, 4, 5, 6]
+            "disabled_points": [1]
         }
     },
     {
-        "debuff_id": "type_seal",
+        "debuff_id": "point_seal_2",
+        "debuff_name": "点数封印",
+        "debuff_icon": "res://images/debuff_icon/point_seal.png",
+        "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）\n[color=#cc0808]⚠ 封印：2点[/color]",
+        "debuff_res": "res://scripts/debuff/point_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_points": [2]
+        }
+    },
+    {
+        "debuff_id": "point_seal_3",
+        "debuff_name": "点数封印",
+        "debuff_icon": "res://images/debuff_icon/point_seal.png",
+        "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）\n[color=#cc0808]⚠ 封印：3点[/color]",
+        "debuff_res": "res://scripts/debuff/point_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_points": [3]
+        }
+    },
+    {
+        "debuff_id": "point_seal_4",
+        "debuff_name": "点数封印",
+        "debuff_icon": "res://images/debuff_icon/point_seal.png",
+        "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）\n[color=#cc0808]⚠ 封印：4点[/color]",
+        "debuff_res": "res://scripts/debuff/point_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_points": [4]
+        }
+    },
+    {
+        "debuff_id": "point_seal_5",
+        "debuff_name": "点数封印",
+        "debuff_icon": "res://images/debuff_icon/point_seal.png",
+        "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）\n[color=#cc0808]⚠ 封印：5点[/color]",
+        "debuff_res": "res://scripts/debuff/point_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_points": [5]
+        }
+    },
+    {
+        "debuff_id": "point_seal_6",
+        "debuff_name": "点数封印",
+        "debuff_icon": "res://images/debuff_icon/point_seal.png",
+        "debuff_tooltip": "随机1种点数的基础分数变为0（可出现多个，点数独立随机）\n[color=#cc0808]⚠ 封印：6点[/color]",
+        "debuff_res": "res://scripts/debuff/point_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_points": [6]
+        }
+    },
+    {
+        "debuff_id": "type_seal_duizi",
         "debuff_name": "骰型封印",
         "debuff_icon": "res://images/debuff_icon/type_seal.png",
-        "debuff_tooltip": "随机1种骰型的倍率变为0%",
+        "debuff_tooltip": "随机1种骰型的倍率变为0%\n[color=#cc0808]⚠ 封印：对子[/color]",
         "debuff_res": "res://scripts/debuff/type_seal_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "candidate_types": ["duizi", "shunzi", "tongse", "tongdui", "tongshun"]
+            "disabled_types": ["duizi"]
+        }
+    },
+    {
+        "debuff_id": "type_seal_shunzi",
+        "debuff_name": "骰型封印",
+        "debuff_icon": "res://images/debuff_icon/type_seal.png",
+        "debuff_tooltip": "随机1种骰型的倍率变为0%\n[color=#cc0808]⚠ 封印：顺子[/color]",
+        "debuff_res": "res://scripts/debuff/type_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_types": ["shunzi"]
+        }
+    },
+    {
+        "debuff_id": "type_seal_tongse",
+        "debuff_name": "骰型封印",
+        "debuff_icon": "res://images/debuff_icon/type_seal.png",
+        "debuff_tooltip": "随机1种骰型的倍率变为0%\n[color=#cc0808]⚠ 封印：同色[/color]",
+        "debuff_res": "res://scripts/debuff/type_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_types": ["tongse"]
+        }
+    },
+    {
+        "debuff_id": "type_seal_tongdui",
+        "debuff_name": "骰型封印",
+        "debuff_icon": "res://images/debuff_icon/type_seal.png",
+        "debuff_tooltip": "随机1种骰型的倍率变为0%\n[color=#cc0808]⚠ 封印：同对[/color]",
+        "debuff_res": "res://scripts/debuff/type_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_types": ["tongdui"]
+        }
+    },
+    {
+        "debuff_id": "type_seal_tongshun",
+        "debuff_name": "骰型封印",
+        "debuff_icon": "res://images/debuff_icon/type_seal.png",
+        "debuff_tooltip": "随机1种骰型的倍率变为0%\n[color=#cc0808]⚠ 封印：同顺[/color]",
+        "debuff_res": "res://scripts/debuff/type_seal_buff.gd",
+        "debuff_type": "pre_hero_turn_buff",
+        "severity": "normal",
+        "data": {
+            "disabled_types": ["tongshun"]
         }
     },
     {
@@ -98,7 +206,7 @@
     {
         "debuff_id": "drop_ban",
         "debuff_name": "掉落禁令",
-        "debuff_icon": "res://icon.svg",
+        "debuff_icon": "res://images/debuff_icon/drop_ban.png",
         "debuff_tooltip": "掉落格子无法使用，掉落骰子直接消失",
         "debuff_res": "res://scripts/debuff/drop_ban_buff.gd",
         "debuff_type": "pre_hero_turn_buff",
@@ -107,7 +215,7 @@
     {
         "debuff_id": "score_ceiling",
         "debuff_name": "分数穹顶",
-        "debuff_icon": "res://icon.svg",
+        "debuff_icon": "res://images/debuff_icon/score_ceiling.png",
         "debuff_tooltip": "单次攻击得分不超过目标分数的40%",
         "debuff_res": "res://scripts/debuff/score_ceiling_buff.gd",
         "debuff_type": "post_attack_buff",
@@ -117,7 +225,7 @@
     {
         "debuff_id": "dice_decay",
         "debuff_name": "骰子衰退",
-        "debuff_icon": "res://icon.svg",
+        "debuff_icon": "res://images/debuff_icon/dice_decay.png",
         "debuff_tooltip": "每有3个史莱姆所有点数基础分-1（最低0）",
         "debuff_res": "res://scripts/debuff/dice_decay_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
@@ -126,7 +234,7 @@
     {
         "debuff_id": "drop_penalty",
         "debuff_name": "掉落惩罚",
-        "debuff_icon": "res://icon.svg",
+        "debuff_icon": "res://images/debuff_icon/drop_penalty.png",
         "debuff_tooltip": "每掉落1个骰子，当前分数-3%",
         "debuff_res": "res://scripts/debuff/drop_penalty_buff.gd",
         "debuff_type": "post_attack_buff",
@@ -135,7 +243,7 @@
     {
         "debuff_id": "armor_break",
         "debuff_name": "破甲",
-        "debuff_icon": "res://icon.svg",
+        "debuff_icon": "res://images/debuff_icon/armor_break.png",
         "debuff_tooltip": "本关防御-2",
         "debuff_res": "res://scripts/debuff/armor_break_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
@@ -148,13 +256,13 @@
         "debuff_tooltip": "每次攻击的得分-15%",
         "debuff_res": "res://scripts/debuff/attack_weaken_buff.gd",
         "debuff_type": "post_attack_buff",
-        "severity": "normal"
+        "severity": "boss"
     },
     {
         "debuff_id": "fragile",
         "debuff_name": "脆弱",
-        "debuff_icon": "res://icon.svg",
-        "debuff_tooltip": "每回合防御-1（最低0）",
+        "debuff_icon": "res://images/debuff_icon/fragile.png",
+        "debuff_tooltip": "每2回合防御-1（最低0）",
         "debuff_res": "res://scripts/debuff/fragile_buff.gd",
         "debuff_type": "pre_enemy_turn_buff",
         "severity": "normal"

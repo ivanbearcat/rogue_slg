@@ -1,32 +1,7 @@
 extends Buff
 
-## 骰型到图标的映射
-const TYPE_ICON_MAP := {
-	"duizi": "res://images/debuff_icon/disable_duizi.png",
-	"shunzi": "res://images/debuff_icon/disable_shunzi.png",
-	"tongse": "res://images/debuff_icon/disable_tongse.png",
-	"tongdui": "res://images/debuff_icon/disable_tongdui.png",
-	"tongshun": "res://images/debuff_icon/disable_tongshun.png",
-}
-
 func _init(meta: Dictionary = {}, game_manager_node: Node2D = null) -> void:
 	super(meta, game_manager_node)
-	# 如果 data 中有 candidate_types（候选池）且没有 disabled_types，随机选一个
-	var data_dict: Dictionary = buff_meta.get("data", {})
-	if not data_dict.has("disabled_types") and data_dict.has("candidate_types"):
-		_randomize_type()
-
-## 从候选骰型中随机选1个，更新 buff_meta
-func _randomize_type() -> void:
-	var candidates: Array = buff_meta.get("data", {}).get("candidate_types", [])
-	if candidates.is_empty():
-		return
-	var chosen: String = candidates[randi() % candidates.size()]
-	# 设置选中的骰型
-	buff_meta["data"]["disabled_types"] = [chosen]
-	# 替换图标为对应骰型的图标
-	if TYPE_ICON_MAP.has(chosen):
-		buff_meta["debuff_icon"] = TYPE_ICON_MAP[chosen]
 
 func set_buff():
 	var texture = load(buff_meta["debuff_icon"])

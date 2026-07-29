@@ -273,6 +273,8 @@ var shop_coin_skill_bought := false
 var pending_shop_skill: Dictionary = {}
 ## 已在商店出现过的金币技能ID列表（防止重复出现）
 var appeared_coin_skill_ids: Array = []
+## 本run已随机抽中的debuff_id列表（跨关卡不重复，run开始时清空）
+var _used_debuff_ids: Array = []
 ## 升级待增加的HP值（延迟到扣血之后应用，确保先扣血再加升级血）
 
 
@@ -314,6 +316,8 @@ func _ready() -> void:
 			Current.target_score = row["target_score"]
 	## 初始化得分累计回血
 	Current.score_heal_threshold = Current.score_heal_base_threshold
+	## 清空本run已用debuff列表（跨关卡不重复机制的重置）
+	_used_debuff_ids = []
 	## 生成网格
 	for x in range(_removable_map_vec.x):
 		for y in range(_removable_map_vec.y):
@@ -453,6 +457,21 @@ func _pre_create_slime():
 					grid.warning.visible = true
 
 
+## 从severity=="normal"的debuff池中排除已用条目后随机选1个
+## 选中条目的debuff_id追加到_used_debuff_ids，返回选中的配置行
+## 若池为空返回空Dictionary
+func _pick_random_debuff() -> Dictionary:
+	var available: Array = []
+	for debuff_row in debuff_json_data:
+		if debuff_row.get("severity", "normal") == "normal" and \
+		debuff_row["debuff_id"] not in _used_debuff_ids:
+			available.append(debuff_row)
+	if available.is_empty():
+		return {}
+	var picked: Dictionary = available.pick_random()
+	_used_debuff_ids.append(picked["debuff_id"])
+	return picked
+
 ## 生成精英史莱姆（在原精英关3/6/9开局生成）
 func _spawn_elite_slime():
 	## 在随机空格生成1个精英史莱姆
@@ -477,13 +496,9 @@ func _spawn_elite_slime():
 	## 设置红色轮廓
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 0))
 	slime_instantiate.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
-	## 施加1个随机普通debuff
-	var curse_debuffs = []
-	for debuff_row in debuff_json_data:
-		if debuff_row.get("severity", "normal") == "normal":
-			curse_debuffs.append(debuff_row)
-	if not curse_debuffs.is_empty():
-		var debuff_row = curse_debuffs.pick_random()
+	## 施加1个随机普通debuff（跨关卡不重复）
+	var debuff_row = _pick_random_debuff()
+	if not debuff_row.is_empty():
 		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
 		debuff_effect_label.text = "精英出现！ [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
@@ -516,17 +531,12 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 	## 施加BOSS效果：先固定后随机，从stage_config读取配置
 	var fixed_curses: Array = stage_config.get("boss_fixed_curses", [])
 	var curse_count: int = stage_config.get("boss_curse_count", 1)
-	## 收集普通debuff池
-	var curse_debuffs = []
-	for debuff_row in debuff_json_data:
-		if debuff_row.get("severity", "normal") == "normal":
-			curse_debuffs.append(debuff_row)
 	var applied_debuff_ids: Array = []
 	var applied_debuff_icons: String = ""
-	## 1. 先施加固定BOSS效果
+	## 1. 先施加固定BOSS效果（从全量debuff_json_data按debuff_id查找，不限于severity=normal）
 	for fixed_id in fixed_curses:
 		var fixed_row = null
-		for debuff_row in curse_debuffs:
+		for debuff_row in debuff_json_data:
 			if debuff_row["debuff_id"] == fixed_id:
 				fixed_row = debuff_row
 				break
@@ -535,21 +545,15 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 			BuffSystem.callv("set_" + fixed_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
 			applied_debuff_ids.append(fixed_id)
 			applied_debuff_icons += " [img=15 ]" + fixed_row["debuff_icon"] + "[/img]"
-	## 2. 再从BOSS效果池中（排除已施加的固定效果）随机抽取boss_curse_count个不重复BOSS效果
-	var available_curses = []
-	for debuff_row in curse_debuffs:
-		if debuff_row["debuff_id"] not in applied_debuff_ids:
-			available_curses.append(debuff_row)
+	## 2. 再从随机池中抽取boss_curse_count个不重复BOSS效果（由_used_debuff_ids统一去重）
 	for i in range(curse_count):
-		if available_curses.is_empty():
+		var debuff_row = _pick_random_debuff()
+		if debuff_row.is_empty():
 			break
-		var idx = randi() % available_curses.size()
-		var debuff_row = available_curses[idx]
 		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
 		applied_debuff_ids.append(debuff_row["debuff_id"])
 		applied_debuff_icons += " [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
-		available_curses.remove_at(idx)
 	debuff_effect_label.text = "BOSS出现！" + applied_debuff_icons
 	await EffectManager.debuff_change_effect()
 	## 根据boss_extra_elites值生成额外精英史莱姆

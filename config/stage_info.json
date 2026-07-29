@@ -97,7 +97,7 @@
         "boss_id": "chaos_king",
         "boss_gate_type": "tongshun",
         "boss_gate_count": 3,
-        "boss_fixed_curses": ["score_drain"],
+        "boss_fixed_curses": ["attack_weaken"],
         "boss_curse_count": 2,
         "boss_extra_elites": 2
     }
