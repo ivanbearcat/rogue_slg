@@ -31,12 +31,16 @@ EffectManager="*res://scripts/autoload/effect_manager.gd"
 VFX="*uid://ecyiymmaj3jv"
 EnvVFX="*uid://qomyut16hnoi"
 TooltipManager="*res://scripts/autoload/tooltip_manager.gd"
-Fx="*uid://bhp42c1hny5fe"
+Fx="*uid://d2354cc1tpg8e"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+window/stretch/scale_mode="integer"
 mouse_cursor/custom_image="res://images/mouse_icon/pointer_scifi_a.svg"
 
 [editor_plugins]
