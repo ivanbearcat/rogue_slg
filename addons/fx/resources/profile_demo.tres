@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="FxProfile" format=3 uid="uid://hm67j6wsl05j"]
 
-[ext_resource type="Script" uid="uid://b81d2bbeg3kgd" path="res://addons/fx/fx_profile.gd" id="1_profile"]
-[ext_resource type="Script" uid="uid://cwoloss7aheg6" path="res://addons/fx/fx_effect.gd" id="1_x8gbu"]
+[ext_resource type="Script" uid="uid://d0yi0eb4b1c4t" path="res://addons/fx/fx_profile.gd" id="1_profile"]
+[ext_resource type="Script" uid="uid://tul8vbn5w1x" path="res://addons/fx/fx_effect.gd" id="1_x8gbu"]
 
 [resource]
 script = ExtResource("1_profile")

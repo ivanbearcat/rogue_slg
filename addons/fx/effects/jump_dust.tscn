@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://jump_dust_001"]
+[gd_scene load_steps=2 format=3 uid="uid://2gr0i4aaf0s2s"]
 
 [sub_resource type="Gradient" id="Gradient_jump"]
 offsets = PackedFloat32Array(0, 0.5, 1)

@@ -142,5 +142,7 @@ func assert_has(dict: Dictionary, key: String, message: String = "") -> void:
 
 func _fail(message: String) -> void:
 	_test_failed = true
-	var script_name := get_script().resource_path.get_file() if get_script() else "unknown"
+	var script_name: String = "unknown"
+	if get_script() and get_script().resource_path:
+		script_name = get_script().resource_path.get_file()
 	print("    ASSERTION FAILED [%s::%s]: %s" % [script_name, _current_test, message])

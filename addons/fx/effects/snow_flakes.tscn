@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://snow_flakes_001"]
+[gd_scene load_steps=2 format=3 uid="uid://447geh6k9ivss"]
 
 [sub_resource type="Gradient" id="Gradient_snow"]
 offsets = PackedFloat32Array(0, 0.5, 1)

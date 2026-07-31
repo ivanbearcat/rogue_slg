@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dash_trail_001"]
+[gd_scene load_steps=3 format=3 uid="uid://ua6e21f4sus8o"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dash"]
 blend_mode = 1

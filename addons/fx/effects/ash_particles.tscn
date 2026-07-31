@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://ash_particles_001"]
+[gd_scene load_steps=3 format=3 uid="uid://ziz0z4cwquo8o"]
 
 [sub_resource type="Curve" id="Curve_ash_scale"]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

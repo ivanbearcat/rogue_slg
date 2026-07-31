@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://shield_break_001"]
+[gd_scene load_steps=3 format=3 uid="uid://6l4gabjkh6e6h"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_shield"]
 blend_mode = 1

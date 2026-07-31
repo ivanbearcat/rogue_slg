@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyf4ga8fhw0b4"]
+[gd_scene load_steps=3 format=3 uid="uid://3dinj8kejnkkg"]
 
 [ext_resource type="Script" uid="uid://d0ufl3j443s8k" path="res://src/effect/vfx_test.gd" id="1_test"]
 [ext_resource type="Texture2D" uid="uid://bjgym2x8n26v1" path="res://icon.svg" id="2_icon"]
@@ -30,7 +30,7 @@ theme_override_constants/separation = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 10
-text = "✨ 粒子"
+text = "鉁?绮掑瓙"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="UI/Panel/VBox"]
@@ -55,7 +55,7 @@ theme_override_constants/separation = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "🗑️"
+text = "馃棏锔?
 
 [node name="ShaderPanel" type="PanelContainer" parent="UI"]
 offset_left = 7.0
@@ -71,7 +71,7 @@ theme_override_constants/separation = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.7, 0.4, 1)
 theme_override_font_sizes/font_size = 10
-text = "🎭 着色"
+text = "馃幁 鐫€鑹?
 horizontal_alignment = 1
 
 [node name="HSeparator2" type="HSeparator" parent="UI/ShaderPanel/VBox2"]
@@ -96,13 +96,13 @@ theme_override_constants/separation = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "✓"
+text = "鉁?
 
 [node name="RemoveShaderButton" type="Button" parent="UI/ShaderPanel/VBox2/ShaderButtonContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 7
-text = "✕"
+text = "鉁?
 
 [node name="HelpPanel" type="PanelContainer" parent="UI"]
 offset_left = 150.0
@@ -114,6 +114,6 @@ offset_bottom = 34.0
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 theme_override_font_sizes/font_size = 7
-text = "📌 选择 → 右键生成 | Esc 退出"
+text = "馃搶 閫夋嫨 鈫?鍙抽敭鐢熸垚 | Esc 閫€鍑?
 horizontal_alignment = 1
 vertical_alignment = 1

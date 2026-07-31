@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://waterfall_mist_001"]
+[gd_scene load_steps=3 format=3 uid="uid://lmbdk9vo7h4j0"]
 
 [sub_resource type="Curve" id="Curve_mist_scale"]
 _data = [Vector2(0, 0.2), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]

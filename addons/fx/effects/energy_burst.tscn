@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://energy_burst_001"]
+[gd_scene load_steps=4 format=3 uid="uid://5ogsmvguckdm9"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_energy"]
 blend_mode = 1

@@ -37,7 +37,7 @@
     {
         "coin_skill_id": "dice_adjust",
         "coin_skill_name": "骰子点数调整",
-        "coin_skill_icon": "res://images/coin_skill_icon/dice_adjust.svg",
+        "coin_skill_icon": "res://images/coin_skill_icon/dice_adjust.png",
         "coin_skill_tooltip": "选择+1或-1调整骰子点数",
         "coin_skill_shop_cost": 4
     },
@@ -58,7 +58,7 @@
     {
         "coin_skill_id": "swap",
         "coin_skill_name": "位置交换",
-        "coin_skill_icon": "res://icon.svg",
+        "coin_skill_icon": "res://images/coin_skill_icon/swap.png",
         "coin_skill_tooltip": "交换2个史莱姆的位置",
         "coin_skill_shop_cost": 4
     }

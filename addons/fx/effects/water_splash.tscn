@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://ceb550ut8wye4"]
+[gd_scene load_steps=2 format=3 uid="uid://u87pi3ip7hz9n"]
 
 [sub_resource type="Gradient" id="Gradient_water"]
 offsets = PackedFloat32Array(0, 0.5, 1)

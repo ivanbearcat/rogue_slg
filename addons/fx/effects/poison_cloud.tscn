@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb0en11ors6qg"]
+[gd_scene load_steps=3 format=3 uid="uid://my6zbrzarrkdy"]
 
 [sub_resource type="Curve" id="Curve_poison_scale"]
 _data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0, Vector2(0.4, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7), 0.0, 0.0, 0, 0]

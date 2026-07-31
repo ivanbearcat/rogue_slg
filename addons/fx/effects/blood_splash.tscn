@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://blood_splash_001"]
+[gd_scene load_steps=3 format=3 uid="uid://bjufkvmjkedpz"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_blood"]
 blend_mode = 1

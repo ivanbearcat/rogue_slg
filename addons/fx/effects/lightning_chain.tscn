@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://lightning_chain_001"]
+[gd_scene load_steps=5 format=3 uid="uid://pn1vixmei8ob4"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lightning"]
 blend_mode = 1

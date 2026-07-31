@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://fireball_trail_001"]
+[gd_scene load_steps=3 format=3 uid="uid://kvnnniu950y9h"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fireball"]
 blend_mode = 1
