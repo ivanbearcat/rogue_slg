@@ -24,10 +24,15 @@
 [ext_resource type="Theme" uid="uid://c7fy6qc45ak5d" path="res://resources/tooltip.tres" id="17_qkpxi"]
 [ext_resource type="Texture2D" uid="uid://g5x32nluxcdp" path="res://images/enemy_icon/normal.png" id="18_5q0nq"]
 [ext_resource type="LabelSettings" uid="uid://dwens7d1jb5s2" path="res://resources/clear_stage_font.tres" id="18_gqmmt"]
+[ext_resource type="PackedScene" uid="uid://gjm8eu8gnais" path="res://scenes/scale_wrapper_bg.tscn" id="19_kmb1v"]
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="19_vxglm"]
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
+[ext_resource type="Texture2D" uid="uid://dyfgx4cis665i" path="res://images/ui/border_ui.png" id="25_j8jky"]
 [ext_resource type="Script" uid="uid://cvems1v2e2cv3" path="res://scripts/hp_bar.gd" id="26_j8jky"]
+[ext_resource type="Texture2D" uid="uid://tp865nxtv2ef" path="res://images/ui_icon/blood_bottle.png" id="28_fuf3a"]
+[ext_resource type="Texture2D" uid="uid://drccwvlcmiao7" path="res://images/ui_icon/redo.png" id="29_c6pm6"]
+[ext_resource type="Texture2D" uid="uid://5q7nw3pj5x07" path="res://images/ui_icon/sand_clock.png" id="30_5he1u"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
 [ext_resource type="PackedScene" uid="uid://biahlr85bpue3" path="res://scenes/drop_selection_ui.tscn" id="33_5q0nq"]
 [ext_resource type="Script" uid="uid://c75g4vrr8ub2v" path="res://scripts/ui/buff_debug_panel.gd" id="34_dgi5k"]
@@ -1120,6 +1125,9 @@ atlas = ExtResource("16_kmb1v")
 atlas = ExtResource("15_jkv2x")
 region = Rect2(29, 148, 79, 56)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1by0b"]
+atlas = ExtResource("25_j8jky")
+
 [sub_resource type="ButtonGroup" id="ButtonGroup_y6deb"]
 allow_unpress = true
 
@@ -1287,51 +1295,51 @@ events = [SubResource("InputEventKey_y6deb")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2wyq8"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(144, 32, 32, 16)
+region = Rect2(144, 32, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fv21b"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(176, 32, 32, 16)
+region = Rect2(176, 32, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tel4y"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(160, 0, 32, 16)
+region = Rect2(160, 0, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5poiv"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(208, 32, 32, 16)
+region = Rect2(208, 32, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b6ruc"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(144, 32, 32, 16)
+region = Rect2(144, 32, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_155or"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(176, 33, 32, 15)
+region = Rect2(176, 33, 24, 15)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vtx2l"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(160, 0, 32, 16)
+region = Rect2(160, 0, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_63lxy"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(208, 33, 32, 14)
+region = Rect2(208, 32, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkpxi"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(96, 16, 48, 16)
+region = Rect2(144, 32, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5q0nq"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(144, 16, 48, 16)
+region = Rect2(176, 33, 24, 15)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dgi5k"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(96, 32, 48, 16)
+region = Rect2(160, 0, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2cjbq"]
 atlas = ExtResource("20_gqmmt")
-region = Rect2(96, 48, 48, 16)
+region = Rect2(208, 32, 24, 15)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y6deb"]
 atlas = ExtResource("20_gqmmt")
@@ -3552,7 +3560,6 @@ glow_levels/2 = 2.0
 glow_blend_mode = 2
 
 [node name="game_manager" type="Node2D" unique_id=146292655]
-scale = Vector2(4, 4)
 script = ExtResource("1_jbfvy")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=573089728]
@@ -3774,17 +3781,18 @@ shortcut = SubResource("Shortcut_vxglm")
 text = "取消"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=81939393]
-position = Vector2(71.5, 68.5)
+position = Vector2(72, 71)
+zoom = Vector2(4, 4)
 
 [node name="score_panal" type="Control" parent="." unique_id=258598019]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -69.75
-offset_top = 11.25
-offset_right = 12.25
-offset_bottom = 99.25
+offset_left = -76.00001
+offset_top = 13.0
+offset_right = 10.977272
+offset_bottom = 99.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4317,9 +4325,9 @@ autowrap_mode = 2
 [node name="stage_score" type="Control" parent="." unique_id=1200675023]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 132.0
+offset_left = 138.0
 offset_top = 12.0
-offset_right = 214.0
+offset_right = 220.0
 offset_bottom = 69.0
 mouse_filter = 2
 
@@ -4404,30 +4412,74 @@ size_flags_horizontal = 10
 text = "0"
 label_settings = ExtResource("12_yq6so")
 
-[node name="hero_skill" type="Control" parent="." unique_id=700926704]
+[node name="turn_label" type="Label" parent="stage_score" unique_id=2009153935]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+offset_left = 30.5
+offset_top = 2.0000057
+offset_right = 88.5
+offset_bottom = 25.000006
+scale = Vector2(0.35, 0.35)
+text = "回合: 1"
+
+[node name="hero_skill" type="Control" parent="." unique_id=908408492]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -69.5
-offset_top = 99.5
-offset_right = 10.5
-offset_bottom = 132.5
-mouse_filter = 1
+offset_left = -75.0
+offset_top = 99.0
+offset_right = 7.0
+offset_bottom = 133.0
 
-[node name="Panel" type="Panel" parent="hero_skill" unique_id=1830030884]
+[node name="scale_wrapper" parent="hero_skill" unique_id=1575915715 instance=ExtResource("19_kmb1v")]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 0.75
+offset_left = -3.0
+offset_top = -1.0
+offset_right = 211.66666
+offset_bottom = 88.33331
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="hero_skill_bak" type="Control" parent="." unique_id=106912901]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -75.5
+offset_top = 99.5
+offset_right = 4.5
+offset_bottom = 132.5
+mouse_filter = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="hero_skill_bak" unique_id=117386873]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -109.5
+offset_top = -43.5
+offset_right = 114.5
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_1by0b")
+patch_margin_left = 26
+patch_margin_top = 22
+patch_margin_right = 26
+patch_margin_bottom = 22
 
 [node name="hero_skill2" type="Control" parent="." unique_id=1695794305]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 134.0
+offset_left = 139.0
 offset_top = 98.25
-offset_right = 214.0
+offset_right = 219.0
 offset_bottom = 131.25
 mouse_filter = 1
 
@@ -4876,50 +4928,64 @@ offset_bottom = 19.1765
 scale = Vector2(0.2, 0.2)
 text = "7"
 
-[node name="buttom_ui" type="Control" parent="." unique_id=1300579138]
+[node name="bottom_ui" type="Control" parent="." unique_id=1654193881]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -69.0
+offset_left = -75.0
 offset_top = 134.0
-offset_right = 133.0
-offset_bottom = 148.0
-mouse_filter = 2
+offset_right = 220.0
+offset_bottom = 155.0
 
-[node name="Panel" type="Panel" parent="buttom_ui" unique_id=1010156941]
+[node name="scale_wrapper" parent="bottom_ui" unique_id=860535787 instance=ExtResource("19_kmb1v")]
+layout_mode = 0
+offset_left = -3.0
+offset_right = 997.0
+offset_bottom = 69.99997
+
+[node name="left_bottom_ui" type="Control" parent="bottom_ui" unique_id=1300579138]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="buttom_ui" unique_id=2047180302]
+[node name="MarginContainer" type="MarginContainer" parent="bottom_ui/left_bottom_ui" unique_id=2047180302]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = 2.0
+offset_right = -1.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_right = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="buttom_ui/MarginContainer" unique_id=1087563198]
+[node name="HBoxContainer" type="HBoxContainer" parent="bottom_ui/left_bottom_ui/MarginContainer" unique_id=1087563198]
 layout_mode = 2
 
-[node name="level_gold_power" type="Control" parent="buttom_ui/MarginContainer/HBoxContainer" unique_id=382825118]
-layout_mode = 2
+[node name="level_gold_power" type="Control" parent="bottom_ui" unique_id=382825118]
+anchors_preset = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 112.0
+offset_bottom = 22.0
 size_flags_horizontal = 3
 
-[node name="help_button" type="TextureButton" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power" unique_id=442165496]
+[node name="help_button" type="TextureButton" parent="bottom_ui/level_gold_power" unique_id=442165496]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 9.25
-offset_top = -1.75
-offset_right = 22.25
-offset_bottom = 12.25
+offset_left = 14.0
+offset_top = -2.5
+offset_right = 27.0
+offset_bottom = 11.5
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 shortcut = SubResource("Shortcut_gqmmt")
@@ -4928,35 +4994,35 @@ texture_pressed = SubResource("AtlasTexture_jscy8")
 texture_hover = SubResource("AtlasTexture_pm3ni")
 stretch_mode = 3
 
-[node name="TextureButton" type="TextureButton" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power" unique_id=2022266193]
+[node name="TextureButton" type="TextureButton" parent="bottom_ui/level_gold_power" unique_id=2022266193]
 layout_mode = 0
-offset_left = -1.5
-offset_top = 3.5
-offset_right = 16.5
-offset_bottom = 21.5
+offset_left = 4.0
+offset_top = 7.0
+offset_right = 22.0
+offset_bottom = 25.0
 scale = Vector2(0.5, 0.5)
 texture_normal = SubResource("AtlasTexture_j8jky")
 texture_pressed = SubResource("AtlasTexture_kmb1v")
 texture_hover = SubResource("AtlasTexture_fuf3a")
 
-[node name="TextureRect" type="TextureRect" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power" unique_id=1492370355]
+[node name="TextureRect" type="TextureRect" parent="bottom_ui/level_gold_power" unique_id=1492370355]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.17
 anchor_top = 1.0
 anchor_right = 0.17
 anchor_bottom = 1.0
-offset_left = 6.5
-offset_top = -14.5
-offset_right = 64.5
-offset_bottom = -0.5
+offset_left = 4.129999
+offset_top = -18.0
+offset_right = 62.129997
+offset_bottom = -4.0
 grow_vertical = 0
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_0ld40")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="class_icon" type="TextureRect" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect" unique_id=1734765174]
+[node name="class_icon" type="TextureRect" parent="bottom_ui/level_gold_power/TextureRect" unique_id=1734765174]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4971,7 +5037,7 @@ grow_vertical = 2
 expand_mode = 2
 stretch_mode = 5
 
-[node name="level_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect" unique_id=912318026]
+[node name="level_label" type="Label" parent="bottom_ui/level_gold_power/TextureRect" unique_id=912318026]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -4987,7 +5053,7 @@ scale = Vector2(0.25, 0.25)
 pivot_offset = Vector2(14.5, 11.5)
 text = "Lv.0"
 
-[node name="MarginContainer2" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect" unique_id=867588627]
+[node name="MarginContainer2" type="MarginContainer" parent="bottom_ui/level_gold_power/TextureRect" unique_id=867588627]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -5002,14 +5068,14 @@ grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)
 
-[node name="total_coins_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect/MarginContainer2" unique_id=94413794]
+[node name="total_coins_label" type="Label" parent="bottom_ui/level_gold_power/TextureRect/MarginContainer2" unique_id=94413794]
 unique_name_in_owner = true
 layout_mode = 2
 text = "20000"
 label_settings = SubResource("LabelSettings_trceg")
 horizontal_alignment = 2
 
-[node name="MarginContainer3" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect" unique_id=1525226496]
+[node name="MarginContainer3" type="MarginContainer" parent="bottom_ui/level_gold_power/TextureRect" unique_id=1525226496]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.693
@@ -5022,19 +5088,23 @@ grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(0.25, 0.25)
 
-[node name="power_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/level_gold_power/TextureRect/MarginContainer3" unique_id=1865989341]
+[node name="power_label" type="Label" parent="bottom_ui/level_gold_power/TextureRect/MarginContainer3" unique_id=1865989341]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0/2"
 label_settings = SubResource("LabelSettings_0ld40")
 horizontal_alignment = 2
 
-[node name="exp_bar" type="Control" parent="buttom_ui/MarginContainer/HBoxContainer" unique_id=1946821939]
-layout_mode = 2
+[node name="exp_bar" type="Control" parent="bottom_ui" unique_id=1946821939]
+anchors_preset = 0
+offset_left = 86.0
+offset_top = 4.0
+offset_right = 375.0
+offset_bottom = 25.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.55
 
-[node name="exp_bar" type="TextureProgressBar" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar" unique_id=1147667567]
+[node name="exp_bar" type="TextureProgressBar" parent="bottom_ui/exp_bar" unique_id=1147667567]
 unique_name_in_owner = true
 layout_mode = 0
 offset_top = 4.0
@@ -5050,20 +5120,23 @@ stretch_margin_bottom = 4
 texture_under = SubResource("AtlasTexture_a8y0u")
 texture_progress = SubResource("AtlasTexture_trceg")
 
-[node name="MarginContainer" type="MarginContainer" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar" unique_id=51796205]
+[node name="scale_wrapper" type="Control" parent="bottom_ui/exp_bar" unique_id=1053628491]
 layout_mode = 1
-anchors_preset = -1
 anchor_right = 1.0
 offset_top = 4.25
-offset_right = 182.99997
+offset_right = 10.9999695
 offset_bottom = 28.25
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.4, 0.4)
 
-[node name="exp_label" type="Label" parent="buttom_ui/MarginContainer/HBoxContainer/exp_bar/MarginContainer" unique_id=111870866]
+[node name="exp_label" type="Label" parent="bottom_ui/exp_bar/scale_wrapper" unique_id=111870866]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
+offset_left = 140.0
+offset_top = 1.8749924
+offset_right = 162.0
+offset_bottom = 21.874992
 size_flags_horizontal = 4
 text = "0/3"
 label_settings = SubResource("LabelSettings_a8y0u")
@@ -5073,20 +5146,11 @@ vertical_alignment = 1
 [node name="coin_skill_trun_button" type="Control" parent="." unique_id=2139570137]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 134.0
-offset_top = 132.5
-offset_right = 214.0
-offset_bottom = 146.5
+offset_left = 138.0
+offset_top = 136.5
+offset_right = 218.0
+offset_bottom = 150.5
 mouse_filter = 2
-
-[node name="Panel" type="Panel" parent="coin_skill_trun_button" unique_id=2067089712]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="coin_skill_trun_button" unique_id=574359919]
 layout_mode = 1
@@ -5100,6 +5164,7 @@ theme_override_constants/separation = 0
 
 [node name="potion_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=2070553992]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 2
 toggle_mode = true
@@ -5113,7 +5178,7 @@ texture_hover = SubResource("AtlasTexture_tel4y")
 texture_disabled = SubResource("AtlasTexture_5poiv")
 stretch_mode = 5
 
-[node name="potion_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/potion_button" unique_id=1224627685]
+[node name="scale_wrapper" type="Control" parent="coin_skill_trun_button/HBoxContainer/potion_button" unique_id=1224627685]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -5121,45 +5186,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.27, 0.27)
 mouse_filter = 1
 
-[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/potion_button/potion_button_label" unique_id=963021487]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -14.5
-offset_top = -4.25001
-offset_right = 9.5
-offset_bottom = 2.74999
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.4, 0.4)
-pivot_offset = Vector2(32, 11.5)
-text = "血瓶"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/potion_button/potion_button_label" unique_id=1712658895]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -1.0
-offset_right = 13.0
-offset_bottom = 7.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.3, 0.3)
-pivot_offset = Vector2(24, 8)
-mouse_filter = 2
-bbcode_enabled = true
-text = "[img=12]res://images/coin.png[/img] -1"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="TextureRect" type="TextureRect" parent="coin_skill_trun_button/HBoxContainer/potion_button/scale_wrapper" unique_id=998617559]
+layout_mode = 0
+offset_left = 24.074005
+offset_top = 7.0370483
+offset_right = 64.074005
+offset_bottom = 47.03705
+texture = ExtResource("28_fuf3a")
+expand_mode = 2
+stretch_mode = 5
 
 [node name="undo_move_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=81501653]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 2
 disabled = true
 texture_normal = SubResource("AtlasTexture_b6ruc")
 texture_pressed = SubResource("AtlasTexture_155or")
@@ -5167,36 +5210,34 @@ texture_hover = SubResource("AtlasTexture_vtx2l")
 texture_disabled = SubResource("AtlasTexture_63lxy")
 stretch_mode = 5
 
-[node name="undo_move_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/undo_move_button" unique_id=1258114120]
+[node name="scale_wrapper2" type="Control" parent="coin_skill_trun_button/HBoxContainer/undo_move_button" unique_id=1258114120]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.302)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -24.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.27, 0.27)
 mouse_filter = 1
 
-[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/undo_move_button/undo_move_button_label" unique_id=985472789]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -14.5
-offset_top = -4.25
-offset_right = 9.5
-offset_bottom = 2.75
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.4, 0.4)
-pivot_offset = Vector2(32, 11.5)
-text = "撤回移动"
+[node name="TextureRect" type="TextureRect" parent="coin_skill_trun_button/HBoxContainer/undo_move_button/scale_wrapper2" unique_id=1618886326]
+layout_mode = 0
+offset_left = 24.074005
+offset_top = 7.0370483
+offset_right = 64.074005
+offset_bottom = 47.03705
+texture = ExtResource("29_c6pm6")
+expand_mode = 2
+stretch_mode = 5
 
 [node name="turn_button" type="TextureButton" parent="coin_skill_trun_button/HBoxContainer" unique_id=892386103]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 2
 keep_pressed_outside = true
 texture_normal = SubResource("AtlasTexture_qkpxi")
 texture_pressed = SubResource("AtlasTexture_5q0nq")
@@ -5204,49 +5245,28 @@ texture_hover = SubResource("AtlasTexture_dgi5k")
 texture_disabled = SubResource("AtlasTexture_2cjbq")
 stretch_mode = 5
 
-[node name="turn_button_label" type="Control" parent="coin_skill_trun_button/HBoxContainer/turn_button" unique_id=1143443242]
+[node name="scale_wrapper3" type="Control" parent="coin_skill_trun_button/HBoxContainer/turn_button" unique_id=1143443242]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -24.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.27, 0.27)
 mouse_filter = 1
 
-[node name="Label" type="Label" parent="coin_skill_trun_button/HBoxContainer/turn_button/turn_button_label" unique_id=323155166]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -14.0
-offset_top = -4.00001
-offset_right = 10.0
-offset_bottom = 2.99999
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.4, 0.4)
-pivot_offset = Vector2(32, 11.5)
-text = "回合结束"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="coin_skill_trun_button/HBoxContainer/turn_button/turn_button_label" unique_id=578487395]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 14.0
-offset_top = -0.999994
-offset_right = 11.0
-offset_bottom = 7.00001
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.3, 0.3)
-pivot_offset = Vector2(24, 8)
-mouse_filter = 2
-bbcode_enabled = true
-text = "[img=15]res://images/power.png[/img] +1"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="TextureRect" type="TextureRect" parent="coin_skill_trun_button/HBoxContainer/turn_button/scale_wrapper3" unique_id=1884802552]
+layout_mode = 0
+offset_left = 24.074005
+offset_top = 7.0370483
+offset_right = 64.074005
+offset_bottom = 47.03705
+texture = ExtResource("30_5he1u")
+expand_mode = 2
+stretch_mode = 5
 
 [node name="round_process_bar" type="Control" parent="." unique_id=792410277]
 layout_mode = 3
@@ -5280,61 +5300,54 @@ size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_og1vs")
 stretch_mode = 2
 
-[node name="turn_label" type="Label" parent="round_process_bar" unique_id=1336682832]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-offset_left = 3.5
-offset_top = -8.0
-offset_right = 61.5
-offset_bottom = 15.0
-scale = Vector2(0.35, 0.35)
-text = "回合: 1"
-
-[node name="turn_coin_label" type="Label" parent="round_process_bar" unique_id=1272284766]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-offset_left = 67.75
-offset_top = -8.0
-offset_right = 89.75
-offset_bottom = 15.0
-scale = Vector2(0.35, 0.35)
-text = "9"
-horizontal_alignment = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="round_process_bar" unique_id=1424500410]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 47.5
-offset_top = -7.75003
-offset_right = 38.5
-offset_bottom = 4.24997
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.35, 0.35)
-bbcode_enabled = true
-text = "奖励: [img=10 ]res://images/coin.png[/img] ×"
-
 [node name="hp_bar" type="HBoxContainer" parent="round_process_bar" unique_id=117588435]
 layout_mode = 0
-offset_left = -19.75
-offset_top = 2.0
-offset_right = 36.25
-offset_bottom = 12.0
+offset_left = 7.25
+offset_top = -14.0
+offset_right = 63.25
+offset_bottom = -4.0
 script = ExtResource("26_j8jky")
 
 [node name="score_heal_progress" type="Label" parent="round_process_bar" unique_id=469851807]
 layout_mode = 0
-offset_left = -21.5
-offset_top = 3.5
-offset_right = 25.5
-offset_bottom = 17.5
+offset_left = 2.5
+offset_top = -0.5
+offset_right = 49.5
+offset_bottom = 13.5
 theme_override_colors/font_color = Color(0.3, 0.8, 0.4, 1)
 theme_override_font_sizes/font_size = 10
 text = "回血: 0/20"
+
+[node name="scale_wrapper" type="Control" parent="round_process_bar" unique_id=1589407210]
+anchors_preset = 0
+offset_left = 57.0
+offset_top = 2.0
+offset_right = 57.0
+offset_bottom = 2.0
+scale = Vector2(0.27, 0.27)
+
+[node name="TextureRect2" type="TextureRect" parent="round_process_bar/scale_wrapper" unique_id=778439018]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("28_fuf3a")
+
+[node name="scale_wrapper2" type="Control" parent="round_process_bar" unique_id=1633831527]
+anchors_preset = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = -2.0
+offset_bottom = -2.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Label" type="Label" parent="round_process_bar/scale_wrapper2" unique_id=267013600]
+layout_mode = 0
+offset_left = 143.5
+offset_top = 7.5000153
+offset_right = 183.5
+offset_bottom = 30.500015
+text = "1/3"
+label_settings = ExtResource("3_h858a")
 
 [node name="debuff_ui" type="Control" parent="." unique_id=1785260996]
 layout_mode = 3

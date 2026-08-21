@@ -18,7 +18,7 @@ const hero_property = {
 @onready var turn_label: Label = %turn_label
 @onready var hero_skill: Control = $hero_skill
 @onready var skill_system: Node2D = $skill_system
-@onready var skill_1_ui: MarginContainer
+@onready var hero_skill_ui: MarginContainer
 @onready var target_score: Label = %target_score
 @onready var total_score: Label = %total_score
 ## 骰型板
@@ -148,7 +148,7 @@ var buff_refresh_cost := 1:
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
 @onready var ship: TextureRect = %ship
-@onready var turn_button_label: Control = %turn_button_label
+@onready var scale_wrapper3: Control = %scale_wrapper3
 @onready var potion_button_label: Control = %potion_button_label
 @onready var turn_coin_label: Label = %turn_coin_label
 @onready var potion_button: TextureButton = %potion_button
@@ -350,7 +350,7 @@ func _ready() -> void:
 	## 回合处理
 	await _turn_process()
 	## 敌人回合结束，启用回合结束按钮
-	turn_button.disabled = false
+	_set_turn_button_disabled(false)
 
 	## 临时测试debuff
 	#_set_stage_debuff(1)
@@ -588,7 +588,7 @@ func _move_elite_boss_slimes():
 
 func _create_slime():
 	## 生成史莱姆（同时生成模式）
-	turn_button.disabled = true
+	_set_turn_button_disabled(true)
 	## 清空上一回合的史莱姆生成记录，确保点数锁定只修改当前回合的史莱姆
 	Current.last_slime_create_array = []
 	var grids_array = grids.get_children()
@@ -969,11 +969,9 @@ func _set_hero_properties(hero: Hero, properties: Dictionary):
 	hero.hero_cmd.connect(_on_hero_cmd)
 	var hero_skills_ui = SceneManager.create_scene(hero.hero_name + "_skills")
 	hero_skill.add_child(hero_skills_ui)
-	## onready后无法获取到代码新增的节点skill_1_ui，在此处添加了场景树之后可以获取，但无法使用唯一标识获取
-	var hero_skill_child = hero_skill.get_child(1)
-	skill_1_ui = hero_skill_child.get_node("%skill_1")
+	hero_skills_ui.name = "skills_root"
+	hero_skill_ui = hero_skill.get_node("skills_root/%skill_1")
 
-	#skill_1_ui = hero_skill.get_node("MarginContainer/HBoxContainer/skill_1")
 
 ## 设置3技能的状态脚本
 func _set_hero_skill_scripts(hero: Hero):
@@ -1001,7 +999,7 @@ func _on_grid_cmd(cmd_name):
 func _roll_dice(slime_instantiate, roll_dice=1, roll_color=1):
 	if not is_instance_valid(slime_instantiate):
 		return
-	turn_button.disabled = true
+	_set_turn_button_disabled(true)
 	if roll_dice:
 		slime_instantiate.dice.play("roll")
 	if roll_color:
@@ -1014,7 +1012,7 @@ func _roll_dice(slime_instantiate, roll_dice=1, roll_color=1):
 		slime_instantiate.dice.set_frame_and_progress(dice_point.pick_random(), 0)
 	if roll_color:
 		slime_instantiate.animated_sprite_2d.play("idle")
-	turn_button.disabled = false
+	_set_turn_button_disabled(false)
 
 ## 显示英雄移动网格
 func show_move_range():
@@ -1103,7 +1101,7 @@ func _turn_process():
 		return
 	_turn_processing = true
 	## 敌人回合期间禁用回合结束按钮
-	turn_button.disabled = true
+	_set_turn_button_disabled(true)
 	## 敌人回合
 	_turn_clean()
 	## 后期回合（8-10回合）史莱姆生成翻倍
@@ -1143,7 +1141,7 @@ func _turn_process():
 ## 技能结算
 func skill_attack():
 	## 攻击的时候禁用合结束按钮
-	turn_button.disabled = true
+	_set_turn_button_disabled(true)
 	await skill_system.skill_attack()
 	Current.public_lock_array.erase("skill_attack")
 	Current.is_attacked = true
@@ -1179,7 +1177,7 @@ func skill_attack():
 	if stage_cleared:
 		await _turn_process()
 		EventBus.event_emit("do_pre_hero_turn_buff")
-		turn_button.disabled = false
+		_set_turn_button_disabled(false)
 		return
 	## 攻击结算后，基于当前场上残留史莱姆扣血
 	_apply_hp_damage()
@@ -1187,7 +1185,7 @@ func skill_attack():
 	await _turn_process()
 	## 执行玩家回合前buff
 	EventBus.event_emit("do_pre_hero_turn_buff")
-	turn_button.disabled = false
+	_set_turn_button_disabled(false)
 
 ##等待buff执行完成
 func wait_for_buff_finish():
@@ -1197,7 +1195,7 @@ func wait_for_buff_finish():
 
 ## 跳过回合按钮按下
 func _on_turn_button_pressed() -> void:
-	turn_button.disabled = true
+	_set_turn_button_disabled(true)
 	## 等待英雄移动完
 	while Current.id_path.size() > 0:
 		await Tools.time_sleep(0.01)
@@ -1238,7 +1236,7 @@ func _on_turn_button_pressed() -> void:
 	if stage_cleared:
 		await _turn_process()
 		EventBus.event_emit("do_pre_hero_turn_buff")
-		turn_button.disabled = false
+		_set_turn_button_disabled(false)
 		return
 	## 跳过回合不攻击，不触发得分回血（once_total_score为0）
 	## 跳过回合后，基于当前场上残留史莱姆扣血
@@ -1247,15 +1245,29 @@ func _on_turn_button_pressed() -> void:
 	await _turn_process()
 	## 执行玩家回合前buff
 	EventBus.event_emit("do_pre_hero_turn_buff")
-	turn_button.disabled = false
+	_set_turn_button_disabled(false)
 	## 测试
 
-## 让label跟着按钮下降
+## 回合按钮视觉按下态(由 button_down/up 信号驱动,用于同步内容偏移)
+var _turn_button_visual_pressed := false
+
+## 同步回合按钮内容(scale_wrapper3)偏移:按下或禁用时下移1px,否则回原位
+func _sync_turn_button_content_offset() -> void:
+	scale_wrapper3.position.y = 1.0 if (turn_button.disabled or _turn_button_visual_pressed) else 0.0
+
+## 设置回合按钮禁用状态并同步内容偏移
+func _set_turn_button_disabled(state: bool) -> void:
+	turn_button.disabled = state
+	_sync_turn_button_content_offset()
+
+## 让label跟着按钮下降(含禁用态,偏移由 _sync 统一计算)
 func _on_turn_button_button_down() -> void:
-	turn_button_label.position += Vector2(0, 1)
+	_turn_button_visual_pressed = true
+	_sync_turn_button_content_offset()
 ## 让label跟着按钮回弹
 func _on_turn_button_button_up() -> void:
-	turn_button_label.position += Vector2(0, -1)
+	_turn_button_visual_pressed = false
+	_sync_turn_button_content_offset()
 
 ## 撤回移动按钮按下动画
 func _on_undo_move_button_button_down() -> void:
@@ -1379,7 +1391,7 @@ func _pre_hero_turn_begin():
 		print("游戏失败")
 		get_tree().paused = true
 	## 兜底恢复回合按钮
-	turn_button.disabled = false
+	_set_turn_button_disabled(false)
 	## 重置英雄状态
 	for hero in Current.all_hero_array:
 		hero.hero_state_machine.transition_to("idle")
@@ -1650,7 +1662,7 @@ func _on_area_2d_mouse_entered() -> void:
 	Current.within_grid_area = false
 
 func _on_skill_system_hide_all_skill() -> void:
-	skill_1_ui.hide_all_skills()
+	hero_skill_ui.hide_all_skills()
 
 func _on_card_1_button_pressed() -> void:
 	## 遍历卡牌效果列表，逐一应用

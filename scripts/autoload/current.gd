@@ -149,14 +149,12 @@ var total_coins: int:
 		game_manager.coin_skill_1.disabled = true
 		game_manager.coin_skill_2.disabled = true
 		game_manager.coin_skill_3.disabled = true
-		game_manager.potion_button_label.modulate = Color(1.0, 1.0, 1.0, 0.302)
 		game_manager.coin_skill_1_icon.self_modulate = Color(1, 1, 1, 0.3)
 		game_manager.coin_skill_2_icon.self_modulate = Color(1, 1, 1, 0.3)
 		game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 0.3)
 		## 血瓶按钮：有血瓶且未满血时启用
 		if _potion_count > 0 and _player_hp < _max_hp:
 			game_manager.potion_button.disabled = false
-			game_manager.potion_button_label.modulate = Color(1, 1, 1, 1)
 		## 技能按钮：根据本关是否已使用来判断
 		## 技能1：存在且本关未使用时启用
 		if coin_skill_array_dict.size() > 0 and coin_skill_used.size() > 0 and coin_skill_used[0] == false:
@@ -642,10 +640,8 @@ func _update_potion_button_state():
 		return
 	if _potion_count > 0 and _player_hp < _max_hp:
 		game_manager.potion_button.disabled = false
-		game_manager.potion_button_label.modulate = Color(1, 1, 1, 1)
 	else:
 		game_manager.potion_button.disabled = true
-		game_manager.potion_button_label.modulate = Color(1.0, 1.0, 1.0, 0.302)
 
 ## 更新撤回移动按钮的启用/禁用状态
 func _update_undo_move_button_state():
@@ -654,7 +650,7 @@ func _update_undo_move_button_state():
 	if not game_manager.has_node("coin_skill_trun_button/HBoxContainer/undo_move_button"):
 		return
 	var undo_button = game_manager.get_node("coin_skill_trun_button/HBoxContainer/undo_move_button")
-	var undo_label = game_manager.get_node("coin_skill_trun_button/HBoxContainer/undo_move_button/undo_move_button_label") if undo_button else null
+	var undo_label = game_manager.get_node("coin_skill_trun_button/HBoxContainer/undo_move_button/scale_wrapper2") if undo_button else null
 	if _is_moved == true and _is_attacked == false and turn == "hero_turn":
 		undo_button.disabled = false
 		if undo_label:

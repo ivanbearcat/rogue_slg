@@ -36,10 +36,9 @@ _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=1184
+window/size/viewport_height=672
 window/stretch/mode="viewport"
-window/stretch/aspect="keep_height"
 window/stretch/scale_mode="integer"
 mouse_cursor/custom_image="res://images/mouse_icon/pointer_scifi_a.svg"
 
@@ -99,3 +98,4 @@ alt+3={
 
 textures/canvas_textures/default_texture_filter=0
 viewport/hdr_2d=true
+2d/snap/snap_2d_transforms_to_pixel=true

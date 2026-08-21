@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://gjm8eu8gnais"]
+
+[ext_resource type="Texture2D" uid="uid://dyfgx4cis665i" path="res://images/ui/border_ui.png" id="1_jjq5b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0sqv"]
+atlas = ExtResource("1_jjq5b")
+
+[node name="scale_wrapper" type="Control" unique_id=1575915715]
+custom_minimum_size = Vector2(34, 17)
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(0.3, 0.3)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1805274891]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_n0sqv")
+patch_margin_left = 26
+patch_margin_top = 22
+patch_margin_right = 26
+patch_margin_bottom = 22
