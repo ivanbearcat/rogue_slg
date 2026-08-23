@@ -617,21 +617,16 @@ var swarm_call_pending: int = 0
 
 
 
-## 更新得分回血进度UI
+## 更新得分回血进度UI（血瓶进度条）
 func _update_score_heal_ui():
-	if game_manager and game_manager.has_node("round_process_bar/score_heal_progress"):
-		var label = game_manager.get_node("round_process_bar/score_heal_progress")
-		label.text = "回血: " + str(score_heal_accumulated) + "/" + str(_score_heal_threshold) + "  血瓶: " + str(_potion_count) + "/" + str(_potion_max)
+	if game_manager and game_manager.blood_bottle_progress:
+		game_manager.blood_bottle_progress.max_value = float(_score_heal_threshold)
+		game_manager.blood_bottle_progress.value = float(_score_heal_accumulated)
 
 ## 更新血瓶数量/上限UI及按钮启用状态
 func _update_potion_ui():
-	if game_manager and game_manager.has_node("round_process_bar/potion_progress"):
-		var label = game_manager.get_node("round_process_bar/potion_progress")
-		label.text = "血瓶: " + str(_potion_count) + "/" + str(_potion_max)
-	# 同时更新 score_heal_progress 中的血瓶数量，确保血瓶数量与实际同步刷新
-	if game_manager and game_manager.has_node("round_process_bar/score_heal_progress"):
-		var heal_label = game_manager.get_node("round_process_bar/score_heal_progress")
-		heal_label.text = "回血: " + str(score_heal_accumulated) + "/" + str(_score_heal_threshold) + "  血瓶: " + str(_potion_count) + "/" + str(_potion_max)
+	if game_manager and game_manager.blood_bottle_label:
+		game_manager.blood_bottle_label.text = str(_potion_count) + "/" + str(_potion_max)
 	_update_potion_button_state()
 
 ## 更新血瓶按钮的启用/禁用状态

@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://0nyks62j7ihp" path="res://images/red_background.png" id="10_eplrr"]
 [ext_resource type="Texture2D" uid="uid://dsopuek2hk0wj" path="res://images/puls_times.png" id="11_w4riq"]
 [ext_resource type="LabelSettings" uid="uid://dhj30d6t7jryv" path="res://resources/pixel_num.tres" id="12_yq6so"]
-[ext_resource type="Texture2D" uid="uid://dc7a6my34pjt5" path="res://images/process_bar.png" id="13_trceg"]
 [ext_resource type="StyleBox" uid="uid://nf1thu8lxm1v" path="res://resources/hover_button.tres" id="15_0ld40"]
 [ext_resource type="Texture2D" uid="uid://bd0mpn20yxg3u" path="res://images/shelves_announcements.png" id="15_jkv2x"]
 [ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="16_jbj1t"]
@@ -30,10 +29,11 @@
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
 [ext_resource type="Texture2D" uid="uid://dyfgx4cis665i" path="res://images/ui/border_ui.png" id="25_j8jky"]
 [ext_resource type="Script" uid="uid://cvems1v2e2cv3" path="res://scripts/hp_bar.gd" id="26_j8jky"]
-[ext_resource type="Texture2D" uid="uid://tp865nxtv2ef" path="res://images/ui_icon/blood_bottle.png" id="28_fuf3a"]
+[ext_resource type="Texture2D" uid="uid://bldic5dub2mqf" path="res://images/ui_icon/blood_bottle2.png" id="28_5he1u"]
 [ext_resource type="Texture2D" uid="uid://drccwvlcmiao7" path="res://images/ui_icon/redo.png" id="29_c6pm6"]
 [ext_resource type="Texture2D" uid="uid://5q7nw3pj5x07" path="res://images/ui_icon/sand_clock.png" id="30_5he1u"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
+[ext_resource type="Texture2D" uid="uid://rfxwwjikwsrj" path="res://images/ui/process_bar.png" id="32_5poiv"]
 [ext_resource type="PackedScene" uid="uid://biahlr85bpue3" path="res://scenes/drop_selection_ui.tscn" id="33_5q0nq"]
 [ext_resource type="Script" uid="uid://c75g4vrr8ub2v" path="res://scripts/ui/buff_debug_panel.gd" id="34_dgi5k"]
 [ext_resource type="Texture2D" uid="uid://cda7fkfl5c5ii" path="res://images/buff_icon/old/attack_over_five.png" id="35_txyw0"]
@@ -1225,15 +1225,15 @@ unicode = 104
 events = [SubResource("InputEventKey_0ld40")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yc10j"]
-atlas = ExtResource("13_trceg")
+atlas = ExtResource("32_5poiv")
 region = Rect2(1, 1, 13, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jscy8"]
-atlas = ExtResource("13_trceg")
+atlas = ExtResource("32_5poiv")
 region = Rect2(1, 33, 12, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pm3ni"]
-atlas = ExtResource("13_trceg")
+atlas = ExtResource("32_5poiv")
 region = Rect2(0, 16, 15, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8jky"]
@@ -1249,7 +1249,7 @@ atlas = ExtResource("20_gqmmt")
 region = Rect2(228, 7, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ld40"]
-atlas = ExtResource("13_trceg")
+atlas = ExtResource("32_5poiv")
 region = Rect2(16, 30, 76, 18)
 
 [sub_resource type="LabelSettings" id="LabelSettings_trceg"]
@@ -1271,11 +1271,11 @@ shadow_size = 11
 shadow_color = Color(0, 0, 0, 0.541176)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a8y0u"]
-atlas = ExtResource("13_trceg")
+atlas = ExtResource("32_5poiv")
 region = Rect2(16, 0, 64, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trceg"]
-atlas = ExtResource("13_trceg")
+atlas = ExtResource("32_5poiv")
 region = Rect2(16, 19, 64, 10)
 
 [sub_resource type="LabelSettings" id="LabelSettings_a8y0u"]
@@ -1348,6 +1348,14 @@ region = Rect2(65, 1, 78, 14)
 [sub_resource type="AtlasTexture" id="AtlasTexture_og1vs"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(149, 4, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2357"]
+atlas = ExtResource("32_5poiv")
+region = Rect2(32, 12, 41, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rj7ey"]
+atlas = ExtResource("32_5poiv")
+region = Rect2(32, 18, 41, 5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxglm"]
 bg_color = Color(0, 0, 0, 0.19607843)
@@ -5122,6 +5130,7 @@ texture_progress = SubResource("AtlasTexture_trceg")
 
 [node name="scale_wrapper" type="Control" parent="bottom_ui/exp_bar" unique_id=1053628491]
 layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
 offset_top = 4.25
 offset_right = 10.9999695
@@ -5186,16 +5195,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.27, 0.27)
+scale = Vector2(0.25, 0.25)
 mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="coin_skill_trun_button/HBoxContainer/potion_button/scale_wrapper" unique_id=998617559]
 layout_mode = 0
-offset_left = 24.074005
-offset_top = 7.0370483
-offset_right = 64.074005
-offset_bottom = 47.03705
-texture = ExtResource("28_fuf3a")
+offset_left = 28.00003
+offset_top = 10.0
+offset_right = 68.00003
+offset_bottom = 50.0
+texture = ExtResource("28_5he1u")
 expand_mode = 2
 stretch_mode = 5
 
@@ -5301,14 +5310,16 @@ texture = SubResource("AtlasTexture_og1vs")
 stretch_mode = 2
 
 [node name="hp_bar" type="HBoxContainer" parent="round_process_bar" unique_id=117588435]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 7.25
-offset_top = -14.0
-offset_right = 63.25
-offset_bottom = -4.0
+offset_left = 6.25
+offset_top = -8.25
+offset_right = 77.25
+theme_override_constants/separation = 1
 script = ExtResource("26_j8jky")
 
 [node name="score_heal_progress" type="Label" parent="round_process_bar" unique_id=469851807]
+visible = false
 layout_mode = 0
 offset_left = 2.5
 offset_top = -0.5
@@ -5328,9 +5339,11 @@ scale = Vector2(0.27, 0.27)
 
 [node name="TextureRect2" type="TextureRect" parent="round_process_bar/scale_wrapper" unique_id=778439018]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("28_fuf3a")
+offset_left = 2.7777777
+offset_top = 2.7777777
+offset_right = 42.77778
+offset_bottom = 42.77778
+texture = ExtResource("28_5he1u")
 
 [node name="scale_wrapper2" type="Control" parent="round_process_bar" unique_id=1633831527]
 anchors_preset = 0
@@ -5338,16 +5351,34 @@ offset_left = -2.0
 offset_top = -2.0
 offset_right = -2.0
 offset_bottom = -2.0
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.4, 0.4)
 
-[node name="Label" type="Label" parent="round_process_bar/scale_wrapper2" unique_id=267013600]
+[node name="blood_bottle_label" type="Label" parent="round_process_bar/scale_wrapper2" unique_id=267013600]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 143.5
-offset_top = 7.5000153
-offset_right = 183.5
-offset_bottom = 30.500015
+offset_left = 176.87502
+offset_top = 14.374996
+offset_right = 216.87502
+offset_bottom = 37.374996
 text = "1/3"
 label_settings = ExtResource("3_h858a")
+
+[node name="blood_bottle_progress" type="TextureProgressBar" parent="round_process_bar" unique_id=471706738]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 5.75
+offset_top = 5.75
+offset_right = 56.75
+offset_bottom = 11.75
+max_value = 35.0
+value = 12.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+texture_under = SubResource("AtlasTexture_e2357")
+texture_progress = SubResource("AtlasTexture_rj7ey")
 
 [node name="debuff_ui" type="Control" parent="." unique_id=1785260996]
 layout_mode = 3
