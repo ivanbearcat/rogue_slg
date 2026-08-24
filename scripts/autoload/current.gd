@@ -622,6 +622,8 @@ func _update_score_heal_ui():
 	if game_manager and game_manager.blood_bottle_progress:
 		game_manager.blood_bottle_progress.max_value = float(_score_heal_threshold)
 		game_manager.blood_bottle_progress.value = float(_score_heal_accumulated)
+	if game_manager and game_manager.blood_bottle_progress_label:
+		game_manager.blood_bottle_progress_label.text = str(_score_heal_accumulated) + "/" + str(_score_heal_threshold)
 
 ## 更新血瓶数量/上限UI及按钮启用状态
 func _update_potion_ui():

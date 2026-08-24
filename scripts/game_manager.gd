@@ -154,6 +154,7 @@ var buff_refresh_cost := 1:
 @onready var potion_button: TextureButton = %potion_button
 @onready var blood_bottle_label: Label = %blood_bottle_label
 @onready var blood_bottle_progress: TextureProgressBar = %blood_bottle_progress
+@onready var blood_bottle_progress_label: Label = %blood_bottle_progress_label
 @onready var coin_skill_1: TextureButton = %coin_skill_1
 @onready var coin_skill_2: TextureButton = %coin_skill_2
 @onready var coin_skill_3: TextureButton = %coin_skill_3

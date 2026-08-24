@@ -1276,7 +1276,7 @@ region = Rect2(16, 0, 64, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trceg"]
 atlas = ExtResource("32_5poiv")
-region = Rect2(16, 19, 64, 10)
+region = Rect2(35, 26, 64, 10)
 
 [sub_resource type="LabelSettings" id="LabelSettings_a8y0u"]
 line_spacing = 0.0
@@ -5313,8 +5313,9 @@ stretch_mode = 2
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 6.25
-offset_top = -8.25
+offset_top = -9.25
 offset_right = 77.25
+offset_bottom = -4.25
 theme_override_constants/separation = 1
 script = ExtResource("26_j8jky")
 
@@ -5379,6 +5380,22 @@ stretch_margin_right = 1
 stretch_margin_bottom = 1
 texture_under = SubResource("AtlasTexture_e2357")
 texture_progress = SubResource("AtlasTexture_rj7ey")
+
+[node name="scale" type="Control" parent="round_process_bar/blood_bottle_progress" unique_id=1177626358]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.4, 0.4)
+
+[node name="blood_bottle_progress_label" type="Label" parent="round_process_bar/blood_bottle_progress/scale" unique_id=1887781540]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 47.499996
+offset_top = -4.9999995
+offset_right = 87.5
+offset_bottom = 18.0
+text = "0/35"
+horizontal_alignment = 1
 
 [node name="debuff_ui" type="Control" parent="." unique_id=1785260996]
 layout_mode = 3
