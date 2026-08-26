@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://drccwvlcmiao7" path="res://images/ui_icon/redo.png" id="29_c6pm6"]
 [ext_resource type="Texture2D" uid="uid://5q7nw3pj5x07" path="res://images/ui_icon/sand_clock.png" id="30_5he1u"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="30_fv21b"]
+[ext_resource type="Texture2D" uid="uid://20shdw5wwxfk" path="res://images/ui/board.png" id="32_5he1u"]
 [ext_resource type="Texture2D" uid="uid://rfxwwjikwsrj" path="res://images/ui/process_bar.png" id="32_5poiv"]
 [ext_resource type="PackedScene" uid="uid://biahlr85bpue3" path="res://scenes/drop_selection_ui.tscn" id="33_5q0nq"]
 [ext_resource type="Script" uid="uid://c75g4vrr8ub2v" path="res://scripts/ui/buff_debug_panel.gd" id="34_dgi5k"]
@@ -1276,7 +1277,7 @@ region = Rect2(16, 0, 64, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trceg"]
 atlas = ExtResource("32_5poiv")
-region = Rect2(35, 26, 64, 10)
+region = Rect2(35, 24, 64, 10)
 
 [sub_resource type="LabelSettings" id="LabelSettings_a8y0u"]
 line_spacing = 0.0
@@ -1357,12 +1358,13 @@ region = Rect2(32, 12, 41, 5)
 atlas = ExtResource("32_5poiv")
 region = Rect2(32, 18, 41, 5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxglm"]
-bg_color = Color(0, 0, 0, 0.19607843)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+[sub_resource type="AtlasTexture" id="AtlasTexture_cja1a"]
+atlas = ExtResource("32_5he1u")
+region = Rect2(137, 12, 102, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1w0nl"]
+atlas = ExtResource("32_5he1u")
+region = Rect2(19, 81, 110, 71)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qkpxi"]
 load_path = "res://.godot/imported/sea_process_bar.png-7e45f3cae0704af80db2f6a76ae32239.ctex"
@@ -1374,6 +1376,10 @@ region = Rect2(160, 50, 80, 19)
 [sub_resource type="AtlasTexture" id="AtlasTexture_augu2"]
 atlas = SubResource("CompressedTexture2D_qkpxi")
 region = Rect2(160, 71, 80, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vhi0"]
+atlas = ExtResource("32_5he1u")
+region = Rect2(147, 82, 82, 67)
 
 [sub_resource type="Image" id="Image_j8jky"]
 data = {
@@ -5313,9 +5319,9 @@ stretch_mode = 2
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 6.25
-offset_top = -9.25
+offset_top = -7.25
 offset_right = 77.25
-offset_bottom = -4.25
+offset_bottom = -2.25
 theme_override_constants/separation = 1
 script = ExtResource("26_j8jky")
 
@@ -5400,23 +5406,35 @@ horizontal_alignment = 1
 [node name="debuff_ui" type="Control" parent="." unique_id=1785260996]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 132.0
-offset_top = -12.0
-offset_right = 214.0
-offset_bottom = 10.0
+offset_left = 140.0
+offset_top = -9.0
+offset_right = 195.0
+offset_bottom = 4.0
 
-[node name="Panel" type="Panel" parent="debuff_ui" unique_id=1273606601]
+[node name="scale" type="Control" parent="debuff_ui" unique_id=185189610]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = 2.25
-offset_right = -1.75
-offset_bottom = -0.25
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_vxglm")
+scale = Vector2(0.35, 0.35)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="debuff_ui/scale" unique_id=1290138773]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 169.42859
+offset_bottom = 44.142853
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_cja1a")
+patch_margin_left = 10
+patch_margin_top = 11
+patch_margin_right = 21
+patch_margin_bottom = 19
 
 [node name="debuff_container" type="HFlowContainer" parent="debuff_ui" unique_id=1963375792]
 unique_name_in_owner = true
@@ -5424,8 +5442,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.25
-offset_top = 4.0
+offset_left = 9.787506
+offset_top = 4.5999994
+offset_right = 13.0
+offset_bottom = 0.5999994
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -5437,22 +5457,39 @@ offset_top = -11.75
 offset_right = 132.75
 offset_bottom = 9.25
 
-[node name="buff_row" type="Panel" parent="buff_ui" unique_id=975388334]
+[node name="scale" type="Control" parent="buff_ui" unique_id=1960425395]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 3
-localize_numeral_system = false
-theme_override_styles/panel = SubResource("StyleBoxFlat_vxglm")
+scale = Vector2(0.4, 0.4)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="buff_ui/scale" unique_id=227190729]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -11.111111
+offset_top = -1.4285698
+offset_right = 193.24997
+offset_bottom = 38.374996
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_1w0nl")
+patch_margin_left = 10
+patch_margin_top = 11
+patch_margin_right = 11
+patch_margin_bottom = 11
 
 [node name="VBoxContainer" type="VBoxContainer" parent="buff_ui" unique_id=304187781]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 0.75
+offset_bottom = 1.75
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -5583,30 +5620,47 @@ bbcode_enabled = true
 text = "获得诅咒"
 vertical_alignment = 1
 
-[node name="Control" type="Control" parent="." unique_id=515712514]
+[node name="score_preview_ui" type="Control" parent="." unique_id=515712514]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -62.25
-offset_top = -5.5
-offset_right = -62.25
-offset_bottom = -5.5
+offset_left = -67.0
+offset_top = -10.0
+offset_right = -7.0
+offset_bottom = 9.0
 
-[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=2081454128]
+[node name="scale" type="Control" parent="score_preview_ui" unique_id=9964442]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 4.0
-offset_right = 32.0
-offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.7, 0.7)
+scale = Vector2(0.5, 0.5)
 
-[node name="score_bar_label" type="Label" parent="Control/MarginContainer" unique_id=1258542655]
+[node name="NinePatchRect" type="NinePatchRect" parent="score_preview_ui/scale" unique_id=1151043355]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -6.0
+offset_right = 68.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_4vhi0")
+patch_margin_left = 16
+patch_margin_top = 18
+patch_margin_right = 15
+patch_margin_bottom = 7
+
+[node name="score_bar_label" type="Label" parent="score_preview_ui/scale/NinePatchRect" unique_id=1258542655]
 unique_name_in_owner = true
-visible = false
-layout_mode = 2
+layout_mode = 0
+offset_left = 36.0
+offset_top = 24.299995
+offset_right = 86.0
+offset_bottom = 38.299995
 text = "100+"
 label_settings = SubResource("LabelSettings_xljpf")
 
