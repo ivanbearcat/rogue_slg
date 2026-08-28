@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dsopuek2hk0wj" path="res://images/puls_times.png" id="11_w4riq"]
 [ext_resource type="LabelSettings" uid="uid://dhj30d6t7jryv" path="res://resources/pixel_num.tres" id="12_yq6so"]
 [ext_resource type="StyleBox" uid="uid://nf1thu8lxm1v" path="res://resources/hover_button.tres" id="15_0ld40"]
-[ext_resource type="Texture2D" uid="uid://bd0mpn20yxg3u" path="res://images/shelves_announcements.png" id="15_jkv2x"]
+[ext_resource type="Texture2D" uid="uid://bd0mpn20yxg3u" path="res://images/ui/shelves_announcements.png" id="15_jkv2x"]
 [ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="16_jbj1t"]
 [ext_resource type="Texture2D" uid="uid://cq5fh03c87561" path="res://images/icon_dice_white.png" id="16_kmb1v"]
 [ext_resource type="Theme" uid="uid://c7fy6qc45ak5d" path="res://resources/tooltip.tres" id="17_qkpxi"]
@@ -919,8 +919,8 @@ keycode = 4194305
 events = [SubResource("InputEventKey_2wyq8")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ny6h8"]
-atlas = ExtResource("6_bkbmf")
-region = Rect2(0, 96, 48, 32)
+atlas = ExtResource("32_5he1u")
+region = Rect2(147, 94, 82, 55)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2xggs"]
 atlas = ExtResource("6_bkbmf")
@@ -1122,7 +1122,7 @@ region = Rect2(4, 55, 24, 11)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjhjs"]
 atlas = ExtResource("16_kmb1v")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gqmmt"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5kiv"]
 atlas = ExtResource("15_jkv2x")
 region = Rect2(29, 148, 79, 56)
 
@@ -3448,6 +3448,10 @@ font_color = Color(1, 0.13333334, 0, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax2r0"]
+atlas = ExtResource("32_5he1u")
+region = Rect2(49, 18, 49, 42)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ro3en"]
 atlas = ExtResource("15_jkv2x")
 region = Rect2(3, 32, 24, 16)
@@ -3819,10 +3823,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_ny6h8")
-patch_margin_left = 5
-patch_margin_top = 6
-patch_margin_right = 5
-patch_margin_bottom = 5
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
 
 [node name="MarginContainer" type="MarginContainer" parent="score_panal/NinePatchRect" unique_id=477216761]
 layout_mode = 1
@@ -4345,18 +4349,27 @@ offset_right = 220.0
 offset_bottom = 69.0
 mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="stage_score" unique_id=1495691043]
+[node name="scale" type="Control" parent="stage_score" unique_id=1053445213]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 3
-mouse_filter = 2
-texture = SubResource("AtlasTexture_gqmmt")
-expand_mode = 2
-stretch_mode = 5
+scale = Vector2(0.5, 0.5)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="stage_score/scale" unique_id=884201465]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 1.4285717
+offset_right = 80.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_h5kiv")
 
 [node name="stage_label" type="Label" parent="stage_score" unique_id=327147400]
 unique_name_in_owner = true
@@ -4496,14 +4509,6 @@ offset_top = 98.25
 offset_right = 219.0
 offset_bottom = 131.25
 mouse_filter = 1
-
-[node name="Panel" type="Panel" parent="hero_skill2" unique_id=269383529]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="hero_skill2" unique_id=1643445843]
 layout_mode = 1
@@ -5623,9 +5628,9 @@ vertical_alignment = 1
 [node name="score_preview_ui" type="Control" parent="." unique_id=515712514]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -67.0
+offset_left = -88.0
 offset_top = -10.0
-offset_right = -7.0
+offset_right = -37.0
 offset_bottom = 9.0
 
 [node name="scale" type="Control" parent="score_preview_ui" unique_id=9964442]
@@ -5656,6 +5661,7 @@ patch_margin_bottom = 7
 
 [node name="score_bar_label" type="Label" parent="score_preview_ui/scale/NinePatchRect" unique_id=1258542655]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 36.0
 offset_top = 24.299995
@@ -5663,6 +5669,35 @@ offset_right = 86.0
 offset_bottom = 38.299995
 text = "100+"
 label_settings = SubResource("LabelSettings_xljpf")
+
+[node name="dice_package_ui" type="Control" parent="." unique_id=186964072]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -24.0
+offset_top = -10.0
+offset_right = 3.0
+offset_bottom = 11.0
+
+[node name="scale" type="Control" parent="dice_package_ui" unique_id=241438952]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.6, 0.6)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="dice_package_ui/scale" unique_id=1547170016]
+layout_mode = 0
+offset_left = -3.333332
+offset_top = 4.999999
+offset_right = 48.333332
+offset_bottom = 35.0
+texture = SubResource("AtlasTexture_ax2r0")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 6
 
 [node name="replace_skill_ui" type="CanvasLayer" parent="." unique_id=915307986]
 unique_name_in_owner = true
