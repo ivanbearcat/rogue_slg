@@ -1,4 +1,4 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cluhn5stgbt1d"]
+[gd_resource type="LabelSettings" format=3 uid="uid://cluhn5stgbt1d"]
 
 [ext_resource type="FontFile" uid="uid://6oc5e4qxi5oy" path="res://fonts/SourceHanSansCN-Medium.otf" id="1_x1igh"]
 

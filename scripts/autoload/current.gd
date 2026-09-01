@@ -243,7 +243,7 @@ var count_round := 0:
 			await tween.finished
 			Current.public_lock_array.erase("turn_ship_animation")
 		## 回合数>10时不触发船动画，但继续显示回合数
-		game_manager.turn_label.text = "回合: " + str(v)
+		game_manager.turn_label.text = str(v)
 	get:
 		#return int(game_manager.turn_label.text)
 		return count_round
@@ -323,11 +323,7 @@ var drop_slot_dice:
 ## 更新掉落格子UI显示
 func _update_drop_slot_ui():
 	if game_manager.drop_slot_panel_frame:
-		var drop_label = game_manager.drop_slot_panel_frame.get_node("HBoxContainer/Label")
 		var drop_point = game_manager.drop_slot_panel_point
-		## "掉落"2字永远显示
-		drop_label.text = "掉落"
-		drop_label.add_theme_color_override("font_color", Color(1, 1, 1, 1))
 		if _drop_slot_dice == null:
 			drop_point.text = "-"
 			drop_point.add_theme_color_override("font_color", Color(1, 1, 1, 0.3))
