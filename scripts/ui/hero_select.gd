@@ -24,6 +24,8 @@ func _on_confirm_pressed() -> void:
 	_is_switching = true
 	Current.selected_hero = HERO_ID
 	print("选定英雄： " + HERO_ID)
+	## 遥测:run 生命周期起点(英雄确认进入战局)
+	EventBus.event_emit("run_start", [HERO_ID])
 	## 即时反馈：禁用按钮并显示加载状态（等待预加载期间无响应的问题由此消除）
 	var confirm_button: Button = $CenterContainer/HeroCard/confirm_button
 	confirm_button.disabled = true

@@ -53,6 +53,8 @@ func _on_timer_timeout():
 		game_manager.e_texture.position.y = 3
 
 func _clicked_public_action(coin_skill_name):
+	## 遥测:金币技能使用(玩家点击唯一收口,含替换后的技能)
+	EventBus.event_emit("coin_skill_used", [coin_skill_name])
 	## 恢复所有UI初始状态
 	CursorManager.reset_cursor()
 	## 标记该技能本关已使用，并禁用对应技能按钮

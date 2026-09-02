@@ -357,6 +357,8 @@ func _ready() -> void:
 	_set_turn_button_disabled(false)
 	## 悬停追踪器：渲染帧数学换算鼠标所在格子，替代 Area2D 物理拾取（子节点随战局销毁）
 	add_child(preload("res://scripts/hover_tracker.gd").new())
+	## 遥测:第 1 关起点
+	EventBus.event_emit("stage_start")
 
 	## 临时测试debuff
 	#_set_stage_debuff(1)
@@ -507,6 +509,8 @@ func _spawn_elite_slime():
 	if not debuff_row.is_empty():
 		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+		## 遥测:精英 debuff 获得
+		EventBus.event_emit("buff_acquired", [debuff_row["debuff_id"], "elite"])
 		debuff_effect_label.text = "精英出现！ [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 		await EffectManager.debuff_change_effect()
 	print("[elite-slime] 生成了精英史莱姆: gate=%s count=%d" % [gate_type, Current.ELITE_GATE_COUNTS[gate_type]])
@@ -549,6 +553,8 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 		if fixed_row != null:
 			var buff = load(fixed_row["debuff_res"]).new(fixed_row, self)
 			BuffSystem.callv("set_" + fixed_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+			## 遥测:BOSS 固定 debuff 获得
+			EventBus.event_emit("buff_acquired", [fixed_id, "boss"])
 			applied_debuff_ids.append(fixed_id)
 			applied_debuff_icons += " [img=15 ]" + fixed_row["debuff_icon"] + "[/img]"
 	## 2. 再从随机池中抽取boss_curse_count个不重复BOSS效果（由_used_debuff_ids统一去重）
@@ -558,6 +564,8 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 			break
 		var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
+		## 遥测:BOSS 随机 debuff 获得
+		EventBus.event_emit("buff_acquired", [debuff_row["debuff_id"], "boss"])
 		applied_debuff_ids.append(debuff_row["debuff_id"])
 		applied_debuff_icons += " [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 	debuff_effect_label.text = "BOSS出现！" + applied_debuff_icons
@@ -751,6 +759,8 @@ func _set_stage_debuff(boss=0):
 	var debuff_row = curse_debuffs.pick_random()
 	var buff = load(debuff_row["debuff_res"]).new(debuff_row, self)
 	BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
+	## 遥测:关卡 debuff 获得
+	EventBus.event_emit("buff_acquired", [debuff_row["debuff_id"], "stage"])
 	debuff_effect_label.text = "获得BOSS效果  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
 
 func _set_buff(buff_row):
@@ -765,6 +775,8 @@ func _set_buff(buff_row):
 			BuffSystem.callv("set_" + bt, [buff, BuffSystem.buff_type.ALWAYS])
 	else:
 		BuffSystem.callv("set_" + buff_types, [buff, BuffSystem.buff_type.ALWAYS])
+	## 遥测:商店 buff 获得(注册成功后统一记录)
+	EventBus.event_emit("buff_acquired", [buff_row["buff_id"], "shop"])
 	# 在buff.set_buff()创建buff_texture后，统一设置元数据
 	if buff.buff_texture:
 		buff.buff_texture.set_meta("buff_meta", buff.buff_meta)
@@ -1392,6 +1404,8 @@ func _pre_hero_turn_begin():
 	## 判断失败：HP<=0时游戏结束
 	if Current.player_hp <= 0:
 		print("游戏失败")
+		## 遥测:run 结束(失败)
+		EventBus.event_emit("run_end", ["fail"])
 		get_tree().paused = true
 	## 兜底恢复回合按钮
 	_set_turn_button_disabled(false)
@@ -1469,6 +1483,8 @@ func _check_stage_clear() -> bool:
 			for fb in family_buffs:
 				if fb.buff_texture:
 					EffectManager.buff_pop_effect(fb.buff_texture)
+		## 遥测:过关事件(置于 clear_stage_buff 之前,保证 buff 明细含本关条目)
+		EventBus.event_emit("stage_clear", [stage_add_coin, hp_add_coin, highest_dice_add_coin])
 		## 清理关卡buff
 		EventBus.event_emit("clear_stage_buff")
 		return true
@@ -1805,6 +1821,12 @@ func _on_shop_coin_skill_button_pressed() -> void:
 	Current.total_coins -= int(shop_coin_skill_row["coin_skill_shop_cost"])
 	## 标记已购买
 	shop_coin_skill_bought = true
+	## 遥测:商店购买金币技能(直接添加与替换两条路径统一在此记录)
+	EventBus.event_emit("shop_tx", [
+		"coin_skill_buy",
+		shop_coin_skill_row["coin_skill_id"],
+		int(shop_coin_skill_row["coin_skill_shop_cost"])
+	])
 	## 禁用商店技能购买按钮，防止重复购买
 	shop_coin_skill_button.disabled = true
 	shop_coin_skill_icon.modulate.a = 0.3
@@ -1920,6 +1942,8 @@ func _on_stage_clear_button_pressed() -> void:
 	else:
 		## 游戏胜利
 		print("胜利")
+		## 遥测:run 结束(胜利)
+		EventBus.event_emit("run_end", ["win"])
 	## 隐藏结算显示内容
 	_hide_all_clear_stage_ui()
 	## 设置商店buff和价格UI
@@ -1958,6 +1982,8 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.slime_create_num = 3
 	Current.slime_tide_pending = 0
 	Current.swarm_call_pending = 0
+	## 遥测:新关起点(目标分已设置,预生成史莱姆之前)
+	EventBus.event_emit("stage_start")
 	## 为新关卡第一回合预生成史莱姆（设置warning告警）
 	_pre_create_slime()
 	## 关卡切换效果
@@ -1981,6 +2007,8 @@ func _on_potion_button_pressed() -> void:
 		heal_amount = 2
 	Current.potion_count -= 1
 	Current.player_hp += heal_amount
+	## 遥测:血瓶使用
+	EventBus.event_emit("potion_used")
 	## 回血视觉反馈
 	if has_node("round_process_bar/hp_bar"):
 		var hp_bar = get_node("round_process_bar/hp_bar")
@@ -2111,6 +2139,8 @@ func _on_buff_refresh_button_pressed() -> void:
 	else:
 		## 扣除刷新费用
 		Current.total_coins -= buff_refresh_cost
+		## 遥测:付费刷新 buff 商店
+		EventBus.event_emit("shop_tx", ["refresh", "buff_refresh", buff_refresh_cost])
 		## 刷新费用增长
 		buff_refresh_cost += 1
 		## 复制触发修改按钮状态
@@ -2131,6 +2161,8 @@ func _on_buff_shop_button_1_pressed() -> void:
 	shop_buff_bought[0] = true
 	Current.total_coins -= _actual_price
 	Current.buff_price_discount = 0
+	## 遥测:商店购买 buff
+	EventBus.event_emit("shop_tx", ["buff_buy", shop_buff_1["buff_id"], _actual_price])
 	_set_buff(shop_buff_1)
 	_apply_war_supply_heal()
 	buff_shop_icon_1.modulate.a = 0
@@ -2146,6 +2178,8 @@ func _on_buff_shop_button_2_pressed() -> void:
 	shop_buff_bought[1] = true
 	Current.total_coins -= _actual_price
 	Current.buff_price_discount = 0
+	## 遥测:商店购买 buff
+	EventBus.event_emit("shop_tx", ["buff_buy", shop_buff_2["buff_id"], _actual_price])
 	_set_buff(shop_buff_2)
 	_apply_war_supply_heal()
 	buff_shop_icon_2.modulate.a = 0
@@ -2161,6 +2195,8 @@ func _on_buff_shop_button_3_pressed() -> void:
 	shop_buff_bought[2] = true
 	Current.total_coins -= _actual_price
 	Current.buff_price_discount = 0
+	## 遥测:商店购买 buff
+	EventBus.event_emit("shop_tx", ["buff_buy", shop_buff_3["buff_id"], _actual_price])
 	_set_buff(shop_buff_3)
 	_apply_war_supply_heal()
 	buff_shop_icon_3.modulate.a = 0
