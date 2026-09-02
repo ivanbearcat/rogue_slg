@@ -1,7 +1,9 @@
 extends Node
 
-## game_manager节点
-@onready var game_manager: Node2D = get_node("/root/game_manager")
+## game_manager节点（跟随 Current 注册状态，场景切换后自动指向新战局）
+var game_manager: Node2D:
+	get:
+		return Current.game_manager
 
 ## 缓存编译后的正则（D5：避免每次调用重新编译）
 var _slime_regex: RegEx

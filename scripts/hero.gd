@@ -15,7 +15,7 @@ var hero_grid_index: Vector2:
 	get:
 		for hero in Current.all_hero_array:
 			if hero_name == hero.hero_name:
-				return get_node("/root/game_manager").position_to_grid_index(position)
+				return Tools.game_manager.position_to_grid_index(position)
 		return Vector2.ZERO
 ## 英雄移动力
 var hero_movement: int

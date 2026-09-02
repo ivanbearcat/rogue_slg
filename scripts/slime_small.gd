@@ -5,7 +5,10 @@ class_name Slime
 @onready var dice: AnimatedSprite2D = $Area2D/dice
 @onready var animated_sprite_2d: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 @onready var selected_marker: Sprite2D = $Area2D/selected_marker
-@onready var game_manager: Node2D = $"/root/game_manager"
+## game_manager引用（跟随 Current 注册状态，场景切换后自动指向新战局）
+var game_manager: Node2D:
+	get:
+		return Current.game_manager
 
 var enemy_grid_index: Vector2:
 	get:
@@ -79,18 +82,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			Current.hero.add_child(float_number)
 		print("[elite-slime] %s被击杀: gate=%s count=%d" % ["BOSS" if is_boss else "精英", gate_type, gate_count])
 	self.queue_free()
-
-func _on_area_2d_mouse_entered() -> void:
-	Current.slime = self
-	## 显示精英/BOSS史莱姆tooltip
-	if is_elite or is_boss:
-		TooltipManager.show_tooltip_at(self.global_position + Vector2(-80, -40), TooltipFormatter.format_elite_slime(is_boss, gate_type, gate_count, dice_point))
-
-func _on_area_2d_mouse_exited() -> void:
-	Current.slime = null
-	## 隐藏精英/BOSS史莱姆tooltip
-	if is_elite or is_boss:
-		TooltipManager.hide_tooltip()
 
 func _on_dice_animation_finished() -> void:
 	print(dice.frame)

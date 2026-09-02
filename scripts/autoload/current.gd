@@ -1,7 +1,9 @@
 extends Node
 #var tween = create_tween()
-## game_manager节点
-@onready var game_manager: Node2D = get_node("/root/game_manager")
+## game_manager节点（由 game_manager._ready 自注册，场景切换后随新战局自动刷新）
+var game_manager: Node2D
+## 英雄选择画面选中的英雄类型（对应 game_manager.hero_property 的键）
+var selected_hero: String = "soldier"
 ## 鼠标指向的英雄
 var hero: Hero
 ## 鼠标指向的史莱姆
@@ -17,7 +19,7 @@ var all_hero_dict: Dictionary
 ## 包含所有英雄的数组:
 var all_hero_array: Array:
 	get:
-		return $"/root/game_manager/heros".get_children()
+		return game_manager.get_node("heros").get_children()
 ## 包含所有英雄位置的数组
 @onready var all_hero_grid_index_array: Array:
 	get:
@@ -28,7 +30,7 @@ var all_hero_array: Array:
 ## 包含所有史莱姆的字典
 var all_enemy_array: Array:
 	get:
-		return $"/root/game_manager/enemys".get_children()
+		return game_manager.get_node("enemys").get_children()
 ## 包含所有敌人格子的数组
 @onready var all_enemy_grid_index_array: Array:
 	get:

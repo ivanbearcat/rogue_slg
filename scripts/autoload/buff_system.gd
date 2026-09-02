@@ -1,6 +1,9 @@
 extends Node2D
 
-@onready var game_manager: Node2D = $"/root/game_manager"
+## game_manager引用（跟随 Current 注册状态，场景切换后自动指向新战局）
+var game_manager: Node2D:
+	get:
+		return Current.game_manager
 
 var resonance_ramp: float = 0.0
 var _last_family_accumulation: Dictionary = {}

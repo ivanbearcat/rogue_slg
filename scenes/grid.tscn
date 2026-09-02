@@ -81,5 +81,3 @@ modulate = Color(0, 1, 0, 1)
 position = Vector2(8, 8)
 texture = SubResource("AtlasTexture_fnun3")
 
-[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

@@ -287,6 +287,8 @@ var _dice_score_labels: Dictionary
 var _dice_multiplier_labels: Dictionary
 
 func _ready() -> void:
+	## 自注册：场景切换后 Current.game_manager 引用随新战局自动刷新
+	Current.game_manager = self
 	## 测试
 
 	#_set_shop_buff()
@@ -329,11 +331,10 @@ func _ready() -> void:
 			grid.position = Vector2(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
 			all_grid_dict[Vector2(x, y)] = grid
 			grids.add_child(grid)
-			grid.grid_cmd.connect(_on_grid_cmd)
 	Current.all_grids_array = grids.get_children()
-	## 生成英雄
+	## 生成英雄（按英雄选择画面选中的类型，默认 soldier）
 	var hero_instantiate = SceneManager.create_scene("hero")
-	_set_hero_properties(hero_instantiate, hero_property["soldier"])
+	_set_hero_properties(hero_instantiate, hero_property[Current.selected_hero])
 	heros.add_child(hero_instantiate)
 	_set_hero_skill_scripts(hero_instantiate)
 	## 配置Astar寻路
@@ -354,6 +355,8 @@ func _ready() -> void:
 	await _turn_process()
 	## 敌人回合结束，启用回合结束按钮
 	_set_turn_button_disabled(false)
+	## 悬停追踪器：渲染帧数学换算鼠标所在格子，替代 Area2D 物理拾取（子节点随战局销毁）
+	add_child(preload("res://scripts/hover_tracker.gd").new())
 
 	## 临时测试debuff
 	#_set_stage_debuff(1)
@@ -994,9 +997,6 @@ func _on_hero_cmd(cmd_name: String, event: InputEvent = null):
 		call(cmd_name, event)
 	else:
 		call(cmd_name)
-
-func _on_grid_cmd(cmd_name):
-	call(cmd_name)
 
 ## 投骰子动画
 func _roll_dice(slime_instantiate, roll_dice=1, roll_color=1):
@@ -1659,10 +1659,6 @@ func _get_min_score_name() -> String:
 			min_val = scores[name]
 			min_name = name
 	return min_name
-
-## 鼠标移出可移动区域清除格子位置
-func _on_area_2d_mouse_entered() -> void:
-	Current.within_grid_area = false
 
 func _on_skill_system_hide_all_skill() -> void:
 	hero_skill_ui.hide_all_skills()
