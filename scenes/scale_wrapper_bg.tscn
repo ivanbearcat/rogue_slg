@@ -9,7 +9,7 @@ atlas = ExtResource("1_jjq5b")
 custom_minimum_size = Vector2(34, 17)
 layout_mode = 3
 anchors_preset = 0
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.2, 0.2)
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1805274891]
 layout_mode = 1

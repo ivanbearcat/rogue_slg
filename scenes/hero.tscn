@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bgm08y6mwa1xl"]
+[gd_scene format=3 uid="uid://bgm08y6mwa1xl"]
 
 [ext_resource type="Script" uid="uid://ut48jmydioy2" path="res://scripts/hero.gd" id="1_2jlbh"]
 [ext_resource type="Texture2D" uid="uid://banb8pskqhwms" path="res://images/Human-Soldier-Red.png" id="1_ufarh"]
@@ -167,7 +167,7 @@ region = Rect2(160, 0, 32, 32)
 [sub_resource type="SpriteFrames" id="SpriteFrames_hvq5q"]
 animations = [{
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"archer_end",
 "speed": 5.0
 }, {
@@ -178,7 +178,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vv0qs")
 }],
-"loop": true,
+"loop": 1,
 "name": &"archer_idle",
 "speed": 2.0
 }, {
@@ -195,12 +195,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f3rlh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"archer_move",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"mage_end",
 "speed": 5.0
 }, {
@@ -211,7 +211,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oedga")
 }],
-"loop": true,
+"loop": 1,
 "name": &"mage_idle",
 "speed": 2.0
 }, {
@@ -228,7 +228,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n37ic")
 }],
-"loop": true,
+"loop": 1,
 "name": &"mage_move",
 "speed": 5.0
 }, {
@@ -236,7 +236,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cubco")
 }],
-"loop": true,
+"loop": 1,
 "name": &"soldier_end",
 "speed": 5.0
 }, {
@@ -247,7 +247,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jflwx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"soldier_idle",
 "speed": 2.0
 }, {
@@ -264,7 +264,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n04tt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"soldier_move",
 "speed": 5.0
 }, {
@@ -284,7 +284,7 @@ animations = [{
 "duration": 1.5,
 "texture": SubResource("AtlasTexture_20s8c")
 }],
-"loop": false,
+"loop": 0,
 "name": &"soldier_skill_1",
 "speed": 5.0
 }, {
@@ -313,7 +313,7 @@ animations = [{
 "duration": 1.5,
 "texture": SubResource("AtlasTexture_07mkl")
 }],
-"loop": false,
+"loop": 0,
 "name": &"soldier_skill_2",
 "speed": 8.0
 }, {
@@ -336,22 +336,22 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sryfu")
 }],
-"loop": false,
+"loop": 0,
 "name": &"soldier_skill_3",
 "speed": 5.0
 }]
 
-[node name="hero" type="Node2D"]
+[node name="hero" type="Node2D" unique_id=699841363]
 z_index = 1
 script = ExtResource("1_2jlbh")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=850934326]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1280364199]
 position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_y1qti")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D" unique_id=604401325]
 material = SubResource("ShaderMaterial_er1yf")
 position = Vector2(8, 9)
 scale = Vector2(0.77, 0.77)
@@ -360,35 +360,35 @@ animation = &"soldier_skill_3"
 frame = 5
 frame_progress = 1.0
 
-[node name="Label" parent="Area2D/AnimatedSprite2D" instance=ExtResource("7_6mqrs")]
+[node name="Label" parent="Area2D/AnimatedSprite2D" unique_id=1498504970 instance=ExtResource("7_6mqrs")]
 visible = false
 
-[node name="hero_state_machine" type="Node2D" parent="."]
+[node name="hero_state_machine" type="Node2D" parent="." unique_id=269896587]
 script = ExtResource("5_fgiwk")
 initial_state = NodePath("idle")
 
-[node name="idle" type="Node2D" parent="hero_state_machine"]
+[node name="idle" type="Node2D" parent="hero_state_machine" unique_id=504437686]
 script = ExtResource("6_yiwd7")
 
-[node name="move" type="Node2D" parent="hero_state_machine"]
+[node name="move" type="Node2D" parent="hero_state_machine" unique_id=31204648]
 script = ExtResource("7_duu28")
 
-[node name="end" type="Node2D" parent="hero_state_machine"]
+[node name="end" type="Node2D" parent="hero_state_machine" unique_id=1188311460]
 script = ExtResource("8_2fhne")
 
-[node name="skill_1" type="Node2D" parent="hero_state_machine"]
+[node name="skill_1" type="Node2D" parent="hero_state_machine" unique_id=57282499]
 script = ExtResource("10_27sfp")
 
-[node name="skill_2" type="Node2D" parent="hero_state_machine"]
+[node name="skill_2" type="Node2D" parent="hero_state_machine" unique_id=1616868523]
 script = ExtResource("10_27sfp")
 
-[node name="skill_3" type="Node2D" parent="hero_state_machine"]
+[node name="skill_3" type="Node2D" parent="hero_state_machine" unique_id=1358801351]
 script = ExtResource("10_27sfp")
 
-[node name="coin_skill_move" type="Node2D" parent="hero_state_machine"]
+[node name="coin_skill_move" type="Node2D" parent="hero_state_machine" unique_id=1324093704]
 script = ExtResource("12_sryfu")
 
-[node name="buff_icon" type="TextureRect" parent="."]
+[node name="buff_icon" type="TextureRect" parent="." unique_id=574279452]
 offset_left = -3.0
 offset_top = -3.0
 offset_right = 9.0
