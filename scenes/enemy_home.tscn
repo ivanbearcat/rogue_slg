@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cg3bpprphtel7"]
+[gd_scene format=3 uid="uid://cg3bpprphtel7"]
 
 [ext_resource type="Script" uid="uid://dyofv2ey6q666" path="res://scripts/enemy_home.gd" id="1_di5tt"]
-[ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/punyworld-overworld-tileset.png" id="1_sa7j8"]
+[ext_resource type="Texture2D" uid="uid://skvtsr3y0bsx" path="res://images/ui/punyworld-overworld-tileset.png" id="1_sa7j8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1aagm"]
 size = Vector2(14, 14)

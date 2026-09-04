@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bpjrapjnm3rqj"]
 
 [ext_resource type="Shader" uid="uid://bvwarcrhlc6ea" path="res://shaders/high_light.gdshader" id="1_78qh4"]
-[ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/GUI.png" id="1_vlmwk"]
+[ext_resource type="Texture2D" uid="uid://bkcg7r3k23uwa" path="res://images/ui/GUI.png" id="1_vlmwk"]
 [ext_resource type="Script" uid="uid://mb8vecn28h10" path="res://scripts/ui/skill_1_ui.gd" id="3_71tpo"]
 [ext_resource type="Shader" uid="uid://dji4fqms4hwsg" path="res://shaders/electricity.gdshader" id="4_q6aow"]
 [ext_resource type="LabelSettings" uid="uid://cluhn5stgbt1d" path="res://resources/label_setting_small.tres" id="4_rqeci"]
