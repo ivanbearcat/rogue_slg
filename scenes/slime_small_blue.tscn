@@ -1,12 +1,12 @@
-﻿[gd_scene format=3 uid="uid://btvvwmetc2oyv"]
+[gd_scene format=3 uid="uid://btvvwmetc2oyv"]
 
 [ext_resource type="Script" uid="uid://ka44hpx6jsu0" path="res://scripts/slime_small.gd" id="1_tqd4j"]
-[ext_resource type="Texture2D" uid="uid://b4voe758sxvk5" path="res://images/Slime_blue.png" id="2_dkde8"]
+[ext_resource type="Texture2D" uid="uid://b4voe758sxvk5" path="res://images/character/Slime_blue.png" id="2_dkde8"]
 [ext_resource type="Texture2D" uid="uid://d2i2drhs34c14" path="res://images/icon_reset_red.png" id="3_4rqaj"]
-[ext_resource type="Texture2D" uid="uid://tnl7iet676i7" path="res://images/Slime.png" id="3_nnlaf"]
-[ext_resource type="Texture2D" uid="uid://bdlqcxnxh51j5" path="res://images/Slime_red.png" id="4_1phkk"]
-[ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/PixelDice_White.png" id="4_mpbkm"]
-[ext_resource type="Texture2D" uid="uid://cyo82memmjeol" path="res://images/Slime_yellow.png" id="5_ua2ni"]
+[ext_resource type="Texture2D" uid="uid://tnl7iet676i7" path="res://images/character/Slime.png" id="3_nnlaf"]
+[ext_resource type="Texture2D" uid="uid://bdlqcxnxh51j5" path="res://images/character/Slime_red.png" id="4_1phkk"]
+[ext_resource type="Texture2D" uid="uid://b0un7brtx72se" path="res://images/ui_icon/PixelDice_White.png" id="4_mpbkm"]
+[ext_resource type="Texture2D" uid="uid://cyo82memmjeol" path="res://images/character/Slime_yellow.png" id="5_ua2ni"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ilaur"]
 size = Vector2(13, 13)
