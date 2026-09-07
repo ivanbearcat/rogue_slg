@@ -90,7 +90,7 @@ const hero_property = {
 @onready var stage_coin_rlabel_3: RichTextLabel = %stage_coin_rlabel_3
 @onready var stage_coin_rlabel_4: RichTextLabel = %stage_coin_rlabel_4
 @onready var paper_texture: TextureRect = %paper_texture
-@onready var stage_clear_button: Button = %stage_clear_button
+@onready var stage_clear_button: TextureButton = %stage_clear_button
 ## 帮助按钮
 @onready var help_button: TextureButton = %help_button
 ## 职业图标

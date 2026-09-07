@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bfsd05fvcyf6u" path="res://images/soldier_skill_icon.png" id="5_cwbpb"]
 [ext_resource type="Script" uid="uid://b1g80k6amnbch" path="res://scripts/ui/skill_2_ui.gd" id="6_ojpdg"]
 [ext_resource type="Script" uid="uid://cf0vyp174rum0" path="res://scripts/ui/skill_3_ui.gd" id="7_3khon"]
-[ext_resource type="Texture2D" uid="uid://dwtnrc2k82jus" path="res://images/green_button.png" id="7_cwbpb"]
+[ext_resource type="Texture2D" uid="uid://dwtnrc2k82jus" path="res://images/ui_icon/green_button.png" id="7_cwbpb"]
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="8_qf8i0"]
 [ext_resource type="LabelSettings" uid="uid://ccp1dqm8hqkda" path="res://fonts/pixel_cn_label_settings.tres" id="11_7kdkw"]
 
