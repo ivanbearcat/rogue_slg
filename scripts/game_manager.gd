@@ -76,21 +76,21 @@ const hero_property = {
 @onready var card_3_description: RichTextLabel = %card3_description
 @onready var hide_level_up_ui_button: Button = %hide_level_up_ui_button
 ## 过关界面
-@onready var clear_stage_ui: CanvasLayer = $clear_stage_ui
-@onready var clear_stage_label: Label = %clear_stage_label
-@onready var stage_clear_label_1: Label = %stage_clear_label_1
-@onready var stage_clear_label_2: Label = %stage_clear_label_2
-@onready var stage_clear_label_3: Label = %stage_clear_label_3
-@onready var stage_coin_label_1: Label = %stage_coin_label_1
-@onready var stage_coin_label_2: Label = %stage_coin_label_2
-@onready var stage_coin_label_3: Label = %stage_coin_label_3
-@onready var stage_coin_label_4: Label = %stage_coin_label_4
-@onready var stage_coin_rlabel_1: RichTextLabel = %stage_coin_rlabel_1
-@onready var stage_coin_rlabel_2: RichTextLabel = %stage_coin_rlabel_2
-@onready var stage_coin_rlabel_3: RichTextLabel = %stage_coin_rlabel_3
-@onready var stage_coin_rlabel_4: RichTextLabel = %stage_coin_rlabel_4
-@onready var paper_texture: TextureRect = %paper_texture
-@onready var stage_clear_button: TextureButton = %stage_clear_button
+@onready var clear_stage_ui: ClearStageUI = $clear_stage_ui
+@onready var clear_stage_label: Label = clear_stage_ui.clear_stage_label
+@onready var stage_clear_label_1: Label = clear_stage_ui.stage_clear_label_1
+@onready var stage_clear_label_2: Label = clear_stage_ui.stage_clear_label_2
+@onready var stage_clear_label_3: Label = clear_stage_ui.stage_clear_label_3
+@onready var stage_coin_label_1: Label = clear_stage_ui.stage_coin_label_1
+@onready var stage_coin_label_2: Label = clear_stage_ui.stage_coin_label_2
+@onready var stage_coin_label_3: Label = clear_stage_ui.stage_coin_label_3
+@onready var stage_coin_label_4: Label = clear_stage_ui.stage_coin_label_4
+@onready var stage_coin_rlabel_1: RichTextLabel = clear_stage_ui.stage_coin_rlabel_1
+@onready var stage_coin_rlabel_2: RichTextLabel = clear_stage_ui.stage_coin_rlabel_2
+@onready var stage_coin_rlabel_3: RichTextLabel = clear_stage_ui.stage_coin_rlabel_3
+@onready var stage_coin_rlabel_4: RichTextLabel = clear_stage_ui.stage_coin_rlabel_4
+@onready var paper_texture: TextureRect = clear_stage_ui.paper_texture
+@onready var stage_clear_button: TextureButton = clear_stage_ui.stage_clear_button
 ## 帮助按钮
 @onready var help_button: TextureButton = %help_button
 ## 职业图标
@@ -289,6 +289,8 @@ var _dice_multiplier_labels: Dictionary
 func _ready() -> void:
 	## 自注册：场景切换后 Current.game_manager 引用随新战局自动刷新
 	Current.game_manager = self
+	## 过关按钮信号：子场景化后原场景内 [connection] 丢失，改为代码连接
+	stage_clear_button.pressed.connect(_on_stage_clear_button_pressed)
 	## 测试
 
 	#_set_shop_buff()
