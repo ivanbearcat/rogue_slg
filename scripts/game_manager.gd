@@ -65,16 +65,24 @@ const hero_property = {
 ## 升级后卡牌择界面
 @onready var level_up_ui: CanvasLayer = %level_up_ui
 ## 升级后卡牌UI
-@onready var card_1: TextureRect = %card1
+@onready var card_1: TextureButton = %card1
 @onready var card_1_name: Label = %card1_name
 @onready var card_1_description: RichTextLabel = %card1_description
-@onready var card_2: TextureRect = %card2
+@onready var card_2: TextureButton = %card2
 @onready var card_2_name: Label = %card2_name
 @onready var card_2_description: RichTextLabel = %card2_description
-@onready var card_3: TextureRect = %card3
+@onready var card_3: TextureButton = %card3
 @onready var card_3_name: Label = %card3_name
 @onready var card_3_description: RichTextLabel = %card3_description
-@onready var hide_level_up_ui_button: Button = %hide_level_up_ui_button
+@onready var card_1_icon: TextureRect = %card1_texture
+@onready var card_2_icon: TextureRect = %card2_texture
+@onready var card_3_icon: TextureRect = %card3_texture
+@onready var hide_level_up_ui_button: TextureButton = %hide_level_up_ui_button
+## 升级界面隐藏按钮图标（显示=eye2，隐藏=eye）。preload 常量，引用稳定
+const LEVEL_UP_UI_SHOW_ICON: Texture2D = preload("res://images/ui_icon/eye2.png")
+const LEVEL_UP_UI_HIDE_ICON: Texture2D = preload("res://images/ui_icon/eye.png")
+## 升级界面当前是否处于隐藏状态。判断状态用这个变量，不要比较纹理资源对象
+var _level_up_ui_hidden := false
 ## 过关界面
 @onready var clear_stage_ui: ClearStageUI = $clear_stage_ui
 @onready var clear_stage_label: Label = clear_stage_ui.clear_stage_label
@@ -115,7 +123,7 @@ const hero_property = {
 @onready var buff_lock_button_3: TextureButton = %buff_lock_button_3
 @onready var buff_refresh_button: TextureButton = %buff_refresh_button
 @onready var buff_refresh_rlabel: RichTextLabel = %buff_refresh_rlabel
-@onready var shop_next_level_button: Button = %shop_next_level_button
+@onready var shop_next_level_button: TextureButton = %shop_next_level_button
 @onready var shop_label: Label = %shop_label
 @onready var shop_texture_ui: TextureRect = %shop_texture_ui
 ## 商店金币技能相关节点
@@ -291,6 +299,13 @@ func _ready() -> void:
 	Current.game_manager = self
 	## 过关按钮信号：子场景化后原场景内 [connection] 丢失，改为代码连接
 	stage_clear_button.pressed.connect(_on_stage_clear_button_pressed)
+	## 升级选卡：点击卡牌直接选择，悬浮/移出弹性缩放
+	var level_up_cards: Array = [card_1, card_2, card_3]
+	for i in level_up_cards.size():
+		var card: TextureButton = level_up_cards[i]
+		card.pressed.connect(_apply_level_up_card.bind(i))
+		card.mouse_entered.connect(_on_level_up_card_mouse_entered.bind(card))
+		card.mouse_exited.connect(_on_level_up_card_mouse_exited.bind(card))
 	## 测试
 
 	#_set_shop_buff()
@@ -927,17 +942,23 @@ func _set_level_up_card():
 		level_up_three_card_array[i] = row
 	## 根据随机结果将数据填入卡牌
 	var card_1_texture = load(level_up_three_card_array[0]['card_textrue'])
-	card_1.texture = card_1_texture
+	card_1.texture_normal = card_1_texture
+	card_1_icon.texture = load(level_up_three_card_array[0]['icon_texture'])
 	card_1_name.text = level_up_three_card_array[0]['card_name']
 	card_1_description.text = level_up_three_card_array[0]['card_description']
 	var card_2_texture = load(level_up_three_card_array[1]['card_textrue'])
-	card_2.texture = card_2_texture
+	card_2.texture_normal = card_2_texture
+	card_2_icon.texture = load(level_up_three_card_array[1]['icon_texture'])
 	card_2_name.text = level_up_three_card_array[1]['card_name']
 	card_2_description.text = level_up_three_card_array[1]['card_description']
 	var card_3_texture = load(level_up_three_card_array[2]['card_textrue'])
-	card_3.texture = card_3_texture
+	card_3.texture_normal = card_3_texture
+	card_3_icon.texture = load(level_up_three_card_array[2]['icon_texture'])
 	card_3_name.text = level_up_three_card_array[2]['card_name']
 	card_3_description.text = level_up_three_card_array[2]['card_description']
+	## 重置悬浮缩放，避免上一轮点击时残留放大状态
+	for card in [card_1, card_2, card_3]:
+		card.scale = Vector2.ONE
 
 ## 检查并升级
 func _check_and_level_up() -> void:
@@ -1681,29 +1702,38 @@ func _get_min_score_name() -> String:
 func _on_skill_system_hide_all_skill() -> void:
 	hero_skill_ui.hide_all_skills()
 
-func _on_card_1_button_pressed() -> void:
+func _apply_level_up_card(index: int) -> void:
 	## 遍历卡牌效果列表，逐一应用
-	for effect in level_up_three_card_array[0]["card_effects"]:
+	for effect in level_up_three_card_array[index]["card_effects"]:
 		_apply_card_effect(effect)
 	get_tree().paused = false
 	level_up_ui.hide()
 	Current.public_lock_array.erase("level_up_ui")
 
-func _on_card_2_button_pressed() -> void:
-	## 遍历卡牌效果列表，逐一应用
-	for effect in level_up_three_card_array[1]["card_effects"]:
-		_apply_card_effect(effect)
-	get_tree().paused = false
-	level_up_ui.hide()
-	Current.public_lock_array.erase("level_up_ui")
+## 悬浮卡牌：居中弹性放大（带过冲回弹）
+func _on_level_up_card_mouse_entered(card: TextureButton) -> void:
+	_kill_card_hover_tween(card)
+	card.pivot_offset = card.size / 2.0
+	## 提升绘制层级盖住邻卡；不能 move_to_front()——会重排 HBoxContainer 子节点顺序导致卡位互换
+	card.z_index = 1
+	var tween: Tween = card.create_tween()
+	tween.tween_property(card, "scale", Vector2(1.1, 1.1), 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	card.set_meta("hover_tween", tween)
 
-func _on_card_3_button_pressed() -> void:
-	## 遍历卡牌效果列表，逐一应用
-	for effect in level_up_three_card_array[2]["card_effects"]:
-		_apply_card_effect(effect)
-	get_tree().paused = false
-	level_up_ui.hide()
-	Current.public_lock_array.erase("level_up_ui")
+## 移出卡牌：弹性弹回原尺寸
+func _on_level_up_card_mouse_exited(card: TextureButton) -> void:
+	_kill_card_hover_tween(card)
+	card.z_index = 0
+	var tween: Tween = card.create_tween()
+	tween.tween_property(card, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	card.set_meta("hover_tween", tween)
+
+## 结束该卡上一段悬浮动画，避免连续进出时叠加冲突
+func _kill_card_hover_tween(card: TextureButton) -> void:
+	if card.has_meta("hover_tween"):
+		var old_tween: Variant = card.get_meta("hover_tween")
+		if old_tween is Tween and (old_tween as Tween).is_valid():
+			(old_tween as Tween).kill()
 
 func _hide_all_clear_stage_ui():
 	clear_stage_label.hide()
@@ -1958,6 +1988,7 @@ func _on_stage_clear_button_pressed() -> void:
 	shop_ui.show()
 	## 商店UI效果
 	await EffectManager.top_to_bottom_effect(shop_texture_ui, 0.5)
+	shop_next_level_button.show()
 
 	## 等待商店关闭
 	while "shop_ui" in Current.public_lock_array:
@@ -2097,16 +2128,15 @@ func _on_dice_sub_button_pressed() -> void:
 		EventBus.event_emit("dice_adjust_apply", ["dice_adjust", _target_slime])
 
 func _on_hide_level_up_ui_button_pressed() -> void:
-	if hide_level_up_ui_button.text == "隐藏":
-		for object in level_up_ui.get_children():
-			if object.name != "hide_level_up_ui_button":
+	## 翻转状态，图标跟随状态设置（Resource 的 == 是引用比较，不能用来判断图标种类）
+	_level_up_ui_hidden = not _level_up_ui_hidden
+	for object in level_up_ui.get_children():
+		if object.name != "hide_level_up_ui_button":
+			if _level_up_ui_hidden:
 				object.hide()
-		hide_level_up_ui_button.text = "显示"
-	else:
-		for object in level_up_ui.get_children():
-			if object.name != "hide_level_up_ui_button":
+			else:
 				object.show()
-		hide_level_up_ui_button.text = "隐藏"
+	hide_level_up_ui_button.texture_normal = LEVEL_UP_UI_HIDE_ICON if _level_up_ui_hidden else LEVEL_UP_UI_SHOW_ICON
 
 ## 设置技能到技能栏
 func _set_coin_skill(coin_skill_row):
@@ -2214,4 +2244,5 @@ func _on_shop_next_level_button_pressed() -> void:
 	buff_refresh_cost = 1
 	get_tree().paused = false
 	shop_ui.hide()
+	shop_next_level_button.hide()
 	Current.public_lock_array.erase("shop_ui")
