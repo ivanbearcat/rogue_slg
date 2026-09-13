@@ -3,7 +3,7 @@ extends Node2D
 signal slime_reroll_finished
 
 const hero_property = {
-	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2(3, 3), "class_icon": "res://images/soldier_icon.png"},
+	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2(3, 3), "class_icon": "res://images/ui_icon/soldier_icon.png"},
 	"archer": {"name": "archer", "movement": 2, "init_vec": Vector2(3, 2)},
 	"mage": {"name": "mage", "movement": 2, "init_vec": Vector2(2, 2)}
 	}
@@ -157,8 +157,8 @@ var buff_refresh_cost := 1:
 @onready var level_label: Label = %level_label
 @onready var ship: TextureRect = %ship
 @onready var scale_wrapper3: Control = %scale_wrapper3
-@onready var potion_button_label: Control = %potion_button_label
-@onready var turn_coin_label: Label = %turn_coin_label
+#@onready var potion_button_label: Control = %potion_button_label
+#@onready var turn_coin_label: Label = %turn_coin_label
 @onready var potion_button: TextureButton = %potion_button
 @onready var blood_bottle_label: Label = %blood_bottle_label
 @onready var blood_bottle_progress: TextureProgressBar = %blood_bottle_progress

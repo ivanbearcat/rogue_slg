@@ -10,13 +10,12 @@ func change_scene(view_name: StringName) -> Node:
 		print("切换进行中，忽略重复切换： " + view_name)
 		return _pending_scene
 	var scene_view := create_scene(view_name)
-	if current_scene:
-		current_scene.queue_free()
-		print("退出场景： " + view_name)
+	_free_current_scene(view_name)
 	current_scene = scene_view
 	## 延迟挂载：避免在父节点装配子节点期间 add_child 失败（如从 _ready 中触发切换）
 	_pending_scene = scene_view
 	get_tree().root.add_child.call_deferred(current_scene)
+	_register_tree_current_scene.call_deferred()
 	_clear_pending.call_deferred()
 	if current_scene:
 		print("进入场景： " + view_name)
@@ -25,6 +24,21 @@ func change_scene(view_name: StringName) -> Node:
 ## 与 deferred 挂载同帧执行（FIFO 保证在 add_child 之后）
 func _clear_pending() -> void:
 	_pending_scene = null
+
+## 释放旧场景：优先用 Godot 原生 current_scene（含项目启动主场景，如 splash），
+## 已释放时退回本单例维护的 current_scene；写回见 _register_tree_current_scene
+func _free_current_scene(view_name: StringName) -> void:
+	var old_scene: Node = get_tree().current_scene
+	if old_scene == null or not is_instance_valid(old_scene) or old_scene.is_queued_for_deletion():
+		old_scene = current_scene
+	if old_scene != null and is_instance_valid(old_scene) and not old_scene.is_queued_for_deletion():
+		old_scene.queue_free()
+		print("退出场景： " + view_name)
+
+## 与 deferred 挂载同帧执行（FIFO 保证在 add_child 之后）
+func _register_tree_current_scene() -> void:
+	if current_scene != null and is_instance_valid(current_scene):
+		get_tree().current_scene = current_scene
 
 func create_scene(scene_name: StringName) -> Node:
 	var scene_path: String = "res://scenes/" + scene_name + ".tscn"

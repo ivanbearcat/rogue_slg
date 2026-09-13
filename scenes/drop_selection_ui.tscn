@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7fdniyqqo3t5"]
+[gd_scene format=3 uid="uid://c7fdniyqqo3t5"]
 
 [ext_resource type="Script" uid="uid://bp1y2cedlg1m3" path="res://scripts/ui/drop_selection_ui.gd" id="1_82mbx"]
 [ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="2_fv21b"]
-[ext_resource type="Texture2D" path="res://images/ui_icon/eye2.png" id="3_eye2"]
-[ext_resource type="Texture2D" path="res://images/ui_icon/eye.png" id="4_eye"]
+[ext_resource type="Texture2D" uid="uid://d2ur4twufxilo" path="res://images/ui_icon/eye2.png" id="3_eye2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_drop_title"]
 line_spacing = 0.0
@@ -63,9 +62,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -65.0
+offset_top = -210.0
 offset_right = 20.0
-offset_bottom = -34.0
+offset_bottom = -179.0
 grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("3_eye2")
