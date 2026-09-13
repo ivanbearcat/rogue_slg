@@ -148,9 +148,9 @@ var buff_refresh_cost := 1:
 	set(v):
 		buff_refresh_cost = v
 		if Current.zero_coin_refresh_times > 0:
-			buff_refresh_rlabel.text = "换一批[img=14 ]res://images/coin.png[/img]0"
+			buff_refresh_rlabel.text = "换一批[img=14 ]res://images/ui_icon/coin.png[/img]0"
 		else:
-			buff_refresh_rlabel.text = "换一批[img=14 ]res://images/coin.png[/img]" + \
+			buff_refresh_rlabel.text = "换一批[img=14 ]res://images/ui_icon/coin.png[/img]" + \
 			str(buff_refresh_cost)
 ## UI
 @onready var power_label: Label = %power_label
@@ -896,7 +896,7 @@ func _generate_card_description(effects: Array) -> String:
 		parts.append(desc)
 	return "，".join(parts)
 
-## 对卡牌效果进行随机波动（±20%，最少1点）
+## 对卡牌效果进行随机波动（add/sub 固定 ±2 绝对区间，下限 0）
 func _fluctuate_card_effects(effects: Array) -> Array:
 	var fluctuated := []
 	for effect in effects:
@@ -904,8 +904,8 @@ func _fluctuate_card_effects(effects: Array) -> Array:
 		var operate = effect["operate"]
 		var value = effect["value"]
 		if operate == "add" or operate == "sub":
-			var fluctuated_val = roundi(value * randf_range(0.8, 1.2))
-			new_effect["value"] = maxi(fluctuated_val, 1)
+			var v := roundi(value)
+			new_effect["value"] = randi_range(maxi(v - 2, 0), v + 2)
 		elif operate == "mul":
 			var delta = value - 1.0
 			var fluctuated_delta = delta * randf_range(0.8, 1.2)
@@ -1806,11 +1806,11 @@ func _set_shop_buff():
 	TooltipManager.set_tooltip(buff_shop_icon_1, TooltipFormatter.format_buff(shop_buff_1))
 	TooltipManager.set_tooltip(buff_shop_icon_2, TooltipFormatter.format_buff(shop_buff_2))
 	TooltipManager.set_tooltip(buff_shop_icon_3, TooltipFormatter.format_buff(shop_buff_3))
-	buff_shop_rlabel_1.text = "[img=13 ]res://images/coin.png[/img] " + \
+	buff_shop_rlabel_1.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
 		str(maxi(0, int(shop_buff_1["buff_price"]) - Current.buff_price_discount))
-	buff_shop_rlabel_2.text = "[img=13 ]res://images/coin.png[/img] " + \
+	buff_shop_rlabel_2.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
 		str(maxi(0, int(shop_buff_2["buff_price"]) - Current.buff_price_discount))
-	buff_shop_rlabel_3.text = "[img=13 ]res://images/coin.png[/img] " + \
+	buff_shop_rlabel_3.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
 		str(maxi(0, int(shop_buff_3["buff_price"]) - Current.buff_price_discount))
 	## 刷新按钮状态
 	Current.total_coins = Current.total_coins
@@ -1832,7 +1832,7 @@ func _set_shop_coin_skill():
 	shop_coin_skill_icon.texture = load(shop_coin_skill_row["coin_skill_icon"])
 	TooltipManager.set_tooltip(shop_coin_skill_icon, TooltipFormatter.format_coin_skill(shop_coin_skill_row))
 	## 设置商店技能价格标签
-	shop_coin_skill_rlabel.text = "[img=13 ]res://images/coin.png[/img] " + str(int(shop_coin_skill_row["coin_skill_shop_cost"]))
+	shop_coin_skill_rlabel.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + str(int(shop_coin_skill_row["coin_skill_shop_cost"]))
 	## 重置购买标记
 	shop_coin_skill_bought = false
 	## 根据金币是否足够设置按钮状态
