@@ -116,6 +116,8 @@ var total_score: int:
 		return _total_score
 ## 单次总分
 var once_total_score: int
+## 本局单次最高得分（每次攻击结算后更新，run 结束前不清零）
+var max_once_score: int = 0
 ## 当前关卡
 var count_stage := 1:
 	set(v):
@@ -124,9 +126,9 @@ var count_stage := 1:
 		for row in game_manager.stage_info_json_data:
 			if row["stage_num"] == Current.count_stage:
 				stage_icon = row["stage_type_icon"]
-		game_manager.stage_label.text = "关卡 " + Tools.num_to_cnnum[v]
-		game_manager.clear_stage_label.text = "关卡 " + Tools.num_to_cnnum[v]
-		game_manager.stage_effect_label.text = "关卡 " + Tools.num_to_cnnum[v] + \
+		game_manager.stage_label.text = "关卡· " + Tools.num_to_cnnum[v]
+		game_manager.clear_stage_label.text = "关卡· " + Tools.num_to_cnnum[v]
+		game_manager.stage_effect_label.text = "关卡· " + Tools.num_to_cnnum[v] + \
 		" [img=17]" + stage_icon + "[/img]"
 	get:
 		return count_stage

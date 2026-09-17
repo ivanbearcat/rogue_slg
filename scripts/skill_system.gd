@@ -117,6 +117,8 @@ func skill_attack():
 	await Tools.time_sleep(0.5)
 	Current.total_score += Current.dice_type_point
 	Current.once_total_score = Current.dice_type_point
+	## 同步本局单次最高得分（跨回合累积，结算画面与遥测共用）
+	Current.max_once_score = maxi(Current.max_once_score, Current.once_total_score)
 	## 等待攻击动画完成和公共锁释放
 	while Current.attack_animation_finished == 0:
 		await Tools.time_sleep(0.05)

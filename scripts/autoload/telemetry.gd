@@ -117,9 +117,15 @@ func _on_potion_used() -> void:
 
 ## run 结束:记录结果后清空当前 run 引用
 func _on_run_end(result: String) -> void:
-	_safe_write("run_end", {"result": result})
+	## payload 在清空 run 引用前写入（同函数内先后顺序保证）
+	_safe_write("run_end", {"result": result, "max_once_score": Current.max_once_score})
 	run_id = ""
 	run_file_path = ""
+
+
+## 本局 buff 清单只读快照（结算画面取数，不暴露内部可变引用）
+func get_run_buffs_snapshot() -> Array:
+	return _run_buffs.duplicate(true)
 
 
 ## 过关清 buff(现成事件):移除累积清单中 STAGE/ELITE 生命周期的条目

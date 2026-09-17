@@ -332,6 +332,8 @@ func _ready() -> void:
 	#print(result)
 	## 初始化金币
 	Current.total_coins = 15
+	## 新局重置单次最高得分（对齐 run_start 重置链）
+	Current.max_once_score = 0
 	## 设置目标分数
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:
@@ -1972,10 +1974,14 @@ func _on_stage_clear_button_pressed() -> void:
 		## 重置后刷新技能按钮状态
 		Current.refresh_coin_skill_buttons()
 	else:
-		## 游戏胜利
+		## 游戏胜利：流程收口——显示结算画面（end_settlement_ui 订阅 run_end 弹出），
+		## 不再进入商店/下一关流程
 		print("胜利")
 		## 遥测:run 结束(胜利)
 		EventBus.event_emit("run_end", ["win"])
+		## 释放关卡切换锁（胜利流程终止，无后续切换）
+		Current.public_lock_array.erase("stage_transition")
+		return
 	## 隐藏结算显示内容
 	_hide_all_clear_stage_ui()
 	## 设置商店buff和价格UI
