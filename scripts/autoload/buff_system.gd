@@ -213,6 +213,18 @@ func clear_elite_buff():
 			buff.clear_buff()
 		pipelines[timing]["ELITE"].clear()
 
+## 新局清空全部 buff（含 ALWAYS/ONCE/shop 生命周期，过关清理不覆盖）
+## 由战局入口 game_manager._ready 的 run_start 重置链调用（再玩一次场景重开）
+func clear_run_buffs() -> void:
+	for timing in TIMINGS:
+		for key in LIFECYCLE_KEYS:
+			for buff in pipelines[timing][key]:
+				buff.clear_buff()
+			pipelines[timing][key].clear()
+	_initialized_buff_ids.clear()
+	_last_family_accumulation = {}
+	_current_family_accumulation = {}
+
 ## ============================================================
 ## 内部辅助
 ## ============================================================

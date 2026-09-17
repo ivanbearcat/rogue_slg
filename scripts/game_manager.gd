@@ -317,6 +317,12 @@ func _ready() -> void:
 	#coin_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
 	#coin_skill_3_icon.texture = load(Current.coin_skill_array_dict[2]["coin_skill_icon"])
 
+	## run_start 重置链：战局场景再次入场（再玩一次 → 选人 → 战局）恢复 boot 默认状态，
+	## 防止上一局残留（hp=0/回合数/得分等）导致开局即失败。
+	## 必须在倍率/基础分随机化之前清空（其后各行会重新装配），已在前面避免被后续填充覆盖时误清。
+	Current.reset_run_state()
+	## 清空上一局残留 buff（含 shop/ALWAYS 生命周期，过关清理不覆盖）
+	BuffSystem.clear_run_buffs()
 	## 设置基础点数分值（随机分配）
 	_randomize_base_scores()
 	## 设置倍率
@@ -332,8 +338,6 @@ func _ready() -> void:
 	#print(result)
 	## 初始化金币
 	Current.total_coins = 15
-	## 新局重置单次最高得分（对齐 run_start 重置链）
-	Current.max_once_score = 0
 	## 设置目标分数
 	for row in stage_info_json_data:
 		if row["stage_num"] == Current.count_stage:

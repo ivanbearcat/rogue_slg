@@ -118,6 +118,103 @@ var total_score: int:
 var once_total_score: int
 ## 本局单次最高得分（每次攻击结算后更新，run 结束前不清零）
 var max_once_score: int = 0
+
+
+## ============================================================
+## 新局重置链
+## ============================================================
+
+## 战局场景重新入场（再玩一次 → 选人 → 战局）时恢复 boot 默认值。
+## 只重置 run 级聚合状态与全局标记；场景节点引用由新战局 _ready 自行装配。
+## 调用时机：game_manager._ready 开头（game_manager 引用已刷新，setter 安全）。
+## 注意：优先直接写 _ 前缀内部变量，避免 setter 触发旧 HUD/演出副作用。
+func reset_run_state() -> void:
+	## 得分与关卡聚合
+	_total_score = 0
+	once_total_score = 0
+	max_once_score = 0
+	count_stage = 1
+	count_add_coins = 0
+	count_round = 0
+	highest_dice_num = 1
+	_one_score = 0
+	_two_score = 0
+	_three_score = 0
+	_four_score = 0
+	_five_score = 0
+	_six_score = 0
+	dice_type_point = 0
+	dice_type_count = 0
+	## HP/血瓶/防御/回血
+	_player_hp = 5
+	_max_hp = 5
+	player_defense = 2
+	_score_heal_accumulated = 0
+	_potion_count = 1
+	_potion_max = 3
+	iron_stomach_reduction = 0
+	scorched_earth_bonus = 0.0
+	has_death_immunity = false
+	death_immunity_used = false
+	## 骰型板/结算标记
+	_drop_slot_consumed_this_turn = false
+	_drop_slot_dice = null
+	_duizi_percent = 0
+	_shunzi_percent = 0
+	_tongse_percent = 0
+	_tongdui_percent = 0
+	_tongshun_percent = 0
+	_base_score = 0
+	_percent_score = 0.0
+	attack_animation_finished = 1
+	slime_create_num = 3
+	power_slime_num = 1
+	## 等级/经验/能量
+	level = 0
+	hero_exp = 0
+	require_exp = 3
+	max_power = 2
+	power = 0
+	power_skill = 0
+	## 金币技能
+	coin_skill_array_dict = []
+	coin_skill_used = []
+	zero_coin_refresh_max_times = 0
+	zero_coin_refresh_times = 0
+	## 击杀/回合计数标记
+	slime_die_sum = 0
+	killed_slime_colors = []
+	pattern_kill_sum = 0
+	killed_power_slime = false
+	last_turn_attacked = false
+	consecutive_score_turns = 0
+	dropped_dice_count = 0
+	scored_dice_info = []
+	active_dice_types = []
+	slime_tide_pending = 0
+	swarm_call_pending = 0
+	## 回合/移动/技能标记与路径
+	turn = "hero_turn"
+	_is_moved = false
+	_is_attacked = false
+	grids_moved_this_turn = 0
+	pre_move_position = Vector2.ZERO
+	pre_move_grid_index = Vector2.ZERO
+	pre_move_total_score = 0
+	id_path = []
+	movable_grid_index_array = []
+	skill_num = ""
+	skill_target_range = []
+	skill_attack_range = []
+	transformable_slime_array = []
+	all_hero_dict = {}
+	last_slime_create_array = []
+	public_lock_array = []
+	action_lock = false
+	has_attack_grid = false
+	## buff 购买折扣（金币本身由战局 _ready 重新初始化为 15）
+	_buff_price_discount = 0
+	dice_multiplier_dict = {}
 ## 当前关卡
 var count_stage := 1:
 	set(v):

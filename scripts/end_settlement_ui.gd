@@ -12,7 +12,8 @@ const TITLE_FAIL := "战败"
 @onready var coins_label: Label = %coins_label
 @onready var max_once_label: Label = %max_once_label
 @onready var total_score_label: Label = %total_score_label
-@onready var end_confirm_button: TextureButton = %end_confirm_button
+@onready var again_button: TextureButton = %again_button
+@onready var end_button: TextureButton = %end_button
 @onready var buff_board: NinePatchRect = %buff_board
 
 ## 缓冲的数据快照（run_end 时点取值，动效播放期间 Current 可能变化）
@@ -23,7 +24,9 @@ var _is_showing := false
 
 func _ready() -> void:
 	EventBus.subscribe("run_end", _on_run_end)
-	end_confirm_button.pressed.connect(_on_confirm_pressed)
+	## 双收口按钮信号接线（两态统一：again → 选人重开；end → splash 退出）
+	again_button.pressed.connect(_on_again_pressed)
+	end_button.pressed.connect(_on_end_button_pressed)
 
 
 ## ============================================================
@@ -84,7 +87,8 @@ func _setup_and_show(data: Dictionary) -> void:
 	coins_label.get_parent().hide()
 	max_once_label.get_parent().hide()
 	total_score_label.get_parent().hide()
-	end_confirm_button.hide()
+	again_button.hide()
+	end_button.hide()
 	buff_board.hide()
 	## 显示整层
 	show()
@@ -106,8 +110,11 @@ func _setup_and_show(data: Dictionary) -> void:
 	for icon_item in buff_row.get_children():
 		EffectManager.buff_pop_effect(icon_item)
 		await Tools.time_sleep(0.08)
-	end_confirm_button.disabled = false
-	end_confirm_button.show()
+	again_button.disabled = false
+	end_button.disabled = false
+	## 动效完成后两按钮同时弹出
+	again_button.show()
+	end_button.show()
 
 
 ## buff 图标条目：PanelContainer+TextureRect（buff_texture.tscn 同款结构）+ buff_meta 元数据
@@ -133,17 +140,21 @@ func _lookup_buff_meta(buff_id: String) -> Dictionary:
 
 
 ## ============================================================
-## 确定按钮收口
+## 收口按钮（两态统一：again → 选人重开，end → splash 退出）
 ## ============================================================
 
-func _on_confirm_pressed() -> void:
-	var result: String = str(_stats.get("result", "fail"))
+## "再玩一次"：解除暂停并回到选人画面，run_start 重置链由选人画面自然触发
+func _on_again_pressed() -> void:
 	_is_showing = false
 	hide()
-	## 胜利态回到游戏初始选人画面（与既有游戏结束路径一致）；失败态仅恢复运行
-	if result == "win":
-		## 先恢复运行再切场景，避免暂停树阻塞场景切换
-		get_tree().paused = false
-		SceneManager.change_scene(&"hero_select")
-	else:
-		get_tree().paused = false
+	## 先恢复运行再切场景，避免暂停树阻塞场景切换
+	get_tree().paused = false
+	SceneManager.change_scene(&"hero_select")
+
+
+## "退出"：解除暂停并回到游戏初始界面
+func _on_end_button_pressed() -> void:
+	_is_showing = false
+	hide()
+	get_tree().paused = false
+	SceneManager.change_scene(&"splash")
