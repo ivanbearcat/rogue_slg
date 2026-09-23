@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://cao4q0jw6vrqj"]
 
-[ext_resource type="Script" path="res://scripts/ui/splash_menu.gd" id="1_menu"]
+[ext_resource type="Script" uid="uid://c6cvjrmolki2n" path="res://scripts/ui/splash_menu.gd" id="1_menu"]
 
-[node name="SplashMenu" type="Control"]
+[node name="SplashMenu" type="Control" unique_id=619426749]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=1712656958]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.08, 0.1, 0.14, 1)
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=1720578007]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -31,11 +31,11 @@ offset_right = 300.0
 offset_bottom = 130.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 48
-text = "ROGUE SLG"
+text = "Dice Slime"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1457777604]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,31 +43,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ButtonColumn" type="VBoxContainer" parent="CenterContainer"]
+[node name="ButtonColumn" type="VBoxContainer" parent="CenterContainer" unique_id=567784676]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="start_button" type="Button" parent="CenterContainer/ButtonColumn"]
+[node name="start_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=1307737103]
 custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
-text = "开始"
+text = "开始游戏"
 
-[node name="continue_button" type="Button" parent="CenterContainer/ButtonColumn"]
+[node name="continue_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=1952813738]
 custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
-text = "继续"
+text = "继续游戏"
 
-[node name="settings_button" type="Button" parent="CenterContainer/ButtonColumn"]
+[node name="settings_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=157465949]
 custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
 text = "设置"
 
-[node name="history_button" type="Button" parent="CenterContainer/ButtonColumn"]
+[node name="history_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=621516189]
 custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
-text = "历史"
+text = "游戏历史"
 
-[node name="quit_button" type="Button" parent="CenterContainer/ButtonColumn"]
+[node name="history_button2" type="Button" parent="CenterContainer/ButtonColumn" unique_id=938814822]
+custom_minimum_size = Vector2(220, 48)
+layout_mode = 2
+text = "制作人员 / 关于"
+
+[node name="quit_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=1278586907]
 custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
 text = "退出"

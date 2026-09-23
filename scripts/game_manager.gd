@@ -99,8 +99,8 @@ var _level_up_ui_hidden := false
 @onready var stage_coin_rlabel_4: RichTextLabel = clear_stage_ui.stage_coin_rlabel_4
 @onready var paper_texture: TextureRect = clear_stage_ui.paper_texture
 @onready var stage_clear_button: TextureButton = clear_stage_ui.stage_clear_button
-## 帮助按钮
-@onready var help_button: TextureButton = %help_button
+## 暂停和帮助按钮
+@onready var pause_ui: CanvasLayer = %pause_ui
 ## 职业图标
 @onready var class_icon: TextureRect = %class_icon
 ## debuff UI
@@ -2256,3 +2256,8 @@ func _on_shop_next_level_button_pressed() -> void:
 	shop_ui.hide()
 	shop_next_level_button.hide()
 	Current.public_lock_array.erase("shop_ui")
+
+
+func _on_pause_button_pressed() -> void:
+	get_tree().paused = true
+	pause_ui.show()
