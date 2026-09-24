@@ -34,6 +34,7 @@ EnvVFX="*uid://qomyut16hnoi"
 TooltipManager="*res://scripts/autoload/tooltip_manager.gd"
 Fx="*uid://d2354cc1tpg8e"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+GameSettings="*uid://wi31s6l3kpft"
 
 [display]
 
