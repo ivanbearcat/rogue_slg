@@ -297,6 +297,8 @@ var _dice_multiplier_labels: Dictionary
 func _ready() -> void:
 	## 自注册：场景切换后 Current.game_manager 引用随新战局自动刷新
 	Current.game_manager = self
+	## 加载bgm
+	AudioManager.play_bgm("res://audio/bgm/吃豆人.mp3")
 	## 过关按钮信号：子场景化后原场景内 [connection] 丢失，改为代码连接
 	stage_clear_button.pressed.connect(_on_stage_clear_button_pressed)
 	## 升级选卡：点击卡牌直接选择，悬浮/移出弹性缩放

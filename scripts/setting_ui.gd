@@ -9,6 +9,7 @@ extends CanvasLayer
 
 func _ready() -> void:
 	EventBus.subscribe('setting_ui', setting_ui)
+	add_to_group("setting_ui")
 	# 用上次保存的值回填 UI(no_signal 避免触发回调又原样写回)
 	main_volume_progress.set_value_no_signal(GameSettings.main_volume)
 	music_volume_progress.set_value_no_signal(GameSettings.music_volume)
@@ -24,16 +25,19 @@ func _refresh_labels() -> void:
 func _on_main_volume_progress_value_changed(value: float) -> void:
 	main_volume_label.text = "%d" % roundi(value)
 	GameSettings.main_volume = value
+	GameSettings.apply_settings()
 	GameSettings.save_settings()
 
 func _on_music_volume_progress_value_changed(value: float) -> void:
 	music_volume_label.text = "%d" % roundi(value)
 	GameSettings.music_volume = value
+	GameSettings.apply_settings()
 	GameSettings.save_settings()
 
 func _on_effect_volume_progress_value_changed(value: float) -> void:
 	effect_volume_label.text = "%d" % roundi(value)
 	GameSettings.effect_volume = value
+	GameSettings.apply_settings()
 	GameSettings.save_settings()
 
 # ±5 按钮改的是 progress.value,value_changed 会自动触发上面的保存,不用动
@@ -54,3 +58,22 @@ func setting_ui(ops: String):
 		show()
 	elif ops == 'hide':
 		hide()
+
+
+func _on_reduce_main_volume_pressed() -> void:
+	main_volume_progress.value -= 5
+
+func _on_increase_main_volume_pressed() -> void:
+	main_volume_progress.value += 5
+
+func _on_reduce_music_volume_pressed() -> void:
+	music_volume_progress.value -= 5
+
+func _on_increase_music_volume_pressed() -> void:
+	music_volume_progress.value += 5
+
+func _on_reduce_effect_volume_pressed() -> void:
+	effect_volume_progress.value -= 5
+
+func _on_increase_effect_volume_pressed() -> void:
+	effect_volume_progress.value += 5

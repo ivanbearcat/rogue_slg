@@ -43,6 +43,8 @@ func skill_attack():
 	Current.action_lock = true
 	## 攻击前buff
 	EventBus.event_emit("do_pre_attack_buff")
+	## 攻击音效
+	AudioManager.play_sfx("attack")
 	## 史莱姆场景名到颜色的映射（精英门槛检查和消耗匹配共用）
 	var slime_color_dict := {
 		"slime_small": "green",
@@ -107,6 +109,9 @@ func skill_attack():
 			if _matched:
 				Current.pattern_kill_sum += 1
 			slime.animated_sprite_2d.play("die")
+	## 受击音效
+	#if Current.slime_die_sum > 0:
+		#AudioManager.play_sfx("hit")
 	## 门槛通过的精英/BOSS史莱姆击杀后清除ELITE debuff
 	if not gate_passed_slimes.is_empty():
 		EventBus.event_emit("clear_elite_buff")

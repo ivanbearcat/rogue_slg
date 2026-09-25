@@ -19,6 +19,10 @@ run/main_scene="res://scenes/splash.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://tl5absyxy4mf"
+
 [autoload]
 
 Current="*res://scripts/autoload/current.gd"
@@ -35,6 +39,7 @@ TooltipManager="*res://scripts/autoload/tooltip_manager.gd"
 Fx="*uid://d2354cc1tpg8e"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 GameSettings="*uid://wi31s6l3kpft"
+AudioManager="*uid://u7w1wewhcngv"
 
 [display]
 
