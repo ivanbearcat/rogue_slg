@@ -13,8 +13,16 @@ func _ready() -> void:
 	_engine = FxEngine.new()
 	_engine.name = "FxEngine"
 	add_child(_engine)
-	# 运行时注册为 Engine 单例（覆盖编辑器实例，若存在）
-	Engine.register_singleton("Fx", self)
+	# 运行时注册为 Engine 单例（幂等：已被占用则不打扰，避免
+	# 编辑器实例与 autoload 实例重复注册导致报错）
+	if not Engine.has_singleton("Fx"):
+		Engine.register_singleton("Fx", self)
+	elif Engine.get_singleton("Fx") != self:
+		# 已被编辑器实例占用时，将其替换为运行时实例仅在游戏内发生；
+		# 编辑器进程里保持现有注册者即可。
+		if not Engine.is_editor_hint():
+			Engine.unregister_singleton("Fx")
+			Engine.register_singleton("Fx", self)
 
 
 func _exit_tree() -> void:

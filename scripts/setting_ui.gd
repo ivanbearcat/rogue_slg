@@ -6,6 +6,8 @@ extends CanvasLayer
 @onready var main_volume_label: Label = %main_volume_label
 @onready var music_volume_label: Label = %music_volume_label
 @onready var effect_volume_label: Label = %effect_volume_label
+@onready var language_option: OptionButton = %language_option
+
 
 func _ready() -> void:
 	EventBus.subscribe('setting_ui', setting_ui)
@@ -15,6 +17,7 @@ func _ready() -> void:
 	music_volume_progress.set_value_no_signal(GameSettings.music_volume)
 	effect_volume_progress.set_value_no_signal(GameSettings.effect_volume)
 	_refresh_labels()
+	_init_language_option()
 
 func _refresh_labels() -> void:
 	_on_main_volume_progress_value_changed(main_volume_progress.value)
@@ -77,3 +80,18 @@ func _on_reduce_effect_volume_pressed() -> void:
 
 func _on_increase_effect_volume_pressed() -> void:
 	effect_volume_progress.value += 5
+
+func _init_language_option() -> void:
+	# 语言名不是待翻译文案,禁止自动翻译(别让"中文"被翻成别的东西)
+	language_option.auto_translate_mode = Control.AUTO_TRANSLATE_MODE_DISABLED
+	language_option.clear()                       # .tscn 里硬编码的 2 项清掉,以后只认代码
+	for l: Dictionary in GameSettings.LANGUAGES:
+		language_option.add_item(str(l["label"]), int(l["id"]))
+	language_option.selected = language_option.get_item_index(GameSettings.language_id)
+	language_option.item_selected.connect(_on_language_option_selected)
+
+func _on_language_option_selected(index: int) -> void:
+	var id := language_option.get_item_id(index)
+	GameSettings.language_id = id
+	GameSettings.apply_settings()
+	GameSettings.save_settings()

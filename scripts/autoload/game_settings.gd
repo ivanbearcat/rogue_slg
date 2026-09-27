@@ -3,35 +3,56 @@ extends Node
 
 const SETTINGS_PATH := "user://settings.cfg"
 
+## 语言注册表——以后加语言只在往这里加一行，id 顺序保持
+## 兼容规则：新语言永远往下追加，禁止插在中间（老玩家的 language_id 序号不能变味）
+const LANGUAGES: Array[Dictionary] = [
+	{ "id": 0, "locale": "zh_CN", "label": "中文" },
+	{ "id": 1, "locale": "en", "label": "English" },
+	# { "id": 2, "locale": "ja", "label": "日本語" },   # 未来追加示例
+]
+
 var main_volume := 50.0
 var music_volume := 50.0
 var effect_volume := 50.0
-var fullscreen := false          # 场景里 CheckBox 默认 button_pressed = true,保持一致
-var language_id := 0            # OptionButton item id: 0=中文 1=English
+var fullscreen := false
+var language_id := 0   # 与 LANGUAGES[].id 对应的运行时序号
 
 func _ready() -> void:
 	load_settings()
 	apply_settings()
 
-const BUS_VOLUME := {           # 设置项 → 音频总线
+const BUS_VOLUME := {
 	"main_volume":   "Master",
-	"music_volume":  "Music",     # 没有"Music"总线时需在 Audio 面板新建
-	"effect_volume": "Effect",    # 同上
+	"music_volume":  "Music",
+	"effect_volume": "Effect",
 }
 
 func apply_settings() -> void:
 	for key: String in BUS_VOLUME:
 		var idx := AudioServer.get_bus_index(BUS_VOLUME[key])
 		if idx == -1:
-			continue              # 总线不存在就跳过,避免 set_(-1) 误改 Master
+			continue
 		var linear: float = get(key) / 100.0
 		AudioServer.set_bus_volume_db(idx, linear_to_db(maxf(linear, 0.0001)))
 		AudioServer.set_bus_mute(idx, linear <= 0.0)
 	DisplayServer.window_set_mode(
 			DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen
 			else DisplayServer.WINDOW_MODE_WINDOWED)
-	# 目前项目还没有翻译资源,先存起来;以后加 .csv/.po 后这两行直接生效
-	TranslationServer.set_locale(["zh_CN", "en"][language_id])
+	TranslationServer.set_locale(get_locale())   # 翻译表建好后这行自动生效
+
+## id → locale 字符串；id 越界时自动回退中文（挡住任何脏数据）
+func get_locale() -> String:
+	for l: Dictionary in LANGUAGES:
+		if int(l["id"]) == language_id:
+			return str(l["locale"])
+	language_id = 0
+	return str(LANGUAGES[0]["locale"])
+
+func _locale_to_id(locale: String) -> int:
+	for l: Dictionary in LANGUAGES:
+		if str(l["locale"]) == locale:
+			return int(l["id"])
+	return 0
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -39,6 +60,8 @@ func save_settings() -> void:
 	cfg.set_value("audio", "music_volume", music_volume)
 	cfg.set_value("audio", "effect_volume", effect_volume)
 	cfg.set_value("display", "fullscreen", fullscreen)
+	# 新档存字符串，双保险期暂时继续留着旧的序号字段
+	cfg.set_value("general", "language", get_locale())
 	cfg.set_value("general", "language_id", language_id)
 	var err := cfg.save(SETTINGS_PATH)
 	if err != OK:
@@ -52,4 +75,8 @@ func load_settings() -> void:
 	music_volume = cfg.get_value("audio", "music_volume", 50.0)
 	effect_volume = cfg.get_value("audio", "effect_volume", 50.0)
 	fullscreen = cfg.get_value("display", "fullscreen", false)
-	language_id = cfg.get_value("general", "language_id", 0)
+	# 读取优先级：字符串字段 → 旧序号字段 → 默认中文
+	if cfg.has_section_key("general", "language"):
+		language_id = _locale_to_id(str(cfg.get_value("general", "language", "zh_CN")))
+	else:
+		language_id = int(cfg.get_value("general", "language_id", 0))
