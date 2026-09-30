@@ -101,6 +101,10 @@ alt+3={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://locale/translations.en.translation", "res://locale/translations.ja.translation", "res://locale/translations.ko.translation", "res://locale/translations.zh_TW.translation", "res://locale/translations.fr.translation", "res://locale/translations.de.translation", "res://locale/translations.es.translation", "res://locale/translations.pt_BR.translation", "res://locale/translations.it.translation")
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

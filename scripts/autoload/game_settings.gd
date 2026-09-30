@@ -6,10 +6,27 @@ const SETTINGS_PATH := "user://settings.cfg"
 ## 语言注册表——以后加语言只在往这里加一行，id 顺序保持
 ## 兼容规则：新语言永远往下追加，禁止插在中间（老玩家的 language_id 序号不能变味）
 const LANGUAGES: Array[Dictionary] = [
-	{ "id": 0, "locale": "zh_CN", "label": "中文" },
-	{ "id": 1, "locale": "en", "label": "English" },
-	# { "id": 2, "locale": "ja", "label": "日本語" },   # 未来追加示例
+	{ "id": 0, "locale": "zh_CN", "label": "中文" },   # NO_TRANSLATE 语言名是专有名词
+	{ "id": 1, "locale": "en", "label": "English" },   # NO_TRANSLATE 语言名是专有名词
+	{ "id": 2, "locale": "ja", "label": "日本語" },
+	{ "id": 3, "locale": "ko", "label": "한국어" },
+	{ "id": 4, "locale": "zh_TW", "label": "繁體中文" },
+	{ "id": 5, "locale": "fr", "label": "Français" },
+	{ "id": 6, "locale": "de", "label": "Deutsch" },
+	{ "id": 7, "locale": "es", "label": "Español" },
+	{ "id": 8, "locale": "pt_BR", "label": "Português (BR)" },
+	{ "id": 9, "locale": "it", "label": "Italiano" },
 ]
+
+## 按语言切换像素字体：主字体 + fallback 链，见 i18n.md 阶段 7
+const FONT_BY_LOCALE := {
+	"zh_CN": "res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf",
+	"zh_TW": "res://fonts/fusion-pixel-12px-monospaced-zh_hant.otf",
+	"ja":    "res://fonts/fusion-pixel-12px-monospaced-ja.otf",
+	"ko":    "res://fonts/fusion-pixel-12px-monospaced-ko.otf",
+}
+const FONT_FALLBACK := "res://fonts/fusion-pixel-12px-monospaced-latin.otf"
+const FONT_CJK := "res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf"
 
 var main_volume := 50.0
 var music_volume := 50.0
@@ -39,6 +56,25 @@ func apply_settings() -> void:
 			DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen
 			else DisplayServer.WINDOW_MODE_WINDOWED)
 	TranslationServer.set_locale(get_locale())   # 翻译表建好后这行自动生效
+	_apply_font()
+
+## 按当前语言装配字体与 fallback 链，写入根主题与 LabelSettings
+func _apply_font() -> void:
+	var main_path: String = FONT_BY_LOCALE.get(get_locale(), FONT_FALLBACK)
+	var font: FontFile = load(main_path)
+	var chain: Array[Font] = []
+	for p: String in [FONT_FALLBACK, FONT_CJK]:
+		if p != main_path:
+			chain.append(load(p))
+	font.fallbacks = chain
+	var theme := get_tree().root.theme
+	if theme == null:
+		theme = Theme.new()
+		get_tree().root.theme = theme
+	theme.default_font = font
+	var ls: Resource = load("res://fonts/pixel_cn_label_settings.tres")
+	if ls is LabelSettings:
+		ls.font = font
 
 ## id → locale 字符串；id 越界时自动回退中文（挡住任何脏数据）
 func get_locale() -> String:

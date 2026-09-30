@@ -1,5 +1,24 @@
 import openpyxl
 import json
+import sys
+
+# Windows 控制台默认 GBK，强制 UTF-8 输出避免 ⚠ 等字符报 UnicodeEncodeError
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
+
+def parse_cell(v):
+    """单元格里的 JSON 文本（如 card_effects 列的数组）还原成真正的数组/对象，
+    保证 excel→json 往返后类型不退化"""
+    if isinstance(v, str):
+        s = v.strip()
+        if s[:1] in ("[", "{"):
+            try:
+                return json.loads(s)
+            except ValueError:
+                return v
+    return v
 
 
 def excel_to_json(excel_file, sheet_name=None):
@@ -19,7 +38,10 @@ def excel_to_json(excel_file, sheet_name=None):
     # 读取数据行
     data = []
     for row in sheet.iter_rows(min_row=3, values_only=True):  # 从第 3 行开始（跳过表头）
-        row_data = dict(zip(headers, row))
+        row_data = {k: parse_cell(v) for k, v in zip(headers, row)}
+        row_data = {k: v for k, v in row_data.items() if v is not None}  # 空单元格=字段缺失，保持原 JSON 的参差键结构
+        if not row_data:  # 整行为空（如被清空但未删除的尾部行）不导出
+            continue
         data.append(row_data)
 
     # 转换为 JSON

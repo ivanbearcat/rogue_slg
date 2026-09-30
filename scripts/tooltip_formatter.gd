@@ -4,6 +4,10 @@ extends RefCounted
 ## BBCode富文本Tooltip格式化工具类
 ## 集中管理数值着色、家族颜色、标签高亮、图标嵌入等BBCode转换
 
+## static 上下文的翻译入口（源文本即KEY：查不到时原样返回）
+static func T(s: String) -> String:
+	return TranslationServer.translate(s)
+
 ## 家族颜色映射
 const FAMILY_COLORS := {
 	"swarm": "#8BC34A",
@@ -71,8 +75,8 @@ const GATE_TYPE_NAMES := {
 ## 格式化buff tooltip
 static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> String:
 	var icon: String = str(buff_meta.get("buff_icon", ""))
-	var name: String = str(buff_meta.get("buff_name", ""))
-	var tooltip: String = str(buff_meta.get("buff_tooltip", ""))
+	var name: String = T(str(buff_meta.get("buff_name", "")))
+	var tooltip: String = T(str(buff_meta.get("buff_tooltip", "")))
 	var family: String = str(buff_meta.get("family", ""))
 	var tags = buff_meta.get("tags", [])
 
@@ -87,8 +91,8 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 	if not family.is_empty():
 		if FAMILY_COLORS.has(family):
 			var family_color: String = FAMILY_COLORS[family]
-			var family_cn: String = FAMILY_NAMES.get(family, family)
-			bbcode += "\n[color=%s]%s系[/color]" % [family_color, family_cn]
+			var family_cn: String = T(str(FAMILY_NAMES.get(family, family)))
+			bbcode += "\n" + T("\n[color=%s]%s系[/color]") % [family_color, family_cn]
 
 	# 描述文本行（数值自动着色，倾向buff=绿色）
 	var colorized_tooltip: String = _colorize_numbers(tooltip, "buff")
@@ -103,19 +107,19 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 			var overlord_name: String = OVERLORD_NAMES.get(family, "")
 			var overlord_effect: String = OVERLORD_EFFECTS.get(family, "")
 			if family_count >= 4:
-				bbcode += "\n💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect]
+				bbcode += "\n" + T("💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color]") % [T(str(FAMILY_NAMES.get(family, family))), T(str(overlord_name)), T(str(overlord_effect))]
 			else:
-				bbcode += "\n💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color]" % [FAMILY_NAMES.get(family, family), overlord_name, overlord_effect, family_count]
+				bbcode += "\n" + T("💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color]") % [T(str(FAMILY_NAMES.get(family, family))), T(str(overlord_name)), T(str(overlord_effect)), family_count]
 
 	# 共鸣霸主共振叠层：共鸣系且霸主已激活时显示当前共振（ramp=0也显示）
 	if family == "resonance" and BuffSystem.get_family_count("resonance") >= 4:
 		var ramp_n := int(BuffSystem.resonance_ramp / 0.01)
 		var ramp_m := int(BuffSystem.resonance_ramp * 100)
-		bbcode += "\n💡 [color=#42A5F5]共鸣霸主·当前共振：%d层（+%d%%）[/color]" % [ramp_n, ramp_m]
+		bbcode += "\n" + T("💡 [color=#42A5F5]共鸣霸主·当前共振：%d层（+%d%%）[/color]") % [ramp_n, ramp_m]
 
 	# 领主BUFF自身显示已激活状态
 	if tags.has("legendary") and tags.has("multiplicative"):
-		bbcode += "\n[color=#0fff5b][b]（已激活 ✓）[/b][/color]"
+		bbcode += "\n" + T("[color=#0fff5b][b]（已激活 ✓）[/b][/color]")
 
 	# 标签行
 	if tags.size() > 0:
@@ -129,15 +133,15 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 ## 格式化debuff tooltip
 static func format_debuff(debuff_meta: Dictionary) -> String:
 	var icon: String = str(debuff_meta.get("debuff_icon", ""))
-	var name: String = str(debuff_meta.get("debuff_name", ""))
-	var tooltip: String = str(debuff_meta.get("debuff_tooltip", ""))
+	var name: String = T(str(debuff_meta.get("debuff_name", "")))
+	var tooltip: String = T(str(debuff_meta.get("debuff_tooltip", "")))
 
 	var bbcode: String = ""
 
 	# 标题行：图标 + 减益标识 + 名称
 	if not icon.is_empty():
 		bbcode += "[img=24]%s[/img] " % icon
-	bbcode += "[color=%s]▼ 减益[/color] " % DECREASE_COLOR
+	bbcode += T("[color=%s]▼ 减益[/color] ") % DECREASE_COLOR
 	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
 
 	# 描述文本行（数值倾向debuff=红色）
@@ -148,8 +152,8 @@ static func format_debuff(debuff_meta: Dictionary) -> String:
 ## 格式化coin_skill tooltip
 static func format_coin_skill(skill_meta: Dictionary) -> String:
 	var icon: String = str(skill_meta.get("coin_skill_icon", ""))
-	var name: String = str(skill_meta.get("coin_skill_name", ""))
-	var tooltip: String = str(skill_meta.get("coin_skill_tooltip", ""))
+	var name: String = T(str(skill_meta.get("coin_skill_name", "")))
+	var tooltip: String = T(str(skill_meta.get("coin_skill_tooltip", "")))
 
 	var bbcode: String = ""
 
@@ -169,16 +173,16 @@ static func format_elite_slime(is_boss: bool, gate_type: String, gate_count: int
 
 	# 标题行
 	if is_boss:
-		bbcode += "[color=%s]★ BOSS史莱姆[/color]" % BOSS_COLOR
+		bbcode += T("[color=%s]★ BOSS史莱姆[/color]") % BOSS_COLOR
 	else:
-		bbcode += "[color=%s]★ 精英史莱姆[/color]" % ELITE_COLOR
+		bbcode += T("[color=%s]★ 精英史莱姆[/color]") % ELITE_COLOR
 
 	# 门槛行
-	var gate_cn: String = GATE_TYPE_NAMES.get(gate_type, gate_type)
-	bbcode += "\n[color=#FFD700]需要: %s ×%d[/color]" % [gate_cn, gate_count]
+	var gate_cn: String = T(str(GATE_TYPE_NAMES.get(gate_type, gate_type)))
+	bbcode += T("\n[color=#FFD700]需要: %s ×%d[/color]") % [gate_cn, gate_count]
 
 	# 骰子行
-	bbcode += "\n骰子: [b]%d点[/b]" % dice_point
+	bbcode += T("\n骰子: [b]%d点[/b]") % dice_point
 
 	return bbcode
 
@@ -195,20 +199,20 @@ static func _colorize_numbers(text: String, default_tendency: String = "buff") -
 	var regex_minus := RegEx.create_from_string("(\\-[0-9]+\\.?[0-9]*%?)")
 	result = regex_minus.sub(result, "[b][color=%s]$1[/color][/b]" % DECREASE_COLOR, true)
 
-	# 3. 匹配增加关键词后的数值
-	var increase_words := ["增加", "加分", "提升", "强化", "额外增加", "额外"]
+	# 3. 匹配增加关键词后的数值（对源语言文本做逻辑匹配,非待翻译文案）
+	var increase_words := ["增加", "加分", "提升", "强化", "额外增加", "额外"] # NO_TRANSLATE
 	var increase_pattern := "(" + "|".join(increase_words) + ")([0-9]+\\.?[0-9]*%?)"
 	var regex_inc_word := RegEx.create_from_string(increase_pattern)
 	result = regex_inc_word.sub(result, "$1[b][color=%s]$2[/color][/b]" % INCREASE_COLOR, true)
 
-	# 4. 匹配减少关键词后的数值
-	var decrease_words := ["减少", "下降", "损失", "禁用", "扣", "脆弱"]
+	# 4. 匹配减少关键词后的数值（对源语言文本做逻辑匹配,非待翻译文案）
+	var decrease_words := ["减少", "下降", "损失", "禁用", "扣", "脆弱"] # NO_TRANSLATE
 	var decrease_pattern := "(" + "|".join(decrease_words) + ")([0-9]+\\.?[0-9]*%?)"
 	var regex_dec_word := RegEx.create_from_string(decrease_pattern)
 	result = regex_dec_word.sub(result, "$1[b][color=%s]$2[/color][/b]" % DECREASE_COLOR, true)
 
-	# 5. 变为0 → 红色
-	var regex_zero := RegEx.create_from_string("变为([0-9]+)")
-	result = regex_zero.sub(result, "变为[b][color=%s]$1[/color][/b]" % DECREASE_COLOR, true)
+	# 5. 变为0 → 红色（匹配模式针对源语言,非待翻译文案）
+	var regex_zero := RegEx.create_from_string("变为([0-9]+)") # NO_TRANSLATE
+	result = regex_zero.sub(result, T("变为[b][color=%s]$1[/color][/b]") % DECREASE_COLOR, true)
 
 	return result

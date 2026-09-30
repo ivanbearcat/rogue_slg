@@ -68,7 +68,7 @@ func _setup_and_show(data: Dictionary) -> void:
 	var result: String = data.get("result", "fail")
 	var stats: Dictionary = data.get("stats", data)
 	## 两态标题
-	end_title_label.text = TITLE_WIN if result == "win" else TITLE_FAIL
+	end_title_label.text = tr(TITLE_WIN) if result == "win" else tr(TITLE_FAIL)
 	## buff 图标行：先清空再按快照重建（图标经 config buff/debuff 的 icon 键映射，tooltip 走 rich_tooltip 通路）
 	for child in buff_row.get_children():
 		child.queue_free()

@@ -148,10 +148,10 @@ var buff_refresh_cost := 1:
 	set(v):
 		buff_refresh_cost = v
 		if Current.zero_coin_refresh_times > 0:
-			buff_refresh_rlabel.text = "换一批[img=14 ]res://images/ui_icon/coin.png[/img]0"
+			buff_refresh_rlabel.text = tr("换一批[img=14 ]res://images/ui_icon/coin.png[/img]%d") % 0
 		else:
-			buff_refresh_rlabel.text = "换一批[img=14 ]res://images/ui_icon/coin.png[/img]" + \
-			str(buff_refresh_cost)
+			buff_refresh_rlabel.text = tr("换一批[img=14 ]res://images/ui_icon/coin.png[/img]%d") % \
+			buff_refresh_cost
 ## UI
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
@@ -298,7 +298,7 @@ func _ready() -> void:
 	## 自注册：场景切换后 Current.game_manager 引用随新战局自动刷新
 	Current.game_manager = self
 	## 加载bgm
-	AudioManager.play_bgm("res://audio/bgm/吃豆人.mp3")
+	AudioManager.play_bgm("res://audio/bgm/吃豆人.mp3") # NO_TRANSLATE 资源路径
 	## 过关按钮信号：子场景化后原场景内 [connection] 丢失，改为代码连接
 	stage_clear_button.pressed.connect(_on_stage_clear_button_pressed)
 	## 升级选卡：点击卡牌直接选择，悬浮/移出弹性缩放
@@ -536,7 +536,7 @@ func _spawn_elite_slime():
 		BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.ELITE])
 		## 遥测:精英 debuff 获得
 		EventBus.event_emit("buff_acquired", [debuff_row["debuff_id"], "elite"])
-		debuff_effect_label.text = "精英出现！ [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+		debuff_effect_label.text = tr("精英出现！ [img=15 ]%s[/img]") % debuff_row["debuff_icon"]
 		await EffectManager.debuff_change_effect()
 	print("[elite-slime] 生成了精英史莱姆: gate=%s count=%d" % [gate_type, Current.ELITE_GATE_COUNTS[gate_type]])
 
@@ -593,7 +593,7 @@ func _spawn_boss_slime(stage_config: Dictionary = {}):
 		EventBus.event_emit("buff_acquired", [debuff_row["debuff_id"], "boss"])
 		applied_debuff_ids.append(debuff_row["debuff_id"])
 		applied_debuff_icons += " [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
-	debuff_effect_label.text = "BOSS出现！" + applied_debuff_icons
+	debuff_effect_label.text = tr("BOSS出现！%s") % applied_debuff_icons
 	await EffectManager.debuff_change_effect()
 	## 根据boss_extra_elites值生成额外精英史莱姆
 	var extra_elites: int = stage_config.get("boss_extra_elites", 0)
@@ -786,7 +786,7 @@ func _set_stage_debuff(boss=0):
 	BuffSystem.callv("set_" + debuff_row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 	## 遥测:关卡 debuff 获得
 	EventBus.event_emit("buff_acquired", [debuff_row["debuff_id"], "stage"])
-	debuff_effect_label.text = "获得BOSS效果  [img=15 ]" + debuff_row["debuff_icon"] + "[/img]"
+	debuff_effect_label.text = tr("获得BOSS效果  [img=15 ]%s[/img]") % debuff_row["debuff_icon"]
 
 func _set_buff(buff_row):
 	if not ResourceLoader.exists(buff_row["buff_res"]):
@@ -845,64 +845,64 @@ func _generate_card_description(effects: Array) -> String:
 		var target_name = ""
 		match target:
 			"all_score":
-				target_name = "所有点数"
+				target_name = tr("所有点数")
 			"all_percent":
-				target_name = "所有倍率"
+				target_name = tr("所有倍率")
 			"random_score":
-				target_name = "随机一个点数"
+				target_name = tr("随机一个点数")
 			"min_score":
-				target_name = "最低点数"
+				target_name = tr("最低点数")
 			"max_score":
-				target_name = "最高点数"
+				target_name = tr("最高点数")
 			_:
 				if target in score_names:
-					target_name = score_names[target]
+					target_name = tr(score_names[target])
 				elif target in percent_names:
-					target_name = percent_names[target]
+					target_name = tr(percent_names[target])
 				else:
 					target_name = target
 		var desc = ""
 		match operate:
 			"add":
-				desc = target_name + "[color=green]+" + str(int(value)) + "[/color]"
+				desc = tr("%s[color=green]+%d[/color]") % [target_name, int(value)]
 			"sub":
-				desc = target_name + "[color=red]-" + str(int(value)) + "[/color]"
+				desc = tr("%s[color=red]-%d[/color]") % [target_name, int(value)]
 			"mul":
 				if value >= 1.0:
 					var pct = roundi((value - 1.0) * 100)
-					desc = target_name + "[color=green]+" + str(pct) + "%[/color]"
+					desc = tr("%s[color=green]+%d%%[/color]") % [target_name, pct]
 				else:
 					var pct = roundi((1.0 - value) * 100)
-					desc = target_name + "[color=red]-" + str(pct) + "%[/color]"
+					desc = tr("%s[color=red]-%d%%[/color]") % [target_name, pct]
 			"set":
 				if int(value) == 0:
-					desc = target_name + "[color=red]归零[/color]"
+					desc = tr("%s[color=red]归零[/color]") % target_name
 				else:
-					desc = target_name + "[color=green]=" + str(int(value)) + "[/color]"
+					desc = tr("%s[color=green]=%d[/color]") % [target_name, int(value)]
 			"swap":
 				var from_name = ""
 				if str(value) in score_names:
-					from_name = score_names[str(value)]
+					from_name = tr(score_names[str(value)])
 				elif str(value) in percent_names:
-					from_name = percent_names[str(value)]
+					from_name = tr(percent_names[str(value)])
 				else:
 					from_name = str(value)
-				desc = target_name + "和" + from_name + "[color=green]互换[/color]"
+				desc = tr("%s和%s[color=green]互换[/color]") % [target_name, from_name]
 			"copy_from":
 				var from_name = ""
 				if str(value) in score_names:
-					from_name = score_names[str(value)]
+					from_name = tr(score_names[str(value)])
 				elif str(value) in percent_names:
-					from_name = percent_names[str(value)]
+					from_name = tr(percent_names[str(value)])
 				else:
 					from_name = str(value)
-				desc = target_name + "[color=green]=" + from_name + "的值[/color]"
+				desc = tr("%s[color=green]=%s的值[/color]") % [target_name, from_name]
 			"set_to_max":
-				desc = target_name + "[color=green]=最高点数[/color]"
+				desc = tr("%s[color=green]=最高点数[/color]") % target_name
 			"set_to_avg":
-				desc = target_name + "[color=green]=平均值[/color]"
+				desc = tr("%s[color=green]=平均值[/color]") % target_name
 		parts.append(desc)
-	return "，".join(parts)
+	return tr("，").join(parts)
 
 ## 对卡牌效果进行随机波动（add/sub 固定 ±2 绝对区间，下限 0）
 func _fluctuate_card_effects(effects: Array) -> Array:
@@ -952,18 +952,18 @@ func _set_level_up_card():
 	var card_1_texture = load(level_up_three_card_array[0]['card_textrue'])
 	card_1.texture_normal = card_1_texture
 	card_1_icon.texture = load(level_up_three_card_array[0]['icon_texture'])
-	card_1_name.text = level_up_three_card_array[0]['card_name']
-	card_1_description.text = level_up_three_card_array[0]['card_description']
+	card_1_name.text = tr(level_up_three_card_array[0]['card_name'])
+	card_1_description.text = tr(level_up_three_card_array[0]['card_description'])
 	var card_2_texture = load(level_up_three_card_array[1]['card_textrue'])
 	card_2.texture_normal = card_2_texture
 	card_2_icon.texture = load(level_up_three_card_array[1]['icon_texture'])
-	card_2_name.text = level_up_three_card_array[1]['card_name']
-	card_2_description.text = level_up_three_card_array[1]['card_description']
+	card_2_name.text = tr(level_up_three_card_array[1]['card_name'])
+	card_2_description.text = tr(level_up_three_card_array[1]['card_description'])
 	var card_3_texture = load(level_up_three_card_array[2]['card_textrue'])
 	card_3.texture_normal = card_3_texture
 	card_3_icon.texture = load(level_up_three_card_array[2]['icon_texture'])
-	card_3_name.text = level_up_three_card_array[2]['card_name']
-	card_3_description.text = level_up_three_card_array[2]['card_description']
+	card_3_name.text = tr(level_up_three_card_array[2]['card_name'])
+	card_3_description.text = tr(level_up_three_card_array[2]['card_description'])
 	## 重置悬浮缩放，避免上一轮点击时残留放大状态
 	for card in [card_1, card_2, card_3]:
 		card.scale = Vector2.ONE
@@ -1164,7 +1164,7 @@ func _turn_process():
 
 	## 第8回合显示危险提示
 	if Current.count_round == 8:
-		stage_effect_label.text = "危险⚠️"
+		stage_effect_label.text = tr("危险⚠️")
 		await EffectManager.stage_change_effect()
 	## 等待回合船动画
 	while "turn_ship_animation" in Current.public_lock_array:
@@ -2013,7 +2013,7 @@ func _on_stage_clear_button_pressed() -> void:
 			break
 	Current.target_score = current_stage_info.get("target_score", 300)
 	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
-	TooltipManager.set_tooltip(difficulty_icon, "[b]" + current_stage_info.get("stage_type", "普通") + "[/b]")
+	TooltipManager.set_tooltip(difficulty_icon, "[b]" + tr(current_stage_info.get("stage_type", "普通")) + "[/b]")
 	## 清空一关金币奖励数和最高骰子奖励数
 	Current.count_add_coins = 0
 	Current.highest_dice_num = 1

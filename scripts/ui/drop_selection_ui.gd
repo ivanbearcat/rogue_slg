@@ -35,8 +35,8 @@ func setup(dropped_dice: Array):
 		button.custom_minimum_size = Vector2(96, 96)
 		## 重置悬浮残留（连续两次弹出时可能残留上一轮 scale）
 		button.scale = Vector2.ONE
-		var color_name: String = _color_name_map.get(dice[0], "?")
-		TooltipManager.set_tooltip(button, "[b][color=%s]%s[/color][/b] [b]%s点[/b]" % [_color_hex_map.get(dice[0], "#ffffff"), color_name, str(dice[1])])
+		var color_name: String = tr(str(_color_name_map.get(dice[0], "?")))
+		TooltipManager.set_tooltip(button, tr("[b][color=%s]%s[/color][/b] [b]%s点[/b]") % [_color_hex_map.get(dice[0], "#ffffff"), color_name, str(dice[1])])
 		button.pressed.connect(_on_dice_selected.bind(dice))
 		button.mouse_entered.connect(_on_dice_option_mouse_entered.bind(button))
 		button.mouse_exited.connect(_on_dice_option_mouse_exited.bind(button))

@@ -1,0 +1,525 @@
+keys,en,ja,ko,zh_TW,fr,de,es,pt_BR,it
+一,One,一,일,一,un,Eins,Uno,Um,Uno
+二,Two,二,이,二,deux,Zwei,Dos,Dois,Due
+三,Three,三,삼,三,trois,Drei,Tres,Três,Tre
+四,Four,四,사,四,quatre,Vier,Cuatro,Quatro,Quattro
+五,Five,五,오,五,cinq,Fünf,Cinco,Cinco,Cinque
+六,Six,六,육,六,six,Sechs,Seis,Seis,Sei
+七,Seven,七,칠,七,sept,Sieben,Siete,Sete,Sette
+八,Eight,八,팔,八,huit,Acht,Ocho,Oito,Otto
+九,Nine,九,구,九,neuf,Neun,Nueve,Nove,Nove
+十,Ten,十,십,十,dix,Zehn,Diez,Dez,Dieci
+十一,Eleven,十一,십일,十一,onze,Elf,Once,Onze,Undici
+十二,Twelve,十二,십이,十二,douze,Zwölf,Doce,Doze,Dodici
+一点,1 Point,1点,1점,一點,Un point,1 Punkt,1 punto,1 ponto,1 punto
+二点,2 Points,2点,2점,二點,Deux points,2 Punkte,2 puntos,2 pontos,2 punti
+三点,3 Points,3点,3점,三點,Trois points,3 Punkte,3 puntos,3 pontos,3 punti
+四点,4 Points,4点,4점,四點,Quatre points,4 Punkte,4 puntos,4 pontos,4 punti
+五点,5 Points,5点,5점,五點,Cinq points,5 Punkte,5 puntos,5 pontos,5 punti
+六点,6 Points,6点,6점,六點,Six points,6 Punkte,6 puntos,6 pontos,6 punti
+对子倍率,Pair Multiplier,ペア倍率,페어 배수,對子倍率,Multiplicateur de Paire,Paar-Multiplikator,Multiplicador de Par,Multiplicador de Par,Moltiplicatore Coppia
+顺子倍率,Straight Multiplier,ストレート倍率,스트레이트 배수,順子倍率,Multiplicateur de Suite,Straight-Multiplikator,Multiplicador de Escalera,Multiplicador de Sequência,Moltiplicatore Sequenza
+同色倍率,Flush Multiplier,同色倍率,동색 배수,同色倍率,Multiplicateur de Couleur,Gleichfarbig-Multiplikator,Multiplicador de Color,Multiplicador de Cor,Moltiplicatore Colore
+同对倍率,Color Pair Multiplier,同色ペア倍率,컬러 페어 배수,同對倍率,Multiplicateur de Paire de couleur,Farbpaar-Multiplikator,Multiplicador de Par de color,Multiplicador de Par de cor,Moltiplicatore Coppia di colore
+同顺倍率,Color Straight Multiplier,同色ストレート倍率,컬러 스트레이트 배수,同順倍率,Multiplicateur de Suite de couleur,Farb-Straight-Multiplikator,Multiplicador de Escalera de color,Multiplicador de Sequência de cor,Moltiplicatore Sequenza di colore
+对子,Pair,ペア,페어,對子,Paire,Paar,Par,Par,Coppia
+顺子,Straight,ストレート,스트레이트,順子,Suite,Straight,Escalera,Sequência,Sequenza
+同色,Flush,同色,동색,同色,Couleur,Gleichfarbig,Color,Cor,Colore
+同对,Color Pair,同色ペア,컬러 페어,同對,Paire de couleur,Farbpaar,Par de color,Par de cor,Coppia di colore
+同顺,Color Straight,同色ストレート,컬러 스트레이트,同順,Suite de couleur,Farb-Straight,Escalera de color,Sequência de cor,Sequenza di colore
+对子：相同点数的骰子,Pair: dice with the same points,ペア：同じ点数のサイコロ,페어: 같은 점수의 주사위,對子：相同點數的骰子,Paire : dés du même nombre de points,Paar: Würfel mit gleichen Punkten,Par: dados con los mismos puntos,Par: dados dos mesmos pontos,Coppia: dadi con gli stessi punti
+顺子：连续点数的骰子,Straight: dice with consecutive points,ストレート：連続した点数のサイコロ,스트레이트: 연속된 점수의 주사위,順子：連續點數的骰子,Suite : dés à points consécutifs,Straight: Würfel mit aufeinanderfolgenden Punkten,Escalera: dados con puntos consecutivos,Sequência: dados de pontos consecutivos,Sequenza: dadi con punti consecutivi
+同色：相同颜色的骰子,Flush: dice of the same color,同色：同じ色のサイコロ,동색: 같은 색의 주사위,同色：相同顏色的骰子,Couleur : dés de même couleur,Gleichfarbig: Würfel gleicher Farbe,Color: dados del mismo color,Cor: dados da mesma cor,Colore: dadi dello stesso colore
+同对：同色+同点数的骰子,Color Pair: same color + same points,同色ペア：同色＋同点数のサイコロ,컬러 페어: 같은 색 + 같은 점수의 주사위,同對：同色+同點數的骰子,Paire de couleur : dés de même couleur et du même nombre de points,Farbpaar: gleiche Farbe + gleiche Punkte,Par de color: mismo color + mismo punto,Par de cor: mesma cor + mesmo ponto,Coppia di colore: stesso colore + stesso punto
+同顺：同色+连续点数的骰子,Color Straight: same color + consecutive points,同色ストレート：同色＋連続点数のサイコロ,컬러 스트레이트: 같은 색 + 연속 점수의 주사위,同順：同色+連續點數的骰子,Suite de couleur : dés de même couleur et à points consécutifs,Farb-Straight: gleiche Farbe + aufeinanderfolgende Punkte,Escalera de color: mismo color + puntos consecutivos,Sequência de cor: mesma cor + pontos consecutivos,Sequenza di colore: stesso colore + punti consecutivi
+潮涌,Tide,潮流,조류,潮湧,Marée,Flut,Marea,Maré,Marea
+铸币,Mint,鋳貨,주화,鑄幣,Monnayage,Prägung,Acuñación,Cunhagem,Coniazione
+共鸣,Resonance,共鳴,공명,共鳴,Résonance,Resonanz,Resonancia,Ressonância,Risonanza
+绝境,Desperation,絶境,절망,絕境,Impasse,Verzweiflung,Desesperación,Desespero,Disperazione
+生机,Vitality,生命,생명,生機,Vitalité,Vitalität,Vitalidad,Vitalidade,Vitalità
+猎杀,Hunt,狩猟,사냥,獵殺,Chasse,Jagd,Caza,Caça,Caccia
+疾风,Gale,疾風,질풍,疾風,Zéphyr,Windhast,Vendaval,Vendaval,Turbinе
+进化,Evolution,進化,진화,進化,Évolution,Evolution,Evolución,Evolução,Evoluzione
+潮涌霸主,Tide Overlord,潮流の覇者,조류의 패자,潮湧霸主,Overlord Marée,Flut-Overlord,Señor de la Marea,Soberano da Maré,Sovrano della Marea
+金元帝国,Golden Empire,金貨帝国,황금 제국,金元帝國,Empire d'Or,Gold-Imperium,Imperio de Oro,Império Dourado,Impero d'Oro
+共鸣霸主,Resonance Overlord,共鳴の覇者,공명의 패자,共鳴霸主,Overlord Résonance,Resonanz-Overlord,Señor de la Resonancia,Soberano da Ressonância,Sovrano della Risonanza
+绝境霸主,Desperation Overlord,絶境の覇者,절망의 패자,絕境霸主,Overlord Impasse,Verzweiflungs-Overlord,Señor de la Desesperación,Soberano do Desespero,Sovrano della Disperazione
+生机霸主,Vitality Overlord,生命の覇者,생명의 패자,生機霸主,Overlord Vitalité,Vitalitäts-Overlord,Señor de la Vitalidad,Soberano da Vitalidade,Sovrano della Vitalità
+猎杀霸主,Hunt Overlord,狩猟の覇者,사냥의 패자,獵殺霸主,Overlord Chasse,Jagd-Overlord,Señor de la Caza,Soberano da Caça,Sovrano della Caccia
+疾风霸主,Gale Overlord,疾風の覇者,질풍의 패자,疾風霸主,Overlord Zéphyr,Windhast-Overlord,Señor del Vendaval,Soberano do Vendaval,Sovrano del Turbine
+进化霸主,Evolution Overlord,進化の覇者,진화의 패자,進化霸主,Overlord Évolution,Evolution-Overlord,Señor de la Evolución,Soberano da Evolução,Sovrano dell'Evoluzione
+每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数,"For each Slime alive, gain extra score of 3% multiplier based on this score",スライム1体が生存するごとに、今回のスコアを基礎に3%倍率のスコアを追加で獲得,슬라임이 1마리 생존할 때마다 이번 점수를 기반으로 3% 배수의 점수 추가 획득,每有1個史萊姆存活，以這次得分為基礎，額外增加3%倍率的分數,"Pour chaque slime en vie, ajoute 3% du multiplicateur en bonus au score de ce coup",Für jeden lebenden Slime gibt es Extra-Punkte von 3% Multiplikator basierend auf diesem Score,"Por cada Slime vivo, puntos extra de 3% de multiplicador sobre esta puntuación","Para cada Slime vivo, pontos extras de 3% do multiplicador sobre esta pontuação","Per ogni Slime vivo, punti extra del 3% del moltiplicatore su questo punteggio"
+铸币系≥4时激活，每有5个金币，击杀获得1%的得分加成,Mint family active at ≥4: each 5 coins grant +1% kill score bonus,鋳貨系が≥4で発動：所持金貨5枚ごとに、撃破時のスコアボーナス+1%を獲得,주화 계열 ≥4 발동: 코인 5개마다 처치 점수 보너스 +1%,鑄幣系≥4時啟用，每有5個金幣，擊殺獲得1%的得分加成,"Activation si ≥4 buff Monnayage, pour chaque 5 pièces détenues les kills gagnent 1% de score en bonus",Prägungsfamilie aktiv bei ≥4: je 5 Münzen +1% Kill-Punktebonus,La familia de Acuñación se activa con ≥4: cada 5 monedas dan +1% de bonus de puntos por baja,"A família de Cunhagem ativa com ≥4: a cada 5 moedas, +1% de bônus de pontos por abate",La famiglia Coniazione si attiva con ≥4: ogni 5 monede danno +1% bonus punti per abbattimento
+共鸣系≥4时激活，正向贡献时永久+1%叠层，下次攻击额外获得once×叠层倍率的得分,Resonance family active at ≥4: positive contributions permanently add +1% stack; the next attack gains extra score of once × stack multiplier,共鳴系が≥4で発動：プラス貢献のたびにスタックが永久+1%、次の攻撃でonce×スタック倍率のスコアを追加獲得,"공명 계열 ≥4 발동: 플러스 기여 시 스택 영구 +1%, 다음 공격에서 once×스택 배수의 점수 추가 획득",共鳴系≥4時啟用，正向貢獻時永久+1%疊層，下次攻擊額外獲得once×疊層倍率的得分,"Activation si ≥4 buff Résonance, à chaque contribution positive +1 charge de plus en permanence, la prochaine attaque gagne un score bonus de once × multiplicateur par charge",Resonanzfamilie aktiv bei ≥4: positive Beiträge erhöhen den Stapel dauerhaft +1%; der nächste Angriff erhält Extra-Punkte von once × Stapel-Multiplikator,La familia de Resonancia se activa con ≥4: cada contribución positiva añade +1% permanente de carga; el siguiente ataque obtiene puntos extra de once × multiplicador de carga,A família de Ressonância ativa com ≥4: contribuição positiva adiciona +1% de carga permanente; o próximo ataque ganha pontos extras de once × multiplicador de carga,La famiglia Risonanza si attiva con ≥4: contributo positivo aggiunge +1% permanente di carica; l'attacco successivo ottiene punti extra di once × moltiplicatore di carica
+绝境系Buff≥4时激活，获得1次全局免死,Desperation family Buffs active at ≥4: gain 1 global death immunity,絶境系Buff≥4で発動：全体の即死回避を1回獲得,절망 계열 Buff ≥4 발동: 전역 즉사 면역 1회 획득,絕境系Buff≥4時啟用，獲得1次全域性免死,"Activation si ≥4 buff Impasse (Buff), accorde 1 fois une immunité mondiale contre la mort",Verzweiflungsfamilie-Buffs aktiv bei ≥4: 1 globalen Tod-Immunität erhalten,Los Buffs de Desesperación se activan con ≥4: obtén 1 inmunidad global a la muerte,Buffs de Desespero ativam com ≥4: ganhe 1 imunidade global à morte,Buff di Disperazione si attivano con ≥4: ottieni 1 immunità globale alla morte
+过关时hp+1；若满血则max_hp+1,"On stage clear hp+1; if at full HP, max_hp+1 instead",クリア時 hp+1；体力が満タンならmax_hp+1,스테이지 클리어 시 hp+1; 체력이 가득 찬 상태라면 max_hp+1,過關時hp+1；若滿血則max_hp+1,"En fin d'Étage, hp+1 ; si la vie est pleine, max_hp+1",Bei Stufenende hp+1; bei vollem Leben stattdessen max_hp+1,"Al superar la ronda hp+1; con vida llena, max_hp+1","Ao concluir a fase hp+1; com vida cheia, max_hp+1","Al completamento del livello hp+1; a vita piena, max_hp+1"
+猎杀系≥4时激活，猎杀系累积得分额外+50%,Hunt family active at ≥4: Hunt family accumulated score gains extra +50%,狩猟系が≥4で発動：狩猟系の累積スコアが+50%,사냥 계열 ≥4 발동: 사냥 계열 누적 점수 추가 +50%,獵殺系≥4時啟用，獵殺繫累積得分額外+50%,"Activation si ≥4 buff Chasse, les gains de score cumulés de cette famille reçoivent un bonus supplémentaire de +50%",Jagdfamilie aktiv bei ≥4: Jagdfamilie-Sampelpunkte extra +50%,La familia de Caza se activa con ≥4: puntos acumulados de Caza +50% extra,A família de Caça ativa com ≥4: pontos acumulados de Caça +50% extras,La famiglia Caccia si attiva con ≥4: punti accumulati di Caccia +50% extra
+疾风系≥4时激活，能量上限+1，攻击时本回合每移动过1格+5%得分,"Gale family active at ≥4: max Energy +1; when attacking, +5% score per tile moved this turn",疾風系が≥4で発動：エネルギー上限+1、攻撃時、このターンの移動1マスごとにスコア+5%,"질풍 계열 ≥4 발동: 에너지 상한 +1, 공격 시 이번 턴 이동한 칸마다 점수 +5%",疾風系≥4時啟用，能量上限+1，攻擊時本回合每移動過1格+5%得分,"Activation si ≥4 buff Zéphyr, limite d'énergie +1, pendant une attaque chaque case parcourue ce tour donne +5% de score",Windhastfamilie aktiv bei ≥4: Energiemaximum +1; beim Angriff +5% Punkte pro Feld Bewegung in dieser Runde,"La familia de Vendaval se activa con ≥4: límite de Energía +1; al atacar, +5% de puntos por casilla movida este turno","A família de Vendaval ativa com ≥4: limite de Energia +1; ao atacar, +5% de pontos por casa movida neste turno","La famiglia Turbine si attiva con ≥4: limite Energia +1; attaccando, +5% punti per casella percorsa in questo turno"
+进化系≥4时激活，每回合随机1个点数基础分+1，随机1个骰型倍率+1%,"Evolution family active at ≥4: each turn, +1 base score to a random point and +1% multiplier to a random Type",進化系が≥4で発動：毎ターン、ランダムな1種類の点数の基礎スコア+1、ランダムな1種類の倍率+1%,"진화 계열 ≥4 발동: 매 턴 무작위 1종 점수의 기본 점수 +1, 무작위 1종 배수 +1%",進化系≥4時啟用，每回合隨機1個點數基礎分+1，隨機1個骰型倍率+1%,"Activation si ≥4 buff Évolution, à chaque tour la valeur de base d'un point au hasard +1, le multiplicateur d'un type de dé au hasard +1%",Evolutionsfamilie aktiv bei ≥4: pro Runde +1 Basispunkte auf einen zufälligen Punkt und +1% Multiplikator auf einen zufälligen Typ,"La familia de Evolución se activa con ≥4: cada turno, +1 de base a un punto aleatorio y +1% de multiplicador a un Tipo aleatorio","A família de Evolução ativa com ≥4: a cada turno, +1 de base em um ponto aleatório e +1% de multiplicador em um Tipo aleatório","La famiglia Evoluzione si attiva con ≥4: ogni turno, +1 base a un punto casuale e +1% moltiplicatore a un Tipo casuale"
+绿,Green,緑,녹색,綠,Vert,Grün,Verde,Verde,Verde
+红,Red,赤,빨강,紅,Rouge,Rot,Rojo,Vermelho,Rosso
+蓝,Blue,青,파랑,藍,Bleu,Blau,Azul,Azul,Blu
+黄,Yellow,黄,노랑,黃,Jaune,Gelb,Amarillo,Amarelo,Giallo
+通关达成,Stage Cleared,クリア達成,클리어 달성,通關達成,Victoire,Stufe geschafft,Ronda Superada,Concluído,Livello Completato
+战败,Defeat,敗北,패배,戰敗,Défaite,Niederlage,Derrota,Derrota,Sconfitta
+普通,Normal,通常,일반,普通,Normal,Normal,Normal,Normal,Normale
+精英,Elite,エリート,엘리트,精英,Élite,Elite,Élite,Elite,Elite
+[color=%s]%s系[/color],[color=%s]%s family[/color],"
+[color=%s]%s系[/color]",[color=%s]%s 계열[/color],[color=%s]%s系[/color],[color=%s]famille %s[/color],[color=%s]%s-Familie[/color],[color=%s]familia %s[/color],[color=%s]família %s[/color],[color=%s]famiglia %s[/color]
+💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color],💡 [color=#0fff5b]%s family Buff≥4 active[%s]: %s (currently 4/4) activated[/color],"
+💡 [color=#0fff5b]%s系Buff≥4で発動[%s]：%s（現在：4/4）発動済み[/color]",💡 [color=#0fff5b]%s 계열 Buff≥4 발동[%s]: %s (현재: 4/4) 발동됨[/color],💡 [color=#0fff5b]%s系Buff≥4時啟用[%s]：%s（當前：4/4）已啟用[/color],💡 [color=#0fff5b]Activation si ≥4 buff de la famille %s [%s] : %s (actuel : 4/4) activé ✓[/color],💡 [color=#0fff5b]%s-Familie-Buff≥4 aktiv[%s]: %s (aktuell 4/4) aktiviert[/color],💡 [color=#0fff5b]Buff de familia %s≥4 activado[%s]: %s (actual: 4/4) activado[/color],💡 [color=#0fff5b]Buff da família %s≥4 ativado[%s]: %s (atual: 4/4) ativado[/color],💡 [color=#0fff5b]Buff famiglia %s≥4 attivo[%s]: %s (attuale: 4/4) attivato[/color]
+💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color],💡 [color=#AAAAAA]%s family Buff≥4 active[%s]: %s (currently %d/4)[/color],"
+💡 [color=#AAAAAA]%s系Buff≥4で発動[%s]：%s（現在：%d/4）[/color]",💡 [color=#AAAAAA]%s 계열 Buff≥4 발동[%s]: %s (현재: %d/4)[/color],💡 [color=#AAAAAA]%s系Buff≥4時啟用[%s]：%s（當前：%d/4）[/color],💡 [color=#AAAAAA]Activation si ≥4 buff de la famille %s [%s] : %s (actuel : %d/4)[/color],💡 [color=#AAAAAA]%s-Familie-Buff≥4 aktiv[%s]: %s (aktuell %d/4)[/color],💡 [color=#AAAAAA]Buff de familia %s≥4 activado[%s]: %s (actual: %d/4)[/color],💡 [color=#AAAAAA]Buff da família %s≥4 ativado[%s]: %s (atual: %d/4)[/color],💡 [color=#AAAAAA]Buff famiglia %s≥4 attivo[%s]: %s (attuale: %d/4)[/color]
+💡 [color=#42A5F5]共鸣霸主·当前共振：%d层（+%d%%）[/color],💡 [color=#42A5F5]Resonance Overlord · current resonance: %d stacks (+%d%%)[/color],"
+💡 [color=#42A5F5]共鳴の覇者・現在の共振：%dスタック（+%d%%）[/color]",💡 [color=#42A5F5]공명의 패자 · 현재 공진: %d스택 (+%d%%)[/color],💡 [color=#42A5F5]共鳴霸主·當前共振：%d層（+%d%%）[/color],💡 [color=#42A5F5]Overlord Résonance·charge actuelle : %d (%d%%)[/color],💡 [color=#42A5F5]Resonanz-Overlord · aktuelle Resonanz: %d Stapel (+%d%%)[/color],💡 [color=#42A5F5]Señor de la Resonancia · resonancia actual: %d cargas (+%d%%)[/color],💡 [color=#42A5F5]Soberano da Ressonância · ressonância atual: %d cargas (+%d%%)[/color],💡 [color=#42A5F5]Sovrano della Risonanza · risonanza attuale: %d cariche (+%d%%)[/color]
+[color=#0fff5b][b]（已激活 ✓）[/b][/color],[color=#0fff5b][b](Activated ✓)[/b][/color],"
+[color=#0fff5b][b]（発動済み ✓）[/b][/color]",[color=#0fff5b][b](발동됨 ✓)[/b][/color],[color=#0fff5b][b]（已啟用 ✓）[/b][/color],[color=#0fff5b][b](activé ✓)[/b][/color],[color=#0fff5b][b](Aktiviert ✓)[/b][/color],[color=#0fff5b][b](Activado ✓)[/b][/color],[color=#0fff5b][b](Ativado ✓)[/b][/color],[color=#0fff5b][b](Attivato ✓)[/b][/color]
+[color=%s]▼ 减益[/color],[color=%s]▼ Debuffs[/color] ,"
+[color=%s]▼ デバフ[/color] ",[color=%s]▼ 디버프[/color] ,[color=%s]▼ 減益[/color],[color=%s]▼ Malus[/color],[color=%s]▼ Nachteile[/color] ,[color=%s]▼ Debilitamientos[/color] ,[color=%s]▼ Penalidades[/color] ,[color=%s]▼ Debolezze[/color] 
+[color=%s]★ BOSS史莱姆[/color],[color=%s]★ BOSS Slime[/color],"
+[color=%s]★ BOSSスライム[/color]",[color=%s]★ BOSS 슬라임[/color],[color=%s]★ BOSS史萊姆[/color],[color=%s]★ slime BOSS[/color],[color=%s]★ BOSS-Slime[/color],[color=%s]★ Slime JEFE[/color],[color=%s]★ Slime CHEFE[/color],[color=%s]★ Slime BOSS[/color]
+[color=%s]★ 精英史莱姆[/color],[color=%s]★ Elite Slime[/color],"
+[color=%s]★ エリートスライム[/color]",[color=%s]★ 엘리트 슬라임[/color],[color=%s]★ 精英史萊姆[/color],[color=%s]★ slime Élite[/color],[color=%s]★ Elite-Slime[/color],[color=%s]★ Slime Élite[/color],[color=%s]★ Slime Elitinha[/color],[color=%s]★ Slime Elite[/color]
+[color=#FFD700]需要: %s ×%d[/color],[color=#FFD700]Need: %s ×%d[/color],"
+[color=#FFD700]必要: %s ×%d[/color]",[color=#FFD700]필요: %s ×%d[/color],[color=#FFD700]需要: %s ×%d[/color],[color=#FFD700]Requis : %s ×%d[/color],[color=#FFD700]Braucht: %s ×%d[/color],[color=#FFD700]Necesita: %s ×%d[/color],[color=#FFD700]Precisa: %s ×%d[/color],[color=#FFD700]Serve: %s ×%d[/color]
+骰子: [b]%d点[/b],Dice: [b]%d points[/b],"
+サイコロ: [b]%d点[/b]",주사위: [b]%d점[/b],骰子: [b]%d點[/b],Dé : [b]%d points[/b],Würfel: [b]%d Punkte[/b],Dado: [b]%d puntos[/b],Dado: [b]%d pontos[/b],Dado: [b]%d punti[/b]
+变为[b][color=%s]$1[/color][/b],becomes [b][color=%s]$1[/color][/b],[b][color=%s]$1[/color][/b]に変化,[b][color=%s]$1[/color][/b]로 변화,變為[b][color=%s]$1[/color][/b],Devient [b][color=%s]$1[/color][/b],wird [b][color=%s]$1[/color][/b],se convierte en [b][color=%s]$1[/color][/b],muda para [b][color=%s]$1[/color][/b],diventa [b][color=%s]$1[/color][/b]
+攻击得分下降,Attack score reduced,攻撃スコア低下,공격 점수 하락,攻擊得分下降,Score d'attaque réduit,Angriffspunkte sinken,Puntos de ataque reducidos,Pontos de ataque reduzidos,Punti d'attacco ridotti
+每次攻击的得分-20%,Each attack's score -20%,毎回の攻撃スコア-20%,매 공격 점수 -20%,每次攻擊的得分-20%,Score de chaque attaque -20%,Punkte pro Angriff -20%,Puntos por ataque -20%,Pontos por ataque -20%,Punti per attacco -20%
+史莱姆潮,Slime Tide,スライムタイド,슬라임 물결,史萊姆潮,Vague de slimes,Slime-Flut,Marea de Slimes,Maré de Slimes,Marea di Slime
+生命>50%时，下回合多生成1个史莱姆,"When HP>50%, spawn 1 extra Slime next turn",体力が50%超のとき、次のターンにスライムを1体追加生成,HP>50%일 때 다음 턴에 슬라임 1마리 추가 생성,生命>50%時，下回合多生成1個史萊姆,"Si la vie > 50%, 1 slime de plus apparaît au tour suivant",Bei HP>50% entsteht in der nächsten Runde 1 zusätzlicher Slime,"Con vida>50%, genera 1 Slime extra el próximo turno","Com vida>50%, gera 1 Slime extra no próximo turno","Con HP>50%, genera 1 Slime extra nel prossimo turno"
+潮涌贡奉,Tide Offering,潮流の奉納,조류의 예물,潮湧貢奉,Offrande de Marée,Flutopfer,Ofrenda de la Marea,Oferenda da Maré,Offerta della Marea
+回合结束时，每有1个史莱姆，增加目标分数1%的分数,"At end of turn, each living Slime adds 1% of target score",ターン終了時、スライム1体ごとに目標スコアの1%をスコアに追加,"턴 종료 시, 슬라임 1마리마다 목표 점수의 1%를 점수에 추가",回合結束時，每有1個史萊姆，增加目標分數1%的分數,"À la fin du tour, pour chaque slime, le score cible augmente de 1%",Am Rundenende +1% der Zielpunkte pro lebendigem Slime,"Al terminar el turno, cada Slime vivo añade 1% de la puntuación objetivo","No fim do turno, cada Slime soma 1% da pontuação alvo","A fine turno, ogni Slime aggiunge 1% del punteggio obiettivo"
+史莱姆转生,Slime Rebirth,スライム転生,슬라임 환생,史萊姆轉生,Renaissance des slimes,Slime-Wiedergeburt,Reencarnación de Slime,Renascença de Slime,Rinascita dei Slime
+每击杀1个史莱姆，30%概率生成1个新史莱姆（逐只独立判定）,Each Slime kill has a 30% chance to spawn 1 new Slime (per-slime independent roll),スライム1体撃破ごとに、30%の確率で新しいスライムを1体生成（個別に判定）,슬라임 1마리 처치마다 30% 확률로 새 슬라임 1마리 생성 (각자 개별 판정),每擊殺1個史萊姆，30%機率生成1個新史萊姆（逐只獨立判定）,"Pour chaque slime tué, 30% de chances de faire apparaître un nouveau slime (tirage indépendant pour chacun)",Bei jedem Slime-Kill 30% Chance auf 1 neuen Slime (unabhängige Würfe pro Slime),"Por cada Slime derribado, 30% de probabilidad de generar 1 nuevo (juicio independiente por unidad)",Cada abate de Slime tem 30% de chance de gerar 1 novo (julgamento individual por unidade),Ogni abbattimento di Slime ha 30% di probabilità di generarne uno nuovo (giudizio indipendente per unità)
+史莱姆分裂,Slime Split,スライム分裂,슬라임 분열,史萊姆分裂,Division des slimes,Slime-Spaltung,División de Slime,Divisão de Slime,Scissione dei Slime
+每关史莱姆出生后，每个都有15%的概率分裂出一个新的史莱姆,"When Slimes spawn each stage, each has a 15% chance to split into a new Slime",各ステージでスライムが出現した後、各体に15%の確率で新しいスライムに分裂,"각 라운드 슬라임 출현 후, 각자 15% 확률로 새 슬라임으로 분열",每關史萊姆出生後，每個都有15%的機率分裂出一個新的史萊姆,"Après l'apparition des slimes à chaque Étage, chacun a 15% de chances de se diviser en un nouveau slime",Nach dem Spawn jeder Stufe spaltet jeder Slime mit 15% Chance einen neuen Slime ab,"Tras nacer los Slimes cada ronda, cada uno tiene 15% de probabilidad de dividirse en uno nuevo","Após nascer a cada fase, cada Slime tem 15% de chance de se dividir em um novo","Dopo la comparsa in ogni livello, ogni Slime ha 15% di probabilità di dividersi in uno nuovo"
+潮涌呼唤,Tide Call,潮流の呼び声,조류의 부름,潮湧呼喚,Appel de Marée,Flutruf,Llamado de la Marea,Chamado da Maré,Richiamo della Marea
+史莱姆数量<3时，下回合多生成1个史莱姆,"When Slimes<3, spawn 1 extra Slime next turn",スライムが3体未満のとき、次のターンにスライムを1体追加生成,슬라임이 3마리 미만일 때 다음 턴에 슬라임 1마리 추가 생성,史萊姆數量<3時，下回合多生成1個史萊姆,"S'il y a moins de 3 slimes, 1 slime de plus apparaît au tour suivant",Bei Slimes<3 entsteht in der nächsten Runde 1 zusätzlicher Slime,"Con menos de 3 Slimes, genera 1 extra el próximo turno","Com menos de 3 Slimes, gera 1 extra no próximo turno","Con meno di 3 Slime, genera 1 extra nel prossimo turno"
+狂潮碾压,Rampage Crush,猛潮の圧潰,광류 학살,狂潮碾壓,Vague déferlante écrasante,Wildwasser-Walze,Arrollamiento de la Marea,Esmagamento da Maré,Schiacciamento dell'Alta Marea
+存活史莱姆≥8时+60%,+60% when living Slimes≥8,生存スライム≥8で+60%,생존 슬라임 ≥8일 때 +60%,存活史萊姆≥8時+60%,+60% si ≥8 slimes en vie,+60% bei ≥8 lebenden Slimes,+60% con ≥8 Slimes vivos,+60% com ≥8 Slimes vivos,+60% con ≥8 Slime vivi
+潮涌系Buff≥4时自动激活，每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数,Tide family auto-activates at ≥4 Buffs: each living Slime grants extra score of 3% multiplier based on this score,潮流系Buff≥4で自動発動：生存スライム1体ごとに、今回のスコアを基礎に3%倍率のスコアを追加,조류 계열 Buff ≥4에서 자동 발동: 생존 슬라임 1마리마다 이번 점수 기반 3% 배수의 점수 추가,潮湧系Buff≥4時自動啟用，每有1個史萊姆存活，以這次得分為基礎，額外增加3%倍率的分數,"Activation automatique si ≥4 buff Marée, pour chaque slime en vie ajoute 3% du multiplicateur en bonus au score de ce coup",Flutfamilie-Buffs aktiviert bei ≥4 automatisch: je lebendiger Slime Extra-Punkte von 3% Multiplikator basierend auf diesem Score,Los Buffs de Marea se activan a ≥4: cada Slime vivo otorga puntos extra de 3% de multiplicador sobre esta puntuación,Buffs da Maré ativam com ≥4: cada Slime vivo adiciona pontos extras de 3% do multiplicador sobre esta pontuação,Buff della famiglia Marea si attivano a ≥4: ogni Slime vivo aggiunge punti extra del 3% del moltiplicatore su questo punteggio
+三合税,Trinity Levy,三合税,삼합세,三合稅,Taxe des triples,Trinitätsabgabe,Tributo Triple,Tri-Taxa,Tributo Tre
+3的倍数回合+3金币,+3 coins on turns divisible by 3,3の倍数ターンは+3金貨,3의 배수 턴 +3 코인,3的倍數回合+3金幣,"Aux tours multiples de 3, +3 pièces","+3 Münzen in Runden, die durch 3 teilbar sind",+3 monedas en turnos múltiplos de 3,+3 moedas em turnos múltiplos de 3,+3 monete nei turni multipli di 3
+金币镜像,Coin Mirror,金貨の鏡映,코인 미러,金幣映象,Miroir de pièces,Münzenspiegel,Espejo de Monedas,Espelho de Moedas,Specchio delle Monete
+每回合获得等于金币数量的分数,"Each turn, gain score equal to coin count",毎ターン、金貨の枚数と同量のスコアを獲得,매 턴 코인 수와 동량의 점수 획득,每回合獲得等於金幣數量的分數,Gagne à chaque tour autant de score que de pièces détenues,Pro Runde Punkte in Höhe der Münzanzahl,Cada turno obtiene puntos iguales al número de monedas,"A cada turno, ganha pontos iguais ao número de moedas",Ogni turno ottieni punti pari al numero di monete
+铸币增压,Mint Surge,鋳貨ブースト,주화 부스트,鑄幣增壓,Surpression de Monnayage,Prägungsschub,Impulso de Acuñación,Impulso de Cunhagem,Spinta di Coniazione
+单次击杀史莱姆≥3时，金币+2,Kill ≥3 Slimes in one attack: +2 coins,1回の攻撃でスライムを≥3体撃破すると金貨+2,한 번의 공격으로 슬라임 ≥3마리 처치 시 코인 +2,單次擊殺史萊姆≥3時，金幣+2,"Si ≥3 slimes tués en un seul coup, +2 pièces",+2 Münzen beim Kill von ≥3 Slimes in einem Angriff,Derribar ≥3 Slimes en un ataque: +2 monedas,Abater ≥3 Slimes num ataque: +2 moedas,Abattere ≥3 Slime in un attacco: +2 monete
+黄金之手,Golden Hand,黄金の手,황금의 손,黃金之手,Main d'or,Goldene Hand,Mano de Oro,Mão de Ouro,Mano d'Oro
+关卡结束时，每有10个金币，金币+1,"At stage end, +1 coin per 10 coins held",ステージ終了時、金貨10枚ごとに金貨+1,라운드 종료 시 코인 10개마다 코인 +1,關卡結束時，每有10個金幣，金幣+1,"À la fin de l'Étage, chaque tranche de 10 pièces détenues donne +1 pièce",Am Stufenende +1 Münze pro 10 Münzen,"Al terminar la ronda, +1 moneda por cada 10","No fim da fase, +1 moeda a cada 10","A fine livello, +1 moneta ogni 10"
+金币风暴,Coin Storm,金貨の嵐,코인 폭풍,金幣風暴,Tempête de pièces,Münzensturm,Tormenta de Monedas,Tempestade de Moedas,Tempesta di Monete
+每回合50%概率获得2金币,50% chance each turn to gain 2 coins,毎ターン50%の確率で金貨+2,매 턴 50% 확률로 코인 +2,每回合50%機率獲得2金幣,50% de chances d'obtenir 2 pièces à chaque tour,50% Chance pro Runde auf 2 Münzen,50% de probabilidad por turno de obtener 2 monedas,50% de chance por turno de ganhar 2 moedas,50% di probabilità per turno di ottenere 2 monete
+站岗赏金,Standing Bounty,衛兵の賞金,경비의 상금,站崗賞金,Prime de faction,Wachposten-Prämie,Recompensa de Guardia,Prêmio da Guarda,Premio del Sentrinella
+如果本回合没有移动过则金币+2,+2 coins if you did not move this turn,このターンに移動していなければ金貨+2,이번 턴에 이동하지 않았다면 코인 +2,如果本回合沒有移動過則金幣+2,"Si aucun déplacement ce tour, +2 pièces","+2 Münzen, wenn in dieser Runde nicht bewegt wurde",+2 monedas si no te has movido este turno,+2 moedas se não se moveu neste turno,+2 monete se non ti sei mosso in questo turno
+coin系≥4时激活，每有5个金币，击杀获得1%的得分加成,coin family active at ≥4: each 5 coins grant +1% kill score bonus,coin系が≥4で発動：金貨5枚ごとに、撃破時のスコアボーナス+1%,coin 계열 ≥4 발동: 코인 5개마다 처치 점수 보너스 +1%,coin系≥4時啟用，每有5個金幣，擊殺獲得1%的得分加成,"Activation si ≥4 buff coin, pour chaque 5 pièces détenues les kills gagnent 1% de score en bonus",coin-Familie aktiv bei ≥4: je 5 Münzen +1% Kill-Punktebonus,La familia coin se activa con ≥4: cada 5 monedas dan +1% de bonus de puntos por baja,"A família coin ativa com ≥4: a cada 5 moedas, +1% de bônus de pontos por abate",La famiglia coin si attiva con ≥4: ogni 5 monete danno +1% bonus punti per abbattimento
+满域强袭,Full-area Assault,全域強襲,전역 강습,滿域強襲,Assaut de plein champ,Gebietssturm,Asalto Pleno,Assalto Pleno,Assalto Integrale
+技能的攻击范围内都有史莱姆，以这次得分为基础，额外增加40%倍率的分数,"When every tile in the skill's attack range holds a Slime, gain extra score of 40% multiplier based on this score",スキルの攻撃範囲のすべてにスライムがいるとき、今回のスコアを基礎に40%倍率のスコアを追加,스킬 공격 범위 모든 곳에 슬라임이 있을 때 이번 점수 기반 40% 배수의 점수 추가,技能的攻擊範圍內都有史萊姆，以這次得分為基礎，額外增加40%倍率的分數,"Si des slimes se trouvent dans toute la zone d'attaque de la compétence, ajoute 40% du multiplicateur en bonus au score de ce coup","Wenn in jedem Feld der Skill-Reichweite ein Slime steht, Extra-Punkte von 40% Multiplikator basierend auf diesem Score","Si hay Slimes en todas las casillas del alcance, puntos extra de 40% de multiplicador sobre esta puntuación","Com Slimes em todas as casas do alcance, pontos extras de 40% do multiplicador sobre esta pontuação","Con Slime in ogni casella del raggio, punti extra del 40% del moltiplicatore su questo punteggio"
+能量猎赏,Energy Hunt Bounty,エネルギー狩りの賞,에너지 사냥 보상,能量獵賞,Prime d'énergie,Energie-Jagd-Prämie,Botín de Energía,Recompensa de Energia,Bottino di Energia
+击杀能量史莱姆，以这次得分为基础，额外增加40%倍率的分数,Killing an Energy Slime grants extra score of 40% multiplier based on this score,エネルギースライムを撃破すると、今回のスコアを基礎に40%倍率のスコアを追加,에너지 슬라임 처치 시 이번 점수 기반 40% 배수의 점수 추가,擊殺能量史萊姆，以這次得分為基礎，額外增加40%倍率的分數,Tuer un slime d'énergie ajoute 40% du multiplicateur en bonus au score de ce coup,Energie-Slime-Kill gewährt Extra-Punkte von 40% Multiplikator basierend auf diesem Score,Derribar un Slime de Energía otorga puntos extra de 40% de multiplicador sobre esta puntuación,Abater um Slime de Energia adiciona pontos extras de 40% do multiplicador sobre esta pontuação,Abattere uno Slime di Energia aggiunge punti extra del 40% del moltiplicatore su questo punteggio
+能量涌动,Energy Surge,エネルギー奔流,에너지 소용돌이,能量湧動,Afflux d'énergie,Energie-Schwall,Flujo de Energía,Fluxo de Energia,Impulso di Energia
+攻击后，如果使用了能量，以这次得分为基础，额外增加30%倍率的分数,"After attacking, if Energy was used, gain extra score of 30% multiplier based on this score",攻撃後にエネルギーを使用していた場合、今回のスコアを基礎に30%倍率のスコアを追加,공격 후 에너지를 사용했을 때 이번 점수 기반 30% 배수의 점수 추가,攻擊後，如果使用了能量，以這次得分為基礎，額外增加30%倍率的分數,"Après une attaque, si de l'énergie a été utilisée, ajoute 30% du multiplicateur en bonus au score de ce coup","Nach dem Angriff, wenn Energie genutzt wurde, Extra-Punkte von 30% Multiplikator basierend auf diesem Score","Tras atacar, si usaste Energía, puntos extra de 30% de multiplicador sobre esta puntuación","Após atacar, se usou Energia, pontos extras de 30% do multiplicador sobre esta pontuação","Dopo l'attacco, se hai usato Energia, punti extra del 30% del moltiplicatore su questo punteggio"
+掉落猎手,Drop Hunter,ドロップの狩手,드롭 사냥꾼,掉落獵手,Chasseur de butin,Drop-Slanno'er,Cazador de Botín,Caçador de loot,Cacciatore di Drop
+消耗了掉落格子的骰子，以这次得分为基础，额外增加20%倍率的分数,Consuming a dice from a drop tile grants extra score of 20% multiplier based on this score,ドロップマスのサイコロを消費すると、今回のスコアを基礎に20%倍率のスコアを追加,드롭 칸의 주사위를 소모할 때 이번 점수 기반 20% 배수의 점수 추가,消耗了掉落格子的骰子，以這次得分為基礎，額外增加20%倍率的分數,Consommer le dé d'une case de butin ajoute 20% du multiplicateur en bonus au score de ce coup,Verbrauch eines Würfels aus einem Drop-Feld gewährt Extra-Punkte von 20% Multiplikator basierend auf diesem Score,Consumir un dado de una casilla de drop otorga puntos extra de 20% de multiplicador sobre esta puntuación,Consumir um dado de casa de drop adiciona pontos extras de 20% do multiplicador sobre esta pontuação,Consumare un dado da una casella di drop aggiunge punti extra del 20% del moltiplicatore su questo punteggio
+走位大师,Positioning Master,ポジショニングの達人,포지셔닝 대가,走位大師,Maître du positionnement,Positionsmeister,Maestro del Reposicionamiento,Mestre do Posicionamento,Maestro del Posizionamento
+攻击范围内每覆盖1个史莱姆，以这次得分为基础，额外增加3%倍率的分数,Each Slime covered in the attack range grants extra score of 3% multiplier based on this score,攻撃範囲がスライムを1体覆うごとに、今回のスコアを基礎に3%倍率のスコアを追加,공격 범위에 슬라임 1마리 커버마다 이번 점수 기반 3% 배수의 점수 추가,攻擊範圍內每覆蓋1個史萊姆，以這次得分為基礎，額外增加3%倍率的分數,"Pour chaque slime couvert dans la zone d'attaque, ajoute 3% du multiplicateur en bonus au score de ce coup",Pro überdecktem Slime in der Angriffsreichweite Extra-Punkte von 3% Multiplikator basierend auf diesem Score,Cada Slime cubierto en el alcance otorga puntos extra de 3% de multiplicador sobre esta puntuación,Cada Slime coberto no alcance adiciona pontos extras de 3% do multiplicador sobre esta pontuação,Ogni Slime coperto nel raggio aggiunge punti extra del 3% del moltiplicatore su questo punteggio
+猎杀追击,Hunt Pursuit,狩猟の追撃,사냥의 추격,獵殺追擊,Relance de la chasse,Jagdnachzug,Persecución de Caza,Perseguição da Caça,Inseguimento della Caccia
+击杀≥3只史莱姆时，以这次得分为基础，额外增加35%倍率的分数,Killing ≥3 Slimes grants extra score of 35% multiplier based on this score,スライムを≥3体撃破すると、今回のスコアを基礎に35%倍率のスコアを追加,슬라임 ≥3마리 처치 시 이번 점수 기반 35% 배수의 점수 추가,擊殺≥3只史萊姆時，以這次得分為基礎，額外增加35%倍率的分數,"Si ≥3 slimes tués, ajoute 35% du multiplicateur en bonus au score de ce coup",Bei Kill von ≥3 Slimes Extra-Punkte von 35% Multiplikator basierend auf diesem Score,Derribar ≥3 Slimes otorga puntos extra de 35% de multiplicador sobre esta puntuación,Abater ≥3 Slimes adiciona pontos extras de 35% do multiplicador sobre esta pontuação,Abattere ≥3 Slime aggiunge punti extra del 35% del moltiplicatore su questo punteggio
+猎杀系Buff≥4时激活，猎杀系得分额外+50%,Hunt family Buffs active at ≥4: Hunt family score gains extra +50%,狩猟系Buff≥4で発動：狩猟系のスコアが+50%,사냥 계열 Buff ≥4 발동: 사냥 계열 점수 추가 +50%,獵殺系Buff≥4時啟用，獵殺系得分額外+50%,"Activation si ≥4 buff Chasse, les gains de score de la famille Chasse reçoivent un bonus supplémentaire de +50%",Jagdfamilie-Buffs aktiv bei ≥4: Jagdfamilie-Punkte extra +50%,Los Buffs de Caza se activan a ≥4: puntos de Caza +50% extra,Buffs de Caça ativam com ≥4: pontos de Caça +50% extras,Buff famiglia Caccia si attivano a ≥4: punti Caccia +50% extra
+疾风增幅,Gale Boost,疾風ブースト,질풍 부스트,疾風增幅,Amplification Zéphyr,Windhast-Boost,Amplificación del Vendaval,Amplificação do Vendaval,Amplificazione Turbine
+攻击后，每有1点移动力，以这次得分为基础，额外增加6%倍率的分数,"After attacking, each point of Movement grants extra score of 6% multiplier based on this score",攻撃後、移動力1ポイントごとに、今回のスコアを基礎に6%倍率のスコアを追加,공격 후 이동력 1포인트마다 이번 점수 기반 6% 배수의 점수 추가,攻擊後，每有1點移動力，以這次得分為基礎，額外增加6%倍率的分數,"Après une attaque, pour chaque point de mobilité dépensé, ajoute 6% du multiplicateur en bonus au score de ce coup",Nach dem Angriff Extra-Punkte von 6% Multiplikator pro Bewegungspunktd basierend auf diesem Score,"Tras atacar, cada punto de Movimiento otorga puntos extra de 6% de multiplicador sobre esta puntuación","Após atacar, cada ponto de Movimento adiciona pontos extras de 6% do multiplicador sobre esta pontuação","Dopo l'attacco, ogni punto di Movimento aggiunge punti extra del 6% del moltiplicatore su questo punteggio"
+急速打击,Fast Strike,急速打撃,신속 타격,急速打擊,Coup frappé fulgurant,Schnellschlag,Golpe Veloz,Golpe Rápido,Colpo Rapido
+移动≥3格+30%,+30% when moving ≥3 tiles,移動≥3マスで+30%,+30% 이동 ≥3칸,移動≥3格+30%,"Si ≥3 déplacements, +30%",+30% bei Bewegung ≥3 Felder,+30% al moverse ≥3 casillas,+30% ao mover ≥3 casas,+30% muovendosi ≥3 caselle
+疾风连击,Gale Combo,疾風連撃,질풍 연타,疾風連擊,Combo Zéphyr,Windhast-Combo,Combo del Vendaval,Combo do Vendaval,Combo del Turbine
+连续得分回合≥2时，移动力+1,+1 Movement with ≥2 consecutive scoring turns,連続スコア取得ターン≥2で移動力+1,연속 점수 획득 턴 ≥2일 때 이동력 +1,連續得分回合≥2時，移動力+1,"Si ≥2 tours de score consécutifs, mobilité +1",+1 Bewegung bei ≥2 aufeinanderfolgenden Punkte-Runden,"Con ≥2 turnos de puntuación consecutivos, Movimiento +1","Com ≥2 turnos de pontuação seguidos, Movimento +1","Con ≥2 turni con punteggio di fila, Movimento +1"
+残影疾步,Afterimage Stride,残影の疾足,잔영 질주,殘影疾步,Course du double éclair,Nachbild-Schritt,Paso Espectral,Passo Fantasma,Passo Fantasma
+场上史莱姆≥5时，移动力+1,+1 Movement when Slimes on the field ≥5,場にスライム≥5で移動力+1,장판의 슬라임 ≥5일 때 이동력 +1,場上史萊姆≥5時，移動力+1,"Si ≥5 slimes sur le plateau, mobilité +1",+1 Bewegung bei ≥5 Slimes auf dem Feld,"Con ≥5 Slimes en pantalla, Movimiento +1","Com ≥5 Slimes na arena, Movimento +1","Con ≥5 Slime in campo, Movimento +1"
+旺盛疾跑,Vigor Dash,旺盛な疾走,왕성한 질주,旺盛疾跑,Course énergique,Lebendiger Lauf,Carrera Vigorosa,Corrida Vigorosa,Corsa Vigorosa
+HP≥80%时，移动力+1,+1 Movement when HP≥80%,HP≥80%で移動力+1,HP≥80%일 때 이동력 +1,HP≥80%時，移動力+1,"Si HP ≥ 80%, mobilité +1",+1 Bewegung bei HP≥80%,"Con HP≥80%, Movimiento +1","Com HP≥80%, Movimento +1","Con HP≥80%, Movimento +1"
+英雄冲锋,Hero Charge,英雄の突撃,영웅 돌진,英雄衝鋒,Charge héroïque,Heldenansturm,Carga Heroica,Investida Heroica,Carica Eroica
+精英或BOSS在场时，移动力+1,+1 Movement while an Elite or BOSS is on the field,エリートかBOSSが場にいると移動力+1,엘리트 또는 BOSS가 장판에 있을 때 이동력 +1,精英或BOSS在場時，移動力+1,"Si un Élite ou un BOSS est présent, mobilité +1","+1 Bewegung, wenn Elite oder BOSS im Feld ist","Con Élite o JEFE en pantalla, Movimiento +1","Com Elite ou CHEFE na arena, Movimento +1","Con Elite o BOSS in campo, Movimento +1"
+疾风系Buff≥4时激活，能量上限+1，攻击时本回合每移动过1格+5%得分,"Gale family Buffs active at ≥4: max Energy +1; when attacking, +5% score per tile moved this turn",疾風系Buff≥4で発動：エネルギー上限+1、攻撃時、このターンの移動1マスごとにスコア+5%,"질풍 계열 Buff ≥4 발동: 에너지 상한 +1, 공격 시 이번 턴 이동한 칸마다 점수 +5%",疾風系Buff≥4時啟用，能量上限+1，攻擊時本回合每移動過1格+5%得分,"Activation si ≥4 buff Zéphyr, limite d'énergie +1, pendant une attaque chaque case parcourue ce tour donne +5% de score",Windhastfamilie-Buffs aktiv bei ≥4: Energiemaximum +1; beim Angriff +5% Punkte pro Feld Bewegung in dieser Runde,"Los Buffs de Vendaval se activan a ≥4: límite de Energía +1; al atacar, +5% de puntos por casilla movida este turno","Buffs do Vendaval ativam com ≥4: limite de Energia +1; ao atacar, +5% de pontos por casa movida neste turno","Buff famiglia Turbine si attivano a ≥4: limite Energia +1; attaccando, +5% punti per casella percorsa in questo turno"
+纯色精通,Pure Color Mastery,単色マスター,단색 마스터,純色精通,Maîtrise de la couleur pure,Rein-Farbmeister,Maestría Monocromática,Maestria Monocromática,Maestria Mono-colo
+击杀的史莱姆中同色≥3只+15%，≥4只+30%，≥5只+50%,"Among killed Slimes, same color ≥3: +15%, ≥4: +30%, ≥5: +50%",撃破したスライムの同色が≥3体で+15%、≥4体で+30%、≥5体で+50%,"처치한 슬라임 중 동색 ≥3마리 +15%, ≥4마리 +30%, ≥5마리 +50%",擊殺的史萊姆中同色≥3只+15%，≥4只+30%，≥5只+50%,"Si ≥3 slimes tués de même couleur +15%, ≥4 +30%, ≥5 +50%","Getötete Slimes gleicher Farbe ≥3: +15%, ≥4: +30%, ≥5: +50%","Del mismo color entre derribados: ≥3 +15%, ≥4 +30%, ≥5 +50%","Da mesma cor entre abates: ≥3 +15%, ≥4 +30%, ≥5 +50%","Stesso colore tra abbattuti: ≥3 +15%, ≥4 +30%, ≥5 +50%"
+同色烙印,Same-color Brand,同色の烙印,동색 브랜드,同色烙印,Marque de couleur,Gleichfarbiges Brandmal,Marca del Mismo Color,Marca da Mesma Cor,Marchio Stesso Colore
+上回合击杀的主色被烙印，本回合击杀同色史莱姆时，以这次得分为基础，额外增加25%倍率的分数,The dominant color killed last turn is branded; killing same-color Slimes this turn grants extra score of 25% multiplier based on this score,前ターンに撃破した主要色が烙印され、このターンに同色スライムを撃破すると、今回のスコアを基礎に25%倍率のスコアを追加,"지난 턴 처치한 주요 색이 브랜드되며, 이번 턴 동색 슬라임 처치 시 이번 점수 기반 25% 배수의 점수 추가",上回合擊殺的主色被烙印，本回合擊殺同色史萊姆時，以這次得分為基礎，額外增加25%倍率的分數,La couleur dominante du slime tué le tour précédent est marquée ; tuer un slime de même couleur ce tour ajoute 25% du multiplicateur en bonus au score de ce coup,Die Hauptfarbe des letzten Kills wird gebrannt; beim Kill gleichfarbiger Slimes in dieser Runde Extra-Punkte von 25% Multiplikator basierend auf diesem Score,El colorprincipal derribado el turno anterior queda marcado; derribar Slimes de ese color este turno otorga puntos extra de 25% de multiplicador sobre esta puntuación,A cor principal abatida no turno anterior é marcada; abater Slimes dessa cor neste turno adiciona pontos extras de 25% do multiplicador sobre esta pontuação,Il colore principale abbattuto il turno scorso viene marchiato; abbattere Slime di quel colore in questo turno aggiunge punti extra del 25% del moltiplicatore su questo punteggio
+虹光涌流,Iris Tide,虹光の奔流,무지개빛 물결,虹光湧流,Flux irisé,Regenbogenschwall,Torrente Aurora,Torrente Arco-íris,Fluire Arcobaleno
+击杀范围内每有1种颜色+10%（4色=+40%）,+10% per color in the kill range (4 colors = +40%),撃破範囲に1色あるごとに+10%（4色＝+40%）,처치 범위의 색마다 +10% (4색 = +40%),擊殺範圍內每有1種顏色+10%（4色=+40%）,Pour chaque couleur présente dans la zone d'attaque +10% (4 couleurs = +40%),+10% pro Farbe in der Kill-Reichweite (4 Farben = +40%),+10% por color en el alcance (4 colores = +40%),+10% por cor no alcance (4 cores = +40%),+10% per colore nel raggio (4 colori = +40%)
+共鸣链,Resonance Chain,共鳴の鎖,공명 사슬,共鳴鏈,Chaîne de Résonance,Resonanzkette,Cadena de Resonancia,Cadeia de Ressonância,Catena di Risonanza
+同色类骰型触发后叠层+10%，未触发衰减-10%，叠层作用于下次攻击,"Same-color Type trigger adds +10% stack, a miss decays -10%; stacks apply to the next attack",同色系の種類が発動後にスタック+10%、未発動で-10%に減衰、スタックは次の攻撃に適用,"동색 계열 발동 후 스택 +10%, 미발동 시 -10%, 스택은 다음 공격에 적용",同色類骰型觸發後疊層+10%，未觸發衰減-10%，疊層作用於下次攻擊,Après un déclenchement de type de même couleur +10% de charge ; sans déclenchement -10% ; la charge s'applique à la prochaine attaque,"Gleichfarbige Typen erhöhen den Stapel bei Auslösung +10%, bei Nichtauslösung -10%; der Stapel wirkt auf den nächsten Angriff","Los Tipos de color propio activados añaden +10% de carga; sin activación, -10%; la carga se aplica al siguiente ataque","Tipos da mesma cor ativos adicionam +10% de carga; sem ativação, -10%; a carga vale para o próximo ataque","I Tipi dello stesso colore attivi aggiungono +10% di carica; se non attivati, -10%; la carica vale per l'attacco successivo"
+四色共鸣,Four-color Resonance,四色の共鳴,사색 공명,四色共鳴,Résonance des 4 couleurs,Vierfarb-Resonanz,Resonancia Cuátuple,Ressonância Quadricromática,Risonanza Quadricromatа
+攻击范围内4色齐备时，以这次得分为基础，额外增加100%倍率的分数,"When all 4 colors are present in the attack range, gain extra score of 100% multiplier based on this score",攻撃範囲の4色がすべて揃うとき、今回のスコアを基礎に100%倍率のスコアを追加,공격 범위에 4색이 모두 있을 때 이번 점수 기반 100% 배수의 점수 추가,攻擊範圍內4色齊備時，以這次得分為基礎，額外增加100%倍率的分數,"Si les 4 couleurs sont présentes dans la zone d'attaque, ajoute 100% du multiplicateur en bonus au score de ce coup","Wenn alle 4 Farben in der Angriffsreichweite vorhanden sind, Extra-Punkte von 100% Multiplikator basierend auf diesem Score","Con los 4 colores reunidos en el alcance, puntos extra de 100% de multiplicador sobre esta puntuación","Com as 4 cores reunidas no alcance, pontos extras de 100% do multiplicador sobre esta pontuação","Con le 4 colore presenti nel raggio, punti extra del 100% del moltiplicatore su questo punteggio"
+色彩狂热,Color Frenzy,色彩への狂熱,색에 대한 광신,色彩狂熱,Frénésie de couleurs,Farbfimmel,Fervor Cromático,Fervor Cromático,Fervore Cromуатico
+≥3色+30%，≤1色-5%,"≥3 colors: +30%, ≤1 color: -5%",≥3色で+30%、≤1色で-5%,"≥3색 +30%, ≤1색 -5%",≥3色+30%，≤1色-5%,"≥3 couleurs +30%, ≤1 couleur -5%","≥3 Farben: +30%, ≤1 Farbe: -5%","≥3 colores: +30%, ≤1 color: -5%","≥3 cores: +30%, ≤1 cor: -5%","≥3 colori: +30%, ≤1 colore: -5%"
+共鸣系Buff≥4时激活，共鸣系Buff触发时永久+1叠层，攻击会获得叠层倍率的加分,Resonance family Buffs active at ≥4: triggering a Resonance Buff permanently adds +1 stack; attacks gain bonus score equal to stack multiplier,共鳴系Buff≥4で発動：共鳴系Buffの発動時にスタックが永久+1、攻撃がスタック倍率のスコアボーナスを得る,"공명 계열 Buff ≥4 발동: 공명 계열 Buff 발동 시 스택 영구 +1, 공격이 스택 배수의 점수 보너스 획득",共鳴系Buff≥4時啟用，共鳴系Buff觸發時永久+1疊層，攻擊會獲得疊層倍率的加分,"Activation si ≥4 buff Résonance, chaque déclenchement de ce buff donne +1 charge en permanence, chaque attaque gagne un score bonus du multiplicateur par charge",Resonanzfamilie-Buffs aktiv bei ≥4: Auslösen eines Resonanz-Buffs erhöht den Stapel dauerhaft +1; Angriffe erhalten Bonus-Punkte vom Stapel-Multiplikator,Los Buffs de Resonancia se activan a ≥4: activar un Buff de Resonancia añade +1 carga permanente; los ataques obtienen el bonus del multiplicador de carga,Buffs de Ressonância ativam com ≥4: ativar um Buff de Ressonância adiciona +1 carga permanente; ataques ganham o bônus do multiplicador de carga,Buff famiglia Risonanza si attivano a ≥4: attivare un Buff di Risonanza aggiunge +1 carica permanente; gli attacchi ottengono il bonus del moltiplicatore di carica
+掉落进化,Drop Evolution,ドロップ進化,드롭 진화,掉落進化,Évolution du butin,Drop-Evolution,Evolución de Drop,Evolução de Drop,Evoluzione dei Drop
+每掉落1个骰子，随机1个骰型倍率+6%,Each dropped dice grants +6% multiplier to a random Type,サイコロを1つドロップするごとに、ランダムな1種類の倍率+6%,주사위 1개 드롭할 때마다 무작위 1종 배수 +6%,每掉落1個骰子，隨機1個骰型倍率+6%,"Pour chaque dé issu du butin, le multiplicateur d'un type de dé au hasard +6%",Pro geworfenem Würfel +6% Multiplikator auf einen zufälligen Typ,Cada dado dropado otorga +6% de multiplicador a un Tipo aleatorio,Cada dado dropado adiciona +6% de multiplicador a um Tipo aleatório,Ogni dado droppato dà +6% moltiplicatore a un Tipo casuale
+随机强化,Random Spell,ランダム強化,무작위 강화,隨機強化,Renfort aléatoire,Zufallsstärkung,Refuerzo Aleatorio,Reforço Aleatório,Potenziamento Casuale
+每回合开始30%概率随机1个点数基础分+2,30% chance at turn start: +2 base score to a random point,毎ターン開始時に30%の確率でランダムな1種類の点数の基礎スコア+2,매 턴 시작 시 30% 확률로 무작위 1종 점수의 기본 점수 +2,每回合開始30%機率隨機1個點數基礎分+2,30% de chances au début de chaque tour que la valeur de base d'un point au hasard soit +2,30% Chance beim Rundenstart: +2 Basispunkte auf einen zufälligen Punkt,30% al inicio de turno: +2 de base a un punto aleatorio,30% ao início do turno: +2 de base em um ponto aleatório,30% a inizio turno: +2 base a un punto casuale
+随机蜕变,Random Metamorphosis,ランダム変貌,무작위 변모,隨機蛻變,Métamorphose aléatoire,Zufallswandlung,Metamorfosis Aleatoria,Metamorfose Aleatória,Metamorfosi Casuale
+每回合开始30%概率随机1个骰型倍率+6%,30% chance at turn start: +6% multiplier to a random Type,毎ターン開始時に30%の確率でランダムな1種類の倍率+6%,매 턴 시작 시 30% 확률로 무작위 1종 배수 +6%,每回合開始30%機率隨機1個骰型倍率+6%,30% de chances au début de chaque tour que le multiplicateur d'un type de dé au hasard soit +6%,30% Chance beim Rundenstart: +6% Multiplikator auf einen zufälligen Typ,30% al inicio de turno: +6% de multiplicador a un Tipo aleatorio,30% ao início do turno: +6% de multiplicador em um Tipo aleatório,30% a inizio turno: +6% moltiplicatore a un Tipo casuale
+击杀增幅,Kill Boost,撃破ブースト,처치 부스트,擊殺增幅,Amplification de kill,Kill-Boost,Impulso por Derribo,Impulso de Abate,Spinta d'Abattimento
+每击杀1个凑成骰型的史莱姆，随机骰型倍率+3%,Each Slime killed that forms a Type grants +3% multiplier to a random Type,種類を構成するスライムを1体撃破ごとに、ランダムな倍率+3%,종류를 구성하는 슬라임 1마리 처치마다 무작위 배수 +3%,每擊殺1個湊成骰型的史萊姆，隨機骰型倍率+3%,"Pour chaque slime tué formant un type de dé, le multiplicateur d'un type au hasard +3%","Pro Slime-Kill, der einen Typ formt, +3% Multiplikator auf einen zufälligen Typ",Cada Slime derribado que compone un Tipo otorga +3% de multiplicador a un Tipo aleatorio,Cada Slime abatido que forma um Tipo adiciona +3% de multiplicador a um Tipo aleatório,Ogni Slime abbattuto che forma un Tipo dà +3% moltiplicatore a un Tipo casuale
+掉落强化,Drop Strengthening,ドロップ強化,드롭 강화,掉落強化,Renfort de butin,Drop-Verstärkung,Refuerzo de Drop,Reforço de Drop,Potenziamento del Drop
+每掉落1个骰子，随机1个点数基础分+2,Each dropped dice grants +2 base score to a random point,サイコロを1つドロップするごとに、ランダムな1種類の点数の基礎スコア+2,주사위 1개 드롭할 때마다 무작위 1종 점수의 기본 점수 +2,每掉落1個骰子，隨機1個點數基礎分+2,"Pour chaque dé issu du butin, la valeur de base d'un point au hasard +2",Pro geworfenem Würfel +2 Basispunkte auf einen zufälligen Punkt,Cada dado dropado otorga +2 de base a un punto aleatorio,Cada dado dropado adiciona +2 de base em um ponto aleatório,Ogni dado droppato dà +2 base a un punto casuale
+击杀强化,Kill Strengthening,撃破強化,처치 강화,擊殺強化,Renfort de kill,Kill-Verstärkung,Refuerzo por Derribo,Reforço de Abate,Rinforzo d'Abattimento
+每击杀1个凑成骰型的史莱姆，随机1个点数基础分+1,Each Slime killed that forms a Type grants +1 base score to a random point,種類を構成するスライム1体撃破ごとに、ランダムな1種類の点数の基礎スコア+1,종류를 구성하는 슬라임 1마리 처치마다 무작위 1종 점수의 기본 점수 +1,每擊殺1個湊成骰型的史萊姆，隨機1個點數基礎分+1,"Pour chaque slime tué formant un type de dé, la valeur de base d'un point au hasard +1","Pro Slime-Kill, der einen Typ formt, +1 Basispunkte auf einen zufälligen Punkt",Cada Slime derribado que forma un Tipo otorga +1 de base a un punto aleatorio,Cada Slime abatido que forma um Tipo adiciona +1 de base em um ponto aleatório,Ogni Slime abbattuto che forma un Tipo dà +1 base a un punto casuale
+进化系Buff≥4时激活，每回合随机1个点数基础分+1，随机1个骰型倍率+1%,"Evolution family Buffs active at ≥4: each turn, +1 base score to a random point and +1% multiplier to a random Type",進化系Buff≥4で発動：毎ターン、ランダムな1種類の点数の基礎スコア+1、ランダムな1種類の倍率+1%,"진화 계열 Buff ≥4 발동: 매 턴 무작위 1종 점수의 기본 점수 +1, 무작위 1종 배수 +1%",進化系Buff≥4時啟用，每回合隨機1個點數基礎分+1，隨機1個骰型倍率+1%,"Activation si ≥4 buff Évolution, à chaque tour la valeur de base d'un point au hasard +1, le multiplicateur d'un type de dé au hasard +1%",Evolutionsfamilie-Buffs aktiv bei ≥4: pro Runde +1 Basispunkte auf einen zufälligen Punkt und +1% Multiplikator auf einen zufälligen Typ,"La familia de Evolución se activa a ≥4: cada turno, +1 de base a un punto aleatorio y +1% de multiplicador a un Tipo aleatorio","Buffs de Evolução ativam com ≥4: a cada turno, +1 de base em um ponto aleatório e +1% de multiplicador em um Tipo aleatório","Buff famiglia Evoluzione si attivano a ≥4: ogni turno, +1 base a un punto casuale e +1% moltiplicatore a un Tipo casuale"
+残血收割,Low Blood Harvest,瀕死の刈り取り,절혈 수확,殘血收割,Moisson des mourants,Blutlese,Cosecha Sanguinaria,Colheita do Sangue,Raccolta Sanguigna
+回合数≥7时，以这次得分为基础，额外增加30%倍率的分数,"At turn ≥7, gain extra score of 30% multiplier based on this score",ターン数≥7のとき、今回のスコアを基礎に30%倍率のスコアを追加,턴 수 ≥7일 때 이번 점수를 기반으로 30% 배수의 점수 추가,回合數≥7時，以這次得分為基礎，額外增加30%倍率的分數,"Si ≥7 tours, ajoute 30% du multiplicateur en bonus au score de ce coup",Bei Runde ≥7 Extra-Punkte von 30% Multiplikator basierend auf diesem Score,"En turno ≥7, puntos extra de 30% de multiplicador sobre esta puntuación","Com turno ≥7, pontos extras de 30% do multiplicador sobre esta pontuação","Al turno ≥7, punti extra del 30% del moltiplicatore su questo punteggio"
+生命壁垒,Life Bulwark,生命の壁,생명 베리어,生命壁壘,Mur de vie,Lebenswall,Baluarte Vital,Baluarte da Vida,Bastione di Vita
+当前HP≤2时，防御+2,Defense +2 while HP≤2,現在のHP≤2で防御+2,현재 HP≤2일 때 방어 +2,當前HP≤2時，防禦+2,"Si HP actuel ≤ 2, défense +2",Verteidigung +2 bei HP≤2,Defensa +2 con HP≤2,Defesa +2 com HP≤2,Difesa +2 con HP≤2
+诅咒焚烧,Curse Burn,呪いの焼却,저주 소각,詛咒焚燒,Brûlure de malédiction,Fluchverbrennung,Quema de Maldiciones,Queima de Maldições,Combustione delle Maledizioni
+每debuff+8%,+8% per debuff,デバフ1つごとに+8%,디버프 1개마다 +8%,每debuff+8%,Pour chaque debuff +8%,+8% pro debuff,+8% por debilitamiento,+8% por debuff,+8% per debuff
+逆境翻盘,Adversity Comeback,逆境の逆転,역경 뒤집기,逆境翻盤,Retournement du désastre,Wende im Rückschlag,Remontada Adversa,Virada na Adversidade,Rimonta nell'Avversità
+HP=1时血瓶恢复量+1（即+2HP）,"At HP=1, healing potion recovers +1 more (+2HP total)",HP=1のとき回復ポーションの回復量+1（つまり+2HP）,HP=1일 때 회복 물약 회복량 +1 (즉 +2HP),HP=1時血瓶恢復量+1（即+2HP）,"Quand HP = 1, le gain de vie de la Potion de vie +1 (soit +2HP)",Bei HP=1 Heilmenge des Heiltranks +1 (also +2HP),"Con HP=1, la poción de vida cura +1 (es decir, +2HP)","Com HP=1, a poção de vida recupera +1 (ou seja, +2HP)","Con HP=1, la pozione di vita cura +1 (cioè +2HP)"
+破釜沉舟,Burn the Boats,破釜沈舟,파저침주,破釜沉舟,Brûler les ponts,Pferde verbrennen,Hundir la Caza,Quebrar Tudo,Sacrifica tutto
+回合开始时，若HP>2则HP-1，本回合攻击得分+35%；否则不扣血无增益,"At turn start, if HP>2 lose 1 HP and attack score +35% this turn; otherwise no HP loss and no bonus",ターン開始時、HP>2ならHP-1し、このターンの攻撃スコア+35%；でなければ体力消費もボーナスもなし,턴 시작 시 HP>2면 HP-1 후 이번 턴 공격 점수 +35%; 아니면 체력 소모도 향상도 없음,回合開始時，若HP>2則HP-1，本回合攻擊得分+35%；否則不扣血無增益,"Au début du tour, si HP > 2, HP-1 et +35% de score d'attaque ce tour ; sinon pas de retrait ni de bonus","Beim Rundenstart, bei HP>2: HP-1 und Angriffspunkte +35% in dieser Runde; sonst kein LP-Verlust und kein Bonus","Al iniciar el turno, si HP>2: pierde 1 HP y puntos de ataque +35% este turno; si no, sin pérdida ni bonus","No início do turno, com HP>2: perde 1 HP e pontos de ataque +35% neste turno; senão, sem perda nem bônus","A inizio turno, con HP>2: perde 1 HP e punti d'attacco +35% in questo turno; altrimenti niente perdita né bonus"
+背水一战,Last Stand,背水の陣,배수의 진,背水一戰,Dernier rempart,Letztes Aufgebot,Última Trinchera,Águas de Costas,Ultimo Baluardo
+当前分数低于目标分数50%时，攻击得分+55%；若攻击未得分则HP-1,"When score is below 50% of target, attack score +55%; if the attack scores nothing, lose 1 HP",現在のスコアが目標スコアの50%未満のとき攻撃スコア+55%；攻撃でスコアが得られなければHP-1,현재 점수가 목표 점수의 50% 미만일 때 공격 점수 +55%; 공격이 점수를 얻지 못하면 HP-1,當前分數低於目標分數50%時，攻擊得分+55%；若攻擊未得分則HP-1,"Si le score actuel < 50% du score cible, +55% de score d'attaque ; si l'attaque ne marque pas, HP-1",Wenn Punkte unter 50% der Zielpunkte liegen: Angriffspunkte +55%; wenn der Angriff keine Punkte erzielt: HP-1,"Con puntos bajo el 50% del objetivo, puntos de ataque +55%; si el ataque no puntúa, pierde 1 HP","Com pontuação abaixo de 50% da meta, pontos de ataque +55%; se o ataque não pontuar, perde 1 HP","Con punteggio sotto il 50% dell'obiettivo, punti d'attacco +55%; se l'attacco non punteggia, perde 1 HP"
+铁壁,Iron Wall,鉄壁,철벽,鐵壁,Mur de fer,Eisenmauer,Pared de Hierro,Muralha de Ferro,Muro di Ferro
+防御+1,Defense +1,防御+1,방어 +1,防禦+1,Défense +1,Verteidigung +1,Defensa +1,Defesa +1,Difesa +1
+铁胃,Iron Stomach,鉄の胃,철위,鐵胃,Estomac de fer,Eisenmagen,Estómago de Hierro,Estômago de Ferro,Stomaco di Ferro
+每回合扣血-1（最少0）,Per-turn HP drain -1 (min 0),毎ターンの体力消費-1（最低0）,매 턴 체력 소모 -1 (최소 0),每回合扣血-1（最少0）,Perte de vie par tour -1 (min. 0),LP-Verlust pro Runde -1 (mind. 0),Pérdida de vida por turno -1 (mín. 0),Perda de HP por turno -1 (mín. 0),Perdita HP per turno -1 (min. 0)
+以战养战,Live Off the Land,以戦養戦,이전양전,以戰養戰,Se nourrir de la guerre,Krieg ernährt Krieg,Aguante por Combate,Guerra Alimenta Guerra,La Guerra Nutre la Guerra
+过关时每3只残余史莱姆回1HP,"On stage clear, recover 1 HP per 3 surviving Slimes",クリア時、残存スライム3体ごとにHP1回復,클리어 시 잔존 슬라임 3마리마다 HP 1회복,過關時每3只殘餘史萊姆回1HP,"En fin d'Étage, 1HP rendu pour chaque tranche de 3 slimes restants",Beim Stufenende 1 HP pro 3 verbleibenden Slimes,"Al superar la ronda, 1 HP por cada 3 Slimes sobrevivientes","Ao concluir, 1 HP por cada 3 Slimes sobreviventes","Al completamento, 1 HP ogni 3 Slime superstiti"
+战场补给,Battlefield Supply,戦場の補給,전장 보급,戰場補給,Ravitaillement de guerre,Schlachtfeldversorgung,Suministro de Campo,Suprimento de Batalha,Rifornimento di Battaglia
+每次购买商店buff后获得1血瓶,Gain 1 healing potion after each shop buff purchase,ショップのbuff購入のたびに回復ポーション+1,상점 buff 구매마다 회복 물약 +1,每次購買商店buff後獲得1血瓶,"Après chaque achat de buff à la Boutique, obtient 1 Potion de vie",1 Heiltrank nach jedem Shop-buff-Kauf,Obtén 1 poción de vida al comprar buff en la tienda,Recebe 1 poção de vida ao comprar buff na loja,Ottieni 1 pozione di vita dopo ogni acquisto buff nel negozio
+嗜血战意,Bloodthirst,嗜血の戦意,필혈 전의,嗜血戰意,Tactique d'écrasement,Blutdurst,Sed de Sangre,Sede de Sangre? No: Sede de Sangue,Vogia di Sangue
+超阈值溢出保留（封顶=当前阈值）,Overflow beyond the threshold is kept (capped at the current threshold),閾値超過分を保持（上限＝現在の閾値）,임계값 초과분을 유지 (상한＝현재 임계값),超閾值溢位保留（封頂=當前閾值）,Le débordement au-dessus du seuil est conservé (plafond = seuil actuel),Überlauf über die Schwelle wird behalten (Deckel = aktuelle Schwelle),El exceso sobre el umbral se conserva (techo = umbral actual),O excesso sobre o limite é mantido (teto = limite atual),L'eccesso oltre la soglia resta (tetto = soglia attuale)
+屠戮盛宴,Slaughter Feast,虐殺の宴,도살의 연회,屠戮盛宴,Festin de boucherie,Schlachtfest,Festín de Matanza,Banquete de Massacre,Banchetto del Massacro
+单次攻击击杀超过3只史莱姆回1HP,Killing more than 3 Slimes in one attack recovers 1 HP,1回の攻撃でスライムを3体超撃破するとHP1回復,한 번의 공격으로 슬라임을 3마리 초과 처치 시 HP 1회복,單次攻擊擊殺超過3只史萊姆回1HP,"Si une seule attaque tue plus de 3 slimes, rend 1HP",Mehr als 3 Slimes in einem Angriff getötet: 1 HP zurück,Derribar más de 3 Slimes en un ataque recupera 1 HP,Abater mais de 3 Slimes num ataque recupera 1 HP,Abattere più di 3 Slime in un attacco ripristina 1 HP
+生机系Buff≥4时激活，过关时hp+1；若满血则max_hp+1,"Vitality family Buffs active at ≥4: on stage clear hp+1; if at full HP, max_hp+1 instead",生命系Buff≥4で発動：クリア時 hp+1；体力が満タンならmax_hp+1,생명 계열 Buff ≥4 발동: 클리어 시 hp+1; 체력이 가득 찬 상태면 max_hp+1,生機系Buff≥4時啟用，過關時hp+1；若滿血則max_hp+1,"Activation si ≥4 buff Vitalité, en fin d'Étage hp+1 ; si la vie est pleine, max_hp+1",Vitalitätsfamilie-Buffs aktiv bei ≥4: hp+1 beim Stufenende; bei vollem Leben max_hp+1,"Los Buffs de Vitalidad se activan a ≥4: al superar, hp+1; con vida llena, max_hp+1","Buffs de Vitalidade ativam com ≥4: ao concluir hp+1; com vida cheia, max_hp+1",Buff famiglia Vitalità si attivano a ≥4: al completamento hp+1; a vita piena max_hp+1
+额外能量,Extra Energy,追加エネルギー,추가 에너지,額外能量,Énergie supplémentaire,Extra-Energie,Energía Extra,Energia Extra,Energia Extra
+能量史莱姆总量+1,Total Energy Slimes +1,エネルギースライムの総数+1,에너지 슬라임 총수 +1,能量史萊姆總量+1,Nombre total de slimes d'énergie +1,Energie-Slime-Gesamtzahl +1,Total de Slimes de Energía +1,Total de Slimes de Energia +1,Totale Slime di Energia +1
+能量扩容,Energy Expansion,エネルギー拡張,에너지 확장,能量擴容,Expansion d'énergie,Energieausbau,Expansión de Energía,Expansão de Energia,Espansione Energia
+能量上限+1,Max Energy +1,エネルギー上限+1,에너지 상한 +1,能量上限+1,Limite d'énergie +1,Energiemaximum +1,Límite de Energía +1,Limite de Energia +1,Limite Energia +1
+免费刷新,Free Refresh,無料リフレッシュ,무료 새로고침,免費重新整理,Rafraîchissement gratuit,Frei-Refresh,Renovación Gratuita,Renovação Grátis,Rinnovo Gratuito
+免费刷新商店一次,Refresh the shop once for free,ショップを1回無料でリフレッシュ,상점을 1회 무료로 새로고침,免費重新整理商店一次,Rafraîchit la Boutique gratuitement une fois,Shop einmal gratis auffrischen,Renueva la tienda una vez gratis,Renova a loja uma vez grátis,Rinnova il negozio una volta gratis
+税吏,Tax Collector,税吏,세리,稅吏,Percepteur,Steuervogt,Labadía,Cobrador,Tassante
+接下来购买buff的价格-1,Next buff purchases cost -1,今後のbuff購入価格-1,이후 buff 구매 가격 -1,接下來購買buff的價格-1,Le prix du prochain achat de buff -1,Künftige buff-Käufe -1,Las próximas compras de buff cuestan -1,As próximas compras de buff custam -1,I prossimi acquisti di buff costano -1
+一点偏执,One-point Obsession,1点への執着,1점 편집,一點偏執,Obsession du 1,Ein-Punkt-Verbohrtheit,Obsesión por 1 punto,Objeção do 1 ponto,Ossessione per 1 punto
+二点偏执,Two-point Obsession,2点への執着,2점 편집,二點偏執,Obsession du 2,Zwei-Punkt-Verbohrtheit,Obsesión por 2 puntos,Objeção do 2 pontos,Ossessione per 2 punti
+三点偏执,Three-point Obsession,3点への執着,3점 편집,三點偏執,Obsession du 3,Drei-Punkt-Verbohrtheit,Obsesión por 3 puntos,Objeção do 3 pontos,Ossessione per 3 punti
+四点偏执,Four-point Obsession,4点への執着,4점 편집,四點偏執,Obsession du 4,Vier-Punkt-Verbohrtheit,Obsesión por 4 puntos,Objeção do 4 pontos,Ossessione per 4 punti
+五点偏执,Five-point Obsession,5点への執着,5점 편집,五點偏執,Obsession du 5,Fünf-Punkt-Verbohrtheit,Obsesión por 5 puntos,Objeção do 5 pontos,Ossessione per 5 punti
+六点偏执,Six-point Obsession,6点への執着,6점 편집,六點偏執,Obsession du 6,Sechs-Punkt-Verbohrtheit,Obsesión por 6 puntos,Objeção do 6 pontos,Ossessione per 6 punti
+一点增幅,One-point Amplify,1点ブースト,1점 부스트,一點增幅,Boost du 1,Ein-Punkt-Verstärkung,Amplificación de 1 punto,Amplificação de 1 ponto,Amplificazione di 1 punto
+二点增幅,Two-point Amplify,2点ブースト,2점 부스트,二點增幅,Boost du 2,Zwei-Punkt-Verstärkung,Amplificación de 2 puntos,Amplificação de 2 pontos,Amplificazione di 2 punti
+三点增幅,Three-point Amplify,3点ブースト,3점 부스트,三點增幅,Boost du 3,Drei-Punkt-Verstärkung,Amplificación de 3 puntos,Amplificação de 3 pontos,Amplificazione di 3 punti
+四点增幅,Four-point Amplify,4点ブースト,4점 부스트,四點增幅,Boost du 4,Vier-Punkt-Verstärkung,Amplificación de 4 puntos,Amplificação de 4 pontos,Amplificazione di 4 punti
+五点增幅,Five-point Amplify,5点ブースト,5점 부스트,五點增幅,Boost du 5,Fünf-Punkt-Verstärkung,Amplificación de 5 puntos,Amplificação de 5 pontos,Amplificazione di 5 punti
+六点增幅,Six-point Amplify,6点ブースト,6점 부스트,六點增幅,Boost du 6,Sechs-Punkt-Verstärkung,Amplificación de 6 puntos,Amplificação de 6 pontos,Amplificazione di 6 punti
+对子特训,Pair Drill,ペア特訓,페어 특훈,對子特訓,Entraînement Paire,Paarspezialtraining,Entrenamiento de Par,Treino de Par,Allenamento Coppia
+顺子特训,Straight Drill,ストレート特訓,스트레이트 특훈,順子特訓,Entraînement Suite,Straight-Spezialtraining,Entrenamiento de Escalera,Treino de Sequência,Allenamento Sequenza
+同色特训,Flush Drill,同色特訓,동색 특훈,同色特訓,Entraînement Couleur,Gleichfarbig-Spezialtraining,Entrenamiento de Color,Treino de Cor,Allenamento Colore
+同对牺牲,Color Pair Sacrifice,同色ペアの犠牲,컬러 페어의 희생,同對犧牲,Sacrifice Paire de couleur,Farbpaar-Opfer,Sacrificio de Par de color,Sacrifício de Par de cor,Sacrificio Coppia di colore
+同顺牺牲,Color Straight Sacrifice,同色ストレートの犠牲,컬러 스트레이트의 희생,同順犧牲,Sacrifice Suite de couleur,Farb-Straight-Opfer,Sacrificio de Escalera de color,Sacrifício de Sequência de cor,Sacrificio Sequenza di colore
+孤注一掷,All-in,孤注一擲,일발 우로,孤注一擲,Tout ou rien,Alles auf eine Karte,Todo al很大,Tudo ou Nada,Tutto per Tutto
+以退为进,Recede to Advance,以退為進,퇴하여 진하다,以退為進,Reculer pour mieux avancer,Rückzug als Vorstoß,Ceder para Avanzar,Recuar para Avançar,Cedere per Avanzare
+对子透支,Pair Overdraft,ペアの透支,페어 과다 인출,對子透支,Découvert Paire,Paar-Überziehung,Sobregiro de Par,Sobрегargo de Par,Debito della Coppia
+顺子押注,Straight Wager,ストレートへの賭け,스트레이트 베팅,順子押注,Pari Suite,Straight-Wette,Apuesta de Escalera,Aposta de Sequência,Puntata sulla Sequenza
+同色押注,Flush Wager,同色への賭け,동색 베팅,同色押注,Pari Couleur,Gleichfarbig-Wette,Apuesta de Color,Aposta de Cor,Puntata sul Colore
+中坚力量,Core Force,中核戦力,중핵전력,中堅力量,Force centrale,Kernkraft,Fuerza Central,Força Central,Forza Centrale
+双数崛起,Even Rise,偶数の台頭,짝수의 부흥,雙數崛起,Ascension des pairs,Aufstieg der geraden Zahlen,Ascenso Par,Ascensão Par,Ascesa dei Pari
+单数突进,Odd Charge,奇数の突進,홀수 돌진,單數突進,Assaut des impairs,Vorstoß der ungeraden Zahlen,Embestida Impar,Embestida Ímpar,Assalto dei Dispari
+极端特化·一,Extreme Specialization · One,極端特化・一,극단 특화 · 1,極端特化·一,Spécialisation extrême·un,Extreme Spezialisierung · Eins,Especialización Extrema · Uno,Especialização Extrema · Um,Specializzazione Estrema · Uno
+极端特化·六,Extreme Specialization · Six,極端特化・六,극단 특화 · 6,極端特化·六,Spécialisation extrême·six,Extreme Spezialisierung · Sechs,Especialización Extrema · Seis,Especialização Extrema · Seis,Specializzazione Estrema · Sei
+对子豪赌,Pair Gamble,ペアの大博打,페어 대박,對子豪賭,Gros pari Paire,Paar-Hazard,Gran Apuesta de Par,Grande Aposta de Par,Grande Puntata sulla Coppia
+顺子豪赌,Straight Gamble,ストレートの大博打,스트레이트 대박,順子豪賭,Gros pari Suite,Straight-Hazard,Gran Apuesta de Escalera,Grande Aposta de Sequência,Grande Puntata sulla Sequenza
+骰子共鸣,Dice Resonance,サイコロ共鳴,주사위 공명,骰子共鳴,Résonance des dés,Würfelresonanz,Resonancia de Dados,Ressonância de Dados,Risonanza dei Dadi
+倍率反哺,Multiplier Rebound,倍率フィードバック,배수 피드백,倍率反哺,Retour du multiplicateur,Multiplikator-Feedback,Realimentación de Multiplicador,Retroalimentação de Multiplicador,Feedback del Moltiplicatore
+连锁反应,Chain Reaction,連鎖反応,연쇄 반응,連鎖反應,Réaction en chaîne,Kettenreaktion,Reacción en Cadena,Reação em Cadeia,Reazione a Catena
+镜像交换,Mirror Swap,鏡映交換,거울 교환,映象交換,Échange miroir,Spiegeltausch,Intercambio Espejo,Troca Espelho,Scambio a Specchio
+倍率吸血,Multiplier Drain,倍率のドレイン,배수 흡입,倍率吸血,Vampirisme du multiplicateur,Multiplikator-Sog,Vampirismo de Multiplicador,Vampiro de Multiplicador,Assorbimento del Moltiplicatore
+追平,Catch Up,追いつき,따라잡기,追平,Rattrapage,Aufholen,Alcanzar,Alcanzar em pato,Recupero
+乾坤互换,Heaven Swap,乾坤互換,건곤 교환,乾坤互換,Permutation céleste,Himmelswende,Permuta Cosmos,Troca Total,Permuto Totale
+骰子复制,Dice Copy,サイコロ複製,주사위 복제,骰子複製,Copie de dé,Würfelkopie,Copiar Dado,Copiar Dado,Copia del Dado
+重铸,Recast,リキャスト,재주조,重鑄,Reforge,Umguss,Refundir,Refundir,Rifusione
+孤注·一,All-in · One,孤注・一,일발 · 1,孤注·一,Tout ou rien·un,Alles-auf-eins · Eins,Todo-ala-Carta · Uno,Tudo ou Nada · Um,Tutto per Tutto · Uno
+孤注·六,All-in · Six,孤注・六,일발 · 6,孤注·六,Tout ou rien·six,Alles-auf-eins · Sechs,Todo-ala-Carta · Seis,Tudo ou Nada · Seis,Tutto per Tutto · Sei
+对子极致,Pair Adept,ペアの極致,페어의 극치,對子極致,Paire ultime,Paar-Vollendungen,Par Cimero,Par Supremo,Coppia Suprema
+同对极致,Color Pair Adept,同色ペアの極致,컬러 페어의 극치,同對極致,Paire de couleur ultime,Farbpaar-Vollendung,Par de color Cimero,Par de cor Supremo,Coppia di colore Suprema
+同顺极致,Color Straight Adept,同色ストレートの極致,컬러 스트레이트의 극치,同順極致,Suite de couleur ultime,Farb-Straight-Vollendungs,Escalera de color Cimera,Sequência de cor Suprema,Sequenza di colore Suprema
+超级共鸣,Super Resonance,スーパー共鳴,수퍼 공명,超級共鳴,Super Résonance,Superresonanz,Súper Resonancia,Super Ressonância,Super Risonanza
+逆转乾坤,Reversal,乾坤の逆転,건곤을 뒤집다,逆轉乾坤,Renversement céleste,Schicksalswende,Reversión del Cosmos,Reversão do Destino,Inversione del Destino
+重掷所有,Reroll All,全リロール,모두 다시 던지기,重擲所有,Tout relancer,Alle neu würfeln,Relanzar todo,Relançar tudo,Rilanciare tutto
+重掷全场所有史莱姆,Reroll all Slimes on the field,場のスライムをすべてリロール,장판의 모든 슬라임 다시 던지기,重擲全場所有史萊姆,Relancer tous les slimes du terrain,Alle Slimes auf dem Feld neu würfeln,Relanzar todos los Slimes en pantalla,Relançar todos os Slimes da arena,Rilanciare tutti gli Slime in campo
+重掷骰子,Reroll Dice,サイコロリロール,주사위 다시 던지기,重擲骰子,Relancer les dés,Würfel neu würfeln,Relanzar dado,Relançar dado,Rilanciare il dado
+重掷所选史莱姆的点数,Reroll selected Slime's points,選択したスライムの点数をリロール,선택한 슬라임의 점수 다시 던지기,重擲所選史萊姆的點數,Relancer les points des slimes sélectionnés,Punkte des gewählten Slimes neu würfeln,Relanzar los puntos del Slime elegido,Relançar os pontos do Slime escolhido,Rilanciare i punti dello Slime scelto
+重掷颜色,Reroll Color,色のリロール,색 다시 던지기,重擲顏色,Relancer les couleurs,Farbe neu würfeln,Relanzar color,Relançar cor,Rilanciare il colore
+重掷所选史莱姆的颜色,Reroll selected Slime's color,選択したスライムの色をリロール,선택한 슬라임의 색 다시 던지기,重擲所選史萊姆的顏色,Relancer les couleurs des slimes sélectionnés,Farbe des gewählten Slimes neu würfeln,Relanzar el color del Slime elegido,Relançar a cor do Slime escolhido,Rilanciare il colore dello Slime scelto
+能量+1,Energy +1,エネルギー+1,에너지 +1,能量+1,Énergie +1,Energie +1,Energía +1,Energia +1,Energia +1
+吹风,Gust,吹き飛ばし,가르치는 바람,吹風,Coup de vent,Böe,Ráfaga,Rajada,Brezza
+所有史莱姆被吹向一个所选的方向一格,All Slimes are blown 1 tile in a chosen direction,すべてのスライムが選んだ方向に1マス吹き飛ばされる,모든 슬라임이 선택한 방향으로 1칸 밀려납니다,所有史萊姆被吹向一個所選的方向一格,Tous les slimes sont poussés d'une case dans une direction choisie,Alle Slimes werden 1 Feld in eine gewählte Richtung geblasen,Todos los Slimes son empujados 1 casilla en la dirección elegida,Todos os Slimes são empurrados 1 casa na direção escolhida,Tutti gli Slime vengono spinti 1 casella nella direzione scelta
+骰子点数调整,Dice Point Adjust,サイコロ点数調整,주사위 점수 조정,骰子點數調整,Ajustement des dés,Würfelpunkte anpassen,Ajuste de Dados,Ajuste de Dados,Regolazione dei Dadi
+选择+1或-1调整骰子点数,Choose +1 or -1 to adjust a dice's points,+1か-1を選んでサイコロの点数を調整,+1 또는 -1을 선택해 주사위 점수를 조정,選擇+1或-1調整骰子點數,Choisissez +1 ou -1 pour ajuster les points du dé,"+1 oder -1 wählen, um Würfelpunkte anzupassen",Elige +1 o -1 para ajustar los puntos del dado,Escolha +1 ou -1 para ajustar os pontos do dado,Scegli +1 o -1 per regolare i punti del dado
+得分翻倍,Double Score,スコア倍増,점수 두 배,得分翻倍,Score doublé,Punkte verdoppeln,Duplicar Puntos,Dobrar Pontos,Raddoppia Punti
+下一次得分翻倍,The next score is doubled,次回のスコアが2倍,다음 점수가 두 배가 됩니다,下一次得分翻倍,Le prochain score est doublé,Der nächste Score verdoppelt sich,Los próximos puntos se duplican,Os próximos pontos dobram,Il prossimo punteggio si raddoppia
+移动,Move,移動,이동,移動,Déplacer,Bewegen,Mover,Mover,Muovi
+额外移动一次,Move one extra time,追加で1回移動,추가로 1회 이동,額外移動一次,Déplacement supplémentaire,Zusätzlich 1x bewegen,Mover una vez extra,Mover mais uma vez,Muovi una volta extra
+位置交换,Swap Positions,位置交換,위치 교환,位置交換,Échange de position,Plätze tauschen,Intercambiar Posiciones,Trocar Posições,Scambia Posizioni
+交换2个史莱姆的位置,Swap the positions of 2 Slimes,2体のスライムの位置を交換,2마리의 슬라임 위치를 교환합니다,交換2個史萊姆的位置,Échanger la position de 2 slimes,Positionen von 2 Slimes tauschen,Intercambia las posiciones de 2 Slimes,Troca as posições de 2 Slimes,Scambia le posizioni di 2 Slime
+点数封印,Point Seal,点数封印,점수 봉인,點數封印,Sceau de points,Punktesiegel,Sello de Puntos,Selar Pontos,Sigillo dei Punti
+"随机1种点数的基础分数变为0（可出现多个，点数独立随机）
+[color=#cc0808]⚠ 封印：1点[/color]","A random point's base score becomes 0 (multiple can occur, points roll independently)
+[color=#cc0808]⚠ Seal: 1 point[/color]","ランダムな1種類の点数の基礎スコアが0になる（複数出現可、点数は個別にランダム）
+[color=#cc0808]⚠ 封印：1点[/color]","무작위 1종 점수의 기본 점수가 0이 됩니다 (여러 개 발생 가능, 점수는 개별 무작위)
+[color=#cc0808]⚠ 봉인: 1점[/color]","隨機1種點數的基礎分數變為0（可出現多個，點數獨立隨機）
+[color=#cc0808]⚠ 封印：1點[/color]","La valeur de base d'un type de point au hasard devient 0 (peut s'appliquer plusieurs fois, chaque type tiré indépendamment)
+[color=#cc0808]⚠ Sceau : 1 point[/color]","Die Basispunkte eines zufälligen Punktes werden 0 (mehrfach möglich, Punkte unabhängig würfeln)
+[color=#cc0808]⚠ Siegel: 1 Punkt[/color]","La puntuación base de un punto aleatorio pasa a 0 (pueden ocurrir varios, puntos al azar independientes)
+[color=#cc0808]⚠ Sello: 1 punto[/color]","A pontuação base de um ponto aleatório vira 0 (podem ocorrer vários, pontos independentes)
+[color=#cc0808]⚠ Selado: 1 ponto[/color]","Il punteggio base di un punto casuale diventa 0 (possono essercene più di uno, punti casuali indipendenti)
+[color=#cc0808]⚠ Sigillo: 1 punto[/color]"
+"随机1种点数的基础分数变为0（可出现多个，点数独立随机）
+[color=#cc0808]⚠ 封印：2点[/color]","A random point's base score becomes 0 (multiple can occur, points roll independently)
+[color=#cc0808]⚠ Seal: 2 points[/color]","ランダムな1種類の点数の基礎スコアが0になる（複数出現可、点数は個別にランダム）
+[color=#cc0808]⚠ 封印：2点[/color]","무작위 1종 점수의 기본 점수가 0이 됩니다 (여러 개 발생 가능, 점수는 개별 무작위)
+[color=#cc0808]⚠ 봉인: 2점[/color]","隨機1種點數的基礎分數變為0（可出現多個，點數獨立隨機）
+[color=#cc0808]⚠ 封印：2點[/color]","La valeur de base d'un type de point au hasard devient 0 (peut s'appliquer plusieurs fois, chaque type tiré indépendamment)
+[color=#cc0808]⚠ Sceau : 2 points[/color]","Die Basispunkte eines zufälligen Punktes werden 0 (mehrfach möglich, Punkte unabhängig würfeln)
+[color=#cc0808]⚠ Siegel: 2 Punkte[/color]","La puntuación base de un punto aleatorio pasa a 0 (pueden ocurrir varios, puntos al azar independientes)
+[color=#cc0808]⚠ Sello: 2 puntos[/color]","A pontuação base de um ponto aleatório vira 0 (podem ocorrer vários, pontos independentes)
+[color=#cc0808]⚠ Selado: 2 pontos[/color]","Il punteggio base di un punto casuale diventa 0 (possono essercene più di uno, punti casuali indipendenti)
+[color=#cc0808]⚠ Sigillo: 2 punti[/color]"
+"随机1种点数的基础分数变为0（可出现多个，点数独立随机）
+[color=#cc0808]⚠ 封印：3点[/color]","A random point's base score becomes 0 (multiple can occur, points roll independently)
+[color=#cc0808]⚠ Seal: 3 points[/color]","ランダムな1種類の点数の基礎スコアが0になる（複数出現可、点数は個別にランダム）
+[color=#cc0808]⚠ 封印：3点[/color]","무작위 1종 점수의 기본 점수가 0이 됩니다 (여러 개 발생 가능, 점수는 개별 무작위)
+[color=#cc0808]⚠ 봉인: 3점[/color]","隨機1種點數的基礎分數變為0（可出現多個，點數獨立隨機）
+[color=#cc0808]⚠ 封印：3點[/color]","La valeur de base d'un type de point au hasard devient 0 (peut s'appliquer plusieurs fois, chaque type tiré indépendamment)
+[color=#cc0808]⚠ Sceau : 3 points[/color]","Die Basispunkte eines zufälligen Punktes werden 0 (mehrfach möglich, Punkte unabhängig würfeln)
+[color=#cc0808]⚠ Siegel: 3 Punkte[/color]","La puntuación base de un punto aleatorio pasa a 0 (pueden ocurrir varios, puntos al azar independientes)
+[color=#cc0808]⚠ Sello: 3 puntos[/color]","A pontuação base de um ponto aleatório vira 0 (podem ocorrer vários, pontos independentes)
+[color=#cc0808]⚠ Selado: 3 pontos[/color]","Il punteggio base di un punto casuale diventa 0 (possono essercene più di uno, punti casuali indipendenti)
+[color=#cc0808]⚠ Sigillo: 3 punti[/color]"
+"随机1种点数的基础分数变为0（可出现多个，点数独立随机）
+[color=#cc0808]⚠ 封印：4点[/color]","A random point's base score becomes 0 (multiple can occur, points roll independently)
+[color=#cc0808]⚠ Seal: 4 points[/color]","ランダムな1種類の点数の基礎スコアが0になる（複数出現可、点数は個別にランダム）
+[color=#cc0808]⚠ 封印：4点[/color]","무작위 1종 점수의 기본 점수가 0이 됩니다 (여러 개 발생 가능, 점수는 개별 무작위)
+[color=#cc0808]⚠ 봉인: 4점[/color]","隨機1種點數的基礎分數變為0（可出現多個，點數獨立隨機）
+[color=#cc0808]⚠ 封印：4點[/color]","La valeur de base d'un type de point au hasard devient 0 (peut s'appliquer plusieurs fois, chaque type tiré indépendamment)
+[color=#cc0808]⚠ Sceau : 4 points[/color]","Die Basispunkte eines zufälligen Punktes werden 0 (mehrfach möglich, Punkte unabhängig würfeln)
+[color=#cc0808]⚠ Siegel: 4 Punkte[/color]","La puntuación base de un punto aleatorio pasa a 0 (pueden ocurrir varios, puntos al azar independientes)
+[color=#cc0808]⚠ Sello: 4 puntos[/color]","A pontuação base de um ponto aleatório vira 0 (podem ocorrer vários, pontos independentes)
+[color=#cc0808]⚠ Selado: 4 pontos[/color]","Il punteggio base di un punto casuale diventa 0 (possono essercene più di uno, punti casuali indipendenti)
+[color=#cc0808]⚠ Sigillo: 4 punti[/color]"
+"随机1种点数的基础分数变为0（可出现多个，点数独立随机）
+[color=#cc0808]⚠ 封印：5点[/color]","A random point's base score becomes 0 (multiple can occur, points roll independently)
+[color=#cc0808]⚠ Seal: 5 points[/color]","ランダムな1種類の点数の基礎スコアが0になる（複数出現可、点数は個別にランダム）
+[color=#cc0808]⚠ 封印：5点[/color]","무작위 1종 점수의 기본 점수가 0이 됩니다 (여러 개 발생 가능, 점수는 개별 무작위)
+[color=#cc0808]⚠ 봉인: 5점[/color]","隨機1種點數的基礎分數變為0（可出現多個，點數獨立隨機）
+[color=#cc0808]⚠ 封印：5點[/color]","La valeur de base d'un type de point au hasard devient 0 (peut s'appliquer plusieurs fois, chaque type tiré indépendamment)
+[color=#cc0808]⚠ Sceau : 5 points[/color]","Die Basispunkte eines zufälligen Punktes werden 0 (mehrfach möglich, Punkte unabhängig würfeln)
+[color=#cc0808]⚠ Siegel: 5 Punkte[/color]","La puntuación base de un punto aleatorio pasa a 0 (pueden ocurrir varios, puntos al azar independientes)
+[color=#cc0808]⚠ Sello: 5 puntos[/color]","A pontuação base de um ponto aleatório vira 0 (podem ocorrer vários, pontos independentes)
+[color=#cc0808]⚠ Selado: 5 pontos[/color]","Il punteggio base di un punto casuale diventa 0 (possono essercene più di uno, punti casuali indipendenti)
+[color=#cc0808]⚠ Sigillo: 5 punti[/color]"
+"随机1种点数的基础分数变为0（可出现多个，点数独立随机）
+[color=#cc0808]⚠ 封印：6点[/color]","A random point's base score becomes 0 (multiple can occur, points roll independently)
+[color=#cc0808]⚠ Seal: 6 points[/color]","ランダムな1種類の点数の基礎スコアが0になる（複数出現可、点数は個別にランダム）
+[color=#cc0808]⚠ 封印：6点[/color]","무작위 1종 점수의 기본 점수가 0이 됩니다 (여러 개 발생 가능, 점수는 개별 무작위)
+[color=#cc0808]⚠ 봉인: 6점[/color]","隨機1種點數的基礎分數變為0（可出現多個，點數獨立隨機）
+[color=#cc0808]⚠ 封印：6點[/color]","La valeur de base d'un type de point au hasard devient 0 (peut s'appliquer plusieurs fois, chaque type tiré indépendamment)
+[color=#cc0808]⚠ Sceau : 6 points[/color]","Die Basispunkte eines zufälligen Punktes werden 0 (mehrfach möglich, Punkte unabhängig würfeln)
+[color=#cc0808]⚠ Siegel: 6 Punkte[/color]","La puntuación base de un punto aleatorio pasa a 0 (pueden ocurrir varios, puntos al azar independientes)
+[color=#cc0808]⚠ Sello: 6 puntos[/color]","A pontuação base de um ponto aleatório vira 0 (podem ocorrer vários, pontos independentes)
+[color=#cc0808]⚠ Selado: 6 pontos[/color]","Il punteggio base di un punto casuale diventa 0 (possono essercene più di uno, punti casuali indipendenti)
+[color=#cc0808]⚠ Sigillo: 6 punti[/color]"
+骰型封印,Type Seal,種類封印,종류 봉인,骰型封印,Sceau de type,Typsiegel,Sello de Tipo,Selo de Tipo,Sigillo del Tipo
+"随机1种骰型的倍率变为0%
+[color=#cc0808]⚠ 封印：对子[/color]","A random Type's multiplier becomes 0%
+[color=#cc0808]⚠ Seal: Pair[/color]","ランダムな1種類の倍率が0%になる
+[color=#cc0808]⚠ 封印：ペア[/color]","무작위 1종의 배수가 0%가 됩니다
+[color=#cc0808]⚠ 봉인: 페어[/color]","隨機1種骰型的倍率變為0%
+[color=#cc0808]⚠ 封印：對子[/color]","Le multiplicateur d'un type de dé au hasard devient 0%
+[color=#cc0808]⚠ Sceau : Paire[/color]","Der Multiplikator eines zufälligen Typs wird 0%
+[color=#cc0808]⚠ Siegel: Paar[/color]","El multiplicador de un Tipo aleatorio pasa a 0%
+[color=#cc0808]⚠ Sello: Par[/color]","O multiplicador de um Tipo aleatório vira 0%
+[color=#cc0808]⚠ Selado: Par[/color]","Il moltiplicatore di un Tipo casuale diventa 0%
+[color=#cc0808]⚠ Sigillo: Coppia[/color]"
+"随机1种骰型的倍率变为0%
+[color=#cc0808]⚠ 封印：顺子[/color]","A random Type's multiplier becomes 0%
+[color=#cc0808]⚠ Seal: Straight[/color]","ランダムな1種類の倍率が0%になる
+[color=#cc0808]⚠ 封印：ストレート[/color]","무작위 1종의 배수가 0%가 됩니다
+[color=#cc0808]⚠ 봉인: 스트레이트[/color]","隨機1種骰型的倍率變為0%
+[color=#cc0808]⚠ 封印：順子[/color]","Le multiplicateur d'un type de dé au hasard devient 0%
+[color=#cc0808]⚠ Sceau : Suite[/color]","Der Multiplikator eines zufälligen Typs wird 0%
+[color=#cc0808]⚠ Siegel: Straight[/color]","El multiplicador de un Tipo aleatorio pasa a 0%
+[color=#cc0808]⚠ Sello: Escalera[/color]","O multiplicador de um Tipo aleatório vira 0%
+[color=#cc0808]⚠ Selado: Sequência[/color]","Il moltiplicatore di un Tipo casuale diventa 0%
+[color=#cc0808]⚠ Sigillo: Sequenza[/color]"
+"随机1种骰型的倍率变为0%
+[color=#cc0808]⚠ 封印：同色[/color]","A random Type's multiplier becomes 0%
+[color=#cc0808]⚠ Seal: Flush[/color]","ランダムな1種類の倍率が0%になる
+[color=#cc0808]⚠ 封印：同色[/color]","무작위 1종의 배수가 0%가 됩니다
+[color=#cc0808]⚠ 봉인: 동색[/color]","隨機1種骰型的倍率變為0%
+[color=#cc0808]⚠ 封印：同色[/color]","Le multiplicateur d'un type de dé au hasard devient 0%
+[color=#cc0808]⚠ Sceau : Couleur[/color]","Der Multiplikator eines zufälligen Typs wird 0%
+[color=#cc0808]⚠ Siegel: Gleichfarbig[/color]","El multiplicador de un Tipo aleatorio pasa a 0%
+[color=#cc0808]⚠ Sello: Color[/color]","O multiplicador de um Tipo aleatório vira 0%
+[color=#cc0808]⚠ Selado: Cor[/color]","Il moltiplicatore di un Tipo casuale diventa 0%
+[color=#cc0808]⚠ Sigillo: Colore[/color]"
+"随机1种骰型的倍率变为0%
+[color=#cc0808]⚠ 封印：同对[/color]","A random Type's multiplier becomes 0%
+[color=#cc0808]⚠ Seal: Color Pair[/color]","ランダムな1種類の倍率が0%になる
+[color=#cc0808]⚠ 封印：同色ペア[/color]","무작위 1종의 배수가 0%가 됩니다
+[color=#cc0808]⚠ 봉인: 컬러 페어[/color]","隨機1種骰型的倍率變為0%
+[color=#cc0808]⚠ 封印：同對[/color]","Le multiplicateur d'un type de dé au hasard devient 0%
+[color=#cc0808]⚠ Sceau : Paire de couleur[/color]","Der Multiplikator eines zufälligen Typs wird 0%
+[color=#cc0808]⚠ Siegel: Farbpaar[/color]","El multiplicador de un Tipo aleatorio pasa a 0%
+[color=#cc0808]⚠ Sello: Par de color[/color]","O multiplicador de um Tipo aleatório vira 0%
+[color=#cc0808]⚠ Selado: Par de cor[/color]","Il moltiplicatore di un Tipo casuale diventa 0%
+[color=#cc0808]⚠ Sigillo: Coppia di colore[/color]"
+"随机1种骰型的倍率变为0%
+[color=#cc0808]⚠ 封印：同顺[/color]","A random Type's multiplier becomes 0%
+[color=#cc0808]⚠ Seal: Color Straight[/color]","ランダムな1種類の倍率が0%になる
+[color=#cc0808]⚠ 封印：同色ストレート[/color]","무작위 1종의 배수가 0%가 됩니다
+[color=#cc0808]⚠ 봉인: 컬러 스트레이트[/color]","隨機1種骰型的倍率變為0%
+[color=#cc0808]⚠ 封印：同順[/color]","Le multiplicateur d'un type de dé au hasard devient 0%
+[color=#cc0808]⚠ Sceau : Suite de couleur[/color]","Der Multiplikator eines zufälligen Typs wird 0%
+[color=#cc0808]⚠ Siegel: Farb-Straight[/color]","El multiplicador de un Tipo aleatorio pasa a 0%
+[color=#cc0808]⚠ Sello: Escalera de color[/color]","O multiplicador de um Tipo aleatório vira 0%
+[color=#cc0808]⚠ Selado: Sequência de cor[/color]","Il moltiplicatore di un Tipo casuale diventa 0%
+[color=#cc0808]⚠ Sigillo: Sequenza di colore[/color]"
+分数施压,Score Pressure,スコアへのプレッシャー,점수 압박,分數施壓,Pression de score,Punktedruck,Presión de Puntos,Pressão de Pontos,Pressione sul Punteggio
+回合结束时目标分数每回合+1%,Target score +1% each turn at end of turn,ターン終了時に目標スコアが毎ターン+1%,턴 종료 시 목표 점수가 매 턴 +1%,回合結束時目標分數每回合+1%,"À la fin du tour, le score cible augmente de 1% par tour",Zielpunkte +1% pro Runde am Rundenende,"Al terminar el turno, la puntuación objetivo +1% por turno","No fim do turno, pontuação alvo +1% por turno","A fine turno, punteggio obiettivo +1% per turno"
+分数流失,Score Drain,スコア流出,점수 유실,分數流失,Perte de score,Punkteabfluss,Fuga de Puntos,Perda de Pontos,Dispersione del Punteggio
+回合结束时当前分数-2%,Current score -2% at end of turn,ターン終了時に現在のスコア-2%,턴 종료 시 현재 점수 -2%,回合結束時當前分數-2%,"À la fin du tour, le score actuel -2%",Aktuelle Punkte -2% am Rundenende,"Al terminar el turno, puntuación actual -2%","No fim do turno, pontuação atual -2%","A fine turno, punteggio attuale -2%"
+腿镣,Shackle,脚枷,족고쇠,腿鐐,Entraves,Fußfessel,Grillete,Grilhão,Ferro ai Piedi
+移动力-1,Movement -1,移動力-1,이동력 -1,移動力-1,Mobilité -1,Bewegung -1,Movimiento -1,Movimento -1,Movimento -1
+能量致盲,Energy Blind,エネルギー目隠し,에너지 실명,能量致盲,Gel énergétique,Energieblindheit,Ceguera de Energía,Cegueira de Energia,Cecità di Energia
+不生成能量史莱姆,No Energy Slimes spawn,エネルギースライムが生成されない,에너지 슬라임이 생성되지 않습니다,不生成能量史萊姆,Aucun slime d'énergie n'apparaît,Keine Energie-Slimes spawnen,No se generan Slimes de Energía,Nenhum Slime de Energia surgem,Nessuno Slime di Energia viene generato
+能量反噬,Energy Backlash,エネルギーの反動,에너지 반작용,能量反噬,Rejet d'énergie,Energie-Rückstoß,Retroceso de Energía,Impacto de Energia,Ritorno di Energia
+使用能量时当前分数-10%,Using Energy costs -10% of current score,エネルギー使用時に現在のスコア-10%,에너지 사용 시 현재 점수 -10%,使用能量時當前分數-10%,Utiliser de l'énergie fait perdre 10% du score actuel,Energieeinsatz kostet -10% der aktuellen Punkte,"Al usar Energía, puntuación actual -10%","Ao usar Energia, pontuação atual -10%","Usando Energia, punteggio attuale -10%"
+史莱姆混沌,Slime Chaos,スライムの混沌,슬라임 혼돈,史萊姆混沌,Chaos des slimes,Slime-Chaos,Caos de Slimes,Caos de Slimes,Caos di Slime
+每回合都会重掷所有史莱姆,All Slimes are rerolled each turn,毎ターン、すべてのスライムがリロールされる,매 턴 모든 슬라임이 다시 던져집니다,每回合都會重擲所有史萊姆,Tous les slimes sont relancés à chaque tour,Alle Slimes werden jede Runde neu gewürfelt,Cada turno se relanzan todos los Slimes,A cada turno todos os Slimes são relançados,Ogni turno tutti gli Slime vengono rilanciati
+虫群侵蚀,Swarm Erosion,虫群の侵食,충군의 침식,蟲群侵蝕,Érosion de la nuée,Schwarm-Erosion,Corrosión del Enjambre,Erosão de Enxame,Erosione dello Sciame
+每有1个史莱姆当前分数-0.5%,Current score -0.5% per Slime,スライム1体ごとに現在のスコア-0.5%,슬라임 1마리마다 현재 점수 -0.5%,每有1個史萊姆當前分數-0.5%,"Pour chaque slime, le score actuel -0,5%",Aktuelle Punkte -0.5% pro Slime,Puntuación actual -0.5% por Slime,Pontuação atual -0.5% por Slime,Punteggio attuale -0.5% per Slime
+史莱姆迁徙,Slime Migration,スライムの移住,슬라임 이주,史萊姆遷徙,Migration des slimes,Slime-Wanderung,Migración de Slimes,Migração de Slimes,Migrazione dei Slime
+每个回合史莱姆都会移动一格,Slimes move one tile each turn,毎ターン、スライムが1マス移動する,매 턴 슬라임이 1칸 이동합니다,每個回合史萊姆都會移動一格,"À chaque tour, chaque slime se déplace d'une case",Slimes bewegen sich jede Runde 1 Feld,Cada turno los Slimes se mueven 1 casilla,A cada turno os Slimes movem 1 casa,Ogni turno gli Slime si muovono di 1 casella
+掉落禁令,Drop Ban,ドロップ禁止,드롭 금지,掉落禁令,Interdiction de butin,Dropverbot,Prohibición de Drop,Banimento de Drop,Divieto di Drop
+掉落格子无法使用，掉落骰子直接消失,Drop tiles are unusable and dropped dice vanish immediately,ドロップマスが使用不能になり、ドロップしたサイコロはその場で消滅,"드롭 칸을 사용할 수 없고, 드롭된 주사위는 즉시 사라집니다",掉落格子無法使用，掉落骰子直接消失,"Les cases de butin sont inutilisables, les dés qui y tombent disparaissent immédiatement",Drop-Felder unbenutzbar; geworfene Würfel verschwinden sofort,Las casillas de drop quedan inservibles y los dados dropados desaparecen al instante,Casas de drop inutilizáveis e dados dropados desaparecem,Le caselle di drop non sono utilisabili e i dadi droppati svaniscono subito
+分数穹顶,Score Dome,スコアのドーム,점수 돔,分數穹頂,Dôme de score,Punktekuppel,Domo de Puntos,Cúpula de Pontos,Cupola del Punteggio
+单次攻击得分不超过目标分数的40%,A single attack scores no more than 40% of the target score,1回の攻撃スコアが目標スコアの40%を超えない,한 번의 공격 점수가 목표 점수의 40%를 넘지 않습니다,單次攻擊得分不超過目標分數的40%,Le score d'une attaque ne dépasse pas 40% du score cible,Ein Angriff erzielt höchstens 40% der Zielpunkte,Un ataque puntúa como máximo el 40% de la puntuación objetivo,Um ataque pontua no máximo 40% da meta,Un attacco punteggia al massimo il 40% dell'obiettivo
+骰子衰退,Dice Decline,サイコロ衰退,주사위 쇠퇴,骰子衰退,Déclin des dés,Würfelverfall,Decadencia de Dados,Declínio dos Dados,Declino dei Dadi
+每有3个史莱姆所有点数基础分-1（最低0）,Every 3 Slimes lower all points' base score -1 (min 0),スライム3体ごとに、全点数の基礎スコア-1（最低0）,슬라임 3마리마다 모든 점수의 기본 점수 -1 (최소 0),每有3個史萊姆所有點數基礎分-1（最低0）,"Tous les 3 slimes, la base de tous les points -1 (min. 0)",Je 3 Slimes -1 Basispunkte aller Punkte (mind. 0),"Por cada 3 Slimes, base de todos los puntos -1 (mín. 0)","A cada 3 Slimes, base de todos os pontos -1 (mín. 0)","Ogni 3 Slime, base di tutti i punti -1 (min. 0)"
+掉落惩罚,Drop Penalty,ドロップの罰,드롭 벌칙,掉落懲罰,Pénalité de butin,Drop-Strafe,Penalización de Drop,Punição de Drop,Penalità del Drop
+每掉落1个骰子，当前分数-3%,Each dropped dice costs -3% of current score,サイコロを1つドロップするごとに、現在のスコア-3%,주사위 1개 드롭할 때마다 현재 점수 -3%,每掉落1個骰子，當前分數-3%,"Pour chaque dé issu du butin, le score actuel -3%",Pro geworfenem Würfel aktuelle Punkte -3%,Cada dado dropado cuesta -3% de puntuación actual,Cada dado dropado custa -3% da pontuação atual,Ogni dado droppato costa -3% del punteggio attuale
+破甲,Armor Break,破甲,방어구 파괴,破甲,Brèche,Panzerbrecher,Rompearmaduras,Quebrararmadura,Rompiarmatura
+本关防御-2,Defense -2 this stage,このステージの防御-2,이 라운드 방어 -2,本關防禦-2,Défense -2 pour cet Étage,Verteidigung -2 in dieser Stufe,Defensa -2 esta ronda,Defesa -2 nesta fase,Difesa -2 in questo livello
+攻击削弱,Attack Weaken,攻撃脆弱化,공격 약화,攻擊削弱,Attaque affaiblie,Angriffsschwächung,Ataque Debilitado,Ataque Enfraquecido,Attacco indebolito
+每次攻击的得分-15%,Each attack's score -15%,毎回の攻撃スコア-15%,매 공격 점수 -15%,每次攻擊的得分-15%,Score de chaque attaque -15%,Punkte pro Angriff -15%,Puntos por ataque -15%,Pontos por ataque -15%,Punti per attacco -15%
+脆弱,Fragile,脆弱,취약,脆弱,Fragilité,Zerbrechlich,Frágil,Frágil,Fragile
+每2回合防御-1（最低0）,Defense -1 every 2 turns (min 0),2ターンごとに防御-1（最低0）,2턴마다 방어 -1 (최소 0),每2回合防禦-1（最低0）,Défense -1 tous les 2 tours (min. 0),Verteidigung -1 alle 2 Runden (mind. 0),Defensa -1 cada 2 turnos (mín. 0),Defesa -1 a cada 2 turnos (mín. 0),Difesa -1 ogni 2 turni (min. 0)
+关卡· 一,Stage · 1,ステージ· 1,스테이지 · 1,關卡· 一,Étage · un,Stufe · 1,Ronda · 1,Fase · 1,Livello · 1
+通过奖励,Clear Reward,クリア報酬,클리어 보상,通過獎勵,Récompense de victoire,Abschlussbonus,Recompensa de Aprobación,Recompensa de Aprovação,Ricompensa di Superamento
+剩余生命奖励,Remaining HP Bonus,残存体力ボーナス,잔존 HP 보너스,剩餘生命獎勵,Récompense de vie restante,Rest-HP-Bonus,Bono de Vida Restante,Bônus de Vida Restante,Bonus HP Residui
+骰子数奖励,Dice Count Bonus,サイコロ数ボーナス,주사위 수 보너스,骰子數獎勵,Récompense de dés restants,Würfelzahl-Bonus,Bono de Número de Dados,Bônus de Número de Dados,Bonus Numero Dadi
+确定,Confirm,決定,확인,確定,Confirmer,Bestätigen,Confirmar,Confirmar,Conferma
+选择一个骰子保留,Choose a dice to keep,サイコロを1つ選んで残す,남길 주사위를 1개 선택,選擇一個骰子保留,Choisir un dé à conserver,Wähle einen Würfel zum Behalten,Elige un dado para conservar,Escolha um dado para manter,Scegli un dado da conservare
+总金币,Total Coins,金貨合計,코인 합계,總金幣,Total de pièces,Münzen gesamt,Monedas totales,Moedas total,Monete totali
+单次最高,Best Single,単回最高,단회 최고,單次最高,Maximum en un coup,Bestes Einzel,Máximo único,Melhor única,Record singolo
+总得分,Total Score,合計スコア,총 점수,總得分,Score total,Punktesumme,Puntuación total,Pontuação total,Punteggio totale
+再玩一次,Play Again,もう一度遊ぶ,다시 하기,再玩一次,Rejouer,Nochmal spielen,Jugar otra vez,Jogar de novo,Rigioca
+返回主菜单,Back to Menu,メインメニューへ戻る,메인 메뉴로 돌아가기,返回主選單,Retour au menu principal,Zurück zum Menü,Volver al menú,Voltar ao menu,Torna al menu
+选择英雄,Choose Hero,英雄を選択,영웅 선택,選擇英雄,Choisir un héros,Held wählen,Elegir Héroe,Escolher Herói,Scegli Eroe
+士兵,Soldier,兵士,병사,士兵,Soldat,Soldat,Soldado,Soldado,Soldato
+选择出征,March Out,出撃を選択,출진 선택,選擇出征,Choisir l'assaut,Ausrücken,Marcar Salida,Sair em Marcha,Parti in spedizione
+选择方向,Choose Direction,方向を選択,방향 선택,選擇方向,Choisir une direction,Richtung wählen,Elegir dirección,Escolher direção,Scegli direzione
+取消,Cancel,キャンセル,취소,取消,Annuler,Abbrechen,Cancelar,Cancelar,Annulla
+调整点数,Adjust Points,点数調整,점수 조정,調整點數,Ajuster les points,Punkte anpassen,Ajustar puntos,Ajustar pontos,Regola punti
+点数,Points,点数,점수,點數,Points,Punkte,Puntos,Pontos,Punti
+分值,Score,スコア,스코어,分值,Valeur,Wert,Valor,Valor,Valore
+骰型,Type,種類,종류,骰型,Type,Typ,Tipo,Tipo,Tipo
+倍率,Multiplier,倍率,배수,倍率,Multiplicateur,Multiplikator,Multiplicador,Multiplicador,Moltiplicatore
+关卡·  一,Stage ·  1,ステージ·  1,스테이지 ·  1,關卡·  一,Étage ·  un,Stufe ·  1,Ronda ·  1,Fase ·  1,Livello ·  1
+回合,Turn,ターン,턴,回合,Tour,Runde,Turno,Turno,Turno
+目标,Target,目標,목표,目標,Cible,Ziel,Objetivo,Meta,Obiettivo
+分数,Score,スコア,점수,分數,Score,Punkte,Puntos,Pontuação,Punteggio
+未获得技能,No skill gained,スキル未獲得,스킬 미획득,未獲得技能,Aucune compétence obtenue,Kein Skill erhalten,Sin skill,Sem skill,Nessuna abilità
+回血: 0/20,Heal: 0/20,回復: 0/20,회복: 0/20,回血: 0/20,Regain de vie: 0/20,Heilung: 0/20,Recuperación: 0/20,Cura: 0/20,Cura: 0/20
+关卡 一[img=17]res://images/enemy_icon/normal.png[/img],Stage 1[img=17]res://images/enemy_icon/normal.png[/img],ステージ 1[img=17]res://images/enemy_icon/normal.png[/img],스테이지 1[img=17]res://images/enemy_icon/normal.png[/img],關卡 一[img=17]res://images/enemy_icon/normal.png[/img],Étage un[img=17]res://images/enemy_icon/normal.png[/img],Stufe 1[img=17]res://images/enemy_icon/normal.png[/img],Ronda 1[img=17]res://images/enemy_icon/normal.png[/img],Fase 1[img=17]res://images/enemy_icon/normal.png[/img],Livello 1[img=17]res://images/enemy_icon/normal.png[/img]
+获得诅咒,Gain Curse,呪いを得る,저주 획득,獲得詛咒,Gagner une malédiction,Fluch erhalten,Obtener Maldición,Ganhar Maldição,Ottieni Maledizione
+选择要替换的技能,Choose a skill to replace,入れ替えるスキルを選択,교체할 스킬을 선택,選擇要替換的技能,Choisir la compétence à remplacer,Zu ersetzenden Skill wählen,Elige skill a reemplazar,Escolha skill para substituir,Scegli l'abilità da sostituire
+商店,Shop,ショップ,상점,商店,Boutique,Shop,Tienda,Loja,Negozio
+补满所有能量,Refill all Energy,全エネルギーを回復,모든 에너지를 회복,補滿所有能量,Restaurer toute l'énergie,Alle Energie auffüllen,Llena toda la Energía,Repõe toda a Energia,Ripristina tutta l'Energia
+经验值+1,EXP +1,経験値+1,경험치 +1,經驗值+1,Expérience +1,EXP +1,EXP +1,EXP +1,EXP +1
+生命药水：+2HP,Healing Potion: +2HP,回復ポーション：+2HP,회복 물약: +2HP,生命藥水：+2HP,Potion de vie : +2HP,Heiltrank: +2HP,Poción de vida: +2HP,Poção de vida: +2HP,Pozione di vita: +2HP
+下一关,Next Stage,次のステージ,다음 라운드,下一關,Étage suivant,Nächste Stufe,Siguiente ronda,Próxima fase,Livello successivo
+选择一张卡牌,Choose a Card,カードを1枚選択,카드 1장 선택,選擇一張卡牌,Choisir une carte,Eine Karte wählen,Elige una carta,Escolha um cartão,Scegli una carta
+倍率增加[color=green]16%[/color],Multiplier up [color=green]16%[/color],倍率増加[color=green]16%[/color],배수 증가[color=green]16%[/color],倍率增加[color=green]16%[/color],Le multiplicateur augmente de [color=green]16%[/color],Multiplikator +[color=green]16%[/color],Multiplicador +[color=green]16%[/color],Multiplicador +[color=green]16%[/color],Moltiplicatore +[color=green]16%[/color]
+继续,Resume,つづける,계속,繼續,Continuer,Fortsetzen,Continuar,Continuar,Continua
+回到主菜单,Back to Main,メインメニューへ戻る,메인 메뉴로 돌아가기,回到主選單,Retour au menu principal,Zurück zum Hauptmenü,Al menú principal,Voltar ao menu principal,Torna al menu principale
+设置,Settings,設定,설정,設定,Options,Einstellungen,Ajustes,Configurações,Impostazioni
+退出,Quit,終了,종료,退出,Quitter,Beenden,Salir,Sair,Esci
+音乐,Music,音楽,음악,音樂,Musique,Musik,Música,Música,Musica
+主音量,Master Volume,全体音量,전체 볼륨,主音量,Volume principal,Gesamtlautstärke,Volumen general,Volume geral,Volume generale
+音乐音量,Music Volume,音楽音量,음악 볼륨,音樂音量,Volume de la musique,Musiklautstärke,Volumen de música,Volume de música,Volume musica
+音效音量,SFX Volume,効果音音量,효과음 볼륨,音效音量,Volume des effets,Sound-Lautstärke,Volumen de efectos,Volume de efeitos,Volume effetti
+显示,Display,表示,표시,顯示,Affichage,Anzeige,Pantalla,Exibir,Schermo
+全屏,Fullscreen,フルスクリーン,전체 화면,全屏,Plein écran,Vollbild,Pantalla completa,Tela cheia,Schermo intero
+游戏,Game,ゲーム,게임,遊戲,Jeu,Spiel,Juego,Jogo,Gioco
+屏幕震动,Screen Shake,画面の振動,화면 진동,螢幕震動,Vibration de l'écran,Bilderschüttern,Vibración,Tremor de tela,Scuotimento schermo
+语言,Language,言語,언어,語言,Langue,Sprache,Idioma,Idioma,Lingua
+中文,中文,中文,中文,中文,Chinois,中文,中文,中文,中文
+关闭,Close,閉じる,닫기,關閉,Fermer,Schließen,Cerrar,Fechar,Chiudi
+"按ESC或
+右键取消","Press ESC or
+right-click to cancel","ESCキーまたは
+右クリックで取消","ESC 또는
+우클릭으로 취소","按ESC或
+右鍵取消","Appuyez sur ESC ou
+clic droit pour annuler","ESC drücken oder
+Rechtsklick zum Abbrechen","Pulsa ESC o
+clic derecho para cancelar","Aperte ESC ou
+clique direito para cancelar","Premi ESC o
+tasto destro per annullare"
+使用能量,Use Energy,エネルギー使用,에너지 사용,使用能量,Utiliser l'énergie,Energie einsetzen,Usar Energía,Usar Energia,Usa Energia
+需要能量,Needs Energy,エネルギー要,에너지 필요,需要能量,Énergie requise,Energie nötig,Necesita Energía,Precisa de Energia,Serve Energia
+开始游戏,Start Game,ゲーム開始,게임 시작,開始遊戲,Démarrer la partie,Spiel starten,Empezar jugo,Iniciar partida,Inizia partita
+继续游戏,Continue,ゲーム続行,이어서 하기,繼續遊戲,Continuer la partie,Fortsetzen,Continuar partida,Continuar partida,Continua partita
+游戏历史,History,プレイ履歴,플레이 기록,遊戲歷史,Historique des parties,Spielhistorie,Historial,Histórico,Storico di gioco
+制作人员 / 关于,Credits / About,スタッフ / 概要,크레딧 / 정보,製作人員 / 關於,Crédits / À propos,Credits / Über,Créditos / Salvo,Créditos / Sobre,Crediti / Info
+关卡· %s,Stage · %s,ステージ· %s,스테이지 · %s,關卡· %s,Étage · %s,Stufe · %s,Ronda · %s,Fase · %s,Livello · %s
+关卡· %s [img=17]%s[/img],Stage · %s [img=17]%s[/img],ステージ· %s [img=17]%s[/img],스테이지 · %s [img=17]%s[/img],關卡· %s [img=17]%s[/img],Étage · %s [img=17]%s[/img],Stufe · %s [img=17]%s[/img],Ronda · %s [img=17]%s[/img],Fase · %s [img=17]%s[/img],Livello · %s [img=17]%s[/img]
+[color=%s]当前烙印：%s[/color],[color=%s]Current Brand: %s[/color],"
+[color=%s]現在の烙印：%s[/color]",[color=%s]현재 브랜드: %s[/color],[color=%s]當前烙印：%s[/color],[color=%s]Marque actuelle : %s[/color],[color=%s]Aktuelles Brandmal: %s[/color],[color=%s]Marca actual: %s[/color],[color=%s]Marca atual: %s[/color],[color=%s]Marchio attuale: %s[/color]
+[color=#888888]当前烙印：无[/color],[color=#888888]Current Brand: None[/color],"
+[color=#888888]現在の烙印：なし[/color]",[color=#888888]현재 브랜드: 없음[/color],[color=#888888]當前烙印：無[/color],[color=#888888]Marque actuelle : aucune[/color],[color=#888888]Aktuelles Brandmal: Keines[/color],[color=#888888]Marca actual: Ninguna[/color],[color=#888888]Marca atual: Nenhuma[/color],[color=#888888]Marchio attuale: Nessuno[/color]
+[color=#42A5F5]当前叠层：%d层（+%d%%）[/color],[color=#42A5F5]Current stacks: %d (+%d%%)[/color],"
+[color=#42A5F5]現在のスタック：%d層（+%d%%）[/color]",[color=#42A5F5]현재 스택: %d (+%d%%)[/color],[color=#42A5F5]當前疊層：%d層（+%d%%）[/color],[color=#42A5F5]Charge actuelle : %d (%d%%)[/color],[color=#42A5F5]Aktueller Stapel: %d (+%d%%)[/color],[color=#42A5F5]Cargas actuales: %d (+%d%%)[/color],[color=#42A5F5]Cargas atual: %d (+%d%%)[/color],[color=#42A5F5]Cariche attuali: %d (+%d%%)[/color]
+换一批[img=14 ]res://images/ui_icon/coin.png[/img]%d,New batch[img=14 ]res://images/ui_icon/coin.png[/img]%d,リフレッシュ[img=14 ]res://images/ui_icon/coin.png[/img]%d,새로고침[img=14 ]res://images/ui_icon/coin.png[/img]%d,換一批[img=14 ]res://images/ui_icon/coin.png[/img]%d,Changer de lot [img=14 ]res://images/ui_icon/coin.png[/img]%d,Neue Ware[img=14 ]res://images/ui_icon/coin.png[/img]%d,Labor nuevo[img=14 ]res://images/ui_icon/coin.png[/img]%d,Nova leva[img=14 ]res://images/ui_icon/coin.png[/img]%d,Nuova merce[img=14 ]res://images/ui_icon/coin.png[/img]%d
+精英出现！ [img=15 ]%s[/img],Elite appears! [img=15 ]%s[/img],エリート出現！ [img=15 ]%s[/img],엘리트 출현! [img=15 ]%s[/img],精英出現！ [img=15 ]%s[/img],Un Élite apparaît ! [img=15 ]%s[/img],Elite erscheint! [img=15 ]%s[/img],¡Aparece Élite! [img=15 ]%s[/img],Elite surge! [img=15 ]%s[/img],Appare l'Elite! [img=15 ]%s[/img]
+BOSS出现！%s,BOSS appears! %s,BOSS出現！%s,BOSS 출현! %s,BOSS出現！%s,Un BOSS apparaît ! %s,BOSS erscheint! %s,¡Aparece JEFE! %s,CHEFE surge! %s,Appare il BOSS! %s
+获得BOSS效果  [img=15 ]%s[/img],Gain BOSS effect  [img=15 ]%s[/img],BOSS効果を獲得  [img=15 ]%s[/img],BOSS 효과 획득  [img=15 ]%s[/img],獲得BOSS效果  [img=15 ]%s[/img],Effet de BOSS obtenu  [img=15 ]%s[/img],BOSS-Effekt erhalten  [img=15 ]%s[/img],Obtienes efecto de JEFE  [img=15 ]%s[/img],Ganha efeito de CHEFE  [img=15 ]%s[/img],Ottieni effetto BOSS  [img=15 ]%s[/img]
+所有点数,All Points,全点数,모든 점수,所有點數,Tous les points,Alle Punkte,Todos los puntos,Todos os pontos,Tutti i punti
+所有倍率,All Multipliers,全倍率,모든 배수,所有倍率,Tous les multiplicateurs,Alle Multiplikatoren,Todos los multiplicadores,Todos os multiplicadores,Tutti i moltiplicatori
+随机一个点数,A random point,ランダムな1点数,무작위 1종 점수,隨機一個點數,Un point au hasard,Ein zufälliger Punkt,Un punto al azar,Um ponto ao acaso,Un punto casuale
+最低点数,Lowest point,最低点数,최저 점수,最低點數,Point minimal,Niedrigster Punkt,Punto más bajo,Ponto mais baixo,Punto minimo
+最高点数,Highest point,最高点数,최고 점수,最高點數,Point maximal,Höchster Punkt,Punto más alto,Ponto mais alto,Punto massimo
+%s[color=green]+%d[/color],%s[color=green]+%d[/color],%s[color=green]+%d[/color],%s[color=green]+%d[/color],%s[color=green]+%d[/color],%s[color=green]+%d[/color],%s[color=green]+%d[/color],%s[color=green]+%d[/color],%s[color=green]+%d[/color],%s[color=green]+%d[/color]
+%s[color=red]-%d[/color],%s[color=red]-%d[/color],%s[color=red]-%d[/color],%s[color=red]-%d[/color],%s[color=red]-%d[/color],%s[color=red]-%d[/color],%s[color=red]-%d[/color],%s[color=red]-%d[/color],%s[color=red]-%d[/color],%s[color=red]-%d[/color]
+%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color],%s[color=green]+%d%%[/color]
+%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color],%s[color=red]-%d%%[/color]
+%s[color=red]归零[/color],%s[color=red]Zero[/color],%s[color=red]ゼロに[/color],%s[color=red]0이 됨[/color],%s[color=red]歸零[/color],%s[color=red]Mise à zéro[/color],%s[color=red]auf Null[/color],%s[color=red]a cero[/color],%s[color=red]vira zero[/color],%s[color=red]a zero[/color]
+%s[color=green]=%d[/color],%s[color=green]=%d[/color],%s[color=green]=%d[/color],%s[color=green]=%d[/color],%s[color=green]=%d[/color],%s[color=green]=%d[/color],%s[color=green]=%d[/color],%s[color=green]=%d[/color],%s[color=green]=%d[/color],%s[color=green]=%d[/color]
+%s和%s[color=green]互换[/color],%s and %s[color=green]swap[/color],%sと%sを[color=green]交換[/color],%s와 %s를[color=green]교환[/color],%s和%s[color=green]互換[/color],%s et %s[color=green]échangés[/color],%s und %s[color=green]tauschen[/color],%s y %s[color=green]se intercambian[/color],%s e %s[color=green]trocam[/color],%s e %s[color=green]scambiati[/color]
+%s[color=green]=%s的值[/color],%s[color=green]= value of %s[/color],%s[color=green]=%sの値[/color],%s[color=green]=%s의 값[/color],%s[color=green]=%s的值[/color],%s[color=green]= valeur de %s[/color],%s[color=green]= Wert von %s[/color],%s[color=green]= valor de %s[/color],%s[color=green]= valor de %s[/color],%s[color=green]= valore di %s[/color]
+%s[color=green]=最高点数[/color],%s[color=green]= highest point[/color],%s[color=green]=最高点数[/color],%s[color=green]=최고 점수[/color],%s[color=green]=最高點數[/color],%s[color=green]= point minimal[/color],%s[color=green]= höchster Punkt[/color],%s[color=green]= punto más alto[/color],%s[color=green]= ponto mais alto[/color],%s[color=green]= punto massimo[/color]
+%s[color=green]=平均值[/color],%s[color=green]= average[/color],%s[color=green]=平均値[/color],%s[color=green]=평균값[/color],%s[color=green]=平均值[/color],%s[color=green]= moyenne[/color],%s[color=green]= Durchschnitt[/color],%s[color=green]= promedio[/color],%s[color=green]= média[/color],%s[color=green]= medio[/color]
+危险⚠️,Danger⚠️,危険⚠️,위험⚠️,危險⚠️,Danger ⚠️,Gefahr⚠️,¡Peligro⚠️,Perigo⚠️,Pericolo⚠️
+BOSS击杀!,BOSS slain!,BOSS撃破!,BOSS 처치!,BOSS擊殺!,BOSS tué !,BOSS besiegt!,¡JEFE abatido!,CHEFE abatido!,BOSS ucciso!
+精英击杀!,Elite slain!,エリート撃破!,엘리트 처치!,精英擊殺!,Élite tué !,Elite besiegt!,¡Élite abatido!,Elite abatida!,Elite ucciso!
+💡 [color=#0fff5b]%s系Buff≥4时激活[%s]：%s（当前：4/4）已激活[/color],💡 [color=#0fff5b]%s family Buff≥4 active[%s]: %s (currently 4/4) activated[/color],"
+💡 [color=#0fff5b]%s系Buff≥4で発動[%s]：%s（現在：4/4）発動済み[/color]",💡 [color=#0fff5b]%s 계열 Buff≥4 발동[%s]: %s (현재: 4/4) 발동됨[/color],💡 [color=#0fff5b]%s系Buff≥4時啟用[%s]：%s（當前：4/4）已啟用[/color],💡 [color=#0fff5b]Activation si ≥4 buff de la famille %s [%s] : %s (actuel : 4/4) activé ✓[/color],💡 [color=#0fff5b]%s-Familie-Buff≥4 aktiv[%s]: %s (aktuell 4/4) aktiviert[/color],💡 [color=#0fff5b]Buff de familia %s≥4 activado[%s]: %s (actual: 4/4) activado[/color],💡 [color=#0fff5b]Buff da família %s≥4 ativado[%s]: %s (atual: 4/4) ativado[/color],💡 [color=#0fff5b]Buff famiglia %s≥4 attivo[%s]: %s (attuale: 4/4) attivato[/color]
+💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color],💡 [color=#AAAAAA]%s family Buff≥4 active[%s]: %s (currently %d/4)[/color],"
+💡 [color=#AAAAAA]%s系Buff≥4で発動[%s]：%s（現在：%d/4）[/color]",💡 [color=#AAAAAA]%s 계열 Buff≥4 발동[%s]: %s (현재: %d/4)[/color],💡 [color=#AAAAAA]%s系Buff≥4時啟用[%s]：%s（當前：%d/4）[/color],💡 [color=#AAAAAA]Activation si ≥4 buff de la famille %s [%s] : %s (actuel : %d/4)[/color],💡 [color=#AAAAAA]%s-Familie-Buff≥4 aktiv[%s]: %s (aktuell %d/4)[/color],💡 [color=#AAAAAA]Buff de familia %s≥4 activado[%s]: %s (actual: %d/4)[/color],💡 [color=#AAAAAA]Buff da família %s≥4 ativado[%s]: %s (atual: %d/4)[/color],💡 [color=#AAAAAA]Buff famiglia %s≥4 attivo[%s]: %s (attuale: %d/4)[/color]
+💡 [color=#42A5F5]共鸣霸主·当前共振：%d层（+%d%%）[/color],💡 [color=#42A5F5]Resonance Overlord · current resonance: %d stacks (+%d%%)[/color],"
+💡 [color=#42A5F5]共鳴の覇者・現在の共振：%dスタック（+%d%%）[/color]",💡 [color=#42A5F5]공명의 패자 · 현재 공진: %d스택 (+%d%%)[/color],💡 [color=#42A5F5]共鳴霸主·當前共振：%d層（+%d%%）[/color],💡 [color=#42A5F5]Overlord Résonance·charge actuelle : %d (%d%%)[/color],💡 [color=#42A5F5]Resonanz-Overlord · aktuelle Resonanz: %d Stapel (+%d%%)[/color],💡 [color=#42A5F5]Señor de la Resonancia · resonancia actual: %d cargas (+%d%%)[/color],💡 [color=#42A5F5]Soberano da Ressonância · ressonância atual: %d cargas (+%d%%)[/color],💡 [color=#42A5F5]Sovrano della Risonanza · risonanza attuale: %d cariche (+%d%%)[/color]
+BUFF调试面板,BUFF debug panel,BUFFデバッグパネル,BUFF 디버그 패널,BUFF除錯面板,Panneau de débogage BUFF,BUFF-Debug-Panel,Panel de debug BUFF,Painel de debug BUFF,Pannello debug BUFF
+── 金币技能 ──,── Coin skills ──,── 金貨スキル ──,── 코인 스킬 ──,── 金幣技能 ──,── Compétences à pièce ──,── Münz-Skills ──,── Skills de moneda ──,── Skills de moeda ──,── Skill moneta ──
+金币+5,Coins +5,金貨+5,코인 +5,金幣+5,Pièces +5,Münzen +5,Monedas +5,Moedas +5,Monete +5
+[b][color=%s]%s[/color][/b] [b]%s点[/b],[b][color=%s]%s[/color][/b] [b]%s points[/b],[b][color=%s]%s[/color][/b] [b]%s点[/b],[b][color=%s]%s[/color][/b] [b]%s점[/b],[b][color=%s]%s[/color][/b] [b]%s點[/b],[b][color=%s]%s[/color][/b] [b]%s points[/b],[b][color=%s]%s[/color][/b] [b]%s Punkte[/b],[b][color=%s]%s[/color][/b] [b]%s puntos[/b],[b][color=%s]%s[/color][/b] [b]%s pontos[/b],[b][color=%s]%s[/color][/b] [b]%s punti[/b]
+加载中...,Loading...,ロード中...,로딩 중...,載入中...,Chargement...,Lädt...,Cargando...,Carregando...,Caricamento...

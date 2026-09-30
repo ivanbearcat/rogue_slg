@@ -72,9 +72,9 @@
 		"buff_tooltip": "潮涌系Buff≥4时自动激活，每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数",
 		"buff_res": "res://scripts/buff/swarm_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
-		"auto_activate": true,
 		"family": "swarm",
-		"tags": []
+		"tags": [],
+		"auto_activate": true
 	},
 	{
 		"buff_id": "triple_round_toll",
@@ -149,9 +149,9 @@
 		"buff_tooltip": "coin系≥4时激活，每有5个金币，击杀获得1%的得分加成",
 		"buff_res": "res://scripts/buff/gold_empire_buff.gd",
 		"buff_type": "post_attack_buff",
-		"auto_activate": true,
 		"family": "coin",
-		"tags": []
+		"tags": [],
+		"auto_activate": true
 	},
 	{
 		"buff_id": "full_range_assault",
@@ -226,9 +226,9 @@
 		"buff_tooltip": "猎杀系Buff≥4时激活，猎杀系得分额外+50%",
 		"buff_res": "res://scripts/buff/hunt_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
-		"auto_activate": true,
 		"family": "hunt",
-		"tags": []
+		"tags": [],
+		"auto_activate": true
 	},
 	{
 		"buff_id": "swift_amplify",
@@ -303,9 +303,9 @@
 		"buff_tooltip": "疾风系Buff≥4时激活，能量上限+1，攻击时本回合每移动过1格+5%得分",
 		"buff_res": "res://scripts/buff/swift_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
-		"auto_activate": true,
 		"family": "swift",
-		"tags": []
+		"tags": [],
+		"auto_activate": true
 	},
 	{
 		"buff_id": "dice_mastery",
@@ -380,9 +380,9 @@
 		"buff_tooltip": "共鸣系Buff≥4时激活，共鸣系Buff触发时永久+1叠层，攻击会获得叠层倍率的加分",
 		"buff_res": "res://scripts/buff/resonance_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
-		"auto_activate": true,
 		"family": "resonance",
-		"tags": []
+		"tags": [],
+		"auto_activate": true
 	},
 	{
 		"buff_id": "drop_type_boost",
@@ -393,7 +393,9 @@
 		"buff_type": "post_attack_buff",
 		"buff_price": 4,
 		"family": "evolution",
-		"tags": ["drop_bonus_trigger"]
+		"tags": [
+            "drop_bonus_trigger"
+		]
 	},
 	{
 		"buff_id": "random_base_boost",
@@ -437,7 +439,9 @@
 		"buff_type": "post_attack_buff",
 		"buff_price": 4,
 		"family": "evolution",
-		"tags": ["drop_bonus_trigger"]
+		"tags": [
+            "drop_bonus_trigger"
+		]
 	},
 	{
 		"buff_id": "kill_base_boost",
@@ -457,9 +461,9 @@
 		"buff_tooltip": "进化系Buff≥4时激活，每回合随机1个点数基础分+1，随机1个骰型倍率+1%",
 		"buff_res": "res://scripts/buff/evolution_overlord_buff.gd",
 		"buff_type": "pre_hero_turn_buff",
-		"auto_activate": true,
 		"family": "evolution",
-		"tags": []
+		"tags": [],
+		"auto_activate": true
 	},
 	{
 		"buff_id": "late_bloom",
@@ -501,9 +505,9 @@
 		"buff_tooltip": "绝境系Buff≥4时激活，获得1次全局免死",
 		"buff_res": "res://scripts/buff/desperation_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
-		"auto_activate": true,
 		"family": "desperation",
-		"tags": []
+		"tags": [],
+		"auto_activate": true
 	},
 	{
 		"buff_id": "comeback_king",
@@ -522,7 +526,10 @@
 		"buff_icon": "res://images/buff_icon/scorched_earth.png",
 		"buff_tooltip": "回合开始时，若HP>2则HP-1，本回合攻击得分+35%；否则不扣血无增益",
 		"buff_res": "res://scripts/buff/scorched_earth_buff.gd",
-		"buff_type": ["pre_hero_turn_buff", "post_attack_buff"],
+		"buff_type": [
+			"pre_hero_turn_buff",
+            "post_attack_buff"
+		],
 		"buff_price": 7,
 		"family": "desperation",
 		"tags": []
@@ -611,9 +618,9 @@
 		"buff_tooltip": "生机系Buff≥4时激活，过关时hp+1；若满血则max_hp+1",
 		"buff_res": "res://scripts/buff/vitality_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
-		"auto_activate": true,
 		"family": "vitality",
-		"tags": []
+		"tags": [],
+		"auto_activate": true
 	},
 	{
 		"buff_id": "extra_power_slime",
@@ -623,7 +630,6 @@
 		"buff_res": "res://scripts/buff/extra_power_slime_buff.gd",
 		"buff_type": "pre_hero_turn_buff",
 		"buff_price": 4,
-		"family": "",
 		"tags": []
 	},
 	{
@@ -634,7 +640,6 @@
 		"buff_res": "res://scripts/buff/power_cap_up_buff.gd",
 		"buff_type": "pre_hero_turn_buff",
 		"buff_price": 3,
-		"family": "",
 		"tags": []
 	},
 	{
@@ -645,7 +650,6 @@
 		"buff_res": "res://scripts/buff/free_refresh_buff.gd",
 		"buff_type": "pre_hero_turn_buff",
 		"buff_price": 2,
-		"family": "",
 		"tags": []
 	},
 	{
@@ -656,7 +660,6 @@
 		"buff_res": "res://scripts/buff/tax_collector_buff.gd",
 		"buff_type": "post_attack_buff",
 		"buff_price": 2,
-		"family": "",
 		"tags": []
 	}
 ]

@@ -76,9 +76,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		var float_number = EffectManager.float_number_effect(1, "green")
 		if float_number:
 			if is_boss:
-				float_number.get_node("Label").text = "BOSS击杀!"
+				float_number.get_node("Label").text = tr("BOSS击杀!")
 			else:
-				float_number.get_node("Label").text = "精英击杀!"
+				float_number.get_node("Label").text = tr("精英击杀!")
 			Current.hero.add_child(float_number)
 		print("[elite-slime] %s被击杀: gate=%s count=%d" % ["BOSS" if is_boss else "精英", gate_type, gate_count])
 	self.queue_free()

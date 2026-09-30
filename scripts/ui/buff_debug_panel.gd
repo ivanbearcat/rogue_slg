@@ -54,7 +54,7 @@ func _build_ui(buff_data: Array, debuff_data: Array) -> void:
 
 	# 标题 Label
 	var title_label = Label.new()
-	title_label.text = "BUFF调试面板"
+	title_label.text = tr("BUFF调试面板")
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title_label)
 
@@ -88,7 +88,7 @@ func _build_ui(buff_data: Array, debuff_data: Array) -> void:
 
 	# 金币技能区域
 	var coin_skill_section_label = Label.new()
-	coin_skill_section_label.text = "── 金币技能 ──"
+	coin_skill_section_label.text = tr("── 金币技能 ──")
 	coin_skill_section_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(coin_skill_section_label)
 
@@ -103,7 +103,7 @@ func _build_ui(buff_data: Array, debuff_data: Array) -> void:
 
 	# 金币+5按钮
 	var add_coins_button = Button.new()
-	add_coins_button.text = "金币+5"
+	add_coins_button.text = tr("金币+5")
 	add_coins_button.pressed.connect(_on_add_coins_pressed)
 	vbox.add_child(add_coins_button)
 

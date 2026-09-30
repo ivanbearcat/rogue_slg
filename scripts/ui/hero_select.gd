@@ -29,5 +29,5 @@ func _on_confirm_pressed() -> void:
 	## 即时反馈：禁用按钮并显示加载状态（等待预加载期间无响应的问题由此消除）
 	var confirm_button: Button = $CenterContainer/HeroCard/confirm_button
 	confirm_button.disabled = true
-	confirm_button.text = "加载中..."
+	confirm_button.text = tr("加载中...")
 	await SceneManager.change_scene_preloaded(&"main")

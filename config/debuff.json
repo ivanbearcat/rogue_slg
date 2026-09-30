@@ -8,7 +8,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_points": [1]
+            "disabled_points": [
+                1
+            ]
         }
     },
     {
@@ -20,7 +22,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_points": [2]
+            "disabled_points": [
+                2
+            ]
         }
     },
     {
@@ -32,7 +36,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_points": [3]
+            "disabled_points": [
+                3
+            ]
         }
     },
     {
@@ -44,7 +50,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_points": [4]
+            "disabled_points": [
+                4
+            ]
         }
     },
     {
@@ -56,7 +64,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_points": [5]
+            "disabled_points": [
+                5
+            ]
         }
     },
     {
@@ -68,7 +78,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_points": [6]
+            "disabled_points": [
+                6
+            ]
         }
     },
     {
@@ -80,7 +92,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_types": ["duizi"]
+            "disabled_types": [
+                "duizi"
+            ]
         }
     },
     {
@@ -92,7 +106,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_types": ["shunzi"]
+            "disabled_types": [
+                "shunzi"
+            ]
         }
     },
     {
@@ -104,7 +120,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_types": ["tongse"]
+            "disabled_types": [
+                "tongse"
+            ]
         }
     },
     {
@@ -116,7 +134,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_types": ["tongdui"]
+            "disabled_types": [
+                "tongdui"
+            ]
         }
     },
     {
@@ -128,7 +148,9 @@
         "debuff_type": "pre_hero_turn_buff",
         "severity": "normal",
         "data": {
-            "disabled_types": ["tongshun"]
+            "disabled_types": [
+                "tongshun"
+            ]
         }
     },
     {
@@ -221,7 +243,6 @@
         "debuff_type": "post_attack_buff",
         "severity": "normal"
     },
-
     {
         "debuff_id": "dice_decay",
         "debuff_name": "骰子衰退",
