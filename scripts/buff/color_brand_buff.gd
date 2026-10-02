@@ -42,9 +42,9 @@ func _get_tooltip_extra() -> String:
 	if branded_color != "":
 		var cn := tr(str(COLOR_CN.get(branded_color, branded_color)))
 		var code := str(COLOR_CODE.get(branded_color, "#FFFFFF"))
-		return tr("\n[color=%s]当前烙印：%s[/color]") % [code, cn]
+		return "\n" + tr("[color=%s]当前烙印：%s[/color]") % [code, cn]
 	else:
-		return tr("\n[color=#888888]当前烙印：无[/color]")
+		return "\n" + tr("[color=#888888]当前烙印：无[/color]")
 
 ## 更新tooltip（fallback：缓存_rich_tooltip_text，hover时会动态重生成）
 func _update_tooltip() -> void:

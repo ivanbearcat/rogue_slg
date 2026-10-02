@@ -38,4 +38,4 @@ func clear_buff():
 func _get_tooltip_extra() -> String:
 	var n := int(chain_multiplier / 0.10)
 	var m := int(chain_multiplier * 100)
-	return tr("\n[color=#42A5F5]当前叠层：%d层（+%d%%）[/color]") % [n, m]
+	return "\n" + tr("[color=#42A5F5]当前叠层：%d层（+%d%%）[/color]") % [n, m]

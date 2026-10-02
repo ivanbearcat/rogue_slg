@@ -92,7 +92,7 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 		if FAMILY_COLORS.has(family):
 			var family_color: String = FAMILY_COLORS[family]
 			var family_cn: String = T(str(FAMILY_NAMES.get(family, family)))
-			bbcode += "\n" + T("\n[color=%s]%s系[/color]") % [family_color, family_cn]
+			bbcode += "\n" + T("[color=%s]%s系[/color]") % [family_color, family_cn]
 
 	# 描述文本行（数值自动着色，倾向buff=绿色）
 	var colorized_tooltip: String = _colorize_numbers(tooltip, "buff")
@@ -141,7 +141,7 @@ static func format_debuff(debuff_meta: Dictionary) -> String:
 	# 标题行：图标 + 减益标识 + 名称
 	if not icon.is_empty():
 		bbcode += "[img=24]%s[/img] " % icon
-	bbcode += T("[color=%s]▼ 减益[/color] ") % DECREASE_COLOR
+	bbcode += T("[color=%s]▼ 减益[/color]") % DECREASE_COLOR + " "
 	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
 
 	# 描述文本行（数值倾向debuff=红色）
@@ -179,10 +179,10 @@ static func format_elite_slime(is_boss: bool, gate_type: String, gate_count: int
 
 	# 门槛行
 	var gate_cn: String = T(str(GATE_TYPE_NAMES.get(gate_type, gate_type)))
-	bbcode += T("\n[color=#FFD700]需要: %s ×%d[/color]") % [gate_cn, gate_count]
+	bbcode += "\n" + T("[color=#FFD700]需要: %s ×%d[/color]") % [gate_cn, gate_count]
 
 	# 骰子行
-	bbcode += T("\n骰子: [b]%d点[/b]") % dice_point
+	bbcode += "\n" + T("骰子: [b]%d点[/b]") % dice_point
 
 	return bbcode
 

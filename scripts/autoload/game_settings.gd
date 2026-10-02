@@ -8,9 +8,9 @@ const SETTINGS_PATH := "user://settings.cfg"
 const LANGUAGES: Array[Dictionary] = [
 	{ "id": 0, "locale": "zh_CN", "label": "中文" },   # NO_TRANSLATE 语言名是专有名词
 	{ "id": 1, "locale": "en", "label": "English" },   # NO_TRANSLATE 语言名是专有名词
-	{ "id": 2, "locale": "ja", "label": "日本語" },
+	{ "id": 2, "locale": "ja", "label": "日本語" },     # NO_TRANSLATE 语言名是专有名词
 	{ "id": 3, "locale": "ko", "label": "한국어" },
-	{ "id": 4, "locale": "zh_TW", "label": "繁體中文" },
+	{ "id": 4, "locale": "zh_TW", "label": "繁體中文" },   # NO_TRANSLATE 语言名是专有名词
 	{ "id": 5, "locale": "fr", "label": "Français" },
 	{ "id": 6, "locale": "de", "label": "Deutsch" },
 	{ "id": 7, "locale": "es", "label": "Español" },

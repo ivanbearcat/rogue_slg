@@ -4,6 +4,13 @@ extends CanvasLayer
 
 var game_manager: Node2D
 
+## 热切换语言后需重赋值的动态构建控件（记录引用统一刷新）
+var _title_label: Label
+var _coin_skill_section_label: Label
+var _add_coins_button: Button
+var _coin_skill_buttons: Array[Button] = []
+var _coin_skill_entries: Array[Dictionary] = []
+
 func _ready() -> void:
 	game_manager = $"/root/game_manager"
 	visible = false
@@ -53,10 +60,10 @@ func _build_ui(buff_data: Array, debuff_data: Array) -> void:
 	scroll.add_child(vbox)
 
 	# 标题 Label
-	var title_label = Label.new()
-	title_label.text = tr("BUFF调试面板")
-	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(title_label)
+	_title_label = Label.new()
+	_title_label.text = tr("BUFF调试面板")
+	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(_title_label)
 
 	# BUFF区域
 	var buff_section_label = Label.new()
@@ -87,10 +94,10 @@ func _build_ui(buff_data: Array, debuff_data: Array) -> void:
 	_create_buff_buttons(debuff_data, debuff_grid, true)
 
 	# 金币技能区域
-	var coin_skill_section_label = Label.new()
-	coin_skill_section_label.text = tr("── 金币技能 ──")
-	coin_skill_section_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(coin_skill_section_label)
+	_coin_skill_section_label = Label.new()
+	_coin_skill_section_label.text = tr("── 金币技能 ──")
+	_coin_skill_section_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(_coin_skill_section_label)
 
 	var coin_skill_grid = GridContainer.new()
 	coin_skill_grid.columns = 4
@@ -102,10 +109,28 @@ func _build_ui(buff_data: Array, debuff_data: Array) -> void:
 	_create_coin_skill_buttons(coin_skill_data, coin_skill_grid)
 
 	# 金币+5按钮
-	var add_coins_button = Button.new()
-	add_coins_button.text = tr("金币+5")
-	add_coins_button.pressed.connect(_on_add_coins_pressed)
-	vbox.add_child(add_coins_button)
+	_add_coins_button = Button.new()
+	_add_coins_button.text = tr("金币+5")
+	_add_coins_button.pressed.connect(_on_add_coins_pressed)
+	vbox.add_child(_add_coins_button)
+
+## 热切换语言：代码 tr() 赋值过的常驻文本不会被自动刷新，重新赋值
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED:
+		_refresh_texts()
+
+func _refresh_texts() -> void:
+	if _title_label == null:
+		return
+	_title_label.text = tr("BUFF调试面板")
+	_coin_skill_section_label.text = tr("── 金币技能 ──")
+	_add_coins_button.text = tr("金币+5")
+	## 金币技能按钮文案 = 数据字段值（中文 key），需按当前语言重查表
+	for i in _coin_skill_buttons.size():
+		var entry: Dictionary = _coin_skill_entries[i] if i < _coin_skill_entries.size() else {}
+		var b: Button = _coin_skill_buttons[i]
+		b.text = tr(entry.get("coin_skill_name", entry.get("coin_skill_id", "?")))
+		b.tooltip_text = tr(entry.get("coin_skill_tooltip", ""))
 
 func _create_buff_buttons(data: Array, container: GridContainer, is_debuff: bool) -> void:
 	for entry in data:
@@ -138,12 +163,16 @@ func _on_buff_button_pressed(buff_data: Dictionary) -> void:
 	game_manager._set_buff(normalized)
 
 func _create_coin_skill_buttons(data: Array, container: GridContainer) -> void:
+	_coin_skill_buttons.clear()
+	_coin_skill_entries.clear()
 	for entry in data:
 		var button = Button.new()
-		button.text = entry.get("coin_skill_name", entry.get("coin_skill_id", "?"))
-		button.tooltip_text = entry.get("coin_skill_tooltip", "")
+		button.text = tr(entry.get("coin_skill_name", entry.get("coin_skill_id", "?")))
+		button.tooltip_text = tr(entry.get("coin_skill_tooltip", ""))
 		button.pressed.connect(_on_coin_skill_button_pressed.bind(entry))
 		container.add_child(button)
+		_coin_skill_buttons.append(button)
+		_coin_skill_entries.append(entry)
 
 func _on_coin_skill_button_pressed(coin_skill_data: Dictionary) -> void:
 	## 将金币技能添加到当前技能栏（最多3个，满了则替换最后一个）

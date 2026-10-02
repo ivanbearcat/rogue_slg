@@ -24,7 +24,7 @@ if hasattr(sys.stdout, "reconfigure"):
 ROOT = Path(__file__).resolve().parents[1]
 XLSX = ROOT / "config" / "config_table.xlsx"
 OUT = ROOT / "locale" / "translations.csv"
-LOCALES = ["en", "ja", "ko", "zh_TW", "fr", "de", "es", "pt_BR", "it"]
+LOCALES = ["zh_CN", "en", "ja", "ko", "zh_TW", "fr", "de", "es", "pt_BR", "it"]
 
 # %s/%d 占位符（%% 转义的百分号不算）
 PLACEHOLDER = re.compile(r"%(?![%d])[sd]")
