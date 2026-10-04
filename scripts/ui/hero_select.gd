@@ -30,4 +30,5 @@ func _on_confirm_pressed() -> void:
 	var confirm_button: Button = $CenterContainer/HeroCard/confirm_button
 	confirm_button.disabled = true
 	confirm_button.text = tr("加载中...")
-	await SceneManager.change_scene_preloaded(&"main")
+	## 马赛克帘子转场：铺帘 → 骰子加载 → 等战局就绪(stage_start) → 拉帘进入战局
+	await SceneTransition.transition_to(&"main", &"stage_start")
