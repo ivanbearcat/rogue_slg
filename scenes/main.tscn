@@ -227,14 +227,14 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("6_1gmj2")
 region = Rect2(142, 2, 24, 25)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhkwd"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vc5cj"]
+bg_color = Color(1, 1, 1, 0.78431374)
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.51666665, 0, 0)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -244,27 +244,27 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("8_akto2")
 region = Rect2(4, 11, 24, 11)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7h2xm"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvyfr"]
+bg_color = Color(1, 1, 1, 0.78431374)
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.51666665, 0, 0)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hhd2"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ty1g6"]
+bg_color = Color(1, 1, 1, 0.78431374)
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.51666665, 0, 0)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -274,14 +274,14 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("8_akto2")
 region = Rect2(4, 22, 24, 11)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqm5u"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2jfr"]
+bg_color = Color(1, 1, 1, 0.78431374)
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.51666665, 0, 0)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -291,14 +291,14 @@ corner_radius_bottom_left = 5
 atlas = ExtResource("8_akto2")
 region = Rect2(4, 33, 24, 11)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opren"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.0313726, 0.0313726, 0)
-border_blend = true
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bu4jf"]
+bg_color = Color(1, 1, 1, 0.78431374)
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.51666665, 0, 0)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -486,7 +486,7 @@ region = Rect2(16, 26, 80, 22)
 
 [sub_resource type="LabelSettings" id="LabelSettings_c6pm6"]
 line_spacing = 0.0
-font = ExtResource("21_2f3dj")
+font = ExtResource("30_fv21b")
 font_size = 14
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
@@ -1313,18 +1313,19 @@ theme_override_constants/separation = 0
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_bhkwd")
+theme_override_styles/panel = SubResource("StyleBoxFlat_vc5cj")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame" unique_id=774195380]
 layout_mode = 2
-size_flags_vertical = 3
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 0.1)
 theme_override_constants/separation = 0
 
 [node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame/HBoxContainer2" unique_id=1748926875]
 custom_minimum_size = Vector2(40, 0)
 custom_maximum_size = Vector2(40, -1)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_surj8")
@@ -1349,26 +1350,37 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "150%"
 label_settings = ExtResource("12_yq6so")
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/duizi_percent_frame" unique_id=53313753]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("30_fv21b")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
 
 [node name="shunzi_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=310303750]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_7h2xm")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nvyfr")
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame" unique_id=110054580]
 layout_mode = 2
 size_flags_vertical = 3
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 0.1)
 theme_override_constants/separation = 0
 
 [node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame/HBoxContainer3" unique_id=345680326]
 custom_minimum_size = Vector2(40, 0)
 custom_maximum_size = Vector2(40, -1)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = ExtResource("6_vreof")
@@ -1393,26 +1405,37 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "160%"
 label_settings = ExtResource("12_yq6so")
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/shunzi_percent_frame" unique_id=780683394]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.08627451, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0.041666627, 0.5, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("30_fv21b")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
 
 [node name="tongse_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=2020530933]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_7hhd2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ty1g6")
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame" unique_id=1368387489]
 layout_mode = 2
 size_flags_vertical = 3
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 0.1)
 theme_override_constants/separation = 0
 
 [node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame/HBoxContainer4" unique_id=537192065]
 custom_minimum_size = Vector2(40, 0)
 custom_maximum_size = Vector2(40, -1)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_lur3c")
@@ -1437,26 +1460,37 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "140%"
 label_settings = ExtResource("12_yq6so")
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongse_percent_frame" unique_id=1965528496]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0.61666656, 1, 1)
+theme_override_colors/font_outline_color = Color(0.08000001, 0.33899996, 0.5, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("30_fv21b")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
 
 [node name="tongdui_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=1542231401]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_yqm5u")
+theme_override_styles/panel = SubResource("StyleBoxFlat_j2jfr")
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame" unique_id=1963534687]
 layout_mode = 2
 size_flags_vertical = 3
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 0.1)
 theme_override_constants/separation = 0
 
 [node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame/HBoxContainer5" unique_id=1845614510]
 custom_minimum_size = Vector2(40, 0)
 custom_maximum_size = Vector2(40, -1)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_a1xmg")
@@ -1481,26 +1515,37 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "300%"
 label_settings = ExtResource("12_yq6so")
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongdui_percent_frame" unique_id=725597629]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0, 0.7333336, 1)
+theme_override_colors/font_outline_color = Color(0.5, 0.055000007, 0.38133344, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("30_fv21b")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
 
 [node name="tongshun_percent_frame" type="PanelContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2" unique_id=448780995]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_opren")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bu4jf")
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame" unique_id=1090100233]
 layout_mode = 2
 size_flags_vertical = 3
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, 0.1)
 theme_override_constants/separation = 0
 
 [node name="TextureRect2" type="TextureRect" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame/HBoxContainer6" unique_id=523412948]
 custom_minimum_size = Vector2(40, 0)
 custom_maximum_size = Vector2(40, -1)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 10
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 texture = SubResource("AtlasTexture_hkjfj")
@@ -1525,9 +1570,17 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 text = "320%"
 label_settings = ExtResource("12_yq6so")
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="score_panal/NinePatchRect/MarginContainer/VBoxContainer/HBoxContainer/NinePatchRect3/MarginContainer2/VBoxContainer2/tongshun_percent_frame" unique_id=1930878888]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("30_fv21b")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = " "
 
 [node name="stage_score" type="Control" parent="." unique_id=1200675023]
 layout_mode = 3

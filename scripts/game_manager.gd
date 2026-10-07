@@ -272,7 +272,8 @@ var _margin_grid: Array[Vector2]
 var color := {
 	"alpha0": "cc080800",
 	"red": "cc0808",
-	"green": "0fff5b"
+	"green": "0fff5b",
+	"orange": "ff8400"
 }
 ## 随机选择出的3张升级时卡牌
 var level_up_three_card_array :Array

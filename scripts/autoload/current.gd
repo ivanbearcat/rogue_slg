@@ -156,6 +156,10 @@ func reset_run_state() -> void:
 	scorched_earth_bonus = 0.0
 	has_death_immunity = false
 	death_immunity_used = false
+	## HP重置后主动刷新心形血条：恢复为全部实心爱心
+	## （上方直写 _ 前缀内部变量绕过了 setter，需手动刷UI）
+	_update_hp_ui()
+	_update_potion_button_state()
 	## 骰型板/结算标记
 	_drop_slot_consumed_this_turn = false
 	_drop_slot_dice = null

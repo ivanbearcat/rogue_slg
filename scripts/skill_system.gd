@@ -11,6 +11,16 @@ extends Node2D
 
 signal hide_all_skill
 
+## 骰型等级颜色字典（值取自 main.tscn 骰型行静态范例 theme_override 精确值）
+## lv1-4: {"font": 字体色hex, "outline": 描边色hex}；lv5: rainbow bbcode 参数串
+const LEVEL_COLORS := {
+	1: {"font": "#FFFFFF", "outline": "#7F7F7F"},
+	2: {"font": "#16FF00", "outline": "#0B8000"},
+	3: {"font": "#009DFF", "outline": "#145681"},
+	4: {"font": "#FF00BB", "outline": "#7F0E61"},
+	5: {"rainbow": "freq=0.4 sat=1.0 val=1.0 speed=2.0"},
+}
+
 func _ready() -> void:
 		## 订阅显示攻击范围
 	EventBus.subscribe("show_skill_attack", show_skill_attack)
@@ -535,6 +545,19 @@ func _fetch_attack_slime_array_info(slime_array):
 		attack_slime_array_info.append(Current.drop_slot_dice.duplicate())
 	return attack_slime_array_info
 
+## 生成骰型行富文本：wave 包裹的 lv.等级 + 按骰子数量的骰子图标
+func _build_dice_type_bbcode(dice_type: String, dice_count: int) -> String:
+	var level: int = clampi(dice_count - 1, 1, 5)
+	var lv_text: String
+	if level == 5:
+		lv_text = "[rainbow %s]lv.5[/rainbow]" % LEVEL_COLORS[5]["rainbow"]
+	else:
+		lv_text = "[color=%s]lv.%d[/color]" % [LEVEL_COLORS[level]["font"], level]
+	var icons := ""
+	for i in range(dice_count):
+		icons += "[font sp=-7] [/font][img=14]res://images/ui_icon/dice_icon.tres[/img]"
+	return "[wave amp=40.0 freq=7.0 connected=1]%s%s[/wave]" % [lv_text, icons]
+
 ## 骰型板展示待攻击史莱姆的分值和骰型
 func _show_dice_panel(dice_type_point):
 	var score = dice_type_point[0]
@@ -557,6 +580,11 @@ func _show_dice_panel(dice_type_point):
 		'tongshun': game_manager.tongshun_percent_frame.get("theme_override_styles/panel")
 	}
 
+	## 渲染前先清空全部骰型行富文本（未命中行保持空白）
+	for type in dice_type_dict.keys():
+		var type_frame = game_manager.get(type + "_percent_frame")
+		type_frame.get_node("RichTextLabel").text = ""
+
 	## 骰型框线和设置倍率
 	#for type in dice_type_point[1]:
 		#frame_dict[type].border_color = Color.html(game_manager.color["red"])
@@ -565,8 +593,12 @@ func _show_dice_panel(dice_type_point):
 		## "none"类型没有对应的骰型行UI，跳过
 		if dice_type == "none":
 			continue
-		frame_dict[dice_type].border_color = Color.html(game_manager.color["red"])
+		frame_dict[dice_type].border_color = Color.html(game_manager.color["orange"])
 		Current.set(dice_type_dict[dice_type], Current.dice_multiplier_dict[dice_type_point[2][index]][dice_type])
+		## 命中骰型行动态显示等级与骰子图标
+		var dice_count: int = dice_type_point[2][index]
+		var dice_frame = game_manager.get(dice_type + "_percent_frame")
+		dice_frame.get_node("RichTextLabel").text = _build_dice_type_bbcode(dice_type, dice_count)
 
 ## 清空板展示史莱姆对应的点数和骰型
 func _reset_dice_panel():
@@ -593,6 +625,10 @@ func _reset_dice_panel():
 	}
 	for i in frame_dict.values():
 		i.border_color = Color.html(game_manager.color["alpha0"])
+	## 清空全部骰型行富文本
+	for type in dice_type_dict.keys():
+		var type_frame = game_manager.get(type + "_percent_frame")
+		type_frame.get_node("RichTextLabel").text = ""
 	Current.base_score = 0
 	Current.percent_score = 0
 	## 恢复初始lv1倍率
