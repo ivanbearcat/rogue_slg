@@ -7,6 +7,7 @@ func set_buff():
 	game_manager.buff_container.add_child(buff_texture)
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 	Current.player_defense += 1
+	Current._update_defense_ui()
 
 func process_buff():
 	pass

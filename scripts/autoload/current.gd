@@ -160,6 +160,8 @@ func reset_run_state() -> void:
 	## （上方直写 _ 前缀内部变量绕过了 setter，需手动刷UI）
 	_update_hp_ui()
 	_update_potion_button_state()
+	## 防御重置为2后主动刷新盾牌防御条
+	_update_defense_ui()
 	## 骰型板/结算标记
 	_drop_slot_consumed_this_turn = false
 	_drop_slot_dice = null
@@ -759,3 +761,10 @@ func _update_hp_ui():
 		var hp_bar = game_manager.get_node("round_process_bar/hp_bar")
 		if hp_bar.has_method("update_hearts"):
 			hp_bar.update_hearts(_player_hp, _max_hp)
+
+## 更新盾牌防御条UI
+func _update_defense_ui():
+	if game_manager and game_manager.has_node("round_process_bar/defense_bar"):
+		var defense_bar = game_manager.get_node("round_process_bar/defense_bar")
+		if defense_bar.has_method("update_shields"):
+			defense_bar.update_shields(player_defense)

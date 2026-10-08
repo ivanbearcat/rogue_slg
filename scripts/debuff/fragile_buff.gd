@@ -15,10 +15,12 @@ func process_buff():
 	## 每2回合防御-1（最低0）
 	if Current.count_round % 2 == 0:
 		Current.player_defense = max(0, Current.player_defense - 1)
+		Current._update_defense_ui()
 
 func clear_buff():
 	## 关卡结束恢复到脆弱生效前的防御值
 	if _defense_before_fragile >= 0:
 		Current.player_defense = _defense_before_fragile
 		_defense_before_fragile = -1
+		Current._update_defense_ui()
 	debuff_texture.queue_free()

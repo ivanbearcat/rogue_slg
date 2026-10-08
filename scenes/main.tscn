@@ -47,6 +47,7 @@
 [ext_resource type="Texture2D" uid="uid://bypnhna66i46c" path="res://images/ui_icon/duizi.tres" id="42_txyw0"]
 [ext_resource type="Texture2D" uid="uid://d2ur4twufxilo" path="res://images/ui_icon/eye2.png" id="43_vchkt"]
 [ext_resource type="Texture2D" uid="uid://57oyou3ef2xv" path="res://images/buff_icon/old/attack_coin_slime_score_increase.png" id="52_bu4jf"]
+[ext_resource type="Script" uid="uid://cyf1geockai2i" path="res://scripts/defense_bar.gd" id="52_defbar"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_og1vs"]
 bg_color = Color(0, 0, 0, 0.9411765)
@@ -1763,7 +1764,10 @@ mouse_filter = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 26.0
+offset_left = -1.0
+offset_top = 8.0
+offset_right = -1.0
+offset_bottom = 34.0
 grow_horizontal = 2
 theme_override_constants/separation = 1
 
@@ -1865,6 +1869,7 @@ stretch_mode = 5
 
 [node name="coin_skill_1_label" type="RichTextLabel" parent="hero_skill2" unique_id=1190571415]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 offset_left = 8.0
@@ -1876,6 +1881,7 @@ bbcode_enabled = true
 
 [node name="coin_skill_2_label" type="RichTextLabel" parent="hero_skill2" unique_id=1858661837]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 offset_left = 35.25
@@ -1887,6 +1893,7 @@ bbcode_enabled = true
 
 [node name="coin_skill_3_label" type="RichTextLabel" parent="hero_skill2" unique_id=850753457]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 offset_left = 61.5
@@ -2545,9 +2552,9 @@ stretch_mode = 5
 layout_mode = 3
 anchors_preset = 0
 offset_left = 134.25
-offset_top = 83.25
+offset_top = 91.25
 offset_right = 212.25
-offset_bottom = 95.25
+offset_bottom = 103.25
 mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="round_process_bar" unique_id=523633058]
@@ -2582,6 +2589,20 @@ offset_right = 77.25
 offset_bottom = -2.25
 theme_override_constants/separation = 1
 script = ExtResource("26_j8jky")
+
+[node name="defense_bar" type="HBoxContainer" parent="round_process_bar" unique_id=839061718]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.25
+offset_top = -7.25
+offset_right = 3.25
+offset_bottom = -14.25
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("52_defbar")
 
 [node name="score_heal_progress" type="Label" parent="round_process_bar" unique_id=469851807]
 visible = false
@@ -2822,6 +2843,7 @@ theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "关卡 一[img=17]res://images/enemy_icon/normal.png[/img]"
 scroll_active = false
+autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -2871,10 +2893,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.499998
+offset_left = 13.999997
 offset_top = 4.0
-offset_right = 11.285713
-offset_bottom = 1.1428528
+offset_right = 15.428589
+offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7, 0.7)
@@ -2889,6 +2911,7 @@ theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "获得诅咒"
 scroll_active = false
+autowrap_mode = 0
 vertical_alignment = 1
 
 [node name="score_preview_ui" type="Control" parent="." unique_id=515712514]

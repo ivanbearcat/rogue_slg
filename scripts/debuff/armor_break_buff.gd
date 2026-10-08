@@ -12,6 +12,7 @@ func set_buff():
 	var before = Current.player_defense
 	Current.player_defense = max(0, Current.player_defense - 2)
 	_defense_reduced = before - Current.player_defense
+	Current._update_defense_ui()
 
 func process_buff():
 	pass
@@ -20,4 +21,5 @@ func clear_buff():
 	## 恢复减少的防御
 	Current.player_defense += _defense_reduced
 	_defense_reduced = 0
+	Current._update_defense_ui()
 	debuff_texture.queue_free()

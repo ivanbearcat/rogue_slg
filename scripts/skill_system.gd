@@ -593,7 +593,7 @@ func _show_dice_panel(dice_type_point):
 		## "none"类型没有对应的骰型行UI，跳过
 		if dice_type == "none":
 			continue
-		frame_dict[dice_type].border_color = Color.html(game_manager.color["orange"])
+		frame_dict[dice_type].border_color = Color.html(game_manager.color["grid_red"])
 		Current.set(dice_type_dict[dice_type], Current.dice_multiplier_dict[dice_type_point[2][index]][dice_type])
 		## 命中骰型行动态显示等级与骰子图标
 		var dice_count: int = dice_type_point[2][index]

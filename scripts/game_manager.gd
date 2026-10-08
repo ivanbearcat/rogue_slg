@@ -273,7 +273,8 @@ var color := {
 	"alpha0": "cc080800",
 	"red": "cc0808",
 	"green": "0fff5b",
-	"orange": "ff8400"
+	"orange": "ff8400",
+	"grid_red": "ff0101"
 }
 ## 随机选择出的3张升级时卡牌
 var level_up_three_card_array :Array
@@ -1937,7 +1938,7 @@ func _replace_coin_skill(index: int, new_skill_row: Dictionary):
 	match index:
 		0:
 			coin_skill_1_icon.texture = load(new_skill_row["coin_skill_icon"])
-			coin_skill_1_label.text = tr(new_skill_row["coin_skill_name"])
+			#coin_skill_1_label.text = tr(new_skill_row["coin_skill_name"])
 			TooltipManager.set_tooltip(coin_skill_1, TooltipFormatter.format_coin_skill(new_skill_row))
 			coin_skill_1.disabled = false
 			coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
@@ -2158,7 +2159,7 @@ func _set_coin_skill(coin_skill_row):
 			Current.coin_skill_array_dict.append(coin_skill_row)
 			Current.coin_skill_used.append(false)
 			coin_skill_1_icon.texture = load(coin_skill_row["coin_skill_icon"])
-			coin_skill_1_label.text = tr(coin_skill_row["coin_skill_name"])
+			#coin_skill_1_label.text = tr(coin_skill_row["coin_skill_name"])
 			TooltipManager.set_tooltip(coin_skill_1, TooltipFormatter.format_coin_skill(coin_skill_row))
 		1:
 			Current.coin_skill_array_dict.append(coin_skill_row)

@@ -14,13 +14,16 @@ func process_buff():
 	if _defense_applied:
 		Current.player_defense -= 2
 		_defense_applied = false
+		Current._update_defense_ui()
 	## HP≤2时临时+2防御
 	if Current.player_hp <= 2:
 		Current.player_defense += 2
 		_defense_applied = true
+		Current._update_defense_ui()
 
 func clear_buff():
 	## 清除时回退临时加成
 	if _defense_applied:
 		Current.player_defense -= 2
 		_defense_applied = false
+		Current._update_defense_ui()
