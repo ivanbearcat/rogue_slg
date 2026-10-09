@@ -68,13 +68,15 @@ func transition_to(view_name: StringName, ready_event: StringName = &"") -> Node
 	while ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
 		await get_tree().process_frame
 
-	## 4) 切换场景（资源已入缓存，实例化很快；转场层在 autoload 上不受场景释放影响）
-	var new_scene := SceneManager.change_scene(view_name)
-
-	## 5) 等待"战局就绪"信号（stage_start 在 game_manager 初始化链末尾发出）
+	## 4) 订阅"战局就绪"信号（必须在 change_scene 之前建立：
+	##    新场景 _ready() 同步段内即可能发出 stage_start，晚了会错过等待满超时）
 	if ready_event != &"":
 		_stage_ready = false
 		EventBus.subscribe(ready_event, _on_stage_ready)
+	var new_scene := SceneManager.change_scene(view_name)
+
+	## 5) 等待就绪信号（订阅已在切换前建立）
+	if ready_event != &"":
 		var deadline := Time.get_ticks_msec() + int(MAX_WAIT_TIME * 1000.0)
 		while not _stage_ready and Time.get_ticks_msec() < deadline:
 			await get_tree().process_frame

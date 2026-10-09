@@ -374,6 +374,15 @@ func _ready() -> void:
 		for y in range(_removable_map_vec.y):
 			if x == 0 or x == range(_removable_map_vec.x).max() or y == 0 or y == range(_removable_map_vec.y).max():
 				_margin_grid.append(Vector2(x, y))
+	## 首进战局:回链锁——先于开场演出锁定回合按钮（chain 尾 387 行统一解锁）。
+	## headless 实测：帘子打开(t0+4.0s)到 _turn_process 禁用(t0+4.4s)之间存在 0.4s 可误操作间隙
+	_set_turn_button_disabled(true)
+	## 遥测:第 1 关起点（战场结构已就绪、开场演出开始前，与中途换关路径口径一致；
+	## 转场层订阅已在 change_scene 前建立，同步段内发出不会丢失）
+	EventBus.event_emit("stage_start")
+	## 横幅延迟对齐拉帘窗口（design D3 调优项落地）：0.3s 停顿内帘子不动，若横幅立即弹出，
+	## 0.2s 的弹出动画会在帘下播完而不可见；延迟 REVEAL_DELAY 使弹出落在拉帘过程中
+	await get_tree().create_timer(SceneTransition.REVEAL_DELAY).timeout
 	## 关卡切换效果
 	await EffectManager.stage_change_effect()
 	## 预生成史莱姆
@@ -384,8 +393,6 @@ func _ready() -> void:
 	_set_turn_button_disabled(false)
 	## 悬停追踪器：渲染帧数学换算鼠标所在格子，替代 Area2D 物理拾取（子节点随战局销毁）
 	add_child(preload("res://scripts/hover_tracker.gd").new())
-	## 遥测:第 1 关起点
-	EventBus.event_emit("stage_start")
 
 	## 临时测试debuff
 	#_set_stage_debuff(1)
