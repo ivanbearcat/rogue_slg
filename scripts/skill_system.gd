@@ -21,6 +21,15 @@ const LEVEL_COLORS := {
 	5: {"rainbow": "freq=0.4 sat=1.0 val=1.0 speed=2.0"},
 }
 
+## 骰型等级→单次金币奖励：lv1(2骰)=0、lv2(3骰)=1、lv3(4骰)=2、lv4(5骰)=4、lv5(6骰+)=8
+const LEVEL_COINS := {
+	1: 0,
+	2: 1,
+	3: 2,
+	4: 4,
+	5: 8,
+}
+
 func _ready() -> void:
 		## 订阅显示攻击范围
 	EventBus.subscribe("show_skill_attack", show_skill_attack)
@@ -81,6 +90,9 @@ func skill_attack():
 	## 计算骰型得分（所有骰子都参与计分，包括门槛未通过的精英/BOSS骰子）
 	var dice_type_result = ScoringAlgorithm.count_total_score(attack_slime_array_info)
 	Current.dice_type_point = dice_type_result[0]
+	## 骰型等级金币奖励：本次结算打出的每个骰型按等级累计
+	## （skill_attack 是所有攻击的真实结算路径；悬浮预览的 count_* 调用不累计，避免重复）
+	_add_dice_type_add_coin(dice_type_result)
 	## 设置骰型数量（骰型大师用）
 	var type_array: Array = dice_type_result[1]
 	var dice_type_count := 0
@@ -544,6 +556,18 @@ func _fetch_attack_slime_array_info(slime_array):
 	if Current.drop_slot_dice != null:
 		attack_slime_array_info.append(Current.drop_slot_dice.duplicate())
 	return attack_slime_array_info
+
+## 骰型等级金币累计：按结算结果 [1]（骰型名数组）与 [2]（各骰型骰子数数组）定级累加到本关奖励
+## 等级口径与 _build_dice_type_bbcode 一致（clampi(count-1,1,5)）；none 为未构成骰型的骰子，不计奖励
+func _add_dice_type_add_coin(dice_type_result: Array) -> void:
+	var type_array: Array = dice_type_result[1]
+	var dice_array: Array = dice_type_result[2]
+	for index in type_array.size():
+		if type_array[index] == "none":
+			continue
+		var dice_count: int = dice_array[index]
+		var level: int = clampi(dice_count - 1, 1, 5)
+		Current.dice_type_add_coin += LEVEL_COINS[level]
 
 ## 生成骰型行富文本：wave 包裹的 lv.等级 + 按骰子数量的骰子图标
 func _build_dice_type_bbcode(dice_type: String, dice_count: int) -> String:

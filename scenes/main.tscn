@@ -2597,11 +2597,12 @@ anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.25
-offset_top = -7.25
+offset_top = -10.25
 offset_right = 3.25
-offset_bottom = -14.25
+offset_bottom = -10.821426
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.35, 0.35)
 script = ExtResource("52_defbar")
 
 [node name="score_heal_progress" type="Label" parent="round_process_bar" unique_id=469851807]

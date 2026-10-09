@@ -80,12 +80,12 @@ func _on_stage_start() -> void:
 
 
 ## 过关:合成用时/回合数/金币分解/buff/金币技能/血瓶明细
-func _on_stage_clear(stage_coin: int, hp_coin: int, dice_coin: int) -> void:
+func _on_stage_clear(stage_coin: int, hp_coin: int, dice_type_coin: int) -> void:
 	var duration := Time.get_unix_time_from_system() - _stage_start_ts
 	_safe_write("stage_clear", {
 		"duration_sec": snappedf(duration, 0.1),
 		"rounds_used": Current.count_round,
-		"coins_earned": {"stage": stage_coin, "hp": hp_coin, "highest_dice": dice_coin},
+		"coins_earned": {"stage": stage_coin, "hp": hp_coin, "dice_type": dice_type_coin},
 		"buffs": _run_buffs.duplicate(true),
 		"coin_skills_used": _stage_coin_skills_used.duplicate(true),
 		"potions_used": _stage_potions_used,

@@ -1486,10 +1486,10 @@ func _check_stage_clear() -> bool:
 			#add_coin += 1
 			#stage_coin_label_2.text = str(add_coin)
 			#await Tools.time_sleep(0.1)
-		## 过关时最高子数金币数组
-		var highest_dice_add_coin = Current.highest_dice_num - 1
-		Current.count_add_coins += highest_dice_add_coin
-		await _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin)
+		## 过关时骰型等级奖励累计
+		var dice_type_add_coin = Current.dice_type_add_coin
+		Current.count_add_coins += dice_type_add_coin
+		await _do_stage_clear_effect(stage_add_coin, hp_add_coin, dice_type_add_coin)
 		## 以战养战：过关时floor(残余史莱姆/3)HP（阶梯式）
 		if BuffSystem.is_buff_registered("sustain"):
 			var sustain_slime_count = 0
@@ -1517,13 +1517,13 @@ func _check_stage_clear() -> bool:
 				if fb.buff_texture:
 					EffectManager.buff_pop_effect(fb.buff_texture)
 		## 遥测:过关事件(置于 clear_stage_buff 之前,保证 buff 明细含本关条目)
-		EventBus.event_emit("stage_clear", [stage_add_coin, hp_add_coin, highest_dice_add_coin])
+		EventBus.event_emit("stage_clear", [stage_add_coin, hp_add_coin, dice_type_add_coin])
 		## 清理关卡buff
 		EventBus.event_emit("clear_stage_buff")
 		return true
 	return false
 
-func _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin):
+func _do_stage_clear_effect(stage_add_coin, hp_add_coin, dice_type_add_coin):
 	## 万一有升级让升级先出现
 	await Tools.time_sleep(0.1)
 	while get_tree().paused:
@@ -1551,13 +1551,13 @@ func _do_stage_clear_effect(stage_add_coin, hp_add_coin, highest_dice_add_coin):
 	await EffectManager.typewriter_effect(stage_clear_label_3, stage_clear_label_3.text, 0.5)
 	stage_coin_rlabel_3.show()
 	stage_coin_label_3.show()
-	await EffectManager.label_num_rolling_effect(stage_coin_label_3, highest_dice_add_coin)
+	await EffectManager.label_num_rolling_effect(stage_coin_label_3, dice_type_add_coin)
 	## 汇总金币
 	stage_coin_rlabel_4.show()
 	stage_coin_label_4.show()
 	await EffectManager.label_num_rolling_effect(
 		stage_coin_label_4,
-		stage_add_coin + hp_add_coin + highest_dice_add_coin
+		stage_add_coin + hp_add_coin + dice_type_add_coin
 		)
 	stage_clear_button.disabled = false
 	stage_clear_button.show()
@@ -2016,9 +2016,9 @@ func _on_stage_clear_button_pressed() -> void:
 	Current.target_score = current_stage_info.get("target_score", 300)
 	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
 	TooltipManager.set_tooltip(difficulty_icon, "[b]" + tr(current_stage_info.get("stage_type", "普通")) + "[/b]")
-	## 清空一关金币奖励数和最高骰子奖励数
+	## 清空一关金币奖励数和骰型等级奖励累计
 	Current.count_add_coins = 0
-	Current.highest_dice_num = 1
+	Current.dice_type_add_coin = 0
 	get_tree().paused = false
 	## 等待升级选卡
 	while "level_up_ui" in Current.public_lock_array:

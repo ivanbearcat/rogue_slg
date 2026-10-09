@@ -136,7 +136,7 @@ func reset_run_state() -> void:
 	count_stage = 1
 	count_add_coins = 0
 	count_round = 0
-	highest_dice_num = 1
+	dice_type_add_coin = 0
 	_one_score = 0
 	_two_score = 0
 	_three_score = 0
@@ -354,8 +354,8 @@ var count_round := 0:
 	get:
 		#return int(game_manager.turn_label.text)
 		return count_round
-## 最高骰子数
-var highest_dice_num := 1
+## 本关骰型等级金币奖励累计（每次打出骰型按等级累加，关卡开始时清零）
+var dice_type_add_coin := 0
 ## 骰型板基础分数
 var _one_score: int = 0
 var one_score: int:

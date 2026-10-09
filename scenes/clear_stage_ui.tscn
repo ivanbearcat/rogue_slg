@@ -208,7 +208,7 @@ offset_left = 387.0
 offset_top = 240.0
 offset_right = 531.0
 offset_bottom = 275.0
-text = "骰子数奖励"
+text = "骰型等级奖励"
 label_settings = SubResource("LabelSettings_hkub5")
 
 [node name="stage_coin_rlabel_3" type="RichTextLabel" parent="Panel/paper_texture/stage_clear_label_3" unique_id=1204079856]
