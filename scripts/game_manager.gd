@@ -1445,7 +1445,10 @@ func _trigger_drop_bonus():
 		return
 	var trigger_buffs = BuffSystem.get_buffs_by_tag("drop_bonus_trigger")
 	for buff in trigger_buffs:
+		## 飘字图标归属窗口（读取方见 EffectManager.float_context_buff）
+		EffectManager.float_context_buff = buff
 		await buff.process_buff()
+		EffectManager.float_context_buff = null
 
 func _pre_hero_turn_begin():
 	## 绝境霸主免死检查：若拥有免死且未消耗，则HP=1不死亡

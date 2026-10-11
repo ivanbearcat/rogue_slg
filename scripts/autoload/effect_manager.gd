@@ -16,6 +16,13 @@ var color := {
 var _content: String
 var _object: Object
 
+## buff/debuff 执行窗口上下文（飘字图标归属用）：
+## 写入方 = buff_system.gd do_buff() 四条管线、game_manager._trigger_drop_bonus()、
+## skill_system._apply_drop_bonus()（各自在 await buff.process_buff() 前 set、后 clear，
+## 与 buff_system._current_timing 同款惯例）
+## 读取方 = float_number_effect()（构造飘字时据此注入来源图标）
+var float_context_buff: Node = null
+
 ## 把图片对象快速放大恢复的效果
 ## 注意：不再修改pivot_offset，避免在HFlowContainer等容器中
 ## 因布局重算导致节点位置偏移（浮空BUG的根因）
@@ -49,6 +56,18 @@ func float_number_effect(float_num, num_color="green", gravity=Vector2(0, 75), v
 	float_number_instantiate.float_num = float_num
 	float_number_instantiate.gravity = gravity
 	float_number_instantiate.velocity = velocity
+	## buff/debuff 执行窗口内：从 buff_meta 解析来源图标注入（buff_icon → debuff_icon 回退），
+	## 无上下文/无图标/图标路径失效时保持纯数字，不阻断
+	if float_context_buff != null:
+		var context_meta = float_context_buff.get("buff_meta")
+		if context_meta is Dictionary:
+			var icon_path: String = str(context_meta.get("buff_icon", ""))
+			if icon_path.is_empty():
+				icon_path = str(context_meta.get("debuff_icon", ""))
+			if not icon_path.is_empty():
+				var icon_tex = load(icon_path)
+				if icon_tex != null:
+					float_number_instantiate.icon_texture = icon_tex
 	return float_number_instantiate
 
 ## 设置数字并滚动

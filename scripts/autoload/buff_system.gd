@@ -64,7 +64,10 @@ func do_buff(timing: String) -> void:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
 		var before := Current.total_score
+		## 飘字图标归属窗口：本 buff 执行期间弹出的得分数字带其图标（读取方见 EffectManager.float_context_buff）
+		EffectManager.float_context_buff = buff
 		await buff.process_buff()
+		EffectManager.float_context_buff = null
 		_track_family_contribution(buff, before)
 		buff.clear_buff()
 		once_to_remove.append(buff)
@@ -75,21 +78,27 @@ func do_buff(timing: String) -> void:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
 		var before := Current.total_score
+		EffectManager.float_context_buff = buff
 		await buff.process_buff()
+		EffectManager.float_context_buff = null
 		_track_family_contribution(buff, before)
 	## ELITE: process only
 	for buff in pipeline["ELITE"]:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
 		var before := Current.total_score
+		EffectManager.float_context_buff = buff
 		await buff.process_buff()
+		EffectManager.float_context_buff = null
 		_track_family_contribution(buff, before)
 	## ALWAYS: process only
 	for buff in pipeline["ALWAYS"]:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
 		var before := Current.total_score
+		EffectManager.float_context_buff = buff
 		await buff.process_buff()
+		EffectManager.float_context_buff = null
 		_track_family_contribution(buff, before)
 	## 保存家族累积供查询
 	_last_family_accumulation = _current_family_accumulation.duplicate()

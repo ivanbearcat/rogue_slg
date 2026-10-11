@@ -237,7 +237,10 @@ func _apply_drop_bonus():
 		return
 	var trigger_buffs = BuffSystem.get_buffs_by_tag("drop_bonus_trigger")
 	for buff in trigger_buffs:
+		## 飘字图标归属窗口（读取方见 EffectManager.float_context_buff）
+		EffectManager.float_context_buff = buff
 		await buff.process_buff()
+		EffectManager.float_context_buff = null
 
 ## 显示掉落骰子选择界面，玩家选择1个保留在掉落格子
 func _show_drop_selection(dropped_dice: Array):
