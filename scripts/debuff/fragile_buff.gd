@@ -23,4 +23,4 @@ func clear_buff():
 		Current.player_defense = _defense_before_fragile
 		_defense_before_fragile = -1
 		Current._update_defense_ui()
-	debuff_texture.queue_free()
+	clear_debuff_texture()

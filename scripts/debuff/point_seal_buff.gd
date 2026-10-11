@@ -19,8 +19,10 @@ func set_buff():
 		6: "six_score",
 	}
 	for point in disabled_points:
-		if score_map.has(point):
-			var key = score_map[point]
+		## JSON 解析的数字为 float，score_map 键为 int，需归一化后匹配
+		var point_int := int(point)
+		if score_map.has(point_int):
+			var key = score_map[point_int]
 			data[key] = Current.get(key)
 			Current.set(key, 0)
 
@@ -35,9 +37,10 @@ func process_buff():
 		6: "six_score",
 	}
 	for point in disabled_points:
-		if score_map.has(point):
-			var key = score_map[point]
-			data[key] = data.get(key, 0) + Current.get(key)
+		## JSON 解析的数字为 float，score_map 键为 int，需归一化后匹配
+		var point_int := int(point)
+		if score_map.has(point_int):
+			var key = score_map[point_int]
 			Current.set(key, 0)
 
 func clear_buff():
@@ -51,9 +54,11 @@ func clear_buff():
 		6: "six_score",
 	}
 	for point in disabled_points:
-		if score_map.has(point):
-			var key = score_map[point]
+		## JSON 解析的数字为 float，score_map 键为 int，需归一化后匹配
+		var point_int := int(point)
+		if score_map.has(point_int):
+			var key = score_map[point_int]
 			if data.has(key):
 				Current.set(key, data[key])
 				data.erase(key)
-	debuff_texture.queue_free()
+	clear_debuff_texture()

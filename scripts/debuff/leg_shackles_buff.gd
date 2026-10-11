@@ -12,5 +12,5 @@ func process_buff():
 	pass
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()
 	Current.hero.hero_movement += 1

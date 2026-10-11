@@ -25,4 +25,4 @@ func count_slime_reroll_finished():
 	count_slime_reroll += 1
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()

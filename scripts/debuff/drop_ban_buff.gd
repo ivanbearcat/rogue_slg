@@ -12,4 +12,4 @@ func process_buff():
 	Current.drop_slot_dice = null
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()

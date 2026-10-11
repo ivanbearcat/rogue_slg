@@ -12,4 +12,4 @@ func process_buff():
 		power_slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", false)
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()

@@ -148,9 +148,9 @@ var buff_refresh_cost := 1:
 	set(v):
 		buff_refresh_cost = v
 		if Current.zero_coin_refresh_times > 0:
-			buff_refresh_rlabel.text = tr("换一批[img=14 ]res://images/ui_icon/coin.png[/img]%d") % 0
+			buff_refresh_rlabel.text = " [img=24]res://images/ui_icon/refresh.png[/img]   [img=16]res://images/ui_icon/coin.png[/img] %d" % 0
 		else:
-			buff_refresh_rlabel.text = tr("换一批[img=14 ]res://images/ui_icon/coin.png[/img]%d") % \
+			buff_refresh_rlabel.text = " [img=24]res://images/ui_icon/refresh.png[/img]   [img=16]res://images/ui_icon/coin.png[/img] %d" % \
 			buff_refresh_cost
 ## UI
 @onready var power_label: Label = %power_label
@@ -809,8 +809,8 @@ func _set_buff(buff_row):
 			BuffSystem.callv("set_" + bt, [buff, BuffSystem.buff_type.ALWAYS])
 	else:
 		BuffSystem.callv("set_" + buff_types, [buff, BuffSystem.buff_type.ALWAYS])
-	## 遥测:商店 buff 获得(注册成功后统一记录)
-	EventBus.event_emit("buff_acquired", [buff_row["buff_id"], "shop"])
+	## 遥测:商店 buff 获得(注册成功后统一记录)（debuff 行无 buff_id，回退 debuff_id）
+	EventBus.event_emit("buff_acquired", [buff_row.get("buff_id", buff_row.get("debuff_id", "?")), "shop"])
 	# 在buff.set_buff()创建buff_texture后，统一设置元数据
 	if buff.buff_texture:
 		buff.buff_texture.set_meta("buff_meta", buff.buff_meta)
@@ -1128,6 +1128,11 @@ func hero_move(event: InputEvent = null):
 	Current.pre_move_position = hero.position
 	Current.pre_move_grid_index = hero.hero_grid_index
 	Current.pre_move_total_score = Current.total_score
+	## 全量快照：英雄 + 全部在场史莱姆（撤回时全量恢复）
+	Current.undo_snapshot = [{"node": hero, "position": hero.position, "grid_index": hero.hero_grid_index}]
+	for slime in Current.all_enemy_array:
+		if is_instance_valid(slime):
+			Current.undo_snapshot.append({"node": slime, "position": slime.position, "grid_index": slime.enemy_grid_index})
 	Current.id_path = astar.get_id_path(hero.hero_grid_index, target_grid_index)
 	Current.grids_moved_this_turn = Current.id_path.size() - 1
 	print(Current.id_path)
@@ -1344,9 +1349,15 @@ func _on_undo_move_button_pressed() -> void:
 	var hero = Current.clicked_hero
 	if not hero:
 		return
-	## 恢复英雄位置
-	hero.position = Current.pre_move_position
-	hero.hero_grid_index = Current.pre_move_grid_index
+	## 全量恢复英雄与史莱姆位置/格子索引
+	for item in Current.undo_snapshot:
+		if is_instance_valid(item["node"]):
+			item["node"].position = item["position"]
+			var node = item["node"]
+			if node is Hero:
+				node.hero_grid_index = item["grid_index"]
+			else:
+				node.enemy_grid_index = item["grid_index"]
 	## 回滚buff分数差值
 	Current.total_score = Current.pre_move_total_score
 	## 清空移动路径
@@ -1362,6 +1373,7 @@ func _on_undo_move_button_pressed() -> void:
 	## 清空保存的移动前数据
 	Current.pre_move_position = Vector2.ZERO
 	Current.pre_move_grid_index = Vector2.ZERO
+	Current.undo_snapshot = []
 
 ## 回合的清理工作
 func _turn_clean():
@@ -1464,6 +1476,8 @@ func _pre_hero_turn_begin():
 	if has_node("coin_skill_trun_button/HBoxContainer/undo_move_button"):
 		var undo_button = get_node("coin_skill_trun_button/HBoxContainer/undo_move_button")
 		undo_button.disabled = true
+		## 清空撤回快照，防止跨回合 stale 恢复
+		Current.undo_snapshot = []
 		if undo_button.has_node("undo_move_button_label"):
 			undo_button.get_node("undo_move_button_label").modulate = Color(1.0, 1.0, 1.0, 0.302)
 	## 恢复鼠标

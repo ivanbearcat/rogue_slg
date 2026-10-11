@@ -149,16 +149,16 @@ func is_buff_registered(buff_id: String) -> bool:
 	for timing in TIMINGS:
 		for key in LIFECYCLE_KEYS:
 			for buff in pipelines[timing][key]:
-				if buff.buff_meta.get("buff_id", "") == buff_id:
+				if buff.buff_meta.get("buff_id", buff.buff_meta.get("debuff_id", "")) == buff_id:
 					return true
 	return false
 
-## 按 buff_id 查找首个匹配的 buff 实例，未找到返回 null
+## 按 buff_id/debuff_id 查找首个匹配的 buff 实例，未找到返回 null
 func get_buff_instance(buff_id: String) -> Buff:
 	for timing in TIMINGS:
 		for key in LIFECYCLE_KEYS:
 			for buff in pipelines[timing][key]:
-				if buff.buff_meta.get("buff_id", "") == buff_id:
+				if buff.buff_meta.get("buff_id", buff.buff_meta.get("debuff_id", "")) == buff_id:
 					return buff
 	return null
 
@@ -214,12 +214,13 @@ func clear_elite_buff():
 		pipelines[timing]["ELITE"].clear()
 
 ## 新局清空全部 buff（含 ALWAYS/ONCE/shop 生命周期，过关清理不覆盖）
-## 由战局入口 game_manager._ready 的 run_start 重置链调用（再玩一次场景重开）
+## 由战局入口 game_manager._ready 的 run_start 重置链调用（再玩一次/退出重开/新局进入）
+## 语义边界：run 级清理为静默丢弃——不调用旧实例的 clear_buff()（不执行恢复逻辑，
+## 旧局快照回写会污染新局 reset 后的初始状态），不触碰已随旧场景释放的展示节点；
+## 新局初始状态由 Current.reset_run_state() 的重置链独立确定。
 func clear_run_buffs() -> void:
 	for timing in TIMINGS:
 		for key in LIFECYCLE_KEYS:
-			for buff in pipelines[timing][key]:
-				buff.clear_buff()
 			pipelines[timing][key].clear()
 	_initialized_buff_ids.clear()
 	_last_family_accumulation = {}

@@ -16,4 +16,4 @@ func process_buff():
 	EffectManager.big_flow_effect(game_manager.target_score)
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()

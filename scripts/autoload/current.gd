@@ -87,6 +87,8 @@ var pre_move_position: Vector2 = Vector2.ZERO
 var pre_move_grid_index: Vector2 = Vector2.ZERO
 ## 移动前的总分（用于buff回滚）
 var pre_move_total_score: int = 0
+## 移动前的全量位置快照（[0]为英雄，其余为史莱姆；用于撤回移动）
+var undo_snapshot: Array = []
 ## 本回合已移动格数
 var grids_moved_this_turn: int = 0
 ## 选中的技能编号
@@ -207,6 +209,7 @@ func reset_run_state() -> void:
 	pre_move_position = Vector2.ZERO
 	pre_move_grid_index = Vector2.ZERO
 	pre_move_total_score = 0
+	undo_snapshot = []
 	id_path = []
 	movable_grid_index_array = []
 	skill_num = ""
@@ -275,8 +278,8 @@ var total_coins: int:
 		if coin_skill_array_dict.size() > 2 and coin_skill_used.size() > 2 and coin_skill_used[2] == false:
 			game_manager.coin_skill_3.disabled = false
 			game_manager.coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
-		## 商店购买按钮
-		if v < game_manager.buff_refresh_cost:
+		## 商店购买按钮：免刷次数>0时不因金币不足禁用
+		if zero_coin_refresh_times <= 0 and v < game_manager.buff_refresh_cost:
 			game_manager.buff_refresh_button.disabled = true
 			game_manager.buff_refresh_button.modulate = Color(0.5, 0.5, 0.5, 1)
 		else:

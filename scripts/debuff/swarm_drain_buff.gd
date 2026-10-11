@@ -17,4 +17,4 @@ func process_buff():
 		Current.total_score -= sub_num
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()

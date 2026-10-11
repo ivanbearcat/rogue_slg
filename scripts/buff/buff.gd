@@ -12,6 +12,14 @@ var family: String
 ## 标签数组
 var tags: Array
 
+## 安全移除 debuff 图标节点：
+## 节点可能已被场景切换或重复清理所释放，直接 queue_free 会报
+## "Cannot call method 'queue_free' on a previously freed instance"。
+func clear_debuff_texture() -> void:
+	if debuff_texture != null and is_instance_valid(debuff_texture):
+		debuff_texture.queue_free()
+	debuff_texture = null
+
 func _init(meta: Dictionary = {}, game_manager_node: Node2D = null) -> void:
 	buff_meta = meta
 	game_manager = game_manager_node

@@ -26,8 +26,8 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
-	# 仅当自己是当前注册的单例时才移除
-	if Engine.get_singleton("Fx") == self:
+	# 仅当自己是当前注册的单例时才移除（先判存在，避免未注册时报错）
+	if Engine.has_singleton("Fx") and Engine.get_singleton("Fx") == self:
 		Engine.unregister_singleton("Fx")
 
 

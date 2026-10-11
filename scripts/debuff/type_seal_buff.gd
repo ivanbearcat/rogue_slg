@@ -53,4 +53,4 @@ func clear_buff():
 			if data.has(key):
 				Current.set(key, data[key])
 				data.erase(key)
-	debuff_texture.queue_free()
+	clear_debuff_texture()

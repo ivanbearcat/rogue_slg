@@ -31,7 +31,8 @@ func _on_preview() -> void:
 	if not preview_node:
 		push_warning("FxProfile: 场景里没有 PreviewNode")
 		return
-	# 调用 Fx autoload 执行预览
-	var fx := Engine.get_singleton("Fx")
-	if fx:
-		fx.play(preview_node, self)
+	# 调用 Fx autoload 执行预览（仅当 Fx 单例已注册时）
+	if Engine.has_singleton("Fx"):
+		var fx: Object = Engine.get_singleton("Fx")
+		if fx is Node and is_instance_valid(fx):
+			fx.play(preview_node, self)

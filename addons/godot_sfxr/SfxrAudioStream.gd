@@ -99,6 +99,10 @@ func build_sfx(play_after_build: bool = false):
 
 func play(from_position: float = 0.0):
 	var player = Engine.get_main_loop().get_first_node_in_group("SfxrInternalAudioPlayer")
+	if player == null:
+		# 内部播放器由编辑器插件创建；导出的游戏里不存在时安静退出，避免空引用崩溃
+		push_warning("SfxrAudioStream: 未找到内部播放器，忽略 play()（需启用 GodotSfxr 编辑器插件）")
+		return
 	if player.playing:
 		player.stop()
 	player.stream = self

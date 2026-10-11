@@ -22,4 +22,4 @@ func clear_buff():
 	Current.player_defense += _defense_reduced
 	_defense_reduced = 0
 	Current._update_defense_ui()
-	debuff_texture.queue_free()
+	clear_debuff_texture()

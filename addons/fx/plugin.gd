@@ -17,7 +17,7 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	if Engine.get_singleton("Fx") == _editor_fx:
+	if Engine.has_singleton("Fx") and Engine.get_singleton("Fx") == _editor_fx:
 		Engine.unregister_singleton("Fx")
 	if is_instance_valid(_editor_fx):
 		_editor_fx.queue_free()
@@ -28,11 +28,11 @@ func _exit_tree() -> void:
 ## 游戏停止后，运行时 Fx autoload 被销毁并移除单例注册。
 ## 此时需要重新注册编辑器实例，使 Preview 按钮继续可用。
 func _process(_delta: float) -> void:
-	if is_instance_valid(_editor_fx) and not Engine.get_singleton("Fx"):
+	if is_instance_valid(_editor_fx) and not Engine.has_singleton("Fx"):
 		Engine.register_singleton("Fx", _editor_fx)
 
 
 ## 确保编辑器 Fx 单例已注册（避免重复注册）。
 func _ensure_editor_singleton() -> void:
-	if is_instance_valid(_editor_fx) and not Engine.get_singleton("Fx"):
+	if is_instance_valid(_editor_fx) and not Engine.has_singleton("Fx"):
 		Engine.register_singleton("Fx", _editor_fx)

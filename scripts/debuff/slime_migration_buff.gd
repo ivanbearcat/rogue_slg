@@ -11,4 +11,4 @@ func process_buff():
 	await game_manager.slime_move_ai()
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()

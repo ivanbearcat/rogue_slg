@@ -20,4 +20,4 @@ func process_buff():
 		Current.public_lock_array.erase("power_backlash_buff")
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()

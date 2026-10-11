@@ -24,4 +24,4 @@ func process_buff():
 	EffectManager.buff_pop_effect(debuff_texture)
 
 func clear_buff():
-	debuff_texture.queue_free()
+	clear_debuff_texture()
