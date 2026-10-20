@@ -6,7 +6,7 @@ var num_color: String
 ## 飘字图标布局常量：图标本地高36px（节点缩放0.25后与36px字号数字同高）
 ## 有图标时 Label 右移固定偏移（icon_height/2 + 间隙），无图标时偏移为零保持原布局
 const ICON_HEIGHT := 36.0
-const ICON_GAP := 1.0
+const ICON_GAP := 0
 const LABEL_ICON_OFFSET := ICON_HEIGHT / 2.0 + ICON_GAP
 
 var float_num: int:

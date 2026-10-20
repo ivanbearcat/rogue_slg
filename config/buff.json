@@ -68,7 +68,7 @@
 	{
 		"buff_id": "swarm_overlord",
 		"buff_name": "潮涌霸主",
-		"buff_icon": "res://icon.svg",
+		"buff_icon": "res://images/buff_icon/swarm_overlord.png",
 		"buff_tooltip": "潮涌系Buff≥4时自动激活，每有1个史莱姆存活，以这次得分为基础，额外增加3%倍率的分数",
 		"buff_res": "res://scripts/buff/swarm_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
@@ -143,11 +143,11 @@
 		"tags": []
 	},
 	{
-		"buff_id": "gold_empire",
-		"buff_name": "金元帝国",
-		"buff_icon": "res://icon.svg",
+		"buff_id": "gold_overlord",
+		"buff_name": "金币霸主",
+		"buff_icon": "res://images/buff_icon/gold_overlord.png",
 		"buff_tooltip": "coin系≥4时激活，每有5个金币，击杀获得1%的得分加成",
-		"buff_res": "res://scripts/buff/gold_empire_buff.gd",
+		"buff_res": "res://scripts/buff/gold_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
 		"family": "coin",
 		"tags": [],
@@ -222,7 +222,7 @@
 	{
 		"buff_id": "hunt_overlord",
 		"buff_name": "猎杀霸主",
-		"buff_icon": "res://icon.svg",
+		"buff_icon": "res://images/buff_icon/hunt_overlord.png",
 		"buff_tooltip": "猎杀系Buff≥4时激活，猎杀系得分额外+50%",
 		"buff_res": "res://scripts/buff/hunt_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
@@ -299,7 +299,7 @@
 	{
 		"buff_id": "swift_overlord",
 		"buff_name": "疾风霸主",
-		"buff_icon": "res://icon.svg",
+		"buff_icon": "res://images/buff_icon/swift_overlord.png",
 		"buff_tooltip": "疾风系Buff≥4时激活，能量上限+1，攻击时本回合每移动过1格+5%得分",
 		"buff_res": "res://scripts/buff/swift_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
@@ -376,7 +376,7 @@
 	{
 		"buff_id": "resonance_overlord",
 		"buff_name": "共鸣霸主",
-		"buff_icon": "res://icon.svg",
+		"buff_icon": "res://images/buff_icon/resonance_overlord.png",
 		"buff_tooltip": "共鸣系Buff≥4时激活，共鸣系Buff触发时永久+1叠层，攻击会获得叠层倍率的加分",
 		"buff_res": "res://scripts/buff/resonance_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
@@ -457,7 +457,7 @@
 	{
 		"buff_id": "evolution_overlord",
 		"buff_name": "进化霸主",
-		"buff_icon": "res://icon.svg",
+		"buff_icon": "res://images/buff_icon/evolution_overlord.png",
 		"buff_tooltip": "进化系Buff≥4时激活，每回合随机1个点数基础分+1，随机1个骰型倍率+1%",
 		"buff_res": "res://scripts/buff/evolution_overlord_buff.gd",
 		"buff_type": "pre_hero_turn_buff",
@@ -501,7 +501,7 @@
 	{
 		"buff_id": "desperation_overlord",
 		"buff_name": "绝境霸主",
-		"buff_icon": "res://icon.svg",
+		"buff_icon": "res://images/buff_icon/desperation_overlord.png",
 		"buff_tooltip": "绝境系Buff≥4时激活，获得1次全局免死",
 		"buff_res": "res://scripts/buff/desperation_overlord_buff.gd",
 		"buff_type": "post_attack_buff",
@@ -614,7 +614,7 @@
 	{
 		"buff_id": "vitality_overlord",
 		"buff_name": "生机霸主",
-		"buff_icon": "res://icon.svg",
+		"buff_icon": "res://images/buff_icon/vitality_overlord.png",
 		"buff_tooltip": "生机系Buff≥4时激活，过关时hp+1；若满血则max_hp+1",
 		"buff_res": "res://scripts/buff/vitality_overlord_buff.gd",
 		"buff_type": "post_attack_buff",

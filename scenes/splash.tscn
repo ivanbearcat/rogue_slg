@@ -1,6 +1,71 @@
 [gd_scene format=3 uid="uid://cao4q0jw6vrqj"]
 
 [ext_resource type="Script" uid="uid://c6cvjrmolki2n" path="res://scripts/ui/splash_menu.gd" id="1_menu"]
+[ext_resource type="Script" uid="uid://dhpixxadvb1nx" path="res://scripts/ui/menu_parallax.gd" id="2_651hb"]
+[ext_resource type="Texture2D" uid="uid://75osowamejea" path="res://images/background/main_sky.png" id="2_r4d6w"]
+[ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="3_5svwm"]
+[ext_resource type="Texture2D" uid="uid://dgqorp0hyv2lv" path="res://images/background/main_cloud.png" id="3_651hb"]
+[ext_resource type="Texture2D" uid="uid://qujpuor5ujwi" path="res://images/background/main_moutain.png" id="4_x1bu2"]
+[ext_resource type="Texture2D" uid="uid://co28ddb56rxef" path="res://images/background/main_sea.png" id="5_440nw"]
+[ext_resource type="Texture2D" uid="uid://cx085tj5boqat" path="res://images/background/main_close2.png" id="7_651hb"]
+
+[sub_resource type="Animation" id="Animation_x1bu2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Parallax2D4/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(593.79553, 343.59244)]
+}
+
+[sub_resource type="Animation" id="Animation_440nw"]
+resource_name = "sea_float"
+length = 2.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Parallax2D4/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8333333, 2.0333333, 2.3333333),
+"transitions": PackedFloat32Array(1.9318728, 2.549123, 0.18301077, 0.40612686),
+"update": 0,
+"values": [Vector2(620.5709, 465.677), Vector2(620.571, 463.677), Vector2(620.571, 464.677), Vector2(620.571, 465.677)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3idxy"]
+_data = {
+&"RESET": SubResource("Animation_x1bu2"),
+&"sea_float": SubResource("Animation_440nw")
+}
+
+[sub_resource type="Gradient" id="Gradient_cja1a"]
+offsets = PackedFloat32Array(0, 0.7740113, 0.90960455, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.193, 0, 0, 0, 0.48800004, 0, 0, 0, 0.80700004)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1by0b"]
+gradient = SubResource("Gradient_cja1a")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_31efs"]
+font = ExtResource("3_5svwm")
+font_size = 84
+outline_size = 18
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 35
+shadow_color = Color(0, 0, 0, 0.78431374)
 
 [node name="SplashMenu" type="Control" unique_id=619426749]
 layout_mode = 3
@@ -11,14 +76,65 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1712656958]
+[node name="ParallaxRoot" type="Node2D" parent="." unique_id=1477553096]
+script = ExtResource("2_651hb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ParallaxRoot" unique_id=703335337]
+libraries/ = SubResource("AnimationLibrary_3idxy")
+autoplay = &"sea_float"
+
+[node name="Parallax2D" type="Parallax2D" parent="ParallaxRoot" unique_id=603128817]
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxRoot/Parallax2D" unique_id=334700883]
+position = Vector2(639.44244, 522.9569)
+scale = Vector2(2.4126458, 2.412646)
+texture = ExtResource("2_r4d6w")
+
+[node name="Parallax2D2" type="Parallax2D" parent="ParallaxRoot" unique_id=705243585]
+scroll_offset = Vector2(0, -30)
+repeat_size = Vector2(1648, 0)
+autoscroll = Vector2(-20, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxRoot/Parallax2D2" unique_id=205197132]
+position = Vector2(482.00003, -78)
+scale = Vector2(1.4607977, 1.633068)
+texture = ExtResource("3_651hb")
+
+[node name="Parallax2D3" type="Parallax2D" parent="ParallaxRoot" unique_id=1847637662]
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxRoot/Parallax2D3" unique_id=1053605701]
+position = Vector2(634.91425, 406.84457)
+scale = Vector2(2.5313962, 2.5313976)
+texture = ExtResource("4_x1bu2")
+
+[node name="Parallax2D4" type="Parallax2D" parent="ParallaxRoot" unique_id=370728371]
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxRoot/Parallax2D4" unique_id=542747331]
+position = Vector2(593.79553, 343.59244)
+scale = Vector2(1.6128623, 1.6497393)
+texture = ExtResource("5_440nw")
+
+[node name="Parallax2D5" type="Parallax2D" parent="ParallaxRoot" unique_id=1625674224]
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxRoot/Parallax2D5" unique_id=1488813831]
+position = Vector2(635.00006, 201.38438)
+scale = Vector2(1.1957296, 1.1957296)
+texture = ExtResource("7_651hb")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=826654634]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.1, 0.14, 1)
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_1by0b")
 
 [node name="Title" type="Label" parent="." unique_id=1720578007]
 layout_mode = 1
@@ -26,12 +142,13 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -300.0
-offset_top = 70.0
+offset_top = 72.0
 offset_right = 300.0
-offset_bottom = 130.0
+offset_bottom = 168.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 48
 text = "Dice Slime"
+label_settings = SubResource("LabelSettings_31efs")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -43,36 +160,47 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ButtonColumn" type="VBoxContainer" parent="CenterContainer" unique_id=567784676]
-layout_mode = 2
+[node name="ButtonColumn" type="VBoxContainer" parent="." unique_id=567784676]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1063.0
+offset_top = 243.0
+offset_right = 1265.0
+offset_bottom = 601.0
 theme_override_constants/separation = 14
 
-[node name="start_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=1307737103]
-custom_minimum_size = Vector2(220, 48)
+[node name="start_button" type="Button" parent="ButtonColumn" unique_id=1307737103]
+custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5svwm")
 text = "开始游戏"
 
-[node name="continue_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=1952813738]
-custom_minimum_size = Vector2(220, 48)
+[node name="continue_button" type="Button" parent="ButtonColumn" unique_id=1952813738]
+custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5svwm")
 text = "继续游戏"
 
-[node name="settings_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=157465949]
-custom_minimum_size = Vector2(220, 48)
+[node name="settings_button" type="Button" parent="ButtonColumn" unique_id=157465949]
+custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5svwm")
 text = "设置"
 
-[node name="history_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=621516189]
-custom_minimum_size = Vector2(220, 48)
+[node name="history_button" type="Button" parent="ButtonColumn" unique_id=621516189]
+custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5svwm")
 text = "游戏历史"
 
-[node name="history_button2" type="Button" parent="CenterContainer/ButtonColumn" unique_id=938814822]
-custom_minimum_size = Vector2(220, 48)
+[node name="history_button2" type="Button" parent="ButtonColumn" unique_id=938814822]
+custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5svwm")
 text = "制作人员 / 关于"
 
-[node name="quit_button" type="Button" parent="CenterContainer/ButtonColumn" unique_id=1278586907]
-custom_minimum_size = Vector2(220, 48)
+[node name="quit_button" type="Button" parent="ButtonColumn" unique_id=1278586907]
+custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5svwm")
 text = "退出"
