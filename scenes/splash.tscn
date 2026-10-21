@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://qujpuor5ujwi" path="res://images/background/main_moutain.png" id="4_x1bu2"]
 [ext_resource type="Texture2D" uid="uid://co28ddb56rxef" path="res://images/background/main_sea.png" id="5_440nw"]
 [ext_resource type="Texture2D" uid="uid://cx085tj5boqat" path="res://images/background/main_close2.png" id="7_651hb"]
+[ext_resource type="Texture2D" uid="uid://c0wg8cx1eg0lm" path="res://images/ui_icon/wood.png" id="9_x1bu2"]
+[ext_resource type="Script" uid="uid://bsckupn54ivkr" path="res://scripts/lib/main_button_label.gd" id="10_3idxy"]
 
 [sub_resource type="Animation" id="Animation_x1bu2"]
 length = 0.001
@@ -49,7 +51,7 @@ _data = {
 
 [sub_resource type="Gradient" id="Gradient_cja1a"]
 offsets = PackedFloat32Array(0, 0.7740113, 0.90960455, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.193, 0, 0, 0, 0.48800004, 0, 0, 0, 0.80700004)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.193, 0, 0, 0, 0.62100005, 0, 0, 0, 0.735)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_1by0b"]
 gradient = SubResource("Gradient_cja1a")
@@ -66,6 +68,42 @@ outline_size = 18
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 35
 shadow_color = Color(0, 0, 0, 0.78431374)
+
+[sub_resource type="LabelSettings" id="LabelSettings_440nw"]
+font = ExtResource("3_5svwm")
+font_size = 18
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3idxy"]
+font = ExtResource("3_5svwm")
+font_size = 18
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_arxou"]
+font = ExtResource("3_5svwm")
+font_size = 18
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tdut7"]
+font = ExtResource("3_5svwm")
+font_size = 18
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pqg0r"]
+font = ExtResource("3_5svwm")
+font_size = 18
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_d1bx2"]
+font = ExtResource("3_5svwm")
+font_size = 18
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
 
 [node name="SplashMenu" type="Control" unique_id=619426749]
 layout_mode = 3
@@ -163,44 +201,135 @@ grow_vertical = 2
 [node name="ButtonColumn" type="VBoxContainer" parent="." unique_id=567784676]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 1063.0
-offset_top = 243.0
-offset_right = 1265.0
-offset_bottom = 601.0
-theme_override_constants/separation = 14
+offset_left = 1057.0
+offset_top = 195.0
+offset_right = 1271.0
+offset_bottom = 686.0
+theme_override_constants/separation = 8
 
-[node name="start_button" type="Button" parent="ButtonColumn" unique_id=1307737103]
+[node name="start_button" type="TextureButton" parent="ButtonColumn" unique_id=496997621]
 custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_5svwm")
+size_flags_horizontal = 4
+offset_transform_enabled = true
+offset_transform_pivot_ratio = Vector2(0, 0)
+texture_normal = ExtResource("9_x1bu2")
+stretch_mode = 5
+script = ExtResource("10_3idxy")
+
+[node name="Label" type="Label" parent="ButtonColumn/start_button" unique_id=2066003807]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "开始游戏"
+label_settings = SubResource("LabelSettings_440nw")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="continue_button" type="Button" parent="ButtonColumn" unique_id=1952813738]
+[node name="continue_button" type="TextureButton" parent="ButtonColumn" unique_id=643951571]
 custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_5svwm")
+size_flags_horizontal = 4
+offset_transform_enabled = true
+offset_transform_pivot_ratio = Vector2(0, 0)
+texture_normal = ExtResource("9_x1bu2")
+script = ExtResource("10_3idxy")
+
+[node name="Label" type="Label" parent="ButtonColumn/continue_button" unique_id=752222219]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "继续游戏"
+label_settings = SubResource("LabelSettings_3idxy")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="settings_button" type="Button" parent="ButtonColumn" unique_id=157465949]
+[node name="settings_button" type="TextureButton" parent="ButtonColumn" unique_id=551847286]
 custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_5svwm")
+size_flags_horizontal = 4
+offset_transform_enabled = true
+offset_transform_pivot_ratio = Vector2(0, 0)
+texture_normal = ExtResource("9_x1bu2")
+script = ExtResource("10_3idxy")
+
+[node name="Label" type="Label" parent="ButtonColumn/settings_button" unique_id=1735912142]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "设置"
+label_settings = SubResource("LabelSettings_arxou")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="history_button" type="Button" parent="ButtonColumn" unique_id=621516189]
+[node name="history_button" type="TextureButton" parent="ButtonColumn" unique_id=517933813]
 custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_5svwm")
-text = "游戏历史"
+size_flags_horizontal = 4
+offset_transform_enabled = true
+offset_transform_pivot_ratio = Vector2(0, 0)
+texture_normal = ExtResource("9_x1bu2")
+script = ExtResource("10_3idxy")
 
-[node name="history_button2" type="Button" parent="ButtonColumn" unique_id=938814822]
+[node name="Label" type="Label" parent="ButtonColumn/history_button" unique_id=2006265026]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "历史记录"
+label_settings = SubResource("LabelSettings_tdut7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="history_button2" type="TextureButton" parent="ButtonColumn" unique_id=1889852691]
 custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_5svwm")
+size_flags_horizontal = 4
+offset_transform_enabled = true
+offset_transform_pivot_ratio = Vector2(0, 0)
+texture_normal = ExtResource("9_x1bu2")
+script = ExtResource("10_3idxy")
+
+[node name="Label" type="Label" parent="ButtonColumn/history_button2" unique_id=182113788]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "制作人员 / 关于"
+label_settings = SubResource("LabelSettings_pqg0r")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="quit_button" type="Button" parent="ButtonColumn" unique_id=1278586907]
+[node name="quit_button" type="TextureButton" parent="ButtonColumn" unique_id=1074576986]
 custom_minimum_size = Vector2(120, 48)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_5svwm")
+size_flags_horizontal = 4
+offset_transform_enabled = true
+offset_transform_pivot_ratio = Vector2(0, 0)
+texture_normal = ExtResource("9_x1bu2")
+script = ExtResource("10_3idxy")
+
+[node name="Label" type="Label" parent="ButtonColumn/quit_button" unique_id=1534851978]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "退出"
+label_settings = SubResource("LabelSettings_d1bx2")
+horizontal_alignment = 1
+vertical_alignment = 1
