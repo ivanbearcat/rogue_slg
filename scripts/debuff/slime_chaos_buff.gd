@@ -1,5 +1,8 @@
 extends Buff
 
+## count_slime_reroll 不入存档快照（生命周期核对结论，task 3.2）：
+## 它是单次 process_buff 执行内的瞬态计数——await 循环里累加、循环结束后立即归零，
+## 不跨回合存活，读档重置为 0 与原语义等价。
 var count_slime_reroll := 0
 
 func set_buff():

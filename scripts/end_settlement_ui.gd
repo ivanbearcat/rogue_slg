@@ -145,6 +145,9 @@ func _lookup_buff_meta(buff_id: String) -> Dictionary:
 
 ## "再玩一次"：解除暂停并回到选人画面，run_start 重置链由选人画面自然触发
 func _on_again_pressed() -> void:
+	## run 结束清档（task 6.1）：跳转处理开头同步删除存档槽，
+	## 保证其后的新 run 与旧档隔离（不依赖退出路径）
+	SaveManager.delete_save()
 	_is_showing = false
 	hide()
 	## 先恢复运行再切场景，避免暂停树阻塞场景切换
@@ -154,6 +157,8 @@ func _on_again_pressed() -> void:
 
 ## "退出"：解除暂停并回到游戏初始界面
 func _on_end_button_pressed() -> void:
+	## run 结束清档（task 6.1）：同上，两个出口都必须清档
+	SaveManager.delete_save()
 	_is_showing = false
 	hide()
 	get_tree().paused = false

@@ -31,6 +31,16 @@ func process_buff():
 	else:
 		chain_multiplier = max(0.0, chain_multiplier - 0.10)
 
+func save_state() -> Dictionary:
+	## 跨回合叠层（作用于下次攻击），丢失会清空玩家已攒的加成
+	return {"chain_multiplier": chain_multiplier}
+
+func restore_state(state: Dictionary) -> void:
+	chain_multiplier = float(state.get("chain_multiplier", 0.0))
+	## 恢复后刷新 tooltip（显示"当前叠层"行）
+	if buff_texture:
+		buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta, _get_tooltip_extra()))
+
 func clear_buff():
 	chain_multiplier = 0.0
 

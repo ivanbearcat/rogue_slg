@@ -36,8 +36,12 @@ func _on_resume_button_pressed() -> void:
 
 
 func _on_texture_button_2_pressed() -> void:
+	## "返回主菜单"：退出即保存——把最近一次回合边界快照落盘后切回主菜单。
+	## flush 只写盘：不拍新快照、不等待演出（规格"退出动作即保存"）
 	hide()
 	get_tree().paused = false
+	if not SaveManager.flush_to_disk():
+		print("[SaveManager] 返回主菜单：落盘失败或无可用快照，主菜单'继续'将反映最后成功存档状态")
 	SceneManager.change_scene(&"splash")
 
 
@@ -46,4 +50,7 @@ func _on_texture_button_3_pressed() -> void:
 
 
 func _on_texture_button_4_pressed() -> void:
+	## "退出游戏"：退出即保存——落盘最近一次回合边界快照后退出进程
+	if not SaveManager.flush_to_disk():
+		print("[SaveManager] 退出游戏：落盘失败或无可用快照")
 	get_tree().quit()

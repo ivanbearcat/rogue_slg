@@ -33,6 +33,7 @@ EventBus="*res://scripts/autoload/event_bus.gd"
 Telemetry="*res://scripts/autoload/telemetry.gd"
 CursorManager="*res://scripts/autoload/cursor_manager.gd"
 BuffSystem="*res://scripts/autoload/buff_system.gd"
+SaveManager="*res://scripts/autoload/save_manager.gd"
 EffectManager="*res://scripts/autoload/effect_manager.gd"
 VFX="*uid://ecyiymmaj3jv"
 EnvVFX="*uid://qomyut16hnoi"
@@ -46,10 +47,7 @@ _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/resizable=false
 window/stretch/mode="viewport"
-window/stretch/aspect="expand"
-window/stretch/scale_mode="integer"
 mouse_cursor/custom_image="res://images/mouse_icon/pointer_scifi_a.svg"
 
 [editor_plugins]

@@ -144,14 +144,17 @@ var shop_buff_2: Dictionary
 var shop_buff_3: Dictionary
 ## 商店buff已购买标记（3个槽位）
 var shop_buff_bought := [false, false, false]
+var _buff_refresh_cost := 1  ## 直写用内部变量（存档恢复路径专用）
 var buff_refresh_cost := 1:
 	set(v):
-		buff_refresh_cost = v
+		_buff_refresh_cost = v
 		if Current.zero_coin_refresh_times > 0:
 			buff_refresh_rlabel.text = " [img=24]res://images/ui_icon/refresh.png[/img]   [img=16]res://images/ui_icon/coin.png[/img] %d" % 0
 		else:
 			buff_refresh_rlabel.text = " [img=24]res://images/ui_icon/refresh.png[/img]   [img=16]res://images/ui_icon/coin.png[/img] %d" % \
 			buff_refresh_cost
+	get:
+		return _buff_refresh_cost
 ## UI
 @onready var power_label: Label = %power_label
 @onready var level_label: Label = %level_label
@@ -310,6 +313,12 @@ func _ready() -> void:
 		card.pressed.connect(_apply_level_up_card.bind(i))
 		card.mouse_entered.connect(_on_level_up_card_mouse_entered.bind(card))
 		card.mouse_exited.connect(_on_level_up_card_mouse_exited.bind(card))
+	## —— 读档恢复分叉（主菜单"继续"进入，design D4）——
+	## 跳过新开 run 初始化链，按存档数据重建棋盘/商店/buff 管线并灌入状态
+	if SaveManager.restoring_run and not SaveManager.pending_save_data.is_empty():
+		_restore_run_from_save(SaveManager.pending_save_data)
+		return
+	## （以下为正常新开局路径）
 	## 测试
 
 	#_set_shop_buff()
@@ -351,29 +360,16 @@ func _ready() -> void:
 	## 清空本run已用debuff列表（跨关卡不重复机制的重置）
 	_used_debuff_ids = []
 	## 生成网格
-	for x in range(_removable_map_vec.x):
-		for y in range(_removable_map_vec.y):
-			var grid = SceneManager.create_scene("grid")
-			grid.grid_index = Vector2(x, y)
-			grid.position = Vector2(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
-			all_grid_dict[Vector2(x, y)] = grid
-			grids.add_child(grid)
-	Current.all_grids_array = grids.get_children()
+	_build_grids()
 	## 生成英雄（按英雄选择画面选中的类型，默认 soldier）
 	var hero_instantiate = SceneManager.create_scene("hero")
 	_set_hero_properties(hero_instantiate, hero_property[Current.selected_hero])
 	heros.add_child(hero_instantiate)
 	_set_hero_skill_scripts(hero_instantiate)
 	## 配置Astar寻路
-	astar = AStarGrid2D.new()
-	astar.region = tile_map_layer.get_used_rect()
-	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
-	astar.update()
+	_setup_astar()
 	## 计算所有地图边缘地块
-	for x in range(_removable_map_vec.x):
-		for y in range(_removable_map_vec.y):
-			if x == 0 or x == range(_removable_map_vec.x).max() or y == 0 or y == range(_removable_map_vec.y).max():
-				_margin_grid.append(Vector2(x, y))
+	_compute_margin_grids()
 	## 首进战局:回链锁——先于开场演出锁定回合按钮（chain 尾 387 行统一解锁）。
 	## headless 实测：帘子打开(t0+4.0s)到 _turn_process 禁用(t0+4.4s)之间存在 0.4s 可误操作间隙
 	_set_turn_button_disabled(true)
@@ -390,6 +386,7 @@ func _ready() -> void:
 	## 回合处理
 	await _turn_process()
 	## 敌人回合结束，启用回合结束按钮
+	_capture_turn_boundary()
 	_set_turn_button_disabled(false)
 	## 悬停追踪器：渲染帧数学换算鼠标所在格子，替代 Area2D 物理拾取（子节点随战局销毁）
 	add_child(preload("res://scripts/hover_tracker.gd").new())
@@ -414,6 +411,238 @@ func _ready() -> void:
 			#var buff = load(row["debuff_res"]).new(row, self)
 			#BuffSystem.callv("set_" + row["debuff_type"], [buff, BuffSystem.buff_type.STAGE])
 
+
+## ============================================================
+## 存档：回合边界快照点（task 3.1）
+## ============================================================
+
+## 回合边界统一快照入口：调用点固定在"敌方回合完全结束（_turn_process 返回、
+## pre_hero_turn 时序尚未执行）、回合按钮重新启用之前"。
+## 该时刻 Current.action_lock 必为 false 且 public_lock_array 为空
+## （headless 回归断言见 test/scripts/save）。
+func _capture_turn_boundary() -> void:
+	SaveManager.capture()
+
+## ============================================================
+## 存档：读档恢复（task 5.2，design D4）
+## ============================================================
+
+## 读档恢复主流程：重建棋盘实体 → 重建 buff 管线 → 灌入 run 状态 →
+## 商店/关卡派生 UI → 统一刷新 → 停在"我方回合可操作"。
+## 灌入纪律（design D4 硬约定）：全程不触发 Current 副作用 setter；
+## 次序上 buff 重建先于 apply（set_buff 的 Current 数值副作用被 apply 覆盖中和），
+## 商店数据恢复先于 apply（金币批刷读取货架数据）。
+func _restore_run_from_save(data: Dictionary) -> void:
+	## 与正常路径一致的回链锁：转场帘子拉开前锁定回合按钮
+	_set_turn_button_disabled(true)
+	## 1) 网格 + 英雄 + AStar + 边缘地块（与正常路径相同的装配）
+	_build_grids()
+	var hero_instantiate = SceneManager.create_scene("hero")
+	_set_hero_properties(hero_instantiate, hero_property[Current.selected_hero])
+	heros.add_child(hero_instantiate)
+	_set_hero_skill_scripts(hero_instantiate)
+	_setup_astar()
+	_compute_margin_grids()
+	## 2) 棋盘实体重建：在场史莱姆 / 预生成史莱姆 / 本回合新生成标记
+	var board: Dictionary = data.get("board", {})
+	var hero_row: Dictionary = board.get("hero", {})
+	## 英雄位置由快照恢复（hero_grid_index 为 position 的派生 getter，只写 position）
+	hero_instantiate.position = grid_index_to_position(
+		_arr_to_vec2(hero_row.get("hero_grid_index", [3, 3])))
+	## 移动力由快照恢复（rush 系 buff 的 _move_granted 恢复为 true 后不再重复叠加）
+	hero_instantiate.hero_movement = int(hero_row.get("hero_movement",
+		hero_property[Current.selected_hero]["movement"]))
+	var board_slimes: Array = _rebuild_slimes_from_data(board.get("slimes", []), true)
+	## 预生成史莱姆恢复为本回合待生成队列：下一回合敌人回合照常掷骰入场；
+	## 并按快照位置点亮出生告警（与 _pre_create_slime 的展示口径一致）。
+	## 注意不可丢弃返回值——_slime_create_array 同时被 _create_slime（入场）
+	## 与 slime_move_ai（出生点占位阻挡）消费，为空会导致读档后本回合不生成史莱姆
+	_slime_create_array = _rebuild_slimes_from_data(board.get("pending", []), false)
+	for slime in _slime_create_array:
+		if all_grid_dict.has(slime.enemy_grid_index):
+			all_grid_dict[slime.enemy_grid_index].warning.visible = true
+	Current.last_slime_create_array = []
+	var last_created_grids := {}
+	for g in board.get("last_created", []):
+		last_created_grids[_arr_to_vec2(g)] = true
+	for slime in board_slimes:
+		if last_created_grids.has(slime.enemy_grid_index):
+			Current.last_slime_create_array.append(slime)
+	## 3) buff 管线重建（set_buff 副作用随后被 apply 覆盖中和，见 BuffSystem 审计注释）
+	BuffSystem.rebuild_from_save(data.get("buffs", {}).get("rows", []))
+	## 4) 商店数据与货架 UI 恢复（不随机；金币批刷统一在 refresh_all_ui）
+	_restore_shop_from_data(data.get("shop", {}))
+	## 5) run 状态灌入（零 setter）+ resonance_ramp + 统一 UI 刷新
+	SaveManager.apply(data)
+	## 6) 关卡派生 UI（目标分/难度图标；由 stage 配置按 count_stage 确定）
+	_write_stage_derived_ui()
+	## 7) 重放本回合 pre_hero_turn 时序：快照点位于该时序执行之后，读档补跑一次，
+	##    与"不中断的连续时间线"保持一致（首局 boot 快照无 buff 时为空操作）
+	EventBus.event_emit("do_pre_hero_turn_buff")
+	## 8) 悬停追踪器（与正常路径一致）
+	add_child(preload("res://scripts/hover_tracker.gd").new())
+	## 9) 恢复收口：重置鼠标、停在"我方回合可操作"、清理恢复标记
+	CursorManager.reset_cursor()
+	_set_turn_button_disabled(false)
+	SaveManager.finish_restore()
+	print("[SaveManager] 战局恢复完成：关卡 %d · 回合 %d" % [Current._count_stage, Current._count_round])
+	## 转场层就绪信号（恢复路径不播开场演出链，装配完成即就绪）
+	EventBus.event_emit("stage_start")
+
+## 按数据行重建史莱姆实例（task 5.2）
+## in_tree=true：加入 enemys 并恢复骰面/HP/精英/BOSS/能量描边；
+## in_tree=false：重建预生成占位（未入树、点数在下次 _create_slime 掷骰时随机决定）
+func _rebuild_slimes_from_data(rows: Array, in_tree: bool) -> Array:
+	var built: Array = []
+	for row in rows:
+		if not row is Dictionary:
+			continue
+		var scene_name := _scene_name_for_color(str(row.get("color", "green")))
+		var slime: Slime = SceneManager.create_scene(scene_name)
+		slime.position = grid_index_to_position(_arr_to_vec2(row.get("grid", [0, 0])))
+		slime.enemy_hp = int(row.get("hp", 1))
+		slime.enemy_type = int(row.get("enemy_type", 1))
+		slime.is_elite = bool(row.get("elite", false))
+		slime.is_boss = bool(row.get("boss", false))
+		if in_tree:
+			enemys.add_child(slime)
+			## 骰面由点数反查帧（dice_to_frame_dice 为实例普通变量，未入树也可用）
+			slime.dice.stop()
+			slime.dice.set_frame_and_progress(slime.dice_to_frame_dice.get(int(row.get("point", 1)), 2), 0)
+			slime.animated_sprite_2d.play("idle")
+		## 描边状态按快照恢复（口径与生成路径一致）
+		if bool(row.get("power", false)):
+			slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(0.0, 18.892, 18.892))
+			slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+		elif slime.is_boss:
+			slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 18.892))
+			slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+		elif slime.is_elite:
+			slime.animated_sprite_2d.material.set_shader_parameter("outline_color", Color(18.892, 0, 0))
+			slime.animated_sprite_2d.material.set_shader_parameter("is_high_light", true)
+		built.append(slime)
+	return built
+
+## 颜色键 → 史莱姆场景名（反向查 Tools.SLIME_COLOR_DICT，单一来源）
+func _scene_name_for_color(color: String) -> String:
+	for scene_name in Tools.SLIME_COLOR_DICT:
+		if Tools.SLIME_COLOR_DICT[scene_name] == color:
+			return scene_name
+	return "slime_small"
+
+## 商店状态恢复：数据直写 + 货架 UI 装配（不触发 Current setter——金币批刷统一收口）
+func _restore_shop_from_data(shop: Dictionary) -> void:
+	var rows: Array = shop.get("buff_rows", [{}, {}, {}])
+	shop_buff_1 = rows[0] if rows.size() > 0 else {}
+	shop_buff_2 = rows[1] if rows.size() > 1 else {}
+	shop_buff_3 = rows[2] if rows.size() > 2 else {}
+	## 类型归一：JSON 往返把 buff_price 变 float（购买路径 maxi 运算依赖 int）
+	for shop_row in [shop_buff_1, shop_buff_2, shop_buff_3]:
+		if shop_row is Dictionary and shop_row.has("buff_price"):
+			shop_row["buff_price"] = int(shop_row["buff_price"])
+	var bought: Array = shop.get("bought", [false, false, false])
+	shop_buff_bought = []
+	for i in 3:
+		shop_buff_bought.append(bool(bought[i]) if i < bought.size() else false)
+	## 镜像购买时的池操作：已购行从 buff_json_data 移除（快照行是解析副本，用深度相等匹配）
+	for i in 3:
+		if shop_buff_bought[i]:
+			var bought_row: Dictionary = [shop_buff_1, shop_buff_2, shop_buff_3][i]
+			if not bought_row.is_empty() and buff_json_data.has(bought_row):
+				buff_json_data.erase(bought_row)
+	## 锁定按钮状态
+	var locks: Array = shop.get("lock_states", [false, false, false])
+	var lock_buttons: Array = [buff_lock_button_1, buff_lock_button_2, buff_lock_button_3]
+	for i in 3:
+		lock_buttons[i].button_pressed = bool(locks[i]) if i < locks.size() else false
+	## 刷新费用（直写背衬变量，价格标签由 refresh_all_ui 统一直写）
+	_buff_refresh_cost = int(shop.get("refresh_cost", 1))
+	## 商店金币技能
+	shop_coin_skill_row = shop.get("coin_skill_row", {})
+	if shop_coin_skill_row is Dictionary and not shop_coin_skill_row.is_empty():
+		if shop_coin_skill_row.has("coin_skill_shop_cost"):
+			shop_coin_skill_row["coin_skill_shop_cost"] = int(shop_coin_skill_row["coin_skill_shop_cost"])
+		shop_coin_skill_icon.texture = load(shop_coin_skill_row["coin_skill_icon"])
+		TooltipManager.set_tooltip(shop_coin_skill_icon, TooltipFormatter.format_coin_skill(shop_coin_skill_row))
+		shop_coin_skill_rlabel.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
+			str(shop_coin_skill_row["coin_skill_shop_cost"])
+		shop_coin_skill_icon.modulate.a = 1
+	else:
+		shop_coin_skill_row = {}
+		shop_coin_skill_icon.texture = null
+		shop_coin_skill_rlabel.text = ""
+	shop_coin_skill_bought = bool(shop.get("coin_skill_bought", false))
+	if shop_coin_skill_bought:
+		shop_coin_skill_button.disabled = true
+		shop_coin_skill_icon.modulate.a = 0.3
+	## 技能池出现记录 / 待处理技能 / 已用 debuff 池
+	appeared_coin_skill_ids = shop.get("appeared_coin_skill_ids", [])
+	pending_shop_skill = shop.get("pending_shop_skill", {})
+	if not pending_shop_skill is Dictionary:
+		pending_shop_skill = {}
+	_used_debuff_ids = shop.get("used_debuff_ids", [])
+	## 货架图标/价格/tooltip（未购槽位正常展示；已购槽位清空展示）
+	var shop_icons: Array = [buff_shop_icon_1, buff_shop_icon_2, buff_shop_icon_3]
+	var shop_rlabels: Array = [buff_shop_rlabel_1, buff_shop_rlabel_2, buff_shop_rlabel_3]
+	var shop_buttons: Array = [buff_shop_button_1, buff_shop_button_2, buff_shop_button_3]
+	var shop_rows: Array = [shop_buff_1, shop_buff_2, shop_buff_3]
+	for i in 3:
+		if shop_buff_bought[i]:
+			shop_icons[i].modulate.a = 0
+			shop_buttons[i].disabled = true
+			lock_buttons[i].disabled = true
+			lock_buttons[i].button_pressed = false
+		else:
+			shop_icons[i].modulate.a = 1
+			shop_buttons[i].disabled = false
+			lock_buttons[i].disabled = false
+			if shop_rows[i] is Dictionary and not shop_rows[i].is_empty():
+				shop_icons[i].texture = load(shop_rows[i]["buff_icon"])
+				TooltipManager.set_tooltip(shop_icons[i], TooltipFormatter.format_buff(shop_rows[i]))
+				shop_rlabels[i].text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
+					str(maxi(0, int(shop_rows[i]["buff_price"]) - Current._buff_price_discount))
+
+## 关卡派生 UI 直写（目标分/难度图标；恢复路径不触发 Current.target_score setter）
+func _write_stage_derived_ui() -> void:
+	var current_stage_info: Dictionary = {}
+	for row in stage_info_json_data:
+		if row["stage_num"] == Current._count_stage:
+			current_stage_info = row
+			break
+	target_score.text = str(int(current_stage_info.get("target_score", 300)))
+	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
+	TooltipManager.set_tooltip(difficulty_icon, "[b]" + tr(current_stage_info.get("stage_type", "普通")) + "[/b]")
+
+## 生成网格（正常路径/读档恢复共用装配）
+func _build_grids() -> void:
+	for x in range(_removable_map_vec.x):
+		for y in range(_removable_map_vec.y):
+			var grid = SceneManager.create_scene("grid")
+			grid.grid_index = Vector2(x, y)
+			grid.position = Vector2(x * grid_size.x + start_pos.x, y * grid_size.y + start_pos.y)
+			all_grid_dict[Vector2(x, y)] = grid
+			grids.add_child(grid)
+	Current.all_grids_array = grids.get_children()
+
+## 配置Astar寻路
+func _setup_astar() -> void:
+	astar = AStarGrid2D.new()
+	astar.region = tile_map_layer.get_used_rect()
+	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	astar.update()
+
+## 计算所有地图边缘地块
+func _compute_margin_grids() -> void:
+	for x in range(_removable_map_vec.x):
+		for y in range(_removable_map_vec.y):
+			if x == 0 or x == range(_removable_map_vec.x).max() or y == 0 or y == range(_removable_map_vec.y).max():
+				_margin_grid.append(Vector2(x, y))
+
+## [x, y] 数组 → Vector2（JSON 往返后元素为 float，显式收敛）
+func _arr_to_vec2(arr: Variant) -> Vector2:
+	if arr is Array and arr.size() >= 2:
+		return Vector2(float(arr[0]), float(arr[1]))
+	return Vector2.ZERO
 
 ## 随机分配基础分值
 ## 将总共60点基础分随机分配到1-6点数的骰子上，最低5最高15
@@ -1236,6 +1465,7 @@ func skill_attack():
 	## 过关后不再扣血，但需要执行敌人回合（生成新关卡史莱姆、设置玩家回合）
 	if stage_cleared:
 		await _turn_process()
+		_capture_turn_boundary()
 		EventBus.event_emit("do_pre_hero_turn_buff")
 		_set_turn_button_disabled(false)
 		return
@@ -1243,6 +1473,7 @@ func skill_attack():
 	_apply_hp_damage()
 	## 敌人回合
 	await _turn_process()
+	_capture_turn_boundary()
 	## 执行玩家回合前buff
 	EventBus.event_emit("do_pre_hero_turn_buff")
 	_set_turn_button_disabled(false)
@@ -1295,6 +1526,7 @@ func _on_turn_button_pressed() -> void:
 	## 过关后不再扣血，但需要执行敌人回合（生成新关卡史莱姆、设置玩家回合）
 	if stage_cleared:
 		await _turn_process()
+		_capture_turn_boundary()
 		EventBus.event_emit("do_pre_hero_turn_buff")
 		_set_turn_button_disabled(false)
 		return
@@ -1303,6 +1535,7 @@ func _on_turn_button_pressed() -> void:
 	_apply_hp_damage()
 	## 回合处理
 	await _turn_process()
+	_capture_turn_boundary()
 	## 执行玩家回合前buff
 	EventBus.event_emit("do_pre_hero_turn_buff")
 	_set_turn_button_disabled(false)

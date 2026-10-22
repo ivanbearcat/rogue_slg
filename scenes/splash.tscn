@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cx085tj5boqat" path="res://images/background/main_close2.png" id="7_651hb"]
 [ext_resource type="Texture2D" uid="uid://c0wg8cx1eg0lm" path="res://images/ui_icon/wood.png" id="9_x1bu2"]
 [ext_resource type="Script" uid="uid://bsckupn54ivkr" path="res://scripts/lib/main_button_label.gd" id="10_3idxy"]
+[ext_resource type="PackedScene" uid="uid://2m3wfvnigbqe" path="res://scenes/setting_ui.tscn" id="11_3idxy"]
 
 [sub_resource type="Animation" id="Animation_x1bu2"]
 length = 0.001
@@ -333,3 +334,6 @@ text = "退出"
 label_settings = SubResource("LabelSettings_d1bx2")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="setting_ui" parent="." unique_id=1327152734 instance=ExtResource("11_3idxy")]
+visible = false

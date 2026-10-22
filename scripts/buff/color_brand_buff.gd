@@ -33,6 +33,15 @@ func process_buff():
 	## 3. 更新tooltip显示当前烙印颜色
 	_update_tooltip()
 
+func save_state() -> Dictionary:
+	## 跨回合颜色承诺（branded_color），丢失会破坏同色连击判定
+	return {"branded_color": branded_color}
+
+func restore_state(state: Dictionary) -> void:
+	branded_color = str(state.get("branded_color", ""))
+	## 恢复后刷新 tooltip（显示"当前烙印"行）
+	_update_tooltip()
+
 func clear_buff():
 	branded_color = ""
 	_update_tooltip()

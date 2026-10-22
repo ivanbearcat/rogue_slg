@@ -11,6 +11,14 @@ func set_buff():
 	## 记录脆弱生效前的防御值
 	_defense_before_fragile = Current.player_defense
 
+func save_state() -> Dictionary:
+	## 数值回滚基准（clear_buff 恢复防御用），丢失会污染防御值
+	return {"_defense_before_fragile": _defense_before_fragile}
+
+func restore_state(state: Dictionary) -> void:
+	## 注册时 set_buff 已按灌入前防御值重记了一次基准，此处以存档值为准覆盖
+	_defense_before_fragile = int(state.get("_defense_before_fragile", -1))
+
 func process_buff():
 	## 每2回合防御-1（最低0）
 	if Current.count_round % 2 == 0:

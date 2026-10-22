@@ -35,6 +35,21 @@ func process_buff():
 func clear_buff():
 	pass
 
+## ============================================================
+## 存档钩子（读档重建路径专用，由 BuffSystem.rebuild_from_save 调用）
+## ============================================================
+## 次序约定：实例化 → 注册（set_buff 挂图标/tooltip）→ restore_state()。
+## 仅持有跨回合实例本地状态的 buff 需覆写；默认空实现 = 无可存状态。
+## 每回合瞬态的实例状态不存（读档天然重置，语义等价）。
+
+## 返回需跨回合保留的实例本地状态（只存本地字段，不存 Current 全局状态）
+func save_state() -> Dictionary:
+	return {}
+
+## 从快照行恢复实例本地状态（state 为 save_state() 的返回值）
+func restore_state(state: Dictionary) -> void:
+	pass
+
 ## 关卡结算时由 game_manager 委托调用（非管线调用），默认空
 func process_stage_clear():
 	pass

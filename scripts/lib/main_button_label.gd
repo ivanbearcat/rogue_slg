@@ -27,4 +27,3 @@ func _on_mouse_exited() -> void:
 func _on_mouse_entered() -> void:
 	self.offset_transform_scale = Vector2(1.03, 1.03)
 	self.offset_transform_rotation = 0.05
-

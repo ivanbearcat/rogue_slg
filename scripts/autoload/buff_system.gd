@@ -1,5 +1,9 @@
 extends Node2D
 
+## ⚠️ 存档密钥盐片段 C（三段散落常量之一，完整密钥不出现在任何单一文件；
+## 其余片段见 save_manager.gd / current.gd。改动任一片段会使现有存档失效 → 走坏档路径）
+const _SAVE_SALT_C := "RG|SALT|C|b37f08e4d5a921c6"
+
 ## game_manager引用（跟随 Current 注册状态，场景切换后自动指向新战局）
 var game_manager: Node2D:
 	get:
@@ -234,6 +238,113 @@ func clear_run_buffs() -> void:
 	_initialized_buff_ids.clear()
 	_last_family_accumulation = {}
 	_current_family_accumulation = {}
+
+## ============================================================
+## 存档序列化（读档恢复路径专用，由 SaveManager 调用）
+## ============================================================
+
+## 快照导出：管线内全部 buff 实例 → 行列表 [{id, lifecycle, timing, local_state}]。
+## 同一实例注册到多个时序（如 scorched_earth 双时序）只产出首行，
+## timing 收敛为 Array；重建时按行恢复"一实例多管线"的原始结构。
+## timing 存管线名（"pre_attack" 等，非配置里的 "xxx_buff" 字符串）。
+func save_buff_rows() -> Array:
+	var rows: Array = []
+	var seen := {}  ## instance_id → 行下标（多时序实例去重）
+	for timing in TIMINGS:
+		for key in LIFECYCLE_KEYS:
+			for buff in pipelines[timing][key]:
+				if not is_instance_valid(buff):
+					continue
+				var uid: int = buff.get_instance_id()
+				if seen.has(uid):
+					var row: Dictionary = rows[seen[uid]]
+					if row["timing"] is Array:
+						row["timing"].append(timing)
+					else:
+						row["timing"] = [row["timing"], timing]
+					continue
+				var buff_id = buff.buff_meta.get("buff_id", buff.buff_meta.get("debuff_id", ""))
+				rows.append({
+					"id": buff_id,
+					"lifecycle": _lifecycle_int(key),
+					"timing": timing,
+					"local_state": buff.save_state(),
+				})
+				seen[uid] = rows.size() - 1
+	return rows
+
+## 从存档行重建管线：按 id 查 buff/debuff JSON 配置实例化 → 注册进对应管线
+## （set_buff() 挂图标/tooltip）→ restore_state() 恢复实例本地状态。
+##
+## ⚠️ 重建次序与副作用审计结论（task 3.3，design Risks 对应项）：
+## game_manager._ready 恢复分支的次序是"先 rebuild_from_save、后 SaveManager.apply()"。
+## 快照清单内各 set_buff() 的 Current 数值副作用已逐一审计：
+##   armor_break（防御-2）、iron_stomach（减伤=1）、desperation_overlord（免死标记重置）、
+##   drop_ban（掉落格清空）——它们的 Current 写入随后全部被 apply() 用快照值覆盖中和；
+##   其余快照清单内 buff 的 set_buff() 仅挂图标/tooltip（color_brand/resonance_chain/
+##   rush 系/life_barrier 等已逐个核对），重建安全。
+## 因此恢复路径唯一需要保证的是实例本地状态（restore_state）与快照一致。
+func rebuild_from_save(rows: Array) -> void:
+	## 防御性清空：恢复前不应有残留注册
+	for timing in TIMINGS:
+		for key in LIFECYCLE_KEYS:
+			pipelines[timing][key].clear()
+	_initialized_buff_ids.clear()
+	for row in rows:
+		if not row is Dictionary:
+			continue
+		var buff_id := str(row.get("id", ""))
+		var timing_v: Variant = row.get("timing", "")
+		var lifecycle := int(row.get("lifecycle", buff_type.ALWAYS))
+		## timing 为 String 或 Array（多时序实例）；所有时序名必须合法
+		var timings: Array = timing_v if timing_v is Array else [timing_v]
+		var timings_valid := not buff_id.is_empty()
+		for t in timings:
+			if not (t in TIMINGS):
+				timings_valid = false
+		if not timings_valid:
+			print("[BuffSystem] 存档重建：跳过无效行 ", buff_id)
+			continue
+		var config := _find_save_config(buff_id)
+		if config.is_empty():
+			print("[BuffSystem] 存档重建：跳过无配置的 buff: ", buff_id)
+			continue
+		var res_path := str(config.get("buff_res", config.get("debuff_res", "")))
+		if not ResourceLoader.exists(res_path):
+			print("[BuffSystem] 存档重建：脚本不存在，跳过: ", buff_id, " ", res_path)
+			continue
+		var buff = load(res_path).new(config, game_manager)
+		for t in timings:
+			set_buff(t, buff, lifecycle)
+		buff.restore_state(row.get("local_state", {}))
+
+## 按 id 在 buff.json（buff_id）→ debuff.json（debuff_id）中查找配置行
+func _find_save_config(buff_id: String) -> Dictionary:
+	var buff_data: Array = game_manager.buff_json_data if \
+		game_manager and game_manager.get("buff_json_data") != null else \
+		Tools.load_json_file("res://config/buff.json")
+	for row in buff_data:
+		if str(row.get("buff_id", "")) == buff_id:
+			return row
+	var debuff_data: Array = game_manager.debuff_json_data if \
+		game_manager and game_manager.get("debuff_json_data") != null else \
+		Tools.load_json_file("res://config/debuff.json")
+	for row in debuff_data:
+		if str(row.get("debuff_id", "")) == buff_id:
+			return row
+	return {}
+
+func _lifecycle_int(key: String) -> int:
+	match key:
+		"ONCE":
+			return buff_type.ONCE
+		"STAGE":
+			return buff_type.STAGE
+		"ALWAYS":
+			return buff_type.ALWAYS
+		"ELITE":
+			return buff_type.ELITE
+	return buff_type.ALWAYS
 
 ## ============================================================
 ## 内部辅助

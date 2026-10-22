@@ -1,5 +1,7 @@
 extends Buff
 
+## 每回合瞬态标记（pre_hero_turn 激活、下回合开始回退）：
+## _active_this_turn 明确不入存档快照——读档后默认 false，与"回合刚重置"语义等价
 var _active_this_turn := false
 
 func set_buff():

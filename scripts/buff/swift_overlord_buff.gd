@@ -25,6 +25,15 @@ func process_buff():
 			if fb.buff_texture:
 				EffectManager.buff_pop_effect(fb.buff_texture)
 
+func save_state() -> Dictionary:
+	return {"_move_bonus_added": _move_bonus_added}
+
+func restore_state(state: Dictionary) -> void:
+	## set_buff() 含数值副作用（家族≥4时 max_power+1），且是否触发取决于重建时
+	## 同族成员的注册次序；读档次序"先重建、后 apply()"使快照 max_power（已含加成）
+	## 随后覆盖——此处仅恢复本地标记（保证 clear_buff 回滚正确）
+	_move_bonus_added = bool(state.get("_move_bonus_added", false))
+
 func clear_buff():
 	# 移动力恢复-1
 	if _move_bonus_added:

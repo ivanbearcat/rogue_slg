@@ -21,6 +21,13 @@ func process_buff():
 		_defense_applied = true
 		Current._update_defense_ui()
 
+func save_state() -> Dictionary:
+	## 跨回合临时防御标记：丢失会让下次 process_buff 的回退逻辑误判（多扣防御）
+	return {"_defense_applied": _defense_applied}
+
+func restore_state(state: Dictionary) -> void:
+	_defense_applied = bool(state.get("_defense_applied", false))
+
 func clear_buff():
 	## 清除时回退临时加成
 	if _defense_applied:

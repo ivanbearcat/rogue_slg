@@ -14,6 +14,15 @@ func set_buff():
 	_defense_reduced = before - Current.player_defense
 	Current._update_defense_ui()
 
+func save_state() -> Dictionary:
+	return {"_defense_reduced": _defense_reduced}
+
+func restore_state(state: Dictionary) -> void:
+	## set_buff() 含数值副作用（防御-2），但读档次序为"先重建、后 SaveManager.apply()"，
+	## 快照中的防御值（已含扣减）会随后覆盖 set_buff 的重复扣减；
+	## 此处仅恢复存档记录的实际扣减量（保证 clear_buff 回滚量正确）
+	_defense_reduced = int(state.get("_defense_reduced", 0))
+
 func process_buff():
 	pass
 
