@@ -167,6 +167,22 @@ static func format_coin_skill(skill_meta: Dictionary) -> String:
 
 	return bbcode
 
+## 格式化英雄技能tooltip（沿用coin_skill范式：标题行+数值着色描述行）
+## 动画区由TooltipManager装配，本函数只负责文本
+static func format_skill(skill_meta: Dictionary) -> String:
+	var name: String = T(str(skill_meta.get("skill_name", "")))
+	var tooltip: String = T(str(skill_meta.get("skill_tooltip", "")))
+
+	var bbcode: String = ""
+
+	# 标题行：技能名称
+	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
+
+	# 描述文本行（数值自动着色）
+	bbcode += "\n" + _colorize_numbers(tooltip, "buff")
+
+	return bbcode
+
 ## 格式化精英/BOSS史莱姆tooltip
 static func format_elite_slime(is_boss: bool, gate_type: String, gate_count: int, dice_point: int) -> String:
 	var bbcode: String = ""

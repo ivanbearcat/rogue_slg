@@ -1,0 +1,28 @@
+[
+    {
+        "hero_id": "soldier",
+        "skill_num": 1,
+        "skill_name": "横斩",
+        "skill_tooltip": "面前横向3格击杀范围内史莱姆，使用能量时为面前2排3列共6格",
+        "anim_sheet": "res://images/skill_sheets/soldier_skill1_sheet.png",
+        "anim_cols": 10,
+        "anim_rows": 4,
+        "anim_frame_begin": 6,
+        "anim_frame_end": 30,
+        "anim_fps": 10,
+        "anim_loop": true,
+        "anim_scale": 1.0
+    },
+    {
+        "hero_id": "soldier",
+        "skill_num": 2,
+        "skill_name": "旋风斩",
+        "skill_tooltip": "击杀周围4格（上下左右）内的史莱姆，使用能量时为周围8格（含四角）"
+    },
+    {
+        "hero_id": "soldier",
+        "skill_num": 3,
+        "skill_name": "嘲讽",
+        "skill_tooltip": "面前反向凹字5格内的史莱姆被强制向英雄方向移动1格，需消耗1能量"
+    }
+]

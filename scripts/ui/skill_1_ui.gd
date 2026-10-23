@@ -22,6 +22,24 @@ func _ready() -> void:
 	EventBus.subscribe("hide_all_skills", hide_all_skills)
 	EventBus.subscribe("skill_button_reset", _on_skill_button_reset)
 	EventBus.subscribe("reset_all_hero_skills", reset_all_hero_skills)
+	_setup_skill_tooltips()
+
+## 三个技能图标区接入技能tooltip（技能1带动画，技能2/3纯文本占位）
+## 悬停目标为整个图标框（skill_1/2/3容器，含图标主体）；正下方细条按钮不作为触发目标
+## 同时清空按钮原生tooltip_text，避免原生提示窗口双显
+## 图标容器自带的mouse_entered/exited高亮连接与tooltip挂接并存（防重连写法只管理本体系连接）
+func _setup_skill_tooltips() -> void:
+	var rows_by_num := {}
+	for row: Dictionary in Tools.load_json_file("res://config/hero_skill.json"):
+		if str(row.get("hero_id", "")) == "soldier":
+			rows_by_num[int(row.get("skill_num", 0))] = row
+	skill_1_button.tooltip_text = ""
+	skill_2_button.tooltip_text = ""
+	skill_3_button.tooltip_text = ""
+	var icon_areas := [self, get_node("../../VBoxContainer2/skill_2"), get_node("../../VBoxContainer3/skill_3")]
+	for num in range(1, 4):
+		if rows_by_num.has(num):
+			TooltipManager.set_skill_tooltip(icon_areas[num - 1], rows_by_num[num])
 
 func _input(event: InputEvent) -> void:
 	## 点击英雄才显示
