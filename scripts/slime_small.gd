@@ -14,7 +14,17 @@ var enemy_grid_index: Vector2:
 	get:
 		return Tools.position_to_grid_index(position)
 var enemy_hp: int = 1
-var target_position: Vector2
+## 移动速度(px/s)
+const MOVE_SPEED: float = 25.0
+## 当前移动插值Tween(到达时触发到达处理;移动中被重定向时kill旧Tween并从当前位置重启)
+var _move_tween: Tween
+## 移动目标格:赋值即启动/重启移动Tween(置零仅清空目标,不触发移动)
+var target_position: Vector2:
+	set(value):
+		# Godot 4属性setter不会自动赋值,需显式存回backing字段
+		target_position = value
+		if value != Vector2.ZERO:
+			_start_move_tween(value)
 var enemy_type: int = 1
 ## 是否为精英史莱姆
 var is_elite: bool = false
@@ -51,13 +61,19 @@ func show_selected_marker() -> void:
 func hide_selected_marker() -> void:
 	animated_sprite_2d.material.set_shader_parameter("is_selected", false)
 
-func _process(delta: float) -> void:
-	if target_position:
-		if self.position == target_position:
-			target_position = Vector2.ZERO
-			game_manager.reset_astar_solid()
-		else:
-			self.position = self.position.move_toward(target_position, 15 * delta)
+func _start_move_tween(to: Vector2) -> void:
+	if _move_tween and _move_tween.is_valid():
+		_move_tween.kill()
+	_move_tween = create_tween()
+	## 时长按速度实时计算(移动中改道后速度恒定);下限防止"目标即当前位置"时0时长Tween的边界行为
+	var duration := maxf(position.distance_to(to) / MOVE_SPEED, 0.001)
+	_move_tween.tween_property(self, "position", to, duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_move_tween.finished.connect(_on_move_finished)
+
+
+func _on_move_finished() -> void:
+	target_position = Vector2.ZERO
+	game_manager.reset_astar_solid()
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	game_manager.add_exp(1)
