@@ -137,6 +137,10 @@ func skill_attack():
 	## 门槛通过的精英/BOSS史莱姆击杀后清除ELITE debuff
 	if not gate_passed_slimes.is_empty():
 		EventBus.event_emit("clear_elite_buff")
+	## 死亡动画高潮帧等待：有史莱姆死亡时等 die 动画播到约0.6s高潮帧，再弹得分飘字
+	## （精英击杀飘字在动画播完1.0s时弹出，与总分字自然错开0.4s）
+	if Current.slime_die_sum > 0:
+		await Tools.time_sleep(0.6)
 	## 得分特效
 	var float_number_instantiate = EffectManager.float_number_effect(Current.dice_type_point)
 	if float_number_instantiate != null:
