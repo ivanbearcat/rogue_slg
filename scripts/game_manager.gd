@@ -1357,6 +1357,9 @@ func hero_move(event: InputEvent = null):
 	Current.pre_move_position = hero.position
 	Current.pre_move_grid_index = hero.hero_grid_index
 	Current.pre_move_total_score = Current.total_score
+	## 配对快照：撤回移动需把毛收入累计器同步回滚到移动前值（undo-move 规格——
+	## 撤回的加分不算"已获得"），与 pre_move_total_score 同点赋值防止两份快照被拆散维护
+	Current._pre_move_score_earned = Current._run_score_earned
 	## 全量快照：英雄 + 全部在场史莱姆（撤回时全量恢复）
 	Current.undo_snapshot = [{"node": hero, "position": hero.position, "grid_index": hero.hero_grid_index}]
 	for slime in Current.all_enemy_array:
@@ -1593,6 +1596,10 @@ func _on_undo_move_button_pressed() -> void:
 				node.enemy_grid_index = item["grid_index"]
 	## 回滚buff分数差值
 	Current.total_score = Current.pre_move_total_score
+	## 配对回滚毛收入累计器：把 _run_score_earned 恢复到移动前快照值，
+	## 保证被回滚的分数增量不被计入毛收入（多次撤回/重移循环数值不漂移）。
+	## 置于 total_score 赋值之后直写 _ 前缀（绕过 setter，避免回滚值被当正增量二次累计）
+	Current._run_score_earned = Current._pre_move_score_earned
 	## 清空移动路径
 	Current.id_path = []
 	## 英雄状态机回到idle

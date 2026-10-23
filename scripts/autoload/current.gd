@@ -91,6 +91,9 @@ var pre_move_position: Vector2 = Vector2.ZERO
 var pre_move_grid_index: Vector2 = Vector2.ZERO
 ## 移动前的总分（用于buff回滚）
 var pre_move_total_score: int = 0
+## 移动前的毛收入得分累计器快照（撤回移动时与 pre_move_total_score 同点赋值/同点直写回滚，
+## 语义见 undo-move 规格"配对回滚毛收入累计器"；物理同点放置防止两份快照被拆散维护）
+var _pre_move_score_earned: int = 0
 ## 移动前的全量位置快照（[0]为英雄，其余为史莱姆；用于撤回移动）
 var undo_snapshot: Array = []
 ## 本回合已移动格数
@@ -115,6 +118,10 @@ var total_score: int:
 	set(v):
 		if v < 0:
 			v = 0
+		## 毛收入累计收口（全项目唯一）：仅正增量计入 run_score_earned；
+		## 负向变化（减分 debuff/过关清零）不扣减毛收入。规则见上方"本局毛收入累计器"注释。
+		if v > _total_score:
+			_run_score_earned += v - _total_score
 		_total_score = v
 		game_manager.total_score.text = str(v)
 		EffectManager.big_flow_effect(game_manager.total_score)
@@ -124,6 +131,26 @@ var total_score: int:
 var once_total_score: int
 ## 本局单次最高得分（每次攻击结算后更新，run 结束前不清零）
 var max_once_score: int = 0
+
+## ============================================================
+## 本局毛收入累计器（结算画面"总金币/总得分"取数口径）
+## ⚠️ 成对修改纪律：本节字段的增删必须同步修改本文件下方的
+## reset_run_state() / export_run_state() / apply_run_state() 三处，
+## 语义见 save-system 规格"毛收入累计器随存档持久化"需求。
+## 记账规则：total_score / total_coins 两个 setter 内的正增量计入毛收入
+## （setter 是全项目唯一的收入收口点）；负向变化（商店花销、减分 debuff、
+## 过关清零）不扣减毛收入；撤回移动经 _pre_move_score_earned 配对回滚。
+## ============================================================
+## 本局累计获得金币（毛收入：含起始 15 金币与关卡奖励/获币 buff；花销不扣减）
+var _run_coins_earned: int = 0
+var run_coins_earned: int:
+	get:
+		return _run_coins_earned
+## 本局累计获得分数（毛收入：含攻击结算与 buff 加分；减分 debuff 与过关清零不扣减）
+var _run_score_earned: int = 0
+var run_score_earned: int:
+	get:
+		return _run_score_earned
 
 
 ## ============================================================
@@ -146,6 +173,12 @@ func reset_run_state() -> void:
 	_total_score = 0
 	once_total_score = 0
 	max_once_score = 0
+	## 毛收入累计器归零（本局口径从新 run 起算）；金币余额同步清零——
+	## 随后战局 _ready 经 setter 赋起始 15（即新局首笔毛收入，防止旧局余额残留
+	## 导致 `total_coins = 15` 判为负增量、起始金币漏计）
+	_run_score_earned = 0
+	_run_coins_earned = 0
+	_total_coins = 0
 	count_stage = 1
 	count_add_coins = 0
 	count_round = 0
@@ -220,6 +253,7 @@ func reset_run_state() -> void:
 	pre_move_position = Vector2.ZERO
 	pre_move_grid_index = Vector2.ZERO
 	pre_move_total_score = 0
+	_pre_move_score_earned = 0
 	undo_snapshot = []
 	id_path = []
 	movable_grid_index_array = []
@@ -265,6 +299,11 @@ var buff_price_discount: int:
 var _total_coins: int = 0  ## 直写用内部变量（存档灌入/读档恢复路径专用）
 var total_coins: int:
 	set(v):
+		## 毛收入累计收口（全项目唯一）：仅正增量计入 run_coins_earned；
+		## 负向变化（商店花销等）不扣减毛收入；`total_coins = total_coins`
+		## 自刷新惯用法增量为 0、无副作用。规则见上方"本局毛收入累计器"注释。
+		if v > _total_coins:
+			_run_coins_earned += v - _total_coins
 		_total_coins = v
 		game_manager.total_coins_label.text = str(v)
 		## 处理按钮和图标的禁用状态
@@ -813,6 +852,11 @@ func export_run_state() -> Dictionary:
 		"total_score": _total_score,
 		"once_total_score": once_total_score,
 		"max_once_score": max_once_score,
+		## —— 金币余额与毛收入累计器（结算"总金币/总得分"口径，随存档持久化；
+		## total_coins 缺键曾致读档后金币归 0——bug 修复）——
+		"total_coins": _total_coins,
+		"run_coins_earned": _run_coins_earned,
+		"run_score_earned": _run_score_earned,
 		"count_stage": _count_stage,
 		"count_add_coins": count_add_coins,
 		"count_round": _count_round,
@@ -884,6 +928,7 @@ func export_run_state() -> Dictionary:
 		"pre_move_position": [pre_move_position.x, pre_move_position.y],
 		"pre_move_grid_index": [pre_move_grid_index.x, pre_move_grid_index.y],
 		"pre_move_total_score": pre_move_total_score,
+		"pre_move_score_earned": _pre_move_score_earned,
 		"id_path": id_path.duplicate(),
 		"movable_grid_index_array": movable_grid_index_array.duplicate(),
 		"skill_num": skill_num,
@@ -910,6 +955,11 @@ func apply_run_state(data: Dictionary) -> void:
 	_total_score = int(data.get("total_score", _total_score))
 	once_total_score = int(data.get("once_total_score", once_total_score))
 	max_once_score = int(data.get("max_once_score", max_once_score))
+	## —— 金币余额与毛收入累计器：直写 _ 前缀内部变量绕过 setter，
+	## 灌入值不会被误当"收入"二次累计；旧档无键走当前值兜底（不判坏档）
+	_total_coins = int(data.get("total_coins", _total_coins))
+	_run_coins_earned = int(data.get("run_coins_earned", _run_coins_earned))
+	_run_score_earned = int(data.get("run_score_earned", _run_score_earned))
 	_count_stage = int(data.get("count_stage", _count_stage))
 	count_add_coins = int(data.get("count_add_coins", count_add_coins))
 	_count_round = int(data.get("count_round", _count_round))
@@ -988,6 +1038,7 @@ func apply_run_state(data: Dictionary) -> void:
 	pre_move_position = _arr_to_vec2(data.get("pre_move_position", [0, 0]))
 	pre_move_grid_index = _arr_to_vec2(data.get("pre_move_grid_index", [0, 0]))
 	pre_move_total_score = int(data.get("pre_move_total_score", 0))
+	_pre_move_score_earned = int(data.get("pre_move_score_earned", 0))
 	id_path = _as_array(data.get("id_path", []))
 	movable_grid_index_array = _as_array(data.get("movable_grid_index_array", []))
 	skill_num = str(data.get("skill_num", ""))

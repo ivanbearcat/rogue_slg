@@ -38,13 +38,15 @@ func _on_run_end(result: String) -> void:
 	if _is_showing:
 		return
 	_is_showing = true
-	## 缓冲快照：buff 列表取遥测 run 级全量清单，其余取 Current 结束时点值
+	## 缓冲快照：buff 列表取遥测 run 级全量清单；金币/总得分取本局毛收入累计器
+	## （end-settlement-ui 规格：总金币=本局累计获得金币含起始与花销不扣减，
+	## 总得分=本局全程累计分数含过关前各关、胜利清零不切断），单次最高仍取 Current
 	_stats = {
 		"result": result,
 		"buffs": Telemetry.get_run_buffs_snapshot(),
-		"coins": Current.total_coins,
+		"coins": Current.run_coins_earned,
 		"max_once_score": Current.max_once_score,
-		"total_score": Current.total_score,
+		"total_score": Current.run_score_earned,
 	}
 	_setup_and_show(_stats)
 

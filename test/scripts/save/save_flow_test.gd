@@ -234,6 +234,12 @@ func _run_phase1() -> void:
 	_check("2.1 drop_slot_dice null 一致", typeof(rs.drop_slot_dice) == TYPE_NIL \
 		and Current._drop_slot_dice == null)
 	_check("2.1 resonance_ramp 一致", float(snap.resonance_ramp) == BuffSystem.resonance_ramp)
+	## ---- 毛收入累计器与金币余额入快照（fix-settlement-run-totals）----
+	_check("2.1 金币余额入快照（读档归 0 bug 回归）", int(rs.total_coins) == Current._total_coins)
+	_check("2.1 毛收入累计器与配对快照入快照", int(rs.run_coins_earned) == Current._run_coins_earned \
+		and int(rs.run_score_earned) == Current._run_score_earned \
+		and int(rs.pre_move_score_earned) == Current._pre_move_score_earned)
+	_check("2.1 起始金币已计入毛收入（开局=15）", Current._run_coins_earned == 15)
 	## ---- 2.3 棋盘实体与运行时一致 ----
 	var slimes: Array = gm.enemys.get_children()
 	_check("2.3 棋盘史莱姆行数与实际一致", (snap.board.slimes as Array).size() == slimes.size())
@@ -301,6 +307,18 @@ func _run_phase1() -> void:
 	if enemies.size() == 0:
 		return
 	enemies[0].is_elite = true
+	## ---- 毛收入累计器收口行为注入（fix-settlement-run-totals）：仅经 setter 的正增量计入 ----
+	var coins_earned_before := Current._run_coins_earned
+	var score_earned_before := Current._run_score_earned
+	Current.total_coins -= 5     ## 花销（负变化）不扣减毛收入
+	_check("收口 花销不扣减毛收入", Current._run_coins_earned == coins_earned_before)
+	Current.total_coins += 25    ## setter 正增量 → 计入毛收入
+	_check("收口 正增量计入毛收入", Current._run_coins_earned == coins_earned_before + 25)
+	Current.total_coins = Current.total_coins  ## 自刷新惯用法增量为 0
+	_check("收口 自刷新惯用法增量为 0", Current._run_coins_earned == coins_earned_before + 25)
+	Current.total_score += 5    ## setter 正增量计入毛收入（137 直写对照；注入后 142 < 第1关目标 150，
+	                             ## 避免读档后回合边界 _check_stage_clear 自动过关卡死 headless 流程）
+	_check("收口 得分正增量计入毛收入", Current._run_score_earned == score_earned_before + 5)
 	Current._total_score += 137
 	BuffSystem.resonance_ramp += 0.05
 	## swift_streak 的 granted 前置条件为连续得分回合数≥2：注入态必须与前置一致，
@@ -326,6 +344,11 @@ func _run_phase1() -> void:
 	gm._capture_turn_boundary()
 	var snap2: Dictionary = SaveManager.get_last_snapshot()
 	_check("注入 total_score 已入快照", int(snap2.run_state.total_score) == Current._total_score)
+	_check("注入余额/毛收入累计器已入快照",
+		int(snap2.run_state.total_coins) == Current._total_coins
+		and int(snap2.run_state.run_coins_earned) == Current._run_coins_earned
+		and int(snap2.run_state.run_score_earned) == Current._run_score_earned
+		and int(snap2.run_state.pre_move_score_earned) == Current._pre_move_score_earned)
 	_check("注入 resonance_ramp 已入快照", float(snap2.resonance_ramp) == BuffSystem.resonance_ramp)
 	_check("注入移动力（base+4）已入快照", int(snap2.board.hero.hero_movement) == _mv_base + 4)
 	## ---- 3.2 行形状（id/lifecycle/timing/local_state）----
@@ -414,6 +437,13 @@ func _run_phase2() -> void:
 	_check("2.4 run_state 等价", run_state_ok)
 	if not run_state_ok:
 		deep_diff(Current.export_run_state(), data.run_state, "run_state")
+	## ---- 2.4 金币余额与毛收入累计器恢复（fix-settlement-run-totals 读档归 0 bug 回归）----
+	_check("2.4 金币余额恢复且非 0", int(Current._total_coins) == int(data.run_state.total_coins) \
+		and int(Current._total_coins) > 0)
+	_check("2.4 毛收入累计器与配对快照恢复等价",
+		int(Current._run_coins_earned) == int(data.run_state.run_coins_earned) \
+		and int(Current._run_score_earned) == int(data.run_state.run_score_earned) \
+		and int(Current._pre_move_score_earned) == int(data.run_state.pre_move_score_earned))
 	## ---- 2.4 HUD 等价（label 直写）----
 	_check("2.4 HUD total_score 与快照一致", String(gm.total_score.text) == str(old_score))
 	_check("2.4 HUD hp 与快照一致", Current._player_hp == int(data.run_state.player_hp))
@@ -578,11 +608,18 @@ func _run_phase2() -> void:
 		int(fresh.run_state.total_score) != old_score)
 	## ============================ 7.2 通关 + 6.1 出口B「退出」 ============================
 	Current._count_stage = 12
+	Current.total_score += 40   ## setter 正增分为毛收入素材（胜利路径先清零关内分，结算仍应非 0）
 	_check("7.2 通关前存档存在", FileAccess.file_exists(SaveManager.SAVE_PATH))
 	await gm2._on_stage_clear_button_pressed()
 	var settle2: Node = gm2.get_node("end_settlement_ui")
 	var win_shown := await _wait_until(func() -> bool: return settle2.visible, 12.0)
 	_check("7.2 通关后结算画面出现", win_shown)
+	## ---- 4.1 胜利态结算取数（毛收入口径：胜利清零后总得分非 0）----
+	_check("4.1 胜利态总得分=毛收入累计器且非 0",
+		settle2._stats.get("total_score", -1) == Current._run_score_earned
+		and int(settle2._stats.get("total_score", 0)) != 0)
+	_check("4.1 胜利态总金币=毛收入累计器",
+		settle2._stats.get("coins", -1) == Current._run_coins_earned)
 	settle2._on_end_button_pressed()
 	await get_tree().create_timer(0.4).timeout
 	_check("6.1 通关退出后存档槽已清空", not FileAccess.file_exists(SaveManager.SAVE_PATH))
