@@ -565,10 +565,19 @@ func _run_phase2() -> void:
 	_check("2.2 刷新费用/金币技能行等价",
 		int(shop.refresh_cost) == int(gm.buff_refresh_cost)
 		and deep_equal(shop.coin_skill_row, gm.shop_coin_skill_row))
-	_check("2.2 已购金币技能/出现记录/已用 debuff 池等价",
+	_check("2.2 已购金币技能/已用 debuff 池等价",
 		bool(shop.coin_skill_bought) == gm.shop_coin_skill_bought
-		and deep_equal(shop.used_debuff_ids, gm._used_debuff_ids)
-		and deep_equal(shop.appeared_coin_skill_ids, gm.appeared_coin_skill_ids))
+		and deep_equal(shop.used_debuff_ids, gm._used_debuff_ids))
+	## ---- 2.2 appeared 机制移除后的行为级检查：恢复技能栏后商店抽选不命中已持有技能 ----
+	## 以池中首个技能模拟玩家已持有（与真实购买进栏的数据同构），再走真实抽选路径验证排除
+	var coin_skill_bar_backup: Array = Current.coin_skill_array_dict.duplicate(true)
+	Current.coin_skill_array_dict = [gm.coin_skill_json_data[0].duplicate(true)]
+	var held_id := str(Current.coin_skill_array_dict[0]["coin_skill_id"])
+	gm._set_shop_coin_skill()
+	var draw_id := str(gm.shop_coin_skill_row.get("coin_skill_id", ""))
+	var draw_not_owned := draw_id != "" and draw_id != held_id
+	Current.coin_skill_array_dict = coin_skill_bar_backup
+	_check("2.2 恢复技能栏后商店抽选结果不在已持有技能中", draw_not_owned)
 	## ==================== 5.2 端到端：读档后首回合照常生成史莱姆（顺带走真实失败结算） ====================
 	var slime_count_before: int = gm.enemys.get_child_count()
 	var pending_count: int = gm._slime_create_array.size()

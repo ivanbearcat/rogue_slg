@@ -257,7 +257,6 @@ func _export_shop(gm: Node) -> Dictionary:
 		"refresh_cost": int(gm.buff_refresh_cost),
 		"coin_skill_row": gm.shop_coin_skill_row.duplicate(true),
 		"coin_skill_bought": gm.shop_coin_skill_bought,
-		"appeared_coin_skill_ids": gm.appeared_coin_skill_ids.duplicate(),
 		"pending_shop_skill": gm.pending_shop_skill.duplicate(true),
 		"used_debuff_ids": gm._used_debuff_ids.duplicate(),
 	}

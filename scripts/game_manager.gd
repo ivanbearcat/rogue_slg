@@ -287,8 +287,6 @@ var shop_coin_skill_row: Dictionary = {}
 var shop_coin_skill_bought := false
 ## 待处理的商店技能（购买后等待添加或替换）
 var pending_shop_skill: Dictionary = {}
-## 已在商店出现过的金币技能ID列表（防止重复出现）
-var appeared_coin_skill_ids: Array = []
 ## 本run已随机抽中的debuff_id列表（跨关卡不重复，run开始时清空）
 var _used_debuff_ids: Array = []
 ## 升级待增加的HP值（延迟到扣血之后应用，确保先扣血再加升级血）
@@ -575,8 +573,7 @@ func _restore_shop_from_data(shop: Dictionary) -> void:
 	if shop_coin_skill_bought:
 		shop_coin_skill_button.disabled = true
 		shop_coin_skill_icon.modulate.a = 0.3
-	## 技能池出现记录 / 待处理技能 / 已用 debuff 池
-	appeared_coin_skill_ids = shop.get("appeared_coin_skill_ids", [])
+	## 待处理技能 / 已用 debuff 池
 	pending_shop_skill = shop.get("pending_shop_skill", {})
 	if not pending_shop_skill is Dictionary:
 		pending_shop_skill = {}
@@ -2091,17 +2088,15 @@ func _set_shop_buff():
 
 ## 设置商店金币技能（每关随机1个技能展示在商店）
 func _set_shop_coin_skill():
-	## 从尚未出现过的金币技能中随机抽取1个（所有技能概率相同，不重复）
+	## 从技能栏未持有的金币技能中随机抽取1个（未持有的技能可重复上架，已持有的技能不再上架）
+	var owned_skill_ids: Array = []
+	for row in Current.coin_skill_array_dict:
+		owned_skill_ids.append(row["coin_skill_id"])
 	var available_skills: Array = []
 	for row in coin_skill_json_data:
-		if row["coin_skill_id"] not in appeared_coin_skill_ids:
+		if row["coin_skill_id"] not in owned_skill_ids:
 			available_skills.append(row)
-	## 如果所有技能都已出现过，重置出现记录
-	if available_skills.is_empty():
-		appeared_coin_skill_ids.clear()
-		available_skills = coin_skill_json_data.duplicate()
 	shop_coin_skill_row = available_skills.pick_random()
-	appeared_coin_skill_ids.append(shop_coin_skill_row["coin_skill_id"])
 	## 设置商店技能图标
 	shop_coin_skill_icon.texture = load(shop_coin_skill_row["coin_skill_icon"])
 	TooltipManager.set_tooltip(shop_coin_skill_icon, TooltipFormatter.format_coin_skill(shop_coin_skill_row))
