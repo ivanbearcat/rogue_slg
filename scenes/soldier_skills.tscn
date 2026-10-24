@@ -145,7 +145,7 @@ offset_left = -1.0000002
 offset_top = -0.9999998
 offset_right = -1.0000002
 offset_bottom = -0.9999998
-scale = Vector2(0.82, 0.82)
+scale = Vector2(0.87, 0.87)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1739205950]
 layout_mode = 0

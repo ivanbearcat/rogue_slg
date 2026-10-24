@@ -33,24 +33,18 @@ func _on_timer_timeout():
 	## 按钮1
 	if game_manager.coin_skill_1.button_pressed == true:
 		game_manager.coin_skill_1_icon.position.y = 4.25
-		game_manager.q_texture.position.y = 3
 	else:
 		game_manager.coin_skill_1_icon.position.y = 3.25
-		game_manager.q_texture.position.y = 2
 	## 按钮2
 	if game_manager.coin_skill_2.button_pressed == true:
 		game_manager.coin_skill_2_icon.position.y = 4.25
-		game_manager.w_texture.position.y = 4
 	else:
 		game_manager.coin_skill_2_icon.position.y = 3.25
-		game_manager.w_texture.position.y = 3
 	## 按钮3
 	if game_manager.coin_skill_3.button_pressed == true:
 		game_manager.coin_skill_3_icon.position.y = 4.25
-		game_manager.e_texture.position.y = 4
 	else:
 		game_manager.coin_skill_3_icon.position.y = 3.25
-		game_manager.e_texture.position.y = 3
 
 func _clicked_public_action(coin_skill_name):
 	## 遥测:金币技能使用(玩家点击唯一收口,含替换后的技能)
@@ -85,11 +79,7 @@ func reset_all_button():
 	for icon in [game_manager.coin_skill_1_icon, game_manager.coin_skill_2_icon, game_manager.coin_skill_3_icon]:
 		if icon.position.y != 3.25:
 			icon.position.y = 3.25
-	if game_manager.q_texture.position.y != 2:
-		game_manager.q_texture.position.y = 2
-	for texture in [game_manager.w_texture, game_manager.e_texture]:
-		if texture.position.y != 3:
-			texture.position.y = 3
+
 
 func reroll_all():
 	for grid in Current.all_grids_array:

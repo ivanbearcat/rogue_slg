@@ -412,18 +412,6 @@ events = [SubResource("InputEventKey_vxglm")]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(3, 51, 26, 26)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_chjal"]
-atlas = ExtResource("20_gqmmt")
-region = Rect2(34, 49, 5, 6)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cjqg0"]
-atlas = ExtResource("20_gqmmt")
-region = Rect2(41, 50, 5, 5)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vchkt"]
-atlas = ExtResource("20_gqmmt")
-region = Rect2(34, 57, 4, 5)
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_574tw"]
 diffuse_texture = ExtResource("9_njo2n")
 
@@ -448,6 +436,18 @@ outline_color = Color(0, 0, 0, 1)
 atlas = ExtResource("6_1gmj2")
 region = Rect2(1, 140, 26, 28)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8jky"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(192, 7, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmb1v"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(210, 7, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fuf3a"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(228, 7, 18, 18)
+
 [sub_resource type="InputEventKey" id="InputEventKey_0ld40"]
 device = -1
 pressed = true
@@ -468,18 +468,6 @@ region = Rect2(1, 33, 12, 14)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pm3ni"]
 atlas = ExtResource("32_5poiv")
 region = Rect2(0, 16, 15, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j8jky"]
-atlas = ExtResource("20_gqmmt")
-region = Rect2(192, 7, 18, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kmb1v"]
-atlas = ExtResource("20_gqmmt")
-region = Rect2(210, 7, 18, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fuf3a"]
-atlas = ExtResource("20_gqmmt")
-region = Rect2(228, 7, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ld40"]
 atlas = ExtResource("32_5poiv")
@@ -985,10 +973,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -76.00001
-offset_top = 13.0
+offset_left = -85.0
+offset_top = 11.0
 offset_right = 10.977272
-offset_bottom = 99.0
+offset_bottom = 98.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -1588,7 +1576,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_left = 138.0
 offset_top = 12.0
-offset_right = 220.0
+offset_right = 230.0
 offset_bottom = 69.0
 mouse_filter = 2
 
@@ -1597,6 +1585,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 6.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -1703,9 +1692,9 @@ stretch_mode = 5
 [node name="hero_skill" type="Control" parent="." unique_id=908408492]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -75.0
+offset_left = -82.0
 offset_top = 99.0
-offset_right = 7.0
+offset_right = 8.0
 offset_bottom = 133.0
 
 [node name="scale_wrapper" parent="hero_skill" unique_id=1575915715 instance=ExtResource("19_kmb1v")]
@@ -1755,9 +1744,9 @@ patch_margin_bottom = 22
 layout_mode = 3
 anchors_preset = 0
 offset_left = 139.0
-offset_top = 98.25
-offset_right = 219.0
-offset_bottom = 124.0
+offset_top = 99.25
+offset_right = 229.0
+offset_bottom = 136.0
 mouse_filter = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="hero_skill2" unique_id=1643445843]
@@ -1902,54 +1891,6 @@ offset_right = 108.5
 offset_bottom = 49.0
 scale = Vector2(0.3, 0.3)
 bbcode_enabled = true
-
-[node name="Q_texture" type="TextureRect" parent="hero_skill2" unique_id=428272250]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 18.25
-offset_top = 2.0
-offset_right = -55.75
-offset_bottom = -26.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("AtlasTexture_chjal")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="W_texture" type="TextureRect" parent="hero_skill2" unique_id=2034832798]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 46.25
-offset_top = 3.0
-offset_right = -29.75
-offset_bottom = -26.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("AtlasTexture_cjqg0")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="E_texture" type="TextureRect" parent="hero_skill2" unique_id=6953698]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 73.25
-offset_top = 3.0
-offset_right = -1.75
-offset_bottom = -25.75
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("AtlasTexture_vchkt")
-expand_mode = 2
-stretch_mode = 5
 
 [node name="real_time_score" type="Control" parent="." unique_id=125637752]
 visible = false
@@ -2206,16 +2147,16 @@ text = "7"
 [node name="bottom_ui" type="Control" parent="." unique_id=1654193881]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -75.0
-offset_top = 133.0
-offset_right = 220.0
-offset_bottom = 155.0
+offset_left = -88.0
+offset_top = 135.0
+offset_right = 232.0
+offset_bottom = 159.0
 
 [node name="scale_wrapper" parent="bottom_ui" unique_id=860535787 instance=ExtResource("19_kmb1v")]
 layout_mode = 0
-offset_left = -0.99999833
-offset_right = 1478.9999
-offset_bottom = 110.0
+offset_left = 2.0000017
+offset_right = 1581.9999
+offset_bottom = 120.0
 
 [node name="left_bottom_ui" type="Control" parent="bottom_ui" unique_id=1300579138]
 layout_mode = 1
@@ -2245,11 +2186,23 @@ layout_mode = 2
 
 [node name="level_gold_power" type="Control" parent="bottom_ui" unique_id=382825118]
 anchors_preset = 0
-offset_left = 1.0
+offset_left = 6.0
 offset_top = 1.0
-offset_right = 112.0
-offset_bottom = 22.0
+offset_right = 104.0
+offset_bottom = 25.0
 size_flags_horizontal = 3
+
+[node name="pause_button" type="TextureButton" parent="bottom_ui/level_gold_power" unique_id=2022266193]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 5.0
+offset_right = 26.0
+offset_bottom = 29.0
+scale = Vector2(0.5, 0.5)
+texture_normal = SubResource("AtlasTexture_j8jky")
+texture_pressed = SubResource("AtlasTexture_kmb1v")
+texture_hover = SubResource("AtlasTexture_fuf3a")
+stretch_mode = 5
 
 [node name="help_button" type="TextureButton" parent="bottom_ui/level_gold_power" unique_id=442165496]
 unique_name_in_owner = true
@@ -2257,28 +2210,16 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 14.0
-offset_top = -5.5
-offset_right = 36.0
-offset_bottom = 15.25
+offset_left = 16.0
+offset_top = -6.5
+offset_right = 38.0
+offset_bottom = 14.25
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 shortcut = SubResource("Shortcut_gqmmt")
 texture_normal = SubResource("AtlasTexture_yc10j")
 texture_pressed = SubResource("AtlasTexture_jscy8")
 texture_hover = SubResource("AtlasTexture_pm3ni")
-stretch_mode = 5
-
-[node name="pause_button" type="TextureButton" parent="bottom_ui/level_gold_power" unique_id=2022266193]
-layout_mode = 0
-offset_left = 2.0
-offset_top = 4.0
-offset_right = 26.0
-offset_bottom = 28.0
-scale = Vector2(0.5, 0.5)
-texture_normal = SubResource("AtlasTexture_j8jky")
-texture_pressed = SubResource("AtlasTexture_kmb1v")
-texture_hover = SubResource("AtlasTexture_fuf3a")
 stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="bottom_ui/level_gold_power" unique_id=1492370355]
@@ -2288,10 +2229,10 @@ anchor_left = 0.17
 anchor_top = 1.0
 anchor_right = 0.17
 anchor_bottom = 1.0
-offset_left = 6.129999
-offset_top = -18.0
-offset_right = 64.13
-offset_bottom = -4.0
+offset_left = 13.130001
+offset_top = -20.0
+offset_right = 71.12999
+offset_bottom = -6.0
 grow_vertical = 0
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_0ld40")
@@ -2377,18 +2318,19 @@ horizontal_alignment = 2
 [node name="exp_bar" type="Control" parent="bottom_ui" unique_id=1946821939]
 anchors_preset = 0
 offset_left = 86.0
-offset_top = 4.0
-offset_right = 375.0
-offset_bottom = 25.0
+offset_top = 5.0
+offset_right = 221.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.55
 
 [node name="exp_bar" type="TextureProgressBar" parent="bottom_ui/exp_bar" unique_id=1147667567]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 4.0
-offset_right = 120.0
-offset_bottom = 13.0
+offset_left = 14.0
+offset_top = 5.0
+offset_right = 134.0
+offset_bottom = 14.0
 size_flags_vertical = 3
 max_value = 3.0
 nine_patch_stretch = true
@@ -2403,11 +2345,11 @@ texture_progress = SubResource("AtlasTexture_trceg")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 4.25
-offset_right = 10.9999695
-offset_bottom = 28.25
+offset_left = 10.999999
+offset_top = 5.25
+offset_right = 21.99997
+offset_bottom = 29.25
 grow_horizontal = 2
-grow_vertical = 2
 scale = Vector2(0.4, 0.4)
 
 [node name="exp_label" type="Label" parent="bottom_ui/exp_bar/scale_wrapper" unique_id=111870866]
@@ -2427,9 +2369,9 @@ vertical_alignment = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = 138.0
-offset_top = 136.5
-offset_right = 218.0
-offset_bottom = 150.5
+offset_top = 140.5
+offset_right = 226.0
+offset_bottom = 154.5
 mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="coin_skill_trun_button" unique_id=574359919]
@@ -2437,6 +2379,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -1.0
+offset_right = -1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(58, 16)
@@ -2551,9 +2496,9 @@ stretch_mode = 5
 [node name="round_process_bar" type="Control" parent="." unique_id=792410277]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 134.25
+offset_left = 135.25
 offset_top = 91.25
-offset_right = 212.25
+offset_right = 213.25
 offset_bottom = 103.25
 mouse_filter = 2
 
@@ -2618,9 +2563,9 @@ text = "回血: 0/20"
 
 [node name="scale_wrapper" type="Control" parent="round_process_bar" unique_id=1589407210]
 anchors_preset = 0
-offset_left = 57.0
+offset_left = 63.0
 offset_top = 2.0
-offset_right = 57.0
+offset_right = 63.0
 offset_bottom = 2.0
 scale = Vector2(0.27, 0.27)
 
@@ -2634,9 +2579,9 @@ texture = ExtResource("28_5he1u")
 
 [node name="scale_wrapper2" type="Control" parent="round_process_bar" unique_id=1633831527]
 anchors_preset = 0
-offset_left = -2.0
+offset_left = 5.0
 offset_top = -2.0
-offset_right = -2.0
+offset_right = 5.0
 offset_bottom = -2.0
 scale = Vector2(0.4, 0.4)
 
@@ -2655,7 +2600,7 @@ unique_name_in_owner = true
 layout_mode = 1
 offset_left = 5.75
 offset_top = 3.75
-offset_right = 56.75
+offset_right = 58.75
 offset_bottom = 12.75
 max_value = 35.0
 value = 12.0
@@ -2669,17 +2614,18 @@ texture_progress = SubResource("AtlasTexture_rj7ey")
 
 [node name="scale" type="Control" parent="round_process_bar/blood_bottle_progress" unique_id=1177626358]
 anchors_preset = 0
-offset_right = 40.0
+offset_left = -1.0
+offset_right = 39.0
 offset_bottom = 40.0
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.45, 0.45)
 
 [node name="blood_bottle_progress_label" type="Label" parent="round_process_bar/blood_bottle_progress/scale" unique_id=1887781540]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 42.5
-offset_top = 5.0
+offset_top = 5.5
 offset_right = 82.5
-offset_bottom = 20.0
+offset_bottom = 17.5
 text = "0/35"
 label_settings = SubResource("LabelSettings_vc5cj")
 horizontal_alignment = 1
@@ -2688,9 +2634,9 @@ horizontal_alignment = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = 140.0
-offset_top = -9.0
-offset_right = 195.0
-offset_bottom = 4.0
+offset_top = -12.0
+offset_right = 217.0
+offset_bottom = 7.0
 
 [node name="scale" type="Control" parent="debuff_ui" unique_id=185189610]
 layout_mode = 1
@@ -2734,9 +2680,9 @@ grow_vertical = 2
 layout_mode = 3
 anchors_preset = 0
 offset_left = 11.0
-offset_top = -11.75
-offset_right = 132.75
-offset_bottom = 9.25
+offset_top = -15.0
+offset_right = 132.0
+offset_bottom = 7.25
 
 [node name="scale" type="Control" parent="buff_ui" unique_id=1960425395]
 layout_mode = 1
@@ -2919,10 +2865,10 @@ vertical_alignment = 1
 [node name="score_preview_ui" type="Control" parent="." unique_id=515712514]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -88.0
-offset_top = -10.0
-offset_right = -37.0
-offset_bottom = 9.0
+offset_left = -84.0
+offset_top = -16.0
+offset_right = -28.0
+offset_bottom = 6.0
 
 [node name="scale" type="Control" parent="score_preview_ui" unique_id=9964442]
 layout_mode = 1
@@ -2964,10 +2910,10 @@ label_settings = SubResource("LabelSettings_xljpf")
 [node name="dice_package_ui" type="Control" parent="." unique_id=186964072]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -24.0
-offset_top = -10.0
-offset_right = 3.0
-offset_bottom = 11.0
+offset_left = -22.0
+offset_top = -15.0
+offset_right = 5.0
+offset_bottom = 6.0
 
 [node name="scale" type="Control" parent="dice_package_ui" unique_id=241438952]
 layout_mode = 1
