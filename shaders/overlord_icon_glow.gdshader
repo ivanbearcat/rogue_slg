@@ -6,6 +6,8 @@ shader_type canvas_item;
 
 // 轮廓光颜色（传入 TooltipFormatter.FAMILY_COLORS[family]）
 uniform vec4 glow_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+// 颜色加深系数：0 = 原家族色，1 = 纯黑；0.8 即"接近黑色的家族色"（保留少量色调以区分家族）
+uniform float color_darken : hint_range(0.0, 1.0) = 0.8;
 // 轮廓半径（源像素，2 = 11px 显示下约 0.7px 细线）
 uniform float thickness : hint_range(0.0, 6.0) = 2.0;
 // 呼吸 alpha 下限/上限/周期
@@ -29,6 +31,7 @@ void fragment() {
 	// 呼吸 alpha（TIME 驱动，周期 pulse_period）
 	float breath = 0.5 + 0.5 * sin(TIME * 6.2831853 / pulse_period);
 	float glow = outline * mix(glow_alpha_min, glow_alpha_max, breath);
-	// 环区域向家族色混合；sprite 本体保持原样
-	COLOR = vec4(mix(base.rgb, glow_color.rgb, glow), max(base.a, glow));
+	// 环区域向加深后的家族色混合（接近黑色）；sprite 本体保持原样
+	vec3 glow_col = mix(glow_color.rgb, vec3(0.0), color_darken);
+	COLOR = vec4(mix(base.rgb, glow_col, glow), max(base.a, glow));
 }
