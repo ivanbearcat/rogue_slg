@@ -3,10 +3,11 @@ extends PanelContainer
 ## RichTooltip脚本组件
 ## 挂载到PanelContainer节点上，提供set_rich_tooltip()方法
 ## 自动监听mouse_enter/mouse_exit信号调用TooltipManager显示/隐藏BBCode tooltip
-## 支持脉冲边框动画（同族BUFF≥4时激活）
+## 支持霸主图标家族色轮廓呼吸光（_start_outline_glow，shader驱动）
+
+const OVERLORD_GLOW_SHADER := preload("res://shaders/overlord_icon_glow.gdshader")
 
 var _rich_tooltip_text: String = ""
-var _pulse_tween: Tween = null
 var _is_hovered: bool = false
 
 ## texture属性代理：转发到内部TextureRect，保持buff_texture.texture = xxx的兼容性
@@ -70,27 +71,17 @@ func _on_mouse_exited() -> void:
 	_is_hovered = false
 	TooltipManager.hide_tooltip()
 
-## 启动脉冲边框动画
-func _start_pulse_border(color: Color) -> void:
-	_stop_pulse_border()
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0, 0, 0, 0)
-	style.set_border_width_all(2)
-	style.border_color = color
-	style.anti_aliasing = false
-	add_theme_stylebox_override("panel", style)
-	# alpha脉冲动画：0.3 ↔ 1.0，周期1.5秒
-	_pulse_tween = create_tween().set_loops()
-	_pulse_tween.tween_property(style, "border_color:a", 0.3, 0.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_pulse_tween.tween_property(style, "border_color:a", 1.0, 0.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+## 启动家族色轮廓呼吸光（霸主图标专属）：沿图标 sprite 的 alpha 轮廓画一圈细发光线，
+## shader TIME 驱动呼吸；绘制发生在 sprite 画布的透明区域，不占任何布局，面板尺寸不变。
+func _start_outline_glow(color: Color) -> void:
+	_stop_outline_glow()
+	var mat := ShaderMaterial.new()
+	mat.shader = OVERLORD_GLOW_SHADER
+	mat.set_shader_parameter("glow_color", color)
+	get_texture_rect().material = mat
 
-## 停止脉冲边框动画，恢复无边框
-func _stop_pulse_border() -> void:
-	if _pulse_tween:
-		_pulse_tween.kill()
-		_pulse_tween = null
-	# 恢复默认无边框StyleBox
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0, 0, 0, 0)
-	style.set_border_width_all(0)
-	add_theme_stylebox_override("panel", style)
+## 停止轮廓呼吸光，卸下 shader 材质
+func _stop_outline_glow() -> void:
+	var rect := get_texture_rect()
+	if rect:
+		rect.material = null

@@ -43,6 +43,7 @@ func _run_integration_tests():
 	print("==================================================")
 
 	_test_6_1_overlord_auto_registration()
+	_test_6_2_flash_logic()
 	_test_6_3_swarm_call_pending_low_slime()
 	_test_6_4_swarm_call_no_trigger_enough_slime()
 	_test_6_5_hunt_overlord_auto_registration()
@@ -66,9 +67,9 @@ func _test_6_1_overlord_auto_registration():
 
 	var gm = get_tree().root.get_node("game_manager")
 	var swarm_metas = [
-		{"buff_id": "swarm_tithe", "family": "swarm", "buff_res": "res://scripts/buff/swarm_tithe_buff.gd", "buff_type": "post_attack_buff", "tags": []},
-		{"buff_id": "tide_crusher", "family": "swarm", "buff_res": "res://scripts/buff/tide_crusher_buff.gd", "buff_type": "post_attack_buff", "tags": []},
-		{"buff_id": "slime_rebirth", "family": "swarm", "buff_res": "res://scripts/buff/slime_rebirth_buff.gd", "buff_type": "post_attack_buff", "tags": []},
+		{"buff_id": "swarm_tithe", "family": "swarm", "buff_icon": "res://images/buff_icon/swarm_tithe.png", "buff_res": "res://scripts/buff/swarm_tithe_buff.gd", "buff_type": "post_attack_buff", "tags": []},
+		{"buff_id": "tide_crusher", "family": "swarm", "buff_icon": "res://images/buff_icon/tide_crusher.png", "buff_res": "res://scripts/buff/tide_crusher_buff.gd", "buff_type": "post_attack_buff", "tags": []},
+		{"buff_id": "slime_rebirth", "family": "swarm", "buff_icon": "res://images/buff_icon/slime_rebirth.png", "buff_res": "res://scripts/buff/slime_rebirth_buff.gd", "buff_type": "post_attack_buff", "tags": []},
 	]
 
 	for meta in swarm_metas:
@@ -110,8 +111,8 @@ func _test_6_1_overlord_auto_registration():
 	## 验证overlord在pipeline中（process_buff加分逻辑已在单元测试test_swarm_overlord_buff中验证）
 	## 此处不调用process_buff以避免headless下EffectManager.float_number_effect/buff_pop_effect的tween崩溃
 
-## 6.2: 同族图标联动闪烁逻辑验证
-## 验证get_family_buffs返回正确数量且overlord的buff_texture为null（被跳过）
+## 6.2: 霸主注册后有自身 texture 且触发闪光仅闪自身
+## （新契约：霸主 set_buff 创建图标挂入BUFF栏；get_family_buffs 仅保留查询用途，不再用于同族联动闪烁）
 func _test_6_2_flash_logic():
 	var test_name = "6.2_flash_logic"
 	print("\n--- %s ---" % test_name)
@@ -120,38 +121,38 @@ func _test_6_2_flash_logic():
 	var gm = get_tree().root.get_node("game_manager")
 	var buff_script = load("res://scripts/buff/buff.gd")
 
-	## 注册3个带buff_texture的swarm buff（不add_child，仅验证逻辑）
+	## 注册3个普通swarm buff（手动PanelContainer图标代表普通图标）
 	for i in range(3):
 		var meta = {"buff_id": "swarm_flash_%d" % i, "family": "swarm", "tags": []}
 		var buff = buff_script.new(meta, gm)
-		buff.buff_texture = TextureRect.new()
+		buff.buff_texture = PanelContainer.new()
 		BuffSystem.set_post_attack_buff(buff, BuffSystem.buff_type.ALWAYS)
 
-	## 注册swarm_overlord（无buff_texture，设计如此）
-	var overlord_meta = {"buff_id": "swarm_overlord", "family": "swarm", "tags": []}
-	var overlord = buff_script.new(overlord_meta, gm)
-	## overlord.buff_texture 保持 null（设计如此）
+	## 注册真实 swarm_overlord（buff.json meta → set_buff 经 _setup_overlord_icon 创建自身图标）
+	var overlord_row := {}
+	for row in Tools.load_json_file("res://config/buff.json"):
+		if row.get("buff_id", "") == "swarm_overlord":
+			overlord_row = row
+			break
+	var overlord = load(overlord_row["buff_res"]).new(overlord_row, gm)
 	BuffSystem.set_post_attack_buff(overlord, BuffSystem.buff_type.ALWAYS)
 
-	## 验证get_family_buffs返回4个（3 normal + 1 overlord）
+	## 验证get_family_buffs返回4个（3 normal + 1 overlord，仅查询用途）
 	var family_buffs = BuffSystem.get_family_buffs("swarm")
 	_assert_eq(test_name, family_buffs.size(), 4, "get_family_buffs('swarm') should return 4 (3 normal + 1 overlord)")
 
-	## 验证闪烁逻辑：对非null buff_texture计数（overlord的null应被跳过）
-	var flash_calls = 0
-	for fb in family_buffs:
-		if fb.buff_texture != null:
-			flash_calls += 1
-	_assert_eq(test_name, flash_calls, 3, "flash logic should target 3 non-null textures (skipping null overlord)")
-
-	## 验证overlord的buff_texture为null
-	var overlord_buff = null
-	for fb in family_buffs:
-		if fb.buff_meta.get("buff_id", "") == "swarm_overlord":
-			overlord_buff = fb
-			break
+	## 验证霸主注册后有自身 texture（新契约，旧契约断言 buff_texture == null 已废除）
+	var overlord_buff = BuffSystem.get_buff_instance("swarm_overlord")
 	_assert_true(test_name, overlord_buff != null, "swarm_overlord should be in family_buffs")
-	_assert_eq(test_name, overlord_buff.buff_texture, null, "overlord buff_texture should be null (no icon by design)")
+	_assert_true(test_name, overlord_buff.buff_texture != null, "overlord should have its own buff_texture (icon by design)")
+	_assert_true(test_name, is_instance_valid(overlord_buff.buff_texture), "overlord buff_texture should be a valid node")
+	_assert_true(test_name, gm.buff_container.is_ancestor_of(overlord_buff.buff_texture), "overlord icon should be inside buff_container")
+
+	## 验证闪烁目标：霸主仅闪自身（目标集合 = 霸主自身1个，不再遍历同族全部非null图标）
+	var flash_targets = []
+	if overlord_buff.buff_texture != null:
+		flash_targets.append(overlord_buff)
+	_assert_eq(test_name, flash_targets.size(), 1, "flash logic targets only the overlord's own texture (self-flash contract)")
 
 ## 6.5: 其他霸主（hunt）自动注册验证
 func _test_6_5_hunt_overlord_auto_registration():
@@ -275,7 +276,7 @@ func _test_6_6_desperation_immunity():
 	_assert_true(test_name, Current.has_death_immunity, "after desperation_overlord set_buff: has_death_immunity should be TRUE")
 	_assert_false(test_name, Current.death_immunity_used, "death_immunity_used should be false (not used yet)")
 
-## 额外：get_family_buffs API
+## 额外：get_family_buffs API（查询用途；闪烁已收敛为霸主仅闪自身）
 func _test_get_family_buffs_api():
 	var test_name = "get_family_buffs_api_and_flash_logic"
 	print("\n--- %s ---" % test_name)
@@ -284,38 +285,35 @@ func _test_get_family_buffs_api():
 	var gm = get_tree().root.get_node("game_manager")
 	var buff_script = load("res://scripts/buff/buff.gd")
 
-	## 注册3个带buff_texture的swarm buff（buff_texture类型为PanelContainer）
+	## 注册3个普通swarm图标buff（buff_texture类型为PanelContainer）
 	for i in range(3):
 		var meta = {"buff_id": "swarm_test_%d" % i, "family": "swarm", "tags": []}
 		var buff = buff_script.new(meta, gm)
 		buff.buff_texture = PanelContainer.new()
 		BuffSystem.set_post_attack_buff(buff, BuffSystem.buff_type.ALWAYS)
 
-	## 注册1个无buff_texture的swarm overlord（模拟霸主，设计如此无图标）
+	## 注册1个霸主（手动buff_texture模拟霸主自身图标，验证查询API含霸主成员）
 	var overlord_meta = {"buff_id": "swarm_overlord", "family": "swarm", "tags": []}
 	var overlord = buff_script.new(overlord_meta, gm)
-	## overlord.buff_texture 保持 null（设计如此）
+	overlord.buff_texture = PanelContainer.new()
 	BuffSystem.set_post_attack_buff(overlord, BuffSystem.buff_type.ALWAYS)
 
 	## 验证get_family_buffs返回4个（3 normal + 1 overlord）
 	var family_buffs = BuffSystem.get_family_buffs("swarm")
 	_assert_eq(test_name, family_buffs.size(), 4, "get_family_buffs('swarm') should return 4 (3 normal + 1 overlord)")
 
-	## 验证闪烁逻辑：对非null buff_texture计数（overlord的null应被跳过）
-	var flash_targets = 0
-	for fb in family_buffs:
-		if fb.buff_texture != null:
-			flash_targets += 1
-	_assert_eq(test_name, flash_targets, 3, "flash logic targets 3 non-null textures (skipping null overlord)")
-
-	## 验证overlord的buff_texture为null
+	## 验证闪烁目标：霸主仅闪自身（目标集合 = 霸主自身1个，不再遍历同族全部非null图标）
 	var overlord_buff = null
 	for fb in family_buffs:
 		if fb.buff_meta.get("buff_id", "") == "swarm_overlord":
 			overlord_buff = fb
 			break
 	_assert_true(test_name, overlord_buff != null, "swarm_overlord should be in family_buffs")
-	_assert_eq(test_name, overlord_buff.buff_texture, null, "overlord buff_texture should be null (no icon by design)")
+	_assert_true(test_name, overlord_buff.buff_texture != null, "overlord should have its own buff_texture (icon by design)")
+	var flash_targets = []
+	if overlord_buff.buff_texture != null:
+		flash_targets.append(overlord_buff)
+	_assert_eq(test_name, flash_targets.size(), 1, "flash logic targets only the overlord's own texture (self-flash contract)")
 
 	## 验证空family返回空数组
 	var empty_result = BuffSystem.get_family_buffs("nonexistent")

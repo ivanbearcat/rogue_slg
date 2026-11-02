@@ -1722,6 +1722,10 @@ func _pre_hero_turn_begin():
 	if Current.player_hp <= 0 and Current.has_death_immunity and not Current.death_immunity_used:
 		Current.death_immunity_used = true
 		Current.player_hp = 1
+		# 免死救场闪光：绝境霸主图标亮一次（保留原 print）
+		var desperation_overlord = BuffSystem.get_buff_instance("desperation_overlord")
+		if desperation_overlord:
+			desperation_overlord.flash_icon()
 		print("绝境霸主免死触发！HP恢复至1")
 	## 判断失败：HP<=0时游戏结束
 	if Current.player_hp <= 0:
@@ -1802,11 +1806,10 @@ func _check_stage_clear() -> bool:
 			else:
 				Current.max_hp += 1
 				Current.player_hp = Current.max_hp
-			# 同族图标联动闪烁
-			var family_buffs = BuffSystem.get_family_buffs("vitality")
-			for fb in family_buffs:
-				if fb.buff_texture:
-					EffectManager.buff_pop_effect(fb.buff_texture)
+			# 生机霸主过关触发：仅闪霸主自身图标（不再联动闪烁同族）
+			var vitality_overlord = BuffSystem.get_buff_instance("vitality_overlord")
+			if vitality_overlord:
+				vitality_overlord.flash_icon()
 		## 遥测:过关事件(置于 clear_stage_buff 之前,保证 buff 明细含本关条目)
 		EventBus.event_emit("stage_clear", [stage_add_coin, hp_add_coin, dice_type_add_coin])
 		## 清理关卡buff

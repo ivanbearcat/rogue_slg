@@ -1,8 +1,8 @@
 extends Buff
 
 func set_buff():
-	# 领主BUFF不再创建UI，只做逻辑注册
-	pass
+	# 猎杀霸主：创建自身图标（购买激活与读档重建共用此路径）
+	_setup_overlord_icon()
 
 func process_buff():
 	# 猎杀霸主 - 猎杀增幅：猎杀系得分额外+15%
@@ -16,10 +16,8 @@ func process_buff():
 		Current.total_score += bonus
 		var float_number_instantiate = EffectManager.float_number_effect(bonus)
 		Current.hero.add_child(float_number_instantiate)
-		var family_buffs = BuffSystem.get_family_buffs("hunt")
-		for fb in family_buffs:
-			if fb.buff_texture:
-				EffectManager.buff_pop_effect(fb.buff_texture)
+		# 触发闪光：仅闪霸主自身图标（不再联动闪烁同族）
+		flash_icon()
 
 func clear_buff():
 	pass

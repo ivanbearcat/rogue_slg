@@ -7,6 +7,8 @@ func set_buff():
 	if BuffSystem.get_family_count("swift") >= 4:
 		Current.max_power += 1
 		_move_bonus_added = true
+	# 创建自身图标（购买激活与读档重建共用此路径）
+	_setup_overlord_icon()
 
 func process_buff():
 	# 疾风霸主 - 每移动1格+5%得分
@@ -20,10 +22,8 @@ func process_buff():
 		Current.total_score += bonus
 		var float_number_instantiate = EffectManager.float_number_effect(bonus)
 		Current.hero.add_child(float_number_instantiate)
-		var family_buffs = BuffSystem.get_family_buffs("swift")
-		for fb in family_buffs:
-			if fb.buff_texture:
-				EffectManager.buff_pop_effect(fb.buff_texture)
+		# 触发闪光：仅闪霸主自身图标（不再联动闪烁同族）
+		flash_icon()
 
 func save_state() -> Dictionary:
 	return {"_move_bonus_added": _move_bonus_added}

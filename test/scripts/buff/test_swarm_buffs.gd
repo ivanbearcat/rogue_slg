@@ -291,6 +291,17 @@ func test_swarm_overlord_buff() -> void:
 	# 清理
 	Current.all_enemy_array.clear()
 
+	# 触发闪光契约（新）：flash_icon 仅闪自身；无 texture 时不报错、不产生闪光效果
+	var tweens_before_flash = get_tree().get_processed_tweens().size()
+	buff.flash_icon()
+	assert_eq(get_tree().get_processed_tweens().size(), tweens_before_flash, "flash_icon without texture: no flash effect, no error")
+
+	# 有自身texture时：flash_icon 恰好产生一次闪光（目标仅为霸主自身，不再联动同族）
+	buff.buff_texture = PanelContainer.new()
+	var tweens_with_icon = get_tree().get_processed_tweens().size()
+	buff.flash_icon()
+	assert_eq(get_tree().get_processed_tweens().size(), tweens_with_icon + 1, "flash_icon flashes exactly once on its own texture")
+
 ## 8. slime_rebirth_buff - 史莱姆转生：每击杀1个史莱姆，30%概率生成1个新史莱姆
 func test_slime_rebirth_buff() -> void:
 	_current_test = "test_slime_rebirth_buff"

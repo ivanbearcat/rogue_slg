@@ -1,8 +1,8 @@
 extends Buff
 
 func set_buff():
-	# 领主BUFF不再创建UI，只做逻辑注册
-	pass
+	# 进化霸主：创建自身图标（购买激活与读档重建共用此路径）
+	_setup_overlord_icon()
 
 func process_buff():
 	# 进化霸主 - 进化系≥4时：每回合随机基础分+1 + 随机倍率+1%
@@ -31,11 +31,8 @@ func process_buff():
 	# 视觉反馈：浮动数字显示进化效果（+1基础分 +1%倍率）
 	var float_number_instantiate = EffectManager.float_number_effect(1)
 	Current.hero.add_child(float_number_instantiate)
-	# 同族图标联动闪烁
-	var family_buffs = BuffSystem.get_family_buffs("evolution")
-	for fb in family_buffs:
-		if fb.buff_texture:
-			EffectManager.buff_pop_effect(fb.buff_texture)
+	# 触发闪光：仅闪霸主自身图标（不再联动闪烁同族）
+	flash_icon()
 
 func clear_buff():
 	pass
