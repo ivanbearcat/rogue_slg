@@ -166,6 +166,9 @@ var buff_refresh_cost := 1:
 @onready var blood_bottle_label: Label = %blood_bottle_label
 @onready var blood_bottle_progress: TextureProgressBar = %blood_bottle_progress
 @onready var blood_bottle_progress_label: Label = %blood_bottle_progress_label
+## 掉血预告 HUD（slime-count-eat-heart-hud）：场上数量徽章与预告心显式刷新入口
+@onready var hud_hp_bar: HBoxContainer = $round_process_bar/hp_bar
+@onready var slime_count_badge: TextureRect = $round_process_bar/slime_count_badge
 @onready var coin_skill_1: TextureButton = %coin_skill_1
 @onready var coin_skill_2: TextureButton = %coin_skill_2
 @onready var coin_skill_3: TextureButton = %coin_skill_3
@@ -476,8 +479,10 @@ func _restore_run_from_save(data: Dictionary) -> void:
 	EventBus.event_emit("do_pre_hero_turn_buff")
 	## 8) 悬停追踪器（与正常路径一致）
 	add_child(preload("res://scripts/hover_tracker.gd").new())
-	## 9) 恢复收口：重置鼠标、停在"我方回合可操作"、清理恢复标记
+	## 9) 恢复收口：重置鼠标、刷新预告 HUD、停在"我方回合可操作"、清理恢复标记
 	CursorManager.reset_cursor()
+	## 读档恢复的 HUD 预告显式刷新（覆盖读档路径：徽章/预告心即时按恢复后的场况显示）
+	_refresh_hud_preview()
 	_set_turn_button_disabled(false)
 	SaveManager.finish_restore()
 	print("[SaveManager] 战局恢复完成：关卡 %d · 回合 %d" % [Current._count_stage, Current._count_round])
@@ -1411,6 +1416,9 @@ func _turn_process():
 		await Tools.time_sleep(0.05)
 	## 生成史莱姆加入节点
 	await _create_slime()
+	## 回合开始显式刷新 HUD 预告（slime-count-eat-heart-hud）：
+	## 预告史莱姆入场完成后徽章/预告心按最新场上数量重算（覆盖读档恢复与新一关首回合路径）
+	_refresh_hud_preview()
 	## 史莱姆预生成和告警信息
 	_pre_create_slime()
 	## 保证骰子动画完成
@@ -1624,20 +1632,29 @@ func _turn_clean():
 	## 进入敌人回合
 	Current.turn = "enemy_turn"
 
-## HP扣血逻辑：根据场上史莱姆数量阶梯扣血
-func _apply_hp_damage():
-	## 计算场上史莱姆数量
+## 场上有效史莱姆统计（单一口径：enemys 有效子节点；结算/徽章/预告心共用）
+func _get_field_slime_count() -> int:
+	## 计算场上史莱姆数量（预告史莱姆未入树，天然不计入）
 	var slime_count = 0
 	for _slime in Current.all_enemy_array:
 		if is_instance_valid(_slime):
 			slime_count += 1
+	return slime_count
+
+## HP扣血预告计算（design D1 单一预览入口，UI 与结算共用同一份公式）：
+## 返回"若当前时刻立即结算将扣除的血量"
+func _get_pending_hp_damage() -> int:
 	## 防御公式扣血: damage = max(0, ceil((slime_count - defense) / 3))
-	var hp_before = Current.player_hp
-	var effective: int = slime_count - Current.player_defense
+	var effective: int = _get_field_slime_count() - Current.player_defense
 	var damage: int = ceili(effective / 3.0) if effective > 0 else 0
 	## 铁胃减伤：最终伤害-1（最少0）
 	if damage > 0 and Current.iron_stomach_reduction > 0:
 		damage = maxi(0, damage - Current.iron_stomach_reduction)
+	return damage
+
+## HP扣血逻辑：根据场上史莱姆数量阶梯扣血
+func _apply_hp_damage():
+	var damage: int = _get_pending_hp_damage()
 	if damage > 0:
 		Current.player_hp -= damage
 		## HP扣减视觉反馈
@@ -1645,6 +1662,14 @@ func _apply_hp_damage():
 			var hp_bar = get_node("round_process_bar/hp_bar")
 			if hp_bar.has_method("play_damage_effect"):
 				hp_bar.play_damage_effect()
+
+## 回合开始/读档恢复的 HUD 预告显式刷新（task 4.1）：
+## 徽章数量与预告心按最新场况重建，轮询为兜底、此处保证确定性刷新
+func _refresh_hud_preview() -> void:
+	if hud_hp_bar and hud_hp_bar.has_method("update_hearts"):
+		hud_hp_bar.update_hearts(Current._player_hp, Current._max_hp, _get_pending_hp_damage())
+	if slime_count_badge and slime_count_badge.has_method("refresh"):
+		slime_count_badge.refresh()
 
 
 ## 得分累计回血结算（在扣血之前调用）

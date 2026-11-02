@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>免血徽章 · HUD三件套 设计稿</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #17171f;
+    color: #cfcfe0;
+    font-family: "Courier New", monospace;
+    padding: 32px;
+    display: flex; flex-direction: column; gap: 40px; align-items: center;
+  }
+  h1 { font-size: 18px; color: #fff; letter-spacing: 2px; }
+  .sub { font-size: 12px; color: #7a7a92; }
+  .panel {
+    background: #20202c;
+    border: 2px solid #3a3a4e;
+    padding: 28px 32px;
+    display: flex; flex-direction: column; gap: 18px; align-items: center;
+  }
+  .sprite { image-rendering: pixelated; display: block; }
+
+  /* ---------- HUD 完整形态 ---------- */
+  .hud { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .hearts { display: flex; gap: 5px; align-items: center; }
+  .hearts img { width: 26px; height: 26px; }
+  .heart-notify {
+    font-size: 11px; color: #8a8aa6; margin-right: 10px;
+    border: 1px solid #3a3a4e; padding: 3px 8px;
+  }
+  .badge-row {
+    border-top: 2px dashed #4a4a60;   /* 与预告心的图案协定: 钉在同一基线 */
+    padding-top: 5px;
+    display: flex; gap: 26px; align-items: center;
+  }
+  .badge { display: flex; gap: 4px; align-items: center; padding: 4px 7px; background: #262634; border: 1px solid #34344a; }
+
+  /* 击杀清单徽章 */
+  .kill-list { display: flex; gap: 3px; }
+  .kill-item { position: relative; width: 34px; height: 27px; background: #2c2c3c; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .kill-item .slime {
+    width: 30px; height: 23px;
+    background: url("images/character/Slime.png") no-repeat;
+    background-position: -11px -11px;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 1px #ff5555);
+    outline: 1px solid #ff5555;      /* 攻击红框协定: 该死名单 */
+  }
+  .kill-item.dead .slime { filter: grayscale(1) brightness(0.45); outline: none; }
+  .kill-item.dead::after {
+    content: ""; position: absolute; left: 6px; top: -4px; width: 3px; height: 36px;
+    background: #5a5a6e; transform: rotate(38deg);
+  }
+  .kill-item.dead::before {
+    content: ""; position: absolute; left: 14px; top: -4px; width: 3px; height: 36px;
+    background: #5a5a6e; transform: rotate(-38deg);
+  }
+  .kill-item.done .slime { filter: grayscale(1) brightness(0.3); }
+
+  /* 空态 / 数字态 */
+  .kill-num { font-size: 20px; color: #ffd24a; font-weight: bold; padding: 0 4px; }
+  .sw-num { font-size: 20px; color: #fff; font-weight: bold; }
+  .sword { color: #ffcf5e; font-size: 20px; }
+  .check { color: #ffe066; font-size: 20px; font-weight: bold; display: none; animation: pop 0.3s; }
+  @keyframes pop { 0% { transform: scale(2); } 100% { transform: scale(1); } }
+
+  /* 入场徽章: 灰沙漏 = 下回合口径 */
+  .entry-badge { display: flex; gap: 6px; align-items: center; color: #9a9ab2; }
+  .entry-badge .num { font-size: 19px; color: #b9b9cf; }
+  .hourglass { width: 14px; height: 14px; display: inline-block; }
+
+  /* ---------- 交互演示 ---------- */
+  .demo { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+  .stats { display: flex; gap: 22px; font-size: 13px; color: #9a9ab2; }
+  .stats b { color: #fff; font-size: 15px; }
+  .learn { min-height: 20px; font-size: 13px; color: #ffe066; text-align: center; }
+  .btns { display: flex; gap: 12px; }
+  button {
+    background: #2e2e44; color: #fff; border: 1px solid #56568a;
+    font-family: inherit; font-size: 14px; padding: 8px 18px; cursor: pointer;
+  }
+  button:hover { background: #3c3c5c; }
+  button:disabled { opacity: 0.35; cursor: default; }
+
+  /* ---------- 图例 ---------- */
+  .legend { display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+  .legend .row { display: flex; gap: 16px; align-items: center; }
+  .legend .k { width: 150px; display: flex; gap: 4px; align-items: center; }
+  .legend .v { color: #9a9ab2; }
+</style>
+</head>
+<body>
+  <h1>免血徽章 · HUD 三件套</h1>
+  <div class="sub">探索可视化设计稿（非游戏代码）· 像素 3x 放大 · 图形取自项目实际素材</div>
+
+  <!-- ============ A. HUD 完整形态 ============ -->
+  <div class="panel">
+    <div class="sub">A. 完整形态：预告心下方悬挂击杀清单（空间协定）· 场景 n=7 盾=2 超标5</div>
+    <div class="hud">
+      <div class="hearts">
+        <span class="heart-notify">本回合结算</span>
+        <img class="sprite" src="images/ui_icon/eat_heart.png" alt="将掉">
+        <img class="sprite" src="images/ui_icon/eat_heart.png" alt="将掉">
+        <img class="sprite" src="images/ui_icon/heart2.png" alt="安全">
+        <img class="sprite" src="images/ui_icon/heart2.png" alt="安全">
+        <img class="sprite" src="images/ui_icon/heart2.png" alt="安全">
+      </div>
+      <div class="badge-row">
+        <!-- 击杀清单徽章 -->
+        <div class="badge">
+          <div class="kill-list" id="listA"></div>
+        </div>
+        <!-- 入场徽章(下回合口径: 灰沙漏) -->
+        <div class="badge entry-badge">
+          <svg class="hourglass" viewBox="0 0 14 14"><path d="M1 1h12v3L7 7 1 4z" fill="#8a8aa6"/><path d="M1 13h12v-3L7 7l-6 3z" fill="#5a5a72"/></svg>
+          <span class="num">+6</span>
+          <div class="kill-item" style="width:30px;height:23px;background:#0000;">
+            <div class="slime" style="opacity:.5; outline:none;"></div>
+          </div>
+          <span style="font-size:12px;color:#7a7a92;">下回合</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ B. 交互演示 ============ -->
+  <div class="panel">
+    <div class="sub">B. 交互演示：打死一只史莱姆 → 清单灰化 → 预告心阶梯熄灭 → 清零金勾</div>
+    <div class="demo">
+      <div class="stats">
+        <span>在场 <b id="st-n">7</b></span>
+        <span>盾 <b id="st-d">2</b></span>
+        <span>超标 <b id="st-e">5</b></span>
+        <span>预告心亮 <b id="st-h">2</b> 颗</span>
+      </div>
+      <div class="hearts" id="hearts-demo"></div>
+      <div class="badge">
+        <div class="kill-list" id="listB"></div>
+        <div class="check" id="check">✓</div>
+      </div>
+      <div class="learn" id="learn">盾外 5 只超标 → 每超 3 只多咬 1 颗心，先试着杀两只看看心动不动</div>
+      <div class="btns">
+        <button id="kill">⚔ 击杀一只</button>
+        <button id="reset">重置</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ C. 数字降级态 ============ -->
+  <div class="panel">
+    <div class="sub">C. 超标 &gt; 5 时自动降级为数字态（潮汐局：超标 7）</div>
+    <div class="badge">
+      <span class="sword">⚔</span>
+      <span class="sw-num" id="sw-num">?</span>
+      <span style="font-size:12px;color:#7a7a92;">只超标</span>
+    </div>
+  </div>
+
+  <!-- ============ D. 图例 ============ -->
+  <div class="panel">
+    <div class="sub">D. 图元协定（全部借用游戏已有语言，零新词）</div>
+    <div class="legend">
+      <div class="row">
+        <div class="k"><div class="kill-item"><div class="slime"></div></div></div>
+        <div class="v">红描边史莱姆 = 盾外该死名单（借用攻击红框语言）</div>
+      </div>
+      <div class="row">
+        <div class="k"><div class="kill-item done"><div class="slime"></div></div></div>
+        <div class="v">灰化+交叉 = 已击杀（进度感保留）</div>
+      </div>
+      <div class="row">
+        <div class="k"><img class="sprite" style="width:26px;height:26px;" src="images/ui_icon/eat_heart.png"></div>
+        <div class="v">预告心 = 本回合结算会掉的血（用你的 eat_heart 素材）</div>
+      </div>
+      <div class="row">
+        <div class="k"><svg class="hourglass" style="width:20px;height:20px;" viewBox="0 0 14 14"><path d="M1 1h12v3L7 7 1 4z" fill="#8a8aa6"/><path d="M1 13h12v-3L7 7l-6 3z" fill="#5a5a72"/></svg></div>
+        <div class="v">灰沙漏 = 下回合口径（与"本回合"两件套区分的身份牌）</div>
+      </div>
+      <div class="row">
+        <div class="k"><span class="check" style="display:inline;">✓</span></div>
+        <div class="v">金勾 = 名单清零 → 本回合无伤达成</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const NEED = 5, DEFENSE = 2, IN_FIELD = 7;
+  let kills = 0;
+
+  function elems(tag, n) { const a=[]; for(let i=0;i<n;i++){a.push(document.createElement(tag));} return a; }
+  function heartSrc(kind) {
+    if (kind === "eat")  return "images/ui_icon/eat_heart.png";
+    if (kind === "safe") return "images/ui_icon/heart2.png";
+    return "images/ui_icon/empty_heart2.png";
+  }
+
+  function render() {
+    const e = Math.max(0, IN_FIELD - DEFENSE - kills);        // 超标
+    const dmg = e > 0 ? Math.ceil(e / 3) : 0;                 // ceil 阶梯
+    const done = e === 0;
+
+    // 交互区预告心: 前 dmg 颗 = 将掉(eat), 其余 = 安全
+    const hd = document.getElementById("hearts-demo");
+    hd.innerHTML = "";
+    for (let i = 0; i < 5; i++) {
+      const img = document.createElement("img");
+      img.className = "sprite";
+      img.style.width = "26px"; img.style.height = "26px";
+      img.src = heartSrc(i < dmg ? "eat" : "safe");
+      hd.appendChild(img);
+    }
+
+    // 清单: 先灰化已杀, 后待杀; 达成后全灰+金勾
+    const list = document.getElementById("listB");
+    list.innerHTML = "";
+    for (let i = 0; i < NEED; i++) {
+      const cell = document.createElement("div");
+      const s = document.createElement("div");
+      cell.className = "kill-item " + (i < kills ? "dead" : "");
+      if (done) cell.className = "kill-item done";
+      s.className = "slime";
+      cell.appendChild(s);
+      list.appendChild(cell);
+    }
+    document.getElementById("check").style.display = done ? "inline" : "none";
+    document.getElementById("kill").disabled = done;
+
+    // 数字账
+    document.getElementById("st-n").textContent  = IN_FIELD - kills;
+    document.getElementById("st-e").textContent  = e;
+    document.getElementById("st-h").textContent  = dmg;
+
+    // 教学浮字(阶梯解说)
+    const line = document.getElementById("learn");
+    if (done) line.textContent = "✓ 名单清零，本回合无伤达成";
+    else if (dmg === 2 && kills >= 2) line.textContent = "注意：杀了 " + kills + " 只心还是 2 颗 —— 只有把超标杀到 0/3 档，心才会一颗颗熄灭";
+    else if (dmg === 1 && kills >= 3) line.textContent = "第 3 只咬掉了第 1 颗心咬不动了？不 —— 你杀得比它咬得快，超标掉档，心的预告从 2 变 1";
+    else if (e === 1) line.textContent = "还剩 1 只 = 仍然掉 1 颗心（超标哪怕 1 只也咬你）";
+    else line.textContent = "盾外 " + e + " 只超标 → 每超 3 只咬 1 颗心";
+  }
+
+  document.getElementById("kill").onclick = () => { kills++; render(); };
+  document.getElementById("reset").onclick = () => { kills = 0; render(); };
+
+  // A 区静态清单: 超标5只
+  const la = document.getElementById("listA");
+  for (let i = 0; i < 5; i++) {
+    const cell = document.createElement("div");
+    cell.className = "kill-item";
+    const s = document.createElement("div");
+    s.className = "slime";
+    cell.appendChild(s);
+    la.appendChild(cell);
+  }
+  document.getElementById("sw-num").textContent = 7;   // C 区示例: 潮汐局超标 7
+
+  render();
+</script>
+</body>
+</html>
