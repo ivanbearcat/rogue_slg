@@ -66,7 +66,7 @@ func _input(event: InputEvent) -> void:
 
 	## 右键点击恢复
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and \
-	event.is_pressed() == true or event.is_action_pressed("esc"):
+	event.is_pressed() == true:
 		if Current.clicked_hero.hero_state_machine.state.name in ["skill_1", "skill_2", "skill_3"]:
 			hide_all_skills()
 			Current.clicked_hero.hero_state_machine.transition_to("move")
@@ -98,32 +98,31 @@ func _on_mouse_exited() -> void:
 
 ## 技能赋能
 func _skill_power_up(skill_num: int) -> void:
-	var skill_dict := {
-		1: [skill_1_button, hero_ui_1],
-		2: [skill_2_button, hero_ui_2],
-		3: [skill_3_button, hero_ui_3]
-	}
+	## 先记录本次事件的按钮按下态（随后 _on_skill_power_reset 的收口同步
+	## 会按真相重写按钮；先读后写保证"按下→赋能 / 弹起→取消赋能"语义不变）
+	var power_buttons := [null, skill_1_button, skill_2_button, skill_3_button]
+	var press_wanted: bool = power_buttons[skill_num].button_pressed
 	_on_skill_power_reset()
-	if Current.power > 0:
-		if skill_dict[skill_num][0].button_pressed:
-			if skill_num == 3:
-				mask_4.hide()
-			else:
-				skill_dict[skill_num][1].material.set_shader_parameter("enable", true)
-			Current.power_skill = skill_num
-		else:
-			if skill_num == 3:
-				mask_4.show()
-			skill_dict[skill_num][1].material.set_shader_parameter("enable", false)
-	else:
-		## 没有能量赋能（震屏，弹提示）
-		skill_dict[skill_num][0].button_pressed = false
+	## 有能量且该技能的能量按钮处于按下态（点击/快捷键切换）才占用赋能
+	if Current.power > 0 and press_wanted:
+		Current.power_skill = skill_num
+	_sync_power_ui()
+
+## 赋能 UI 单点同步（design D2）：以 Current.power_skill 为唯一真相，
+## 一次性直写全部赋能视觉位；任何触发点（赋能切换/复位/读档恢复刷新）共用本入口。
+## 不变式：mask4.visible ⇔ power_skill != 3；hero_ui_1/2 发光 ⇔ power_skill == 1/2；
+## 按钮按下态直写不触发 pressed（Engine 只发 toggled，无订阅者，无递归风险）
+func _sync_power_ui() -> void:
+	hero_ui_1.material.set_shader_parameter("enable", Current.power_skill == 1)
+	hero_ui_2.material.set_shader_parameter("enable", Current.power_skill == 2)
+	mask_4.visible = Current.power_skill != 3
+	skill_1_button.button_pressed = Current.power_skill == 1
+	skill_2_button.button_pressed = Current.power_skill == 2
+	skill_3_button.button_pressed = Current.power_skill == 3
 
 func _on_skill_power_reset() -> void:
-	var skill_ui_list = [hero_ui_1, hero_ui_2]
-	for skill in skill_ui_list:
-		skill.material.set_shader_parameter("enable", false)
 	Current.power_skill = 0
+	_sync_power_ui()
 
 func _on_skill_button_reset() -> void:
 	skill_1_button.button_pressed = false

@@ -22,6 +22,10 @@ extends Node
 ##   7.2 全流程回归脚本（新 run → 3 回合 → 落盘 → 重启进程 → 继续 → 等价 → 通关 → 清档）
 ##   （4.2 flush 失败路径与 7.3 写入中断模拟见 save_codec_test.gd section 6-8）
 ##
+## 覆盖（fix-skill-access-and-empower-sync）：
+##   赋能注入素材（power_skill=3 / power=1 入快照）—— phase1
+##   2.1/2.2 恢复收口补英雄自动选中（clicked_hero）+ 赋能 UI 按 power_skill 刷新 —— phase2
+##
 ## 用法：
 ##   godot --headless --path . res://test/scripts/save/save_flow_test.tscn -- --phase=1
 ##   godot --headless --path . res://test/scripts/save/save_flow_test.tscn -- --phase=2
@@ -339,6 +343,11 @@ func _run_phase1() -> void:
 		_inject(debuff_id, "pre_enemy_turn", BuffSystem.buff_type.STAGE, patches[debuff_id])
 	_check("rush 系 4 buff 注入（granted=true）", granted_count == RUSH_BUFF_IDS.size())
 	Current.drop_slot_dice = ["red", 3]     ## setter 仅更新掉落格 UI（非演出）
+	## ---- 赋能注入（fix-skill-access-and-empower-sync 素材：task 2.2 验证场景）----
+	## power_skill 随存档持有：快照写入"嘲讽已赋能未使用"（power_skill=3、power=1），
+	## phase2 读档后断言赋能 UI 与按钮/mask4 按真相恢复一致
+	Current.power = 1
+	Current.power_skill = 3
 	## ---- 注入后的回合边界快照（边界复核 + 落盘素材）----
 	_check("3.1 注入点仍处无锁干净位", Current.action_lock == false and Current.public_lock_array.is_empty())
 	gm._capture_turn_boundary()
@@ -351,6 +360,8 @@ func _run_phase1() -> void:
 		and int(snap2.run_state.pre_move_score_earned) == Current._pre_move_score_earned)
 	_check("注入 resonance_ramp 已入快照", float(snap2.resonance_ramp) == BuffSystem.resonance_ramp)
 	_check("注入移动力（base+4）已入快照", int(snap2.board.hero.hero_movement) == _mv_base + 4)
+	_check("赋能注入已入快照（power_skill=3 / power=1）",
+		int(snap2.run_state.power_skill) == 3 and int(snap2.run_state.power) == 1)
 	## ---- 3.2 行形状（id/lifecycle/timing/local_state）----
 	var rows: Array = snap2.buffs.rows
 	_stage1_inject_rows_count = rows.size()
@@ -429,6 +440,24 @@ func _run_phase2() -> void:
 	_check("5.3 action_lock=false", Current.action_lock == false)
 	_check("5.3 公共锁为空", Current.public_lock_array.is_empty())
 	_check("5.3 回合按钮启用", not gm.turn_button.disabled)
+	## ---- 5.3 恢复后英雄处于选中态（fix-skill-access-and-empower-sync，design D1）----
+	## 等效断言：恢复收口的 transition_to("idle") 后状态名仍为 "idle" 且
+	## clicked_hero 指向该英雄（idle.exit 赋值）→ 技能 UI 输入 gate 不再静默拦截
+	_check("5.3 恢复后英雄状态为 idle（transition_to 无状态漂移）",
+		Current.hero != null and Current.hero.hero_state_machine.state.name == "idle")
+	_check("5.3 恢复后 clicked_hero 指向该英雄（技能 gate 不再拦截）",
+		Current.clicked_hero != null and Current.clicked_hero == Current.hero)
+	## ---- 2.2 恢复后赋能 UI 与 power_skill 三方同步（design D3 恢复赋能刷新）----
+	## 快照注入素材：power_skill=3、power=1（嘲讽已赋能未使用）
+	var skill_ui: Node = gm.hero_skill_ui
+	_check("2.2 恢复后 power_skill 与存档一致（=3）", Current.power_skill == 3)
+	_check("2.2 技能3 能量按钮按下态一致", skill_ui.skill_3_button.button_pressed)
+	_check("2.2 技能3 解锁（mask4 隐藏）", not skill_ui.mask_4.visible)
+	_check("2.2 hero_ui_1/2 保持熄灭",
+		skill_ui.hero_ui_1.material.get_shader_parameter("enable") != true
+		and skill_ui.hero_ui_2.material.get_shader_parameter("enable") != true)
+	_check("2.2 技能1/2 能量按钮弹起", not skill_ui.skill_1_button.button_pressed \
+		and not skill_ui.skill_2_button.button_pressed)
 	_check("2.4 读档零演出事件（hp_changed 未触发）", _hp_events == 0)
 	_check("2.4 读档无飘字节点", _count_float_nodes(get_tree().root) == 0)
 	_check("3.4 resonance_ramp 恢复", float(BuffSystem.resonance_ramp) == old_ramp)

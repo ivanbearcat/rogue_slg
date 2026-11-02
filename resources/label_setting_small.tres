@@ -1,6 +1,6 @@
 [gd_resource type="LabelSettings" format=3 uid="uid://cluhn5stgbt1d"]
 
-[ext_resource type="FontFile" uid="uid://6oc5e4qxi5oy" path="res://fonts/SourceHanSansCN-Medium.otf" id="1_x1igh"]
+[ext_resource type="FontFile" uid="uid://dg6u74skflecd" path="res://fonts/fusion-pixel-12px-monospaced-zh_hans.otf" id="1_x1igh"]
 
 [resource]
 line_spacing = 0.0

@@ -3,14 +3,25 @@ extends Node
 ## 一次性诊断脚本：复现"技能按下后悬停无红框、点击无效"链路（只读取证，不修改游戏逻辑）
 ## 用法: Godot_v4.7-stable_win64.exe --headless --path . res://test/scripts/scene/skill_hover_diag.tscn -- --skill=1
 ## 参数 --skill=1/2/3 指定诊断的技能编号，默认 1
+## 另有 --mode=empower：赋能切换同步回归（fix-skill-access-and-empower-sync tasks 1.4）
 
 var _skill_num := "1"
+var _mode := "hover"
 
 func _ready() -> void:
+	## 探针保活：本场景作为启动 current_scene 时会被第一次 change_scene 释放，
+	## 摘除注册避免 diag 节点被释放后协程中断挂死（与 save_flow_test 同款规避）
+	if get_tree().current_scene == self:
+		get_tree().current_scene = null
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--skill="):
 			_skill_num = arg.trim_prefix("--skill=")
-	_run()
+		if arg.begins_with("--mode="):
+			_mode = arg.trim_prefix("--mode=")
+	if _mode == "empower":
+		_run_empower_test()
+	else:
+		_run()
 
 func _run() -> void:
 	print("[DIAG] === 技能", _skill_num, " 悬停/点击链路诊断开始 ===")
@@ -131,6 +142,94 @@ func _run() -> void:
 	else:
 		print("[DIAG] >>> 关键发现: 点击未触发技能攻击")
 	_quit()
+
+## ============================================================
+## 赋能 UI 单点同步回归（fix-skill-access-and-empower-sync，design D2/D4）
+## 用法: --mode=empower
+## 赋能切换的引擎语义（ButtonGroup 静默 unpress + pressed 信号）以
+## "直写 button_pressed + 调用 pressed 处理函数"复现，与 Alt 快捷键触发同构；
+## 能量直写（Current.power）走 setter 正常链路。
+## 断言（tasks 1.4）：
+##   1）技能 3 赋能后 mask4 隐藏（嘲讽解锁）
+##   2）随后技能 1 赋能 → mask4 重新可见且 skill_3_button 未按下
+##   3）无能量按压任何赋能按钮后各图标状态不变（弹回）
+## ============================================================
+var _p_failed := 0
+
+func _p_check(name: String, cond: bool) -> void:
+	if cond:
+		print("[DIAG] PASS ", name)
+	else:
+		_p_failed += 1
+		print("[DIAG] FAIL ", name)
+
+func _run_empower_test() -> void:
+	print("[DIAG] === 赋能切换同步回归（mode=empower）开始 ===")
+	SceneManager.change_scene(&"main")
+	var waited := 0.0
+	while true:
+		await get_tree().create_timer(0.2).timeout
+		waited += 0.2
+		if Current.game_manager != null and Current.game_manager.get_node("heros").get_child_count() > 0:
+			break
+		if waited > 20.0:
+			print("[DIAG] FAIL 战局场景加载超时")
+			get_tree().quit(1)
+			return
+	await get_tree().create_timer(0.5).timeout
+	var ui: Node = Current.game_manager.hero_skill_ui
+	if ui == null:
+		print("[DIAG] FAIL 未取得技能 UI（hero_skill_ui）")
+		get_tree().quit(1)
+		return
+	## ---- 基线：默认全灭/锁定/弹起 ----
+	_p_check("基线 mask4 可见（锁定）", ui.mask_4.visible)
+	_p_check("基线 hero_ui_1 熄灭", ui.hero_ui_1.material.get_shader_parameter("enable") != true)
+	_p_check("基线 三按钮均为弹起态", not ui.skill_1_button.button_pressed \
+		and not ui.skill_2_button.button_pressed and not ui.skill_3_button.button_pressed)
+	## ---- 断言1：技能 3 赋能 → mask4 隐藏 ----
+	Current.power = 1
+	_p_check("直写能量后 Current.power == 1", Current.power == 1)
+	ui.skill_3_button.button_pressed = true
+	ui._on_skill_3_button_pressed()
+	_p_check("1）Alt+3 后 mask4 隐藏（嘲讽解锁）", not ui.mask_4.visible)
+	_p_check("1）power_skill 同步为 3", Current.power_skill == 3)
+	_p_check("1）skill_3_button 按下态", ui.skill_3_button.button_pressed)
+	_p_check("1）skill_1/2_button 弹起态", not ui.skill_1_button.button_pressed \
+		and not ui.skill_2_button.button_pressed)
+	_p_check("1）hero_ui_1/2 熄灭", ui.hero_ui_1.material.get_shader_parameter("enable") != true \
+		and ui.hero_ui_2.material.get_shader_parameter("enable") != true)
+	## ---- 断言2：切换到技能 1 赋能 → mask4 重开 + 嘲讽按钮弹起 ----
+	ui.skill_1_button.button_pressed = true
+	ui._on_skill_1_button_pressed()
+	_p_check("2）切技能1后 mask4 重新可见", ui.mask_4.visible)
+	_p_check("2）skill_3_button 未按下", not ui.skill_3_button.button_pressed)
+	_p_check("2）power_skill 同步为 1", Current.power_skill == 1)
+	_p_check("2）hero_ui_1 发光", ui.hero_ui_1.material.get_shader_parameter("enable") == true)
+	_p_check("2）hero_ui_2 熄灭", ui.hero_ui_2.material.get_shader_parameter("enable") != true)
+	_p_check("2）skill_1_button 按下态", ui.skill_1_button.button_pressed)
+	## ---- 复位回默认（走复位收口路径）----
+	ui._on_skill_power_reset()
+	_p_check("复位后全灭/锁定/弹起", ui.mask_4.visible and not ui.skill_1_button.button_pressed \
+		and ui.hero_ui_1.material.get_shader_parameter("enable") != true and Current.power_skill == 0)
+	## ---- 断言3：无能量按压任一赋能按钮 → 图标状态不变（弹回）----
+	var btn_by_num := {1: ui.skill_1_button, 2: ui.skill_2_button, 3: ui.skill_3_button}
+	for num in [1, 2, 3]:
+		Current.power = 0
+		var btn: TextureButton = btn_by_num[num]
+		btn.button_pressed = true
+		ui.call("_on_skill_%d_button_pressed" % num)
+		_p_check("3）无能量按技能%d → 图标全灭/锁定（状态不变）" % num,
+			ui.mask_4.visible
+			and ui.hero_ui_1.material.get_shader_parameter("enable") != true
+			and ui.hero_ui_2.material.get_shader_parameter("enable") != true
+			and Current.power_skill == 0)
+		_p_check("3）无能量按技能%d → 按钮弹回" % num,
+			not ui.skill_1_button.button_pressed
+			and not ui.skill_2_button.button_pressed
+			and not ui.skill_3_button.button_pressed)
+	print("[DIAG] === 赋能切换同步回归结束（失败 %d 项）===" % _p_failed)
+	get_tree().quit(1 if _p_failed > 0 else 0)
 
 func _quit() -> void:
 	print("[DIAG] === 诊断结束 ===")

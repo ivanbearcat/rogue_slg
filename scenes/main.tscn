@@ -23,7 +23,6 @@
 [ext_resource type="Texture2D" uid="uid://3g8enfkuqc41" path="res://images/ui/sea_process_bar.png" id="20_gqmmt"]
 [ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="21_2f3dj"]
 [ext_resource type="Script" uid="uid://cvems1v2e2cv3" path="res://scripts/hp_bar.gd" id="26_j8jky"]
-[ext_resource type="Script" path="res://scripts/slime_count_badge.gd" uid="uid://jp152sj0hi8k" id="33_badge"]
 [ext_resource type="Texture2D" uid="uid://bldic5dub2mqf" path="res://images/ui_icon/blood_bottle2.png" id="28_5he1u"]
 [ext_resource type="Texture2D" uid="uid://drccwvlcmiao7" path="res://images/ui_icon/redo.png" id="29_c6pm6"]
 [ext_resource type="Texture2D" uid="uid://5q7nw3pj5x07" path="res://images/ui_icon/sand_clock.png" id="30_5he1u"]
@@ -35,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://20shdw5wwxfk" path="res://images/ui/board.png" id="32_5he1u"]
 [ext_resource type="Texture2D" uid="uid://rfxwwjikwsrj" path="res://images/ui/process_bar.png" id="32_5poiv"]
 [ext_resource type="PackedScene" uid="uid://c7fdniyqqo3t5" path="res://scenes/drop_selection_ui.tscn" id="33_5q0nq"]
+[ext_resource type="Script" uid="uid://jp152sj0hi8k" path="res://scripts/slime_count_badge.gd" id="33_badge"]
 [ext_resource type="Script" uid="uid://c75g4vrr8ub2v" path="res://scripts/ui/buff_debug_panel.gd" id="34_dgi5k"]
 [ext_resource type="Texture2D" uid="uid://cda7fkfl5c5ii" path="res://images/buff_icon/old/attack_over_five.png" id="35_txyw0"]
 [ext_resource type="LabelSettings" uid="uid://ccp1dqm8hqkda" path="res://fonts/pixel_cn_label_settings.tres" id="36_chjal"]
@@ -2775,13 +2775,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 56.0
-offset_right = 218.0
-offset_bottom = 76.0
+offset_left = -88.0
+offset_top = 55.0
+offset_right = 232.0
+offset_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1, 1e-05)
+scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(146, 10)
 mouse_filter = 2
 
@@ -2843,13 +2843,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 56.0
-offset_right = 218.0
-offset_bottom = 76.0
+offset_left = -88.0
+offset_top = 55.0
+offset_right = 231.0
+offset_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1, 1e-05)
+scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(146, 10)
 mouse_filter = 2
 

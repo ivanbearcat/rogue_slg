@@ -479,8 +479,16 @@ func _restore_run_from_save(data: Dictionary) -> void:
 	EventBus.event_emit("do_pre_hero_turn_buff")
 	## 8) 悬停追踪器（与正常路径一致）
 	add_child(preload("res://scripts/hover_tracker.gd").new())
-	## 9) 恢复收口：重置鼠标、刷新预告 HUD、停在"我方回合可操作"、清理恢复标记
+	## 9) 恢复收口：重置鼠标、补英雄自动选中、刷赋能 UI、刷新预告 HUD、停在"我方回合可操作"、清理恢复标记
 	CursorManager.reset_cursor()
+	## 补英雄自动选中（design D1）：与新开局面板经 _pre_hero_turn_begin 的同款循环同构，
+	## 经 idle.exit() 完成 clicked_hero 赋值——读档路径此前缺失该环节，
+	## 技能 UI 的输入 gate（clicked_hero == null → return）会静默吞掉技能输入
+	for hero in Current.all_hero_array:
+		hero.hero_state_machine.transition_to("idle")
+	## 赋能 UI 刷新（design D3）：power_skill 随存档持有而按钮按下态/mask4 不入档，
+	## 按 Current.power_skill 真相同步一次，消除读档后的三方失步
+	hero_skill_ui._sync_power_ui()
 	## 读档恢复的 HUD 预告显式刷新（覆盖读档路径：徽章/预告心即时按恢复后的场况显示）
 	_refresh_hud_preview()
 	_set_turn_button_disabled(false)

@@ -23,8 +23,8 @@ atlas = ExtResource("1_vlmwk")
 region = Rect2(113, 113, 30, 14)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_q6aow"]
-seed = 39
-frequency = 0.005
+seed = 38
+frequency = 0.1
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qf8i0"]
 width = 192
@@ -38,7 +38,7 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_qf8i0")
 shader_parameter/noise_speed = 0.3
 shader_parameter/noise_size = 0.2
 shader_parameter/edge_color = Color(1, 0.574052, 0.12776, 1)
-shader_parameter/enable = false
+shader_parameter/enable = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_buw5v"]
 atlas = ExtResource("5_cwbpb")
@@ -209,24 +209,22 @@ visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-color = Color(0, 0, 0, 0.670588)
+color = Color(0, 0, 0, 0.87058824)
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/skill_1/hero_ui_1/mask1" unique_id=1816431161]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = -17.0
-offset_right = 16.0
-offset_bottom = 23.0
+offset_left = -20.954016
+offset_top = -16.999996
+offset_right = 37.045982
+offset_bottom = 5.000004
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.35, 0.35)
 pivot_offset = Vector2(32, 36)
-text = "按ESC或
-右键取消
-"
+text = "右键取消"
 label_settings = ExtResource("4_rqeci")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -296,24 +294,22 @@ visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-color = Color(0, 0, 0, 0.670588)
+color = Color(0, 0, 0, 0.87058824)
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2/skill_2/hero_ui_2/mask2" unique_id=1715553430]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = -17.0
-offset_right = 16.0
-offset_bottom = 23.0
+offset_left = -20.954016
+offset_top = -16.999996
+offset_right = 37.045982
+offset_bottom = 5.000004
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.35, 0.35)
 pivot_offset = Vector2(32, 36)
-text = "按ESC或
-右键取消
-"
+text = "右键取消"
 label_settings = ExtResource("4_rqeci")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -382,24 +378,23 @@ visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-color = Color(0, 0, 0, 0.670588)
+mouse_filter = 2
+color = Color(0, 0, 0, 0.87058824)
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/skill_3/hero_ui_3/mask3" unique_id=165183397]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = -17.0
-offset_right = 16.0
-offset_bottom = 23.0
+offset_left = -20.954016
+offset_top = -16.999996
+offset_right = 37.045982
+offset_bottom = 5.000004
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.35, 0.35)
 pivot_offset = Vector2(32, 36)
-text = "按ESC或
-右键取消
-"
+text = "右键取消"
 label_settings = ExtResource("4_rqeci")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -410,9 +405,10 @@ layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.670588)
+color = Color(0, 0, 0, 0.87058824)
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/skill_3/hero_ui_3/mask4" unique_id=1171557542]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

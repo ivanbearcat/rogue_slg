@@ -2,6 +2,11 @@
 ## 命令行运行buff测试: godot --headless --script res://test/scripts/buff/run_buff_tests.gd
 ## 在主场景环境中执行（所有autoload可用）
 
+## autoload 编译期不可见：--script 主循环脚本在 autoload 注册前编译，
+## 一律按 save_codec_test 同款运行时取用（root.get_node）
+func _cur() -> Node:
+	return root.get_node("Current")
+
 var _total: int = 0
 var _passed: int = 0
 var _failed: int = 0
@@ -102,58 +107,58 @@ func run_all_tests():
 
 func _save_current_state() -> Dictionary:
 	return {
-		"total_score": Current.total_score,
-		"once_total_score": Current.once_total_score,
-		"target_score": Current.target_score,
-		"player_hp": Current.player_hp,
-		"max_hp": Current.max_hp,
-		"player_defense": Current.player_defense,
-		"count_stage": Current.count_stage,
-		"count_round": Current.count_round,
-		"total_coins": Current.total_coins,
+		"total_score": _cur().total_score,
+		"once_total_score": _cur().once_total_score,
+		"target_score": _cur().target_score,
+		"player_hp": _cur().player_hp,
+		"max_hp": _cur().max_hp,
+		"player_defense": _cur().player_defense,
+		"count_stage": _cur().count_stage,
+		"count_round": _cur().count_round,
+		"total_coins": _cur().total_coins,
 	}
 
 func _restore_current_state(state: Dictionary) -> void:
-	Current.total_score = state["total_score"]
-	Current.once_total_score = state["once_total_score"]
-	Current.target_score = state["target_score"]
-	Current.player_hp = state["player_hp"]
-	Current.max_hp = state["max_hp"]
-	Current.player_defense = state["player_defense"]
-	Current.count_stage = state["count_stage"]
-	Current.count_round = state["count_round"]
-	Current.total_coins = state["total_coins"]
+	_cur().total_score = state["total_score"]
+	_cur().once_total_score = state["once_total_score"]
+	_cur().target_score = state["target_score"]
+	_cur().player_hp = state["player_hp"]
+	_cur().max_hp = state["max_hp"]
+	_cur().player_defense = state["player_defense"]
+	_cur().count_stage = state["count_stage"]
+	_cur().count_round = state["count_round"]
+	_cur().total_coins = state["total_coins"]
 
 ## 重置Current到测试默认值
 func reset_current_to_defaults() -> void:
-	Current.total_score = 0
-	Current.once_total_score = 0
-	Current.target_score = 100
-	Current.player_hp = 5
-	Current.max_hp = 5
-	Current.player_defense = 2
-	Current.count_stage = 1
-	Current.count_round = 1
-	Current.total_coins = 0
-	Current.power_slime_num = 1
-	Current.max_power = 2
-	Current.power = 0
-	if Current.hero:
-		Current.hero.hero_movement = 0
-	Current.all_enemy_array.clear()
-	Current.skill_attack_range.clear()
-	Current.dice_type_count = 0
-	Current.slime_die_sum = 0
-	Current.killed_slime_colors = []
-	Current.killed_power_slime = false
-	Current.last_turn_attacked = false
-	Current.consecutive_score_turns = 0
-	Current.zero_coin_refresh_times = 0
-	Current.zero_coin_refresh_max_times = 0
-	Current.iron_stomach_reduction = 0
-	Current.public_lock_array.clear()
-	Current.dropped_dice_count = 0
-	Current.scored_dice_info.clear()
-	Current.active_dice_types.clear()
-	Current.drop_slot_dice = null
-	Current.score_heal_accumulated = 0
+	_cur().total_score = 0
+	_cur().once_total_score = 0
+	_cur().target_score = 100
+	_cur().player_hp = 5
+	_cur().max_hp = 5
+	_cur().player_defense = 2
+	_cur().count_stage = 1
+	_cur().count_round = 1
+	_cur().total_coins = 0
+	_cur().power_slime_num = 1
+	_cur().max_power = 2
+	_cur().power = 0
+	if _cur().hero:
+		_cur().hero.hero_movement = 0
+	_cur().all_enemy_array.clear()
+	_cur().skill_attack_range.clear()
+	_cur().dice_type_count = 0
+	_cur().slime_die_sum = 0
+	_cur().killed_slime_colors = []
+	_cur().killed_power_slime = false
+	_cur().last_turn_attacked = false
+	_cur().consecutive_score_turns = 0
+	_cur().zero_coin_refresh_times = 0
+	_cur().zero_coin_refresh_max_times = 0
+	_cur().iron_stomach_reduction = 0
+	_cur().public_lock_array.clear()
+	_cur().dropped_dice_count = 0
+	_cur().scored_dice_info.clear()
+	_cur().active_dice_types.clear()
+	_cur().drop_slot_dice = null
+	_cur().score_heal_accumulated = 0
