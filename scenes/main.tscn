@@ -664,26 +664,35 @@ outline_color = Color(0, 0, 0, 1)
 atlas = ExtResource("32_5he1u")
 region = Rect2(49, 18, 49, 42)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7ddy"]
+bg_color = Color(0, 0, 0, 0.9411765)
+
 [sub_resource type="LabelSettings" id="LabelSettings_o7ddy"]
 font = ExtResource("30_fv21b")
 font_size = 36
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ro3en"]
-atlas = ExtResource("15_jkv2x")
-region = Rect2(3, 32, 24, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4bwh"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(3, 19, 26, 26)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e755i"]
-atlas = ExtResource("15_jkv2x")
-region = Rect2(3, 64, 24, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksmap"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(35, 19, 26, 26)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_od4ux"]
-atlas = ExtResource("15_jkv2x")
-region = Rect2(3, 48, 24, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygd8o"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(67, 19, 26, 26)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0loja"]
+bg_color = Color(0, 0, 0, 0.39215687)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ids8r"]
+bg_color = Color(0.3125, 0.3125, 0.3125, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjg73"]
-bg_color = Color(0, 0, 0, 0.9019608)
+bg_color = Color(0, 0, 0, 0.92156863)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kf5aa"]
 atlas = ExtResource("15_jkv2x")
@@ -699,6 +708,18 @@ font = ExtResource("30_fv21b")
 font_size = 24
 outline_size = 9
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro3en"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(3, 32, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e755i"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(3, 65, 24, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_od4ux"]
+atlas = ExtResource("15_jkv2x")
+region = Rect2(3, 48, 24, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kjtvk"]
 atlas = ExtResource("15_jkv2x")
@@ -832,6 +853,7 @@ autostart = true
 [node name="direction_ui" type="CanvasLayer" parent="coin_skill_system" unique_id=1686644075]
 unique_name_in_owner = true
 process_mode = 2
+visible = false
 
 [node name="Panel" type="Panel" parent="coin_skill_system/direction_ui" unique_id=338365461]
 anchors_preset = 15
@@ -2733,10 +2755,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 9.787506
-offset_top = 4.5999994
-offset_right = 13.0
-offset_bottom = 0.5999994
+offset_left = 2.787506
+offset_top = 1.5999994
+offset_right = 6.0
+offset_bottom = -2.4000015
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -2798,10 +2820,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -88.0
+offset_left = -256.99854
 offset_top = 55.0
-offset_right = 232.0
-offset_bottom = 74.0
+offset_right = 34199748.0
+offset_bottom = 65.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
@@ -2866,10 +2888,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -88.0
+offset_left = -256.99854
 offset_top = 55.0
-offset_right = 231.0
-offset_bottom = 74.0
+offset_right = 34299748.0
+offset_bottom = 65.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
@@ -3042,6 +3064,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o7ddy")
 
 [node name="Label" type="Label" parent="replace_skill_ui/Panel" unique_id=2054627888]
 layout_mode = 1
@@ -3060,19 +3083,20 @@ text = "选择要替换的技能"
 label_settings = SubResource("LabelSettings_o7ddy")
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="replace_skill_ui/Panel" unique_id=178622555]
+[node name="VBoxContainer" type="HBoxContainer" parent="replace_skill_ui/Panel" unique_id=586988010]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -100.0
-offset_right = 150.0
-offset_bottom = 100.0
+offset_left = -227.0
+offset_top = -123.0
+offset_right = 713.0
+offset_bottom = 169.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.5, 0.5)
 theme_override_constants/separation = 20
 
 [node name="replace_skill_1" type="TextureButton" parent="replace_skill_ui/Panel/VBoxContainer" unique_id=1025844151]
@@ -3080,18 +3104,23 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 64)
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
-texture_normal = SubResource("AtlasTexture_ro3en")
-texture_pressed = SubResource("AtlasTexture_e755i")
-texture_hover = SubResource("AtlasTexture_od4ux")
+texture_normal = SubResource("AtlasTexture_j4bwh")
+texture_pressed = SubResource("AtlasTexture_ksmap")
+texture_hover = SubResource("AtlasTexture_ygd8o")
 stretch_mode = 5
 
 [node name="replace_skill_1_icon" type="TextureRect" parent="replace_skill_ui/Panel/VBoxContainer/replace_skill_1" unique_id=173654694]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 53.0
-offset_bottom = 53.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 41.0
+offset_top = 35.0
+offset_right = -40.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 2
 stretch_mode = 5
 
@@ -3100,18 +3129,18 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 64)
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
-texture_normal = SubResource("AtlasTexture_ro3en")
-texture_pressed = SubResource("AtlasTexture_e755i")
-texture_hover = SubResource("AtlasTexture_od4ux")
+texture_normal = SubResource("AtlasTexture_j4bwh")
+texture_pressed = SubResource("AtlasTexture_ksmap")
+texture_hover = SubResource("AtlasTexture_ygd8o")
 stretch_mode = 5
 
 [node name="replace_skill_2_icon" type="TextureRect" parent="replace_skill_ui/Panel/VBoxContainer/replace_skill_2" unique_id=1721151719]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 53.0
-offset_bottom = 53.0
+offset_left = 41.0
+offset_top = 35.0
+offset_right = 260.0
+offset_bottom = 249.0
 expand_mode = 2
 stretch_mode = 5
 
@@ -3120,27 +3149,33 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 64)
 layout_mode = 2
 theme = ExtResource("17_qkpxi")
-texture_normal = SubResource("AtlasTexture_ro3en")
-texture_pressed = SubResource("AtlasTexture_e755i")
-texture_hover = SubResource("AtlasTexture_od4ux")
+texture_normal = SubResource("AtlasTexture_j4bwh")
+texture_pressed = SubResource("AtlasTexture_ksmap")
+texture_hover = SubResource("AtlasTexture_ygd8o")
 stretch_mode = 5
 
 [node name="replace_skill_3_icon" type="TextureRect" parent="replace_skill_ui/Panel/VBoxContainer/replace_skill_3" unique_id=645014290]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 53.0
-offset_bottom = 53.0
+offset_left = 41.0
+offset_top = 35.0
+offset_right = 260.0
+offset_bottom = 249.0
 expand_mode = 2
 stretch_mode = 5
 
-[node name="cancel_replace_button" type="Button" parent="replace_skill_ui/Panel/VBoxContainer" unique_id=1806602301]
+[node name="cancel_replace_button" type="Button" parent="replace_skill_ui/Panel" unique_id=1806602301]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
+layout_mode = 0
+offset_left = 608.0
+offset_top = 415.0
+offset_right = 699.0
+offset_bottom = 465.0
 theme_override_fonts/font = ExtResource("30_fv21b")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_0loja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ids8r")
 text = "取消"
 
 [node name="clear_stage_ui" parent="." unique_id=2021986512 instance=ExtResource("31_pibwh")]
@@ -3997,7 +4032,7 @@ script = ExtResource("34_dgi5k")
 [connection signal="pressed" from="replace_skill_ui/Panel/VBoxContainer/replace_skill_1" to="." method="_on_replace_skill_1_pressed"]
 [connection signal="pressed" from="replace_skill_ui/Panel/VBoxContainer/replace_skill_2" to="." method="_on_replace_skill_2_pressed"]
 [connection signal="pressed" from="replace_skill_ui/Panel/VBoxContainer/replace_skill_3" to="." method="_on_replace_skill_3_pressed"]
-[connection signal="pressed" from="replace_skill_ui/Panel/VBoxContainer/cancel_replace_button" to="." method="_on_cancel_replace_button_pressed"]
+[connection signal="pressed" from="replace_skill_ui/Panel/cancel_replace_button" to="." method="_on_cancel_replace_button_pressed"]
 [connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_1/buff_shop_button_1" to="." method="_on_buff_shop_button_1_pressed"]
 [connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_2/buff_shop_button_2" to="." method="_on_buff_shop_button_2_pressed"]
 [connection signal="pressed" from="shop_ui/Panel/shop_texture_ui/HFlowContainer/buff_shop_icon_3/buff_shop_button_3" to="." method="_on_buff_shop_button_3_pressed"]
