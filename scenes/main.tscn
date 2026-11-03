@@ -54,6 +54,12 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_og1vs"]
 bg_color = Color(0, 0, 0, 0.9411765)
 
+[sub_resource type="LabelSettings" id="LabelSettings_0loja"]
+font = ExtResource("30_fv21b")
+font_size = 36
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_txyw0"]
 atlas = ExtResource("5_og1vs")
 region = Rect2(0, 0, 16, 16)
@@ -108,6 +114,12 @@ keycode = 4194305
 
 [sub_resource type="Shortcut" id="Shortcut_vxglm"]
 events = [SubResource("InputEventKey_2wyq8")]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bu4jf"]
+font = ExtResource("30_fv21b")
+font_size = 36
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ny6h8"]
 atlas = ExtResource("32_5he1u")
@@ -652,6 +664,12 @@ outline_color = Color(0, 0, 0, 1)
 atlas = ExtResource("32_5he1u")
 region = Rect2(49, 18, 49, 42)
 
+[sub_resource type="LabelSettings" id="LabelSettings_o7ddy"]
+font = ExtResource("30_fv21b")
+font_size = 36
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ro3en"]
 atlas = ExtResource("15_jkv2x")
 region = Rect2(3, 32, 24, 16)
@@ -814,7 +832,6 @@ autostart = true
 [node name="direction_ui" type="CanvasLayer" parent="coin_skill_system" unique_id=1686644075]
 unique_name_in_owner = true
 process_mode = 2
-visible = false
 
 [node name="Panel" type="Panel" parent="coin_skill_system/direction_ui" unique_id=338365461]
 anchors_preset = 15
@@ -836,6 +853,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 30
 text = "选择方向"
+label_settings = SubResource("LabelSettings_0loja")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -901,11 +919,12 @@ layout_mode = 2
 
 [node name="cancel_direction_button" type="Button" parent="coin_skill_system/direction_ui" unique_id=71681277]
 unique_name_in_owner = true
-offset_left = 554.0
-offset_top = 468.0
-offset_right = 604.0
-offset_bottom = 506.0
+offset_left = 621.0
+offset_top = 506.0
+offset_right = 671.0
+offset_bottom = 544.0
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("30_fv21b")
 theme_override_font_sizes/font_size = 21
 theme_override_styles/hover = ExtResource("15_0ld40")
 shortcut = SubResource("Shortcut_vxglm")
@@ -936,6 +955,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 30
 text = "调整点数"
+label_settings = SubResource("LabelSettings_bu4jf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -957,22 +977,25 @@ alignment = 1
 [node name="dice_add_button" type="Button" parent="coin_skill_system/dice_adjust_ui/HBoxContainer" unique_id=1677386136]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("30_fv21b")
 theme_override_font_sizes/font_size = 28
 text = "▲+1"
 
 [node name="dice_sub_button" type="Button" parent="coin_skill_system/dice_adjust_ui/HBoxContainer" unique_id=1736537962]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("30_fv21b")
 theme_override_font_sizes/font_size = 28
 text = "▼-1"
 
 [node name="cancel_dice_adjust_button" type="Button" parent="coin_skill_system/dice_adjust_ui" unique_id=91618418]
 unique_name_in_owner = true
-offset_left = 554.0
+offset_left = 620.0
 offset_top = 468.0
-offset_right = 604.0
+offset_right = 670.0
 offset_bottom = 506.0
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("30_fv21b")
 theme_override_font_sizes/font_size = 21
 theme_override_styles/hover = ExtResource("15_0ld40")
 shortcut = SubResource("Shortcut_vxglm")
@@ -3028,12 +3051,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -150.0
-offset_top = -150.0
+offset_top = -211.0
 offset_right = 150.0
-offset_bottom = -120.0
+offset_bottom = -181.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "选择要替换的技能"
+label_settings = SubResource("LabelSettings_o7ddy")
 horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="replace_skill_ui/Panel" unique_id=178622555]
@@ -3115,6 +3139,8 @@ stretch_mode = 5
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("30_fv21b")
+theme_override_font_sizes/font_size = 24
 text = "取消"
 
 [node name="clear_stage_ui" parent="." unique_id=2021986512 instance=ExtResource("31_pibwh")]
