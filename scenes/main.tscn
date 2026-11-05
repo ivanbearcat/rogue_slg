@@ -2829,6 +2829,7 @@ grow_vertical = 2
 scale = Vector2(1, 1e-05)
 pivot_offset = Vector2(146, 10)
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="ColorRect" parent="stage_effect_ui" unique_id=1499560044]
 layout_mode = 1
