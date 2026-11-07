@@ -10,7 +10,6 @@
 [ext_resource type="Script" uid="uid://cf0vyp174rum0" path="res://scripts/ui/skill_3_ui.gd" id="7_3khon"]
 [ext_resource type="Texture2D" uid="uid://dwtnrc2k82jus" path="res://images/ui_icon/green_button.png" id="7_cwbpb"]
 [ext_resource type="Material" uid="uid://ibjahw08itr5" path="res://shaders/fire_outline.tres" id="8_qf8i0"]
-[ext_resource type="LabelSettings" uid="uid://ccp1dqm8hqkda" path="res://fonts/pixel_cn_label_settings.tres" id="11_7kdkw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mokjr"]
 shader = ExtResource("1_78qh4")
@@ -406,26 +405,6 @@ offset_right = 32.0
 offset_bottom = 32.0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.87058824)
-
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer3/skill_3/hero_ui_3/mask4" unique_id=1171557542]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -19.338593
-offset_top = -5.8169136
-offset_right = 44.661407
-offset_bottom = 38.18309
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.25, 0.25)
-pivot_offset = Vector2(32, 36)
-text = "需要能量
-"
-label_settings = ExtResource("11_7kdkw")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="skill_3_button" type="TextureButton" parent="HBoxContainer/VBoxContainer3" unique_id=387147373]
 unique_name_in_owner = true

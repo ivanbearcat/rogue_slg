@@ -549,11 +549,10 @@ func _run_phase2() -> void:
 			pipeline_ok = false
 			print("    管线缺失行 ", row.id)
 	_check("3.3 管线结构与快照行一致", pipeline_ok)
-	## 图标一致性（task 3.3）：快照清单内各 set_buff 的图标装配已审计——
-	## swift_overlord 注册时不挂图标（家族≥4 触发型，图标在 process 弹出），
-	## 其余行注册即挂一枚 buff/debuff texture。断言"非豁免行均有图标"。
-	var icon_exempt := ["swift_overlord"]
-	var expected_icons: int = (data.buffs.rows as Array).size() - icon_exempt.size()
+	## 图标一致性（task 3.3）：注册即挂图标——普通行经 manager 装配挂 buff/debuff texture，
+	## overlord 家族行在各自 set_buff() 内调用 _setup_overlord_icon 自挂（购买激活与读档
+	## 重建共用同一路径），不再豁免 swift_overlord；断言"每快照行恰一枚图标"（rows==icons）
+	var expected_icons: int = (data.buffs.rows as Array).size()
 	var icon_count: int = gm.buff_container.get_child_count() + gm.debuff_container.get_child_count()
 	var icon_ok: bool = icon_count == expected_icons
 	_check("3.3 buff/debuff 图标数量与行数一致", icon_ok)

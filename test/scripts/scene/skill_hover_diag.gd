@@ -94,30 +94,44 @@ func _run() -> void:
 		_quit()
 		return
 
-	## --- 步骤3: 模拟悬停目标格（直接调用 grid 的 mouse_entered 处理函数）---
+	## --- 步骤3: 模拟悬停目标格（经 HoverTracker 驱动,/grid.gd 已迁移 hover_tracker.gd,
+	## 旧方法 _on_area_2d_mouse_entered 已不存在——该调用会运行时报错中断协程导致卡死）---
 	var hover_index: Vector2 = Current.skill_target_range[0]
 	var hover_grid: Node = gm.all_grid_dict[hover_index]
+	var tracker: Node = null
+	for child in gm.get_children():
+		if child.get_script() != null \
+				and str(child.get_script().resource_path).ends_with("hover_tracker.gd"):
+			tracker = child
+			break
 	print("[DIAG] 步骤3 悬停目标格 ", hover_index,
-		" 该格target.visible=", hover_grid.target.visible)
-	hover_grid._on_area_2d_mouse_entered()
-	await get_tree().create_timer(0.1).timeout
-	var red_count := 0
-	for g in Current.all_grids_array:
-		if g.attack.visible:
-			red_count += 1
-	print("[DIAG] 步骤3 悬停后: 红框(attack)数量=", red_count,
-		" skill_attack_range=", Current.skill_attack_range,
-		" has_attack_grid=", Current.has_attack_grid,
-		" Current.grid_index=", Current.grid_index)
-	if red_count == 0:
-		print("[DIAG] >>> 关键发现: 悬停目标格后红框数量为 0 → 红框显示链路断裂")
+		" 该格target.visible=", hover_grid.target.visible,
+		" HoverTracker=", "已挂载" if tracker != null else "未找到!!")
+	_p_check("步骤3 HoverTracker 已挂载", tracker != null)
+	if tracker != null and Current.hero != null:
+		## headless 下 tracker._process 每帧解析 get_global_mouse_position()=(0,0) 在棋盘外，
+		## 会立刻触发退出语义清掉红框——暂停帧处理，改为例证驱动（纯语义调用）
+		tracker.set_process(false)
+		tracker._hovered_index = null
+		tracker._apply_transition(null, Vector2i(hover_index))
+		await get_tree().process_frame
+		var red_count := 0
+		for g in Current.all_grids_array:
+			if g.attack.visible:
+				red_count += 1
+		print("[DIAG] 步骤3 悬停后: 红框(attack)数量=", red_count,
+			" skill_attack_range=", Current.skill_attack_range,
+			" has_attack_grid=", Current.has_attack_grid,
+			" Current.grid_index=", Current.grid_index)
+		if red_count == 0:
+			print("[DIAG] >>> 关键发现: 悬停目标格后红框数量为 0 → 红框显示链路断裂")
 
 	## --- 步骤3b: 对照实验, 悬停一个"非目标格"（模拟用户把鼠标移到敌人位置）---
 	var far_index: Vector2 = hero.hero_grid_index + Vector2(3, 0)
-	if gm.all_grid_dict.has(far_index):
+	if tracker != null and gm.all_grid_dict.has(far_index):
 		var far_grid: Node = gm.all_grid_dict[far_index]
-		far_grid._on_area_2d_mouse_entered()
-		await get_tree().create_timer(0.05).timeout
+		tracker._apply_transition(Vector2i(hover_index), Vector2i(far_index))
+		await get_tree().process_frame
 		var red_count2 := 0
 		for g in Current.all_grids_array:
 			if g.attack.visible:

@@ -2150,6 +2150,8 @@ func _set_shop_coin_skill():
 func _on_shop_coin_skill_button_pressed() -> void:
 	## 判断金币是否足够
 	if Current.total_coins < int(shop_coin_skill_row["coin_skill_shop_cost"]):
+		## 防御性兜底：常规路径下按钮已由 total_coins setter 联动禁用，
+		## 此分支兜数据时序差；静默 return（用户决定不做金币不足提示）
 		return
 	## 扣除金币
 	Current.total_coins -= int(shop_coin_skill_row["coin_skill_shop_cost"])
@@ -2475,6 +2477,12 @@ func _on_buff_refresh_button_pressed() -> void:
 		_set_shop_buff()
 		Current.total_coins = Current.total_coins
 	else:
+		## 金币守卫（无提示，用户决定）：兜 total_coins setter 联动与商店数据更新之间的
+		## 时序差（如换关后新商品价格高于当前金币但按钮尚未被联动禁用的可点击窗口）。
+		## 不足时不扣费、不换品、不抬升费用，直接静默 return；
+		## 免费分支（zero_coin_refresh_times > 0）不经过该判断
+		if Current.total_coins < buff_refresh_cost:
+			return
 		## 扣除刷新费用
 		Current.total_coins -= buff_refresh_cost
 		## 遥测:付费刷新 buff 商店
@@ -2495,6 +2503,8 @@ func _apply_war_supply_heal() -> void:
 func _on_buff_shop_button_1_pressed() -> void:
 	var _actual_price = maxi(0, shop_buff_1["buff_price"] - Current.buff_price_discount)
 	if Current.total_coins < _actual_price:
+		## 防御性兜底：常规路径下按钮已由 total_coins setter 联动禁用，
+		## 此分支兜数据时序差；静默 return（用户决定不做金币不足提示）
 		return
 	shop_buff_bought[0] = true
 	Current.total_coins -= _actual_price
@@ -2512,6 +2522,8 @@ func _on_buff_shop_button_1_pressed() -> void:
 func _on_buff_shop_button_2_pressed() -> void:
 	var _actual_price = maxi(0, shop_buff_2["buff_price"] - Current.buff_price_discount)
 	if Current.total_coins < _actual_price:
+		## 防御性兜底：常规路径下按钮已由 total_coins setter 联动禁用，
+		## 此分支兜数据时序差；静默 return（用户决定不做金币不足提示）
 		return
 	shop_buff_bought[1] = true
 	Current.total_coins -= _actual_price
@@ -2529,6 +2541,8 @@ func _on_buff_shop_button_2_pressed() -> void:
 func _on_buff_shop_button_3_pressed() -> void:
 	var _actual_price = maxi(0, shop_buff_3["buff_price"] - Current.buff_price_discount)
 	if Current.total_coins < _actual_price:
+		## 防御性兜底：常规路径下按钮已由 total_coins setter 联动禁用，
+		## 此分支兜数据时序差；静默 return（用户决定不做金币不足提示）
 		return
 	shop_buff_bought[2] = true
 	Current.total_coins -= _actual_price

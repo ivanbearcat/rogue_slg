@@ -50,6 +50,7 @@
 [ext_resource type="Texture2D" uid="uid://d2ur4twufxilo" path="res://images/ui_icon/eye2.png" id="43_vchkt"]
 [ext_resource type="Texture2D" uid="uid://57oyou3ef2xv" path="res://images/buff_icon/old/attack_coin_slime_score_increase.png" id="52_bu4jf"]
 [ext_resource type="Script" uid="uid://cyf1geockai2i" path="res://scripts/defense_bar.gd" id="52_defbar"]
+[ext_resource type="Script" uid="uid://br3u3wuroxykx" path="res://scripts/ui/alert_bubble.gd" id="53_alrtp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_og1vs"]
 bg_color = Color(0, 0, 0, 0.9411765)
@@ -663,6 +664,16 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ax2r0"]
 atlas = ExtResource("32_5he1u")
 region = Rect2(49, 18, 49, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1by0b"]
+atlas = ExtResource("20_gqmmt")
+region = Rect2(10, 80, 42, 16)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ids8r"]
+font = ExtResource("30_fv21b")
+font_size = 24
+outline_size = 12
+outline_color = Color(0.24705882, 0.011764706, 0.011764706, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7ddy"]
 bg_color = Color(0, 0, 0, 0.9411765)
@@ -3052,6 +3063,57 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 expand_mode = 1
 stretch_mode = 5
+
+[node name="alert_ui" type="CanvasLayer" parent="." unique_id=1852346799]
+layer = 101
+
+[node name="alert_box" type="Control" parent="alert_ui" unique_id=578254988]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 591.0
+offset_top = 330.0
+offset_right = 645.0
+offset_bottom = 354.0
+scale = Vector2(4, 4)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
+script = ExtResource("53_alrtp")
+
+[node name="TextureRect" type="TextureRect" parent="alert_ui/alert_box" unique_id=930204848]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -1.0
+offset_right = 4.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_1by0b")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="alert_label" type="Label" parent="alert_ui/alert_box" unique_id=1278771239]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.4444275
+offset_top = -2.0
+offset_right = 104.44443
+offset_bottom = 57.33333
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+text = "需要能量"
+label_settings = SubResource("LabelSettings_ids8r")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
 
 [node name="replace_skill_ui" type="CanvasLayer" parent="." unique_id=915307986]
 unique_name_in_owner = true
