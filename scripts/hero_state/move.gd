@@ -26,8 +26,12 @@ func update(_delta: float) -> void:
 		var target_grid_index = Current.id_path[0]
 		var target_position = Vector2(target_grid_index.x * 16, target_grid_index.y * 16) + Vector2(16, 16)
 		#print(owner.position, target_position)
+		var pre_pos: Vector2 = owner.position
 		owner.position = owner.position.move_toward(target_position, 100 * _delta)
 		if owner.position == target_position:
+			## 每走完一格播一步步声;距离为0说明id_path[0]是脚下起点格(A*路径含起点),不算一步静默跳过
+			if owner.position != pre_pos:
+				AudioManager.play_sfx("footstep", 0.1)
 			Current.id_path.remove_at(0)
 		if Current.id_path.is_empty():
 			Current.is_moved = true

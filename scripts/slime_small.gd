@@ -55,6 +55,12 @@ var dice_to_frame_dice: Dictionary = {
 	6: 4
 }
 
+## 动画帧音效注册表:动画名 → {帧下标: 音效键}
+## "die" 一个键覆盖四色史莱姆(共用本脚本与同一动画名);die 帧号=用户标定帧1
+const FRAME_SFX := {
+	"die": {2: "slime_die"},
+}
+
 func show_selected_marker() -> void:
 	animated_sprite_2d.material.set_shader_parameter("is_selected", true)
 
@@ -101,3 +107,14 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func _on_dice_animation_finished() -> void:
 	print(dice.frame)
+
+## 帧事件音效:动画名未在表中注册(idle/roll/dice等常驻动画)静默返回;die 高潮帧播爆浆音
+## 死亡音效带音高抖动±0.15与0.05s去重窗口(并发档位3):同刻多杀只响一层、错开死亡音高有差异
+func _on_animated_sprite_2d_frame_changed() -> void:
+	var frame_sfx: Variant = FRAME_SFX.get(animated_sprite_2d.animation)
+	if frame_sfx == null:
+		return
+	var sfx_key: Variant = frame_sfx.get(animated_sprite_2d.frame)
+	if sfx_key == null:
+		return
+	AudioManager.play_sfx(sfx_key, 0.15, 0.05)

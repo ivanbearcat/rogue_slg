@@ -20,6 +20,13 @@ var hero_grid_index: Vector2:
 ## 英雄移动力
 var hero_movement: int
 
+## 动画帧音效注册表:完整动画名 → {帧下标: 音效键}
+## 帧下标是几何事实,只要帧序不变即与触发时刻无关;新英雄只需补表项,处理函数零改动
+const FRAME_SFX := {
+	"soldier_skill_1": {2: "attack"},
+	"soldier_skill_2": {3: "attack"},
+}
+
 func _ready() -> void:
 	animated_sprite_2d.play(hero_name + "_idle")
 	skill_1.show_skill_range.connect(_on_show_skill_range)
@@ -65,3 +72,13 @@ func _on_skill_attack():
 func _on_animated_sprite_2d_animation_finished() -> void:
 	Current.attack_animation_finished = 1
 	#self.hero_state_machine.transition_to("end")
+
+## 帧事件音效:动画名未在表中注册(idle/move/dice等常驻动画)静默返回;命中配置帧播对应音效
+func _on_animated_sprite_2d_frame_changed() -> void:
+	var frame_sfx: Variant = FRAME_SFX.get(animated_sprite_2d.animation)
+	if frame_sfx == null:
+		return
+	var sfx_key: Variant = frame_sfx.get(animated_sprite_2d.frame)
+	if sfx_key == null:
+		return
+	AudioManager.play_sfx(sfx_key)
