@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://duwomfcwwhpqt" path="res://images/ui_icon/six.tres" id="39_chjal"]
 [ext_resource type="Texture2D" uid="uid://diuliocyqfr02" path="res://images/card/orange.png" id="40_cjqg0"]
 [ext_resource type="PackedScene" uid="uid://cendsettleui1" path="res://scenes/end_settlement_ui.tscn" id="40_ensui"]
+[ext_resource type="Script" uid="uid://bcrajt0j7mvx1" path="res://scripts/lib/button_label.gd" id="41_bu4jf"]
 [ext_resource type="Texture2D" uid="uid://1mkuadq2183d" path="res://images/card/blue.png" id="41_vchkt"]
 [ext_resource type="Texture2D" uid="uid://bypnhna66i46c" path="res://images/ui_icon/duizi.tres" id="42_txyw0"]
 [ext_resource type="Texture2D" uid="uid://d2ur4twufxilo" path="res://images/ui_icon/eye2.png" id="43_vchkt"]
@@ -3064,6 +3065,23 @@ size_flags_stretch_ratio = 3.0
 expand_mode = 1
 stretch_mode = 5
 
+[node name="help_ui" type="Control" parent="." unique_id=894987067]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -88.0
+offset_top = -19.0
+offset_right = 232.0
+offset_bottom = 161.0
+
+[node name="Panel" type="Panel" parent="help_ui" unique_id=995443210]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="alert_ui" type="CanvasLayer" parent="." unique_id=1852346799]
 layer = 101
 
@@ -3074,7 +3092,7 @@ offset_left = 591.0
 offset_top = 330.0
 offset_right = 645.0
 offset_bottom = 354.0
-scale = Vector2(4, 4)
+scale = Vector2(1e-05, 1e-05)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 mouse_filter = 2
 script = ExtResource("53_alrtp")
@@ -3248,7 +3266,6 @@ visible = false
 [node name="shop_ui" type="CanvasLayer" parent="." unique_id=1499345335]
 unique_name_in_owner = true
 process_mode = 2
-visible = false
 
 [node name="Panel" type="Panel" parent="shop_ui" unique_id=2127136799]
 anchors_preset = 15
@@ -3785,7 +3802,6 @@ stretch_mode = 5
 
 [node name="shop_next_level_button" type="TextureButton" parent="shop_ui/Panel" unique_id=652245332]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
 offset_left = 601.0
 offset_top = 507.0
@@ -3796,6 +3812,7 @@ texture_pressed = SubResource("AtlasTexture_5b8rv")
 texture_hover = SubResource("AtlasTexture_g8i88")
 texture_disabled = SubResource("AtlasTexture_buwvt")
 stretch_mode = 5
+script = ExtResource("41_bu4jf")
 
 [node name="Label" type="Label" parent="shop_ui/Panel/shop_next_level_button" unique_id=1413912972]
 layout_mode = 1

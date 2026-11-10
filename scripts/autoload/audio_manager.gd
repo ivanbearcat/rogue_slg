@@ -11,6 +11,12 @@ const SOUNDS := {
 	"attack": preload("res://audio/sfx/attack.ogg"),
 	"slime_die": preload("res://audio/sfx/slime_die.ogg"),
 	"footstep": preload("res://audio/sfx/footstep_grass_002.ogg"),
+	"button_hover": preload("res://audio/sfx/button_hover.ogg"),
+	"dice_shake": preload("res://audio/sfx/dice-shake-1.ogg"),
+	"change_scene": preload("res://audio/sfx/change_scene.ogg"),
+	"click2": preload("res://audio/sfx/click2.ogg"),
+	"coin": preload("res://audio/sfx/coin.tres"),
+	"error": preload("res://audio/sfx/error_001.ogg"),
 }
 
 func _ready() -> void:

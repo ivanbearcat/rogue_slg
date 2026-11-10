@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://cqpfbqec73olb" path="res://fonts/SourceHanSansCN-Bold.otf" id="3_lmnif"]
 [ext_resource type="Script" uid="uid://cfbht3nu07qt3" path="res://scripts/clear_stage_ui.gd" id="4_csui"]
 [ext_resource type="LabelSettings" uid="uid://dhj30d6t7jryv" path="res://resources/pixel_num.tres" id="5_lmnif"]
+[ext_resource type="Script" uid="uid://bcrajt0j7mvx1" path="res://scripts/lib/button_label.gd" id="6_1s7d4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ld40"]
 bg_color = Color(0, 0, 0, 0.980392)
@@ -239,7 +240,7 @@ theme_override_font_sizes/font_size = 20
 text = "0"
 label_settings = ExtResource("5_lmnif")
 
-[node name="stage_clear_button" type="TextureButton" parent="Panel/paper_texture" unique_id=2009863201]
+[node name="stage_clear_button" type="TextureButton" parent="Panel/paper_texture" unique_id=417737049]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -252,8 +253,9 @@ texture_pressed = SubResource("AtlasTexture_5b8rv")
 texture_hover = SubResource("AtlasTexture_g8i88")
 texture_disabled = SubResource("AtlasTexture_buwvt")
 stretch_mode = 5
+script = ExtResource("6_1s7d4")
 
-[node name="Label" type="Label" parent="Panel/paper_texture/stage_clear_button" unique_id=925313061]
+[node name="Label" type="Label" parent="Panel/paper_texture/stage_clear_button" unique_id=1026393080]
 layout_mode = 0
 offset_left = 27.0
 offset_top = 11.0
