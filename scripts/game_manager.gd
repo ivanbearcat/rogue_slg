@@ -208,6 +208,9 @@ var buff_refresh_cost := 1:
 @onready var buff_json_data: Array = Tools.load_json_file('res://config/buff.json')
 ## 骰型倍率
 @onready var dice_multiplier_json_data: Array = Tools.load_json_file("res://config/dice_multiplier.json")
+## 帮助按钮
+@onready var help_ui: Control = %help_ui
+
 ## 格子像素大小
 var grid_size = Vector2(16, 16)
 ## 起始格子位置
@@ -2571,3 +2574,11 @@ func _on_shop_next_level_button_pressed() -> void:
 func _on_pause_button_pressed() -> void:
 	get_tree().paused = true
 	pause_ui.show()
+
+
+func _on_help_button_pressed() -> void:
+	help_ui.show()
+
+
+func _on_help_button_close_pressed() -> void:
+	help_ui.hide()

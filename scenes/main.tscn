@@ -449,6 +449,13 @@ outline_color = Color(0, 0, 0, 1)
 atlas = ExtResource("6_1gmj2")
 region = Rect2(1, 140, 26, 28)
 
+[sub_resource type="InputEventKey" id="InputEventKey_bu4jf"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_bu4jf"]
+events = [SubResource("InputEventKey_bu4jf")]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8jky"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(192, 7, 18, 18)
@@ -529,13 +536,13 @@ outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 11
 
-[sub_resource type="InputEventKey" id="InputEventKey_y6deb"]
+[sub_resource type="InputEventKey" id="InputEventKey_o7ddy"]
 device = -1
-keycode = 82
-unicode = 114
+keycode = 70
+unicode = 102
 
 [sub_resource type="Shortcut" id="Shortcut_og1vs"]
-events = [SubResource("InputEventKey_y6deb")]
+events = [SubResource("InputEventKey_o7ddy")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2wyq8"]
 atlas = ExtResource("20_gqmmt")
@@ -553,6 +560,14 @@ region = Rect2(160, 0, 24, 16)
 atlas = ExtResource("20_gqmmt")
 region = Rect2(208, 32, 24, 16)
 
+[sub_resource type="InputEventKey" id="InputEventKey_0loja"]
+device = -1
+keycode = 82
+unicode = 114
+
+[sub_resource type="Shortcut" id="Shortcut_o7ddy"]
+events = [SubResource("InputEventKey_0loja")]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_b6ruc"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(144, 32, 24, 16)
@@ -568,6 +583,14 @@ region = Rect2(160, 0, 24, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_63lxy"]
 atlas = ExtResource("20_gqmmt")
 region = Rect2(208, 32, 24, 16)
+
+[sub_resource type="InputEventKey" id="InputEventKey_ids8r"]
+device = -1
+keycode = 32
+unicode = 32
+
+[sub_resource type="Shortcut" id="Shortcut_ids8r"]
+events = [SubResource("InputEventKey_ids8r")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkpxi"]
 atlas = ExtResource("20_gqmmt")
@@ -665,6 +688,23 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ax2r0"]
 atlas = ExtResource("32_5he1u")
 region = Rect2(49, 18, 49, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5y4ni"]
+atlas = ExtResource("6_bkbmf")
+region = Rect2(145, 65, 46, 14)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xaipn"]
+font = ExtResource("30_fv21b")
+font_size = 24
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dnhof"]
+font = ExtResource("30_fv21b")
+font_size = 24
+font_color = Color(1, 0.23162961, 0.8342895, 1)
+outline_size = 10
+outline_color = Color(0.2578125, 0.09122596, 0.20228362, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1by0b"]
 atlas = ExtResource("20_gqmmt")
@@ -2242,13 +2282,15 @@ offset_top = 5.0
 offset_right = 26.0
 offset_bottom = 29.0
 scale = Vector2(0.5, 0.5)
+tooltip_text = "暂停/设置"
+theme = ExtResource("17_qkpxi")
+shortcut = SubResource("Shortcut_bu4jf")
 texture_normal = SubResource("AtlasTexture_j8jky")
 texture_pressed = SubResource("AtlasTexture_kmb1v")
 texture_hover = SubResource("AtlasTexture_fuf3a")
 stretch_mode = 5
 
 [node name="help_button" type="TextureButton" parent="bottom_ui/level_gold_power" unique_id=442165496]
-unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -2259,6 +2301,8 @@ offset_right = 38.0
 offset_bottom = 14.25
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
+tooltip_text = "帮助"
+theme = ExtResource("17_qkpxi")
 shortcut = SubResource("Shortcut_gqmmt")
 texture_normal = SubResource("AtlasTexture_yc10j")
 texture_pressed = SubResource("AtlasTexture_jscy8")
@@ -2435,6 +2479,8 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 2
+tooltip_text = "血瓶"
+theme = ExtResource("17_qkpxi")
 toggle_mode = true
 action_mode = 0
 keep_pressed_outside = true
@@ -2471,7 +2517,10 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
+tooltip_text = "重置移动"
+theme = ExtResource("17_qkpxi")
 disabled = true
+shortcut = SubResource("Shortcut_o7ddy")
 texture_normal = SubResource("AtlasTexture_b6ruc")
 texture_pressed = SubResource("AtlasTexture_155or")
 texture_hover = SubResource("AtlasTexture_vtx2l")
@@ -2506,7 +2555,10 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
+tooltip_text = "结束回合"
+theme = ExtResource("17_qkpxi")
 keep_pressed_outside = true
+shortcut = SubResource("Shortcut_ids8r")
 texture_normal = SubResource("AtlasTexture_qkpxi")
 texture_pressed = SubResource("AtlasTexture_5q0nq")
 texture_hover = SubResource("AtlasTexture_dgi5k")
@@ -3066,7 +3118,8 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="help_ui" type="Control" parent="." unique_id=894987067]
-visible = false
+unique_name_in_owner = true
+z_index = 5
 layout_mode = 3
 anchors_preset = 0
 offset_left = -88.0
@@ -3079,8 +3132,514 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -3.0
+offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="help_button_close" type="TextureButton" parent="help_ui/Panel" unique_id=112955413]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 22.0
+offset_top = 74.0
+offset_right = 44.0
+offset_bottom = 94.75
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+shortcut = SubResource("Shortcut_gqmmt")
+texture_normal = SubResource("AtlasTexture_yc10j")
+texture_pressed = SubResource("AtlasTexture_jscy8")
+texture_hover = SubResource("AtlasTexture_pm3ni")
+stretch_mode = 5
+
+[node name="dice_type" type="NinePatchRect" parent="help_ui/Panel" unique_id=484212169]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 63.0
+offset_top = 63.0
+offset_right = 97.0
+offset_bottom = 74.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/dice_type" unique_id=634591597]
+layout_mode = 1
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "骰型倍率"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="dice_score" type="NinePatchRect" parent="help_ui/Panel" unique_id=1209003234]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 16.0
+offset_top = 63.0
+offset_right = 50.0
+offset_bottom = 74.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/dice_score" unique_id=684751768]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "点数分值"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="dice_pocket" type="NinePatchRect" parent="help_ui/Panel" unique_id=610621946]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 74.0
+offset_top = 9.0
+offset_right = 108.0
+offset_bottom = 20.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/dice_pocket" unique_id=1236925477]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "骰子口袋"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="score_preview" type="NinePatchRect" parent="help_ui/Panel" unique_id=387005504]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 34.0
+offset_top = 9.0
+offset_right = 68.0
+offset_bottom = 20.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/score_preview" unique_id=2038719191]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "分数预告"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="buff_bar" type="NinePatchRect" parent="help_ui/Panel" unique_id=1492875709]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 125.0
+offset_top = 9.0
+offset_right = 159.0
+offset_bottom = 20.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/buff_bar" unique_id=41136657]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "Buff栏"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="debuff_bar" type="NinePatchRect" parent="help_ui/Panel" unique_id=1227181087]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 252.0
+offset_top = 9.0
+offset_right = 286.0
+offset_bottom = 20.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/debuff_bar" unique_id=229355873]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "Debuff栏"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="skill_grid" type="NinePatchRect" parent="help_ui/Panel" unique_id=47204943]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 242.0
+offset_top = 132.0
+offset_right = 276.0
+offset_bottom = 143.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/skill_grid" unique_id=405255619]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "额外技能格"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="potion_progress" type="NinePatchRect" parent="help_ui/Panel" unique_id=440603758]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 242.0
+offset_top = 113.0
+offset_right = 276.0
+offset_bottom = 124.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/potion_progress" unique_id=1764868000]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "血瓶进度"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="exp_bar" type="NinePatchRect" parent="help_ui/Panel" unique_id=1321878156]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 141.0
+offset_top = 160.0
+offset_right = 175.0
+offset_bottom = 171.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/exp_bar" unique_id=1605345352]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "经验条"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="shield" type="NinePatchRect" parent="help_ui/Panel" unique_id=2017418577]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 242.0
+offset_top = 93.0
+offset_right = 276.0
+offset_bottom = 104.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/shield" unique_id=2035672380]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "护盾"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="power" type="NinePatchRect" parent="help_ui/Panel" unique_id=221671808]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 86.0
+offset_top = 160.0
+offset_right = 120.0
+offset_bottom = 171.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/power" unique_id=1411990849]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "能量"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hero_skill" type="NinePatchRect" parent="help_ui/Panel" unique_id=912424935]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 49.0
+offset_top = 117.0
+offset_right = 83.0
+offset_bottom = 128.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/hero_skill" unique_id=1695102902]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "职业技能"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="power_button" type="NinePatchRect" parent="help_ui/Panel" unique_id=229614044]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 49.0
+offset_top = 141.0
+offset_right = 83.0
+offset_bottom = 152.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/power_button" unique_id=187765657]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "赋能按钮"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="end_trun" type="NinePatchRect" parent="help_ui/Panel" unique_id=810537790]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 291.0
+offset_top = 155.0
+offset_right = 320.0
+offset_bottom = 166.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/end_trun" unique_id=1482102336]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 129.57141
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "结束回合"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="reset_move" type="NinePatchRect" parent="help_ui/Panel" unique_id=2117768262]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 261.0
+offset_top = 155.0
+offset_right = 290.0
+offset_bottom = 166.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/reset_move" unique_id=1315912725]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 129.57141
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "重置移动"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="use_potion" type="NinePatchRect" parent="help_ui/Panel" unique_id=1507024032]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 231.0
+offset_top = 155.0
+offset_right = 260.0
+offset_bottom = 166.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/use_potion" unique_id=1166594052]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 129.57141
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "使用血瓶"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="use_potion2" type="NinePatchRect" parent="help_ui/Panel" unique_id=301898599]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 32.0
+offset_top = 156.0
+offset_right = 61.0
+offset_bottom = 167.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/use_potion2" unique_id=816108511]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 129.57141
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "关闭帮助"
+label_settings = SubResource("LabelSettings_dnhof")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="shorcut_key" type="NinePatchRect" parent="help_ui/Panel" unique_id=647986489]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 118.0
+offset_top = 52.0
+offset_right = 204.0
+offset_bottom = 132.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="RichTextLabel" parent="help_ui/Panel/shorcut_key" unique_id=1855397652]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 392.47617
+offset_bottom = 368.66666
+scale = Vector2(0.21, 0.21)
+theme_override_constants/line_separation = 3
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("30_fv21b")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "	[img=30]res://images/ui_icon/esc.tres[/img]		暂停/菜单
+	[img=30]res://images/ui_icon/q.tres[/img]		英雄第一个技能
+	[img=30]res://images/ui_icon/w.tres[/img]		英雄第二个技能
+	[img=30]res://images/ui_icon/e.tres[/img]		英雄第三个技能
+	[img=30]res://images/ui_icon/1.tres[/img]		第一个额外技能
+	[img=30]res://images/ui_icon/2.tres[/img]		第二个额外技能
+	[img=30]res://images/ui_icon/3.tres[/img]		第三个额外技能
+	[img=30]res://images/ui_icon/r.tres[/img]		重置移动
+	[img=30]res://images/ui_icon/f.tres[/img]		使用血瓶
+	[img=30]res://images/ui_icon/space.tres[/img]		回合结束
+	[img=30]res://images/ui_icon/h.tres[/img]		帮助/教学"
+
+[node name="shorcut_key_nine" type="NinePatchRect" parent="help_ui/Panel/shorcut_key" unique_id=945982053]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1.0
+offset_top = -8.0
+offset_right = 35.0
+offset_bottom = 2.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/shorcut_key/shorcut_key_nine" unique_id=1183011014]
+layout_mode = 0
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "快捷键"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="alert_ui" type="CanvasLayer" parent="." unique_id=1852346799]
 layer = 101
@@ -3266,6 +3825,7 @@ visible = false
 [node name="shop_ui" type="CanvasLayer" parent="." unique_id=1499345335]
 unique_name_in_owner = true
 process_mode = 2
+visible = false
 
 [node name="Panel" type="Panel" parent="shop_ui" unique_id=2127136799]
 anchors_preset = 15
@@ -3802,6 +4362,7 @@ stretch_mode = 5
 
 [node name="shop_next_level_button" type="TextureButton" parent="shop_ui/Panel" unique_id=652245332]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 601.0
 offset_top = 507.0
@@ -4102,6 +4663,7 @@ script = ExtResource("34_dgi5k")
 [connection signal="button_up" from="hero_skill2/HBoxContainer/coin_skill_3" to="." method="_on_coin_skill_3_button_up"]
 [connection signal="pressed" from="hero_skill2/HBoxContainer/coin_skill_3" to="." method="_on_coin_skill_3_pressed"]
 [connection signal="pressed" from="bottom_ui/level_gold_power/pause_button" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="bottom_ui/level_gold_power/help_button" to="." method="_on_help_button_pressed"]
 [connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/potion_button" to="." method="_on_potion_button_pressed"]
 [connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/undo_move_button" to="." method="_on_undo_move_button_button_down"]
 [connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/undo_move_button" to="." method="_on_undo_move_button_button_up"]
@@ -4109,6 +4671,7 @@ script = ExtResource("34_dgi5k")
 [connection signal="button_down" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_down"]
 [connection signal="button_up" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_button_up"]
 [connection signal="pressed" from="coin_skill_trun_button/HBoxContainer/turn_button" to="." method="_on_turn_button_pressed"]
+[connection signal="pressed" from="help_ui/Panel/help_button_close" to="." method="_on_help_button_close_pressed"]
 [connection signal="pressed" from="replace_skill_ui/Panel/VBoxContainer/replace_skill_1" to="." method="_on_replace_skill_1_pressed"]
 [connection signal="pressed" from="replace_skill_ui/Panel/VBoxContainer/replace_skill_2" to="." method="_on_replace_skill_2_pressed"]
 [connection signal="pressed" from="replace_skill_ui/Panel/VBoxContainer/replace_skill_3" to="." method="_on_replace_skill_3_pressed"]
