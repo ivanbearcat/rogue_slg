@@ -2,6 +2,9 @@ extends Node2D
 
 signal slime_reroll_finished
 
+## 过关金币滚动配声音高（0.754s ÷ 1.5 ≈ 0.5s，与数字滚动同长）
+const COIN_ROLL_PITCH := 1.5
+
 const hero_property = {
 	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2(3, 3), "class_icon": "res://images/ui_icon/soldier_icon.png"},
 	"archer": {"name": "archer", "movement": 2, "init_vec": Vector2(3, 2)},
@@ -253,7 +256,9 @@ func spawn_slime_at_random_grid(count: int) -> void:
 		spawned_enemies.append(enemy_instantiate)
 	## await process_frame确保注册到Current.all_enemy_array
 	await get_tree().process_frame
-	## 触发骰子动画
+	## 触发骰子动画（波起点只播一组三层，与波内史莱姆数量无关）
+	if not spawned_enemies.is_empty():
+		AudioManager.play_dice_shake_wave()
 	for enemy in spawned_enemies:
 		if not is_instance_valid(enemy):
 			continue
@@ -899,7 +904,9 @@ func _create_slime():
 	_slime_create_array.clear()
 	## 阶段2：等待所有节点注册到 Current.all_enemy_array
 	await get_tree().process_frame
-	## 阶段3：并行触发所有骰子动画
+	## 阶段3：并行触发所有骰子动画（波起点只播一组三层，与波内史莱姆数量无关）
+	if not spawned_enemies.is_empty():
+		AudioManager.play_dice_shake_wave()
 	for enemy in spawned_enemies:
 		if not is_instance_valid(enemy):
 			continue
@@ -1293,6 +1300,7 @@ func _on_hero_cmd(cmd_name: String, event: InputEvent = null):
 func _roll_dice(slime_instantiate, roll_dice=1, roll_color=1):
 	if not is_instance_valid(slime_instantiate):
 		return
+	AudioManager.play_sfx("dice_shake")
 	_set_turn_button_disabled(true)
 	if roll_dice:
 		slime_instantiate.dice.play("roll")
@@ -1836,22 +1844,26 @@ func _do_stage_clear_effect(stage_add_coin, hp_add_coin, dice_type_add_coin):
 	await EffectManager.typewriter_effect(stage_clear_label_1, stage_clear_label_1.text, 0.5)
 	stage_coin_rlabel_1.show()
 	stage_coin_label_1.show()
+	AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
 	await EffectManager.label_num_rolling_effect(stage_coin_label_1, stage_add_coin)
 	## 第二行
 	stage_clear_label_2.show()
 	await EffectManager.typewriter_effect(stage_clear_label_2, stage_clear_label_2.text, 0.5)
 	stage_coin_rlabel_2.show()
 	stage_coin_label_2.show()
+	AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
 	await EffectManager.label_num_rolling_effect(stage_coin_label_2, hp_add_coin)
 	## 第三行
 	stage_clear_label_3.show()
 	await EffectManager.typewriter_effect(stage_clear_label_3, stage_clear_label_3.text, 0.5)
 	stage_coin_rlabel_3.show()
 	stage_coin_label_3.show()
+	AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
 	await EffectManager.label_num_rolling_effect(stage_coin_label_3, dice_type_add_coin)
 	## 汇总金币
 	stage_coin_rlabel_4.show()
 	stage_coin_label_4.show()
+	AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
 	await EffectManager.label_num_rolling_effect(
 		stage_coin_label_4,
 		stage_add_coin + hp_add_coin + dice_type_add_coin

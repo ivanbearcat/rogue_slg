@@ -54,6 +54,7 @@ func transition_to(view_name: StringName, ready_event: StringName = &"") -> Node
 	_material.set_shader_parameter("tile_px", TILE_PX)
 	visible = true
 	var cover_tween := create_tween()
+	AudioManager.play_sfx("change_scene")
 	cover_tween.tween_method(_set_amount, 0.0, 1.0, COVER_TIME) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	await cover_tween.finished
@@ -87,6 +88,7 @@ func transition_to(view_name: StringName, ready_event: StringName = &"") -> Node
 	_show_loading(false)
 	_material.set_shader_parameter("opening", 1.0)
 	var reveal_tween := create_tween()
+	AudioManager.play_sfx("change_scene_reverse")
 	reveal_tween.tween_method(_set_amount, 1.0, 0.0, REVEAL_TIME) \
 		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	await reveal_tween.finished

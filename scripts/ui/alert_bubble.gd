@@ -45,6 +45,7 @@ func show_alert(text: String = "", at_mouse: bool = false) -> void:
 		_place_at_mouse()
 	else:
 		global_position = Vector2(633, 342)
+	AudioManager.play_sfx("error", 0.0, 0.2)
 	_tween = create_tween()
 	_tween.tween_property(self, "scale", Vector2(4, 4), POP_TIME).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_tween.tween_interval(WAIT_TIME)
