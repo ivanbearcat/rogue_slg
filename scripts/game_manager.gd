@@ -517,6 +517,19 @@ func _rebuild_slimes_from_data(rows: Array, in_tree: bool) -> Array:
 		slime.enemy_type = int(row.get("enemy_type", 1))
 		slime.is_elite = bool(row.get("elite", false))
 		slime.is_boss = bool(row.get("boss", false))
+		## 门槛类型/数量随快照恢复（精英/BOSS 击杀门槛；漏恢复会导致
+		## tooltip 显示"需要: ×0"且 check_gate 匹配空类型永远判负、无法击杀）
+		slime.gate_type = str(row.get("gate_type", ""))
+		slime.gate_count = int(row.get("gate_count", 0))
+		## 兜底：门槛字段缺失/为空（旧存档或受污染存档）时按生成规则重掷，
+		## 否则空门槛令 check_gate 永远判负，该精英/BOSS 无法击杀
+		if (slime.is_elite or slime.is_boss) and slime.gate_type.is_empty():
+			if slime.is_boss:
+				slime.gate_type = Current.BOSS_GATE_TYPES.pick_random()
+				slime.gate_count = Current.BOSS_GATE_COUNT
+			else:
+				slime.gate_type = Current.ELITE_GATE_TYPES.pick_random()
+				slime.gate_count = Current.ELITE_GATE_COUNTS[slime.gate_type]
 		if in_tree:
 			enemys.add_child(slime)
 			## 骰面由点数反查帧（dice_to_frame_dice 为实例普通变量，未入树也可用）
