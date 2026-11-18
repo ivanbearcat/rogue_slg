@@ -7,7 +7,7 @@ var _sfx_pool: Array[AudioStreamPlayer] = []
 var _sfx_playing_key: Array[String] = []
 ## 各音效键最近一次实际播放的时间戳(ms),配合 play_sfx 的去重窗口使用
 var _sfx_last_played_ms: Dictionary = {}
-const SFX_POOL_SIZE := 8          # 最多 8 个音效同时响
+const SFX_POOL_SIZE := 24         # 最多 24 个音效同时响（过关 coin 按数值可叠 20 声）
 const SFX_DIR := "res://audio/sfx/"
 const SOUNDS := {
 	"attack": preload("res://audio/sfx/attack.ogg"),

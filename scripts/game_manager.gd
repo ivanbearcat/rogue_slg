@@ -2,9 +2,6 @@ extends Node2D
 
 signal slime_reroll_finished
 
-## 过关金币滚动配声音高（0.754s ÷ 1.5 ≈ 0.5s，与数字滚动同长）
-const COIN_ROLL_PITCH := 1.5
-
 const hero_property = {
 	"soldier": {"name": "soldier", "movement": 3, "init_vec": Vector2(3, 3), "class_icon": "res://images/ui_icon/soldier_icon.png"},
 	"archer": {"name": "archer", "movement": 2, "init_vec": Vector2(3, 2)},
@@ -1844,29 +1841,27 @@ func _do_stage_clear_effect(stage_add_coin, hp_add_coin, dice_type_add_coin):
 	await EffectManager.typewriter_effect(stage_clear_label_1, stage_clear_label_1.text, 0.5)
 	stage_coin_rlabel_1.show()
 	stage_coin_label_1.show()
-	AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
-	await EffectManager.label_num_rolling_effect(stage_coin_label_1, stage_add_coin)
+	await EffectManager.label_num_rolling_effect(stage_coin_label_1, stage_add_coin, 1, true)
 	## 第二行
 	stage_clear_label_2.show()
 	await EffectManager.typewriter_effect(stage_clear_label_2, stage_clear_label_2.text, 0.5)
 	stage_coin_rlabel_2.show()
 	stage_coin_label_2.show()
-	AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
-	await EffectManager.label_num_rolling_effect(stage_coin_label_2, hp_add_coin)
+	await EffectManager.label_num_rolling_effect(stage_coin_label_2, hp_add_coin, 1, true)
 	## 第三行
 	stage_clear_label_3.show()
 	await EffectManager.typewriter_effect(stage_clear_label_3, stage_clear_label_3.text, 0.5)
 	stage_coin_rlabel_3.show()
 	stage_coin_label_3.show()
-	AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
-	await EffectManager.label_num_rolling_effect(stage_coin_label_3, dice_type_add_coin)
+	await EffectManager.label_num_rolling_effect(stage_coin_label_3, dice_type_add_coin, 1, true)
 	## 汇总金币
 	stage_coin_rlabel_4.show()
 	stage_coin_label_4.show()
-	AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
 	await EffectManager.label_num_rolling_effect(
 		stage_coin_label_4,
-		stage_add_coin + hp_add_coin + dice_type_add_coin
+		stage_add_coin + hp_add_coin + dice_type_add_coin,
+		1,
+		true
 		)
 	stage_clear_button.disabled = false
 	stage_clear_button.show()

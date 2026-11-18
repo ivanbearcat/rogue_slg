@@ -70,16 +70,46 @@ func float_number_effect(float_num, num_color="green", gravity=Vector2(0, 75), v
 					float_number_instantiate.icon_texture = icon_tex
 	return float_number_instantiate
 
+## 过关金币滚动音效参数：每单位一声，最多 20 声（大数值防爆音）
+const COIN_ROLL_MAX_SFX := 20
+const COIN_ROLL_PITCH := 1.5
+
 ## 设置数字并滚动
-func label_num_rolling_effect(object, value, sync=1):
+## coin_sfx=true 时，滚动期间随显示数值递增同步播放 coin（每个单位一声，最多 max_coin_sfx 声）
+func label_num_rolling_effect(object, value, sync=1, coin_sfx=false, max_coin_sfx=COIN_ROLL_MAX_SFX):
 	_object = object
 	var tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_method(label_num_rolling_update_text, int(_object.text), value, 0.5)
+	if coin_sfx:
+		var state := {
+			"end": int(value),
+			"max": max_coin_sfx,
+			"played": 0,
+		}
+		tween.tween_method(_label_num_rolling_update_text_with_coin.bind(state), int(_object.text), value, 0.5)
+	else:
+		tween.tween_method(label_num_rolling_update_text, int(_object.text), value, 0.5)
 	if sync:
 		await tween.finished
 func label_num_rolling_update_text(value):
 	_object.text = str(value)
 	EffectManager.big_flow_effect(_object, 0)
+
+## 滚动更新文本 + 按整数递增同步播放 coin：显示值每越过一个发声阈值放一声
+func _label_num_rolling_update_text_with_coin(value, state: Dictionary) -> void:
+	_object.text = str(value)
+	EffectManager.big_flow_effect(_object, 0)
+	var end: int = state["end"]
+	if end <= 0:
+		return
+	var total: int = mini(end, int(state["max"]))
+	var shown: int = int(value)
+	while int(state["played"]) < total:
+		var next_index: int = int(state["played"]) + 1
+		var threshold: int = int(ceil(float(end) * next_index / total))
+		if shown < threshold:
+			break
+		AudioManager.play_sfx("coin", 0.0, 0.0, 0.0, COIN_ROLL_PITCH)
+		state["played"] = next_index
 
 ## 打字机效果
 func typewriter_effect(object, content, duration, sync=1):
