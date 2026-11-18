@@ -160,15 +160,20 @@ func _default_exit_guarded() -> void:
 	EventBus.event_emit("hide_skill_attack")
 	Current.has_attack_grid = false
 
-## 精英/BOSS tooltip 迁移：悬停格上有该类史莱姆时在其上方显示，离开隐藏
+## 精英/BOSS tooltip 定位微调：popup 相对鼠标的偏移（与 BUFF tooltip 同款右下偏移）
+## x 正值 = 出现在鼠标右侧；y 正值 = 出现在鼠标下方；负值反向
+const TOOLTIP_OFFSET := Vector2(20, 10)
+
+## 精英/BOSS tooltip：悬停格上有该类史莱姆时在鼠标附近显示（与 BUFF 同款定位），离开隐藏
 func _update_tooltip() -> void:
 	var slime = Current.slime
 	if slime != null and is_instance_valid(slime) and (slime.is_elite or slime.is_boss):
 		if _tooltip_slime != slime:
-			TooltipManager.show_tooltip_at(
-					slime.global_position + Vector2(-80, -40),
+			TooltipManager.show_tooltip(
+					slime,
 					TooltipFormatter.format_elite_slime(
-							slime.is_boss, slime.gate_type, slime.gate_count, slime.dice_point))
+							slime.is_boss, slime.gate_type, slime.gate_count, slime.dice_point),
+					TOOLTIP_OFFSET)
 			_tooltip_slime = slime
 			_tooltip_active = true
 	elif _tooltip_active:

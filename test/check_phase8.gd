@@ -9,7 +9,11 @@ const TEMPLATES := [
 	"[color=%s]%s系[/color]",
 	"[color=%s]▼ 减益[/color]",
 	"[color=#FFD700]需要: %s ×%d[/color]",
-	"骰子: [b]%d点[/b]",
+	"[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个 %d 点[/b][/color]骰子",
+	"[color=#FFD700]击杀条件：[/color]单次攻击中打出含 [color=#FFD700][b]%d 点[/b][/color]的 [color=#FFD700][b]%d 连[/b][/color]顺子",
+	"[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个[/b][/color]与它同色的骰子",
+	"[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个[/b][/color]与它同色同点的骰子",
+	"[color=#FFD700]击杀条件：[/color]单次攻击中打出含 [color=#FFD700][b]%d 点[/b][/color]的 [color=#FFD700][b]%d 连[/b][/color]同色顺子",
 ]
 
 func _initialize() -> void:

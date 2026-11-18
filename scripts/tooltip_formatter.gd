@@ -72,6 +72,18 @@ const GATE_TYPE_NAMES := {
 	"tongshun": "同顺",
 }
 
+## 击杀条件完整表述（按门槛类型生成一句可读描述）
+## 判定逻辑（ScoringAlgorithm.check_gate）：以该史莱姆的骰子[颜色, 点数]为锚点，
+## 且其自身骰子也在攻击骰子数组内一并计入，故表述以"它"为参照
+## 占位符顺序：duizi=[数量,点数] shunzi/tongshun=[点数,数量] tongse/tongdui=[数量]
+const GATE_KILL_HINTS := {
+	"duizi": "[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个 %d 点[/b][/color]骰子",
+	"shunzi": "[color=#FFD700]击杀条件：[/color]单次攻击中打出含 [color=#FFD700][b]%d 点[/b][/color]的 [color=#FFD700][b]%d 连[/b][/color]顺子",
+	"tongse": "[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个[/b][/color]与它同色的骰子",
+	"tongdui": "[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个[/b][/color]与它同色同点的骰子",
+	"tongshun": "[color=#FFD700]击杀条件：[/color]单次攻击中打出含 [color=#FFD700][b]%d 点[/b][/color]的 [color=#FFD700][b]%d 连[/b][/color]同色顺子",
+}
+
 ## 格式化buff tooltip
 static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> String:
 	var icon: String = str(buff_meta.get("buff_icon", ""))
@@ -82,10 +94,13 @@ static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> Strin
 
 	var bbcode: String = ""
 
-	# 标题行：图标 + 名称
+	# 标题行：图标 + 名称（help-ui 同款：不加粗、金色大字号）
 	if not icon.is_empty():
 		bbcode += "[img=24]%s[/img] " % icon
-	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
+	bbcode += "[color=#FFD700][font_size=20]%s[/font_size][/color]" % name
+
+	# 分割线：标题下方（help-ui 同款样式）
+	bbcode += "\n[hr color=#777777 height=1 width=100%]"
 
 	# 家族行
 	if not family.is_empty():
@@ -138,11 +153,14 @@ static func format_debuff(debuff_meta: Dictionary) -> String:
 
 	var bbcode: String = ""
 
-	# 标题行：图标 + 减益标识 + 名称
+	# 标题行：图标 + 减益标识 + 名称（help-ui 同款：不加粗、金色大字号）
 	if not icon.is_empty():
 		bbcode += "[img=24]%s[/img] " % icon
 	bbcode += T("[color=%s]▼ 减益[/color]") % DECREASE_COLOR + " "
-	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
+	bbcode += "[color=#FFD700][font_size=20]%s[/font_size][/color]" % name
+
+	# 分割线：标题下方（help-ui 同款样式）
+	bbcode += "\n[hr color=#777777 height=1 width=100%]"
 
 	# 描述文本行（数值倾向debuff=红色）
 	bbcode += "\n" + _colorize_numbers(tooltip, "debuff")
@@ -157,10 +175,13 @@ static func format_coin_skill(skill_meta: Dictionary) -> String:
 
 	var bbcode: String = ""
 
-	# 标题行：图标 + 名称
+	# 标题行：图标 + 名称（help-ui 同款：不加粗、金色大字号）
 	if not icon.is_empty():
 		bbcode += "[img=24]%s[/img] " % icon
-	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
+	bbcode += "[color=#FFD700][font_size=20]%s[/font_size][/color]" % name
+
+	# 分割线：标题下方（help-ui 同款样式）
+	bbcode += "\n[hr color=#777777 height=1 width=100%]"
 
 	# 描述文本行
 	bbcode += "\n" + _colorize_numbers(tooltip, "buff")
@@ -175,8 +196,11 @@ static func format_skill(skill_meta: Dictionary) -> String:
 
 	var bbcode: String = ""
 
-	# 标题行：技能名称
-	bbcode += "[b][font_size=18]%s[/font_size][/b]" % name
+	# 标题行：技能名称（help-ui 同款：不加粗、金色大字号）
+	bbcode += "[color=#FFD700][font_size=20]%s[/font_size][/color]" % name
+
+	# 分割线：标题下方（help-ui 同款样式）
+	bbcode += "\n[hr color=#777777 height=1 width=100%]"
 
 	# 描述文本行（数值自动着色）
 	bbcode += "\n" + _colorize_numbers(tooltip, "buff")
@@ -187,18 +211,30 @@ static func format_skill(skill_meta: Dictionary) -> String:
 static func format_elite_slime(is_boss: bool, gate_type: String, gate_count: int, dice_point: int) -> String:
 	var bbcode: String = ""
 
-	# 标题行
+	# 标题行（help-ui 同款：大字号不加粗，BOSS/精英保留语义色）
 	if is_boss:
-		bbcode += T("[color=%s]★ BOSS史莱姆[/color]") % BOSS_COLOR
+		bbcode += "[font_size=20]" + T("[color=%s]★ BOSS史莱姆[/color]") % BOSS_COLOR + "[/font_size]"
 	else:
-		bbcode += T("[color=%s]★ 精英史莱姆[/color]") % ELITE_COLOR
+		bbcode += "[font_size=20]" + T("[color=%s]★ 精英史莱姆[/color]") % ELITE_COLOR + "[/font_size]"
 
-	# 门槛行
-	var gate_cn: String = T(str(GATE_TYPE_NAMES.get(gate_type, gate_type)))
-	bbcode += "\n" + T("[color=#FFD700]需要: %s ×%d[/color]") % [gate_cn, gate_count]
+	# 分割线：标题下方（help-ui 同款样式）
+	bbcode += "\n[hr color=#777777 height=1 width=100%]"
 
-	# 骰子行
-	bbcode += "\n" + T("骰子: [b]%d点[/b]") % dice_point
+	# 击杀条件行：按门槛类型生成完整表述（替代原先"需要: xxx ×N"+"骰子: N点"两行）
+	var hint: String = GATE_KILL_HINTS.get(gate_type, "")
+	if hint.is_empty():
+		# 未知门槛类型兜底：类型名 + 数量
+		var gate_cn_fallback: String = T(str(GATE_TYPE_NAMES.get(gate_type, gate_type)))
+		bbcode += "\n" + T("[color=#FFD700]需要: %s ×%d[/color]") % [gate_cn_fallback, gate_count]
+	elif gate_type == "duizi":
+		# 对子：先数量后点数
+		bbcode += "\n" + T(hint) % [gate_count, dice_point]
+	elif gate_type == "shunzi" or gate_type == "tongshun":
+		# 顺子/同顺：先点数后数量（顺子需包含它的点数）
+		bbcode += "\n" + T(hint) % [dice_point, gate_count]
+	else:
+		# 同色/同对：仅需数量
+		bbcode += "\n" + T(hint) % [gate_count]
 
 	return bbcode
 

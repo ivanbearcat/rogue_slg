@@ -31,7 +31,8 @@ func _on_skill_anim_area_resized() -> void:
 	_skill_anim_sprite.position = _skill_anim_area.size / 2.0
 
 ## 在鼠标位置显示tooltip（出现后固定不动）
-func show_tooltip(node: Control, bbcode_text: String, offset: Vector2 = Vector2(20, 10)) -> void:
+## node 仅为 await 期间的有效性守卫，Control/Node2D 均可（悬停源不限于 Control）
+func show_tooltip(node: Node, bbcode_text: String, offset: Vector2 = Vector2(20, 10)) -> void:
 	if bbcode_text.is_empty():
 		hide_tooltip()
 		return
@@ -56,6 +57,9 @@ func show_tooltip_at(position: Vector2, bbcode_text: String) -> void:
 	# 文本tooltip与技能tooltip互斥
 	_hide_skill_popup()
 	_rich_label.text = bbcode_text
+	# 先按目标位置粗定位再显示：popup从(0,0)或旧位置直接显示会闪现错位，
+	# 布局完成后 _position_at 再按内容实际尺寸做边界修正
+	_popup.position = position
 	_popup.visible = true
 	await _await_rtl_layout(_rich_label)
 	_position_at(position)

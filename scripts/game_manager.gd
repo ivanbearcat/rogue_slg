@@ -623,7 +623,7 @@ func _write_stage_derived_ui() -> void:
 			break
 	target_score.text = str(int(current_stage_info.get("target_score", 300)))
 	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
-	TooltipManager.set_tooltip(difficulty_icon, "[b]" + tr(current_stage_info.get("stage_type", "普通")) + "[/b]")
+	TooltipManager.set_tooltip(difficulty_icon, "[color=#FFD700][font_size=20]" + tr(current_stage_info.get("stage_type", "普通")) + "[/font_size][/color]")
 
 ## 生成网格（正常路径/读档恢复共用装配）
 func _build_grids() -> void:
@@ -2319,7 +2319,7 @@ func _on_stage_clear_button_pressed() -> void:
 			break
 	Current.target_score = current_stage_info.get("target_score", 300)
 	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
-	TooltipManager.set_tooltip(difficulty_icon, "[b]" + tr(current_stage_info.get("stage_type", "普通")) + "[/b]")
+	TooltipManager.set_tooltip(difficulty_icon, "[color=#FFD700][font_size=20]" + tr(current_stage_info.get("stage_type", "普通")) + "[/font_size][/color]")
 	## 清空一关金币奖励数和骰型等级奖励累计
 	Current.count_add_coins = 0
 	Current.dice_type_add_coin = 0
