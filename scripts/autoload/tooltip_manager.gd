@@ -74,6 +74,9 @@ func set_tooltip(node: Control, bbcode_text: String, offset: Vector2 = Vector2(2
 		node.disconnect("mouse_exited", _on_node_mouse_exited)
 	# 同一节点只允许挂一种tooltip（清掉技能tooltip挂接）
 	_disconnect_skill_hooks(node)
+	# BBCode浮窗接管提示：清空节点原生tooltip_text，避免原生提示窗口与浮窗双显
+	# （如金币技能槽购买后场景预置的"未获得技能"、难度图标预置的"普通"）
+	node.tooltip_text = ""
 	# 存储tooltip文本和偏移
 	_tooltip_data[node] = {"text": bbcode_text, "offset": offset}
 	node.mouse_entered.connect(_on_node_mouse_entered.bind(node))
@@ -112,6 +115,8 @@ func set_skill_tooltip(node: Control, skill_row: Dictionary, offset: Vector2 = V
 		node.disconnect("mouse_exited", _on_node_mouse_exited)
 	# 同一节点只允许挂一种tooltip（清掉文本tooltip挂接）
 	_disconnect_text_hooks(node)
+	# 技能弹窗接管提示：清空原生tooltip_text，避免原生提示窗口与技能弹窗双显
+	node.tooltip_text = ""
 	# 存储技能行数据和偏移
 	_skill_data[node] = {"skill_row": skill_row, "offset": offset}
 	node.mouse_entered.connect(_on_skill_node_mouse_entered.bind(node))
