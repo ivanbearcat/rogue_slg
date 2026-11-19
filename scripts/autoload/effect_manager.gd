@@ -47,12 +47,22 @@ func buff_pop_effect(object) -> void:
 	tween.tween_property(object, "modulate", orig_modulate, 0.1)
 	await tween.finished
 
+## 飘字默认字号（36 = 既有飘字观感；计分板小档见 SCORE_BOARD_FONT_SIZE）
+const FLOAT_FONT_DEFAULT := 36
+
 ## 飘字效果
-func float_number_effect(float_num, num_color="green", gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50)) -> Node2D:
+## text_suffix：数字后缀（计分板倍率行 "%"），默认空 = 既有纯数字
+## font_size：字号档，默认 36 = 既有观感
+## auto_free：淡出后自毁（计分板行节点整局存活时用），默认 false = 既有生命周期
+func float_number_effect(float_num, num_color="green", gravity=Vector2(0, 75), velocity=Vector2(randi_range(-10,10), -50), text_suffix="", font_size=FLOAT_FONT_DEFAULT, auto_free=false) -> Node2D:
 	if float_num >-1 and float_num < 1:
 		return
 	var float_number_instantiate = SceneManager.create_scene("float_number")
 	float_number_instantiate.num_color = color[num_color]
+	## 先装配后缀/字号/自毁，再写数字（float_num setter 内拼装文本与图标布局）
+	float_number_instantiate.text_suffix = text_suffix
+	float_number_instantiate.font_size = font_size
+	float_number_instantiate.auto_free = auto_free
 	float_number_instantiate.float_num = float_num
 	float_number_instantiate.gravity = gravity
 	float_number_instantiate.velocity = velocity
@@ -69,6 +79,71 @@ func float_number_effect(float_num, num_color="green", gravity=Vector2(0, 75), v
 				if icon_tex != null:
 					float_number_instantiate.icon_texture = icon_tex
 	return float_number_instantiate
+
+## ============================================================
+## 计分板增减飘字（score-board-delta-float）
+## ============================================================
+## 计分板行 frame 映射（属性名 → game_manager 场景行 PanelContainer 名）
+const SCORE_BOARD_FRAMES := {
+	"one_score": "one_score_frame",
+	"two_score": "two_score_frame",
+	"three_score": "three_score_frame",
+	"four_score": "four_score_frame",
+	"five_score": "five_score_frame",
+	"six_score": "six_score_frame",
+	"duizi_percent": "duizi_percent_frame",
+	"shunzi_percent": "shunzi_percent_frame",
+	"tongse_percent": "tongse_percent_frame",
+	"tongdui_percent": "tongdui_percent_frame",
+	"tongshun_percent": "tongshun_percent_frame",
+}
+## 计分板飘字小字号档（小于得分飘字 36 档，spec「飘字字号档」）
+const SCORE_BOARD_FONT_SIZE := 24
+## frame 左上角起的挂载偏移（屏幕像素口径，挂载时按祖先缩放换算本地值）：
+## 基础分行无名称列（数值列占右半），倍率行左侧是名称列（"对子"等）——倍率飘字偏到数值列
+const SCORE_BOARD_FLOAT_OFFSET_SCORE := Vector2(12, 1)
+const SCORE_BOARD_FLOAT_OFFSET_PERCENT := Vector2(22, 1)
+## 6.3 目测定稿：固定垂直匀速上飘（无随机横漂），上升距离收紧
+## （velocity -4 / gravity 0 → 1s 生涯内匀速上浮共 4px，末态驻留顶部淡出不回落）
+const SCORE_BOARD_VELOCITY_Y := -4.0
+const SCORE_BOARD_GRAVITY := Vector2(0, 0)
+
+## 计分板增减飘字：在属性对应行的 frame 内弹 delta 飘字
+## （绿增红减，倍率属性带 "%" 后缀，淡出后自毁防行节点堆积）。
+## 由 Current 11 个属性 setter 统一收口调用 → 渠道无关覆盖卡牌/buff/debuff
+## 全部修改路径；走 float_number_effect() 复用 float_context_buff 图标注入。
+## 静音窗口（关卡重置链）与 delta=0 在此静默；恢复路径（封印解除写回）不静音。
+func score_board_float_effect(property: String, delta: int) -> void:
+	if delta == 0 or Current.score_board_float_muted:
+		return
+	var frame_name: String = SCORE_BOARD_FRAMES.get(property, "")
+	if frame_name.is_empty():
+		return
+	var gm = Current.game_manager
+	if gm == null or gm.get(frame_name) == null:
+		return
+	var suffix := "%" if property.ends_with("_percent") else ""
+	var fx = float_number_effect(
+		delta,
+		"green" if delta > 0 else "red",
+		SCORE_BOARD_GRAVITY,
+		Vector2(0, SCORE_BOARD_VELOCITY_Y),
+		suffix, SCORE_BOARD_FONT_SIZE, true
+	)
+	if fx == null:
+		return
+	var frame: PanelContainer = gm.get(frame_name)
+	frame.add_child(fx)
+	## 祖先缩放补偿：行 frame 处于 score_panal 缩放容器内（≈0.24），
+	## 飘字根节点按倒数补偿，使字号/偏移/上升/重力均回到屏幕像素口径
+	## （24 档 ≈ 6px 有效字高，小于得分飘字的 9px）
+	var inv := 1.0 / maxf(frame.get_global_transform().get_scale().x, 0.001)
+	fx.scale = Vector2(inv, inv)
+	## 倍率行数值列在右侧（左侧为名称列），基础分行数值列占右半 → 分档偏移
+	var offset := SCORE_BOARD_FLOAT_OFFSET_PERCENT if property.ends_with("_percent") else SCORE_BOARD_FLOAT_OFFSET_SCORE
+	fx.position = offset * inv
+	fx.velocity *= inv
+	fx.gravity *= inv
 
 ## 过关金币滚动音效参数：每单位一声，最多 20 声（大数值防爆音）
 const COIN_ROLL_MAX_SFX := 20

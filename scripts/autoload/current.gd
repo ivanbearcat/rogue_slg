@@ -413,59 +413,77 @@ var count_round := 0:
 		return _count_round
 ## 本关骰型等级金币奖励累计（每次打出骰型按等级累加，关卡开始时清零）
 var dice_type_add_coin := 0
+## 计分板飘字静音开关（set/clear 惯例对齐 EffectManager.float_context_buff）：
+## 关卡开始重置链（基础分随机装配 + 倍率重置）经 setter 装配但不该弹增减飘字，
+## 由 game_manager 在重置链前后置位/复位（见 _ready 重置链包裹）。
+## 瞬时窗口标记，不入存档三处清单；读档走 label 直写路径天然不触发 setter，无需处理。
+var score_board_float_muted := false
 ## 骰型板基础分数
 var _one_score: int = 0
 var one_score: int:
 	set(v):
+		var _old := _one_score
 		_one_score = v
 		if game_manager.one_score:
 			game_manager.one_score.text = str(v)
 			EffectManager.big_flow_effect(game_manager.one_score)
+		## 增减飘字收口（渠道无关：卡牌/buff/debuff 全走此 setter；静音窗口内跳过）
+		EffectManager.score_board_float_effect("one_score", v - _old)
 	get:
 		return _one_score
 var _two_score: int = 0
 var two_score: int:
 	set(v):
+		var _old := _two_score
 		_two_score = v
 		if game_manager.two_score:
 			game_manager.two_score.text = str(v)
 			EffectManager.big_flow_effect(game_manager.two_score)
+		EffectManager.score_board_float_effect("two_score", v - _old)
 	get:
 		return _two_score
 var _three_score: int = 0
 var three_score: int:
 	set(v):
+		var _old := _three_score
 		_three_score = v
 		if game_manager.three_score:
 			game_manager.three_score.text = str(v)
 			EffectManager.big_flow_effect(game_manager.three_score)
+		EffectManager.score_board_float_effect("three_score", v - _old)
 	get:
 		return _three_score
 var _four_score: int = 0
 var four_score: int:
 	set(v):
+		var _old := _four_score
 		_four_score = v
 		if game_manager.four_score:
 			game_manager.four_score.text = str(v)
 			EffectManager.big_flow_effect(game_manager.four_score)
+		EffectManager.score_board_float_effect("four_score", v - _old)
 	get:
 		return _four_score
 var _five_score: int = 0
 var five_score: int:
 	set(v):
+		var _old := _five_score
 		_five_score = v
 		if game_manager.five_score:
 			game_manager.five_score.text = str(v)
 			EffectManager.big_flow_effect(game_manager.five_score)
+		EffectManager.score_board_float_effect("five_score", v - _old)
 	get:
 		return _five_score
 var _six_score: int = 0
 var six_score: int:
 	set(v):
+		var _old := _six_score
 		_six_score = v
 		if game_manager.six_score:
 			game_manager.six_score.text = str(v)
 			EffectManager.big_flow_effect(game_manager.six_score)
+		EffectManager.score_board_float_effect("six_score", v - _old)
 	get:
 		return _six_score
 ## 掉落格子骰子是否在本回合攻击中被消耗（参与骰型计分）
@@ -495,41 +513,52 @@ func _update_drop_slot_ui():
 var _duizi_percent: int = 0
 var duizi_percent: int:
 	set(v):
+		var _old := _duizi_percent
 		_duizi_percent = v
 		game_manager.duizi_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.duizi_percent)
+		## 增减飘字收口（带 % 后缀；与基础分同款渠道无关拦截）
+		EffectManager.score_board_float_effect("duizi_percent", v - _old)
 	get:
 		return _duizi_percent
 var _shunzi_percent: int = 0
 var shunzi_percent: int:
 	set(v):
+		var _old := _shunzi_percent
 		_shunzi_percent = v
 		game_manager.shunzi_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.shunzi_percent)
+		EffectManager.score_board_float_effect("shunzi_percent", v - _old)
 	get:
 		return _shunzi_percent
 var _tongse_percent: int = 0
 var tongse_percent: int:
 	set(v):
+		var _old := _tongse_percent
 		_tongse_percent = v
 		game_manager.tongse_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.tongse_percent)
+		EffectManager.score_board_float_effect("tongse_percent", v - _old)
 	get:
 		return _tongse_percent
 var _tongdui_percent: int = 0
 var tongdui_percent: int:
 	set(v):
+		var _old := _tongdui_percent
 		_tongdui_percent = v
 		game_manager.tongdui_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.tongdui_percent)
+		EffectManager.score_board_float_effect("tongdui_percent", v - _old)
 	get:
 		return _tongdui_percent
 var _tongshun_percent: int = 0
 var tongshun_percent: int:
 	set(v):
+		var _old := _tongshun_percent
 		_tongshun_percent = v
 		game_manager.tongshun_percent.text = str(v) + "%"
 		EffectManager.big_flow_effect(game_manager.tongshun_percent)
+		EffectManager.score_board_float_effect("tongshun_percent", v - _old)
 	get:
 		return _tongshun_percent
 ## 实时基础和倍率

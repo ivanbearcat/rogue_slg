@@ -28,9 +28,8 @@ func process_buff():
 		"tongse": Current.tongse_percent += 1; game_manager._update_multiplier_dict("tongse_percent", "add", 1); _type_name = "同色"
 		"tongdui": Current.tongdui_percent += 1; game_manager._update_multiplier_dict("tongdui_percent", "add", 1); _type_name = "同对"
 		"tongshun": Current.tongshun_percent += 1; game_manager._update_multiplier_dict("tongshun_percent", "add", 1); _type_name = "同顺"
-	# 视觉反馈：浮动数字显示进化效果（+1基础分 +1%倍率）
-	var float_number_instantiate = EffectManager.float_number_effect(1)
-	Current.hero.add_child(float_number_instantiate)
+	# 视觉反馈：+1/+1% 由计分板增减飘字承接（setter 拦截，本 buff 执行窗口内带霸主图标），
+	# 不再在英雄位置弹加成飘字
 	# 触发闪光：仅闪霸主自身图标（不再联动闪烁同族）
 	flash_icon()
 

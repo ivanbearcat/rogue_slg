@@ -339,6 +339,9 @@ func _ready() -> void:
 	Current.reset_run_state()
 	## 清空上一局残留 buff（含 shop/ALWAYS 生命周期，过关清理不覆盖）
 	BuffSystem.clear_run_buffs()
+	## 计分板飘字静音窗口（set/clear 惯例对齐 float_context_buff）：
+	## 重置链经 setter 装配会产生 delta，但不该弹增减飘字（spec「初始化与读档静音」）
+	Current.score_board_float_muted = true
 	## 设置基础点数分值（随机分配）
 	_randomize_base_scores()
 	## 设置倍率
@@ -349,6 +352,7 @@ func _ready() -> void:
 	Current.tongse_percent = Current.dice_multiplier_dict[2]["tongse"]
 	Current.tongdui_percent = Current.dice_multiplier_dict[2]["tongdui"]
 	Current.tongshun_percent = Current.dice_multiplier_dict[2]["tongshun"]
+	Current.score_board_float_muted = false
 	## 测试倍率
 	#var result = ScoringAlgorithm.count_total_score([["red", 3], ["blue", 3], ["blue", 3], ["blue", 2], ["blue", 1], ["blue", 6]])
 	#print(result)
