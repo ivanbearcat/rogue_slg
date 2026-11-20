@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/score_balloon.gd" id="1_balloon"]
+[ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="2_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_balloon"]
+resource_local_to_scene = true
+font = ExtResource("2_font")
+font_size = 24
+font_color = Color(0, 1, 0.07, 1)
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ScoreBalloon" type="Node2D"]
+script = ExtResource("1_balloon")
+
+[node name="Label" type="Label" parent="."]
+z_index = 196
+fit_content = false
+offset_left = -80.0
+offset_top = -12.0
+offset_right = 80.0
+offset_bottom = 12.0
+scale = Vector2(0.5, 0.5)
+text = "+0"
+label_settings = SubResource("LabelSettings_balloon")
+horizontal_alignment = 1
+vertical_alignment = 1

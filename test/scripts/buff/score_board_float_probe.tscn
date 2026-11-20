@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://u3vst2rdair"]
 
-[ext_resource type="Script" path="res://test/scripts/buff/score_board_float_probe.gd" id="1_probe"]
+[ext_resource type="Script" uid="uid://blvtnbk42y2w5" path="res://test/scripts/buff/score_board_float_probe.gd" id="1_probe"]
 
-[node name="ScoreBoardFloatProbe" type="Node2D"]
+[node name="ScoreBoardFloatProbe" type="Node2D" unique_id=605486855]
 script = ExtResource("1_probe")

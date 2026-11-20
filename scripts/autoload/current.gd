@@ -114,6 +114,15 @@ var target_score: int:
 		return int(game_manager.target_score.text)
 ## 当前总分
 var _total_score: int = 0
+## 计分板总分展示静默开关（post-attack-score-balloon，design D1）：
+## 静默期间 total_score setter 跳过 `game_manager.total_score.text` 直写与
+## `big_flow_effect` 脉冲；`_run_score_earned` 记账照常累加（数值路径不动）。
+## 由攻击主流程在主分写入前置位（skill_attack，见 skill_system.gd），
+## 气球到达计分板入账时刻复位 + 显示同步 + 一次入账脉冲。
+## ⚠️ 与 score_board_float_muted（行内增减飘字静音）是两个不同开关：
+## 总分静默期间行内飘字照常，互不覆盖；set/clear 惯例对齐 float_context_buff。
+## 瞬时窗口标记，不入存档三处清单；读档走 label 直写路径天然不触发 setter，无需处理。
+var total_score_display_muted := false
 var total_score: int:
 	set(v):
 		if v < 0:
@@ -123,8 +132,9 @@ var total_score: int:
 		if v > _total_score:
 			_run_score_earned += v - _total_score
 		_total_score = v
-		game_manager.total_score.text = str(v)
-		EffectManager.big_flow_effect(game_manager.total_score)
+		if not total_score_display_muted:
+			game_manager.total_score.text = str(v)
+			EffectManager.big_flow_effect(game_manager.total_score)
 	get:
 		return _total_score
 ## 单次总分
@@ -416,6 +426,9 @@ var dice_type_add_coin := 0
 ## 计分板飘字静音开关（set/clear 惯例对齐 EffectManager.float_context_buff）：
 ## 关卡开始重置链（基础分随机装配 + 倍率重置）经 setter 装配但不该弹增减飘字，
 ## 由 game_manager 在重置链前后置位/复位（见 _ready 重置链包裹）。
+## ⚠️ 与 total_score_display_muted 是两个不同开关：本开关管"行内增减飘字"
+## （score_board_float_effect 读）；后者管"总分 label 直写/脉冲"
+## （total_score setter 读）。两者对象不同，勿混用。
 ## 瞬时窗口标记，不入存档三处清单；读档走 label 直写路径天然不触发 setter，无需处理。
 var score_board_float_muted := false
 ## 骰型板基础分数

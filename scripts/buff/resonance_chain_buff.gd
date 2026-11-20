@@ -12,14 +12,11 @@ func set_buff():
 func process_buff():
 	## 1. 先应用本次叠层效益（上次累积的 chain_multiplier）
 	if chain_multiplier > 0.0:
-		Current.public_lock_array.append("resonance_chain_buff")
+		## 申报制迁移：数值即时生效，播报由 token 承载（叠层"先应用后更新"次序不变）
 		var add_num = int(Current.once_total_score * chain_multiplier)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("resonance_chain_buff")
+		if add_num > 0:
+			Current.total_score += add_num
+			BuffSystem.declare_score_contribution(add_num)
 	## 2. 判定本次是否触发同色类骰型，调整叠层
 	var triggered := false
 	for dice_type in Current.active_dice_types:

@@ -12,13 +12,10 @@ func process_buff():
 		return
 	var bonus = roundi(Current.once_total_score * BuffSystem.resonance_ramp)
 	if bonus > 0:
-		Current.public_lock_array.append("resonance_overlord_buff")
+		## 申报制迁移：数值即时生效，加分呈现由 token + 气球承载
+		## （resonance-overlord-delayed 规格：SHALL NOT 自行弹出得分飘字）
 		Current.total_score += bonus
-		var float_number_instantiate = EffectManager.float_number_effect(bonus)
-		Current.hero.add_child(float_number_instantiate)
-		Current.public_lock_array.erase("resonance_overlord_buff")
-		# 触发闪光：仅闪霸主自身图标（不再联动闪烁同族）
-		flash_icon()
+		BuffSystem.declare_score_contribution(bonus)
 
 func clear_buff():
 	pass

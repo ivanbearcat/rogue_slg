@@ -30,6 +30,14 @@ func create_and_set_buff(script_path: String, meta: Dictionary = {}) -> Buff:
 	buff.set_buff()
 	return buff
 
+## 申报制辅助：以效果 buff 为归属上下文执行一次得分贡献申报
+## （模拟 do_buff 内 declare 窗口：set → declare → clear；非 post_attack 时序
+## 不进播报列表，不影响 BuffSystem._score_declarations）
+func _declare(buff: Buff, delta: int) -> void:
+	BuffSystem._declare_context_buff = buff
+	BuffSystem.declare_score_contribution(delta)
+	BuffSystem._declare_context_buff = null
+
 ## 创建测试用史莱姆。color 参数为场景名（如 "slime_small"、"slime_small_red"）
 ## 通过设置 scene_file_path 使 Tools.fetch_slime_scene 能正确提取场景名
 func add_slime(grid_index: Vector2 = Vector2.ZERO, color: String = "slime_small", point: int = 1, is_power: bool = false):
@@ -300,8 +308,8 @@ func test_resonance_overlord_buff() -> void:
 			BuffSystem.pipelines[timing][key].clear()
 	BuffSystem.resonance_ramp = 0.0
 	c.total_score = 100
-	BuffSystem._track_family_contribution(resonance_buff, 50)
-	assert_eq(BuffSystem.resonance_ramp, 0.0, "<4 buffs: positive delta should NOT increase ramp")
+	_declare(resonance_buff, 50)
+	assert_eq(BuffSystem.resonance_ramp, 0.0, "<4 buffs: positive declaration should NOT increase ramp")
 
 	BuffSystem.resonance_ramp = 0.05
 	c.once_total_score = 1000
@@ -316,29 +324,29 @@ func test_resonance_overlord_buff() -> void:
 		BuffSystem.set_post_attack_buff(dummy, BuffSystem.buff_type.ALWAYS)
 	assert_eq(BuffSystem.get_family_count("resonance"), 4, "Should have 4 resonance buffs registered")
 
-	# 正向贡献 → ramp += 0.01
+	# 正向申报 → ramp += 0.01（申报制：declare_score_contribution 归属当前效果）
 	BuffSystem.resonance_ramp = 0.0
 	c.total_score = 100
-	BuffSystem._track_family_contribution(resonance_buff, 50)
-	assert_approx(BuffSystem.resonance_ramp, 0.01, 0.001, "≥4 buffs: positive delta should increase ramp by 0.01")
+	_declare(resonance_buff, 50)
+	assert_approx(BuffSystem.resonance_ramp, 0.01, 0.001, "≥4 buffs: positive declaration should increase ramp by 0.01")
 
-	# 无贡献 → ramp 不变
+	# 未申报 → ramp 不变
 	var ramp_before = BuffSystem.resonance_ramp
 	c.total_score = 100
-	BuffSystem._track_family_contribution(resonance_buff, 100)
-	assert_eq(BuffSystem.resonance_ramp, ramp_before, "Zero delta: ramp should not change")
+	_declare(resonance_buff, 0)
+	assert_eq(BuffSystem.resonance_ramp, ramp_before, "No declaration: ramp should not change")
 
-	# 负贡献 → ramp 不变
+	# 负申报 → ramp 不变
 	c.total_score = 40
-	BuffSystem._track_family_contribution(resonance_buff, 50)
-	assert_eq(BuffSystem.resonance_ramp, ramp_before, "Negative delta: ramp should not change")
+	_declare(resonance_buff, -10)
+	assert_eq(BuffSystem.resonance_ramp, ramp_before, "Negative declaration: ramp should not change")
 
 	## --- ramp 无上限 ---
 	BuffSystem.resonance_ramp = 0.0
 	c.total_score = 100
 	for i in range(100):
-		BuffSystem._track_family_contribution(resonance_buff, 50)
-	assert_approx(BuffSystem.resonance_ramp, 1.0, 0.001, "100 positive contributions: ramp should be ~1.0 (no cap)")
+		_declare(resonance_buff, 50)
+	assert_approx(BuffSystem.resonance_ramp, 1.0, 0.001, "100 positive declarations: ramp should be ~1.0 (no cap)")
 
 	## --- ramp 跨 clear_stage_buff 保留 ---
 	BuffSystem.resonance_ramp = 0.05

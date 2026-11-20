@@ -23,6 +23,10 @@ var auto_free := false
 const ICON_HEIGHT := 36.0
 const ICON_GAP := 0
 const LABEL_ICON_OFFSET := ICON_HEIGHT / 2.0 + ICON_GAP
+## 观感校准常量（微调入口）：飘字停留 = 不透明保持时长，淡出 = 渐隐时长，
+## 总观感时长 = HOLD + FADE。此前 0.2+0.8=1.0s，目测反馈偏长 → 收紧 0.6s
+const HOLD_DELAY := 0.15
+const FADE_DURATION := 0.45
 
 var float_num: int:
 	set(v):
@@ -48,9 +52,9 @@ var gravity := Vector2.ZERO
 
 func _ready() -> void:
 	var tween := create_tween()
-	tween.tween_property($Label, "modulate:a", 0, 0.8).set_delay(0.2)
-	tween.parallel().tween_property($Icon, "modulate:a", 0, 0.8).set_delay(0.2)
-	## 自毁开关：淡出完成后约 1s（0.2 延迟 + 0.8 淡出）回收；默认关 = 既有生命周期
+	tween.tween_property($Label, "modulate:a", 0, FADE_DURATION).set_delay(HOLD_DELAY)
+	tween.parallel().tween_property($Icon, "modulate:a", 0, FADE_DURATION).set_delay(HOLD_DELAY)
+	## 自毁开关：淡出完成后 HOLD+FADE（默认 0.6s）回收；默认关 = 既有生命周期
 	if auto_free:
 		await tween.finished
 		queue_free()

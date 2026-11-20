@@ -47,7 +47,10 @@ func buff_pop_effect(object) -> void:
 	tween.tween_property(object, "modulate", orig_modulate, 0.1)
 	await tween.finished
 
-## 飘字默认字号（36 = 既有飘字观感；计分板小档见 SCORE_BOARD_FONT_SIZE）
+## 飘字默认字号（36 = 既有飘字观感；计分板小档见 SCORE_BOARD_FONT_SIZE）。
+## 观感微调入口：Label 节点缩放 0.25 固定，有效视觉字高 = 字号 × 0.25
+##（36 档 ≈ 9px 高）；调小改这里（如 32 ≈ 8px），图标经 _apply_icon_layout
+## 等比跟随保持与数字同高，计分板 24 独立档不受影响
 const FLOAT_FONT_DEFAULT := 36
 
 ## 飘字效果

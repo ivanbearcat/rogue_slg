@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://test/scripts/buff/score_declaration_probe.gd" id="1_probe"]
+
+[node name="ScoreDeclarationProbe" type="Node2D"]
+script = ExtResource("1_probe")

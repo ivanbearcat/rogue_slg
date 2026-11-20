@@ -8,14 +8,12 @@ func set_buff():
 	buff_texture.set_rich_tooltip(TooltipFormatter.format_buff(buff_meta))
 
 func process_buff():
-	Current.public_lock_array.append("swift_amplify_buff")
+	## 申报制迁移：数值即时生效，播报由 token 承载
+	## （移动力为 0 时 add_num=0，不申报——「无得分效果不申报」）
 	var add_num = int(Current.hero.hero_movement * 0.06 * Current.once_total_score)
-	var float_number_instantiate = EffectManager.float_number_effect(add_num)
-	Current.hero.add_child(float_number_instantiate)
-	EffectManager.buff_pop_effect(buff_texture)
-	await Tools.time_sleep(1)
-	Current.total_score += add_num
-	Current.public_lock_array.erase("swift_amplify_buff")
+	if add_num > 0:
+		Current.total_score += add_num
+		BuffSystem.declare_score_contribution(add_num)
 
 func clear_buff():
 	pass

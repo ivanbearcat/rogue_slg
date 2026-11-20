@@ -11,13 +11,11 @@ func process_buff():
 	var accumulated = BuffSystem.get_family_accumulation("hunt")
 	if accumulated <= 0:
 		return
+	## 申报制迁移：数值即时生效，播报由 token 承载（家族累积为申报驱动，同源数据）
 	var bonus = roundi(accumulated * 0.50)
 	if bonus > 0:
 		Current.total_score += bonus
-		var float_number_instantiate = EffectManager.float_number_effect(bonus)
-		Current.hero.add_child(float_number_instantiate)
-		# 触发闪光：仅闪霸主自身图标（不再联动闪烁同族）
-		flash_icon()
+		BuffSystem.declare_score_contribution(bonus)
 
 func clear_buff():
 	pass

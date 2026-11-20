@@ -139,7 +139,7 @@ func test_fragile_buff() -> void:
 	buff2.clear_buff()
 	assert_eq(c.player_defense, 0, "fragile: defense restores to 0 after clear_buff (original was 0)")
 
-## 2. attack_weaken_buff - process时分数减少20%, total_score=100减20, total_score=0不减
+## 2. attack_weaken_buff - process时分数减少15%, total_score=100减15, total_score=0不减
 func test_attack_weaken_buff() -> void:
 	_current_test = "test_attack_weaken_buff"
 	var c = Current
@@ -147,25 +147,25 @@ func test_attack_weaken_buff() -> void:
 	var meta = {"buff_id": "attack_weaken", "family": "", "tags": [], "buff_icon": "", "buff_tooltip": "", "debuff_icon": "debuff_icon", "debuff_tooltip": "attack score down tooltip"}
 	var buff = create_and_set_buff("res://scripts/debuff/attack_weaken_buff.gd", meta)
 
-	# total_score=100时减少20（int(100*0.20)=20）
+	# total_score=100时减少15（int(100*0.15)=15）
 	c.total_score = 100
 	buff.process_buff()
-	assert_eq(c.total_score, 80, "attack_weaken: total_score should be 80 after process (100-20)")
+	assert_eq(c.total_score, 85, "attack_weaken: total_score should be 85 after process (100-15)")
 
 	# total_score=0时不减少
 	c.total_score = 0
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "attack_weaken: total_score should stay 0 when already 0")
 
-	# total_score=50时减少10（int(50*0.20)=10）
+	# total_score=50时减少7（int(50*0.15)=7）
 	c.total_score = 50
 	buff.process_buff()
-	assert_eq(c.total_score, 40, "attack_weaken: total_score should be 40 after process (50-10)")
+	assert_eq(c.total_score, 43, "attack_weaken: total_score should be 43 after process (50-7)")
 
-	# total_score=3时减少0（int(3*0.20)=int(0.6)=0）
+	# total_score=3时减少0（int(3*0.15)=int(0.45)=0）
 	c.total_score = 3
 	buff.process_buff()
-	assert_eq(c.total_score, 3, "attack_weaken: total_score should stay 3 when int(3*0.20)=0")
+	assert_eq(c.total_score, 3, "attack_weaken: total_score should stay 3 when int(3*0.15)=0")
 
 	# clear_buff释放debuff_texture
 	buff.clear_buff()

@@ -49,6 +49,17 @@ func _ensure_game_manager() -> void:
 			gm._ready()
 	else:
 		print("  [Test Runner] Using existing game_manager at /root/game_manager")
+	## 命名容器补齐（对齐 integration_test_runner 先例）：
+	## Current.all_enemy_array getter 走 $game_manager/enemys 子节点路径，
+	## mock_game_manager 的 enemys/heros 是属性而非子节点——需挂命名子节点
+	_add_named_container_if_missing(gm, "enemys")
+	_add_named_container_if_missing(gm, "heros")
+
+func _add_named_container_if_missing(gm: Node, container_name: String) -> void:
+	if not gm.has_node(container_name):
+		var container = Node.new()
+		container.name = container_name
+		gm.add_child(container)
 
 func _fix_current_game_manager_ref() -> void:
 	## Current autoload 的 @onready var game_manager 在 _ready() 时获取失败
@@ -84,6 +95,10 @@ func run_tests() -> void:
 
 	_is_running = false
 	all_tests_complete.emit(_total, _passed, _failed)
+	## headless 命令行运行到点退出（失败数=退出码）；编辑器/带窗口运行保持原行为
+	if DisplayServer.get_name() == "headless":
+		print("[Test Runner] complete — quit(%d)" % _failed)
+		get_tree().quit(_failed)
 
 func _save_current_state() -> void:
 	_saved_current_state = {

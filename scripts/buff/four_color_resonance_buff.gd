@@ -14,14 +14,11 @@ func process_buff():
 		unique_colors[c] = true
 	var color_count = unique_colors.size()
 	if color_count >= 4:
-		Current.public_lock_array.append("four_color_resonance_buff")
+		## 申报制迁移：数值即时生效，播报由 token 承载
 		var add_num = int(Current.once_total_score * 1.0)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("four_color_resonance_buff")
+		if add_num > 0:
+			Current.total_score += add_num
+			BuffSystem.declare_score_contribution(add_num)
 
 func clear_buff():
 	pass

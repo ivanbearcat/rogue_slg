@@ -18,6 +18,20 @@ var _current_timing: String = ""
 ## 记录已初始化的buff实例，避免同一实例注册到多个pipeline时重复调用set_buff()
 var _initialized_buff_ids: Dictionary = {}
 
+## ============================================================
+## 得分贡献申报（post-attack-score-balloon，design D2）
+## ============================================================
+## 申报归属窗口：当前正在执行的效果实例（set/clear 惯例对齐
+## EffectManager.float_context_buff / _current_timing）。
+## do_buff 在每个 process_buff() 前 set、后 clear；效果内调用
+## declare_score_contribution() 时据此归属到本实例。
+var _declare_context_buff: Buff = null
+## 本次 post_attack 管线的申报记录（管线执行顺序）：
+## [{"buff": <Buff>, "delta": <int 有符号增量>, "icon_path": <来源图标路径>}, ...]
+## do_buff("post_attack") 开始时清空；演出编排器（skill_attack 接线）消费后清空。
+## 非 post_attack 时序不收集（防御；现网无非 post_attack 得分产出者）。
+var _score_declarations: Array = []
+
 enum buff_type {
 	ONCE,
 	STAGE,
@@ -62,17 +76,21 @@ func do_buff(timing: String) -> void:
 	var pipeline = pipelines[timing]
 	_current_timing = timing
 	_current_family_accumulation.clear()
+	## post_attack 申报列表按次清空（上一攻击的记录已由演出消费/作废）
+	if timing == "post_attack":
+		_score_declarations.clear()
 	## ONCE: process + clear + remove
 	var once_to_remove := []
 	for buff in pipeline["ONCE"]:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
-		var before := Current.total_score
 		## 飘字图标归属窗口：本 buff 执行期间弹出的得分数字带其图标（读取方见 EffectManager.float_context_buff）
 		EffectManager.float_context_buff = buff
+		## 申报归属窗口：效果内 declare_score_contribution() 归属到本实例
+		_declare_context_buff = buff
 		await buff.process_buff()
+		_declare_context_buff = null
 		EffectManager.float_context_buff = null
-		_track_family_contribution(buff, before)
 		buff.clear_buff()
 		once_to_remove.append(buff)
 	for buff in once_to_remove:
@@ -81,29 +99,29 @@ func do_buff(timing: String) -> void:
 	for buff in pipeline["STAGE"]:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
-		var before := Current.total_score
 		EffectManager.float_context_buff = buff
+		_declare_context_buff = buff
 		await buff.process_buff()
+		_declare_context_buff = null
 		EffectManager.float_context_buff = null
-		_track_family_contribution(buff, before)
 	## ELITE: process only
 	for buff in pipeline["ELITE"]:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
-		var before := Current.total_score
 		EffectManager.float_context_buff = buff
+		_declare_context_buff = buff
 		await buff.process_buff()
+		_declare_context_buff = null
 		EffectManager.float_context_buff = null
-		_track_family_contribution(buff, before)
 	## ALWAYS: process only
 	for buff in pipeline["ALWAYS"]:
 		if "drop_bonus_trigger" in buff.tags:
 			continue
-		var before := Current.total_score
 		EffectManager.float_context_buff = buff
+		_declare_context_buff = buff
 		await buff.process_buff()
+		_declare_context_buff = null
 		EffectManager.float_context_buff = null
-		_track_family_contribution(buff, before)
 	## 保存家族累积供查询
 	_last_family_accumulation = _current_family_accumulation.duplicate()
 	_current_timing = ""
@@ -206,6 +224,41 @@ func get_family_accumulation(family: String) -> int:
 	if _current_family_accumulation.has(family):
 		return _current_family_accumulation[family]
 	return 0
+
+## ============================================================
+## 得分贡献申报 API（post-attack-score-balloon，design D2）
+## ============================================================
+
+## 得分贡献申报：post_attack 管线内的效果在 process_buff() 内调用（有符号）。
+## 数值写入仍由效果自身负责（保持既有计算语义，审计面最小），本接口只做
+## "记录 + 归属"三件事：
+##   1) 家族累积按申报值入账（族主 ×1.5 的同源数据，hunt_overlord 等读取）；
+##   2) resonance ramp 叠层按"正向申报"判定（delta > 0，见
+##      resonance-overlord-delayed 规格"永久叠层累加"）；
+##   3) 申报记录进入本次 post_attack 的播报列表（token 演出消费）。
+## 本次未触发或未改变得分的效果不申报（delta=0 静默返回）；
+## 管线外调用（无申报归属上下文）同样静默返回。
+func declare_score_contribution(delta: int) -> void:
+	if delta == 0:
+		return
+	var buff: Buff = _declare_context_buff
+	if buff == null:
+		return
+	_track_family_contribution(buff, delta)
+	if _current_timing == "post_attack":
+		_score_declarations.append({
+			"buff": buff,
+			"delta": delta,
+			## token 来源图标取图规则（buff_icon → debuff_icon 回退，与飘字一致）
+			"icon_path": str(buff.buff_meta.get("buff_icon", buff.buff_meta.get("debuff_icon", ""))),
+		})
+
+## 取走本次 post_attack 的申报列表（返回副本；调用方取走后原列表清空，
+## 防御同一份申报被二次消费）。skill_attack 在 do_post_attack_buff 后调用。
+func take_score_declarations() -> Array:
+	var declarations := _score_declarations.duplicate()
+	_score_declarations.clear()
+	return declarations
 
 ## ============================================================
 ## 清理
@@ -350,15 +403,18 @@ func _lifecycle_int(key: String) -> int:
 ## 内部辅助
 ## ============================================================
 
-func _track_family_contribution(buff: Buff, score_before: int) -> void:
+## 家族累积入账（申报值驱动）：delta 为 declare_score_contribution() 提交的
+## 有符号申报值。申报制改造前由 do_buff 差值测量调用（score_before 现值差），
+## 现在仅在申报时刻调用——once_total_score 快照、total_score 中途读取者的
+## 语义均不变（数值路径不动，见 design D1/D2/D5）。
+func _track_family_contribution(buff: Buff, delta: int) -> void:
 	if buff.family == "":
 		return
-	var delta := Current.total_score - score_before
 	if delta > 0:
 		if not _current_family_accumulation.has(buff.family):
 			_current_family_accumulation[buff.family] = 0
 		_current_family_accumulation[buff.family] += delta
-		## 共鸣叠层：正向贡献且共鸣系≥4时，resonance_ramp += 0.01（永久，无上限）
+		## 共鸣叠层：正向申报且共鸣系≥4时，resonance_ramp += 0.01（永久，无上限）
 		## 领主buff(auto_activate)不叠加ramp，避免自身触发导致雪崩式增长
 		if buff.family == "resonance" and get_family_count("resonance") >= 4 and not buff.buff_meta.get("auto_activate", false):
 			resonance_ramp += 0.01

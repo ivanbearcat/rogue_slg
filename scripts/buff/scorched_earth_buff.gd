@@ -31,15 +31,14 @@ func _do_pre_hero_turn():
 		_active_this_turn = true
 		EffectManager.buff_pop_effect(buff_texture)
 
-## post_attack：攻击动画完成后加分飘字（与其他post_attack buff时序一致）
+## post_attack：攻击动画完成后加分（与其他post_attack buff时序一致）
 func _do_post_attack():
 	if Current.scorched_earth_bonus > 0:
 		var se_add_num = roundi(Current.once_total_score * Current.scorched_earth_bonus)
 		if se_add_num > 0:
-			var se_float_number = EffectManager.float_number_effect(se_add_num)
-			Current.hero.add_child(se_float_number)
+			## 申报制迁移：数值即时生效，播报由 token 承载
 			Current.total_score += se_add_num
-			EffectManager.buff_pop_effect(buff_texture)
+			BuffSystem.declare_score_contribution(se_add_num)
 
 func clear_buff():
 	## 清除时回退加成标记

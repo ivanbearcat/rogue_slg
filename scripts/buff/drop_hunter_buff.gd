@@ -9,11 +9,8 @@ func set_buff():
 
 func process_buff():
 	if Current.drop_slot_consumed_this_turn:
-		Current.public_lock_array.append("drop_hunter_buff")
+		## 申报制迁移：数值即时生效，播报由 token 承载
 		var add_num = int(Current.once_total_score * 0.20)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("drop_hunter_buff")
+		if add_num > 0:
+			Current.total_score += add_num
+			BuffSystem.declare_score_contribution(add_num)

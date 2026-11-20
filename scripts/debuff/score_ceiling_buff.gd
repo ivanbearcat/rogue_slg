@@ -11,10 +11,9 @@ func process_buff():
 	var cap = int(Current.target_score * 0.40)
 	if Current.once_total_score > cap:
 		var excess = Current.once_total_score - cap
-		Current.public_lock_array.append("score_ceiling_buff")
-		var float_number_instantiate = EffectManager.float_number_effect(-excess, "red")
-		Current.hero.add_child(float_number_instantiate)
-		await Tools.time_sleep(1)
+		## 申报制迁移：数值即时生效；负向贡献 → 红色 token。
+		## once_total_score 超额回写保留（design D5：管线内执行次序不变，
+		## 其后效果读到的快照与现状一致）
 		Current.total_score -= excess
 		Current.once_total_score -= excess
-		Current.public_lock_array.erase("score_ceiling_buff")
+		BuffSystem.declare_score_contribution(-excess)

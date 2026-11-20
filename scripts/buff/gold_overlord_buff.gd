@@ -10,11 +10,9 @@ func process_buff():
 		return
 	var bonus = roundi(Current.once_total_score * (Current.total_coins / 5) * 0.01)
 	if bonus > 0:
+		## 申报制迁移：数值即时生效，播报由 token 承载
 		Current.total_score += bonus
-		var float_number_instantiate = EffectManager.float_number_effect(bonus)
-		Current.hero.add_child(float_number_instantiate)
-		# 首次获得触发闪光：仅闪霸主自身图标（原先无任何触发视觉反馈）
-		flash_icon()
+		BuffSystem.declare_score_contribution(bonus)
 
 func clear_buff():
 	pass

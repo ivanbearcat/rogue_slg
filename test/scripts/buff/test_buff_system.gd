@@ -110,6 +110,14 @@ func _mock_set_buff_texture(buff) -> void:
 	var tex_rect = TextureRect.new()
 	buff.buff_texture = tex_rect
 
+## 申报制辅助：在指定 BuffSystem 实例上以 buff 为归属上下文执行一次得分贡献申报
+## （模拟 do_buff 内 declare 窗口：set → declare → clear；测试中非 post_attack 时序，
+## 不进播报列表）
+func _declare_on(bs: Node, buff: Buff, delta: int) -> void:
+	bs._declare_context_buff = buff
+	bs.declare_score_contribution(delta)
+	bs._declare_context_buff = null
+
 ## ============================================================
 ## 测试方法
 ## ============================================================
@@ -217,6 +225,11 @@ func test_resonance_ramp_increment() -> void:
 
 	var bs_script = load("res://scripts/autoload/buff_system.gd")
 	var bs = bs_script.new()
+	## new 实例不触发 _ready：手动装配 5×4 空管线（get_family_count/_track 查询面）
+	for timing in bs.TIMINGS:
+		bs.pipelines[timing] = {}
+		for key in bs.LIFECYCLE_KEYS:
+			bs.pipelines[timing][key] = []
 
 	var c = Current
 	c.total_score = 100
@@ -227,25 +240,34 @@ func test_resonance_ramp_increment() -> void:
 		_mock_set_buff_texture(buff)
 		bs.pipelines["post_attack"]["ALWAYS"].append(buff)
 
-	# Track family contribution with a resonance buff
+	# 正向申报 → ramp += 0.01（申报制：declare_score_contribution 归属当前效果）
 	var res_buff = _create_mock_buff("res_test", "resonance", ["attack"])
-	var score_before = c.total_score
-	c.total_score = 120  # delta = 20
-	bs._track_family_contribution(res_buff, score_before)
-	assert_eq(bs.resonance_ramp, 0.05, "resonance_ramp should be 0.05 after 1 resonance contribution")
+	bs.resonance_ramp = 0.0
+	_declare_on(bs, res_buff, 20)
+	assert_eq(bs.resonance_ramp, 0.01, "resonance_ramp should be 0.01 after 1 positive declaration")
 
 	# Second contribution
-	score_before = c.total_score
-	c.total_score = 140
-	bs._track_family_contribution(res_buff, score_before)
-	assert_eq(bs.resonance_ramp, 0.10, "resonance_ramp should be 0.10 after 2 contributions")
+	_declare_on(bs, res_buff, 20)
+	assert_eq(bs.resonance_ramp, 0.02, "resonance_ramp should be 0.02 after 2 declarations")
 
-	# Cap at 0.50
-	bs.resonance_ramp = 0.48
-	score_before = c.total_score
-	c.total_score = 160
-	bs._track_family_contribution(res_buff, score_before)
-	assert_eq(bs.resonance_ramp, 0.50, "resonance_ramp should cap at 0.50")
+	# 无上限（旧 0.50 封顶语义已废除，见 resonance-overlord-delayed 规格"ramp 无上限"）
+	bs.resonance_ramp = 0.98
+	_declare_on(bs, res_buff, 20)
+	assert_eq(bs.resonance_ramp, 0.99, "resonance_ramp should be 0.99 (no cap)")
+
+	# 负申报不叠 ramp
+	var before = bs.resonance_ramp
+	_declare_on(bs, res_buff, -5)
+	assert_eq(bs.resonance_ramp, before, "negative declaration should not increase ramp")
+
+	# 家族累积按申报值入账（族主 ×1.5 的同源数据）
+	bs._current_family_accumulation.clear()
+	_declare_on(bs, res_buff, 50)
+	assert_eq(bs.get_family_accumulation("resonance"), 50, "family accumulation should follow declared delta")
+	# 零申报静默（本次未触发或未改变得分的效果不申报）
+	bs._current_family_accumulation.clear()
+	_declare_on(bs, res_buff, 0)
+	assert_eq(bs.get_family_accumulation("resonance"), 0, "zero declaration should be silent")
 
 ## 8. test_get_family_accumulation - query current family accumulation
 func test_get_family_accumulation() -> void:
@@ -287,12 +309,17 @@ func test_clear_stage_buff() -> void:
 	assert_eq(bs.pipelines["pre_attack"]["STAGE"].size(), 0, "after clear_stage_buff: stage array should be empty")
 	assert_eq(bs.pipelines["pre_attack"]["ALWAYS"].size(), 1, "after clear_stage_buff: always array should still have 1 buff")
 
-## 8. test_track_family_ignores_empty_family - 空family的buff不参与族主累加
+## 8. test_track_family_ignores_empty_family - 空family的buff不参与族主累加（申报口径）
 func test_track_family_ignores_empty_family() -> void:
 	_current_test = "test_track_family_ignores_empty_family"
 
 	var bs_script = load("res://scripts/autoload/buff_system.gd")
 	var bs = bs_script.new()
+	## new 实例不触发 _ready：手动装配 5×4 空管线
+	for timing in bs.TIMINGS:
+		bs.pipelines[timing] = {}
+		for key in bs.LIFECYCLE_KEYS:
+			bs.pipelines[timing][key] = []
 
 	var c = Current
 	c.total_score = 100
@@ -302,41 +329,27 @@ func test_track_family_ignores_empty_family() -> void:
 	_mock_set_buff_texture(empty_family_buff)
 	bs.pipelines["pre_attack"]["ALWAYS"].append(empty_family_buff)
 
-	# 模拟_track_family_contribution逻辑
-	# 模拟：buff的family为空时，_track_family_contribution直接return
-	var family_accumulation = {}
+	# 申报制：空 family 的正向申报不入账（_track_family_contribution 直接 return）
+	_declare_on(bs, empty_family_buff, 10)
+	assert_false(bs._current_family_accumulation.has(""), "family_accumulation should not have empty family key")
+	assert_eq(bs._current_family_accumulation.size(), 0, "family_accumulation should be empty when only empty-family buff declares")
 
-	# 模拟process_buff后score没变化（空family不应累加）
-	var score_before = c.total_score
-	# _track_family_contribution检查: family=="" -> return
-	if empty_family_buff.family != "":
-		var delta = c.total_score - score_before
-		if delta > 0:
-			if not family_accumulation.has(empty_family_buff.family):
-				family_accumulation[empty_family_buff.family] = 0
-			family_accumulation[empty_family_buff.family] += delta
-
-	# 验证family_accumulation中没有空family
-	assert_false(family_accumulation.has(""), "family_accumulation should not have empty family key")
-	assert_eq(family_accumulation.size(), 0, "family_accumulation should be empty when only empty-family buff exists")
-
-	# 对比：有family的buff应累加
+	# 对比：有family的buff正向申报应入账（申报值驱动）
 	var vitality_buff = _create_mock_buff("vitality_test", "vitality", ["attack"])
 	_mock_set_buff_texture(vitality_buff)
 	bs.pipelines["pre_attack"]["ALWAYS"].append(vitality_buff)
 
-	# 模拟vitality buff贡献了10分
-	c.total_score = 110  # score_before=100, delta=10
-	if vitality_buff.family != "":
-		var delta = c.total_score - score_before
-		if delta > 0:
-			if not family_accumulation.has(vitality_buff.family):
-				family_accumulation[vitality_buff.family] = 0
-			family_accumulation[vitality_buff.family] += delta
+	_declare_on(bs, vitality_buff, 10)
+	assert_eq(bs.get_family_accumulation("vitality"), 10, "vitality accumulation should be 10 (declared delta)")
+	assert_false(bs._current_family_accumulation.has(""), "family_accumulation should still not have empty family key")
 
-	assert_has(family_accumulation, "vitality", "family_accumulation should have vitality key")
-	assert_eq(family_accumulation["vitality"], 10, "vitality accumulation should be 10")
-	assert_false(family_accumulation.has(""), "family_accumulation should still not have empty family key")
+	# 负申报不入账（申报口径：仅正向申报入账）
+	_declare_on(bs, vitality_buff, -3)
+	assert_eq(bs.get_family_accumulation("vitality"), 10, "negative declaration should not accumulate")
+
+	# 未申报（delta=0）静默
+	_declare_on(bs, vitality_buff, 0)
+	assert_eq(bs.get_family_accumulation("vitality"), 10, "zero declaration should be silent")
 
 ## 9. test_buff_init_from_meta - Buff基类_init正确设置family/tags
 func test_buff_init_from_meta() -> void:

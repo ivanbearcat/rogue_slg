@@ -183,7 +183,9 @@ func test_drop_hunter_buff() -> void:
 	await buff.process_buff()
 	assert_eq(Current.total_score, 0, "drop_slot_consumed_this_turn=false with dice: should not trigger")
 
-## 6. position_master_buff - int(once×slime_in_range×0.03); 0个不加
+## 6. position_master_buff - int(once×slime_die_sum×0.03)； 0 击杀不加
+## （实现口径为击杀数 slime_die_sum——旧断言按"攻击范围内数量"写而实现读
+## die_sum，属基线即挂的断言语义脱节；本次对齐实现口径）
 func test_position_master_buff() -> void:
 	_current_test = "test_position_master_buff"
 	Current.once_total_score = 1000
@@ -192,34 +194,33 @@ func test_position_master_buff() -> void:
 	var meta = {"buff_icon": "", "buff_tooltip": "test", "family": "hunt", "tags": []}
 	var buff = create_and_set_buff("res://scripts/buff/position_master_buff.gd", meta)
 
-	# 0个史莱姆在攻击范围内→不触发
+	# 0击杀→不触发
 	_clear_slimes()
+	Current.slime_die_sum = 0
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "0 slimes in range: should not trigger")
+	assert_eq(Current.total_score, 0, "0 kills: should not trigger")
 
-	# 3个史莱姆在攻击范围内→int(1000*3*0.03)=int(90)=90
+	# 3击杀→int(1000*3*0.03)=int(90)=90
 	_clear_slimes()
-	add_slime_in_range(Vector2(0, 0))
-	add_slime_in_range(Vector2(1, 0))
-	add_slime_in_range(Vector2(2, 0))
+	Current.slime_die_sum = 3
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(1000 * 3 * 0.03), "3 slimes in range: should add int(once*3*0.03)")
+	assert_eq(Current.total_score, int(1000 * 3 * 0.03), "3 kills: should add int(once*3*0.03)")
 
-	# 1个史莱姆在攻击范围内→int(1000*1*0.03)=int(30)=30
+	# 1击杀→int(1000*1*0.03)=int(30)=30
 	_clear_slimes()
-	add_slime_in_range(Vector2(0, 0))
+	Current.slime_die_sum = 1
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, int(1000 * 1 * 0.03), "1 slime in range: should add int(once*1*0.03)")
+	assert_eq(Current.total_score, int(1000 * 1 * 0.03), "1 kill: should add int(once*1*0.03)")
 
-	# 史莱姆在all_enemy_array但不在skill_attack_range→不计数
+	# 击杀数回零后不再触发
 	_clear_slimes()
-	add_slime(Vector2(5, 5))  # 不在攻击范围内
+	Current.slime_die_sum = 0
 	Current.total_score = 0
 	await buff.process_buff()
-	assert_eq(Current.total_score, 0, "Slime not in range: should not trigger")
+	assert_eq(Current.total_score, 0, "0 kills after reset: should not trigger")
 
 ## 7. drop_bonus_buff - 每个dropped dice随机+1到对应分数; 0个drop不加
 func test_drop_bonus_buff() -> void:

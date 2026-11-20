@@ -13,14 +13,11 @@ func process_buff():
 		if is_instance_valid(debuff):
 			debuff_count += 1
 	if debuff_count > 0:
-		Current.public_lock_array.append("curse_burner_buff")
+		## 申报制迁移：数值即时生效，播报由 token 承载
 		var add_num = int(Current.once_total_score * debuff_count * 0.08)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("curse_burner_buff")
+		if add_num > 0:
+			Current.total_score += add_num
+			BuffSystem.declare_score_contribution(add_num)
 
 func clear_buff():
 	pass

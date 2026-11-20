@@ -11,6 +11,11 @@ extends Node2D
 
 signal hide_all_skill
 
+## 攻击后得分演出编排器（post-attack-score-balloon，design D3/D4）：
+## 一次攻击一场演出，出生气球种子 → perform(申报列表) token 错峰连发 →
+## 气球飞入计分板返回入账时刻
+const SCORE_BALLOON_ORCHESTRATOR := preload("res://scripts/ui/score_balloon_orchestrator.gd")
+
 ## 骰型等级颜色字典（值取自 main.tscn 骰型行静态范例 theme_override 精确值）
 ## lv1-4: {"font": 字体色hex, "outline": 描边色hex}；lv5: rainbow bbcode 参数串
 const LEVEL_COLORS := {
@@ -136,10 +141,14 @@ func skill_attack():
 	## （精英击杀飘字在动画播完1.0s时弹出，与总分字自然错开0.4s）
 	if Current.slime_die_sum > 0:
 		await Tools.time_sleep(0.6)
-	## 得分特效
-	var float_number_instantiate = EffectManager.float_number_effect(Current.dice_type_point)
-	if float_number_instantiate != null:
-		Current.hero.add_child(float_number_instantiate)
+	## 攻击得分主飘字 → 气球种子出生（post-attack-score-balloon：气球悬停英雄头顶，
+	## 种子为骰型得分、不带骰型名称标签；得分呈现由气球与 token 流承载）
+	## 【计分板总分展示静默窗口开启（覆盖随后的主分写入，见 design D1：
+	## 数值照常即时结算，静默仅压制 total_score label 直写与脉冲）】
+	var orchestrator: Node2D = SCORE_BALLOON_ORCHESTRATOR.new()
+	game_manager.add_child(orchestrator)
+	orchestrator.setup_balloon(Current.dice_type_point)
+	Current.total_score_display_muted = true
 	await Tools.time_sleep(0.5)
 	Current.total_score += Current.dice_type_point
 	Current.once_total_score = Current.dice_type_point
@@ -159,10 +168,18 @@ func skill_attack():
 				_found_in_scored = true
 				break
 		Current.drop_slot_consumed_this_turn = _found_in_scored
-	### 攻击后buff
-	EventBus.event_emit("do_post_attack_buff")
-	## 等待buff处理完成
-	await game_manager.wait_for_buff_finish()
+	### 攻击后buff：直接 await 管线（do_post_attack_buff 全项目单订阅者、单发射点，
+	### EventBus 转发在此刻等价于直调——直调以取得"结算完成 + 申报列表齐"的确定时点；
+	### 申报制下管线零硬等待、即时结算，唯一的跨帧点是 slime_rebirth 的生成等待）
+	await BuffSystem.do_post_attack_buff()
+	## 演出编排：token 错峰飞入气球 → 气球定格并飞向计分板；
+	## perform 返回（含异常裁剪兜底）即入账时刻——解除静默 + 显示同步 + 一次入账脉冲
+	var declarations: Array = BuffSystem.take_score_declarations()
+	await orchestrator.perform(declarations)
+	Current.total_score_display_muted = false
+	game_manager.total_score.text = str(Current.total_score)
+	EffectManager.big_flow_effect(game_manager.total_score)
+	orchestrator.queue_free()
 	## 如果是赋能技能就消耗能量,然后重置UI
 	if Current.power_skill:
 		Current.power -= 1

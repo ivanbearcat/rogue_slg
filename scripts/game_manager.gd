@@ -1254,6 +1254,13 @@ func _check_and_level_up() -> void:
 		exp_bar.max_value = Current.require_exp
 		## 设置经验label
 		_set_exp_bar_scale(Current.hero_exp, Current.require_exp)
+		## 攻击得分演出期间不弹卡：等 skill_attack 全链（含气球/token 演出
+		## perform）完成再弹——add_exp 由史莱姆死亡 fire-and-forget 触发，
+		## 只等 buff 锁不知道演出在跑，曾致"飘字未播完就弹升级卡"截断演出。
+		## 主流程 erase("skill_attack") 后有"等待一会让升级先弹出"的 0.4s
+		## 协作窗（见 skill_attack 段），此等待恰在该窗内通过，无死锁
+		while "skill_attack" in Current.public_lock_array:
+			await Tools.time_sleep(0.1)
 		## 设置升级时卡牌UI
 		_set_level_up_card()
 		## 有其他全局界面操作时等待

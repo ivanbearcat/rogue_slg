@@ -19,15 +19,11 @@ func process_buff():
 	elif color_count <= 1:
 		bonus_percent = -0.05
 	if bonus_percent != 0.0:
-		Current.public_lock_array.append("chromatic_frenzy_buff")
+		## 申报制迁移：数值即时生效；负向贡献申报为红色 token（spec「负向贡献红色 token」）
 		var add_num = int(Current.once_total_score * bonus_percent)
-		var float_color = "green" if add_num > 0 else "red"
-		var float_number_instantiate = EffectManager.float_number_effect(add_num, float_color)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("chromatic_frenzy_buff")
+		if add_num != 0:
+			Current.total_score += add_num
+			BuffSystem.declare_score_contribution(add_num)
 
 func clear_buff():
 	pass

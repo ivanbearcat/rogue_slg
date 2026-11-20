@@ -152,17 +152,17 @@ func test_coin_mirror_score_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 10, "10 coins: total_score should be 10")
 
-	# 1金币：total_score += 1*3 = 3
+	# 1金币：total_score += 1（实现：每 1 金币 +1 分）
 	c.total_score = 0
 	c.total_coins = 1
 	buff.process_buff()
-	assert_eq(c.total_score, 3, "1 coin: total_score should be 3")
+	assert_eq(c.total_score, 1, "1 coin: total_score should be 1")
 
 	# 从非零分数开始，累加
 	c.total_score = 100
 	c.total_coins = 3
 	buff.process_buff()
-	assert_eq(c.total_score, 109, "From 100 score with 3 coins: total_score should be 109")
+	assert_eq(c.total_score, 103, "From 100 score with 3 coins: total_score should be 103")
 
 ## 3. golden_touch_buff - process_buff不做任何事（效果在外部流程中执行）
 func test_golden_touch_buff() -> void:

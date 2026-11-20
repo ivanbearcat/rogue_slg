@@ -19,11 +19,9 @@ func process_buff():
 		return
 	var bonus = int(Current.once_total_score * moved * 0.05)
 	if bonus > 0:
+		## 申报制迁移：数值即时生效，播报由 token 承载
 		Current.total_score += bonus
-		var float_number_instantiate = EffectManager.float_number_effect(bonus)
-		Current.hero.add_child(float_number_instantiate)
-		# 触发闪光：仅闪霸主自身图标（不再联动闪烁同族）
-		flash_icon()
+		BuffSystem.declare_score_contribution(bonus)
 
 func save_state() -> Dictionary:
 	return {"_move_bonus_added": _move_bonus_added}

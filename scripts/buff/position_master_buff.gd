@@ -10,11 +10,8 @@ func set_buff():
 func process_buff():
 	var slime_count = Current.slime_die_sum
 	if slime_count > 0:
-		Current.public_lock_array.append("position_master_buff")
+		## 申报制迁移：数值即时生效，播报由 token 承载
 		var add_num = int(Current.once_total_score * slime_count * 0.03)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("position_master_buff")
+		if add_num > 0:
+			Current.total_score += add_num
+			BuffSystem.declare_score_contribution(add_num)

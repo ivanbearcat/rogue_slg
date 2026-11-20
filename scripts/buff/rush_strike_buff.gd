@@ -9,14 +9,11 @@ func set_buff():
 
 func process_buff():
 	if Current.hero.hero_movement >= 3:
-		Current.public_lock_array.append("rush_strike_buff")
+		## 申报制迁移：数值即时生效，播报由 token 承载
 		var add_num = int(Current.once_total_score * 0.30)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("rush_strike_buff")
+		if add_num > 0:
+			Current.total_score += add_num
+			BuffSystem.declare_score_contribution(add_num)
 
 func clear_buff():
 	pass

@@ -30,15 +30,34 @@ func create_and_set_buff(script_path: String, meta: Dictionary = {}) -> Buff:
 	buff.set_buff()
 	return buff
 
+## 轻量史莱姆替身：GDScript 4 不接受向未声明属性赋值（裸 Node 报 Invalid
+## assignment 且函数中断，史莱姆不会进数组——历史遗留的 mock 基建缺陷）；
+## 字段显式声明后可赋值
+class DummySlime extends Node:
+	var enemy_grid_index: Vector2
+	var slime_color: String
+	var slime_point: int
+	var is_elite: bool
+	var is_boss: bool
+
 func add_slime(grid_index: Vector2 = Vector2.ZERO, color: String = "green", point: int = 1, is_power: bool = false):
-	var slime = Node.new()
+	var slime = DummySlime.new()
 	slime.enemy_grid_index = grid_index
 	slime.slime_color = color
 	slime.slime_point = point
 	slime.is_elite = false
 	slime.is_boss = false
-	Current.all_enemy_array.append(slime)
+	## Current.all_enemy_array 为计算 getter（读 $game_manager/enemys 子节点）：
+	## 往 getter 返回的临时数组 append 无效——替身必须挂进容器节点
+	Current.game_manager.get_node("enemys").add_child(slime)
 	return slime
+
+## 清空史莱姆容器（all_enemy_array 计算口径：clear 临时数组无效）
+func _clear_slimes() -> void:
+	var enemys: Node = Current.game_manager.get_node("enemys")
+	for child in enemys.get_children():
+		enemys.remove_child(child)
+		child.queue_free()
 
 func add_slime_in_range(grid_index: Vector2 = Vector2.ZERO, color: String = "green", point: int = 1, is_power: bool = false):
 	var slime = add_slime(grid_index, color, point, is_power)
@@ -112,7 +131,7 @@ func test_slime_tide_buff() -> void:
 	assert_eq(c.max_hp, 0, "max_hp should be 0 after clear_buff")
 	assert_eq(c.player_hp, 0, "player_hp should be 0 after clear_buff from 1")
 
-## 2. swarm_tithe_buff - 分数 = enemy_count × target_score × 0.0025
+## 2. swarm_tithe_buff - 分数 = enemy_count × target_score × 0.01
 func test_swarm_tithe_buff() -> void:
 	_current_test = "test_swarm_tithe_buff"
 	var c = Current
@@ -126,21 +145,21 @@ func test_swarm_tithe_buff() -> void:
 	buff.process_buff()
 	assert_eq(c.total_score, 0, "No enemies: total_score should not change")
 
-	# 添加5个敌人：5 * 1000 * 0.0025 = 12.5 -> int(12.5) = 12
+	# 添加5个敌人：5 * 1000 * 0.01 = 50
 	c.total_score = 0
 	for i in range(5):
 		add_slime(Vector2(i, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, int(5 * 1000 * 0.0025), "5 enemies: score should be int(5 * 1000 * 0.0025)")
+	assert_eq(c.total_score, int(5 * 1000 * 0.01), "5 enemies: score should be int(5 * 1000 * 0.01)")
 
 	# 大量敌人：100个
 	c.total_score = 0
-	Current.all_enemy_array.clear()
+	_clear_slimes()
 	c.target_score = 200
 	for i in range(100):
 		add_slime(Vector2(i, 0))
 	buff.process_buff()
-	assert_eq(c.total_score, int(100 * 200 * 0.0025), "100 enemies with target_score=200: score should be int(100 * 200 * 0.0025)")
+	assert_eq(c.total_score, int(100 * 200 * 0.01), "100 enemies with target_score=200: score should be int(100 * 200 * 0.01)")
 
 ## 3. full_range_assault_buff - die_count == range_size时触发
 func test_full_range_assault_buff() -> void:
@@ -187,7 +206,7 @@ func test_swarm_heart_buff() -> void:
 
 	# 6个史莱姆：6/3=2, 分数 = int(1000 * 2 * 0.10) = 200
 	c.total_score = 0
-	Current.all_enemy_array.clear()
+	_clear_slimes()
 	for i in range(6):
 		add_slime(Vector2(i, 0))
 	buff.process_buff()
@@ -217,7 +236,7 @@ func test_slime_explosion_buff() -> void:
 
 	# 6个范围内史莱姆：6/3=2, 分数 = int(1000 * 2 * 0.10) = 200
 	c.total_score = 0
-	Current.all_enemy_array.clear()
+	_clear_slimes()
 	Current.skill_attack_range.clear()
 	for i in range(6):
 		add_slime_in_range(Vector2(i, 0))
@@ -226,7 +245,7 @@ func test_slime_explosion_buff() -> void:
 
 	# 9个范围内史莱姆：9/3=3, 分数 = int(1000 * 3 * 0.10) = 300
 	c.total_score = 0
-	Current.all_enemy_array.clear()
+	_clear_slimes()
 	Current.skill_attack_range.clear()
 	for i in range(9):
 		add_slime_in_range(Vector2(i, 0))
@@ -235,7 +254,7 @@ func test_slime_explosion_buff() -> void:
 
 	# 范围外史莱姆不计算：3个总史莱姆但只有2个在范围内
 	c.total_score = 0
-	Current.all_enemy_array.clear()
+	_clear_slimes()
 	Current.skill_attack_range.clear()
 	add_slime_in_range(Vector2(0, 0))
 	add_slime_in_range(Vector2(1, 0))
@@ -255,6 +274,7 @@ func test_tide_crusher_buff() -> void:
 	var buff = create_and_set_buff("res://scripts/buff/tide_crusher_buff.gd", meta)
 
 	# 7个史莱姆不触发
+	_clear_slimes()
 	for i in range(7):
 		add_slime(Vector2(i, 0))
 	buff.process_buff()
@@ -262,13 +282,17 @@ func test_tide_crusher_buff() -> void:
 
 	# 8个史莱姆触发，分数 = int(1000 * 0.60) = 600
 	c.total_score = 0
-	add_slime(Vector2(7, 0))
+	_clear_slimes()
+	for i in range(8):
+		add_slime(Vector2(i, 0))
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 0.60), "8 slimes: should trigger, score = int(once_total_score * 0.60)")
 
 	# 9个史莱姆也触发
 	c.total_score = 0
-	add_slime(Vector2(8, 0))
+	_clear_slimes()
+	for i in range(9):
+		add_slime(Vector2(i, 0))
 	buff.process_buff()
 	assert_eq(c.total_score, int(1000 * 0.60), "9 slimes: should trigger, score = int(once_total_score * 0.60)")
 
@@ -289,7 +313,7 @@ func test_swarm_overlord_buff() -> void:
 	# clear_buff无操作
 	buff.clear_buff()
 	# 清理
-	Current.all_enemy_array.clear()
+	_clear_slimes()
 
 	# 触发闪光契约（新）：flash_icon 仅闪自身；无 texture 时不报错、不产生闪光效果
 	var tweens_before_flash = get_tree().get_processed_tweens().size()
@@ -397,7 +421,7 @@ func test_power_cap_up_buff() -> void:
 func test_swarm_call_pre_enemy_turn() -> void:
 	_current_test = "test_swarm_call_pre_enemy_turn"
 	var c = Current
-	c.all_enemy_array.clear()
+	_clear_slimes()
 	c.swarm_call_pending = 0
 
 	# 创建swarm_call buff实例（不调用set_buff以避免纹理/UI依赖）
@@ -424,7 +448,7 @@ func test_swarm_call_pre_enemy_turn() -> void:
 func test_swarm_call_no_trigger_when_enough() -> void:
 	_current_test = "test_swarm_call_no_trigger_when_enough"
 	var c = Current
-	c.all_enemy_array.clear()
+	_clear_slimes()
 	c.swarm_call_pending = 0
 
 	# 创建swarm_call buff实例

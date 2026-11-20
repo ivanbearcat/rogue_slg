@@ -9,15 +9,11 @@ func set_buff():
 
 func process_buff():
 	if Current.power_skill:
-		Current.public_lock_array.append("power_backlash_buff")
+		## 申报制迁移：数值即时生效；负向贡献 → 红色 token
 		var sub_num = int(Current.total_score * 0.1)
-
-		var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(debuff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score -= sub_num
-		Current.public_lock_array.erase("power_backlash_buff")
+		if sub_num > 0:
+			Current.total_score -= sub_num
+			BuffSystem.declare_score_contribution(-sub_num)
 
 func clear_buff():
 	clear_debuff_texture()

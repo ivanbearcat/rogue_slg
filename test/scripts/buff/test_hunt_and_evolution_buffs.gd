@@ -105,15 +105,16 @@ func test_hunt_overlord_realtime_accumulation() -> void:
 	var overlord = overlord_script.new(overlord_meta, gm)
 	bs.pipelines["post_attack"]["ALWAYS"].append(overlord)
 
-	# 模拟do_buff流程：先执行普通hunt buff贡献分数，再执行overlord读取累积
+	# 模拟do_buff申报流程：先执行普通hunt buff申报贡献，再执行overlord读取累积
 	bs._current_family_accumulation.clear()
 
-	# 模拟4个hunt buff各贡献25分（共100）
+	# 模拟4个hunt buff各申报25分（共100；申报制：declare_score_contribution 归属当前效果）
 	for i in range(4):
 		var buff = bs.pipelines["post_attack"]["ALWAYS"][i]
-		var score_before = c.total_score
-		c.total_score += 25  # 每个buff贡献25分
-		bs._track_family_contribution(buff, score_before)
+		c.total_score += 25
+		bs._declare_context_buff = buff
+		bs.declare_score_contribution(25)
+		bs._declare_context_buff = null
 
 	# 验证当前轮累积值为100（实时）
 	assert_eq(bs.get_family_accumulation("hunt"), 100, "hunt accumulation should be 100 (realtime, not stale)")

@@ -41,3 +41,6 @@ class MockContainer extends Node:
 
 class MockLabel extends RefCounted:
 	var text: String = "0"
+	## total_score setter 的 big_flow_effect 脉冲可观测面（探针断言用；
+	## 真实路径作用于 Label.scale，mock 对齐该属性名）
+	var scale: Vector2 = Vector2.ONE

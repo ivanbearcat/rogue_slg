@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/score_token.gd" id="1_token"]
+[ext_resource type="FontFile" uid="uid://cje04ex1osi0c" path="res://fonts/MinimalPixel v2.ttf" id="2_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_token"]
+resource_local_to_scene = true
+font = ExtResource("2_font")
+font_size = 36
+font_color = Color(0, 1, 0.07, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="ScoreToken" type="Node2D"]
+script = ExtResource("1_token")
+
+[node name="Label" type="Label" parent="."]
+z_index = 197
+fit_content = false
+offset_right = 40.0
+offset_bottom = 18.0
+scale = Vector2(0.25, 0.25)
+text = "+0"
+label_settings = SubResource("LabelSettings_token")
+horizontal_alignment = 0
+
+[node name="Icon" type="TextureRect" parent="."]
+visible = false
+z_index = 197
+offset_right = 36.0
+offset_bottom = 36.0
+scale = Vector2(0.25, 0.25)
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 0

@@ -20,14 +20,11 @@ func set_buff():
 func process_buff():
 	## 1. 烙印匹配加成：若 branded_color 存在于本回合击杀列表中，则 +25%
 	if branded_color != "" and branded_color in Current.killed_slime_colors:
-		Current.public_lock_array.append("color_brand_buff")
+		## 申报制迁移：数值即时生效，播报由 token 承载
 		var add_num = int(Current.once_total_score * 0.25)
-		var float_number_instantiate = EffectManager.float_number_effect(add_num)
-		Current.hero.add_child(float_number_instantiate)
-		EffectManager.buff_pop_effect(buff_texture)
-		await Tools.time_sleep(1)
-		Current.total_score += add_num
-		Current.public_lock_array.erase("color_brand_buff")
+		if add_num > 0:
+			Current.total_score += add_num
+			BuffSystem.declare_score_contribution(add_num)
 	## 2. 统计本回合击杀主色，更新烙印（平票或无击杀则保持不变）
 	_update_branded_color()
 	## 3. 更新tooltip显示当前烙印颜色

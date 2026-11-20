@@ -9,13 +9,10 @@ func set_buff():
 
 func process_buff():
 	var add_num = Current.total_coins
-	if add_num <= 0:
-		return
-	Current.total_score += add_num
-	var float_number_instantiate = EffectManager.float_number_effect(add_num)
-	Current.hero.add_child(float_number_instantiate)
-	EffectManager.buff_pop_effect(buff_texture)
-	await Tools.time_sleep(1)
+	if add_num > 0:
+		## 申报制迁移：数值即时生效，播报由 token 承载
+		Current.total_score += add_num
+		BuffSystem.declare_score_contribution(add_num)
 
 func clear_buff():
 	pass

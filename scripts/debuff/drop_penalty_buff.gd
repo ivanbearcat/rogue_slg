@@ -10,16 +10,11 @@ func set_buff():
 func process_buff():
 	var dropped_count: int = Current.dropped_dice_count
 	if dropped_count > 0:
-		Current.public_lock_array.append("drop_penalty_buff")
+		## 申报制迁移：数值即时生效；负向贡献 → 红色 token
 		var sub_num = int(Current.total_score * dropped_count * 0.03)
-
 		if sub_num > 0:
-			var float_number_instantiate = EffectManager.float_number_effect(-sub_num, "red")
-			Current.hero.add_child(float_number_instantiate)
-			EffectManager.buff_pop_effect(debuff_texture)
-			await Tools.time_sleep(1)
 			Current.total_score -= sub_num
-		Current.public_lock_array.erase("drop_penalty_buff")
+			BuffSystem.declare_score_contribution(-sub_num)
 
 func clear_buff():
 	clear_debuff_texture()
