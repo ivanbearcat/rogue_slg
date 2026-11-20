@@ -8,6 +8,8 @@ extends Node2D
 ##   2.2 气球——种子出生/0·1·8·12 条 token 序列的滚动、位数分档与封顶、
 ##              定格后飞向计分板终点行为
 ##   2.3 编排器——12 条申报连发总时长 ≤2.5s 且含合并汇总 token
+##   icon-gap-unify——图标内容显示尺寸归一（透明边与满铺间隔一致，
+##              变更 token-icon-gap-unify 任务 1.2 断言 + 4.1 目测材料）
 ## 截图保存到 test/scripts/buff/out/score_show/（供目测定稿参考，任务 5.3 校准基线）
 
 const OUT_DIR := "res://test/scripts/buff/out/score_show"
@@ -94,6 +96,7 @@ func _run_all() -> void:
 	await _scenario_orchestrator_burst(gm)
 	await _scenario_orchestrator_emergency(gm)
 	await _scenario_board_target_scaled(gm)
+	await _scenario_icon_gap_unify(gm)
 	_clear_stage(gm)
 
 func _scenario_token_flight(gm: Node) -> void:
@@ -131,11 +134,23 @@ func _scenario_token_flight(gm: Node) -> void:
 	var bbox: Rect2 = Rect2(lcenter - lhalf, lhalf * 2.0).merge(Rect2(icenter - ihalf, ihalf * 2.0))
 	var center_ok: bool = bbox.get_center().length() < 0.5
 	var side_ok: bool = lcenter.x > icenter.x  ## 数字排在图标右侧（并排版型保持）
-	var layout_ok: bool = icon_rect.visible and side_ok and label.text == "+35"
+	## 视觉投影断言（spec「数字与图标贴合并排」）：icon 与 label 各自绕
+	## rect 中心 pivot 缩放，节点间 position 差不随 LABEL_SCALE 缩放——
+	## 屏幕上"图标墨迹右缘 → 数字 ink 左缘"的距离必须按渲染变换投影
+	## 断言（源 rect 几何差与视觉脱钩：GAP=-2 曾产生 34.75px 大缝、
+	## pivot 丢失时 -36 类真压叠 10px；贴合区间 ±2px 双向拦截）
+	var icon_right_visual: float = icon_rect.position.x \
+		+ icon_rect.pivot_offset.x * (1.0 - icon_rect.scale.x) \
+		+ icon_rect.scale.x * icon_rect.size.x
+	var label_left_visual: float = label.position.x \
+		+ label.pivot_offset.x * (1.0 - label.scale.x)
+	var visual_gap: float = label_left_visual - icon_right_visual
+	var side_geo_ok: bool = absf(visual_gap) <= 2.0
+	var layout_ok: bool = icon_rect.visible and side_ok and side_geo_ok and label.text == "+35"
 	_check("token 弧线飞行（顶点抬升）", arc_ok, "最大抬升=%.1fpx（弧高 24px，应>3px 高于连线）" % min_lift)
 	_check("token 到达回调", arrive_ok, "arrived=%s" % str(arrived))
 	_check("token 落点对准目标", near_ok, "dist=%.2f" % end.distance_to(target))
-	_check("token 图标与数字并排", layout_ok, "icon=%s label=%s 中心 x: label=%.1f icon=%.1f" % [icon_rect.visible, label.text, lcenter.x, icenter.x])
+	_check("token 图标与数字并排", layout_ok, "icon=%s label=%s 视觉间隔=%.2fpx（贴合区间 ±2px；大缝/压叠均拦截）" % [icon_rect.visible, label.text, visual_gap])
 	_check("token 视觉中心=原点（所见即起飞点）", center_ok, "视觉bbox中心=%s（应≈0,0；icon∪label 缩放后）" % bbox.get_center())
 	await _shot("01_token_flight.png")
 	token.queue_free()
@@ -155,6 +170,73 @@ func _scenario_token_negative(gm: Node) -> void:
 	_check("负向 token 红色纯数值（无图标零偏移）", ok, "text=%s color=%s icon=%s 文字中心=%s" % [label.text, color, icon_rect.visible, text_center])
 	await _shot("02_token_negative.png")
 	token.queue_free()
+
+## ---------- 图标内容归一（间隔归一回归闸门，icon-gap-unify 任务 1.2） ----------
+
+## 纹理可见内容 bbox（逐像素扫 alpha 边界；扫描不可用/全透明时回退整幅，
+## 与编排器 _load_icon 的内容裁剪同口径）
+func _content_bbox(tex: Texture2D) -> Rect2i:
+	var img: Image = tex.get_image()
+	if img == null or img.is_empty():
+		return Rect2i(Vector2i.ZERO, Vector2i(tex.get_width(), tex.get_height()))
+	var min_x := img.get_width()
+	var min_y := img.get_height()
+	var max_x := -1
+	var max_y := -1
+	for y in img.get_height():
+		for x in img.get_width():
+			if img.get_pixel(x, y).a > 0.001:
+				if x < min_x:
+					min_x = x
+				if y < min_y:
+					min_y = y
+				if x > max_x:
+					max_x = x
+				if y > max_y:
+					max_y = y
+	if max_x < 0 or max_y < 0:
+		return Rect2i(Vector2i.ZERO, Vector2i(img.get_width(), img.get_height()))
+	return Rect2i(min_x, min_y, max_x - min_x + 1, max_y - min_y + 1)
+
+## icon 可见内容的显示尺寸（STRETCH_SCALE 口径：纹理整幅拉满 rect，
+## 可见内容 bbox 占画布比例 × rect 尺寸 = 内容实际显示大小）——
+## 编排器以 AtlasTexture 裁到内容区后 bbox 即整幅，任何来源图标
+## 的可见内容都显示为 rect 满幅（36×36），间隔归一成立
+func _content_display_size(icon_rect: TextureRect) -> Vector2:
+	var tex: Texture2D = icon_rect.texture
+	if tex == null:
+		return Vector2.ZERO
+	var canvas := Vector2(tex.get_width(), tex.get_height())
+	var bbox: Rect2i = _content_bbox(tex)
+	if canvas.x <= 0.0 or canvas.y <= 0.0 or bbox.size.x <= 0 or bbox.size.y <= 0:
+		return Vector2.ZERO
+	return Vector2(bbox.size) / canvas * icon_rect.size
+
+## 透明边差异大的两枚图标（dice_mastery 内容≈53% vs gold_overlord 满铺）
+## 经编排器 _load_icon 各自装配 token：可见内容显示尺寸必须一致——
+## 未裁剪时内容显示尺寸随美术留白漂移（此断言 FAIL）；裁剪生效后
+## 两者都拉满 36×36 显示 rect（spec「透明边图标与满铺图标间隔一致」）
+func _scenario_icon_gap_unify(gm: Node) -> void:
+	var orch: Node2D = ORCHESTRATOR_SCRIPT.new()
+	gm.add_child(orch)
+	var dice: Node2D = load("res://scenes/score_token.tscn").instantiate()
+	gm.add_child(dice)
+	dice.position = Vector2(160, 80)
+	dice.setup(10, orch._load_icon("res://images/buff_icon/dice_mastery.png"))
+	var overlord: Node2D = load("res://scenes/score_token.tscn").instantiate()
+	gm.add_child(overlord)
+	overlord.position = Vector2(160, 140)
+	overlord.setup(20, orch._load_icon("res://images/buff_icon/gold_overlord.png"))
+	var dice_size: Vector2 = _content_display_size(dice.get_node("Icon"))
+	var overlord_size: Vector2 = _content_display_size(overlord.get_node("Icon"))
+	var size_diff: Vector2 = (dice_size - overlord_size).abs()
+	var unify_ok: bool = size_diff.x < 0.5 and size_diff.y < 0.5
+	_check("图标内容显示尺寸归一（透明边与满铺间隔一致）", unify_ok,
+		"dice_mastery 内容显示=%s gold_overlord 内容显示=%s rect=%s（可见内容应等大拉满显示区）" % [dice_size, overlord_size, dice.get_node("Icon").size])
+	await _shot("07_icon_gap_unify.png")
+	dice.queue_free()
+	overlord.queue_free()
+	orch.queue_free()
 
 ## ---------- 气球序列（任务 2.2） ----------
 

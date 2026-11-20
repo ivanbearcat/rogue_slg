@@ -19,10 +19,14 @@ const FLIGHT_EASE := Tween.EASE_OUT
 ## 空白曾致"图标与数字间隔更大"；数字左对齐贴 rect 左缘，位置恒定）
 const LABEL_SCALE := 0.25
 const ICON_HEIGHT := 36.0
-## 图标与数字的间隙（本地像素，视觉值 ×0.25）：观感微调入口——
-## 0=紧贴，正值留缝（3～4 明显拉开），负值轻微压叠（用户定稿 -2；
-## stretch SCALE 填满修复后此旋钮才真正生效）
-const ICON_LABEL_GAP := -36.0
+## 图标与数字的间隙（本地像素）：观感微调入口——正值数字右移留缝，
+## 负值数字左移压向图标。⚠ pivot 语义（icon-gap-unify 渲染实测）：
+## _center_visual 设 pivot=rect 尺寸一半，0.25 缩放只缩小各 rect 内部，
+## 节点间 position 差不随 LABEL_SCALE 缩放——屏幕观感换算：
+## 视觉间隔 = (ICON_HEIGHT + GAP) + 0.75 像素。定稿 -37：数字与图标
+## 贴合并排轻微压叠 0.25px（5.3"并排轻微压叠"口径；pivot 修复前的
+## -2 定稿属旧几何，那时 -36 才是数字压图标）
+const ICON_LABEL_GAP := -37.0
 const LABEL_ICON_OFFSET := ICON_HEIGHT + ICON_LABEL_GAP
 
 var delta: int = 0

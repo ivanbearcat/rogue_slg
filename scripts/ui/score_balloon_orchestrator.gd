@@ -20,19 +20,20 @@ extends Node2D
 const TOKEN_SCENE := preload("res://scenes/score_token.tscn")
 const BALLOON_SCENE := preload("res://scenes/score_balloon.tscn")
 
-## 观感校准常量（任务 5.3 目测定稿后回写）
+## 观感校准常量（任务 5.3 目测定稿已回写）
 ## ── token 连发三参数（联动公式：上限枚数 = (窗口 − 飞行) ÷ 间隔）──
-## TOKEN_INTERVAL：相邻 token 起飞的错峰间隔（读数从容度；用户定稿 0.4）
+## TOKEN_INTERVAL：相邻 token 起飞的错峰间隔（读数从容度；5.3 定稿 0.35）
 const TOKEN_INTERVAL := 0.35
 ## TOKEN_FLY_DURATION：单枚 token 弧线飞行时长
 const TOKEN_FLY_DURATION := 0.6
 ## BURST_WINDOW：连发窗口——所有 token（含汇总）的到达时刻 ≤ 此值
-##（spec「大量触发的连发封顶」验收线：防几十个 BUFF 触发时演出拖沓）
+##（5.3 定稿 9：owner 目测拍板自草案 2.5 放宽，允许多申报全单发细读；
+## 正常满编全程 ≈ 窗口 9 + 定格 0.25 + 飞板 0.4 ≈ 9.65s < 兜底 15s ✓）
 const BURST_WINDOW := 9
 ## MAX_INDIVIDUAL_TOKENS：单发 token 上限——前 N 条申报各发一枚（带来源
 ## 图标），超出部分合并为一条汇总（纯数值）。由窗口/间隔自动推导，改
-## BURST_WINDOW 或 TOKEN_INTERVAL 即自动重算枚数（例：2.5/0.4 → 4 枚；
-## 窗口 3 → 6 枚；曾为死参数——声明后无逻辑读取，手改无效果，本次联动化）
+## BURST_WINDOW 或 TOKEN_INTERVAL 即自动重算枚数（定稿 9/0.35 → 24 枚；
+## 曾为死参数——声明后无逻辑读取，手改无效果，本次联动化）
 const MAX_INDIVIDUAL_TOKENS := maxi(1, int((BURST_WINDOW - TOKEN_FLY_DURATION) / TOKEN_INTERVAL))
 ## 气球水平微调（5.3 定稿入口：英雄帧内角色不完全居中时补偿视觉偏差；
 ## 负值左移 / 正值右移，单位像素，0 = 文字中心对准 sprite 帧中心。
@@ -121,17 +122,13 @@ func perform(declarations: Array) -> bool:
 		var board_target := _score_board_position()
 		var arrived: Array = []
 		_balloon.balloon_arrived.connect(
-			func(_total: int) -> void:
-				arrived.append(true)
-				_debug_dump_balloon_arrival(board_target, true),
+			func(_total: int) -> void: arrived.append(true),
 			CONNECT_ONE_SHOT)
 		_balloon.freeze_and_fly_to(board_target)
 		while arrived.is_empty():
 			if not await _wait(0.05):
 				break
 		if is_instance_valid(_balloon):
-			if arrived.is_empty():
-				_debug_dump_balloon_arrival(board_target, false)  ## 裁剪路径:中断时的实际位置
 			_balloon.queue_free()
 		_balloon = null
 	return true
@@ -163,14 +160,49 @@ func _effect_icon(buff) -> Control:
 	return null
 
 ## 来源图标加载（buff_icon → debuff_icon 回退已由申报记录的 icon_path 承载；
-## 空路径/加载失败 → null = 纯数值 token，不阻断）
+## 空路径/加载失败 → null = 纯数值 token，不阻断）。
+## 加载成功后按 alpha 内容 bbox 包 AtlasTexture（region = 内容区）：
+## 透明边随来源美术漂移（普通图标内容最低仅占画布 53%，领主族满铺），
+## token 的排版对齐画布 rect 会致图标-数字间隔随来源漂移；裁到内容区后
+## 可见内容统一拉满 36×36 显示 rect，间隔唯一由排版常量决定
+##（spec「token 图标与数字排版归一」）。逐 icon_path 扫描一次、缓存复用
 func _load_icon(icon_path: String) -> Texture2D:
 	if icon_path.is_empty():
 		return null
 	if not _icon_cache.has(icon_path):
 		var tex: Texture2D = load(icon_path) if ResourceLoader.exists(icon_path) else null
-		_icon_cache[icon_path] = tex
+		_icon_cache[icon_path] = _crop_to_content(tex)
 	return _icon_cache[icon_path]
+
+## 内容区裁剪：逐像素扫 alpha 边界得内容 bbox，AtlasTexture(region=bbox)
+## 包装原纹理；扫描不可用/全透明时原样返回（不阻断）
+func _crop_to_content(tex: Texture2D) -> Texture2D:
+	if tex == null:
+		return null
+	var img: Image = tex.get_image()
+	if img == null or img.is_empty():
+		return tex
+	var min_x := img.get_width()
+	var min_y := img.get_height()
+	var max_x := -1
+	var max_y := -1
+	for y in img.get_height():
+		for x in img.get_width():
+			if img.get_pixel(x, y).a > 0.001:
+				if x < min_x:
+					min_x = x
+				if y < min_y:
+					min_y = y
+				if x > max_x:
+					max_x = x
+				if y > max_y:
+					max_y = y
+	if max_x < 0 or max_y < 0:
+		return tex
+	var atlas_tex := AtlasTexture.new()
+	atlas_tex.atlas = tex
+	atlas_tex.region = Rect2(min_x, min_y, max_x - min_x + 1, max_y - min_y + 1)
+	return atlas_tex
 
 ## 计分板总分位置（世界坐标）：文字在 label 本地 rect 内的中心，
 ## 经 get_global_transform 投影到世界——stage_score 下有 0.5/0.5/0.45
@@ -211,62 +243,7 @@ func _score_board_position() -> Vector2:
 			origin.y = board.size.y - text_size.y
 	## 本地文字中心 → 全局变换投影（祖先 scale 一次算清；
 	## 位数变化时文字变宽，落点跟随文字实际中心）
-	var result: Vector2 = board.get_global_transform() * (origin + text_size / 2.0)
-	_debug_dump_board_target(board, target_text, text_size, origin, result)
-	return result
-
-## ⚠️ 5.3 临时诊断（观感定稿后删除）：落点测量全量数值落盘 + 控制台，
-## 用于比对"计算落点 vs 计分板数字实际渲染位置"
-func _debug_dump_board_target(board: Control, target_text: String, text_size: Vector2, origin: Vector2, result: Vector2) -> void:
-	var lines: Array = []
-	lines.append("[board target] attack_no=%s" % Current.count_round)
-	lines.append("  target_text='%s'  Current._total_score=%s  label.text='%s'" % [target_text, Current._total_score, board.text])
-	lines.append("  label.size=%s  label.global_rect=%s" % [board.size, board.get_global_rect()])
-	var gt: Transform2D = board.get_global_transform()
-	lines.append("  label.global_transform: origin=%s scale=%s" % [gt.origin, gt.get_scale()])
-	lines.append("  align h=%d v=%d  font_size=%s  outline=%s" % [board.horizontal_alignment, board.vertical_alignment, board.get("label_settings").font_size, board.get("label_settings").outline_size])
-	lines.append("  text_size=%s  origin=%s" % [text_size, origin])
-	lines.append("  result(落点)=%s   rect_center=%s" % [result, board.get_global_rect().get_center()])
-	var node: Node = board
-	var depth := 0
-	while node != null and depth < 10:
-		var gr: Rect2 = Rect2()
-		if node is Control:
-			gr = (node as Control).get_global_rect()
-		var sc: Variant = node.get("scale")
-		lines.append("  ancestor[%d] %s(%s) global_rect=%s scale=%s pos=%s" % [depth, node.name, node.get_class(), gr, sc if sc != null else Vector2.ONE, node.get("position")])
-		node = node.get_parent()
-		depth += 1
-	var text := "\n".join(lines)
-	print(text)
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://test/scripts/buff/out/score_show"))
-	var f := FileAccess.open("res://test/scripts/buff/out/score_show/board_target_debug.txt", FileAccess.WRITE)
-	if f:
-		f.store_string(text)
-
-## ⚠️ 5.3 临时诊断(观感定稿后删除):气球到达时刻的实际全局坐标,
-## 与计算落点 board_target 比对——定位"实际到达位置 ≠ 计算落点"的环节
-func _debug_dump_balloon_arrival(board_target: Vector2, arrived_normally: bool) -> void:
-	var lines: Array = []
-	lines.append("[balloon arrival] arrived_normally=%s" % arrived_normally)
-	lines.append("  computed board_target=%s" % board_target)
-	if _balloon != null and is_instance_valid(_balloon):
-		lines.append("  balloon.position(local)=%s  balloon.global_position=%s" % [_balloon.position, _balloon.global_position])
-		var label: Control = _balloon.get_node_or_null("Label")
-		if label != null:
-			lines.append("  balloon label.global_rect=%s (文字中心=%s)" % [label.get_global_rect(), label.get_global_rect().get_center()])
-	else:
-		lines.append("  balloon=<已失效>")
-	lines.append("  orchestrator.global_position=%s  global_transform=%s" % [global_position, get_global_transform()])
-	var parent := get_parent()
-	if parent != null:
-		lines.append("  orchestrator.parent=%s(%s)  parent.global_transform=%s" % [parent.name, parent.get_class(), parent.get_global_transform() if parent is Node2D else "N/A"])
-	var text := "\n".join(lines)
-	print(text)
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://test/scripts/buff/out/score_show"))
-	var f2 := FileAccess.open("res://test/scripts/buff/out/score_show/balloon_arrival_debug.txt", FileAccess.WRITE)
-	if f2:
-		f2.store_string(text)
+	return board.get_global_transform() * (origin + text_size / 2.0)
 
 ## ---------- 安全兜底 ----------
 
