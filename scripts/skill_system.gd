@@ -148,6 +148,8 @@ func skill_attack():
 	var orchestrator: Node2D = SCORE_BALLOON_ORCHESTRATOR.new()
 	game_manager.add_child(orchestrator)
 	orchestrator.setup_balloon(Current.dice_type_point)
+	## 气球出生不配音（试听反馈定稿，spec「气球出生无声」）——木琴音阶由编排器
+	## 自首枚 BUFF token 到达气球起播，气球入账时刻播 MAX 收尾
 	Current.total_score_display_muted = true
 	await Tools.time_sleep(0.5)
 	Current.total_score += Current.dice_type_point

@@ -83,6 +83,9 @@ const LEVEL_UP_UI_SHOW_ICON: Texture2D = preload("res://images/ui_icon/eye2.png"
 const LEVEL_UP_UI_HIDE_ICON: Texture2D = preload("res://images/ui_icon/eye.png")
 ## 升级界面当前是否处于隐藏状态。判断状态用这个变量，不要比较纹理资源对象
 var _level_up_ui_hidden := false
+## stage_clear 按次音量（progression-sfx 任务 4.1 试听校准入口：默认 0dB 起步，
+## 若长音盖过打字机行则下调；定稿值回写于此，参照编排器目测定稿注释先例）
+const STAGE_CLEAR_VOLUME_DB := 0.0
 ## 过关界面
 @onready var clear_stage_ui: ClearStageUI = $clear_stage_ui
 @onready var clear_stage_label: Label = clear_stage_ui.clear_stage_label
@@ -1857,6 +1860,11 @@ func _do_stage_clear_effect(stage_add_coin, hp_add_coin, dice_type_add_coin):
 	get_tree().paused = true
 	## 纸
 	clear_stage_ui.show()
+	## 过关音效：纸面铺下动画开始的第一时刻一声（progression-sfx「纸落下即响」，
+	## 试听反馈修订：早于"过关"标题显示与第一行打字机）；AudioManager 为
+	## PROCESS_MODE_ALWAYS，全局暂停态照常播完；fire-and-forget 不延后打字机/
+	## 金币滚动节奏（音量见 STAGE_CLEAR_VOLUME_DB）
+	AudioManager.play_sfx("stage_clear", 0.0, 0.0, STAGE_CLEAR_VOLUME_DB)
 	await EffectManager.top_to_bottom_effect(paper_texture, 0.5)
 	## 标题
 	clear_stage_label.show()

@@ -6,6 +6,10 @@ extends Node2D
 ## 气球定格并飞向计分板 → perform 返回（入账时刻由调用方解除静默 + 显示同步 + 脉冲）→
 ## queue_free。
 ##
+## 配音（progression-sfx）：气球出生无声；token 到达播木琴音阶（第 n 笔正 token 播
+## 第 min(n, 9) 阶、封顶第 9 阶，负分低八度不占号）；气球飞入总分入账时刻播
+## match_10（MAX）收尾。
+##
 ## token 规则（spec「token 错峰连发与来源归属」）：
 ##   - 按申报顺序（=管线执行顺序）每 0.2s 发射一枚，贝塞尔弧线约 0.6s 飞入气球；
 ##   - 连发窗口上限 2.5s：单发上限 MAX_INDIVIDUAL_TOKENS=9 枚
@@ -46,6 +50,14 @@ const BALLOON_HERO_X_OFFSET := 0.0
 ## GAP 5.3 目测定稿：用户校准 6.0（文字底缘悬空于 sprite 顶上方约 12px，
 ## 观感"浮"于头顶；此前 -6 为底缘贴顶口径，目测反馈偏好上浮）
 const BALLOON_HERO_GAP := 6.0
+## ── 木琴音阶配音（progression-sfx；任务 4.1 试听校准入口，定稿值回写于此）──
+## NEGATIVE_BASE_PITCH：负分低八度基准音高——spec「base_pitch 约 0.5，允许观感校准
+## 微调」，design D3 定 0.5~0.7 区间试听；pitch 0.5 时音长约 ×2，若负分音偏"拖"可
+## 调向 0.7
+const NEGATIVE_BASE_PITCH := 0.5
+## NEGATIVE_DEDUP_WINDOW：负 token 同键去重窗口——design 风险项「多枚负 token 连发
+## 低八度重复叠放」的现成缓解（0.2s）；0 = 先听默认不去重，违和再启用
+const NEGATIVE_DEDUP_WINDOW := 0.0
 ## 演出总时限兜底（正常全程 ≤3s；异常中断时强制收口，防结算挂起）
 const EMERGENCY_TIMEOUT_MSEC := 15000
 
@@ -54,6 +66,10 @@ var _tokens_in_flight: int = 0
 var _deadline_msec: int = 0
 ## 图标纹理缓存（同来源多 token 复用；load 失败缓存 null 不重试）
 var _icon_cache: Dictionary = {}
+## 正分到达计数（progression-sfx 木琴音阶）：气球出生无声，第 n 笔正 token 到达播
+## 第 min(n, 9) 阶（MAX 阶保留给气球入账收尾，见 perform 的 balloon_arrived）；
+## 实例字段随编排器每场 queue_free 消亡，逐次攻击自动从第 1 阶重计（design D4，零显式清理）
+var _positive_arrived: int = 0
 
 ## 气球出生：种子为骰型得分，悬停英雄头顶（替代旧攻击主飘字，无骰型名称标签）
 func setup_balloon(seed: int) -> void:
@@ -121,8 +137,12 @@ func perform(declarations: Array) -> bool:
 	if _balloon != null and is_instance_valid(_balloon):
 		var board_target := _score_board_position()
 		var arrived: Array = []
+		## 入账收尾音：气球飞入总分的精确帧播 match_10（MAX，progression-sfx
+		##「入账收尾最高阶」）——与 arrival 标记同帧，MAX 阶不参与 token 音阶
 		_balloon.balloon_arrived.connect(
-			func(_total: int) -> void: arrived.append(true),
+			func(_total: int) -> void:
+				arrived.append(true)
+				AudioManager.play_sfx("match_10"),
 			CONNECT_ONE_SHOT)
 		_balloon.freeze_and_fly_to(board_target)
 		while arrived.is_empty():
@@ -140,6 +160,19 @@ func _on_token_arrived(delta: int, token: Node2D) -> void:
 	if _balloon != null and is_instance_valid(_balloon):
 		_balloon.absorb(delta)
 	token.queue_free()
+	_play_arrival_sfx(delta)
+
+## token 到达配音（progression-sfx 木琴音阶，与 absorb 数字滚动/弹跳脉冲同刻）：
+##   正向 token（含超出单发上限的汇总）：计数 +1 后播第 min(n, 9) 阶，第 9 笔起
+##     封顶第 9 阶（试听反馈定稿——MAX 阶保留给气球入账收尾，见 perform）；
+##     零值申报上游已静默，到达的 token 必有符号
+##   负向 token：播 match_1 低八度（NEGATIVE_BASE_PITCH），不推进音阶序号
+func _play_arrival_sfx(delta: int) -> void:
+	if delta > 0:
+		_positive_arrived += 1
+		AudioManager.play_sfx("match_%d" % mini(_positive_arrived, 9))
+	elif delta < 0:
+		AudioManager.play_sfx("match_1", 0.0, NEGATIVE_DEDUP_WINDOW, 0.0, NEGATIVE_BASE_PITCH)
 
 ## ---------- 归属定位 ----------
 

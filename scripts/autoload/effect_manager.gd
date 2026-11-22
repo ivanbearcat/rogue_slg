@@ -242,6 +242,9 @@ func debuff_change_effect():
 
 ## level_up飘字
 func level_up_effect(object):
+	## 升级音效：飘字 + 萤火虫演出开始处同刻一声（progression-sfx「升级飘字与音效同刻」）；
+	## fire-and-forget，不阻塞后续演出与升级选卡流程
+	AudioManager.play_sfx("level_up")
 	Current.public_lock_array.append("level_up_effect")
 	var label = SceneManager.create_scene("level_up_label")
 	object.add_child(label)

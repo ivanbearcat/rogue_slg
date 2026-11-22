@@ -21,6 +21,20 @@ const SOUNDS := {
 	"click2_release": preload("res://audio/sfx/click2_release.ogg"),
 	"coin": preload("res://audio/sfx/coin.tres"),
 	"error": preload("res://audio/sfx/error_001.ogg"),
+	## 进度奖励音效（progression-sfx）：升级 / 过关 / 攻击得分木琴音阶
+	## match_1 ~ match_10 = 木琴第 1 ~ 10 阶（match_10 对应 _10_MAX 文件，正分封顶阶）
+	"level_up": preload("res://audio/sfx/level_up.ogg"),
+	"stage_clear": preload("res://audio/sfx/stage_clear.ogg"),
+	"match_1": preload("res://audio/sfx/match_xylophone_1.ogg"),
+	"match_2": preload("res://audio/sfx/match_xylophone_2.ogg"),
+	"match_3": preload("res://audio/sfx/match_xylophone_3.ogg"),
+	"match_4": preload("res://audio/sfx/match_xylophone_4.ogg"),
+	"match_5": preload("res://audio/sfx/match_xylophone_5.ogg"),
+	"match_6": preload("res://audio/sfx/match_xylophone_6.ogg"),
+	"match_7": preload("res://audio/sfx/match_xylophone_7.ogg"),
+	"match_8": preload("res://audio/sfx/match_xylophone_8.ogg"),
+	"match_9": preload("res://audio/sfx/match_xylophone_9.ogg"),
+	"match_10": preload("res://audio/sfx/match_xylophone_10_MAX.ogg"),
 }
 ## 骰子波回声常量（试听后可调，不改规格语义）
 const DICE_WAVE_ECHO_DELAYS: Array[float] = [0.06, 0.12]
