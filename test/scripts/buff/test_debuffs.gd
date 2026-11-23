@@ -202,13 +202,21 @@ func test_point_seal_buff() -> void:
 	assert_eq(c.one_score, 10, "point_seal: one_score should restore to 10 after clear_buff")
 	assert_eq(c.six_score, 30, "point_seal: six_score should restore to 30 after clear_buff")
 
-## 4. type_seal_buff - 禁用指定骰型百分比，clear时恢复
+## 4. type_seal_buff - 禁用指定骰型（显示值+倍率表整列），clear时恢复
+## 回归（框选封印骰型取消后再选中倍率复原BUG）：倍率表 dice_multiplier_dict 是
+## 结算/预览/预览重置的共用真相，封印必须写入表内，否则预览路径从表内取原值写回
 func test_type_seal_buff() -> void:
 	_current_test = "test_type_seal_buff"
 	var c = Current
 	c.duizi_percent = 30
 	c.shunzi_percent = 20
 	c.tongse_percent = 15
+	## 灌倍率表测试数据（测试后恢复原表，避免污染其他测试）
+	var saved_dict: Dictionary = c.dice_multiplier_dict.duplicate(true)
+	c.dice_multiplier_dict = {
+		2: {"duizi": 30, "shunzi": 20, "tongse": 15},
+		3: {"duizi": 60, "shunzi": 40, "tongse": 30},
+	}
 
 	# 禁用duizi和shunzi
 	var meta = {
@@ -223,13 +231,52 @@ func test_type_seal_buff() -> void:
 	assert_eq(c.shunzi_percent, 0, "type_seal: shunzi_percent should be 0 after set_buff")
 	# 未禁用的骰型不受影响
 	assert_eq(c.tongse_percent, 15, "type_seal: tongse_percent should remain 15")
+	# 倍率表整列归零（结算/预览共用真相）
+	assert_eq(c.dice_multiplier_dict[2]["duizi"], 0, "type_seal: dict[2] duizi column should be 0 after set_buff")
+	assert_eq(c.dice_multiplier_dict[3]["duizi"], 0, "type_seal: dict[3] duizi column should be 0 after set_buff")
+	assert_eq(c.dice_multiplier_dict[2]["shunzi"], 0, "type_seal: dict[2] shunzi column should be 0 after set_buff")
+	assert_eq(c.dice_multiplier_dict[3]["shunzi"], 0, "type_seal: dict[3] shunzi column should be 0 after set_buff")
+	# 未禁用骰型的倍率表列不受影响
+	assert_eq(c.dice_multiplier_dict[2]["tongse"], 15, "type_seal: dict[2] tongse column should remain 15")
+	assert_eq(c.dice_multiplier_dict[3]["tongse"], 30, "type_seal: dict[3] tongse column should remain 30")
 
-	# process_buff持续禁用：如果百分比被恢复，再次设为0
+	# 结算路径回归：封印写入倍率表后，ScoringAlgorithm 对封印骰型计0分
+	# （修复前结算查未封印的倍率表，对子照常按原倍率计分）
+	c.three_score = 20
+	var sealed_score = ScoringAlgorithm.count_total_score([["red", 3], ["blue", 3]])
+	assert_eq(sealed_score[0], 0, "type_seal: sealed duizi should score 0 via ScoringAlgorithm")
+
+	# process_buff持续禁用：显示值/表列被改动（封印期间买buff加值等）时，吸进保存值并重申归零
 	c.duizi_percent = 10
+	c.dice_multiplier_dict[2]["duizi"] = 30
 	buff.process_buff()
 	assert_eq(c.duizi_percent, 0, "type_seal: duizi_percent should be 0 after process (re-disabled)")
+	assert_eq(c.dice_multiplier_dict[2]["duizi"], 0, "type_seal: dict[2] duizi column should be 0 after process (re-disabled)")
+	assert_eq(c.dice_multiplier_dict[3]["duizi"], 0, "type_seal: dict[3] duizi column should be 0 after process (re-disabled)")
 
-	# clear_buff后恢复保存的百分比
+	# clear_buff后恢复保存的百分比与倍率表列（含process吸走的增量）
 	buff.clear_buff()
-	assert_eq(c.duizi_percent, 30, "type_seal: duizi_percent should restore to 30 after clear_buff")
+	assert_eq(c.duizi_percent, 40, "type_seal: duizi_percent should restore to 30+10 after clear_buff")
 	assert_eq(c.shunzi_percent, 20, "type_seal: shunzi_percent should restore to 20 after clear_buff")
+	assert_eq(c.dice_multiplier_dict[2]["duizi"], 60, "type_seal: dict[2] duizi column should restore to 30+30 after clear_buff")
+	assert_eq(c.dice_multiplier_dict[3]["duizi"], 60, "type_seal: dict[3] duizi column should restore to 60 after clear_buff")
+	assert_eq(c.dice_multiplier_dict[2]["shunzi"], 20, "type_seal: dict[2] shunzi column should restore to 20 after clear_buff")
+	assert_eq(c.dice_multiplier_dict[3]["shunzi"], 40, "type_seal: dict[3] shunzi column should restore to 40 after clear_buff")
+
+	# 存档往返回归：save_state 经 JSON 序列化（mult列键变字符串）→ restore_state 归一化恢复
+	# （修复前 data 无存档闭环：读档 rebuild 的 set_buff 从已封印快照(0)污染保存值，
+	# 封印结束后倍率永久丢失为0）
+	var seal_buff2 = create_and_set_buff("res://scripts/debuff/type_seal_buff.gd", meta)
+	var roundtrip: Variant = JSON.parse_string(JSON.stringify(seal_buff2.save_state()))
+	assert_ne(roundtrip, null, "type_seal: save_state should survive JSON roundtrip")
+	seal_buff2.restore_state(roundtrip)
+	assert_eq(c.duizi_percent, 0, "type_seal: duizi_percent should stay sealed after restore_state")
+	assert_eq(c.dice_multiplier_dict[2]["duizi"], 0, "type_seal: dict[2] duizi column should stay sealed after restore_state")
+	assert_eq(c.dice_multiplier_dict[3]["duizi"], 0, "type_seal: dict[3] duizi column should stay sealed after restore_state")
+	seal_buff2.clear_buff()
+	assert_eq(c.duizi_percent, 40, "type_seal: duizi_percent should restore to sealed-snapshot value after clear following restore_state")
+	assert_eq(c.dice_multiplier_dict[2]["duizi"], 60, "type_seal: dict[2] duizi column should restore after clear following restore_state")
+	assert_eq(c.dice_multiplier_dict[3]["duizi"], 60, "type_seal: dict[3] duizi column should restore after clear following restore_state")
+	c.three_score = 0
+	## 恢复测试前的倍率表
+	c.dice_multiplier_dict = saved_dict
