@@ -240,6 +240,124 @@ func debuff_change_effect():
 	var tween2 = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween2.tween_property(game_manager.debuff_effect_ui, "scale:y", 0, 0.1)
 
+## ============================================================
+## 窗口抖动（window-shake）：tween 活跃 Camera2D 的 offset，
+## 战场棋盘与计分板（默认画布）整体位移；商店/升级/技能替换/提示等
+## 独立 CanvasLayer 弹窗不随相机位移，天然保持稳定与可交互。
+## 接线口径（观感试听定稿）：仅两处——击杀死亡高潮帧（一次性，
+## skill_system 挂接）与得分爆档驻留（持续，进 1000+ 燃烧区段起、
+## 点击攻击止，skill_system 挂接）；其余时刻明确不抖，勿新增接线。
+## ============================================================
+## 三档档位表（试听校准入口，参照 audio_manager「试听后可调」惯例）：
+## 幅度以「屏幕像素」定义观感，实际相机 offset = 屏幕值 / zoom
+## （zoom=4 时世界 offset 显示被放大 4 倍，照抄插件 ±10 世界值会得到
+## ±40 屏幕 px 的过猛抖动）；试听后如需微调只改这三处数值，
+## 不改档位名与调用方约定（调用方只指定档位，不传自由幅度参数）。
+## 当前用档：击杀普通史莱姆 = medium、击杀精英/BOSS = heavy、
+## 得分爆档驻留抖 = light
+const SHAKE_TIER_LIGHT := {"screen_px": 1.0, "duration": 0.12}
+const SHAKE_TIER_MEDIUM := {"screen_px": 6.0, "duration": 0.2}
+const SHAKE_TIER_HEAVY := {"screen_px": 10.0, "duration": 0.3}
+## 档位名 → 参数映射（window_shake 的唯一取值来源，常量集中定义、
+## 无散落取值；未识别档位查表落空 → 静默零位移，spec「未知档位不抖」）
+const SHAKE_TIERS := {
+	"light": SHAKE_TIER_LIGHT,
+	"medium": SHAKE_TIER_MEDIUM,
+	"heavy": SHAKE_TIER_HEAVY,
+}
+## 抖动步长（与两处既有插件实现一致的节奏粒度）
+const SHAKE_STEP_DURATION := 0.05
+## 【相机基准锚定】main.tscn 的 Camera2D 无自定义 offset，抖前基准恒为
+## (0,0)，复位目标常量化于此。⚠️ 若未来给相机加自定义 offset 或开启
+## position_smoothing，本抖动机制的「基准复位 + 重启覆盖」防漂移前提
+## 需重评（window-shake design D2/Risks）
+const SHAKE_BASE_OFFSET := Vector2.ZERO
+## 进行中的抖动 tween（重启覆盖并发策略：新触发 kill 旧 tween 后按新
+## 档位重启，最后触发优先不做幅度叠加；同刻多杀天然去重为单次量级）
+var _shake_tween: Tween = null
+
+## 窗口抖动入口（一次性，全游戏唯一，收口 EffectManager，不依赖外部特效插件）：
+## tier = "light" / "medium" / "heavy"，未识别档位静默不抖；
+## 幅度随步数线性衰减至 0（起手强收尾弱），步长 0.05s；
+## 结束步显式复位到基准——任意次抖动（含中途再触发）后画面零漂移；
+## TWEEN_PAUSE_PROCESS（与 EffectManager 既有特效一致的暂停策略）：
+## 任何 get_tree().paused 窗口内照常播完并复位，禁止冻结在半偏移状态
+func window_shake(tier: String) -> void:
+	var tier_params: Variant = SHAKE_TIERS.get(tier)
+	if tier_params == null:
+		return
+	var camera := get_viewport().get_camera_2d()
+	if camera == null:
+		return
+	## 重启覆盖：kill 进行中的抖动（含持续抖动）并立即归位基准——
+	## 新抖动不继承「抖到一半」的偏移（防漂移核心，design D4）
+	if _shake_tween and _shake_tween.is_valid():
+		_shake_tween.kill()
+	_shake_sustained_active = false
+	camera.offset = SHAKE_BASE_OFFSET
+	## 屏幕 px → 世界 offset 换算（zoom 校准，design D3）
+	var amplitude := float(tier_params["screen_px"]) / maxf(camera.zoom.x, 0.001)
+	var total_steps := maxi(1, ceili(float(tier_params["duration"]) / SHAKE_STEP_DURATION))
+	_shake_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	for i in range(total_steps):
+		## 幅度随步数线性衰减至 0
+		var decay := 1.0 - float(i) / float(total_steps)
+		var shake_offset := Vector2(
+			randf_range(-amplitude, amplitude) * decay,
+			randf_range(-amplitude, amplitude) * decay
+		)
+		_shake_tween.tween_property(camera, "offset", SHAKE_BASE_OFFSET + shake_offset, SHAKE_STEP_DURATION)
+	## 结束显式复位到基准（spec「抖后零漂移」）
+	_shake_tween.tween_property(camera, "offset", SHAKE_BASE_OFFSET, SHAKE_STEP_DURATION)
+
+## 持续抖动是否在跑（window_shake_sustained_stop 的幂等守卫：
+## 仅停持续抖动，不误杀进行中的一次性抖动）
+var _shake_sustained_active := false
+
+## 持续窗口抖动（驻留型，得分爆档预览期用）：固定幅度步进抖动循环，
+## 起于进入 1000+ 燃烧区段，止于 window_shake_sustained_stop()——
+## 攻击点击（skill_attack 入口）、预览面板收起或预览离开爆档三处收口。
+## 每步写入都是「基准 + 随机值」的绝对偏移（非累加），构造上零漂移；
+## 一次性抖动触发时按重启覆盖策略 kill 本循环（design D4 单 tween 归一）
+func window_shake_sustained(tier: String) -> void:
+	var tier_params: Variant = SHAKE_TIERS.get(tier)
+	if tier_params == null:
+		return
+	var camera := get_viewport().get_camera_2d()
+	if camera == null:
+		return
+	if _shake_tween and _shake_tween.is_valid():
+		_shake_tween.kill()
+	camera.offset = SHAKE_BASE_OFFSET
+	## 屏幕 px → 世界 offset 换算（zoom 校准，design D3）
+	var amplitude := float(tier_params["screen_px"]) / maxf(camera.zoom.x, 0.001)
+	var steps_per_cycle := maxi(1, ceili(float(tier_params["duration"]) / SHAKE_STEP_DURATION))
+	_shake_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_loops()
+	for i in range(steps_per_cycle):
+		_shake_tween.tween_callback(_shake_sustained_step.bind(camera, amplitude))
+		_shake_tween.tween_interval(SHAKE_STEP_DURATION)
+	_shake_sustained_active = true
+
+## 持续抖动步进：每步写入「基准 + 随机值」的绝对偏移
+func _shake_sustained_step(camera: Camera2D, amplitude: float) -> void:
+	if camera == null or not is_instance_valid(camera):
+		return
+	camera.offset = SHAKE_BASE_OFFSET + Vector2(
+		randf_range(-amplitude, amplitude),
+		randf_range(-amplitude, amplitude)
+	)
+
+## 停止持续抖动并复位基准（幂等：持续抖动未在跑时不做任何事）
+func window_shake_sustained_stop() -> void:
+	if not _shake_sustained_active:
+		return
+	_shake_sustained_active = false
+	if _shake_tween and _shake_tween.is_valid():
+		_shake_tween.kill()
+	var camera := get_viewport().get_camera_2d()
+	if camera != null:
+		camera.offset = SHAKE_BASE_OFFSET
+
 ## level_up飘字
 func level_up_effect(object):
 	## 升级音效：飘字 + 萤火虫演出开始处同刻一声（progression-sfx「升级飘字与音效同刻」）；

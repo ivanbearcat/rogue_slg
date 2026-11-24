@@ -63,6 +63,9 @@ func hide_skill_attack():
 
 ## 鼠标点击红框之后攻击
 func skill_attack():
+	## 攻击点击瞬间停得分爆档驻留抖动（spec「点击攻击即停」；
+	## 幂等：驻留未在跑时不做任何事。点击→emit→本入口同一调用栈，同帧生效）
+	EffectManager.window_shake_sustained_stop()
 	## 正在攻击结算
 	Current.action_lock = true
 	## 攻击前buff
@@ -114,6 +117,8 @@ func skill_attack():
 	Current.slime_die_sum = 0
 	Current.killed_slime_colors = []
 	Current.pattern_kill_sum = 0
+	## 击杀抖动档位跟踪：本次结算击杀含精英/BOSS → 重档，纯普通史莱姆 → 中档
+	var kill_shake_heavy := false
 	var scored_dice_copy = Current.scored_dice_info.duplicate()
 	for slime in Current.all_enemy_array:
 		if slime.enemy_grid_index in Current.skill_attack_range:
@@ -121,6 +126,8 @@ func skill_attack():
 			if slime in gate_failed_slimes:
 				continue
 			Current.slime_die_sum += 1
+			if slime.is_elite or slime.is_boss:
+				kill_shake_heavy = true
 			## 消耗匹配：检查被击杀史莱姆的骰子是否参与了骰型计分
 			var slime_color = slime_color_dict[Tools.fetch_slime_scene(slime)]
 			Current.killed_slime_colors.append(slime_color)
@@ -141,6 +148,12 @@ func skill_attack():
 	## （精英击杀飘字在动画播完1.0s时弹出，与总分字自然错开0.4s）
 	if Current.slime_die_sum > 0:
 		await Tools.time_sleep(0.6)
+		## 击杀窗口抖动：挂在高潮帧等待处，与 slime_die 音效同帧事件源对齐
+		## （FRAME_SFX 帧触发与本 0.6s 等待同刻）——结算开始时不抖，die 动画
+		## 到高潮帧才抖（spec「击杀抖动卡高潮帧」）；普通史莱姆中档、
+		## 精英/BOSS 重档（档位表约定）；单次结算单次调用 = 同刻多杀只抖
+		## 单次量级，不叠加不延长（spec「同刻多杀只抖一层」）
+		EffectManager.window_shake("heavy" if kill_shake_heavy else "medium")
 	## 攻击得分主飘字 → 气球种子出生（post-attack-score-balloon：气球悬停英雄头顶，
 	## 种子为骰型得分、不带骰型名称标签；得分呈现由气球与 token 流承载）
 	## 【计分板总分展示静默窗口开启（覆盖随后的主分写入，见 design D1：
@@ -655,6 +668,11 @@ func _reset_dice_panel():
 	label.scale = Vector2.ONE
 	label.text = ""
 	label.hide()
+	## 面板清空即离开燃烧区段：停得分爆档驻留抖动（幂等，攻击点击路径由
+	## skill_attack 入口先停、预览收起/离开棋盘经此处兜底），
+	## 下次展示 1000+ 视为重新「进入爆档」（可再起驻留抖）
+	EffectManager.window_shake_sustained_stop()
+	_last_score_zone = 0
 	var frame_dict = {
 		1: game_manager.one_score_frame.get("theme_override_styles/panel"),
 		2: game_manager.two_score_frame.get("theme_override_styles/panel"),
@@ -693,9 +711,23 @@ func _get_score_zone(score: int) -> int:
 		return 1
 	return 0
 
+## 上次分值区段（得分爆档驻留抖动判定用）：面板清空（_reset_dice_panel）即归零，
+## 重新展示 1000+ 视为再次「进入爆档」；已在燃烧区段内的重复渲染不重启抖动
+var _last_score_zone := 0
+
 ## 根据分值区段设置 score_bar_label 的视觉属性
 func _apply_score_visual(score: int) -> void:
 	var zone = _get_score_zone(score)
+	## 得分爆档驻留抖动（spec「得分爆档持续抖动」）：单次攻击预览得分使计分板
+	## 首次进入 1000+ 燃烧区段时，与燃烧视觉（下方 _start_score_shake）同刻开始
+	## 持续轻抖，驻留至点击攻击（skill_attack 入口 stop）/预览面板收起
+	## （_reset_dice_panel stop）/预览离开爆档（此处 zone<3 stop）任一时刻止；
+	## 已在燃烧区段内的重复渲染（同悬停重算）不重启
+	if zone == 3 and _last_score_zone < 3:
+		EffectManager.window_shake_sustained("light")
+	elif zone < 3 and _last_score_zone == 3:
+		EffectManager.window_shake_sustained_stop()
+	_last_score_zone = zone
 	var label = game_manager.score_bar_label
 	var ls = label.label_settings
 	match zone:
