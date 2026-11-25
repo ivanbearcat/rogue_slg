@@ -358,6 +358,22 @@ func window_shake_sustained_stop() -> void:
 	if camera != null:
 		camera.offset = SHAKE_BASE_OFFSET
 
+## ============================================================
+## 升级萤火虫（effect-library-governance：外部库能力移植进 EffectManager 收口）
+## ============================================================
+## 移植自外部特效库的萤火虫入口（库已下架，视觉行为保真移植）：实例化项目
+## 自有 fireflies 场景挂到 parent，发射区域 = area_size/2（矩形发射区），
+## 返回节点供调用方控制销毁时序。
+## ⚠️ 现状怪癖保真（design D3）：level_up_effect 把英雄坐标当 area_size 传入，
+## 萤火虫发射区域随英雄站位漂移——按移植前行为照抄，修正留观感校准期再议。
+const FIREFLIES_SCENE := preload("res://scenes/fireflies.tscn")
+
+func create_fireflies(parent: Node2D, area_size: Vector2 = Vector2(200, 100)) -> CPUParticles2D:
+	var fireflies: CPUParticles2D = FIREFLIES_SCENE.instantiate()
+	parent.add_child(fireflies)
+	fireflies.emission_rect_extents = area_size / 2
+	return fireflies
+
 ## level_up飘字
 func level_up_effect(object):
 	## 升级音效：飘字 + 萤火虫演出开始处同刻一声（progression-sfx「升级飘字与音效同刻」）；
@@ -371,7 +387,9 @@ func level_up_effect(object):
 	tween.set_parallel(true)
 	tween.tween_property(label, "position:y", label.position.y - 35, 0.9)
 	tween.tween_property(label, "modulate:a", 0.2, 0.9).set_ease(Tween.EASE_OUT).set_delay(0.1)
-	var fireflies_effect = EnvVFX.create_fireflies(Current.hero.animated_sprite_2d, Current.hero.animated_sprite_2d.position)
+	## 萤火虫经 EffectManager 内部实现（怪癖保真：英雄坐标传入 area_size 语义参数，
+	## 发射区域随英雄站位漂移，与移植前一致）
+	var fireflies_effect = create_fireflies(Current.hero.animated_sprite_2d, Current.hero.animated_sprite_2d.position)
 	await tween.finished
 	fireflies_effect.queue_free()
 	label.queue_free()

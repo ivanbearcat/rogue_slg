@@ -35,10 +35,7 @@ CursorManager="*res://scripts/autoload/cursor_manager.gd"
 BuffSystem="*res://scripts/autoload/buff_system.gd"
 SaveManager="*res://scripts/autoload/save_manager.gd"
 EffectManager="*res://scripts/autoload/effect_manager.gd"
-VFX="*uid://ecyiymmaj3jv"
-EnvVFX="*uid://qomyut16hnoi"
 TooltipManager="*res://scripts/autoload/tooltip_manager.gd"
-Fx="*uid://d2354cc1tpg8e"
 GameSettings="*uid://wi31s6l3kpft"
 AudioManager="*uid://u7w1wewhcngv"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
@@ -52,7 +49,7 @@ mouse_cursor/custom_image="res://images/mouse_icon/pointer_scifi_a.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/fx/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/vfx_library/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg", "res://addons/godot_sfxr/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [input]
 

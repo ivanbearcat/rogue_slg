@@ -3050,14 +3050,15 @@ patch_margin_bottom = 7
 
 [node name="score_bar_label" type="Label" parent="score_preview_ui/scale/NinePatchRect" unique_id=1258542655]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
-offset_left = 36.0
+offset_left = 26.0
 offset_top = 24.299995
-offset_right = 86.0
+offset_right = 76.0
 offset_bottom = 38.299995
 text = "100+"
 label_settings = SubResource("LabelSettings_xljpf")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="dice_package_ui" type="Control" parent="." unique_id=186964072]
 layout_mode = 3
