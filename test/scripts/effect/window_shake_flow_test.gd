@@ -262,11 +262,28 @@ func _pos_sustained_score_zone() -> void:
 func _source_scan_hooks() -> void:
 	var ss_src := _read_file("res://scripts/skill_system.gd")
 
-	## 击杀挂点：调用必须位于死亡动画高潮帧等待（0.6s）之后 → 结算开始不抖、到高潮帧才抖
-	var wait_idx := ss_src.find("await Tools.time_sleep(0.6)")
+	## 击杀挂点（死亡+抖动同刻锚定 0.6s 节拍，slime-death-hit-frame design D4/D5）：
+	## 门闸须同时含命中帧条件与 0.6s 节拍下限；die 起播位于门闸后；
+	## 抖动位于 die 起播后（同刻）；击杀链不再有独立的 0.6s 手调等待
+	var gate_idx := ss_src.find("not Current.attack_hit_frame_reached or")
+	var beat_idx := ss_src.find("- gate_start_ms < 600")
+	var die_play_idx := ss_src.find('animated_sprite_2d.play("die")')
 	var kill_call_idx := ss_src.find('window_shake("heavy" if kill_shake_heavy else "medium")')
-	_check("击杀挂点：挂接在死亡高潮帧等待之后（结算开始不抖）",
-		wait_idx >= 0 and kill_call_idx > wait_idx)
+	_check("击杀挂点：0.6s 节拍门闸（含命中帧下限）后 die 起播、抖动与起播同刻",
+		gate_idx >= 0 and beat_idx > gate_idx and die_play_idx > gate_idx
+		and kill_call_idx > die_play_idx and ss_src.find("time_sleep(0.6)") < 0)
+
+	## 命中帧门闸时序（slime-death-hit-frame）：play("die") 起播必须位于命中帧门闸
+	## while 之后 → 结算点击瞬间不播死亡、命中帧不早死（spec「死亡动画起播于点击后0.6s节拍」）
+	_check("命中帧门闸：die 起播位于门闸 while 之后（点击瞬间不早死）",
+		gate_idx >= 0 and die_play_idx > gate_idx)
+
+	## 命中帧信号置位（slime-death-hit-frame）：hero.gd 帧回调必须存在
+	## attack 音效帧 → 命中标志的置位（门闸的信号源，漏配则门闸退到兜底放行）
+	var hero_src := _read_file("res://scripts/hero.gd")
+	var hero_frame_body := _extract_func_body(hero_src, "_on_animated_sprite_2d_frame_changed")
+	_check("命中帧信号：hero.gd 帧回调存在 attack 音效帧置位命中标志",
+		hero_frame_body.contains("Current.attack_hit_frame_reached = true"))
 
 	## 点击攻击即停：驻留停止调用位于 skill_attack 入口（action_lock 之前 = 点击同帧）
 	var attack_fn := ss_src.find("func skill_attack():")

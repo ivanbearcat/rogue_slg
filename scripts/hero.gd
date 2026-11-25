@@ -79,6 +79,10 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 	if frame_sfx == null:
 		return
 	var sfx_key: Variant = frame_sfx.get(animated_sprite_2d.frame)
+	## 命中帧标志（slime-death-hit-frame）：attack 音效帧即命中帧，行进到该帧时置位
+	## ——复用 FRAME_SFX 单表防双源漂移（design D1），音效逻辑原样保留在后
+	if sfx_key == "attack":
+		Current.attack_hit_frame_reached = true
 	if sfx_key == null:
 		return
 	AudioManager.play_sfx(sfx_key)

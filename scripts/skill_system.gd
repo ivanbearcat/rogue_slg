@@ -68,6 +68,9 @@ func skill_attack():
 	EffectManager.window_shake_sustained_stop()
 	## 正在攻击结算
 	Current.action_lock = true
+	## 命中帧标志复位（slime-death-hit-frame）：每次点击 = 新时序窗口，
+	## 防连续两次攻击时第二次门闸被上一次残留标志误放行（design D2）
+	Current.attack_hit_frame_reached = false
 	## 攻击前buff
 	EventBus.event_emit("do_pre_attack_buff")
 	## 史莱姆场景名到颜色的映射（精英门槛检查和消耗匹配共用）
@@ -119,6 +122,9 @@ func skill_attack():
 	Current.pattern_kill_sum = 0
 	## 击杀抖动档位跟踪：本次结算击杀含精英/BOSS → 重档，纯普通史莱姆 → 中档
 	var kill_shake_heavy := false
+	## 死亡名单（slime-death-hit-frame design D3）：数据计算留在点击瞬间，
+	## 仅收集待死亡史莱姆，die 动画改在命中帧门闸后统一起播
+	var death_slimes: Array = []
 	var scored_dice_copy = Current.scored_dice_info.duplicate()
 	for slime in Current.all_enemy_array:
 		if slime.enemy_grid_index in Current.skill_attack_range:
@@ -140,19 +146,31 @@ func skill_attack():
 					break
 			if _matched:
 				Current.pattern_kill_sum += 1
-			slime.animated_sprite_2d.play("die")
+			death_slimes.append(slime)
 	## 门槛通过的精英/BOSS史莱姆击杀后清除ELITE debuff
 	if not gate_passed_slimes.is_empty():
 		EventBus.event_emit("clear_elite_buff")
-	## 死亡动画高潮帧等待：有史莱姆死亡时等 die 动画播到约0.6s高潮帧，再弹得分飘字
-	## （精英击杀飘字在动画播完1.0s时弹出，与总分字自然错开0.4s）
+	## 死亡动画起播（slime-death-hit-frame）：有史莱姆死亡时，先过命中帧门闸再起播
 	if Current.slime_die_sum > 0:
-		await Tools.time_sleep(0.6)
-		## 击杀窗口抖动：挂在高潮帧等待处，与 slime_die 音效同帧事件源对齐
-		## （FRAME_SFX 帧触发与本 0.6s 等待同刻）——结算开始时不抖，die 动画
-		## 到高潮帧才抖（spec「击杀抖动卡高潮帧」）；普通史莱姆中档、
-		## 精英/BOSS 重档（档位表约定）；单次结算单次调用 = 同刻多杀只抖
-		## 单次量级，不叠加不延长（spec「同刻多杀只抖一层」）
+		## 命中帧 + 0.6s 节拍门闸（slime-death-hit-frame design D4/D5）：死亡起播与
+		## 击杀抖动锚定攻击结算点击后 0.6s，且不早于攻击命中帧（命中帧晚于节拍时
+		## 以命中帧为准）。放行条件（任一满足）：命中标志已置且已到 0.6s 节拍 /
+		## 攻击动画播完（漏配命中帧兜底）/ 超时 2.0s 兜底，流程不死锁。
+		## 轮询标志沿用既有等待惯例；墙钟 deadline 计时沿用 scene_transition 模式，
+		## 逐帧计数不漂移真实节拍
+		var gate_start_ms := Time.get_ticks_msec()
+		while (not Current.attack_hit_frame_reached or Time.get_ticks_msec() - gate_start_ms < 600) \
+				and Current.attack_animation_finished == 0 \
+				and Time.get_ticks_msec() - gate_start_ms < 2000:
+			await Tools.time_sleep(0.01)
+		## 门闸后统一起播死亡动画：多杀同刻齐播，与单杀一致（spec「0.6s 节拍统一起播」）
+		## 击杀抖动与 die 起播同刻（design D5：死亡+抖动同刻于点击后 0.6s，
+		## 命中帧时刻只出 attack 音效；slime_die 音效仍由 die 帧表独立触发
+		## （帧号=用户实机标定帧1，起播后0.2s≈点击后0.8s））；
+		## 普通史莱姆中档、精英/BOSS 重档（档位表约定）；单次结算单次调用 =
+		## 同刻多杀只抖单次量级（spec「同刻多杀只抖一层」）
+		for slime in death_slimes:
+			slime.animated_sprite_2d.play("die")
 		EffectManager.window_shake("heavy" if kill_shake_heavy else "medium")
 	## 攻击得分主飘字 → 气球种子出生（post-attack-score-balloon：气球悬停英雄头顶，
 	## 种子为骰型得分、不带骰型名称标签；得分呈现由气球与 token 流承载）

@@ -599,6 +599,11 @@ var percent_score: float:
 var dice_type_point: int
 ## 攻击动画是否完成
 var attack_animation_finished = 1
+## 攻击命中帧标志（瞬态，slime-death-hit-frame）：hero 帧回调行进到 FRAME_SFX 的
+## attack 音效帧时置位（attack 音效帧即命中帧，语义同源复用单表），skill_attack
+## 入口复位（每次点击 = 新时序窗口）；skill_system 击杀门闸轮询此标志等待命中帧。
+## 瞬时窗口标记，不入存档三处清单（同 total_score_display_muted 惯例）。
+var attack_hit_frame_reached := false
 ## 史莱姆生成数量
 var slime_create_num := 3
 ## 能量史莱姆数组

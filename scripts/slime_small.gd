@@ -58,7 +58,7 @@ var dice_to_frame_dice: Dictionary = {
 ## 动画帧音效注册表:动画名 → {帧下标: 音效键}
 ## "die" 一个键覆盖四色史莱姆(共用本脚本与同一动画名);die 帧号=用户标定帧1
 const FRAME_SFX := {
-	"die": {2: "slime_die"},
+	"die": {1: "slime_die"},
 }
 
 func show_selected_marker() -> void:
