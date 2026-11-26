@@ -172,7 +172,8 @@ func _update_tooltip() -> void:
 			TooltipManager.show_tooltip(
 					slime,
 					TooltipFormatter.format_elite_slime(
-							slime.is_boss, slime.gate_type, slime.gate_count, slime.dice_point),
+							slime.is_boss, slime.gate_type, slime.gate_count, slime.dice_point,
+							Tools.SLIME_COLOR_DICT.get(Tools.fetch_slime_scene(slime), "green")),
 					TOOLTIP_OFFSET)
 			_tooltip_slime = slime
 			_tooltip_active = true

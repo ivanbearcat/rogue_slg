@@ -72,17 +72,36 @@ const GATE_TYPE_NAMES := {
 	"tongshun": "同顺",
 }
 
-## 击杀条件完整表述（按门槛类型生成一句可读描述）
-## 判定逻辑（ScoringAlgorithm.check_gate）：以该史莱姆的骰子[颜色, 点数]为锚点，
-## 且其自身骰子也在攻击骰子数组内一并计入，故表述以"它"为参照
-## 占位符顺序：duizi=[数量,点数] shunzi/tongshun=[点数,数量] tongse/tongdui=[数量]
-const GATE_KILL_HINTS := {
-	"duizi": "[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个 %d 点[/b][/color]骰子",
-	"shunzi": "[color=#FFD700]击杀条件：[/color]单次攻击中打出含 [color=#FFD700][b]%d 点[/b][/color]的 [color=#FFD700][b]%d 连[/b][/color]顺子",
-	"tongse": "[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个[/b][/color]与它同色的骰子",
-	"tongdui": "[color=#FFD700]击杀条件：[/color]单次攻击中打出 [color=#FFD700][b]%d 个[/b][/color]与它同色同点的骰子",
-	"tongshun": "[color=#FFD700]击杀条件：[/color]单次攻击中打出含 [color=#FFD700][b]%d 点[/b][/color]的 [color=#FFD700][b]%d 连[/b][/color]同色顺子",
+## 击杀条件统一句式骨架（design D1）：五门槛共用同一句式，只有骰型词/定义两个变量
+## %s 顺序：徽章(数量N) → 徽章(骰型词) → 骰型定义（琥珀色括号澄清行）
+const GATE_KILL_SKELETON := "[color=#FFD700]击杀条件：[/color]由 %s 个或以上的史莱姆组成 %s 骰型[color=#FFB74D]（%s，需包含自身）[/color]"
+
+## 五门槛 {骰型词, 定义} 映射（design D1）
+## 对子→点数相同 / 顺子→点数连续 / 同色→颜色相同 / 同对→颜色点数都相同 / 同顺→同色且点数连续
+const GATE_DICE_TYPE_INFO := {
+	"duizi": {"word": "对子", "definition": "点数相同"},
+	"shunzi": {"word": "顺子", "definition": "点数连续"},
+	"tongse": {"word": "同色", "definition": "颜色相同"},
+	"tongdui": {"word": "同对", "definition": "颜色点数都相同"},
+	"tongshun": {"word": "同顺", "definition": "同色且点数连续"},
 }
+
+## 自身骰子行（design D3）：%s = 24×24 骰面图标 / 降级文字（颜色名+点数）
+const DICE_ROW_ICON := "自身骰子 [img=24]%s[/img]"
+const DICE_ROW_TEXT := "自身骰子：%s %d 点"
+
+## 骰面颜色英文（SLIME_COLOR_DICT 值域）→ 颜色中文名KEY映射（文字降级用）
+const DICE_COLOR_NAMES := {
+	"green": "绿",
+	"red": "红",
+	"yellow": "黄",
+	"blue": "蓝",
+}
+
+## 徽章观感常量（design D2）：暗金底 + 金字，与正文同字号、不加粗——
+## 颜色与底色反差已足够显眼（owner 手测定稿，覆盖初版"粗体+放大一档"方案）
+const BADGE_BGCOLOR := "#4a3800"
+const BADGE_COLOR := "#FFD700"
 
 ## 格式化buff tooltip
 static func format_buff(buff_meta: Dictionary, extra_text: String = "") -> String:
@@ -207,8 +226,22 @@ static func format_skill(skill_meta: Dictionary) -> String:
 
 	return bbcode
 
+## 徽章辅助（design D2）：暗金底 + 金字，与正文同字号、不加粗，
+## 文字两侧留一个空格防止背景色块贴字边缘（"由 ␣2␣ 个"）
+static func _badge(text: String) -> String:
+	return "[bgcolor=%s][color=%s] %s [/color][/bgcolor]" % [BADGE_BGCOLOR, BADGE_COLOR, text]
+
+## 自身骰子行（design D3）：优先 24×24 骰面图标锚定颜色+点数（dice_{color}_{point}.tres）；
+## 资源缺失/颜色非法时降级为文字（颜色名+点数），不阻断 tooltip 渲染
+static func _dice_row(dice_color: String, dice_point: int) -> String:
+	var icon_path := "res://images/ui_icon/dice_%s_%d.tres" % [dice_color, dice_point]
+	if ResourceLoader.exists(icon_path):
+		return T(DICE_ROW_ICON) % [icon_path]
+	var color_cn: String = T(str(DICE_COLOR_NAMES.get(dice_color, dice_color)))
+	return T(DICE_ROW_TEXT) % [color_cn, dice_point]
+
 ## 格式化精英/BOSS史莱姆tooltip
-static func format_elite_slime(is_boss: bool, gate_type: String, gate_count: int, dice_point: int) -> String:
+static func format_elite_slime(is_boss: bool, gate_type: String, gate_count: int, dice_point: int, dice_color: String) -> String:
 	var bbcode: String = ""
 
 	# 标题行（help-ui 同款：大字号不加粗，BOSS/精英保留语义色）
@@ -220,21 +253,21 @@ static func format_elite_slime(is_boss: bool, gate_type: String, gate_count: int
 	# 分割线：标题下方（help-ui 同款样式）
 	bbcode += "\n[hr color=#777777 height=1 width=100%]"
 
-	# 击杀条件行：按门槛类型生成完整表述（替代原先"需要: xxx ×N"+"骰子: N点"两行）
-	var hint: String = GATE_KILL_HINTS.get(gate_type, "")
-	if hint.is_empty():
-		# 未知门槛类型兜底：类型名 + 数量
+	# 击杀条件行：统一句式（design D1）——金色"击杀条件："标签 + 数量/骰型词暗金底徽章
+	# + 琥珀色括号定义行；判定以该史莱姆自身骰子为锚点且自身计入攻击骰子，故注明"需包含自身"
+	var info: Dictionary = GATE_DICE_TYPE_INFO.get(gate_type, {})
+	if info.is_empty():
+		# 未知门槛类型兜底：类型名 + 数量（保留既有分支）
 		var gate_cn_fallback: String = T(str(GATE_TYPE_NAMES.get(gate_type, gate_type)))
 		bbcode += "\n" + T("[color=#FFD700]需要: %s ×%d[/color]") % [gate_cn_fallback, gate_count]
-	elif gate_type == "duizi":
-		# 对子：先数量后点数
-		bbcode += "\n" + T(hint) % [gate_count, dice_point]
-	elif gate_type == "shunzi" or gate_type == "tongshun":
-		# 顺子/同顺：先点数后数量（顺子需包含它的点数）
-		bbcode += "\n" + T(hint) % [dice_point, gate_count]
 	else:
-		# 同色/同对：仅需数量
-		bbcode += "\n" + T(hint) % [gate_count]
+		var badge_count: String = _badge(str(gate_count))
+		var badge_word: String = _badge(T(str(info["word"])))
+		var definition: String = T(str(info["definition"]))
+		bbcode += "\n" + T(GATE_KILL_SKELETON) % [badge_count, badge_word, definition]
+
+	# 自身骰子行：骰面图标补齐颜色锚点（design D3），资源加载失败降级为文字
+	bbcode += "\n" + _dice_row(dice_color, dice_point)
 
 	return bbcode
 

@@ -3050,6 +3050,7 @@ patch_margin_bottom = 7
 
 [node name="score_bar_label" type="Label" parent="score_preview_ui/scale/NinePatchRect" unique_id=1258542655]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 26.0
 offset_top = 24.299995
