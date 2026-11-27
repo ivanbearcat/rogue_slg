@@ -2401,6 +2401,10 @@ func _on_potion_button_pressed() -> void:
 	_apply_score_heal()
 
 func _on_coin_skill_1_pressed() -> void:
+	## 行走中拦截：与自带技能入口闸同口径，英雄沿路径行走时忽略本次触发
+	if Current.id_path:
+		EventBus.event_emit("reset_all_button")
+		return
 	if coin_skill_1.button_pressed == false:
 		coin_skill_1.button_pressed = true
 	else:
@@ -2409,6 +2413,10 @@ func _on_coin_skill_1_pressed() -> void:
 		EventBus.event_emit(Current.coin_skill_array_dict[0]["coin_skill_id"])
 
 func _on_coin_skill_2_pressed() -> void:
+	## 行走中拦截：与自带技能入口闸同口径，英雄沿路径行走时忽略本次触发
+	if Current.id_path:
+		EventBus.event_emit("reset_all_button")
+		return
 	if coin_skill_2.button_pressed == false:
 		coin_skill_2.button_pressed = true
 	else:
@@ -2417,6 +2425,10 @@ func _on_coin_skill_2_pressed() -> void:
 		EventBus.event_emit(Current.coin_skill_array_dict[1]["coin_skill_id"])
 
 func _on_coin_skill_3_pressed() -> void:
+	## 行走中拦截：与自带技能入口闸同口径，英雄沿路径行走时忽略本次触发
+	if Current.id_path:
+		EventBus.event_emit("reset_all_button")
+		return
 	if coin_skill_3.button_pressed == false:
 		coin_skill_3.button_pressed = true
 	else:
