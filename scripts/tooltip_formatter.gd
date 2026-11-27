@@ -273,31 +273,33 @@ static func format_elite_slime(is_boss: bool, gate_type: String, gate_count: int
 
 ## 数值自动着色函数
 ## default_tendency: "buff" 默认绿色, "debuff" 默认红色
+static var _regex_cache: Dictionary = {}  # key -> RegEx（static 惰性缓存，避免每次悬停重建）
+
+static func _cached_regex(key: String, pattern: String) -> RegEx:
+	if not _regex_cache.has(key):
+		_regex_cache[key] = RegEx.create_from_string(pattern)
+	return _regex_cache[key]
+
 static func _colorize_numbers(text: String, default_tendency: String = "buff") -> String:
 	var result: String = text
 
 	# 1. 匹配明确符号：+N/+N% → 绿色
-	var regex_plus := RegEx.create_from_string("(\\+[0-9]+\\.?[0-9]*%?)")
-	result = regex_plus.sub(result, "[b][color=%s]$1[/color][/b]" % INCREASE_COLOR, true)
+	result = _cached_regex("plus", "(\\+[0-9]+\\.?[0-9]*%?)").sub(result, "[b][color=%s]$1[/color][/b]" % INCREASE_COLOR, true)
 
 	# 2. 匹配明确符号：-N/-N% → 红色
-	var regex_minus := RegEx.create_from_string("(\\-[0-9]+\\.?[0-9]*%?)")
-	result = regex_minus.sub(result, "[b][color=%s]$1[/color][/b]" % DECREASE_COLOR, true)
+	result = _cached_regex("minus", "(\\-[0-9]+\\.?[0-9]*%?)").sub(result, "[b][color=%s]$1[/color][/b]" % DECREASE_COLOR, true)
 
 	# 3. 匹配增加关键词后的数值（对源语言文本做逻辑匹配,非待翻译文案）
 	var increase_words := ["增加", "加分", "提升", "强化", "额外增加", "额外"] # NO_TRANSLATE
 	var increase_pattern := "(" + "|".join(increase_words) + ")([0-9]+\\.?[0-9]*%?)"
-	var regex_inc_word := RegEx.create_from_string(increase_pattern)
-	result = regex_inc_word.sub(result, "$1[b][color=%s]$2[/color][/b]" % INCREASE_COLOR, true)
+	result = _cached_regex("inc_word", increase_pattern).sub(result, "$1[b][color=%s]$2[/color][/b]" % INCREASE_COLOR, true)
 
 	# 4. 匹配减少关键词后的数值（对源语言文本做逻辑匹配,非待翻译文案）
 	var decrease_words := ["减少", "下降", "损失", "禁用", "扣", "脆弱"] # NO_TRANSLATE
 	var decrease_pattern := "(" + "|".join(decrease_words) + ")([0-9]+\\.?[0-9]*%?)"
-	var regex_dec_word := RegEx.create_from_string(decrease_pattern)
-	result = regex_dec_word.sub(result, "$1[b][color=%s]$2[/color][/b]" % DECREASE_COLOR, true)
+	result = _cached_regex("dec_word", decrease_pattern).sub(result, "$1[b][color=%s]$2[/color][/b]" % DECREASE_COLOR, true)
 
 	# 5. 变为0 → 红色（匹配模式针对源语言,非待翻译文案）
-	var regex_zero := RegEx.create_from_string("变为([0-9]+)") # NO_TRANSLATE
-	result = regex_zero.sub(result, T("变为[b][color=%s]$1[/color][/b]") % DECREASE_COLOR, true)
+	result = _cached_regex("zero", "变为([0-9]+)").sub(result, T("变为[b][color=%s]$1[/color][/b]") % DECREASE_COLOR, true) # NO_TRANSLATE
 
 	return result

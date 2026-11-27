@@ -20,6 +20,12 @@ func _ready() -> void:
 	$ButtonColumn/quit_button.pressed.connect(_on_quit_pressed)
 	_gating_continue_button()
 
+func _notification(what: int) -> void:
+	## 语言切换后重跑"继续游戏"按钮装配（含关卡/回合进度行），随新语言立即刷新
+	## （先例：buff_debug_panel 的 NOTIFICATION_TRANSLATION_CHANGED 分支）
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_gating_continue_button()
+
 ## "继续"门控（design D6）：有可用存档（完整性校验通过）才启用，
 ## 并在按钮上展示存档进度（关卡/回合）；无档或坏档 → 禁用置灰
 func _gating_continue_button() -> void:

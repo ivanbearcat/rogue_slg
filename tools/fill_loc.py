@@ -87,22 +87,27 @@ def main():
 
     wb2 = load_workbook(XLSX, read_only=True)
     ws2 = wb2["翻译"]
+    if DRY:
+        print("（试运行未写盘，跳过回读校验）")
+        return
+    ## 回读列按表头定位（zh_CN 列插入后不能再用固定偏移 j=1..9，否则拿 zh_CN 列对 en 译文）
+    header2 = [c.value for c in ws2[1]]
+    ci2 = {loc: header2.index(loc) + 1 for loc in LOCALES}
     ok = True
     for row in ws2.iter_rows(min_row=2, values_only=True):
         key = str(row[0] or "").strip()
         if not key:
             continue
         i = idx[key]
-        for j, loc in enumerate(LOCALES, start=1):
+        for loc in LOCALES:
             if loc == "zh_TW":
                 continue
-            got = str(row[j] or "")
+            got = str(row[ci2[loc] - 1] or "")
             if got != trans[loc][i]:
                 ok = False
                 print(f"  ✗ [{loc}] {key[:12]}… 不一致")
-    if not DRY:
-        print("回读校验", "✓ 一致" if ok else "✗ 存在不一致")
-        sys.exit(0 if ok else 1)
+    print("回读校验", "✓ 一致" if ok else "✗ 存在不一致")
+    sys.exit(0 if ok else 1)
 
 
 if __name__ == "__main__":

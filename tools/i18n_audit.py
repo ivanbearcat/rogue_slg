@@ -7,7 +7,11 @@
 扫描范围：
   - scripts/**/*.gd 中的中文字符串字面量（含 "..." 与 \"\"\"...\"\"\" 多行串；
     tr()/T() 参数、字典值、模板等均覆盖）
+  - scripts/**/*.gd 中括号拼接的多行字符串表达式（help_ui 整段 BBCode blob 形态）：
+    片段 unescape 后重组为整串，与 keys 精确比对（不再逐片段报警）
   - scenes/**/*.tscn 中 text / tooltip_text / popup/item_<n>/text 属性的中文值
+  - config/*.json 展示字段（字段名含 name/tooltip/title/desc/description 的
+    中文字符串值；排除 card_description——运行时被 _generate_card_description() 覆盖）
 排除规则：
   - 注释行（整行 # 开头）
   - print / push_warning / push_error / assert 所在行
@@ -19,6 +23,7 @@
   py -3.14 -X utf8 tools/i18n_audit.py
 """
 import csv
+import json
 import re
 import sys
 from pathlib import Path
@@ -39,6 +44,10 @@ COMMENT_LINE = re.compile(r"^\s*#")
 TSCN_PROP = re.compile(
     r"(?:popup/item_\d+/)?(?:text|tooltip_text)\s*=\s*\"((?:\\.|[^\"\\])*)\""
 )
+# config/*.json 展示字段口径：字段名（小写）含这些 token 即视为展示字段
+JSON_FIELD_TOKENS = ("name", "tooltip", "title", "desc", "description")
+# 运行时被 _generate_card_description() 覆盖，是设计期参考稿，不参与翻译（阶段4口径）
+JSON_EXCLUDE_FIELDS = {"card_description"}
 
 
 def unescape(s: str) -> str:
@@ -53,6 +62,90 @@ def load_keys() -> set[str]:
         reader = csv.reader(f)
         next(reader)  # 表头
         return {row[0].strip() for row in reader if row and row[0].strip()}
+
+
+def _paren_delta(line: str) -> int:
+    """一行的括号增量（字符串字面量内部的括号不计）"""
+    delta, in_str, k = 0, False, 0
+    while k < len(line):
+        c = line[k]
+        if in_str:
+            if c == "\\":
+                k += 1  # 跳过转义对
+            elif c == '"':
+                in_str = False
+        elif c == '"':
+            in_str = True
+        elif c == "(":
+            delta += 1
+        elif c == ")":
+            delta -= 1
+        k += 1
+    return delta
+
+
+def _collect_paren_block(lines: list, start: int):
+    """从 start 行（本行含未闭合的 "("）逐行累计到括号回平。
+    返回 (块文本, 下一行索引)；到文件尾仍未闭合返回 (None, start)。"""
+    depth, buf, j = 0, [], start
+    while j < len(lines):
+        line = lines[j]
+        buf.append(line)
+        depth += _paren_delta(line)
+        if depth <= 0:
+            return "\n".join(buf), j + 1
+        j += 1
+    return None, start
+
+
+def _pure_concat_literals(text: str):
+    """块文本若为"字面量经 + 拼接"的表达式（help_ui 字典值形态 `"key": ( "a" + "b" ),`），
+    返回参与拼接的字面量原文列表（剔除字典键名）；否则返回 None。
+
+    token 流校验：gaps[0] 为首字面量前导；其后跟 `: (` 视为字典键名剔除（形态 A），
+    或块本身以 `(...)` 开启（形态 B）；字面量之间的间隙必须是纯 `+`；末间隙只允许
+    `)` 与可选 `,`。含函数调用/逗号分隔等任何其他形态一律返回 None
+    （回退逐行扫描，保持旧报警粒度，杜绝误报）。"""
+    if '"""' in text:
+        return None
+    tokens = []  # ("lit", 原文) / ("gap", 文本)
+    k, n = 0, len(text)
+    while k < n:
+        c = text[k]
+        if c == '"':
+            m = STRING_LIT.match(text, k)
+            if m is None:
+                return None
+            tokens.append(("lit", m.group(1)))
+            k = m.end()
+        else:
+            j = text.find('"', k)
+            if j == -1:
+                tokens.append(("gap", text[k:]))
+                break
+            tokens.append(("gap", text[k:j]))
+            k = j
+    lits = [t[1] for t in tokens if t[0] == "lit"]
+    gaps = [t[1] for t in tokens if t[0] == "gap"]
+    # token 流形态：gap, lit, gap, lit, ..., gap（len(gaps) == len(lits) + 1）
+    if not lits or len(gaps) != len(lits) + 1:
+        return None
+    if re.fullmatch(r"\s*", gaps[0]) and len(lits) >= 2 \
+            and re.fullmatch(r"\s*:\s*\(\s*", gaps[1]):
+        # 形态 A：字典键名 + 拼接值 → 首字面量为键名，剔除
+        content = lits[1:]
+    elif re.fullmatch(r'[^"()]*\(\s*', gaps[0]) \
+            and re.fullmatch(r"\s*", gaps[1]):
+        # 形态 B：裸表达式（var x = ( ... )）
+        content = lits
+    else:
+        return None
+    for g in gaps[2:-1]:
+        if re.fullmatch(r"\s*\+\s*", g) is None:
+            return None
+    if re.fullmatch(r"\s*\)\s*,?\s*", gaps[-1]) is None:
+        return None
+    return content or None
 
 
 def audit_gd(keys: set[str], report: list) -> int:
@@ -102,6 +195,20 @@ def audit_gd(keys: set[str], report: list) -> int:
                                 report.append((f"scripts/{fp.name}", ln, seg.strip()))
                 i += 1
                 continue
+            # 括号拼接多行字符串表达式（help_ui 整段 BBCode blob 形态，change D3）：
+            # 纯 "字面量 + 字面量" 块重组为整串按 1 处计数、与 keys 精确比对；
+            # 非纯拼接（函数调用等）回退下方逐行扫描，保持旧粒度
+            if raw.rstrip().endswith("("):
+                block_text, end_i = _collect_paren_block(lines, i)
+                lits = _pure_concat_literals(block_text) if block_text is not None else None
+                if lits is not None:
+                    whole = "".join(unescape(lit) for lit in lits)
+                    if HAN.search(whole):
+                        total += 1
+                        if whole not in keys:
+                            report.append((f"scripts/{fp.name}", ln, whole))
+                    i = end_i
+                    continue
             # 普通单行字符串
             for m in STRING_LIT.finditer(raw):
                 lit = unescape(m.group(1))
@@ -129,6 +236,34 @@ def audit_tscn(keys: set[str], report: list) -> int:
     return total
 
 
+def audit_json(keys: set[str], report: list) -> int:
+    """扫描 config/*.json 展示字段中文字符串值（change D5，堵 hero_skill 类漏报）。
+    返回中文展示值处数，缺口进 report"""
+    total = 0
+    for fp in sorted((ROOT / "config").glob("*.json")):
+        try:
+            data = json.loads(fp.read_text(encoding="utf-8"))
+        except (ValueError, UnicodeDecodeError):
+            continue
+        if not isinstance(data, list):
+            continue
+        for row in data:
+            if not isinstance(row, dict):
+                continue
+            for field, v in row.items():
+                fl = str(field).lower()
+                if fl in JSON_EXCLUDE_FIELDS:
+                    continue
+                if not any(t in fl for t in JSON_FIELD_TOKENS):
+                    continue
+                if not isinstance(v, str) or not HAN.search(v):
+                    continue
+                total += 1
+                if v.strip() not in keys:
+                    report.append((f"config/{fp.name}", 0, v.strip()))
+    return total
+
+
 def main():
     if not CSV.exists():
         print(f"✗ 未找到 {CSV}；请先运行 tools/export_loc.py 导出 CSV")
@@ -139,9 +274,11 @@ def main():
     report: list = []
     n_gd = audit_gd(keys, report)
     n_tscn = audit_tscn(keys, report)
-    total = n_gd + n_tscn
+    n_json = audit_json(keys, report)
+    total = n_gd + n_tscn + n_json
 
-    print(f"扫描覆盖：scripts 中文字面量 {n_gd} 处 + scenes 属性值 {n_tscn} 处 = {total} 处")
+    print(f"扫描覆盖：scripts 中文字面量 {n_gd} 处 + scenes 属性值 {n_tscn} 处"
+          f" + config 展示字段 {n_json} 处 = {total} 处")
     print(f"审计缺口（未登记进表格）：{len(report)} 条")
     for f, ln, lit in report:
         print(f"  ✗ {f}:{ln}  缺 key：{lit!r}")

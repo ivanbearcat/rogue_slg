@@ -35,8 +35,13 @@ func setup(dropped_dice: Array):
 		button.custom_minimum_size = Vector2(96, 96)
 		## 重置悬浮残留（连续两次弹出时可能残留上一轮 scale）
 		button.scale = Vector2.ONE
-		var color_name: String = tr(str(_color_name_map.get(dice[0], "?")))
-		TooltipManager.set_tooltip(button, tr("[color=%s]%s[/color] %s点") % [_color_hex_map.get(dice[0], "#ffffff"), color_name, str(dice[1])])
+		## tooltip 懒格式化（动态绑定）：捕获 hex/颜色 key/点数，悬停时才查表翻译拼串
+		var tooltip_parts: Array = [
+			str(_color_hex_map.get(dice[0], "#ffffff")),
+			str(_color_name_map.get(dice[0], "?")),
+			str(dice[1]),
+		]
+		TooltipManager.set_dynamic_tooltip(button, tooltip_parts, _format_dice_tooltip)
 		button.pressed.connect(_on_dice_selected.bind(dice))
 		button.mouse_entered.connect(_on_dice_option_mouse_entered.bind(button))
 		button.mouse_exited.connect(_on_dice_option_mouse_exited.bind(button))
@@ -60,6 +65,10 @@ func _on_dice_selected(dice: Array):
 	visible = false
 	## 取消暂停（收尾四步在同一函数完成：写 meta、erase 锁、隐藏、取消暂停）
 	get_tree().paused = false
+
+## 掉落骰子 tooltip 格式化器（悬停时按当前语言查表拼串）
+func _format_dice_tooltip(parts: Array) -> String:
+	return tr("[color=%s]%s[/color] %s点") % [parts[0], tr(parts[1]), parts[2]]
 
 ## 悬浮选项：居中弹性放大（带过冲回弹），参数与卡牌悬浮一致
 func _on_dice_option_mouse_entered(option: TextureButton) -> void:

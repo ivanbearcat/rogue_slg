@@ -284,14 +284,7 @@ var _count_stage: int = 1  ## 直写用内部变量（存档灌入/读档恢复�
 var count_stage: int:
 	set(v):
 		_count_stage = v
-		var stage_icon
-		for row in game_manager.stage_info_json_data:
-			if row["stage_num"] == Current.count_stage:
-				stage_icon = row["stage_type_icon"]
-		var stage_text: String = tr("关卡· %s") % tr(Tools.num_to_cnnum[v])
-		game_manager.stage_label.text = stage_text
-		game_manager.clear_stage_label.text = stage_text
-		game_manager.stage_effect_label.text = tr("关卡· %s [img=17]%s[/img]") % [tr(Tools.num_to_cnnum[v]), stage_icon]
+		_refresh_stage_banner()
 	get:
 		return _count_stage
 ## 关卡奖励金币数
@@ -1144,17 +1137,15 @@ func refresh_all_ui() -> void:
 	## —— 金币技能栏图标/tooltip/label 直写 ——
 	var skill_buttons: Array = [game_manager.coin_skill_1, game_manager.coin_skill_2, game_manager.coin_skill_3]
 	var skill_icons: Array = [game_manager.coin_skill_1_icon, game_manager.coin_skill_2_icon, game_manager.coin_skill_3_icon]
-	var skill_labels: Array = [game_manager.coin_skill_1_label, game_manager.coin_skill_2_label, game_manager.coin_skill_3_label]
 	for i in 3:
 		if i < coin_skill_array_dict.size() and coin_skill_array_dict[i] is Dictionary:
 			var skill_row: Dictionary = coin_skill_array_dict[i]
 			skill_icons[i].texture = load(skill_row["coin_skill_icon"])
-			TooltipManager.set_tooltip(skill_buttons[i], TooltipFormatter.format_coin_skill(skill_row))
-			## 与 _set_coin_skill 行为对齐：槽位1 不写 label（既有注释掉的路径），槽位2/3 写
-			if i >= 1:
-				skill_labels[i].text = tr(skill_row["coin_skill_name"])
+			TooltipManager.set_dynamic_tooltip(skill_buttons[i], skill_row, TooltipFormatter.format_coin_skill)
 		else:
 			skill_icons[i].texture = null
+	## 槽位名标签：与 _set_coin_skill 行为对齐（槽位1 不写），走 game_manager 收口刷新
+	game_manager._refresh_coin_skill_slot_labels()
 	refresh_coin_skill_buttons()
 	## —— 商店按钮批刷（total_coins setter 即批刷入口，沿用既有 idiom）——
 	total_coins = _total_coins
@@ -1163,15 +1154,8 @@ func refresh_all_ui() -> void:
 		game_manager.buff_refresh_rlabel.text = " [img=24]res://images/ui_icon/refresh.png[/img]   [img=16]res://images/ui_icon/coin.png[/img] %d" % 0
 	else:
 		game_manager.buff_refresh_rlabel.text = " [img=24]res://images/ui_icon/refresh.png[/img]   [img=16]res://images/ui_icon/coin.png[/img] %d" % game_manager.buff_refresh_cost
-	## —— 关卡文本直写（复制 count_stage setter 的文本装配，不走 setter）——
-	var stage_icon := ""
-	for row in game_manager.stage_info_json_data:
-		if row["stage_num"] == _count_stage:
-			stage_icon = row["stage_type_icon"]
-	var stage_text: String = tr("关卡· %s") % tr(Tools.num_to_cnnum[_count_stage])
-	game_manager.stage_label.text = stage_text
-	game_manager.clear_stage_label.text = stage_text
-	game_manager.stage_effect_label.text = tr("关卡· %s [img=17]%s[/img]") % [tr(Tools.num_to_cnnum[_count_stage]), stage_icon]
+	## —— 关卡横幅：装配收口（与 count_stage setter 同一函数），不走 setter ——
+	_refresh_stage_banner()
 	## —— 回合数与船位（count_round setter 的 tween 只属于真实回合推进；
 	## 恢复时按 count_round 静态落位，>10 后停在最后格）——
 	if _count_round <= 1:
@@ -1185,6 +1169,26 @@ func refresh_all_ui() -> void:
 ## Variant → Array（JSON 往返防御：非数组一律空数组）
 func _as_array(v: Variant) -> Array:
 	return v if v is Array else []
+
+
+## 关卡横幅装配（收口：count_stage setter 与 refresh_all_ui 共用；语言切换通知分支同走此函数）。
+## 写 stage_label / clear_stage_label / stage_effect_label 三个横幅 label
+func _refresh_stage_banner() -> void:
+	if not game_manager:
+		return
+	var stage_icon := ""
+	for row in game_manager.stage_info_json_data:
+		if row["stage_num"] == _count_stage:
+			stage_icon = row["stage_type_icon"]
+	var stage_text: String = tr("关卡· %s") % tr(Tools.num_to_cnnum[_count_stage])
+	game_manager.stage_label.text = stage_text
+	game_manager.clear_stage_label.text = stage_text
+	game_manager.stage_effect_label.text = tr("关卡· %s [img=17]%s[/img]") % [tr(Tools.num_to_cnnum[_count_stage]), stage_icon]
+
+func _notification(what: int) -> void:
+	## 语言切换后关卡横幅立即随语言（装配收口后的单点）
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_refresh_stage_banner()
 
 ## [x, y] 数组 → Vector2（JSON 往返后元素为 float，显式 float() 收敛）
 func _arr_to_vec2(arr: Variant) -> Vector2:

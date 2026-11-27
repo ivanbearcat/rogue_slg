@@ -41,6 +41,7 @@ JSON_DISPLAY_FIELDS = [
     "debuff_name", "debuff_tooltip",
     "coin_skill_name", "coin_skill_tooltip",
     "card_name",
+    "skill_name", "skill_tooltip",
 ]
 
 # 含汉字（CJK 统一表意文字区间）

@@ -5,6 +5,7 @@ Godot 项目设置→本地化→翻译 挂载该 CSV，按列自动生成各语
 校验规则：
   - 占位符 %s/%d 数量与位置必须一致（且 %d%% 中的 %% 不算占位符）
   - BBCode 标签数量必须一致
+  - key 与每语译文的换行数必须一致（多行整段 blob 机翻吞行拦截，见 change i18n-gap-fill-hotswitch D3）
   - 缺翻逐条列出（试点阶段允许 >0，但校验错误必须为 0）
 
 用法：py -3.14 -X utf8 tools/export_loc.py
@@ -61,6 +62,8 @@ def main():
                 kt = TAG.findall(key)
                 if kt and len(kt) != len(TAG.findall(cell)):
                     errors.append(("BBCode标签数不一致", loc, key))
+                if key.count("\n") != cell.count("\n"):
+                    errors.append(("换行数不一致", loc, key))
 
     print(f"导出完成：{OUT}（{n} 行）")
     print(f"缺翻 {len(missing)} 条；校验错误 {len(errors)} 条")

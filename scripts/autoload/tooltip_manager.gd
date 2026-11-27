@@ -82,6 +82,22 @@ func set_tooltip(node: Control, bbcode_text: String, offset: Vector2 = Vector2(2
 	node.mouse_entered.connect(_on_node_mouse_entered.bind(node))
 	node.mouse_exited.connect(_on_node_mouse_exited)
 
+## 动态绑定（change i18n-gap-fill-hotswitch 方案B）：存源数据+格式化器，
+## 悬停时才算翻译与格式化——语言热切换与动态数据（家族计数等）都取悬停时刻的实时值。
+## formatter 为 Callable，参数是 source，返回成品 BBCode 文本
+func set_dynamic_tooltip(node: Control, source: Variant, formatter: Callable, offset: Vector2 = Vector2(20, 10)) -> void:
+	if node.is_connected("mouse_entered", _on_node_mouse_entered):
+		node.disconnect("mouse_entered", _on_node_mouse_entered)
+	if node.is_connected("mouse_exited", _on_node_mouse_exited):
+		node.disconnect("mouse_exited", _on_node_mouse_exited)
+	# 同一节点只允许挂一种tooltip（清掉技能tooltip挂接）
+	_disconnect_skill_hooks(node)
+	node.tooltip_text = ""
+	# 双形态：成品文本（{"text": ...}）/ 源+格式化器（{"source": ..., "formatter": ...}）
+	_tooltip_data[node] = {"source": source, "formatter": formatter, "offset": offset}
+	node.mouse_entered.connect(_on_node_mouse_entered.bind(node))
+	node.mouse_exited.connect(_on_node_mouse_exited)
+
 ## 移除节点的BBCode tooltip
 func unset_tooltip(node: Control) -> void:
 	if node.is_connected("mouse_entered", _on_node_mouse_entered):
@@ -91,7 +107,7 @@ func unset_tooltip(node: Control) -> void:
 	_disconnect_skill_hooks(node)
 	_tooltip_data.erase(node)
 
-var _tooltip_data: Dictionary = {}  # node -> {text, offset}
+var _tooltip_data: Dictionary = {}  # node -> {text, offset}（静态成品文本）或 {source, formatter, offset}（动态懒格式化）
 
 func _on_node_mouse_entered(node: Control) -> void:
 	if not is_instance_valid(node):
@@ -100,7 +116,12 @@ func _on_node_mouse_entered(node: Control) -> void:
 	var data: Dictionary = _tooltip_data.get(node, {})
 	if data.is_empty():
 		return
-	show_tooltip(node, data["text"], data["offset"])
+	if data.has("formatter"):
+		## 动态形态：悬停时刻才做翻译与格式化（语言/数据都实时）
+		var text: String = data["formatter"].call(data["source"])
+		show_tooltip(node, text, data["offset"])
+	else:
+		show_tooltip(node, data["text"], data["offset"])
 
 func _on_node_mouse_exited() -> void:
 	hide_tooltip()

@@ -69,18 +69,11 @@ keys,zh_CN,en,ja,ko,zh_TW,fr,de,es,pt_BR,it
 💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color],💡 [color=#AAAAAA]%s系Buff≥4时激活[%s]：%s（当前：%d/4）[/color],💡 [color=#AAAAAA]%s family Buff≥4 active[%s]: %s (currently %d/4)[/color],💡 [color=#AAAAAA]%s系Buff≥4で発動[%s]：%s（現在：%d/4）[/color],💡 [color=#AAAAAA]%s 계열 Buff≥4 발동[%s]: %s (현재: %d/4)[/color],💡 [color=#AAAAAA]%s系Buff≥4時啟用[%s]：%s（當前：%d/4）[/color],💡 [color=#AAAAAA]Activation si ≥4 buff de la famille %s [%s] : %s (actuel : %d/4)[/color],💡 [color=#AAAAAA]%s-Familie-Buff≥4 aktiv[%s]: %s (aktuell %d/4)[/color],💡 [color=#AAAAAA]Buff de familia %s≥4 activado[%s]: %s (actual: %d/4)[/color],💡 [color=#AAAAAA]Buff da família %s≥4 ativado[%s]: %s (atual: %d/4)[/color],💡 [color=#AAAAAA]Buff famiglia %s≥4 attivo[%s]: %s (attuale: %d/4)[/color]
 💡 [color=#42A5F5]共鸣霸主·当前共振：%d层（+%d%%）[/color],💡 [color=#42A5F5]共鸣霸主·当前共振：%d层（+%d%%）[/color],💡 [color=#42A5F5]Resonance Overlord · current resonance: %d stacks (+%d%%)[/color],💡 [color=#42A5F5]共鳴の覇者・現在の共振：%dスタック（+%d%%）[/color],💡 [color=#42A5F5]공명의 패자 · 현재 공진: %d스택 (+%d%%)[/color],💡 [color=#42A5F5]共鳴霸主·當前共振：%d層（+%d%%）[/color],💡 [color=#42A5F5]Overlord Résonance·charge actuelle : %d (%d%%)[/color],💡 [color=#42A5F5]Resonanz-Overlord · aktuelle Resonanz: %d Stapel (+%d%%)[/color],💡 [color=#42A5F5]Señor de la Resonancia · resonancia actual: %d cargas (+%d%%)[/color],💡 [color=#42A5F5]Soberano da Ressonância · ressonância atual: %d cargas (+%d%%)[/color],💡 [color=#42A5F5]Sovrano della Risonanza · risonanza attuale: %d cariche (+%d%%)[/color]
 [color=#0fff5b][b]（已激活 ✓）[/b][/color],[color=#0fff5b][b]（已激活 ✓）[/b][/color],[color=#0fff5b][b](Activated ✓)[/b][/color],[color=#0fff5b][b]（発動済み ✓）[/b][/color],[color=#0fff5b][b](발동됨 ✓)[/b][/color],[color=#0fff5b][b]（已啟用 ✓）[/b][/color],[color=#0fff5b][b](activé ✓)[/b][/color],[color=#0fff5b][b](Aktiviert ✓)[/b][/color],[color=#0fff5b][b](Activado ✓)[/b][/color],[color=#0fff5b][b](Ativado ✓)[/b][/color],[color=#0fff5b][b](Attivato ✓)[/b][/color]
-[color=%s]▼ 减益[/color],[color=%s]▼ 减益[/color],[color=%s]▼ Debuffs[/color],[color=%s]▼ デバフ[/color],[color=%s]▼ 디버프[/color],[color=%s]▼ 減益[/color],[color=%s]▼ Malus[/color],[color=%s]▼ Nachteile[/color],[color=%s]▼ Debilitamientos[/color],[color=%s]▼ Penalidades[/color],[color=%s]▼ Debolezze[/color]
+[color=%s]▼ 减益[/color],[color=%s]▼ 减益[/color],[color=%s]▼ Debuffs[/color] ,[color=%s]▼ デバフ[/color],[color=%s]▼ 디버프[/color] ,[color=%s]▼ 減益[/color],[color=%s]▼ Malus[/color],[color=%s]▼ Nachteile[/color] ,[color=%s]▼ Debilitamientos[/color] ,[color=%s]▼ Penalidades[/color] ,[color=%s]▼ Debolezze[/color] 
 [color=%s]★ BOSS史莱姆[/color],[color=%s]★ BOSS史莱姆[/color],[color=%s]★ BOSS Slime[/color],[color=%s]★ BOSSスライム[/color],[color=%s]★ BOSS 슬라임[/color],[color=%s]★ BOSS史萊姆[/color],[color=%s]★ slime BOSS[/color],[color=%s]★ BOSS-Slime[/color],[color=%s]★ Slime JEFE[/color],[color=%s]★ Slime CHEFE[/color],[color=%s]★ Slime BOSS[/color]
 [color=%s]★ 精英史莱姆[/color],[color=%s]★ 精英史莱姆[/color],[color=%s]★ Elite Slime[/color],[color=%s]★ エリートスライム[/color],[color=%s]★ 엘리트 슬라임[/color],[color=%s]★ 精英史萊姆[/color],[color=%s]★ slime Élite[/color],[color=%s]★ Elite-Slime[/color],[color=%s]★ Slime Élite[/color],[color=%s]★ Slime Elitinha[/color],[color=%s]★ Slime Elite[/color]
 [color=#FFD700]需要: %s ×%d[/color],[color=#FFD700]需要: %s ×%d[/color],[color=#FFD700]Need: %s ×%d[/color],[color=#FFD700]必要: %s ×%d[/color],[color=#FFD700]필요: %s ×%d[/color],[color=#FFD700]需要: %s ×%d[/color],[color=#FFD700]Requis : %s ×%d[/color],[color=#FFD700]Braucht: %s ×%d[/color],[color=#FFD700]Necesita: %s ×%d[/color],[color=#FFD700]Precisa: %s ×%d[/color],[color=#FFD700]Serve: %s ×%d[/color]
-[color=#FFD700]击杀条件：[/color]由 %s 个或以上的史莱姆组成 %s 骰型[color=#FFB74D]（%s，需包含自身）[/color],[color=#FFD700]击杀条件：[/color]由 %s 个或以上的史莱姆组成 %s 骰型[color=#FFB74D]（%s，需包含自身）[/color],"[color=#FFD700]Kill condition:[/color] with %s or more slimes, form a %s pattern[color=#FFB74D] (%s, must include itself)[/color]",[color=#FFD700]撃破条件：[/color]%s 体以上のスライムで %s のダイス型を作る[color=#FFB74D]（%s、自分自身を含む）[/color],"[color=#FFD700]격파 조건:[/color] %s마 이상의 슬라임으로 %s 패턴 형성[color=#FFB74D] (%s, 자신 포함)[/color]",[color=#FFD700]擊殺條件：[/color]由 %s 個或以上的史萊姆組成 %s 骰型[color=#FFB74D]（%s，需包含自身）[/color],"[color=#FFD700]Condition d'élimination :[/color] avec %s slimes ou plus, former un type %s[color=#FFB74D] (%s, doit s'inclure soi-même)[/color]","[color=#FFD700]Tötungsbedingung:[/color] ein %s-Muster aus %s oder mehr Slimes bilden[color=#FFB74D] (%s, muss sich selbst enthalten)[/color]","[color=#FFD700]Condición de eliminación:[/color] con %s o más slimes, formar un patrón %s[color=#FFB74D] (%s, debe incluirse a sí mismo)[/color]","[color=#FFD700]Condição de eliminação:[/color] com %s ou mais slimes, formar um padrão %s[color=#FFB74D] (%s, deve incluir a si mesmo)[/color]","[color=#FFD700]Condizione di eliminazione:[/color] con %s o più slime, formare un tipo %s[color=#FFB74D] (%s, deve includere se stesso)[/color]"
-点数相同,点数相同,Same points,同じ点数,같은 점수,點數相同,Mêmes points,Gleiche Punkte,Mismos puntos,Pontos iguais,Stessi punti
-点数连续,点数连续,Consecutive points,点数が連続,연속된 점수,點數連續,Points consécutifs,Fortlaufende Punkte,Puntos consecutivos,Pontos consecutivos,Punti consecutivi
-颜色相同,颜色相同,Same color,同じ色,같은 색,顏色相同,Même couleur,Gleiche Farbe,Mismo color,Mesma cor,Stesso colore
-颜色点数都相同,颜色点数都相同,Same color and points,色も点数も同じ,색과 점수가 모두 같음,顏色點數都相同,Même couleur et mêmes points,Gleiche Farbe und gleiche Punkte,Mismo color y mismos puntos,Mesma cor e mesmos pontos,Stesso colore e stessi punti
-同色且点数连续,同色且点数连续,Same color and consecutive points,同色で点数が連続,같은 색이며 연속된 점수,同色且點數連續,Même couleur et points consécutifs,Gleiche Farbe und fortlaufende Punkte,Mismo color y puntos consecutivos,Mesma cor e pontos consecutivos,Stesso colore e punti consecutivi
-自身骰子 [img=24]%s[/img],自身骰子 [img=24]%s[/img],Own dice [img=24]%s[/img],自身のダイス [img=24]%s[/img],자기 주사위 [img=24]%s[/img],自身骰子 [img=24]%s[/img],Son dé [img=24]%s[/img],Eigener Würfel [img=24]%s[/img],Dado propio [img=24]%s[/img],Dado próprio [img=24]%s[/img],Dado proprio [img=24]%s[/img]
-自身骰子：%s %d 点,自身骰子：%s %d 点,"Own dice: %s, %d points",自身のダイス：%s %d点,자기 주사위: %s %d점,自身骰子：%s %d 點,"Son dé : %s, %d points","Eigener Würfel: %s, %d Punkte","Dado propio: %s, %d puntos","Dado próprio: %s, %d pontos","Dado proprio: %s, %d punti"
+骰子: [b]%d点[/b],骰子: [b]%d点[/b],Dice: [b]%d points[/b],サイコロ: [b]%d点[/b],주사위: [b]%d점[/b],骰子: [b]%d點[/b],Dé : [b]%d points[/b],Würfel: [b]%d Punkte[/b],Dado: [b]%d puntos[/b],Dado: [b]%d pontos[/b],Dado: [b]%d punti[/b]
 变为[b][color=%s]$1[/color][/b],变为[b][color=%s]$1[/color][/b],becomes [b][color=%s]$1[/color][/b],[b][color=%s]$1[/color][/b]に変化,[b][color=%s]$1[/color][/b]로 변화,變為[b][color=%s]$1[/color][/b],Devient [b][color=%s]$1[/color][/b],wird [b][color=%s]$1[/color][/b],se convierte en [b][color=%s]$1[/color][/b],muda para [b][color=%s]$1[/color][/b],diventa [b][color=%s]$1[/color][/b]
 攻击得分下降,攻击得分下降,Attack score reduced,攻撃スコア低下,공격 점수 하락,攻擊得分下降,Score d'attaque réduit,Angriffspunkte sinken,Puntos de ataque reducidos,Pontos de ataque reduzidos,Punti d'attacco ridotti
 每次攻击的得分-20%,每次攻击的得分-20%,Each attack's score -20%,毎回の攻撃スコア-20%,매 공격 점수 -20%,每次攻擊的得分-20%,Score de chaque attaque -20%,Punkte pro Angriff -20%,Puntos por ataque -20%,Pontos por ataque -20%,Punti per attacco -20%
@@ -524,5 +517,1101 @@ BOSS击杀!,BOSS击杀!,BOSS slain!,BOSS撃破!,BOSS 처치!,BOSS擊殺!,BOSS tu
 BUFF调试面板,BUFF调试面板,BUFF debug panel,BUFFデバッグパネル,BUFF 디버그 패널,BUFF除錯面板,Panneau de débogage BUFF,BUFF-Debug-Panel,Panel de debug BUFF,Painel de debug BUFF,Pannello debug BUFF
 ── 金币技能 ──,── 金币技能 ──,── Coin skills ──,── 金貨スキル ──,── 코인 스킬 ──,── 金幣技能 ──,── Compétences à pièce ──,── Münz-Skills ──,── Skills de moneda ──,── Skills de moeda ──,── Skill moneta ──
 金币+5,金币+5,Coins +5,金貨+5,코인 +5,金幣+5,Pièces +5,Münzen +5,Monedas +5,Moedas +5,Monete +5
-[color=%s]%s[/color] %s点,[color=%s]%s[/color] %s点,[color=%s]%s[/color] %s points,[color=%s]%s[/color] %s点,[color=%s]%s[/color] %s점,[color=%s]%s[/color] %s點,[color=%s]%s[/color] %s points,[color=%s]%s[/color] %s Punkte,[color=%s]%s[/color] %s puntos,[color=%s]%s[/color] %s pontos,[color=%s]%s[/color] %s punti
+[b][color=%s]%s[/color][/b] [b]%s点[/b],[b][color=%s]%s[/color][/b] [b]%s点[/b],[b][color=%s]%s[/color][/b] [b]%s points[/b],[b][color=%s]%s[/color][/b] [b]%s点[/b],[b][color=%s]%s[/color][/b] [b]%s점[/b],[b][color=%s]%s[/color][/b] [b]%s點[/b],[b][color=%s]%s[/color][/b] [b]%s points[/b],[b][color=%s]%s[/color][/b] [b]%s Punkte[/b],[b][color=%s]%s[/color][/b] [b]%s puntos[/b],[b][color=%s]%s[/color][/b] [b]%s pontos[/b],[b][color=%s]%s[/color][/b] [b]%s punti[/b]
 加载中...,加载中...,Loading...,ロード中...,로딩 중...,載入中...,Chargement...,Lädt...,Cargando...,Carregando...,Caricamento...
+加载中,加载中,Loading,読み込み中,불러오는 중,載入中,Chargement,Laden,Cargando,Carregando,Caricamento
+[color=#FFD700]击杀条件：[/color]由 %s 个或以上的史莱姆组成 %s 骰型[color=#FFB74D]（%s，需包含自身）[/color],[color=#FFD700]击杀条件：[/color]由 %s 个或以上的史莱姆组成 %s 骰型[color=#FFB74D]（%s，需包含自身）[/color],"[color=#FFD700]Kill condition:[/color] formed from %s or more Slimes composing a %s Type[color=#FFB74D] (%s, must include self)[/color]",[color=#FFD700]撃破条件：[/color]%s 体以上のスライムで %s 種類を構成[color=#FFB74D]（%s、自身を含む）[/color],"[color=#FFD700]처치 조건:[/color]슬라임 %s마리 이상으로 %s 종류를 구성[color=#FFB74D](%s, 자신 포함)[/color]",[color=#FFD700]擊殺條件：[/color]由 %s 個或以上的史萊姆組成 %s 骰型[color=#FFB74D]（%s，需包含自身）[/color],"[color=#FFD700]Condition d'élimination :[/color] constituée de %s slimes ou plus formant un Type %s[color=#FFB74D] (%s, doit s'inclure)[/color]","[color=#FFD700]Kill-Bedingung:[/color] aus %s oder mehr Slimes aufgebaut, die einen %s-Typ bilden[color=#FFB74D] (%s, muss sich selbst enthalten)[/color]","[color=#FFD700]Condición de derribo:[/color] formada por %s o más Slimes que compongan un Tipo %s[color=#FFB74D] (%s, debe incluirse a sí mismo)[/color]","[color=#FFD700]Condição de abate:[/color] formada por %s ou mais Slimes compondo um Tipo %s[color=#FFB74D] (%s, deve incluir a si mesmo)[/color]","[color=#FFD700]Condizione di uccisione:[/color] formata da %s o più Slime che compongono un Tipo %s[color=#FFB74D] (%s, deve includere se stesso)[/color]"
+点数相同,点数相同,Same points,同じ点数,같은 점수,點數相同,Mêmes points,Gleiche Punkte,Mismos puntos,Mesmos pontos,Stessi punti
+点数连续,点数连续,Consecutive points,連続した点数,연속된 점수,點數連續,Points consécutifs,Aufeinanderfolgende Punkte,Puntos consecutivos,Pontos consecutivos,Punti consecutivi
+颜色相同,颜色相同,Same color,同じ色,같은 색,顏色相同,Même couleur,Gleiche Farbe,Mismo color,Mesma cor,Stesso colore
+颜色点数都相同,颜色点数都相同,Same color and points,同色かつ同点数,색과 점수가 모두 같음,顏色點數都相同,Même couleur et mêmes points,Gleiche Farbe und gleiche Punkte,Mismo color y mismos puntos,Mesma cor e mesmos pontos,Stesso colore e stessi punti
+同色且点数连续,同色且点数连续,Same color and consecutive points,同色かつ連続点数,같은 색이며 연속된 점수,同色且點數連續,Même couleur et points consécutifs,Gleiche Farbe und aufeinanderfolgende Punkte,Mismo color y puntos consecutivos,Mesma cor e pontos consecutivos,Stesso colore e punti consecutivi
+自身骰子 [img=24]%s[/img],自身骰子 [img=24]%s[/img],Own dice [img=24]%s[/img],自身のサイコロ [img=24]%s[/img],자체 주사위 [img=24]%s[/img],自身骰子 [img=24]%s[/img],Dé propre [img=24]%s[/img],Eigener Würfel [img=24]%s[/img],Dado propio [img=24]%s[/img],Dado próprio [img=24]%s[/img],Dado proprio [img=24]%s[/img]
+自身骰子：%s %d 点,自身骰子：%s %d 点,Own dice: %s %d points,自身のサイコロ：%s %d 点,자체 주사위: %s %d점,自身骰子：%s %d 點,Dé propre : %s %d points,Eigener Würfel: %s %d Punkte,Dado propio: %s %d puntos,Dado próprio: %s %d pontos,Dado proprio: %s %d punti
+[color=%s]%s[/color] %s点,[color=%s]%s[/color] %s点,[color=%s]%s[/color] %s points,[color=%s]%s[/color] %s点,[color=%s]%s[/color] %s점,[color=%s]%s[/color] %s點,[color=%s]%s[/color] %s points,[color=%s]%s[/color] %s Punkte,[color=%s]%s[/color] %s puntos,[color=%s]%s[/color] %s pontos,[color=%s]%s[/color] %s punti
+"[color=#FFD700][font_size=20]骰型倍率[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+攻击范围内的史莱姆骰子与口袋骰子共同组成骰型。
+[color=#42A5F5]至少 2 个骰子：2 个为 Lv.1，每多 1 个升 1 级，6 个及以上为 Lv.5。[/color]
+系统选择整次攻击总分最高的组合；一套组合可包含多个骰型，分数相加。
+[color=#FFB74D]同一分组同时满足多种骰型时，只取该组最高分的一种，不重复叠加。[/color]
+单个骰型得分 = 参与骰子的基础分值之和 × 该骰型倍率。
+[color=#AAAAAA]未组成骰型的骰子不得分。[/color]","[color=#FFD700][font_size=20]骰型倍率[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+攻击范围内的史莱姆骰子与口袋骰子共同组成骰型。
+[color=#42A5F5]至少 2 个骰子：2 个为 Lv.1，每多 1 个升 1 级，6 个及以上为 Lv.5。[/color]
+系统选择整次攻击总分最高的组合；一套组合可包含多个骰型，分数相加。
+[color=#FFB74D]同一分组同时满足多种骰型时，只取该组最高分的一种，不重复叠加。[/color]
+单个骰型得分 = 参与骰子的基础分值之和 × 该骰型倍率。
+[color=#AAAAAA]未组成骰型的骰子不得分。[/color]","[color=#FFD700][font_size=20]Type Multipliers[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Slime dice within your attack range and pocket dice together form Types.
+[color=#42A5F5]At least 2 dice: 2 make Lv.1, each extra die raises the level by 1, 6 or more = Lv.5.[/color]
+The system picks the combo with the highest total attack score; one combo may contain multiple Types, and scores add up.
+[color=#FFB74D]When a group meets several Types at once, only the highest-scoring Type of that group counts, without stacking.[/color]
+Single Type score = sum of the base values of the participating dice × that Type's multiplier.
+[color=#AAAAAA]Dice that form no Type score nothing.[/color]","[color=#FFD700][font_size=20]種類倍率[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+攻撃範囲内のスライムサイコロとポケットのサイコロが合わさって種類を構成します。
+[color=#42A5F5]最低 2 個：2 個で Lv.1、1 個増えるごとに 1 レベル上昇、6 個以上で Lv.5。[/color]
+システムは攻撃合計スコアが最も高い組み合わせを選択します。1 つの組み合わせに複数の種類を含められ、スコアは加算されます。
+[color=#FFB74D]同じグループが複数の種類を同時に満たす場合、そのグループでは最も高い得点の 1 種類のみを採用し、重複加算しません。[/color]
+種類 1 つのスコア = 参加サイコロの基礎配点の合計 × その種類の倍率。
+[color=#AAAAAA]種類を構成しなかったサイコロは得点しません。[/color]","[color=#FFD700][font_size=20]종류 배수[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+공격 범위 안의 슬라임 주사위와 주머니 주사위가 함께 종류를 이룹니다.
+[color=#42A5F5]최소 2개: 2개면 Lv.1, 1개 추가마다 1레벨 상승, 6개 이상은 Lv.5.[/color]
+시스템은 공격 총점이 가장 높은 조합을 선택하며, 하나의 조합에 여러 종류가 포함될 수 있고 점수는 합산됩니다.
+[color=#FFB74D]한 그룹이 여러 종류를 동시에 만족할 때는 해당 그룹에서 가장 높은 점수의 한 가지만 적용하며 중복 누적되지 않습니다.[/color]
+종류 1개의 점수 = 참여 주사위의 기본 점수 합 × 해당 종류의 배수.
+[color=#AAAAAA]종류를 이루지 못한 주사위는 점수를 얻지 못합니다.[/color]","[color=#FFD700][font_size=20]骰型倍率[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+攻擊範圍內的史萊姆骰子與口袋骰子共同組成骰型。
+[color=#42A5F5]至少 2 個骰子：2 個為 Lv.1，每多 1 個升 1 級，6 個及以上為 Lv.5。[/color]
+系統選擇整次攻擊總分最高的組合；一套組合可包含多個骰型，分數相加。
+[color=#FFB74D]同一分組同時滿足多種骰型時，只取該組最高分的一種，不重複疊加。[/color]
+單個骰型得分 = 參與骰子的基礎分值之和 × 該骰型倍率。
+[color=#AAAAAA]未組成骰型的骰子不得分。[/color]","[color=#FFD700][font_size=20]Multiplicateurs de Type[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Les dés slime dans la portée d'attaque et les dés de la poche forment ensemble des Types.
+[color=#42A5F5]Au moins 2 dés : 2 dés = Lv.1, chaque dé supplémentaire monte d'un niveau, 6 ou plus = Lv.5.[/color]
+Le système choisit la combinaison au score d'attaque total le plus élevé ; une combinaison peut contenir plusieurs Types, et les scores s'additionnent.
+[color=#FFB74D]Quand un groupe satisfait plusieurs Types à la fois, seul le Type au score le plus élevé du groupe compte, sans cumul.[/color]
+Score d'un Type = somme des valeurs de base des dés participants × multiplicateur de ce Type.
+[color=#AAAAAA]Les dés ne formant aucun Type ne marquent rien.[/color]","[color=#FFD700][font_size=20]Typ-Multiplikatoren[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Slime-Würfel in der Angriffsreichweite und Taschen-Würfel bilden zusammen Typen.
+[color=#42A5F5]Mindestens 2 Würfel: 2 = Lv.1, jeder weitere +1 Level, 6 oder mehr = Lv.5.[/color]
+Das System wählt die Kombination mit der höchsten Gesamtangriffspunktzahl; eine Kombination kann mehrere Typen enthalten, die Punkte addieren sich.
+[color=#FFB74D]Erfüllt eine Gruppe mehrere Typen gleichzeitig, zählt nur der punktehöchste Typ dieser Gruppe, ohne Stapelung.[/color]
+Punktzahl eines Typs = Summe der Grundwerte der beteiligten Würfel × Multiplikator dieses Typs.
+[color=#AAAAAA]Würfel, die keinen Typ bilden, bringen keine Punkte.[/color]","[color=#FFD700][font_size=20]Multiplicadores de Tipo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Los dados slime dentro del rango de ataque y los dados de la bolsa forman juntos los Tipos.
+[color=#42A5F5]Al menos 2 dados: 2 = Lv.1, cada dado extra sube 1 nivel, 6 o más = Lv.5.[/color]
+El sistema elige la combinación con la puntuación total de ataque más alta; una combinación puede contener varios Tipos, y las puntuaciones se suman.
+[color=#FFB74D]Cuando un grupo satisface varios Tipos a la vez, solo cuenta el Tipo de mayor puntuación de ese grupo, sin acumular.[/color]
+Puntuación de un Tipo = suma de los valores base de los dados participantes × multiplicador de ese Tipo.
+[color=#AAAAAA]Los dados que no forman Tipo no puntúan.[/color]","[color=#FFD700][font_size=20]Multiplicadores de Tipo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Os dados slime dentro do alcance de ataque e os dados da bolsa formam juntos os Tipos.
+[color=#42A5F5]No mínimo 2 dados: 2 = Lv.1, cada dado extra sobe 1 nível, 6 ou mais = Lv.5.[/color]
+O sistema escolhe a combinação com a maior pontuação total de ataque; uma combinação pode conter vários Tipos, e as pontuações se somam.
+[color=#FFB74D]Quando um grupo satisfaz vários Tipos ao mesmo tempo, conta apenas o Tipo de maior pontuação desse grupo, sem acumular.[/color]
+Pontuação de um Tipo = soma dos valores base dos dados participantes × multiplicador desse Tipo.
+[color=#AAAAAA]Dados que não formam Tipo não pontuam.[/color]","[color=#FFD700][font_size=20]Moltiplicatori di Tipo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+I dadi slime nel raggio d'attacco e i dadi della tasca formano insieme i Tipi.
+[color=#42A5F5]Almeno 2 dadi: 2 = Lv.1, ogni dado extra sale di 1 livello, 6 o più = Lv.5.[/color]
+Il sistema sceglie la combinazione col punteggio totale d'attacco più alto; una combinazione può contenere più Tipi, e i punteggi si sommano.
+[color=#FFB74D]Quando un gruppo soddisfa più Tipi contemporaneamente, conta solo il Tipo col punteggio più alto del gruppo, senza accumuli.[/color]
+Punteggio di un Tipo = somma dei valori base dei dadi partecipanti × moltiplicatore di quel Tipo.
+[color=#AAAAAA]I dadi che non formano Tipi non fanno punteggio.[/color]"
+"[color=#FFD700][font_size=20]骰型组合[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]对子[/color]：点数相同的骰子至少 2 个，颜色不限。例：红3+蓝3。
+[color=#FFD700]顺子[/color]：点数连续的骰子至少 2 个，颜色不限，[color=#42A5F5]重复点数只按 1 个参与连续点计数[/color]。例：红2+蓝2+黄3+绿4（两个 2 只算 1 个，连续点为 2/3/4）。
+[color=#FFD700]同色[/color]：颜色相同的骰子至少 2 个，点数不限。例：红2+红5。
+[color=#FFD700]同对[/color]：同色且同点数的骰子至少 2 个。例：红3+红3。
+[color=#FFD700]同顺[/color]：同色且点数连续的骰子至少 2 个，[color=#42A5F5]重复点数只按 1 个参与连续点计数[/color]。例：红2+红2+红3（两个 2 只算 1 个，连续点为 2/3）。
+[color=#42A5F5]骰型等级：与骰型倍率说明相同，2 个为 Lv.1，每多 1 个升 1 级，6 个及以上为 Lv.5；顺子/同顺按去重后的连续点数量计算。[/color]
+[color=#FFB74D]同一分组同时满足多种骰型时（如红3+红3 既是同对又是对子），只取该组最高分的一种，不重复叠加。[/color]","[color=#FFD700][font_size=20]骰型组合[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]对子[/color]：点数相同的骰子至少 2 个，颜色不限。例：红3+蓝3。
+[color=#FFD700]顺子[/color]：点数连续的骰子至少 2 个，颜色不限，[color=#42A5F5]重复点数只按 1 个参与连续点计数[/color]。例：红2+蓝2+黄3+绿4（两个 2 只算 1 个，连续点为 2/3/4）。
+[color=#FFD700]同色[/color]：颜色相同的骰子至少 2 个，点数不限。例：红2+红5。
+[color=#FFD700]同对[/color]：同色且同点数的骰子至少 2 个。例：红3+红3。
+[color=#FFD700]同顺[/color]：同色且点数连续的骰子至少 2 个，[color=#42A5F5]重复点数只按 1 个参与连续点计数[/color]。例：红2+红2+红3（两个 2 只算 1 个，连续点为 2/3）。
+[color=#42A5F5]骰型等级：与骰型倍率说明相同，2 个为 Lv.1，每多 1 个升 1 级，6 个及以上为 Lv.5；顺子/同顺按去重后的连续点数量计算。[/color]
+[color=#FFB74D]同一分组同时满足多种骰型时（如红3+红3 既是同对又是对子），只取该组最高分的一种，不重复叠加。[/color]","[color=#FFD700][font_size=20]Type Combos[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]Pair[/color]: at least 2 dice with the same points, any colors. E.g.: Red3+Blue3.
+[color=#FFD700]Straight[/color]: at least 2 dice with consecutive points, any colors, [color=#42A5F5]repeated point values count only once toward consecutive points[/color]. E.g.: Red2+Blue2+Yellow3+Green4 (the two 2s count as one; consecutive points 2/3/4).
+[color=#FFD700]Flush[/color]: at least 2 dice of the same color, any points. E.g.: Red2+Red5.
+[color=#FFD700]Color Pair[/color]: at least 2 dice of the same color and same point. E.g.: Red3+Red3.
+[color=#FFD700]Color Straight[/color]: at least 2 dice of the same color with consecutive points, [color=#42A5F5]repeated point values count only once toward consecutive points[/color]. E.g.: Red2+Red2+Red3 (the two 2s count as one; consecutive points 2/3).
+[color=#42A5F5]Type level: same rules as Type Multipliers, 2 make Lv.1, each extra die raises the level by 1, 6 or more = Lv.5; Straight/Color Straight count by deduplicated consecutive points.[/color]
+[color=#FFB74D]When a group meets several Types at once (e.g. Red3+Red3 is both a Color Pair and a Pair), only the highest-scoring Type of that group counts, without stacking.[/color]","[color=#FFD700][font_size=20]種類の組み合わせ[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]ペア[/color]：同じ点数のサイコロが 2 個以上、色は不定。例：赤3+青3。
+[color=#FFD700]ストレート[/color]：連続した点数のサイコロが 2 個以上、色は不定、[color=#42A5F5]重複した点数は連続点の計数に 1 個としてのみ参加[/color]。例：赤2+青2+黄3+緑4（2 つの 2 は 1 個と数え、連続点は 2/3/4）。
+[color=#FFD700]同色[/color]：同じ色のサイコロが 2 個以上、点数は不定。例：赤2+赤5。
+[color=#FFD700]同色ペア[/color]：同色かつ同点数のサイコロが 2 個以上。例：赤3+赤3。
+[color=#FFD700]同色ストレート[/color]：同色かつ連続した点数のサイコロが 2 個以上、[color=#42A5F5]重複した点数は連続点の計数に 1 個としてのみ参加[/color]。例：赤2+赤2+赤3（2 つの 2 は 1 個と数え、連続点は 2/3）。
+[color=#42A5F5]種類レベル：種類倍率の説明と同じく、2 個で Lv.1、1 個増えるごとに 1 レベル上昇、6 個以上で Lv.5。ストレート/同色ストレートは重複を除いた連続点の数で計算。[/color]
+[color=#FFB74D]同じグループが複数の種類を同時に満たす場合（例：赤3+赤3 は同色ペアかつペア）、そのグループでは最も高い得点の 1 種類のみを採用し、重複加算しません。[/color]","[color=#FFD700][font_size=20]종류 조합[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]페어[/color]: 같은 점수의 주사위 2개 이상, 색은 자유. 예: 빨강3+파랑3.
+[color=#FFD700]스트레이트[/color]: 연속된 점수의 주사위 2개 이상, 색은 자유, [color=#42A5F5]중복 점수는 연속 점수 계산에 1개로만 참여[/color]. 예: 빨강2+파랑2+노랑3+녹색4(두 개의 2는 1개로 계산, 연속 점수 2/3/4).
+[color=#FFD700]동색[/color]: 같은 색의 주사위 2개 이상, 점수는 자유. 예: 빨강2+빨강5.
+[color=#FFD700]컬러 페어[/color]: 같은 색이면서 같은 점수의 주사위 2개 이상. 예: 빨강3+빨강3.
+[color=#FFD700]컬러 스트레이트[/color]: 같은 색이며 연속된 점수의 주사위 2개 이상, [color=#42A5F5]중복 점수는 연속 점수 계산에 1개로만 참여[/color]. 예: 빨강2+빨강2+빨강3(두 개의 2는 1개로 계산, 연속 점수 2/3).
+[color=#42A5F5]종류 레벨: 종류 배수 설명과 동일, 2개면 Lv.1, 1개 추가마다 1레벨 상승, 6개 이상은 Lv.5; 스트레이트/컬러 스트레이트는 중복을 제거한 연속 점수 개수로 계산합니다.[/color]
+[color=#FFB74D]한 그룹이 여러 종류를 동시에 만족할 때(예: 빨강3+빨강3은 컬러 페어이면서 페어), 해당 그룹에서 가장 높은 점수의 한 가지만 적용하며 중복 누적되지 않습니다.[/color]","[color=#FFD700][font_size=20]骰型組合[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]對子[/color]：點數相同的骰子至少 2 個，顏色不限。例：紅3+藍3。
+[color=#FFD700]順子[/color]：點數連續的骰子至少 2 個，顏色不限，[color=#42A5F5]重複點數只按 1 個參與連續點計數[/color]。例：紅2+藍2+黃3+綠4（兩個 2 只算 1 個，連續點為 2/3/4）。
+[color=#FFD700]同色[/color]：顏色相同的骰子至少 2 個，點數不限。例：紅2+紅5。
+[color=#FFD700]同對[/color]：同色且同點數的骰子至少 2 個。例：紅3+紅3。
+[color=#FFD700]同順[/color]：同色且點數連續的骰子至少 2 個，[color=#42A5F5]重複點數只按 1 個參與連續點計數[/color]。例：紅2+紅2+紅3（兩個 2 只算 1 個，連續點為 2/3）。
+[color=#42A5F5]骰型等級：與骰型倍率說明相同，2 個為 Lv.1，每多 1 個升 1 級，6 個及以上為 Lv.5；順子/同順按去重後的連續點數量計算。[/color]
+[color=#FFB74D]同一分組同時滿足多種骰型時（如紅3+紅3 既是同對又是對子），只取該組最高分的一種，不重複疊加。[/color]","[color=#FFD700][font_size=20]Combos de Types[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]Paire[/color] : au moins 2 dés de mêmes points, couleurs libres. Ex. : rouge3+bleu3.
+[color=#FFD700]Suite[/color] : au moins 2 dés à points consécutifs, couleurs libres, [color=#42A5F5]les points répétés ne comptent qu'une fois dans le décompte des points consécutifs[/color]. Ex. : rouge2+bleu2+jaune3+vert4 (les deux 2 n'en comptent qu'un ; points consécutifs 2/3/4).
+[color=#FFD700]Couleur[/color] : au moins 2 dés de même couleur, points libres. Ex. : rouge2+rouge5.
+[color=#FFD700]Paire de couleur[/color] : au moins 2 dés de même couleur et de même point. Ex. : rouge3+rouge3.
+[color=#FFD700]Suite de couleur[/color] : au moins 2 dés de même couleur à points consécutifs, [color=#42A5F5]les points répétés ne comptent qu'une fois dans le décompte des points consécutifs[/color]. Ex. : rouge2+rouge2+rouge3 (les deux 2 n'en comptent qu'un ; points consécutifs 2/3).
+[color=#42A5F5]Niveau de Type : mêmes règles que Multiplicateurs de Type, 2 dés = Lv.1, chaque dé supplémentaire monte d'un niveau, 6 ou plus = Lv.5 ; Suite/Suite de couleur se calculent sur les points consécutifs dédupliqués.[/color]
+[color=#FFB74D]Quand un groupe satisfait plusieurs Types à la fois (ex. rouge3+rouge3 est à la fois Paire de couleur et Paire), seul le Type au score le plus élevé du groupe compte, sans cumul.[/color]","[color=#FFD700][font_size=20]Typ-Kombinationen[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]Paar[/color]: mindestens 2 Würfel mit gleichen Punkten, Farbe beliebig. Z. B.: Rot3+Blau3.
+[color=#FFD700]Straight[/color]: mindestens 2 Würfel mit aufeinanderfolgenden Punkten, Farbe beliebig, [color=#42A5F5]doppelte Punkte zählen bei der Sequenz nur einmal[/color]. Z. B.: Rot2+Blau2+Gelb3+Grün4 (die beiden 2er zählen als 1; Sequenz 2/3/4).
+[color=#FFD700]Gleichfarbig[/color]: mindestens 2 Würfel gleicher Farbe, Punkte beliebig. Z. B.: Rot2+Rot5.
+[color=#FFD700]Farbpaar[/color]: mindestens 2 Würfel gleicher Farbe und gleicher Punkte. Z. B.: Rot3+Rot3.
+[color=#FFD700]Farb-Straight[/color]: mindestens 2 Würfel gleicher Farbe mit aufeinanderfolgenden Punkten, [color=#42A5F5]doppelte Punkte zählen bei der Sequenz nur einmal[/color]. Z. B.: Rot2+Rot2+Rot3 (die beiden 2er zählen als 1; Sequenz 2/3).
+[color=#42A5F5]Typ-Level: gleiche Regeln wie Typ-Multiplikatoren, 2 = Lv.1, jeder weitere +1 Level, 6 oder mehr = Lv.5; Straight/Farb-Straight zählen nach den deduplizierten Sequenzpunkten.[/color]
+[color=#FFB74D]Erfüllt eine Gruppe mehrere Typen gleichzeitig (z. B. Rot3+Rot3 ist Farbpaar und Paar), zählt nur der punktehöchste Typ dieser Gruppe, ohne Stapelung.[/color]","[color=#FFD700][font_size=20]Combinaciones de Tipo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]Par[/color]: al menos 2 dados con los mismos puntos, cualquier color. Ej.: rojo3+azul3.
+[color=#FFD700]Escalera[/color]: al menos 2 dados con puntos consecutivos, cualquier color, [color=#42A5F5]los puntos repetidos cuentan solo una vez para la consecución[/color]. Ej.: rojo2+azul2+amarillo3+verde4 (los dos 2 cuentan como 1; consecución 2/3/4).
+[color=#FFD700]Color[/color]: al menos 2 dados del mismo color, puntos libres. Ej.: rojo2+rojo5.
+[color=#FFD700]Par de color[/color]: al menos 2 dados del mismo color y mismos puntos. Ej.: rojo3+rojo3.
+[color=#FFD700]Escalera de color[/color]: al menos 2 dados del mismo color con puntos consecutivos, [color=#42A5F5]los puntos repetidos cuentan solo una vez para la consecución[/color]. Ej.: rojo2+rojo2+rojo3 (los dos 2 cuentan como 1; consecución 2/3).
+[color=#42A5F5]Nivel de Tipo: mismas reglas que Multiplicadores de Tipo, 2 dados = Lv.1, cada dado extra sube 1 nivel, 6 o más = Lv.5; Escalera/Escalera de color se calculan con los puntos consecutivos tras deduplicar.[/color]
+[color=#FFB74D]Cuando un grupo satisface varios Tipos a la vez (p. ej., rojo3+rojo3 es Par de color y también Par), solo cuenta el Tipo de mayor puntuación de ese grupo, sin acumular.[/color]","[color=#FFD700][font_size=20]Combinações de Tipo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]Par[/color]: pelo menos 2 dados com os mesmos pontos, qualquer cor. Ex.: vermelho3+azul3.
+[color=#FFD700]Sequência[/color]: pelo menos 2 dados com pontos consecutivos, qualquer cor, [color=#42A5F5]pontos repetidos contam apenas uma vez na contagem consecutiva[/color]. Ex.: vermelho2+azul2+amarelo3+verde4 (os dois 2 contam como 1; pontos consecutivos 2/3/4).
+[color=#FFD700]Cor[/color]: pelo menos 2 dados da mesma cor, pontos livres. Ex.: vermelho2+vermelho5.
+[color=#FFD700]Par de cor[/color]: pelo menos 2 dados da mesma cor e mesmos pontos. Ex.: vermelho3+vermelho3.
+[color=#FFD700]Sequência de cor[/color]: pelo menos 2 dados da mesma cor com pontos consecutivos, [color=#42A5F5]pontos repetidos contam apenas uma vez na contagem consecutiva[/color]. Ex.: vermelho2+vermelho2+vermelho3 (os dois 2 contam como 1; pontos consecutivos 2/3).
+[color=#42A5F5]Nível de Tipo: mesmas regras dos Multiplicadores de Tipo, 2 dados = Lv.1, cada dado extra sobe 1 nível, 6 ou mais = Lv.5; Sequência/Sequência de cor contam pelos pontos consecutivos após deduplicar.[/color]
+[color=#FFB74D]Quando um grupo satisfaz vários Tipos ao mesmo tempo (ex.: vermelho3+vermelho3 é Par de cor e também Par), conta apenas o Tipo de maior pontuação desse grupo, sem acumular.[/color]","[color=#FFD700][font_size=20]Combinazioni di Tipo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+[color=#FFD700]Coppia[/color]: almeno 2 dadi con gli stessi punti, colori liberi. Es.: rosso3+blu3.
+[color=#FFD700]Sequenza[/color]: almeno 2 dadi con punti consecutivi, colori liberi, [color=#42A5F5]i punti ripetuti contano solo una volta nel conteggio dei punti consecutivi[/color]. Es.: rosso2+blu2+giallo3+verde4 (i due 2 contano come 1; punti consecutivi 2/3/4).
+[color=#FFD700]Colore[/color]: almeno 2 dadi dello stesso colore, punti liberi. Es.: rosso2+rosso5.
+[color=#FFD700]Coppia di colore[/color]: almeno 2 dadi dello stesso colore e stessi punti. Es.: rosso3+rosso3.
+[color=#FFD700]Sequenza di colore[/color]: almeno 2 dadi dello stesso colore con punti consecutivi, [color=#42A5F5]i punti ripetuti contano solo una volta nel conteggio dei punti consecutivi[/color]. Es.: rosso2+rosso2+rosso3 (i due 2 contano come 1; punti consecutivi 2/3).
+[color=#42A5F5]Livello di Tipo: stesse regole dei Moltiplicatori di Tipo, 2 dadi = Lv.1, ogni dado extra sale di 1 livello, 6 o più = Lv.5; Sequenza/Sequenza di colore si calcolano sui punti consecutivi senza duplicati.[/color]
+[color=#FFB74D]Quando un gruppo soddisfa più Tipi contemporaneamente (es. rosso3+rosso3 è sia Coppia di colore che Coppia), conta solo il Tipo col punteggio più alto del gruppo, senza accumuli.[/color]"
+"[color=#FFD700][font_size=20]点数分值[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+1～6 点各有独立的基础分值，每局开始时随机分配。
+[color=#42A5F5]每点基础分值在 5～15 之间，六种点数合计 60 点。[/color]
+只有组成骰型的骰子，其基础分值才计入得分。
+[color=#FFD700]单个骰型得分 = 参与骰子的基础分值之和 × 该骰型倍率[/color]
+[color=#AAAAAA]未组成骰型的骰子不产生分数。[/color]","[color=#FFD700][font_size=20]点数分值[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+1～6 点各有独立的基础分值，每局开始时随机分配。
+[color=#42A5F5]每点基础分值在 5～15 之间，六种点数合计 60 点。[/color]
+只有组成骰型的骰子，其基础分值才计入得分。
+[color=#FFD700]单个骰型得分 = 参与骰子的基础分值之和 × 该骰型倍率[/color]
+[color=#AAAAAA]未组成骰型的骰子不产生分数。[/color]","[color=#FFD700][font_size=20]Point Scores[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Points 1–6 each have an independent base value, randomly assigned at the start of each run.
+[color=#42A5F5]Each point's base value falls between 5 and 15, and the six point values total 60.[/color]
+Only dice that form a Type contribute their base value to the score.
+[color=#FFD700]Single Type score = sum of the base values of the participating dice × that Type's multiplier[/color]
+[color=#AAAAAA]Dice that form no Type produce no score.[/color]","[color=#FFD700][font_size=20]点数配点[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+1～6 の点はそれぞれ独立した基礎配点を持ち、毎試合の開始時にランダムに割り当てられます。
+[color=#42A5F5]各点の基礎配点は 5～15 の間で、6 種類の点数の合計は 60 点。[/color]
+種類を構成したサイコロの基礎配点のみが得点に加算されます。
+[color=#FFD700]種類 1 つのスコア = 参加サイコロの基礎配点の合計 × その種類の倍率[/color]
+[color=#AAAAAA]種類を構成しなかったサイコロは得点を生みません。[/color]","[color=#FFD700][font_size=20]점수 배점[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+1~6의 점수는 각자 독립된 기본 점수를 가지며, 게임 시작 시 무작위로 배정됩니다.
+[color=#42A5F5]각 점수의 기본값은 5~15 사이이며, 여섯 점수의 합계는 60점입니다.[/color]
+종류를 이룬 주사위의 기본 점수만 점수에 계산됩니다.
+[color=#FFD700]종류 1개의 점수 = 참여 주사위의 기본 점수 합 × 해당 종류의 배수[/color]
+[color=#AAAAAA]종류를 이루지 못한 주사위는 점수를 내지 않습니다.[/color]","[color=#FFD700][font_size=20]點數分值[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+1～6 點各有獨立的基礎分值，每局開始時隨機分配。
+[color=#42A5F5]每點基礎分值在 5～15 之間，六種點數合計 60 點。[/color]
+只有組成骰型的骰子，其基礎分值才計入得分。
+[color=#FFD700]單個骰型得分 = 參與骰子的基礎分值之和 × 該骰型倍率[/color]
+[color=#AAAAAA]未組成骰型的骰子不產生分數。[/color]","[color=#FFD700][font_size=20]Valeurs des points[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Les points de 1 à 6 ont chacun une valeur de base indépendante, attribuée au hasard au début de chaque partie.
+[color=#42A5F5]La valeur de base de chaque point se situe entre 5 et 15, et les six points totalisent 60.[/color]
+Seuls les dés formant un Type voient leur valeur de base compter dans le score.
+[color=#FFD700]Score d'un Type = somme des valeurs de base des dés participants × multiplicateur de ce Type[/color]
+[color=#AAAAAA]Les dés ne formant aucun Type ne produisent aucun score.[/color]","[color=#FFD700][font_size=20]Punktwerte[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Die Punkte 1–6 haben jeweils einen unabhängigen Grundwert, der zu Beginn jeder Partie zufällig zugewiesen wird.
+[color=#42A5F5]Der Grundwert jedes Punkts liegt zwischen 5 und 15, die sechs Punktwerte ergeben zusammen 60.[/color]
+Nur Würfel, die einen Typ bilden, tragen ihren Grundwert zum Score bei.
+[color=#FFD700]Punktzahl eines Typs = Summe der Grundwerte der beteiligten Würfel × Multiplikator dieses Typs[/color]
+[color=#AAAAAA]Würfel, die keinen Typ bilden, erzeugen keinen Score.[/color]","[color=#FFD700][font_size=20]Valores de puntos[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Los puntos del 1 al 6 tienen cada uno un valor base independiente, asignado al azar al inicio de cada partida.
+[color=#42A5F5]El valor base de cada punto está entre 5 y 15, y los seis puntos suman 60 en total.[/color]
+Solo los dados que forman un Tipo aportan su valor base a la puntuación.
+[color=#FFD700]Puntuación de un Tipo = suma de los valores base de los dados participantes × multiplicador de ese Tipo[/color]
+[color=#AAAAAA]Los dados que no forman Tipo no producen puntuación.[/color]","[color=#FFD700][font_size=20]Valores dos pontos[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Os pontos de 1 a 6 têm cada um um valor base independente, atribuído aleatoriamente no início de cada partida.
+[color=#42A5F5]O valor base de cada ponto fica entre 5 e 15, e os seis pontos somam 60 no total.[/color]
+Apenas dados que formam um Tipo têm seu valor base contado na pontuação.
+[color=#FFD700]Pontuação de um Tipo = soma dos valores base dos dados participantes × multiplicador desse Tipo[/color]
+[color=#AAAAAA]Dados que não formam Tipo não produzem pontuação.[/color]","[color=#FFD700][font_size=20]Valori dei punti[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+I punti da 1 a 6 hanno ciascuno un valore base indipendente, assegnato a caso all'inizio di ogni partita.
+[color=#42A5F5]Il valore base di ogni punto è tra 5 e 15, e i sei punti totalizzano 60.[/color]
+Solo i dadi che formano un Tipo fanno valere il loro valore base nel punteggio.
+[color=#FFD700]Punteggio di un Tipo = somma dei valori base dei dadi partecipanti × moltiplicatore di quel Tipo[/color]
+[color=#AAAAAA]I dadi che non formano Tipi non producono punteggio.[/color]"
+"[color=#FFD700][font_size=20]骰子口袋[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+口袋最多保存 [color=#FFD700]1 个骰子[/color]，并加入下一次攻击的骰型计算。
+参与计分后立即消耗；未参与计分时进入掉落候选。
+[color=#42A5F5]只有 1 个掉落骰子时自动保留；多个时选择 1 个，其余丢弃。[/color]
+[color=#FFB74D]过关时口袋清空。[/color]","[color=#FFD700][font_size=20]骰子口袋[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+口袋最多保存 [color=#FFD700]1 个骰子[/color]，并加入下一次攻击的骰型计算。
+参与计分后立即消耗；未参与计分时进入掉落候选。
+[color=#42A5F5]只有 1 个掉落骰子时自动保留；多个时选择 1 个，其余丢弃。[/color]
+[color=#FFB74D]过关时口袋清空。[/color]","[color=#FFD700][font_size=20]Dice Pocket[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+The pocket holds up to [color=#FFD700]1 die[/color], which joins the next attack's Type calculation.
+It is consumed once used for scoring; if not used for scoring it becomes a drop candidate.
+[color=#42A5F5]With only 1 dropped die it is kept automatically; with several, pick 1 and discard the rest.[/color]
+[color=#FFB74D]The pocket empties when a stage is cleared.[/color]","[color=#FFD700][font_size=20]サイコロポケット[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+ポケットは [color=#FFD700]1 個のサイコロ[/color]まで保存でき、次の攻撃の種類計算に参加します。
+得点に参加した時点で消費。未参加の場合はドロップ候補に入ります。
+[color=#42A5F5]ドロップサイコロが 1 個のみなら自動的に保留。複数ある場合は 1 個を選び、残りを捨てます。[/color]
+[color=#FFB74D]ステージ通過時にポケットは空になります。[/color]","[color=#FFD700][font_size=20]주사위 주머니[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+주머니에는 [color=#FFD700]주사위 1개[/color]까지 보관되며 다음 공격의 종류 계산에 참여합니다.
+점수에 참여하면 즉시 소모됩니다. 미참여 시 드롭 후보가 됩니다.
+[color=#42A5F5]드롭 주사위가 1개뿐이면 자동 보관되고, 여러 개일 때는 1개를 골라 나머지는 버립니다.[/color]
+[color=#FFB74D]스테이지를 통과하면 주머니는 비워집니다.[/color]","[color=#FFD700][font_size=20]骰子口袋[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+口袋最多儲存 [color=#FFD700]1 個骰子[/color]，並加入下一次攻擊的骰型計算。
+參與計分後立即消耗；未參與計分時進入掉落候選。
+[color=#42A5F5]只有 1 個掉落骰子時自動保留；多個時選擇 1 個，其餘丟棄。[/color]
+[color=#FFB74D]過關時口袋清空。[/color]","[color=#FFD700][font_size=20]Poche à dés[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+La poche conserve au maximum [color=#FFD700]1 dé[/color], qui participe au calcul des Types de la prochaine attaque.
+Il est consommé dès qu'il participe au score ; s'il n'y participe pas, il devient candidat au drop.
+[color=#42A5F5]Avec 1 seul dé dropé, conservation automatique ; s'il y en a plusieurs, il faut en choisir 1 et jeter les autres.[/color]
+[color=#FFB74D]La poche se vide au passage de l'étage.[/color]","[color=#FFD700][font_size=20]Würfeltasche[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Die Tasche fasst höchstens [color=#FFD700]1 Würfel[/color], der in die Typberechnung des nächsten Angriffs einfließt.
+Er wird verbraucht, sobald er zum Score beiträgt; ohne Score-Beteiligung wird er zum Drop-Kandidaten.
+[color=#42A5F5]Nur 1 gedroppter Würfel wird automatisch behalten; bei mehreren 1 auswählen, den Rest verwerfen.[/color]
+[color=#FFB74D]Beim Stufendurchgang wird die Tasche geleert.[/color]","[color=#FFD700][font_size=20]Bolsa de dados[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+La bolsa guarda como máximo [color=#FFD700]1 dado[/color], que participa en el cálculo de Tipos del próximo ataque.
+Se consume en cuanto participa en la puntuación; si no participa, pasa a ser candidato de drop.
+[color=#42A5F5]Con 1 solo dado de drop se conserva automáticamente; con varios, elige 1 y descarta el resto.[/color]
+[color=#FFB74D]La bolsa se vacía al superar la ronda.[/color]","[color=#FFD700][font_size=20]Bolsa de dados[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+A bolsa guarda no máximo [color=#FFD700]1 dado[/color], que entra no cálculo de Tipos do próximo ataque.
+É consumido ao participar da pontuação; sem participação, vira candidato a drop.
+[color=#42A5F5]Com apenas 1 dado de drop, é mantido automaticamente; com vários, escolha 1 e descarte o resto.[/color]
+[color=#FFB74D]A bolsa esvazia ao passar de fase.[/color]","[color=#FFD700][font_size=20]Tasca dei dadi[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+La tasca conserva al massimo [color=#FFD700]1 dado[/color], che partecipa al calcolo dei Tipi del prossimo attacco.
+Viene consumato appena partecipa al punteggio; se non partecipa, diventa candidato al drop.
+[color=#42A5F5]Con 1 solo dado dropato viene tenuto automaticamente; se sono più di uno, scegline 1 e scarta il resto.[/color]
+[color=#FFB74D]La tasca si svuota al superamento del livello.[/color]"
+"[color=#FFD700][font_size=20]分数预告[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+预告本次选中攻击的骰型得分，[color=#FFD700]包含口袋骰子[/color]。
+[color=#42A5F5]BUFF 已改变的基础分值或骰型倍率，会反映在预告中。[/color]
+[color=#FFB74D]不包含攻击结算后由 BUFF 额外追加的分数。[/color]","[color=#FFD700][font_size=20]分数预告[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+预告本次选中攻击的骰型得分，[color=#FFD700]包含口袋骰子[/color]。
+[color=#42A5F5]BUFF 已改变的基础分值或骰型倍率，会反映在预告中。[/color]
+[color=#FFB74D]不包含攻击结算后由 BUFF 额外追加的分数。[/color]","[color=#FFD700][font_size=20]Score Preview[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Previews the Type score of the currently selected attack, [color=#FFD700]including pocket dice[/color].
+[color=#42A5F5]Base values or Type multipliers changed by BUFFs are reflected in the preview.[/color]
+[color=#FFB74D]Does not include extra score added by BUFFs after attack resolution.[/color]","[color=#FFD700][font_size=20]スコア予告[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+今回選択した攻撃の種類スコアを予告します。[color=#FFD700]ポケットのサイコロを含む[/color]。
+[color=#42A5F5]BUFF が変えた基礎配点や種類倍率は予告に反映されます。[/color]
+[color=#FFB74D]攻撃の解決後に BUFF が追加するスコアは含まれません。[/color]","[color=#FFD700][font_size=20]점수 미리보기[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+이번에 선택한 공격의 종류 점수를 미리 보여주며, [color=#FFD700]주머니 주사위가 포함됩니다[/color].
+[color=#42A5F5]BUFF가 바꾼 기본 점수나 종류 배수는 미리보기에 반영됩니다.[/color]
+[color=#FFB74D]공격 정산 후 BUFF가 추가하는 점수는 포함되지 않습니다.[/color]","[color=#FFD700][font_size=20]分數預告[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+預告本次選中攻擊的骰型得分，[color=#FFD700]包含口袋骰子[/color]。
+[color=#42A5F5]BUFF 已改變的基礎分值或骰型倍率，會反映在預告中。[/color]
+[color=#FFB74D]不包含攻擊結算後由 BUFF 額外追加的分數。[/color]","[color=#FFD700][font_size=20]Aperçu du score[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Annonce le score de Types de l'attaque sélectionnée, [color=#FFD700]dés de la poche inclus[/color].
+[color=#42A5F5]Les valeurs de base ou les multiplicateurs de Type modifiés par des BUFFs se reflètent dans l'aperçu.[/color]
+[color=#FFB74D]N'inclut pas les scores supplémentaires ajoutés par les BUFFs après la résolution de l'attaque.[/color]","[color=#FFD700][font_size=20]Punktevorschau[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Zeigt den Typ-Score des aktuell gewählten Angriffs voraus, [color=#FFD700]einschließlich Taschen-Würfel[/color].
+[color=#42A5F5]Von BUFFs veränderte Grundwerte oder Typ-Multiplikatoren fließen in die Vorschau ein.[/color]
+[color=#FFB74D]Zusätzliche Punkte von BUFFs nach der Angriffsauflösung sind nicht enthalten.[/color]","[color=#FFD700][font_size=20]Vista previa de puntuación[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Muestra la puntuación de Tipos del ataque seleccionado, [color=#FFD700]incluidos los dados de la bolsa[/color].
+[color=#42A5F5]Los valores base o multiplicadores de Tipo modificados por BUFFs se reflejan en la vista previa.[/color]
+[color=#FFB74D]No incluye la puntuación extra añadida por BUFFs tras la resolución del ataque.[/color]","[color=#FFD700][font_size=20]Prévia de pontuação[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Mostra a pontuação de Tipos do ataque selecionado, [color=#FFD700]incluindo dados da bolsa[/color].
+[color=#42A5F5]Valores base ou multiplicadores de Tipo alterados por BUFFs aparecem na prévia.[/color]
+[color=#FFB74D]Não inclui a pontuação extra adicionada por BUFFs após a resolução do ataque.[/color]","[color=#FFD700][font_size=20]Anteprima del punteggio[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Mostra il punteggio dei Tipi dell'attacco selezionato, [color=#FFD700]dadi della tasca inclusi[/color].
+[color=#42A5F5]Valori base o moltiplicatori di Tipo modificati da BUFF si riflettono nell'anteprima.[/color]
+[color=#FFB74D]Non include il punteggio extra aggiunto dai BUFF dopo la risoluzione dell'attacco.[/color]"
+"[color=#FFD700][font_size=20]Buff 栏[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+展示本局已获得并生效的 BUFF，悬停图标可查看详情。
+[color=#FFD700]过关后可进入商店购买 BUFF。[/color]
+[color=#0fff5b]部分 BUFF 满足条件时会自动激活。[/color]","[color=#FFD700][font_size=20]Buff 栏[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+展示本局已获得并生效的 BUFF，悬停图标可查看详情。
+[color=#FFD700]过关后可进入商店购买 BUFF。[/color]
+[color=#0fff5b]部分 BUFF 满足条件时会自动激活。[/color]","[color=#FFD700][font_size=20]Buff Bar[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Shows the BUFFs acquired and active this run; hover an icon for details.
+[color=#FFD700]After clearing a stage you can enter the shop to buy BUFFs.[/color]
+[color=#0fff5b]Some BUFFs activate automatically when their conditions are met.[/color]","[color=#FFD700][font_size=20]Buff 欄[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+この試合で獲得し効果中の BUFF を表示します。アイコンにホバーすると詳細を確認できます。
+[color=#FFD700]ステージ通過後はショップで BUFF を購入できます。[/color]
+[color=#0fff5b]条件を満たすと自動発動する BUFF もあります。[/color]","[color=#FFD700][font_size=20]Buff 바[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+이번 판에서 획득해 발동 중인 BUFF를 표시합니다. 아이콘에 호버하면 상세를 볼 수 있습니다.
+[color=#FFD700]스테이지 통과 후 상점에서 BUFF를 구매할 수 있습니다.[/color]
+[color=#0fff5b]일부 BUFF는 조건을 충족하면 자동 발동합니다.[/color]","[color=#FFD700][font_size=20]Buff 欄[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+展示本局已獲得並生效的 BUFF，懸停圖示可檢視詳情。
+[color=#FFD700]過關後可進入商店購買 BUFF。[/color]
+[color=#0fff5b]部分 BUFF 滿足條件時會自動啟用。[/color]","[color=#FFD700][font_size=20]Barre de Buffs[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Affiche les BUFFs acquis et actifs de cette partie ; survolez une icône pour les détails.
+[color=#FFD700]Après avoir passé un étage, vous pouvez entrer en boutique pour acheter des BUFFs.[/color]
+[color=#0fff5b]Certains BUFFs s'activent automatiquement lorsque leurs conditions sont remplies.[/color]","[color=#FFD700][font_size=20]Buff-Leiste[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Zeigt die in dieser Partie erhaltenen und wirksamen BUFFs; Icon überfahren für Details.
+[color=#FFD700]Nach dem Stufendurchgang kannst du im Shop BUFFs kaufen.[/color]
+[color=#0fff5b]Manche BUFFs aktivieren sich automatisch, wenn ihre Bedingungen erfüllt sind.[/color]","[color=#FFD700][font_size=20]Barra de Buffs[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Muestra los BUFFs obtenidos y activos en esta partida; pasa el cursor por un icono para ver detalles.
+[color=#FFD700]Tras superar una ronda puedes entrar en la tienda a comprar BUFFs.[/color]
+[color=#0fff5b]Algunos BUFFs se activan automáticamente al cumplirse sus condiciones.[/color]","[color=#FFD700][font_size=20]Barra de Buffs[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Mostra os BUFFs obtidos e ativos nesta partida; passe o mouse no ícone para ver detalhes.
+[color=#FFD700]Depois de passar de fase, você pode entrar na loja para comprar BUFFs.[/color]
+[color=#0fff5b]Alguns BUFFs ativam automaticamente quando as condições são atendidas.[/color]","[color=#FFD700][font_size=20]Barra dei Buff[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Mostra i BUFF ottenuti e attivi in questa partita; passa sul'icona per i dettagli.
+[color=#FFD700]Dopo aver superato un livello puoi entrare nel negozio e comprare BUFF.[/color]
+[color=#0fff5b]Alcuni BUFF si attivano automaticamente quando le condizioni sono soddisfatte.[/color]"
+"[color=#FFD700][font_size=20]Debuff 栏[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+精英或 BOSS 可能带来一个或多个 DEBUFF。
+[color=#0fff5b]满足骰型门槛并击杀精英或 BOSS 后，可提前清除对应 DEBUFF。[/color]
+[color=#FFB74D]未提前清除的 DEBUFF 会在过关时统一清除。[/color]","[color=#FFD700][font_size=20]Debuff 栏[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+精英或 BOSS 可能带来一个或多个 DEBUFF。
+[color=#0fff5b]满足骰型门槛并击杀精英或 BOSS 后，可提前清除对应 DEBUFF。[/color]
+[color=#FFB74D]未提前清除的 DEBUFF 会在过关时统一清除。[/color]","[color=#FFD700][font_size=20]Debuff Bar[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Elites or the BOSS may bring one or more DEBUFFs.
+[color=#0fff5b]After meeting the Type threshold and killing the Elite or BOSS, the corresponding DEBUFF can be cleared early.[/color]
+[color=#FFB74D]DEBUFFs not cleared early are removed together when the stage is cleared.[/color]","[color=#FFD700][font_size=20]Debuff 欄[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+エリートや BOSS は 1 つ以上の DEBUFF をもたらすことがあります。
+[color=#0fff5b]種類の敷居を満たしてエリートか BOSS を撃破すると、対応する DEBUFF を早期に解除できます。[/color]
+[color=#FFB74D]早期解除しなかった DEBUFF はステージ通過時に一括解除されます。[/color]","[color=#FFD700][font_size=20]Debuff 바[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+엘리트나 BOSS는 DEBUFF를 하나 이상 가져올 수 있습니다.
+[color=#0fff5b]종류 기준을 충족하고 엘리트나 BOSS를 처치하면 해당 DEBUFF를 조기에 해제할 수 있습니다.[/color]
+[color=#FFB74D]조기 해제하지 않은 DEBUFF는 스테이지 통과 시 일괄 해제됩니다.[/color]","[color=#FFD700][font_size=20]Debuff 欄[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+精英或 BOSS 可能帶來一個或多個 DEBUFF。
+[color=#0fff5b]滿足骰型門檻並擊殺精英或 BOSS 後，可提前清除對應 DEBUFF。[/color]
+[color=#FFB74D]未提前清除的 DEBUFF 會在過關時統一清除。[/color]","[color=#FFD700][font_size=20]Barre de Debuffs[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Les Élites ou le BOSS peuvent apporter un ou plusieurs DEBUFFs.
+[color=#0fff5b]Après avoir rempli le seuil de Type et tué l'Élite ou le BOSS, le DEBUFF correspondant peut être levé par anticipation.[/color]
+[color=#FFB74D]Les DEBUFFs non levés par anticipation sont retirés en bloc au passage de l'étage.[/color]","[color=#FFD700][font_size=20]Debuff-Leiste[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Eliten oder der BOSS können einen oder mehrere DEBUFFs mitbringen.
+[color=#0fff5b]Nach Erfüllen der Typ-Schwelle und dem Töten der Elite oder des BOSS kann der entsprechende DEBUFF vorzeitig entfernt werden.[/color]
+[color=#FFB74D]Nicht vorzeitig entfernte DEBUFFs werden beim Stufendurchgang gesammelt entfernt.[/color]","[color=#FFD700][font_size=20]Barra de Debuffs[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Los élites o el BOSS pueden traer uno o varios DEBUFFs.
+[color=#0fff5b]Al cumplir el umbral de Tipo y derribar al élite o al BOSS, se puede retirar antes de tiempo el DEBUFF correspondiente.[/color]
+[color=#FFB74D]Los DEBUFFs no retirados antes de tiempo se eliminan en bloque al superar la ronda.[/color]","[color=#FFD700][font_size=20]Barra de Debuffs[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Elites ou o BOSS podem trazer um ou mais DEBUFFs.
+[color=#0fff5b]Ao atender o limiar de Tipo e abater o Elite ou o BOSS, o DEBUFF correspondente pode ser removido antecipadamente.[/color]
+[color=#FFB74D]DEBUFFs não removidos antecipadamente são eliminados em bloco ao passar de fase.[/color]","[color=#FFD700][font_size=20]Barra dei Debuff[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Gli Élite o il BOSS possono portare uno o più DEBUFF.
+[color=#0fff5b]Soddisfatta la soglia di Tipo e ucciso l'Élite o il BOSS, il DEBUFF corrispondente può essere rimosso in anticipo.[/color]
+[color=#FFB74D]I DEBUFF non rimossi in anticipo vengono eliminati in blocco al superamento del livello.[/color]"
+"[color=#FFD700][font_size=20]额外技能格[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+额外技能（金币技能）最多装备 [color=#FFD700]3 个[/color]。
+满栏购买时需要选择替换。
+[color=#42A5F5]每个技能每关可使用 1 次，过关恢复。[/color]
+[color=#FFD700]Q/W/E 分别对应三个技能槽位。[/color]","[color=#FFD700][font_size=20]额外技能格[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+额外技能（金币技能）最多装备 [color=#FFD700]3 个[/color]。
+满栏购买时需要选择替换。
+[color=#42A5F5]每个技能每关可使用 1 次，过关恢复。[/color]
+[color=#FFD700]Q/W/E 分别对应三个技能槽位。[/color]","[color=#FFD700][font_size=20]Extra Skill Slots[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Up to [color=#FFD700]3[/color] extra skills (coin skills) can be equipped.
+Buying with a full bar requires choosing a replacement.
+[color=#42A5F5]Each skill can be used once per stage and recovers when the stage is cleared.[/color]
+[color=#FFD700]Q/W/E correspond to the three skill slots.[/color]","[color=#FFD700][font_size=20]追加スキル枠[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+追加スキル（金貨スキル）は最大 [color=#FFD700]3 個[/color]まで装備できます。
+満枠の状態での購入は入れ替えを選択する必要があります。
+[color=#42A5F5]各スキルは 1 ステージに 1 回使用でき、通過で回復します。[/color]
+[color=#FFD700]Q/W/E が 3 つのスキル枠に対応。[/color]","[color=#FFD700][font_size=20]추가 스킬 칸[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+추가 스킬(코인 스킬)은 최대 [color=#FFD700]3개[/color]까지 장착할 수 있습니다.
+만석 상태에서 구매 시 교체를 선택해야 합니다.
+[color=#42A5F5]각 스킬은 스테이지당 1회 사용할 수 있으며 통과 시 회복됩니다.[/color]
+[color=#FFD700]Q/W/E가 세 스킬 슬롯에 대응합니다.[/color]","[color=#FFD700][font_size=20]額外技能格[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+額外技能（金幣技能）最多裝備 [color=#FFD700]3 個[/color]。
+滿欄購買時需要選擇替換。
+[color=#42A5F5]每個技能每關可使用 1 次，過關恢復。[/color]
+[color=#FFD700]Q/W/E 分別對應三個技能槽位。[/color]","[color=#FFD700][font_size=20]Emplacements de compétences[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Jusqu'à [color=#FFD700]3[/color] compétences supplémentaires (compétences pièces) peuvent être équipées.
+Un achat barre pleine impose de choisir un remplacement.
+[color=#42A5F5]Chaque compétence s'utilise 1 fois par étage et se récupère au passage.[/color]
+[color=#FFD700]Q/W/E correspondent aux trois emplacements de compétences.[/color]","[color=#FFD700][font_size=20]Zusatz-Skillplätze[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Bis zu [color=#FFD700]3[/color] Zusatz-Skills (Münz-Skills) können ausgerüstet werden.
+Beim Kauf bei voller Leiste muss ein Ersatz gewählt werden.
+[color=#42A5F5]Jeder Skill ist 1× pro Stufe einsetzbar und erholt sich beim Durchgang.[/color]
+[color=#FFD700]Q/W/E entsprechen den drei Skillplätzen.[/color]","[color=#FFD700][font_size=20]Huecos de habilidad extra[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Se pueden equipar hasta [color=#FFD700]3[/color] habilidades extra (habilidades de moneda).
+Comprar con la barra llena obliga a elegir un reemplazo.
+[color=#42A5F5]Cada habilidad se usa 1 vez por ronda y se recupera al superarla.[/color]
+[color=#FFD700]Q/W/E corresponden a los tres huecos de habilidad.[/color]","[color=#FFD700][font_size=20]Espaços de habilidade extra[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Até [color=#FFD700]3[/color] habilidades extras (habilidades de moeda) podem ser equipadas.
+Comprar com a barra cheia exige escolher uma substituição.
+[color=#42A5F5]Cada habilidade pode ser usada 1 vez por fase e se recupera ao passar dela.[/color]
+[color=#FFD700]Q/W/E correspondem aos três espaços de habilidade.[/color]","[color=#FFD700][font_size=20]Slot di abilità extra[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Fino a [color=#FFD700]3[/color] abilità extra (abilità moneta) possono essere equipaggiate.
+Comprare con la barra piena richiede di scegliere una sostituzione.
+[color=#42A5F5]Ogni abilità si usa 1 volta per livello e si recupera al superamento.[/color]
+[color=#FFD700]Q/W/E corrispondono ai tre slot di abilità.[/color]"
+"[color=#FFD700][font_size=20]血瓶进度[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+按骰型得分累计，[color=#FFB74D]不包含 BUFF 额外追加分数[/color]。
+达到要求获得 1 瓶血瓶，之后所需分数提高。
+[color=#42A5F5]血瓶达到存储上限时，需先使用血瓶腾出位置才能获得下一瓶。[/color]","[color=#FFD700][font_size=20]血瓶进度[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+按骰型得分累计，[color=#FFB74D]不包含 BUFF 额外追加分数[/color]。
+达到要求获得 1 瓶血瓶，之后所需分数提高。
+[color=#42A5F5]血瓶达到存储上限时，需先使用血瓶腾出位置才能获得下一瓶。[/color]","[color=#FFD700][font_size=20]Potion Progress[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Accumulates by Type score, [color=#FFB74D]excluding extra score added by BUFFs[/color].
+Reaching the threshold grants 1 healing potion; the required score then increases.
+[color=#42A5F5]When potions hit the storage cap, use one to free a slot before earning the next.[/color]","[color=#FFD700][font_size=20]ポーション進度[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+種類スコアで累積します。[color=#FFB74D]BUFF の追加スコアは含まれません[/color]。
+必要値に達すると回復ポーションを 1 本獲得し、その後必要スコアが上昇します。
+[color=#42A5F5]ポーションが保管上限に達した場合、次を獲得するには先に 1 本使って空きを作る必要があります。[/color]","[color=#FFD700][font_size=20]물약 진행도[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+종류 점수로 누적되며, [color=#FFB74D]BUFF 추가 점수는 제외됩니다[/color].
+기준에 도달하면 회복 물약 1개를 획득하고, 이후 필요 점수가 상승합니다.
+[color=#42A5F5]물약이 저장 상한에 도달하면 다음 물약을 얻으려면 먼저 1개를 사용해 자리를 내야 합니다.[/color]","[color=#FFD700][font_size=20]血瓶進度[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+按骰型得分累計，[color=#FFB74D]不包含 BUFF 額外追加分數[/color]。
+達到要求獲得 1 瓶血瓶，之後所需分數提高。
+[color=#42A5F5]血瓶達到儲存上限時，需先使用血瓶騰出位置才能獲得下一瓶。[/color]","[color=#FFD700][font_size=20]Progression de potion[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Cumulée par le score de Types, [color=#FFB74D]hors scores supplémentaires des BUFFs[/color].
+Atteindre le seuil accorde 1 potion de vie ; le score requis augmente ensuite.
+[color=#42A5F5]Quand les potions atteignent la limite de stockage, il faut en utiliser une pour libérer une place avant d'en gagner une nouvelle.[/color]","[color=#FFD700][font_size=20]Trank-Fortschritt[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Kumuliert über den Typ-Score, [color=#FFB74D]ohne zusätzliche BUFF-Punkte[/color].
+Erreicht die Schwelle, gibt es 1 Heiltrank; danach steigt die nötige Punktzahl.
+[color=#42A5F5]Ist das Tranklager voll, muss erst ein Trank genutzt werden, um Platz für den nächsten zu schaffen.[/color]","[color=#FFD700][font_size=20]Progreso de poción[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Se acumula por la puntuación de Tipos, [color=#FFB74D]sin la puntuación extra de los BUFFs[/color].
+Al alcanzar el umbral se obtiene 1 poción de vida; después la puntuación requerida aumenta.
+[color=#42A5F5]Cuando las pociones llegan al límite de almacenamiento, hay que usar una para hacer hueco antes de conseguir la siguiente.[/color]","[color=#FFD700][font_size=20]Progresso da poção[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Acumula pela pontuação de Tipos, [color=#FFB74D]sem a pontuação extra de BUFFs[/color].
+Ao atingir a meta, ganha 1 poção de vida; depois a pontuação necessária aumenta.
+[color=#42A5F5]Quando as poções atingem o limite de armazenamento, é preciso usar uma para abrir espaço antes de ganhar a próxima.[/color]","[color=#FFD700][font_size=20]Progressione della pozione[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Si accumula col punteggio dei Tipi, [color=#FFB74D]escluso il punteggio extra dei BUFF[/color].
+Raggiungere la soglia concede 1 pozione di vita; poi il punteggio richiesto aumenta.
+[color=#42A5F5]Quando le pozioni raggiungono il limite di stoccaggio, va usata una pozione per fare spazio prima di ottenerne un'altra.[/color]"
+"[color=#FFD700][font_size=20]经验条[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+每击杀 1 个史莱姆获得 [color=#FFD700]1 点经验[/color]。
+经验满后从三张升级卡牌中选择 1 张。
+[color=#0fff5b]每升 5 级，生命上限 +1[/color]；[color=#FFB74D]当前生命不会因此恢复。[/color]","[color=#FFD700][font_size=20]经验条[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+每击杀 1 个史莱姆获得 [color=#FFD700]1 点经验[/color]。
+经验满后从三张升级卡牌中选择 1 张。
+[color=#0fff5b]每升 5 级，生命上限 +1[/color]；[color=#FFB74D]当前生命不会因此恢复。[/color]","[color=#FFD700][font_size=20]EXP Bar[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Each Slime killed grants [color=#FFD700]1 EXP point[/color].
+When EXP is full, choose 1 of three level-up cards.
+[color=#0fff5b]Every 5 levels, max HP +1[/color]; [color=#FFB74D]current HP is not restored by this.[/color]","[color=#FFD700][font_size=20]経験値バー[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+スライムを 1 体撃破するごとに [color=#FFD700]1 経験値[/color]を獲得。
+経験値が満タンになると 3 枚のレベルアップカードから 1 枚を選択します。
+[color=#0fff5b]5 レベルごとに最大 HP +1[/color]；[color=#FFB74D]現在の HP はこれでは回復しません。[/color]","[color=#FFD700][font_size=20]경험치 바[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+슬라임 1마리를 처치할 때마다 [color=#FFD700]경험치 1점[/color]을 얻습니다.
+경험치가 가득 차면 세 장의 레벨업 카드 중 1장을 선택합니다.
+[color=#0fff5b]5레벨마다 최대 HP +1[/color]; [color=#FFB74D]현재 HP는 이로 인해 회복되지 않습니다.[/color]","[color=#FFD700][font_size=20]經驗條[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+每擊殺 1 個史萊姆獲得 [color=#FFD700]1 點經驗[/color]。
+經驗滿後從三張升級卡牌中選擇 1 張。
+[color=#0fff5b]每升 5 級，生命上限 +1[/color]；[color=#FFB74D]當前生命不會因此恢復。[/color]","[color=#FFD700][font_size=20]Barre d'EXP[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Chaque slime tué accorde [color=#FFD700]1 point d'EXP[/color].
+EXP pleine, choisissez 1 carte parmi les trois cartes de montée de niveau.
+[color=#0fff5b]Tous les 5 niveaux, PV max +1[/color] ; [color=#FFB74D]les PV actuels ne sont pas restaurés pour autant.[/color]","[color=#FFD700][font_size=20]EXP-Leiste[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Jeder getötete Slime gewährt [color=#FFD700]1 EXP-Punkt[/color].
+Ist die EXP voll, wähle 1 aus drei Level-up-Karten.
+[color=#0fff5b]Alle 5 Level, max HP +1[/color]; [color=#FFB74D]aktuelle HP werden dadurch nicht wiederhergestellt.[/color]","[color=#FFD700][font_size=20]Barra de EXP[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Cada Slime derribado otorga [color=#FFD700]1 punto de EXP[/color].
+Con la EXP llena, elige 1 de las tres cartas de subida de nivel.
+[color=#0fff5b]Cada 5 niveles, HP máx. +1[/color]; [color=#FFB74D]el HP actual no se recupera por ello.[/color]","[color=#FFD700][font_size=20]Barra de EXP[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Cada Slime abatido concede [color=#FFD700]1 ponto de EXP[/color].
+Com a EXP cheia, escolha 1 entre três cartas de subir de nível.
+[color=#0fff5b]A cada 5 níveis, HP máx. +1[/color]; [color=#FFB74D]o HP atual não se recupera por isso.[/color]","[color=#FFD700][font_size=20]Barra EXP[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Ogni Slime ucciso concede [color=#FFD700]1 punto EXP[/color].
+Con l'EXP piena, scegli 1 tra le tre carte di potenziamento.
+[color=#0fff5b]Ogni 5 livelli, HP massimi +1[/color]; [color=#FFB74D]gli HP attuali non si recuperano per questo.[/color]"
+"[color=#FFD700][font_size=20]护盾[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+回合结算时按 [color=#42A5F5]剩余史莱姆数 － 护盾数[/color] 计算。
+结果小于等于 0 时不受伤；大于 0 时每 3 只造成 1 点伤害，零头也算 1 点。
+[color=#FFD700]例：7 只史莱姆、2 点护盾 → 受到 2 点伤害。[/color]","[color=#FFD700][font_size=20]护盾[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+回合结算时按 [color=#42A5F5]剩余史莱姆数 － 护盾数[/color] 计算。
+结果小于等于 0 时不受伤；大于 0 时每 3 只造成 1 点伤害，零头也算 1 点。
+[color=#FFD700]例：7 只史莱姆、2 点护盾 → 受到 2 点伤害。[/color]","[color=#FFD700][font_size=20]Shield[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+At turn settlement, calculated as [color=#42A5F5]remaining Slimes － Shield[/color].
+No damage at 0 or below; above 0, every 3 Slimes deal 1 damage, with remainders counted as 1.
+[color=#FFD700]Example: 7 Slimes, 2 Shield → take 2 damage.[/color]","[color=#FFD700][font_size=20]シールド[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+ターン決算時に [color=#42A5F5]残りスライム数 － シールド数[/color] で計算します。
+結果が 0 以下なら被弾なし。0 より大きければ 3 体ごとに 1 ダメージ、端数も 1 として数えます。
+[color=#FFD700]例：スライム 7 体、シールド 2 → 2 ダメージを受ける。[/color]","[color=#FFD700][font_size=20]실드[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+턴 정산 시 [color=#42A5F5]남은 슬라임 수 － 실드 수[/color]로 계산합니다.
+결과가 0 이하이면 피해가 없습니다. 0보다 크면 3마리마다 1 피해를 받고, 나머지도 1로 계산합니다.
+[color=#FFD700]예: 슬라임 7마리, 실드 2 → 2 피해를 받습니다.[/color]","[color=#FFD700][font_size=20]護盾[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+回合結算時按 [color=#42A5F5]剩餘史萊姆數 － 護盾數[/color] 計算。
+結果小於等於 0 時不受傷；大於 0 時每 3 只造成 1 點傷害，零頭也算 1 點。
+[color=#FFD700]例：7 只史萊姆、2 點護盾 → 受到 2 點傷害。[/color]","[color=#FFD700][font_size=20]Bouclier[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Au règlement du tour, calculé selon [color=#42A5F5]slimes restants － Boucliers[/color].
+Aucun dégât à 0 ou moins ; au-delà de 0, chaque groupe de 3 slimes inflige 1 dégât, le reste compte pour 1.
+[color=#FFD700]Exemple : 7 slimes, 2 Boucliers → 2 dégâts subis.[/color]","[color=#FFD700][font_size=20]Schild[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Bei der Rundenabrechnung wird [color=#42A5F5]verbleibende Slimes － Schilde[/color] gerechnet.
+Bei 0 oder darunter kein Schaden; darüber verursachen je 3 Slimes 1 Schaden, Reste zählen als 1.
+[color=#FFD700]Beispiel: 7 Slimes, 2 Schilde → 2 Schaden erlitten.[/color]","[color=#FFD700][font_size=20]Escudo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+En el cierre de turno se calcula como [color=#42A5F5]slimes restantes － Escudos[/color].
+Con 0 o menos, sin daño; por encima de 0, cada 3 slimes infligen 1 de daño, y el resto cuenta como 1.
+[color=#FFD700]Ejemplo: 7 slimes, 2 de Escudo → recibes 2 de daño.[/color]","[color=#FFD700][font_size=20]Escudo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+No fechamento do turno, calculado como [color=#42A5F5]slimes restantes － Escudos[/color].
+Com 0 ou menos, sem dano; acima de 0, cada 3 slimes causam 1 de dano, e a sobra conta como 1.
+[color=#FFD700]Exemplo: 7 slimes, 2 de Escudo → sofre 2 de dano.[/color]","[color=#FFD700][font_size=20]Scudo[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Al bilancio del turno si calcola come [color=#42A5F5]slime rimasti － Scudi[/color].
+A 0 o meno, nessun danno; oltre 0, ogni 3 slime infliggono 1 danno, anche lo scarto conta come 1.
+[color=#FFD700]Esempio: 7 slime, 2 di Scudo → subisci 2 danni.[/color]"
+"[color=#FFD700][font_size=20]能量[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+显示当前能量 / 能量上限。
+[color=#0fff5b]击杀青色高亮的能量史莱姆，恢复 1 点能量。[/color]
+[color=#42A5F5]赋能技能成功施放时消耗 1 点。[/color]
+[color=#FFB74D]部分技能必须先赋能才能使用。[/color]","[color=#FFD700][font_size=20]能量[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+显示当前能量 / 能量上限。
+[color=#0fff5b]击杀青色高亮的能量史莱姆，恢复 1 点能量。[/color]
+[color=#42A5F5]赋能技能成功施放时消耗 1 点。[/color]
+[color=#FFB74D]部分技能必须先赋能才能使用。[/color]","[color=#FFD700][font_size=20]Energy[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Shows current Energy / max Energy.
+[color=#0fff5b]Kill the cyan-highlighted Energy Slimes to restore 1 Energy.[/color]
+[color=#42A5F5]Empowered skills consume 1 point on a successful cast.[/color]
+[color=#FFB74D]Some skills must be empowered first before use.[/color]","[color=#FFD700][font_size=20]エネルギー[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+現在のエネルギー / エネルギー上限を表示します。
+[color=#0fff5b]シアン色にハイライトされたエネルギースライムを撃破すると 1 回復。[/color]
+[color=#42A5F5]エンパワースキルは発動成功時に 1 消費します。[/color]
+[color=#FFB74D]先にエンパワーしなければ使えないスキルもあります。[/color]","[color=#FFD700][font_size=20]에너지[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+현재 에너지 / 에너지 상한을 표시합니다.
+[color=#0fff5b]청록색으로 하이라이트된 에너지 슬라임을 처치하면 1 회복됩니다.[/color]
+[color=#42A5F5]에너지 부여 스킬은 시전 성공 시 1 소모합니다.[/color]
+[color=#FFB74D]일부 스킬은 먼저 에너지를 부여해야 사용할 수 있습니다.[/color]","[color=#FFD700][font_size=20]能量[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+顯示當前能量 / 能量上限。
+[color=#0fff5b]擊殺青色高亮的能量史萊姆，恢復 1 點能量。[/color]
+[color=#42A5F5]賦能技能成功施放時消耗 1 點。[/color]
+[color=#FFB74D]部分技能必須先賦能才能使用。[/color]","[color=#FFD700][font_size=20]Énergie[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Affiche l'Énergie actuelle / l'Énergie max.
+[color=#0fff5b]Tuez les slimes d'énergie surlignés en cyan pour restaurer 1 Énergie.[/color]
+[color=#42A5F5]Les compétences énergisées consomment 1 point lors d'un lancement réussi.[/color]
+[color=#FFB74D]Certaines compétences doivent d'abord être énergisées pour être utilisées.[/color]","[color=#FFD700][font_size=20]Energie[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Zeigt aktuelle Energie / Energiemaximum.
+[color=#0fff5b]Töte cyan-hervorgehobene Energie-Slimes, um 1 Energie zurückzugewinnen.[/color]
+[color=#42A5F5]Energisierte Skills verbrauchen bei erfolgreichem Einsatz 1 Punkt.[/color]
+[color=#FFB74D]Manche Skills müssen erst energisiert werden, bevor sie eingesetzt werden können.[/color]","[color=#FFD700][font_size=20]Energía[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Muestra la Energía actual / la Energía máxima.
+[color=#0fff5b]Elimina los Slimes de energía resaltados en cian para recuperar 1 de Energía.[/color]
+[color=#42A5F5]Las habilidades energizadas consumen 1 punto al lanzarse con éxito.[/color]
+[color=#FFB74D]Algunas habilidades deben energizarse primero para poder usarse.[/color]","[color=#FFD700][font_size=20]Energia[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Mostra a Energia atual / o limite de Energia.
+[color=#0fff5b]Mata os Slimes de energia destacados em ciano para recuperar 1 de Energia.[/color]
+[color=#42A5F5]Habilidades energizadas consomem 1 ponto ao serem lançadas com sucesso.[/color]
+[color=#FFB74D]Algumas habilidades precisam ser energizadas antes de serem usadas.[/color]","[color=#FFD700][font_size=20]Energia[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Mostra l'Energia attuale / l'Energia massima.
+[color=#0fff5b]Uccidi gli Slime d'energia evidenziati in ciano per recuperare 1 Energia.[/color]
+[color=#42A5F5]Le abilità energizzate consumano 1 punto quando lanciate con successo.[/color]
+[color=#FFB74D]Alcune abilità vanno energizzate prima dell'uso.[/color]"
+"[color=#FFD700][font_size=20]英雄技能[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+当前英雄的 3 个专属技能。
+[color=#FFD700]数字键 1/2/3 分别对应三个技能。[/color]","[color=#FFD700][font_size=20]英雄技能[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+当前英雄的 3 个专属技能。
+[color=#FFD700]数字键 1/2/3 分别对应三个技能。[/color]","[color=#FFD700][font_size=20]Hero Skills[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+The current hero's 3 signature skills.
+[color=#FFD700]Number keys 1/2/3 correspond to the three skills.[/color]","[color=#FFD700][font_size=20]英雄スキル[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+現在の英雄の 3 つの専用スキル。
+[color=#FFD700]数字キー 1/2/3 が 3 つのスキルに対応。[/color]","[color=#FFD700][font_size=20]영웅 스킬[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+현재 영웅의 3개 전용 스킬.
+[color=#FFD700]숫자키 1/2/3이 세 스킬에 대응합니다.[/color]","[color=#FFD700][font_size=20]英雄技能[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+當前英雄的 3 個專屬技能。
+[color=#FFD700]數字鍵 1/2/3 分別對應三個技能。[/color]","[color=#FFD700][font_size=20]Compétences du héros[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Les 3 compétences signature du héros actuel.
+[color=#FFD700]Les touches 1/2/3 correspondent aux trois compétences.[/color]","[color=#FFD700][font_size=20]Helden-Skills[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Die 3 Spezial-Skills des aktuellen Helden.
+[color=#FFD700]Die Zifferntasten 1/2/3 entsprechen den drei Skills.[/color]","[color=#FFD700][font_size=20]Habilidades del héroe[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Las 3 habilidades exclusivas del héroe actual.
+[color=#FFD700]Las teclas 1/2/3 corresponden a las tres habilidades.[/color]","[color=#FFD700][font_size=20]Habilidades do herói[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+As 3 habilidades exclusivas do herói atual.
+[color=#FFD700]As teclas 1/2/3 correspondem às três habilidades.[/color]","[color=#FFD700][font_size=20]Abilità dell'eroe[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Le 3 abilità esclusive dell'eroe attuale.
+[color=#FFD700]I tasti numerici 1/2/3 corrispondono alle tre abilità.[/color]"
+"[color=#FFD700][font_size=20]赋能按钮[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+点击进入赋能状态，再点一次取消。
+[color=#FFB74D]没有能量时不能赋能；同时至多 1 个技能赋能。[/color]
+技能成功施放后消耗 1 点能量并复位。
+[color=#FFD700]快捷键：Alt+1/2/3[/color]","[color=#FFD700][font_size=20]赋能按钮[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+点击进入赋能状态，再点一次取消。
+[color=#FFB74D]没有能量时不能赋能；同时至多 1 个技能赋能。[/color]
+技能成功施放后消耗 1 点能量并复位。
+[color=#FFD700]快捷键：Alt+1/2/3[/color]","[color=#FFD700][font_size=20]Empower Button[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Click to enter the empower state; click again to cancel.
+[color=#FFB74D]Cannot empower without Energy; at most 1 skill empowered at a time.[/color]
+A successful cast consumes 1 Energy and resets.
+[color=#FFD700]Shortcut: Alt+1/2/3[/color]","[color=#FFD700][font_size=20]エンパワーボタン[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+クリックでエンパワー状態に入り、もう一度クリックで解除します。
+[color=#FFB74D]エネルギーがないとエンパワーできません。同時にエンパワーできるのは 1 スキルまで。[/color]
+スキルの発動成功時に 1 エネルギーを消費してリセットされます。
+[color=#FFD700]ショートカット：Alt+1/2/3[/color]","[color=#FFD700][font_size=20]에너지 부여 버튼[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+클릭하면 에너지 부여 상태에 진입하고, 한 번 더 클릭하면 취소됩니다.
+[color=#FFB74D]에너지가 없으면 부여할 수 없습니다. 동시에 1개 스킬만 부여할 수 있습니다.[/color]
+스킬 시전 성공 시 에너지 1을 소모하고 초기화됩니다.
+[color=#FFD700]단축키: Alt+1/2/3[/color]","[color=#FFD700][font_size=20]賦能按鈕[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+點選進入賦能狀態，再點一次取消。
+[color=#FFB74D]沒有能量時不能賦能；同時至多 1 個技能賦能。[/color]
+技能成功施放後消耗 1 點能量並復位。
+[color=#FFD700]快捷鍵：Alt+1/2/3[/color]","[color=#FFD700][font_size=20]Bouton d'énergisation[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Cliquez pour entrer en état d'énergisation, recliquez pour annuler.
+[color=#FFB74D]Impossible d'énergiser sans Énergie ; au maximum 1 compétence énergisée à la fois.[/color]
+Un lancement réussi consomme 1 point d'Énergie et réinitialise.
+[color=#FFD700]Raccourci : Alt+1/2/3[/color]","[color=#FFD700][font_size=20]Energisieren-Knopf[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Klick wechselt in den Energisieren-Zustand, erneuter Klick bricht ab.
+[color=#FFB74D]Ohne Energie kein Energisieren; gleichzeitig ist höchstens 1 Skill energisiert.[/color]
+Ein erfolgreicher Einsatz verbraucht 1 Energie und setzt zurück.
+[color=#FFD700]Tastenkürzel: Alt+1/2/3[/color]","[color=#FFD700][font_size=20]Botón de energización[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Haz clic para entrar en estado de energización; vuelve a hacer clic para cancelar.
+[color=#FFB74D]No se puede energizar sin Energía; como máximo 1 habilidad energizada a la vez.[/color]
+Un lanzamiento exitoso consume 1 punto de Energía y se restablece.
+[color=#FFD700]Atajo: Alt+1/2/3[/color]","[color=#FFD700][font_size=20]Botão de energização[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Clique para entrar no estado de energização; clique de novo para cancelar.
+[color=#FFB74D]Não é possível energizar sem Energia; no máximo 1 habilidade energizada por vez.[/color]
+Um lançamento bem-sucedido consome 1 ponto de Energia e reinicia.
+[color=#FFD700]Atalho: Alt+1/2/3[/color]","[color=#FFD700][font_size=20]Pulsante di energizzazione[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Fai clic per entrare nello stato di energizzazione, fai di nuovo clic per annullare.
+[color=#FFB74D]Impossibile energizzare senza Energia; al massimo 1 abilità energizzata alla volta.[/color]
+Un lancio riuscito consuma 1 punto di Energia e si azzera.
+[color=#FFD700]Scorciatoia: Alt+1/2/3[/color]"
+"[color=#FFD700][font_size=20]结束回合[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+放弃本次攻击并结束回合，获得随机颜色、随机 1～6 点的骰子。
+[color=#42A5F5]口袋已有骰子时，需要二选一保留。[/color]
+[color=#FFD700]快捷键：空格[/color]","[color=#FFD700][font_size=20]结束回合[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+放弃本次攻击并结束回合，获得随机颜色、随机 1～6 点的骰子。
+[color=#42A5F5]口袋已有骰子时，需要二选一保留。[/color]
+[color=#FFD700]快捷键：空格[/color]","[color=#FFD700][font_size=20]End Turn[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Give up this attack and end the turn, gaining a die of random color and random 1–6 points.
+[color=#42A5F5]If the pocket already holds a die, choose one of the two to keep.[/color]
+[color=#FFD700]Shortcut: Space[/color]","[color=#FFD700][font_size=20]ターン終了[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+今回の攻撃を放棄してターンを終了し、ランダムな色・ランダムな 1～6 の点のサイコロを 1 個獲得します。
+[color=#42A5F5]ポケットにサイコロがある場合は、二択でどちらかを保留します。[/color]
+[color=#FFD700]ショートカット：スペース[/color]","[color=#FFD700][font_size=20]턴 종료[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+이번 공격을 포기하고 턴을 종료하며, 무작위 색과 1~6점의 주사위를 1개 얻습니다.
+[color=#42A5F5]주머니에 주사위가 있으면 둘 중 하나를 골라 보관해야 합니다.[/color]
+[color=#FFD700]단축키: 스페이스[/color]","[color=#FFD700][font_size=20]結束回合[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+放棄本次攻擊並結束回合，獲得隨機顏色、隨機 1～6 點的骰子。
+[color=#42A5F5]口袋已有骰子時，需要二選一保留。[/color]
+[color=#FFD700]快捷鍵：空格[/color]","[color=#FFD700][font_size=20]Fin du tour[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Abandonne l'attaque en cours et termine le tour, en gagnant un dé de couleur aléatoire et de 1 à 6 points.
+[color=#42A5F5]Si la poche contient déjà un dé, il faut en garder un des deux.[/color]
+[color=#FFD700]Raccourci : Espace[/color]","[color=#FFD700][font_size=20]Runde beenden[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Gibt den aktuellen Angriff auf und beendet die Runde; du erhältst einen Würfel mit zufälliger Farbe und zufällig 1–6 Punkten.
+[color=#42A5F5]Ist bereits ein Würfel in der Tasche, muss einer von beiden behalten werden.[/color]
+[color=#FFD700]Tastenkürzel: Leertaste[/color]","[color=#FFD700][font_size=20]Terminar turno[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Renuncia a este ataque y termina el turno, obteniendo un dado de color aleatorio y de 1 a 6 puntos.
+[color=#42A5F5]Si la bolsa ya tiene un dado, hay que elegir cuál de los dos conservar.[/color]
+[color=#FFD700]Atajo: Espacio[/color]","[color=#FFD700][font_size=20]Encerrar turno[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Abre mão deste ataque e encerra o turno, ganhando um dado de cor aleatória e de 1 a 6 pontos.
+[color=#42A5F5]Se a bolsa já tiver um dado, é preciso escolher qual dos dois manter.[/color]
+[color=#FFD700]Atalho: Espaço[/color]","[color=#FFD700][font_size=20]Fine turno[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Rinuncia a questo attacco e termina il turno, ottenendo un dado di colore casuale e da 1 a 6 punti.
+[color=#42A5F5]Se la tasca ha già un dado, bisogna sceglierne uno dei due da tenere.[/color]
+[color=#FFD700]Scorciatoia: Spazio[/color]"
+"[color=#FFD700][font_size=20]重置移动[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+恢复英雄与场上史莱姆到移动前的位置，并回滚移动产生的分数。
+[color=#FFB74D]只有尚未攻击时才能撤回。[/color]
+[color=#FFD700]快捷键：R[/color]","[color=#FFD700][font_size=20]重置移动[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+恢复英雄与场上史莱姆到移动前的位置，并回滚移动产生的分数。
+[color=#FFB74D]只有尚未攻击时才能撤回。[/color]
+[color=#FFD700]快捷键：R[/color]","[color=#FFD700][font_size=20]Reset Move[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Restores the hero and the Slimes on the field to their pre-move positions and rolls back the score gained from the move.
+[color=#FFB74D]You can only undo before attacking.[/color]
+[color=#FFD700]Shortcut: R[/color]","[color=#FFD700][font_size=20]移動リセット[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+英雄と場上のスライムを移動前の位置に戻し、移動で得たスコアをロールバックします。
+[color=#FFB74D]取り消せるのは未攻撃の時だけです。[/color]
+[color=#FFD700]ショートカット：R[/color]","[color=#FFD700][font_size=20]이동 리셋[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+영웅과 필드의 슬라임을 이동 전 위치로 되돌리고, 이동으로 얻은 점수를 롤백합니다.
+[color=#FFB74D]공격하기 전에만 취소할 수 있습니다.[/color]
+[color=#FFD700]단축키: R[/color]","[color=#FFD700][font_size=20]重置移動[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+恢復英雄與場上史萊姆到移動前的位置，並回滾移動產生的分數。
+[color=#FFB74D]只有尚未攻擊時才能撤回。[/color]
+[color=#FFD700]快捷鍵：R[/color]","[color=#FFD700][font_size=20]Réinitialiser le déplacement[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Restaure le héros et les slimes du terrain à leur position d'avant le déplacement, et annule le score gagné par le déplacement.
+[color=#FFB74D]On ne peut annuler qu'avant d'avoir attaqué.[/color]
+[color=#FFD700]Raccourci : R[/color]","[color=#FFD700][font_size=20]Bewegung zurücksetzen[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Stellt Held und Slimes auf dem Feld auf die Positionen vor der Bewegung zurück und rollt die durch die Bewegung gewonnenen Punkte zurück.
+[color=#FFB74D]Nur vor dem Angriff abbrechbar.[/color]
+[color=#FFD700]Tastenkürzel: R[/color]","[color=#FFD700][font_size=20]Reiniciar movimiento[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Devuelve al héroe y a los slimes del campo a sus posiciones previas al movimiento y revierte la puntuación obtenida por él.
+[color=#FFB74D]Solo se puede deshacer antes de atacar.[/color]
+[color=#FFD700]Atajo: R[/color]","[color=#FFD700][font_size=20]Redefinir movimento[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Devolve o herói e os slimes do campo às posições anteriores ao movimento e reverte a pontuação obtida por ele.
+[color=#FFB74D]Só é possível desfazer antes de atacar.[/color]
+[color=#FFD700]Atalho: R[/color]","[color=#FFD700][font_size=20]Reimposta movimento[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Riporta l'eroe e gli slime del campo alle posizioni precedenti al movimento e azzera il punteggio ottenuto con esso.
+[color=#FFB74D]Si può annullare solo prima di aver attaccato.[/color]
+[color=#FFD700]Scorciatoia: R[/color]"
+"[color=#FFD700][font_size=20]使用血瓶[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+消耗 1 瓶血瓶恢复 1 点生命，不超过生命上限。
+[color=#FFB74D]没有血瓶或已满血时不能使用。[/color]
+[color=#AAAAAA]部分 BUFF 可以改变恢复量。[/color]
+[color=#FFD700]快捷键：F[/color]","[color=#FFD700][font_size=20]使用血瓶[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+消耗 1 瓶血瓶恢复 1 点生命，不超过生命上限。
+[color=#FFB74D]没有血瓶或已满血时不能使用。[/color]
+[color=#AAAAAA]部分 BUFF 可以改变恢复量。[/color]
+[color=#FFD700]快捷键：F[/color]","[color=#FFD700][font_size=20]Use Potion[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Consume 1 healing potion to restore 1 HP, up to max HP.
+[color=#FFB74D]Cannot use with no potions or at full HP.[/color]
+[color=#AAAAAA]Some BUFFs can change the amount restored.[/color]
+[color=#FFD700]Shortcut: F[/color]","[color=#FFD700][font_size=20]ポーション使用[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+回復ポーション 1 本を消費して HP を 1 回復します（最大 HP を超えない）。
+[color=#FFB74D]ポーションがない場合や満血の時は使用できません。[/color]
+[color=#AAAAAA]BUFF によっては回復量が変わることがあります。[/color]
+[color=#FFD700]ショートカット：F[/color]","[color=#FFD700][font_size=20]물약 사용[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+회복 물약 1개를 소모해 HP를 1 회복하며, 최대 HP를 넘지 않습니다.
+[color=#FFB74D]물약이 없거나 체력이 가득 찼을 때는 사용할 수 없습니다.[/color]
+[color=#AAAAAA]일부 BUFF는 회복량을 바꿀 수 있습니다.[/color]
+[color=#FFD700]단축키: F[/color]","[color=#FFD700][font_size=20]使用血瓶[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+消耗 1 瓶血瓶恢復 1 點生命，不超過生命上限。
+[color=#FFB74D]沒有血瓶或已滿血時不能使用。[/color]
+[color=#AAAAAA]部分 BUFF 可以改變恢復量。[/color]
+[color=#FFD700]快捷鍵：F[/color]","[color=#FFD700][font_size=20]Utiliser une potion[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Consomme 1 potion de vie pour restaurer 1 PV, sans dépasser les PV max.
+[color=#FFB74D]Impossible sans potion ou avec les PV pleins.[/color]
+[color=#AAAAAA]Certains BUFFs peuvent modifier la quantité restaurée.[/color]
+[color=#FFD700]Raccourci : F[/color]","[color=#FFD700][font_size=20]Trank verwenden[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Verbraucht 1 Heiltrank, um 1 LP wiederherzustellen, höchstens bis zum LP-Maximum.
+[color=#FFB74D]Ohne Trank oder bei vollem LP nicht einsetzbar.[/color]
+[color=#AAAAAA]Manche BUFFs können die Heilmenge verändern.[/color]
+[color=#FFD700]Tastenkürzel: F[/color]","[color=#FFD700][font_size=20]Usar poción[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Consume 1 poción de vida para recuperar 1 HP, sin superar el HP máximo.
+[color=#FFB74D]No se puede usar sin pociones o con el HP lleno.[/color]
+[color=#AAAAAA]Algunos BUFFs pueden cambiar la cantidad recuperada.[/color]
+[color=#FFD700]Atajo: F[/color]","[color=#FFD700][font_size=20]Usar poção[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Consome 1 poção de vida para recuperar 1 HP, sem ultrapassar o HP máximo.
+[color=#FFB74D]Não é possível usar sem poções ou com o HP cheio.[/color]
+[color=#AAAAAA]Alguns BUFFs podem alterar a quantidade recuperada.[/color]
+[color=#FFD700]Atalho: F[/color]","[color=#FFD700][font_size=20]Usa pozione[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Consuma 1 pozione di vita per recuperare 1 HP, senza superare gli HP massimi.
+[color=#FFB74D]Non si può usare senza pozioni o a vita piena.[/color]
+[color=#AAAAAA]Alcuni BUFF possono cambiare la quantità recuperata.[/color]
+[color=#FFD700]Scorciatoia: F[/color]"
+"[color=#FFD700][font_size=20]关闭帮助[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+关闭帮助界面并返回战局。
+[color=#FFD700]也可以按 H 关闭。[/color]","[color=#FFD700][font_size=20]关闭帮助[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+关闭帮助界面并返回战局。
+[color=#FFD700]也可以按 H 关闭。[/color]","[color=#FFD700][font_size=20]Close Help[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Closes the help screen and returns to the battle.
+[color=#FFD700]You can also press H to close.[/color]","[color=#FFD700][font_size=20]ヘルプを閉じる[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+ヘルプ画面を閉じて戦局に戻ります。
+[color=#FFD700]H キーでも閉じられます。[/color]","[color=#FFD700][font_size=20]도움말 닫기[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+도움말 화면을 닫고 전투로 돌아갑니다.
+[color=#FFD700]H 키로도 닫을 수 있습니다.[/color]","[color=#FFD700][font_size=20]關閉幫助[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+關閉幫助介面並返回戰局。
+[color=#FFD700]也可以按 H 關閉。[/color]","[color=#FFD700][font_size=20]Fermer l'aide[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Ferme l'écran d'aide et retourne à la bataille.
+[color=#FFD700]On peut aussi appuyer sur H pour fermer.[/color]","[color=#FFD700][font_size=20]Hilfe schließen[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Schließt den Hilfsbildschirm und kehrt zur Schlacht zurück.
+[color=#FFD700]Auch mit H schließbar.[/color]","[color=#FFD700][font_size=20]Cerrar la ayuda[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Cierra la pantalla de ayuda y vuelve a la batalla.
+[color=#FFD700]También puedes pulsar H para cerrar.[/color]","[color=#FFD700][font_size=20]Fechar a ajuda[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Fecha a tela de ajuda e volta à batalha.
+[color=#FFD700]Você também pode apertar H para fechar.[/color]","[color=#FFD700][font_size=20]Chiudi aiuto[/font_size][/color]
+[hr color=#777777 height=1 width=100%]
+Chiude la schermata di aiuto e torna alla battaglia.
+[color=#FFD700]Puoi chiudere anche premendo H.[/color]"
+关卡,关卡,Stage,ステージ,스테이지,關卡,Étage,Stufe,Ronda,Fase,Livello
+骰型等级奖励,骰型等级奖励,Type Level Bonus,種類レベルボーナス,종류 레벨 보상,骰型等級獎勵,Bonus de niveau de Type,Typstufen-Bonus,Bonus de nivel de Tipo,Bônus de nível de Tipo,Bonus di livello di Tipo
+暂停/设置,暂停/设置,Pause/Settings,ポーズ/設定,일시정지/설정,暫停/設定,Pause/Paramètres,Pause/Einstellungen,Pausa/Ajustes,Pausa/Ajustes,Pausa/Impostazioni
+帮助,帮助,Help,ヘルプ,도움말,幫助,Aide,Hilfe,Ayuda,Ajuda,Aiuto
+血瓶,血瓶,Potion,ポーション,물약,血瓶,Potion,Trank,Poción,Poção,Pozione
+重置移动,重置移动,Reset Move,移動リセット,이동 리셋,重置移動,Réinit. déplacement,Bewegung zurücksetzen,Reiniciar movimiento,Redefinir movimento,Reimposta movimento
+结束回合,结束回合,End Turn,ターン終了,턴 종료,結束回合,Fin du tour,Runde beenden,Terminar turno,Encerrar turno,Fine turno
+骰型倍率,骰型倍率,Type Multipliers,種類倍率,종류 배수,骰型倍率,Multiplicateurs de Type,Typ-Multiplikatoren,Multiplicadores de Tipo,Multiplicadores de Tipo,Moltiplicatori di Tipo
+骰型组合,骰型组合,Type Combos,種類の組み合わせ,종류 조합,骰型組合,Combos de Types,Typ-Kombinationen,Combinaciones de Tipo,Combinações de Tipo,Combinazioni di Tipo
+点数分值,点数分值,Point Scores,点数配点,점수 배점,點數分值,Valeurs des points,Punktwerte,Valores de puntos,Valores dos pontos,Valori dei punti
+骰子口袋,骰子口袋,Dice Pocket,サイコロポケット,주사위 주머니,骰子口袋,Poche à dés,Würfeltasche,Bolsa de dados,Bolsa de dados,Tasca dei dadi
+分数预告,分数预告,Score Preview,スコア予告,점수 미리보기,分數預告,Aperçu du score,Punktevorschau,Vista previa de puntuación,Prévia de pontuação,Anteprima del punteggio
+Buff栏,Buff栏,Buff Bar,Buff 欄,Buff 바,Buff欄,Barre de Buffs,Buff-Leiste,Barra de Buffs,Barra de Buffs,Barra dei Buff
+Debuff栏,Debuff栏,Debuff Bar,Debuff 欄,Debuff 바,Debuff欄,Barre de Debuffs,Debuff-Leiste,Barra de Debuffs,Barra de Debuffs,Barra dei Debuff
+额外技能格,额外技能格,Extra Skill Slots,追加スキル枠,추가 스킬 칸,額外技能格,Emplacements de compétences,Zusatz-Skillplätze,Huecos de habilidad extra,Espaços de habilidade extra,Slot di abilità extra
+血瓶进度,血瓶进度,Potion Progress,ポーション進度,물약 진행도,血瓶進度,Progression de potion,Trank-Fortschritt,Progreso de poción,Progresso da poção,Progressione della pozione
+经验条,经验条,EXP Bar,経験値バー,경험치 바,經驗條,Barre d'EXP,EXP-Leiste,Barra de EXP,Barra de EXP,Barra EXP
+护盾,护盾,Shield,シールド,실드,護盾,Bouclier,Schild,Escudo,Escudo,Scudo
+能量,能量,Energy,エネルギー,에너지,能量,Énergie,Energie,Energía,Energia,Energia
+职业技能,职业技能,Class Skills,職業スキル,직업 스킬,職業技能,Compétences de classe,Klassenskills,Habilidades de clase,Habilidades de classe,Abilità di classe
+赋能按钮,赋能按钮,Empower Button,エンパワーボタン,에너지 부여 버튼,賦能按鈕,Bouton d'énergisation,Energisieren-Knopf,Botón de energización,Botão de energização,Pulsante di energizzazione
+使用血瓶,使用血瓶,Use Potion,ポーション使用,물약 사용,使用血瓶,Utiliser une potion,Trank verwenden,Usar poción,Usar poção,Usa pozione
+关闭帮助,关闭帮助,Close Help,ヘルプを閉じる,도움말 닫기,關閉幫助,Fermer l'aide,Hilfe schließen,Cerrar la ayuda,Fechar a ajuda,Chiudi aiuto
+"[img=30]res://images/ui_icon/esc.tres[/img]		暂停/菜单
+	[img=30]res://images/ui_icon/q.tres[/img]		英雄第一个技能
+	[img=30]res://images/ui_icon/w.tres[/img]		英雄第二个技能
+	[img=30]res://images/ui_icon/e.tres[/img]		英雄第三个技能
+	[img=30]res://images/ui_icon/1.tres[/img]		第一个额外技能
+	[img=30]res://images/ui_icon/2.tres[/img]		第二个额外技能
+	[img=30]res://images/ui_icon/3.tres[/img]		第三个额外技能
+	[img=30]res://images/ui_icon/r.tres[/img]		重置移动
+	[img=30]res://images/ui_icon/f.tres[/img]		使用血瓶
+	[img=30]res://images/ui_icon/space.tres[/img]		回合结束
+	[img=30]res://images/ui_icon/h.tres[/img]		帮助/教学","[img=30]res://images/ui_icon/esc.tres[/img]		暂停/菜单
+	[img=30]res://images/ui_icon/q.tres[/img]		英雄第一个技能
+	[img=30]res://images/ui_icon/w.tres[/img]		英雄第二个技能
+	[img=30]res://images/ui_icon/e.tres[/img]		英雄第三个技能
+	[img=30]res://images/ui_icon/1.tres[/img]		第一个额外技能
+	[img=30]res://images/ui_icon/2.tres[/img]		第二个额外技能
+	[img=30]res://images/ui_icon/3.tres[/img]		第三个额外技能
+	[img=30]res://images/ui_icon/r.tres[/img]		重置移动
+	[img=30]res://images/ui_icon/f.tres[/img]		使用血瓶
+	[img=30]res://images/ui_icon/space.tres[/img]		回合结束
+	[img=30]res://images/ui_icon/h.tres[/img]		帮助/教学","[img=30]res://images/ui_icon/esc.tres[/img]		Pause/Menu
+	[img=30]res://images/ui_icon/q.tres[/img]		Hero skill 1
+	[img=30]res://images/ui_icon/w.tres[/img]		Hero skill 2
+	[img=30]res://images/ui_icon/e.tres[/img]		Hero skill 3
+	[img=30]res://images/ui_icon/1.tres[/img]		Extra skill 1
+	[img=30]res://images/ui_icon/2.tres[/img]		Extra skill 2
+	[img=30]res://images/ui_icon/3.tres[/img]		Extra skill 3
+	[img=30]res://images/ui_icon/r.tres[/img]		Reset Move
+	[img=30]res://images/ui_icon/f.tres[/img]		Use Potion
+	[img=30]res://images/ui_icon/space.tres[/img]		End Turn
+	[img=30]res://images/ui_icon/h.tres[/img]		Help/Tutorial","[img=30]res://images/ui_icon/esc.tres[/img]		ポーズ/メニュー
+	[img=30]res://images/ui_icon/q.tres[/img]		英雄スキル1
+	[img=30]res://images/ui_icon/w.tres[/img]		英雄スキル2
+	[img=30]res://images/ui_icon/e.tres[/img]		英雄スキル3
+	[img=30]res://images/ui_icon/1.tres[/img]		追加スキル1
+	[img=30]res://images/ui_icon/2.tres[/img]		追加スキル2
+	[img=30]res://images/ui_icon/3.tres[/img]		追加スキル3
+	[img=30]res://images/ui_icon/r.tres[/img]		移動リセット
+	[img=30]res://images/ui_icon/f.tres[/img]		ポーション使用
+	[img=30]res://images/ui_icon/space.tres[/img]		ターン終了
+	[img=30]res://images/ui_icon/h.tres[/img]		ヘルプ/チュートリアル","[img=30]res://images/ui_icon/esc.tres[/img]		일시정지/메뉴
+	[img=30]res://images/ui_icon/q.tres[/img]		영웅 스킬 1
+	[img=30]res://images/ui_icon/w.tres[/img]		영웅 스킬 2
+	[img=30]res://images/ui_icon/e.tres[/img]		영웅 스킬 3
+	[img=30]res://images/ui_icon/1.tres[/img]		추가 스킬 1
+	[img=30]res://images/ui_icon/2.tres[/img]		추가 스킬 2
+	[img=30]res://images/ui_icon/3.tres[/img]		추가 스킬 3
+	[img=30]res://images/ui_icon/r.tres[/img]		이동 리셋
+	[img=30]res://images/ui_icon/f.tres[/img]		물약 사용
+	[img=30]res://images/ui_icon/space.tres[/img]		턴 종료
+	[img=30]res://images/ui_icon/h.tres[/img]		도움말/튜토리얼","[img=30]res://images/ui_icon/esc.tres[/img]		暫停/選單
+	[img=30]res://images/ui_icon/q.tres[/img]		英雄第一個技能
+	[img=30]res://images/ui_icon/w.tres[/img]		英雄第二個技能
+	[img=30]res://images/ui_icon/e.tres[/img]		英雄第三個技能
+	[img=30]res://images/ui_icon/1.tres[/img]		第一個額外技能
+	[img=30]res://images/ui_icon/2.tres[/img]		第二個額外技能
+	[img=30]res://images/ui_icon/3.tres[/img]		第三個額外技能
+	[img=30]res://images/ui_icon/r.tres[/img]		重置移動
+	[img=30]res://images/ui_icon/f.tres[/img]		使用血瓶
+	[img=30]res://images/ui_icon/space.tres[/img]		回合結束
+	[img=30]res://images/ui_icon/h.tres[/img]		幫助/教學","[img=30]res://images/ui_icon/esc.tres[/img]		Pause/Menu
+	[img=30]res://images/ui_icon/q.tres[/img]		Compétence du héros 1
+	[img=30]res://images/ui_icon/w.tres[/img]		Compétence du héros 2
+	[img=30]res://images/ui_icon/e.tres[/img]		Compétence du héros 3
+	[img=30]res://images/ui_icon/1.tres[/img]		Compétence supp. 1
+	[img=30]res://images/ui_icon/2.tres[/img]		Compétence supp. 2
+	[img=30]res://images/ui_icon/3.tres[/img]		Compétence supp. 3
+	[img=30]res://images/ui_icon/r.tres[/img]		Réinit. déplacement
+	[img=30]res://images/ui_icon/f.tres[/img]		Utiliser une potion
+	[img=30]res://images/ui_icon/space.tres[/img]		Fin du tour
+	[img=30]res://images/ui_icon/h.tres[/img]		Aide/Tutoriel","[img=30]res://images/ui_icon/esc.tres[/img]		Pause/Menü
+	[img=30]res://images/ui_icon/q.tres[/img]		Helden-Skill 1
+	[img=30]res://images/ui_icon/w.tres[/img]		Helden-Skill 2
+	[img=30]res://images/ui_icon/e.tres[/img]		Helden-Skill 3
+	[img=30]res://images/ui_icon/1.tres[/img]		Zusatz-Skill 1
+	[img=30]res://images/ui_icon/2.tres[/img]		Zusatz-Skill 2
+	[img=30]res://images/ui_icon/3.tres[/img]		Zusatz-Skill 3
+	[img=30]res://images/ui_icon/r.tres[/img]		Bewegung zurücksetzen
+	[img=30]res://images/ui_icon/f.tres[/img]		Trank verwenden
+	[img=30]res://images/ui_icon/space.tres[/img]		Runde beenden
+	[img=30]res://images/ui_icon/h.tres[/img]		Hilfe/Tutorial","[img=30]res://images/ui_icon/esc.tres[/img]		Pausa/Menú
+	[img=30]res://images/ui_icon/q.tres[/img]		Habilidad del héroe 1
+	[img=30]res://images/ui_icon/w.tres[/img]		Habilidad del héroe 2
+	[img=30]res://images/ui_icon/e.tres[/img]		Habilidad del héroe 3
+	[img=30]res://images/ui_icon/1.tres[/img]		Habilidad extra 1
+	[img=30]res://images/ui_icon/2.tres[/img]		Habilidad extra 2
+	[img=30]res://images/ui_icon/3.tres[/img]		Habilidad extra 3
+	[img=30]res://images/ui_icon/r.tres[/img]		Reiniciar movimiento
+	[img=30]res://images/ui_icon/f.tres[/img]		Usar poción
+	[img=30]res://images/ui_icon/space.tres[/img]		Terminar turno
+	[img=30]res://images/ui_icon/h.tres[/img]		Ayuda/Tutorial","[img=30]res://images/ui_icon/esc.tres[/img]		Pausa/Menu
+	[img=30]res://images/ui_icon/q.tres[/img]		Habilidade do herói 1
+	[img=30]res://images/ui_icon/w.tres[/img]		Habilidade do herói 2
+	[img=30]res://images/ui_icon/e.tres[/img]		Habilidade do herói 3
+	[img=30]res://images/ui_icon/1.tres[/img]		Habilidade extra 1
+	[img=30]res://images/ui_icon/2.tres[/img]		Habilidade extra 2
+	[img=30]res://images/ui_icon/3.tres[/img]		Habilidade extra 3
+	[img=30]res://images/ui_icon/r.tres[/img]		Redefinir movimento
+	[img=30]res://images/ui_icon/f.tres[/img]		Usar poção
+	[img=30]res://images/ui_icon/space.tres[/img]		Encerrar turno
+	[img=30]res://images/ui_icon/h.tres[/img]		Ajuda/Tutorial","[img=30]res://images/ui_icon/esc.tres[/img]		Pausa/Menù
+	[img=30]res://images/ui_icon/q.tres[/img]		Abilità dell'eroe 1
+	[img=30]res://images/ui_icon/w.tres[/img]		Abilità dell'eroe 2
+	[img=30]res://images/ui_icon/e.tres[/img]		Abilità dell'eroe 3
+	[img=30]res://images/ui_icon/1.tres[/img]		Abilità extra 1
+	[img=30]res://images/ui_icon/2.tres[/img]		Abilità extra 2
+	[img=30]res://images/ui_icon/3.tres[/img]		Abilità extra 3
+	[img=30]res://images/ui_icon/r.tres[/img]		Reimposta movimento
+	[img=30]res://images/ui_icon/f.tres[/img]		Usa pozione
+	[img=30]res://images/ui_icon/space.tres[/img]		Fine turno
+	[img=30]res://images/ui_icon/h.tres[/img]		Aiuto/Tutorial"
+快捷键,快捷键,Shortcuts,ショートカット,단축키,快捷鍵,Raccourcis,Tastenkürzel,Atajos,Atalhos,Scorciatoie
+右键取消,右键取消,Right-click to cancel,右クリックで取消,우클릭으로 취소,右鍵取消,Clic droit pour annuler,Rechtsklick zum Abbrechen,Clic derecho para cancelar,Clique direito para cancelar,Tasto destro per annullare
+历史记录,历史记录,History,履歴,기록,歷史記錄,Historique,Verlauf,Historial,Histórico,Cronologia
+金币霸主,金币霸主,Coin Overlord,金貨の覇者,주화의 패자,金幣霸主,Overlord Monnayage,Münz-Overlord,Señor de la Acuñación,Soberano da Cunhagem,Sovrano della Coniazione
+横斩,横斩,Horizontal Slash,横斬り,가로 베기,橫斬,Taillade horizontale,Horizontalschlag,Tajo horizontal,Corte horizontal,Taglio orizzontale
+面前横向3格击杀范围内史莱姆，使用能量时为面前2排3列共6格,面前横向3格击杀范围内史莱姆，使用能量时为面前2排3列共6格,"Kills Slimes within 3 tiles horizontally in front; when Energy is used, covers 2 rows × 3 columns (6 tiles in total) in front.",正面横3マス以内のスライムを撃破。エネルギー使用時は正面2行3列の計6マス,정면 가로 3칸 범위의 슬라임을 처치합니다. 에너지 사용 시 정면 2행 3열 총 6칸,面前橫向3格擊殺範圍內史萊姆，使用能量時為面前2排3列共6格,"Tue les slimes dans les 3 cases horizontales devant ; en utilisant l'Énergie, 2 rangées × 3 colonnes (6 cases au total) devant.",Tötet Slimes im horizontalen 3-Felder-Bereich nach vorn; mit Energie 2 Reihen × 3 Spalten (insgesamt 6 Felder) nach vorn.,"Elimina a los slimes en 3 casillas horizontales al frente; al usar Energía, 2 filas × 3 columnas (6 casillas en total) al frente.","Mata os slimes em 3 casas horizontais à frente; ao usar Energia, 2 fileiras × 3 colunas (6 casas no total) à frente.","Uccide gli slime entro 3 caselle orizzontali davanti; usando l'Energia, 2 righe × 3 colonne (6 caselle in totale) davanti."
+旋风斩,旋风斩,Whirlwind Slash,旋風斬り,회전 베기,旋風斬,Taillade tourbillon,Wirbelschlag,Tajo torbellino,Corte redemoinho,Taglio turbine
+击杀周围4格（上下左右）内的史莱姆，使用能量时为周围8格（含四角）,击杀周围4格（上下左右）内的史莱姆，使用能量时为周围8格（含四角）,"Kills Slimes in the 4 surrounding tiles (up/down/left/right); when Energy is used, all 8 surrounding tiles (corners included).",周囲4マス（上下左右）のスライムを撃破。エネルギー使用時は周囲8マス（四隅を含む）,주변 4칸(상하좌우)의 슬라임을 처치합니다. 에너지 사용 시 주변 8칸(모서리 포함),擊殺周圍4格（上下左右）內的史萊姆，使用能量時為周圍8格（含四角）,"Tue les slimes dans les 4 cases adjacentes (haut/bas/gauche/droite) ; en utilisant l'Énergie, les 8 cases autour (coins compris).",Tötet Slimes auf den 4 umliegenden Feldern (oben/unten/links/rechts); mit Energie alle 8 umliegenden Felder (Ecken eingeschlossen).,"Elimina a los slimes en las 4 casillas de alrededor (arriba/abajo/izquierda/derecha); al usar Energía, las 8 de alrededor (esquinas incluidas).","Mata os slimes nas 4 casas ao redor (cima/baixo/esquerda/direita); ao usar Energia, as 8 ao redor (cantos incluídos).","Uccide gli slime nelle 4 caselle intorno (su/giù/sinistra/destra); usando l'Energia, tutte e 8 quelle intorno (angoli inclusi)."
+嘲讽,嘲讽,Taunt,挑発,도발,嘲諷,Provocation,Provokation,Provocar,Provocar,Provocazione
+面前反向凹字5格内的史莱姆被强制向英雄方向移动1格，需消耗1能量,面前反向凹字5格内的史莱姆被强制向英雄方向移动1格，需消耗1能量,Slimes within the reversed concave 5-tile zone in front are forced 1 tile toward the hero; costs 1 Energy.,正面反対側の凹字型5マス以内のスライムは、英雄の方向へ強制的に1マス移動。エネルギー1消費,정면 반대쪽 오목 모양 5칸 안의 슬라임은 영웅 방향으로 1칸 강제 이동됩니다. 에너지 1 소모,面前反向凹字5格內的史萊姆被強制向英雄方向移動1格，需消耗1能量,Les slimes dans la zone concave inversée de 5 cases devant sont forcés de se déplacer d'1 case vers le héros ; coûte 1 Énergie.,Slimes innerhalb der umgekehrten konkaven 5-Felder-Zone nach vorn werden 1 Feld in Richtung des Helden gezwungen; kostet 1 Energie.,Los slimes dentro de la zona cóncava invertida de 5 casillas al frente se ven forzados a moverse 1 casilla hacia el héroe; cuesta 1 Energía.,Os slimes dentro da zona côncava invertida de 5 casas à frente são forçados a mover 1 casa em direção ao herói; custa 1 Energia.,Gli slime nella zona concava invertita di 5 caselle davanti sono forzati a spostarsi di 1 casella verso l'eroe; costa 1 Energia.

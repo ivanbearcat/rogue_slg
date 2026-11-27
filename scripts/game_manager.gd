@@ -305,6 +305,20 @@ var _dice_score_labels: Dictionary
 ## 骰型倍率Label映射
 var _dice_multiplier_labels: Dictionary
 
+func _notification(what: int) -> void:
+	## 语言切换后 Q/W/E 金币技能槽位名立即随语言（先例：buff_debug_panel）
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_refresh_coin_skill_slot_labels()
+
+## 金币技能槽位名标签刷新（赋值收口：_replace_coin_skill / _set_coin_skill /
+## Current.refresh_all_ui 三处赋值共用；语言切换通知分支同走此函数）
+## 槽位1 不写 label（既有约定：装配路径注释掉），槽位2/3 按当前技能行查表
+func _refresh_coin_skill_slot_labels() -> void:
+	var labels: Array = [coin_skill_1_label, coin_skill_2_label, coin_skill_3_label]
+	for i in [1, 2]:
+		if i < Current.coin_skill_array_dict.size() and Current.coin_skill_array_dict[i] is Dictionary:
+			labels[i].text = tr(Current.coin_skill_array_dict[i]["coin_skill_name"])
+
 func _ready() -> void:
 	## 自注册：场景切换后 Current.game_manager 引用随新战局自动刷新
 	Current.game_manager = self
@@ -596,7 +610,7 @@ func _restore_shop_from_data(shop: Dictionary) -> void:
 		if shop_coin_skill_row.has("coin_skill_shop_cost"):
 			shop_coin_skill_row["coin_skill_shop_cost"] = int(shop_coin_skill_row["coin_skill_shop_cost"])
 		shop_coin_skill_icon.texture = load(shop_coin_skill_row["coin_skill_icon"])
-		TooltipManager.set_tooltip(shop_coin_skill_icon, TooltipFormatter.format_coin_skill(shop_coin_skill_row))
+		TooltipManager.set_dynamic_tooltip(shop_coin_skill_icon, shop_coin_skill_row, TooltipFormatter.format_coin_skill)
 		shop_coin_skill_rlabel.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
 			str(shop_coin_skill_row["coin_skill_shop_cost"])
 		shop_coin_skill_icon.modulate.a = 1
@@ -630,7 +644,7 @@ func _restore_shop_from_data(shop: Dictionary) -> void:
 			lock_buttons[i].disabled = false
 			if shop_rows[i] is Dictionary and not shop_rows[i].is_empty():
 				shop_icons[i].texture = load(shop_rows[i]["buff_icon"])
-				TooltipManager.set_tooltip(shop_icons[i], TooltipFormatter.format_buff(shop_rows[i]))
+				TooltipManager.set_dynamic_tooltip(shop_icons[i], shop_rows[i], TooltipFormatter.format_buff)
 				shop_rlabels[i].text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
 					str(maxi(0, int(shop_rows[i]["buff_price"]) - Current._buff_price_discount))
 
@@ -643,7 +657,12 @@ func _write_stage_derived_ui() -> void:
 			break
 	target_score.text = str(int(current_stage_info.get("target_score", 300)))
 	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
-	TooltipManager.set_tooltip(difficulty_icon, "[color=#FFD700][font_size=20]" + tr(current_stage_info.get("stage_type", "普通")) + "[/font_size][/color]")
+	## 难度名走 tr()，悬停时刻才查表翻译（语言热切换实时）
+	TooltipManager.set_dynamic_tooltip(difficulty_icon, current_stage_info, _format_difficulty_tooltip)
+
+## 难度图标 tooltip 格式化器（D1 闭包形态）：悬停时按当前语言拼 BBCode
+func _format_difficulty_tooltip(info: Dictionary) -> String:
+	return "[color=#FFD700][font_size=20]" + tr(str(info.get("stage_type", "普通"))) + "[/font_size][/color]"
 
 ## 生成网格（正常路径/读档恢复共用装配）
 func _build_grids() -> void:
@@ -2149,9 +2168,9 @@ func _set_shop_buff():
 	buff_shop_icon_1.texture = load(shop_buff_1["buff_icon"])
 	buff_shop_icon_2.texture = load(shop_buff_2["buff_icon"])
 	buff_shop_icon_3.texture = load(shop_buff_3["buff_icon"])
-	TooltipManager.set_tooltip(buff_shop_icon_1, TooltipFormatter.format_buff(shop_buff_1))
-	TooltipManager.set_tooltip(buff_shop_icon_2, TooltipFormatter.format_buff(shop_buff_2))
-	TooltipManager.set_tooltip(buff_shop_icon_3, TooltipFormatter.format_buff(shop_buff_3))
+	TooltipManager.set_dynamic_tooltip(buff_shop_icon_1, shop_buff_1, TooltipFormatter.format_buff)
+	TooltipManager.set_dynamic_tooltip(buff_shop_icon_2, shop_buff_2, TooltipFormatter.format_buff)
+	TooltipManager.set_dynamic_tooltip(buff_shop_icon_3, shop_buff_3, TooltipFormatter.format_buff)
 	buff_shop_rlabel_1.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
 		str(maxi(0, int(shop_buff_1["buff_price"]) - Current.buff_price_discount))
 	buff_shop_rlabel_2.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + \
@@ -2174,7 +2193,7 @@ func _set_shop_coin_skill():
 	shop_coin_skill_row = available_skills.pick_random()
 	## 设置商店技能图标
 	shop_coin_skill_icon.texture = load(shop_coin_skill_row["coin_skill_icon"])
-	TooltipManager.set_tooltip(shop_coin_skill_icon, TooltipFormatter.format_coin_skill(shop_coin_skill_row))
+	TooltipManager.set_dynamic_tooltip(shop_coin_skill_icon, shop_coin_skill_row, TooltipFormatter.format_coin_skill)
 	## 设置商店技能价格标签
 	shop_coin_skill_rlabel.text = "[img=13 ]res://images/ui_icon/coin.png[/img] " + str(int(shop_coin_skill_row["coin_skill_shop_cost"]))
 	## 重置购买标记
@@ -2221,11 +2240,11 @@ func _on_shop_coin_skill_button_pressed() -> void:
 func _show_replace_skill_ui():
 	## 设置3个已有技能的图标和tooltip
 	replace_skill_1_icon.texture = load(Current.coin_skill_array_dict[0]["coin_skill_icon"])
-	TooltipManager.set_tooltip(replace_skill_1, TooltipFormatter.format_coin_skill(Current.coin_skill_array_dict[0]))
+	TooltipManager.set_dynamic_tooltip(replace_skill_1, Current.coin_skill_array_dict[0], TooltipFormatter.format_coin_skill)
 	replace_skill_2_icon.texture = load(Current.coin_skill_array_dict[1]["coin_skill_icon"])
-	TooltipManager.set_tooltip(replace_skill_2, TooltipFormatter.format_coin_skill(Current.coin_skill_array_dict[1]))
+	TooltipManager.set_dynamic_tooltip(replace_skill_2, Current.coin_skill_array_dict[1], TooltipFormatter.format_coin_skill)
 	replace_skill_3_icon.texture = load(Current.coin_skill_array_dict[2]["coin_skill_icon"])
-	TooltipManager.set_tooltip(replace_skill_3, TooltipFormatter.format_coin_skill(Current.coin_skill_array_dict[2]))
+	TooltipManager.set_dynamic_tooltip(replace_skill_3, Current.coin_skill_array_dict[2], TooltipFormatter.format_coin_skill)
 	## 显示替换UI
 	replace_skill_ui.show()
 
@@ -2275,19 +2294,19 @@ func _replace_coin_skill(index: int, new_skill_row: Dictionary):
 		0:
 			coin_skill_1_icon.texture = load(new_skill_row["coin_skill_icon"])
 			#coin_skill_1_label.text = tr(new_skill_row["coin_skill_name"])
-			TooltipManager.set_tooltip(coin_skill_1, TooltipFormatter.format_coin_skill(new_skill_row))
+			TooltipManager.set_dynamic_tooltip(coin_skill_1, new_skill_row, TooltipFormatter.format_coin_skill)
 			coin_skill_1.disabled = false
 			coin_skill_1_icon.self_modulate = Color(1, 1, 1, 1)
 		1:
 			coin_skill_2_icon.texture = load(new_skill_row["coin_skill_icon"])
-			coin_skill_2_label.text = tr(new_skill_row["coin_skill_name"])
-			TooltipManager.set_tooltip(coin_skill_2, TooltipFormatter.format_coin_skill(new_skill_row))
+			_refresh_coin_skill_slot_labels()
+			TooltipManager.set_dynamic_tooltip(coin_skill_2, new_skill_row, TooltipFormatter.format_coin_skill)
 			coin_skill_2.disabled = false
 			coin_skill_2_icon.self_modulate = Color(1, 1, 1, 1)
 		2:
 			coin_skill_3_icon.texture = load(new_skill_row["coin_skill_icon"])
-			coin_skill_3_label.text = tr(new_skill_row["coin_skill_name"])
-			TooltipManager.set_tooltip(coin_skill_3, TooltipFormatter.format_coin_skill(new_skill_row))
+			_refresh_coin_skill_slot_labels()
+			TooltipManager.set_dynamic_tooltip(coin_skill_3, new_skill_row, TooltipFormatter.format_coin_skill)
 			coin_skill_3.disabled = false
 			coin_skill_3_icon.self_modulate = Color(1, 1, 1, 1)
 	## 清空待处理技能
@@ -2351,7 +2370,7 @@ func _on_stage_clear_button_pressed() -> void:
 			break
 	Current.target_score = current_stage_info.get("target_score", 300)
 	difficulty_icon.texture = load(current_stage_info.get("stage_type_icon", "res://images/enemy_icon/normal.png"))
-	TooltipManager.set_tooltip(difficulty_icon, "[color=#FFD700][font_size=20]" + tr(current_stage_info.get("stage_type", "普通")) + "[/font_size][/color]")
+	TooltipManager.set_dynamic_tooltip(difficulty_icon, current_stage_info, _format_difficulty_tooltip)
 	## 清空一关金币奖励数和骰型等级奖励累计
 	Current.count_add_coins = 0
 	Current.dice_type_add_coin = 0
@@ -2508,19 +2527,19 @@ func _set_coin_skill(coin_skill_row):
 			Current.coin_skill_used.append(false)
 			coin_skill_1_icon.texture = load(coin_skill_row["coin_skill_icon"])
 			#coin_skill_1_label.text = tr(coin_skill_row["coin_skill_name"])
-			TooltipManager.set_tooltip(coin_skill_1, TooltipFormatter.format_coin_skill(coin_skill_row))
+			TooltipManager.set_dynamic_tooltip(coin_skill_1, coin_skill_row, TooltipFormatter.format_coin_skill)
 		1:
 			Current.coin_skill_array_dict.append(coin_skill_row)
 			Current.coin_skill_used.append(false)
 			coin_skill_2_icon.texture = load(coin_skill_row["coin_skill_icon"])
-			coin_skill_2_label.text = tr(coin_skill_row["coin_skill_name"])
-			TooltipManager.set_tooltip(coin_skill_2, TooltipFormatter.format_coin_skill(coin_skill_row))
+			_refresh_coin_skill_slot_labels()
+			TooltipManager.set_dynamic_tooltip(coin_skill_2, coin_skill_row, TooltipFormatter.format_coin_skill)
 		2:
 			Current.coin_skill_array_dict.append(coin_skill_row)
 			Current.coin_skill_used.append(false)
 			coin_skill_3_icon.texture = load(coin_skill_row["coin_skill_icon"])
-			coin_skill_3_label.text = tr(coin_skill_row["coin_skill_name"])
-			TooltipManager.set_tooltip(coin_skill_3, TooltipFormatter.format_coin_skill(coin_skill_row))
+			_refresh_coin_skill_slot_labels()
+			TooltipManager.set_dynamic_tooltip(coin_skill_3, coin_skill_row, TooltipFormatter.format_coin_skill)
 	## 添加技能后刷新按钮状态
 	Current.refresh_coin_skill_buttons()
 
