@@ -250,7 +250,12 @@ func double_score():
 
 func double_score_clicked():
 	if Current.grid_index == Current.hero.hero_grid_index:
-		BuffSystem.set_post_attack_buff(DoubleScoreBuff.new(), BuffSystem.buff_type.ONCE)
+		## 注册注入 meta（double-score-token-pop，design D2）：申报记录的 icon_path
+		## 取 buff_meta.buff_icon → token 走编排器 _load_icon 透明边裁剪，与 BUFF
+		## token 同款"图标 + 数字"样式（双倍攻击图标在头顶，不进 BUFF 栏）
+		BuffSystem.set_post_attack_buff(
+			DoubleScoreBuff.new({"buff_icon": "res://images/coin_skill_icon/double_score.png"}),
+			BuffSystem.buff_type.ONCE)
 		_clicked_public_action("double_score")
 
 func swap():

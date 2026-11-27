@@ -12,6 +12,12 @@ var family: String
 ## 标签数组
 var tags: Array
 
+## 出生弹起标记（double-score-token-pop，design D4）：置 true 的 buff 申报得分时
+## token 在起飞点执行一次弹起出生动画（上抛后回落，再接弧线飞行）。
+## 由 BuffSystem.declare_score_contribution 写入申报记录，编排器 perform 按记录
+## 分支调用；默认 false = 普通直飞，普通 buff 申报不带弹起
+var token_birth_pop: bool = false
+
 ## 安全移除 debuff 图标节点：
 ## 节点可能已被场景切换或重复清理所释放，直接 queue_free 会报
 ## "Cannot call method 'queue_free' on a previously freed instance"。

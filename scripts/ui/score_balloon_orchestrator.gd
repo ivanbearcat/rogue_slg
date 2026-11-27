@@ -18,6 +18,11 @@ extends Node2D
 ##   - 起飞点为来源效果 BUFF/DEBUFF 栏图标全局坐标，起飞瞬间复用
 ##     EffectManager.buff_pop_effect 闪烁（纯 modulate，零布局影响）；
 ##     图标失效（mock/测试环境）时从气球位起飞，不阻断演出。
+##   - 无栏图标来源（double-score-token-pop）：token 从英雄头顶 buff_icon 节点
+##     全局中心起飞（只判节点在树内不判 texture，design D3），起飞时头顶图标
+##     buff_pop_effect 闪烁（texture 有效时才闪，design D5）；申报带
+##     token_birth_pop 标记的 token 弹起出生（上抛越顶）后从气球文字上沿直接
+##     落入气球，fire-and-forget 不阻塞错峰发射循环（design D4 + 任务 3.2 定稿）
 ## 安全兜底：perform 内所有等待段带总时限（任务 4.3）——演出异常/中断时裁剪返回，
 ## 保证调用方的入账与锁释放逻辑必然执行。
 
@@ -123,9 +128,24 @@ func perform(declarations: Array) -> bool:
 		var panel := _effect_icon(buff)
 		if panel != null:
 			EffectManager.buff_pop_effect(panel)
+		else:
+			## 无栏图标来源（double-score-token-pop，design D5）：闪英雄头顶 buff
+			## 图标（TextureRect 为 Control，API 兼容）；texture 有效时才闪——
+			## clear_buff 已置 null 时仅视觉降级跳过，不阻断演出。
+			## 汇总 token（buff == null，无来源效果）不闪
+			var head_icon := _hero_head_buff_icon()
+			if buff != null and head_icon != null and head_icon.texture != null:
+				EffectManager.buff_pop_effect(head_icon)
 		_tokens_in_flight += 1
 		token.token_arrived.connect(_on_token_arrived.bind(token))
-		token.fly_to(_balloon.position, TOKEN_FLY_DURATION)
+		## 出生弹起分支（double-score-token-pop，design D4 + 任务 3.2 定稿）：
+		## 申报标记驱动。birth_pop_then_fly 为 fire-and-forget——上抛越顶后
+		## 从气球文字上沿直接落入气球，不进入发射循环的等待链，后续 token
+		## 仍按固定 TOKEN_INTERVAL 错峰发射（spec「弹起不影响其他 token」）
+		if entry.get("token_birth_pop", false):
+			token.birth_pop_then_fly(_balloon.position)
+		else:
+			token.fly_to(_balloon.position, TOKEN_FLY_DURATION)
 	## 等全部 token 落入气球
 	while _tokens_in_flight > 0:
 		if not await _wait(0.05):
@@ -176,13 +196,36 @@ func _play_arrival_sfx(delta: int) -> void:
 
 ## ---------- 归属定位 ----------
 
-## 起飞点：来源效果图标全局坐标（BUFF 栏 buff_texture 优先 → DEBUFF 栏
-## debuff_texture 回退）；图标失效时从气球位起飞（mock/测试环境不阻断）
+## 起飞点三级分支（double-score-token-pop，design D3）：
+## 1. 来源效果 BUFF/DEBUFF 栏图标全局中心（现状优先）
+## 2. 来源无栏图标（金币技能系）→ 英雄头顶 buff_icon 节点全局中心——只判节点
+##    在树内、不判 texture：双倍的 clear_buff() 在演出前把头顶 texture 置 null，
+##    若以 texture 为条件会错误回退气球位；节点位置始终有效，起飞点不受清理影响
+## 3. 均失效（mock/测试环境无头顶节点）→ 气球位起飞兜底（不阻断演出）
+## 写入方审计（任务 2.1，全库 grep `\.buff_icon`）：仅 double_score_buff.gd 写
+## texture、hero.gd 定义节点——头顶图标节点专属技能 buff 图标位、无共用者，
+## 无需按 design 风险项收紧为 token_birth_pop 标记条件。
+## 汇总 token（buff == null，无来源效果）不适用第 2 级，保持气球位起飞现状
 func _launch_position(buff) -> Vector2:
 	var panel := _effect_icon(buff)
 	if panel != null:
 		return panel.get_global_rect().get_center()
+	var head_icon := _hero_head_buff_icon()
+	if buff != null and head_icon != null:
+		return head_icon.get_global_rect().get_center()
 	return _balloon.position if _balloon != null else position
+
+## 英雄头顶 buff 图标节点（double-score-token-pop，design D3/D5 共用）：
+## 只判节点在树内（不判 texture，起飞点依据见 _launch_position）；
+## mock/测试环境 Current.hero 无该节点 → null（调用方逐级回退）
+func _hero_head_buff_icon() -> TextureRect:
+	var hero: Hero = Current.hero
+	if hero == null:
+		return null
+	var icon: TextureRect = hero.get("buff_icon")
+	if icon != null and is_instance_valid(icon) and icon.is_inside_tree():
+		return icon
+	return null
 
 func _effect_icon(buff) -> Control:
 	if buff == null:

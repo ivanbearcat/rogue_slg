@@ -33,6 +33,20 @@ class SilentBuff extends Buff:
 	func process_buff():
 		pass
 
+## 双倍攻击 mock 英雄装配（double-score-token-pop 任务 3.1）：
+## 双倍 set_buff/clear_buff 读写 Current.hero.buff_icon——挂同名子节点后手动
+## 装配 buff_icon 属性。⚠️ 不入树：hero.gd 的 _ready 依赖 sprite 子节点，
+## 入树即报错（同 score_show_probe 舞台惯例，@onready 不触发）
+func _mount_hero_with_head_icon() -> TextureRect:
+	var hero := Node2D.new()
+	hero.set_script(load("res://scripts/hero.gd"))
+	var head_icon := TextureRect.new()
+	head_icon.name = "buff_icon"
+	hero.add_child(head_icon)
+	hero.set("buff_icon", head_icon)
+	Current.hero = hero
+	return head_icon
+
 var _results: Array = []
 var _saved: Dictionary = {}
 ## 直接复用 mock_game_manager 的 total_score（MockLabel，带 text/scale 观测面）。
@@ -76,6 +90,7 @@ func _save_state() -> void:
 		"run_score_earned": Current._run_score_earned,
 		"muted": Current.total_score_display_muted,
 		"gm": Current.game_manager,
+		"hero": Current.hero,
 	}
 
 func _restore_state() -> void:
@@ -92,6 +107,7 @@ func _restore_state() -> void:
 	Current._run_score_earned = _saved["run_score_earned"]
 	Current.total_score_display_muted = _saved["muted"]
 	Current.game_manager = _saved["gm"]
+	Current.hero = _saved["hero"]
 
 func _check(step: String, ok: bool, detail: String) -> void:
 	var tag: String = "PASS:" if ok else "FAIL:"
@@ -140,6 +156,7 @@ func _run_all() -> void:
 	## 数值与家族累积断言不受静默影响）
 	Current.total_score_display_muted = true
 	await _scenario_declare_immediate()
+	await _scenario_double_score_declaration()
 	await _scenario_settle_time_flat()
 	await _scenario_no_score_no_declare()
 	await _scenario_ramp_positive()
@@ -168,6 +185,58 @@ func _scenario_declare_immediate() -> void:
 		and str(decls[0]["icon_path"]) == str(buff.buff_meta.get("buff_icon", ""))
 	_check("申报即时生效", ok,
 		"total=%d family=%d decls=%d" % [Current._total_score, bs.get_family_accumulation("hunt"), decls.size()])
+
+## ---------- 双倍攻击申报制（double-score-token-pop 任务 3.1，对照 delta spec
+## 「双倍攻击得分 token 化」四场景）----------
+## 覆盖：申报记录（带双倍图标 + 弹起标记）/ 数值路径不变 / 英雄位置无旧式飘字 /
+## 普通 buff 申报不带弹起标记
+func _scenario_double_score_declaration() -> void:
+	var bs := get_node("/root/BuffSystem")
+	var head_icon := _mount_hero_with_head_icon()
+	var children_before: int = Current.hero.get_child_count()
+	var arr := _reset_post_attack_pipeline()
+	## 双倍攻击：真实 DoubleScoreBuff（注册路径同 coin_skill_system.double_score_clicked）
+	Current.once_total_score = 200
+	Current._total_score = 0
+	bs._current_family_accumulation.clear()
+	var ds: DoubleScoreBuff = DoubleScoreBuff.new(
+		{"buff_icon": "res://images/coin_skill_icon/double_score.png"}, Current.game_manager)
+	arr.append(ds)
+	await bs.do_buff("post_attack")
+	var decls: Array = bs.take_score_declarations()
+	var ds_decl: Dictionary = decls[0] if decls.size() > 0 else {}
+	## 场景「双倍攻击触发申报另一份得分」：总分照常 +200（数值路径不变断言），
+	## 申报带双倍攻击图标；弹起标记随申报携带（design D4）
+	var ok_declare: bool = Current._total_score == 200 \
+		and decls.size() == 1 and int(ds_decl.get("delta", 0)) == 200 \
+		and str(ds_decl.get("icon_path", "")) == "res://images/coin_skill_icon/double_score.png" \
+		and ds_decl.get("token_birth_pop", false) == true
+	_check("双倍申报：+200 记录带图标与弹起标记、总分照常累加", ok_declare,
+		"total=%d decls=%d delta=%d icon=%s pop=%s" % [Current._total_score, decls.size(),
+		int(ds_decl.get("delta", 0)), str(ds_decl.get("icon_path", "")), str(ds_decl.get("token_birth_pop", false))])
+	## 场景「不再弹出旧式伤害飘字」：do_buff 全程不向英雄挂任何飘字节点
+	## （旧路径 float_number_effect 会 add_child 到英雄）
+	var no_float: bool = Current.hero.get_child_count() == children_before
+	_check("英雄位置无旧式飘字（子节点数不变）", no_float,
+		"before=%d after=%d" % [children_before, Current.hero.get_child_count()])
+	## 头顶图标已被 clear_buff 清空（时序前提：起飞点依据节点而非 texture）
+	var cleared: bool = head_icon.texture == null
+	_check("clear_buff 置空头顶 texture（起飞点不依赖 texture 的前提）", cleared,
+		"texture=%s" % str(head_icon.texture))
+	## 普通 buff 申报不带弹起标记（基类默认 false）
+	var arr2 := _reset_post_attack_pipeline()
+	var plain: DeclareBuff = _make_buff(DeclareBuff, "probe_plain_pop", "hunt")
+	plain.declare_delta = 30
+	arr2.append(plain)
+	Current._total_score = 0
+	await bs.do_buff("post_attack")
+	var decls2: Array = bs.take_score_declarations()
+	var ok_plain: bool = decls2.size() == 1 and decls2[0]["token_birth_pop"] == false
+	_check("普通 buff 申报不带弹起标记", ok_plain,
+		"pop=%s" % str(decls2[0]["token_birth_pop"] if decls2.size() > 0 else "n/a"))
+	## 拆除 mock 英雄（_restore_state 只恢复原 hero 引用）
+	Current.hero.queue_free()
+	Current.hero = null
 
 ## spec「结算耗时与触发数量无关」：1 个 vs 8 个申报效果，do_buff 结算耗时同级
 func _scenario_settle_time_flat() -> void:

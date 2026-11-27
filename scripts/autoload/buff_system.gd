@@ -251,6 +251,10 @@ func declare_score_contribution(delta: int) -> void:
 			"delta": delta,
 			## token 来源图标取图规则（buff_icon → debuff_icon 回退，与飘字一致）
 			"icon_path": str(buff.buff_meta.get("buff_icon", buff.buff_meta.get("debuff_icon", ""))),
+			## 出生弹起标记（double-score-token-pop，design D4）：来源 buff 自声明
+			## 出生动画（token_birth_pop，基类默认 false），perform 按此分支调用
+			## 弹起段——编排器不硬编码 buff 类型，普通 buff 申报标记为 false
+			"token_birth_pop": buff.token_birth_pop,
 		})
 
 ## 取走本次 post_attack 的申报列表（返回副本；调用方取走后原列表清空，

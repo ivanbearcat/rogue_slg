@@ -10,11 +10,15 @@ extends Node2D
 ##   2.3 编排器——12 条申报连发总时长 ≤2.5s 且含合并汇总 token
 ##   icon-gap-unify——图标内容显示尺寸归一（透明边与满铺间隔一致，
 ##              变更 token-icon-gap-unify 任务 1.2 断言 + 4.1 目测材料）
+##   double-score-token-pop 任务 3.1——双倍攻击 token 化四场景：起飞点三级分支
+##              （头顶图标中心/汇总气球位）、弹起段结束位置==出生位、气球吸收
+##              滚动至 2× 骰型分、木琴音阶序号正常推进、弹起不阻塞错峰发射
 ## 截图保存到 test/scripts/buff/out/score_show/（供目测定稿参考，任务 5.3 校准基线）
 
 const OUT_DIR := "res://test/scripts/buff/out/score_show"
 const ORCHESTRATOR_SCRIPT := preload("res://scripts/ui/score_balloon_orchestrator.gd")
 const BALLOON_SCRIPT := preload("res://scripts/ui/score_balloon.gd")
+const TOKEN_SCRIPT := preload("res://scripts/ui/score_token.gd")
 
 ## 演出断言不绑死数值：连发口径动态读 ORCHESTRATOR_SCRIPT 常量
 ##（用户可随意拧观感参数，断言语义自动跟随）
@@ -97,6 +101,7 @@ func _run_all() -> void:
 	await _scenario_orchestrator_emergency(gm)
 	await _scenario_board_target_scaled(gm)
 	await _scenario_icon_gap_unify(gm)
+	await _scenario_double_score_show(gm)
 	_clear_stage(gm)
 
 func _scenario_token_flight(gm: Node) -> void:
@@ -137,15 +142,16 @@ func _scenario_token_flight(gm: Node) -> void:
 	## 视觉投影断言（spec「数字与图标贴合并排」）：icon 与 label 各自绕
 	## rect 中心 pivot 缩放，节点间 position 差不随 LABEL_SCALE 缩放——
 	## 屏幕上"图标墨迹右缘 → 数字 ink 左缘"的距离必须按渲染变换投影
-	## 断言（源 rect 几何差与视觉脱钩：GAP=-2 曾产生 34.75px 大缝、
-	## pivot 丢失时 -36 类真压叠 10px；贴合区间 ±2px 双向拦截）
+	## 断言。间隔基准 = ICON_LABEL_INK_GAP 调定值（double-score-token-pop
+	## 任务 3.2 放开为 +2px 留缝），断言"实测 == 调定"±2px——观感常量
+	## 再校准时间距断言自动跟随，不绑死绝对值
 	var icon_right_visual: float = icon_rect.position.x \
 		+ icon_rect.pivot_offset.x * (1.0 - icon_rect.scale.x) \
 		+ icon_rect.scale.x * icon_rect.size.x
 	var label_left_visual: float = label.position.x \
 		+ label.pivot_offset.x * (1.0 - label.scale.x)
 	var visual_gap: float = label_left_visual - icon_right_visual
-	var side_geo_ok: bool = absf(visual_gap) <= 2.0
+	var side_geo_ok: bool = absf(visual_gap - TOKEN_SCRIPT.ICON_LABEL_INK_GAP) <= 2.0
 	var layout_ok: bool = icon_rect.visible and side_ok and side_geo_ok and label.text == "+35"
 	_check("token 弧线飞行（顶点抬升）", arc_ok, "最大抬升=%.1fpx（弧高 24px，应>3px 高于连线）" % min_lift)
 	_check("token 到达回调", arrive_ok, "arrived=%s" % str(arrived))
@@ -171,71 +177,55 @@ func _scenario_token_negative(gm: Node) -> void:
 	await _shot("02_token_negative.png")
 	token.queue_free()
 
-## ---------- 图标内容归一（间隔归一回归闸门，icon-gap-unify 任务 1.2） ----------
+## ---------- 图标间隔归一（icon-gap-unify 演进 + double-score-token-pop 反馈） ----------
 
-## 纹理可见内容 bbox（逐像素扫 alpha 边界；扫描不可用/全透明时回退整幅，
-## 与编排器 _load_icon 的内容裁剪同口径）
-func _content_bbox(tex: Texture2D) -> Rect2i:
-	var img: Image = tex.get_image()
-	if img == null or img.is_empty():
-		return Rect2i(Vector2i.ZERO, Vector2i(tex.get_width(), tex.get_height()))
-	var min_x := img.get_width()
-	var min_y := img.get_height()
-	var max_x := -1
-	var max_y := -1
-	for y in img.get_height():
-		for x in img.get_width():
-			if img.get_pixel(x, y).a > 0.001:
-				if x < min_x:
-					min_x = x
-				if y < min_y:
-					min_y = y
-				if x > max_x:
-					max_x = x
-				if y > max_y:
-					max_y = y
-	if max_x < 0 or max_y < 0:
-		return Rect2i(Vector2i.ZERO, Vector2i(img.get_width(), img.get_height()))
-	return Rect2i(min_x, min_y, max_x - min_x + 1, max_y - min_y + 1)
-
-## icon 可见内容的显示尺寸（STRETCH_SCALE 口径：纹理整幅拉满 rect，
-## 可见内容 bbox 占画布比例 × rect 尺寸 = 内容实际显示大小）——
-## 编排器以 AtlasTexture 裁到内容区后 bbox 即整幅，任何来源图标
-## 的可见内容都显示为 rect 满幅（36×36），间隔归一成立
-func _content_display_size(icon_rect: TextureRect) -> Vector2:
-	var tex: Texture2D = icon_rect.texture
-	if tex == null:
-		return Vector2.ZERO
-	var canvas := Vector2(tex.get_width(), tex.get_height())
-	var bbox: Rect2i = _content_bbox(tex)
-	if canvas.x <= 0.0 or canvas.y <= 0.0 or bbox.size.x <= 0 or bbox.size.y <= 0:
-		return Vector2.ZERO
-	return Vector2(bbox.size) / canvas * icon_rect.size
-
-## 透明边差异大的两枚图标（dice_mastery 内容≈53% vs gold_overlord 满铺）
-## 经编排器 _load_icon 各自装配 token：可见内容显示尺寸必须一致——
-## 未裁剪时内容显示尺寸随美术留白漂移（此断言 FAIL）；裁剪生效后
-## 两者都拉满 36×36 显示 rect（spec「透明边图标与满铺图标间隔一致」）
+## 三枚不同形状素材（瘦高 double_score 16×25、近方 dice_mastery 17×19、
+## 近方满铺 gold_overlord 29×30）装配 token，断言：
+##   1) 等比显示——icon rect == 墨迹 × contain 缩放（无拉宽变形）；
+##   2) 图标墨迹右缘 → 数字左缘的视觉间隔三素材一致（±0.5px）——
+##      间隔唯一由 ICON_LABEL_INK_GAP 决定，与素材形状无关
 func _scenario_icon_gap_unify(gm: Node) -> void:
 	var orch: Node2D = ORCHESTRATOR_SCRIPT.new()
 	gm.add_child(orch)
-	var dice: Node2D = load("res://scenes/score_token.tscn").instantiate()
-	gm.add_child(dice)
-	dice.position = Vector2(160, 80)
-	dice.setup(10, orch._load_icon("res://images/buff_icon/dice_mastery.png"))
-	var overlord: Node2D = load("res://scenes/score_token.tscn").instantiate()
-	gm.add_child(overlord)
-	overlord.position = Vector2(160, 140)
-	overlord.setup(20, orch._load_icon("res://images/buff_icon/gold_overlord.png"))
-	var dice_size: Vector2 = _content_display_size(dice.get_node("Icon"))
-	var overlord_size: Vector2 = _content_display_size(overlord.get_node("Icon"))
-	var size_diff: Vector2 = (dice_size - overlord_size).abs()
-	var unify_ok: bool = size_diff.x < 0.5 and size_diff.y < 0.5
-	_check("图标内容显示尺寸归一（透明边与满铺间隔一致）", unify_ok,
-		"dice_mastery 内容显示=%s gold_overlord 内容显示=%s rect=%s（可见内容应等大拉满显示区）" % [dice_size, overlord_size, dice.get_node("Icon").size])
+	var sources := {
+		"double_score": "res://images/coin_skill_icon/double_score.png",
+		"dice_mastery": "res://images/buff_icon/dice_mastery.png",
+		"gold_overlord": "res://images/buff_icon/gold_overlord.png",
+	}
+	var tokens: Array = []
+	var gaps: Array = []
+	var aspect_ok: bool = true
+	var idx := 0
+	for key in sources:
+		var tok: Node2D = load("res://scenes/score_token.tscn").instantiate()
+		gm.add_child(tok)
+		tok.position = Vector2(160, 80 + idx * 60)
+		var tex: Texture2D = orch._load_icon(sources[key])
+		tok.setup(10, tex)
+		var icon: TextureRect = tok.get_node("Icon")
+		var label: Label = tok.get_node("Label")
+		## 等比断言：rect == 墨迹 × min(36/w, 36/h)（contain）
+		var ink: Vector2 = tex.get_size()
+		var expect: Vector2 = ink * minf(TOKEN_SCRIPT.ICON_HEIGHT / ink.x, TOKEN_SCRIPT.ICON_HEIGHT / ink.y)
+		if (icon.size - expect).length() > 0.5:
+			aspect_ok = false
+		## 视觉间隔（同 token-flight 的渲染投影口径：icon/label 各绕 rect 中心缩放）
+		var icon_right: float = icon.position.x \
+			+ icon.pivot_offset.x * (1.0 - icon.scale.x) \
+			+ icon.scale.x * icon.size.x
+		var label_left: float = label.position.x \
+			+ label.pivot_offset.x * (1.0 - label.scale.x)
+		gaps.append(label_left - icon_right)
+		tokens.append(tok)
+		idx += 1
+	var gap_ok: bool = absf(gaps[0] - gaps[1]) < 0.5 and absf(gaps[1] - gaps[2]) < 0.5
+	_check("图标等比显示不变形（瘦高/近方/满铺素材一致）", aspect_ok,
+		"double=%s dice=%s gold=%s" % [str(tokens[0].get_node("Icon").size), str(tokens[1].get_node("Icon").size), str(tokens[2].get_node("Icon").size)])
+	_check("图标-数字视觉间隔三素材统一（与素材形状无关）", gap_ok,
+		"double=%.2fpx dice=%.2fpx gold=%.2fpx（应相等）" % [gaps[0], gaps[1], gaps[2]])
 	await _shot("07_icon_gap_unify.png")
-	dice.queue_free()
-	overlord.queue_free()
+	for tok in tokens:
+		tok.queue_free()
 	orch.queue_free()
 
 ## ---------- 气球序列（任务 2.2） ----------
@@ -377,6 +367,124 @@ func _scenario_orchestrator_emergency(gm: Node) -> void:
 	_check("演出时限裁剪：异常中断时等待段立即返回（自愈无卡死）", normal_ok and clipped_ok,
 		"正常段=%s 裁剪段=%s 耗时=%dms" % [normal_ok, clipped, Time.get_ticks_msec() - t0])
 	orchestrator.queue_free()
+
+## ---------- 双倍攻击得分 token 化（double-score-token-pop 任务 3.1，对照 delta spec） ----------
+
+## token 发射时刻采样（并行协程 fire-and-forget，写入成员 _launch_samples；
+## perform 与采样交错执行，互不阻塞——同 perform 内 fly_to 的 fire-and-forget 惯例）
+var _launch_samples: Array = []
+var _sampling_done: bool = true
+
+func _sample_token_launches(orch: Node2D, seconds: float) -> void:
+	_launch_samples = []
+	_sampling_done = false
+	var seen := {}
+	var t0 := Time.get_ticks_msec()
+	while Time.get_ticks_msec() - t0 < seconds * 1000.0:
+		for child in orch.get_children():
+			var id: int = child.get_instance_id()
+			if not seen.has(id) and child.get_script() == TOKEN_SCRIPT:
+				seen[id] = true
+				_launch_samples.append((Time.get_ticks_msec() - t0) / 1000.0)
+		await get_tree().process_frame
+	_sampling_done = true
+
+func _scenario_double_score_show(gm: Node) -> void:
+	## 头顶 buff 图标替身：挂在真实 hero 的 buff_icon 属性上（起飞点/闪烁锚点）；
+	## hero 不入树（@onready 不触发），属性经 set() 手动装配
+	var head_icon := TextureRect.new()
+	head_icon.position = Vector2(150, 178)
+	head_icon.size = Vector2(16, 16)
+	gm.add_child(head_icon)
+	Current.hero.set("buff_icon", head_icon)
+	var ds_buff: DoubleScoreBuff = DoubleScoreBuff.new(
+		{"buff_icon": "res://images/coin_skill_icon/double_score.png"})
+	var orchestrator: Node2D = ORCHESTRATOR_SCRIPT.new()
+	gm.add_child(orchestrator)
+	orchestrator.setup_balloon(200)
+	## ── 场景「无栏图标效果从其实际图标位置起飞」：双倍 token 从英雄头顶
+	## buff 图标全局中心起飞（只判节点在树内，不判 texture）；汇总 token
+	## （buff == null，无来源效果）保持气球位起飞现状
+	var head_center: Vector2 = head_icon.get_global_rect().get_center()
+	var launch_head: Vector2 = orchestrator._launch_position(ds_buff)
+	var launch_summary: Vector2 = orchestrator._launch_position(null)
+	var launch_ok: bool = launch_head.distance_to(head_center) < 0.5 \
+		and launch_summary.distance_to(orchestrator._balloon.position) < 0.5
+	_check("起飞点三级分支（无栏图标→头顶图标中心/汇总→气球位）", launch_ok,
+		"头顶起飞=%s 期望=%s 汇总起飞=%s 气球=%s" % [launch_head, head_center, launch_summary, orchestrator._balloon.position])
+	## ── 弹起出生段（任务 3.2 定稿动线）：上抛 40px 顶点越过气球 → 自顶点从
+	## 气球文字上沿直接落入气球中心（单驼峰；不回落出生位、无二次反弹）
+	var token: Node2D = load("res://scenes/score_token.tscn").instantiate()
+	gm.add_child(token)
+	var birth := Vector2(150, 178)
+	token.position = birth
+	token.setup(200, orchestrator._load_icon("res://images/coin_skill_icon/double_score.png"))
+	var fall_target: Vector2 = orchestrator._balloon.position
+	var min_y: float = birth.y
+	var last_sampled_y: float = birth.y
+	var arrived_flag := [false]
+	token.token_arrived.connect(func(_d: int) -> void: arrived_flag[0] = true)
+	token.birth_pop_then_fly(fall_target)
+	while not arrived_flag[0]:
+		min_y = minf(min_y, token.position.y)
+		last_sampled_y = token.position.y
+		await get_tree().process_frame
+	var apex_ok: bool = absf(min_y - (birth.y - TOKEN_SCRIPT.POP_HEIGHT)) < 2.0
+	var above_ok: bool = min_y < fall_target.y - 5.0
+	var land_ok: bool = token.position.distance_to(fall_target) < 0.5 and arrived_flag[0]
+	_check("弹起上抛 40px（顶点越过气球）", apex_ok and above_ok,
+		"顶点y=%.1f（出生y=%.1f-%.0f）气球中心y=%.1f（顶点应高出 5px 以上）" % [min_y, birth.y, TOKEN_SCRIPT.POP_HEIGHT, fall_target.y])
+	_check("从文字上沿上方直接落入气球（token_arrived 时序不变）", land_ok,
+		"终点=%s 目标=%s 到达前采样y=%.1f" % [str(token.position), str(fall_target), last_sampled_y])
+	token.queue_free()
+	## ── 场景「气球数字计入另一份得分」：种子 +200，吸收双倍 token 后滚动 +400
+	orchestrator._balloon.absorb(200)
+	await get_tree().create_timer(0.35).timeout
+	var balloon: Node2D = orchestrator._balloon
+	var ok_2x: bool = balloon.total == 400 and _balloon_label(balloon).text == "+400"
+	_check("气球吸收后滚动至 2× 骰型分（+200→+400）", ok_2x,
+		"total=%d text=%s" % [balloon.total, _balloon_label(balloon).text])
+	## ── 木琴音阶序号正常推进：正 token 递增占号、负 token 低八度不占号
+	orchestrator._play_arrival_sfx(30)
+	var sfx_ok: bool = orchestrator._positive_arrived == 1
+	orchestrator._play_arrival_sfx(-5)
+	sfx_ok = sfx_ok and orchestrator._positive_arrived == 1
+	orchestrator._play_arrival_sfx(40)
+	sfx_ok = sfx_ok and orchestrator._positive_arrived == 2
+	_check("木琴音阶序号正常推进（负 token 不占号）", sfx_ok,
+		"positive_arrived=%d（正-负-正三次到达后应 2）" % orchestrator._positive_arrived)
+	orchestrator.queue_free()
+	## ── 场景「弹起不影响其他 token」：[普通, 双倍] 两枚 token 的发射间隔
+	## ≈ TOKEN_INTERVAL——弹起 fire-and-forget，不进入发射循环等待链
+	##（若误 await 弹起，间隔会多出 POP_DURATION=0.2s，本断言拦截）。
+	## 采样精度一帧，容差取 max(0.12, 3 帧距)（同 burst 场景帧延迟补偿惯例，
+	## 0.35 与阻塞路径 0.55 可区分）
+	var orch2: Node2D = ORCHESTRATOR_SCRIPT.new()
+	gm.add_child(orch2)
+	orch2.setup_balloon(0)
+	_sample_token_launches(orch2, 1.2)
+	await orch2.perform([
+		{"buff": null, "delta": 10, "icon_path": ""},
+		{"buff": ds_buff, "delta": 200,
+			"icon_path": "res://images/coin_skill_icon/double_score.png",
+			"token_birth_pop": true},
+	])
+	while not _sampling_done:
+		await get_tree().create_timer(0.05).timeout
+	var frame_msec := 0
+	for i in range(3):
+		var f0 := Time.get_ticks_msec()
+		await get_tree().process_frame
+		frame_msec = maxi(frame_msec, Time.get_ticks_msec() - f0)
+	var gap_tol: float = maxf(0.12, float(frame_msec) * 3.0 / 1000.0)
+	var gap: float = _launch_samples[1] - _launch_samples[0] if _launch_samples.size() == 2 else -1.0
+	var gap_ok: bool = gap >= 0.0 \
+		and absf(gap - ORCHESTRATOR_SCRIPT.TOKEN_INTERVAL) <= gap_tol
+	_check("弹起不阻塞错峰发射（第二枚间隔≈TOKEN_INTERVAL）", gap_ok,
+		"launch_times=%s gap=%.2fs interval=%.2fs tolerance=%.2fs" % [str(_launch_samples), gap, ORCHESTRATOR_SCRIPT.TOKEN_INTERVAL, gap_tol])
+	orch2.queue_free()
+	Current.hero.set("buff_icon", null)
+	head_icon.queue_free()
 
 ## ---------- 计分板落点（scale 单位错配回归，5.3 目测反馈） ----------
 
