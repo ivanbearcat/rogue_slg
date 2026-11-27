@@ -1,12 +1,13 @@
 extends Node
 
 ## headless 集成验证：help_ui 富文本 tooltip
-## 覆盖：17 项文案、目标映射、TooltipManager 注册、关闭回收、语言切换重绑、边缘定位与长文案尺寸
+## 覆盖：18 项文案、目标映射、TooltipManager 注册、关闭回收、语言切换重绑、边缘定位与长文案尺寸
 
 const HELP_UI_SCRIPT_PATH := "res://scripts/ui/help_ui.gd"
 
 const EXPECTED_KEYS := [
 	"dice_type",
+	"dice_type_desc",
 	"dice_score",
 	"dice_pocket",
 	"score_preview",
@@ -62,18 +63,18 @@ func _run() -> void:
 	_check(help_ui_script != null, "help_ui.gd 可加载")
 	if help_ui_script == null:
 		return
-	## 2.4：脚本挂载成功且布局节点数量未变（17 标注 + 关闭按钮 + 快捷键面板 = 19）
+	## 2.4：脚本挂载成功且布局节点数量未变（18 标注 + 关闭按钮 + 快捷键面板 = 20）
 	_check(help_ui.get_script() == help_ui_script, "help_ui 挂载 help_ui.gd")
 	var panel: Panel = help_ui.get_node_or_null("Panel")
 	_check(panel != null, "help_ui/Panel 存在")
 	if panel == null:
 		return
-	_check(panel.get_child_count() == 19, "帮助界面布局节点数量不变（期望 19，实际 %d）" % panel.get_child_count())
+	_check(panel.get_child_count() == 20, "帮助界面布局节点数量不变（期望 20，实际 %d）" % panel.get_child_count())
 
 	var constants := help_ui_script.get_script_constant_map()
 	var help_tooltips: Dictionary = constants.get("HELP_TOOLTIPS", {})
-	## 1.1：17 个 key 完整、文案非空、无占位文案
-	_check(help_tooltips.size() == EXPECTED_KEYS.size(), "HELP_TOOLTIPS key 数量为 17（实际 %d）" % help_tooltips.size())
+	## 1.1：18 个 key 完整、文案非空、无占位文案
+	_check(help_tooltips.size() == EXPECTED_KEYS.size(), "HELP_TOOLTIPS key 数量为 18（实际 %d）" % help_tooltips.size())
 	for key: String in EXPECTED_KEYS:
 		_check(help_tooltips.has(key), "HELP_TOOLTIPS 缺少 key: " + key)
 		var text := _tooltip_text(help_tooltips, key)
@@ -83,7 +84,7 @@ func _run() -> void:
 
 	## 1.2 / 2.1：每个 key 至少解析到一个 Control，且全部注册进 TooltipManager
 	var bound: Dictionary = help_ui.get_bound_targets()
-	_check(bound.size() == EXPECTED_KEYS.size(), "已绑定 key 数量为 17（实际 %d）" % bound.size())
+	_check(bound.size() == EXPECTED_KEYS.size(), "已绑定 key 数量为 18（实际 %d）" % bound.size())
 	var dual_keys: Array[String] = []
 	for key: String in EXPECTED_KEYS:
 		var paths: Array[String] = help_ui.get_target_paths(key)
@@ -116,6 +117,15 @@ func _run() -> void:
 	var dice_type := _tooltip_text(help_tooltips, "dice_type")
 	_check(dice_type.contains("多个骰型") and dice_type.contains("分数相加"), "骰型文案：多骰型组合相加")
 	_check(dice_type.contains("只取") and dice_type.contains("最高分") and dice_type.contains("不重复叠加"), "骰型文案：同分组不重复叠加")
+	var dice_type_desc := _tooltip_text(help_tooltips, "dice_type_desc")
+	for type_name in ["对子", "顺子", "同色", "同对", "同顺"]:
+		_check(dice_type_desc.contains(type_name), "骰型组合文案：五种骰型名齐全（缺 %s）" % type_name)
+	_check(dice_type_desc.contains("例："), "骰型组合文案：含组合示例")
+	_check(dice_type_desc.count("例：") >= 5, "骰型组合文案：每种骰型至少一个示例（实际 %d 个）" % dice_type_desc.count("例："))
+	_check(dice_type_desc.contains("重复点数只按 1 个"), "骰型组合文案：顺子/同顺去重说明")
+	_check(dice_type_desc.contains("去重后的连续点数量计算"), "骰型组合文案：等级按去重后连续点计算")
+	_check(dice_type_desc.contains("2 个为 Lv.1") and dice_type_desc.contains("6 个及以上为 Lv.5"), "骰型组合文案：等级口径与骰型倍率一致")
+	_check(dice_type_desc.contains("只取") and dice_type_desc.contains("最高分") and dice_type_desc.contains("不重复叠加"), "骰型组合文案：同分组不重复叠加")
 	var exp_bar := _tooltip_text(help_tooltips, "exp_bar")
 	_check(exp_bar.contains("每升 5 级") and exp_bar.contains("生命上限 +1"), "经验条文案：每 5 级生命上限 +1")
 	_check(exp_bar.contains("当前生命不会因此恢复"), "经验条文案：升级不恢复当前生命")
@@ -181,7 +191,7 @@ func _run() -> void:
 		await get_tree().process_frame
 		_check(not TooltipManager._popup.visible, "%s 移出隐藏 tooltip" % key)
 
-	## 窗口模式下用真实鼠标事件验证 17 项都能被 GUI 命中（防止 mouse_filter=IGNORE 回归）
+	## 窗口模式下用真实鼠标事件验证 18 项都能被 GUI 命中（防止 mouse_filter=IGNORE 回归）
 	if DisplayServer.get_name() != "headless":
 		for key: String in EXPECTED_KEYS:
 			var hover_node: Control = help_ui.get_node("Panel/" + key)

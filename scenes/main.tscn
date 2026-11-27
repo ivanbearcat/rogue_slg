@@ -3184,6 +3184,31 @@ label_settings = SubResource("LabelSettings_xaipn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="dice_type_desc" type="NinePatchRect" parent="help_ui/Panel" unique_id=1159919631]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 63.0
+offset_top = 77.0
+offset_right = 97.0
+offset_bottom = 88.0
+texture = SubResource("AtlasTexture_5y4ni")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Label" type="Label" parent="help_ui/Panel/dice_type_desc" unique_id=2132248274]
+layout_mode = 1
+offset_left = 1.0000014
+offset_top = 3.0
+offset_right = 153.38095
+offset_bottom = 27.0
+scale = Vector2(0.21, 0.21)
+text = "骰型组合"
+label_settings = SubResource("LabelSettings_xaipn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="dice_score" type="NinePatchRect" parent="help_ui/Panel" unique_id=1209003234]
 layout_mode = 1
 anchors_preset = -1

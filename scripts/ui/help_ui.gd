@@ -24,6 +24,17 @@ const HELP_TOOLTIPS := {
 		+ "单个骰型得分 = 参与骰子的基础分值之和 × 该骰型倍率。\n"
 		+ "[color=#AAAAAA]未组成骰型的骰子不得分。[/color]"
 	),
+	"dice_type_desc": (
+		"[color=#FFD700][font_size=20]骰型组合[/font_size][/color]\n"
+		+ "[hr color=#777777 height=1 width=100%]\n"
+		+ "[color=#FFD700]对子[/color]：点数相同的骰子至少 2 个，颜色不限。例：红3+蓝3。\n"
+		+ "[color=#FFD700]顺子[/color]：点数连续的骰子至少 2 个，颜色不限，[color=#42A5F5]重复点数只按 1 个参与连续点计数[/color]。例：红2+蓝2+黄3+绿4（两个 2 只算 1 个，连续点为 2/3/4）。\n"
+		+ "[color=#FFD700]同色[/color]：颜色相同的骰子至少 2 个，点数不限。例：红2+红5。\n"
+		+ "[color=#FFD700]同对[/color]：同色且同点数的骰子至少 2 个。例：红3+红3。\n"
+		+ "[color=#FFD700]同顺[/color]：同色且点数连续的骰子至少 2 个，[color=#42A5F5]重复点数只按 1 个参与连续点计数[/color]。例：红2+红2+红3（两个 2 只算 1 个，连续点为 2/3）。\n"
+		+ "[color=#42A5F5]骰型等级：与骰型倍率说明相同，2 个为 Lv.1，每多 1 个升 1 级，6 个及以上为 Lv.5；顺子/同顺按去重后的连续点数量计算。[/color]\n"
+		+ "[color=#FFB74D]同一分组同时满足多种骰型时（如红3+红3 既是同对又是对子），只取该组最高分的一种，不重复叠加。[/color]"
+	),
 	"dice_score": (
 		"[color=#FFD700][font_size=20]点数分值[/font_size][/color]\n"
 		+ "[hr color=#777777 height=1 width=100%]\n"
